@@ -1,0 +1,10 @@
+#
+Debug
+DebugStatic
+py
+Release
+ReleaseStatic
+*.py
+*.ncb
+*.suo
+*.user
