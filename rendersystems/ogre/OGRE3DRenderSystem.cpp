@@ -235,10 +235,18 @@ bool OGRE3DRenderSystem::advance(float, const NxOgre::Enums::Priority&)
 
 void OGRE3DRenderSystem::setVisualisationMode(NxOgre::Enums::VisualDebugger type)
 {
+ if (Ogre::MaterialManager::getSingletonPtr()->resourceExists("OGRE3DRenderSystem.VisualDebugger") == false)
+ {
+  Ogre::MaterialPtr material = Ogre::MaterialManager::getSingletonPtr()->create("OGRE3DRenderSystem.VisualDebugger", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+  material->getTechnique(0)->getPass(0)->setVertexColourTracking(Ogre::TVC_DIFFUSE);
+  material->getTechnique(0)->getPass(0)->setDepthBias(1);
+  material->getTechnique(0)->setLightingEnabled(false);
+
+ }
 
  if (mVisualDebuggerRenderable == 0)
  {
-  mVisualDebuggerRenderable = createRenderable(NxOgre::Enums::RenderableType_VisualDebugger);
+  mVisualDebuggerRenderable = createRenderable(NxOgre::Enums::RenderableType_VisualDebugger, "OGRE3DRenderSystem.VisualDebugger");
   ::NxOgre::World::getWorld()->getVisualDebugger()->setRenderable(mVisualDebuggerRenderable);
   mVisualDebuggerNode = mSceneManager->getRootSceneNode()->createChildSceneNode();
   mVisualDebuggerNode->attachObject(mVisualDebuggerRenderable);

@@ -137,7 +137,6 @@ void OGRE3DRenderable::drawCloth(NxOgre::PhysXMeshData* data, NxOgre::Buffer<flo
 
 void OGRE3DRenderable::drawClothFast(NxOgre::PhysXMeshData* data, const NxOgre::Bounds3& bounds)
 {
-
  
  // Resize buffers if necessary.
  _resize(data->getNbVertices(), data->getNbIndices());
@@ -155,10 +154,42 @@ void OGRE3DRenderable::drawClothFast(NxOgre::PhysXMeshData* data, const NxOgre::
 }
 void OGRE3DRenderable::drawVisualDebugger(NxOgre::VisualDebuggerMeshData* data)
 {
- _resize(data->getNbPoints(), 0);
+ _resize(data->getNbLines() * 2, 0);
  
- mVertexBuffer->writeData(0, 3 * data->getNbPoints() * sizeof(Ogre::Real), data->getPoints() );
+ Ogre::Real* pos = static_cast<Ogre::Real*>(mVertexBuffer->lock(0, data->getNbLines() * sizeof(Ogre::Real) *  3 * 2, Ogre::HardwareBuffer::HBL_DISCARD));
+ NxOgre::VisualDebuggerMeshData::DebugLine* line = data->getLines();
  
+ Ogre::RGBA* col = static_cast<Ogre::RGBA*>(mVertexColourBuffer->lock(0, data->getNbLines() * sizeof(Ogre::RGBA), Ogre::HardwareBuffer::HBL_DISCARD));
+ 
+ for (unsigned int i=0; i < data->getNbLines(); i++)
+ {
+  
+   (*pos++) = line->mPosition0.x;
+   (*pos++) = line->mPosition0.y;
+   (*pos++) = line->mPosition0.z;
+   
+   Ogre::ColourValue cv(
+             (float) ((line->mColour & 0xff000000) >> 24) / 255.0f,
+             (float) ((line->mColour & 0x00ff0000) >> 16) / 255.0f,
+             (float) ((line->mColour & 0x0000ff00) >> 8)  / 255.0f,
+             (float) ( line->mColour & 0x000000ff)        / 255.0f);
+   
+   Ogre::RGBA clr;
+   Ogre::Root::getSingletonPtr()->convertColourValue(cv, &clr);
+   
+   (*pos++) = line->mPosition1.x;
+   (*pos++) = line->mPosition1.y;
+   (*pos++) = line->mPosition1.z;
+   (*col++) = clr;
+   
+   (*line++);
+   
+ }
+ 
+ mVertexColourBuffer->unlock();
+ mVertexBuffer->unlock();
+ 
+ mBox.setInfinite();
  
 }
 

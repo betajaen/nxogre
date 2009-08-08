@@ -53,6 +53,12 @@ class NxOgrePublicClass VisualDebuggerMeshData
   
   struct DebugLine
   {
+   DebugLine(const Vec3& a, const Vec3& b, unsigned int colour = 0xFFFFFF)
+   {
+    mPosition0 = a;
+    mPosition1 = b;
+    mColour    = colour;
+   }
    Vec3         mPosition0;
    Vec3         mPosition1;
    unsigned int mColour;

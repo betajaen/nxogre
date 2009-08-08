@@ -34,9 +34,6 @@ namespace NxOgre_Namespace
                                                                                        
 
 VisualDebuggerMeshData::VisualDebuggerMeshData(void)
-: mNbPoints(0),
-  mNbLines(0),
-  mNbTriangles(0)
 {
 }
 
@@ -64,19 +61,19 @@ VisualDebuggerMeshData::DebugTriangle* VisualDebuggerMeshData::getTriangles(void
 
 unsigned int VisualDebuggerMeshData::getNbPoints(void) const
 {
- return mNbPoints;
+ return mPoints.size();
 }
 
 
 unsigned int VisualDebuggerMeshData::getNbLines(void) const
 {
- return mNbLines;
+ return mLines.size();
 }
 
 
 unsigned int VisualDebuggerMeshData::getNbTriangles(void) const
 {
- return mNbTriangles;
+ return mTriangles.size();
 }
 
 

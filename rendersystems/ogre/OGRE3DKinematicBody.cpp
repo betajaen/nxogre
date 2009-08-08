@@ -62,7 +62,7 @@ OGRE3DKinematicBody::OGRE3DKinematicBody(OGRE3DRigidBodyPrototype* prototype, OG
  }
  else
  {
-  // Matrix's are faster than vectors and quaternions. 
+  // Matrix's are faster than vectors and quaternions.
   Ogre::Matrix4 m4 = toMatrix44(getGlobalPose());
   mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(m4.getTrans(), m4.extractQuaternion());
   mSelfCreated = true;

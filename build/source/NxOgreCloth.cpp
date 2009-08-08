@@ -92,15 +92,15 @@ bool Cloth::advance(float deltaTime, const Enums::Priority&)
   NxBounds3 bounds;
   mCloth->getWorldBounds(bounds);
   
-  if (mDrawnAtLeastOnce)
+  /*if (mDrawnAtLeastOnce)
   {
    mRenderable->drawClothFast(mMeshData, Bounds3::from(bounds));
   }
   else
-  {
+  {*/
    mRenderable->drawCloth(mMeshData, mMesh->getTextureCoords(), Bounds3::from(bounds));
-   mDrawnAtLeastOnce = true;
-  }
+  // mDrawnAtLeastOnce = true;
+  //}
  }
  
  return true;

@@ -146,8 +146,9 @@ void VisualDebugger::draw()
   if (renderable == 0)
    continue;
   
+  mMeshData->mLines.append(VisualDebuggerMeshData::DebugLine(Vec3(0,0,0), Vec3(0, 10, 0)));
   mMeshData->mLines.appendMany(renderable->getNbLines(),renderable->getLines());
-
+  
 //  mMeshData->mLines.append(renderable->getLines(), renderable->getNbLines() * sizeof(NxDebugLine));
 //  mMeshData->mLines.reserve(renderable->getNbLines() * sizeof(NxDebugLine));
 //  mMeshData->mLines.append(
