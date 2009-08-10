@@ -45,32 +45,6 @@ class NxOgrePublicClass VisualDebuggerMeshData
   
   public: // Functions
   
-  struct DebugPoint
-  {
-   Vec3         mPosition;
-   unsigned int mColour;
-  };
-  
-  struct DebugLine
-  {
-   DebugLine(const Vec3& a, const Vec3& b, unsigned int colour = 0xFFFFFF)
-   {
-    mPosition0 = a;
-    mPosition1 = b;
-    mColour    = colour;
-   }
-   Vec3         mPosition0;
-   Vec3         mPosition1;
-   unsigned int mColour;
-  };
-  
-  struct DebugTriangle
-  {
-   Vec3         mPosition0;
-   Vec3         mPosition1;
-   Vec3         mPosition2;
-   unsigned int mColour;
-  };
   
   public: // Functions
   
@@ -82,44 +56,27 @@ class NxOgrePublicClass VisualDebuggerMeshData
   */
                                              ~VisualDebuggerMeshData(void);
   
-  /** \brief Get Debug Points
-  */
-  DebugPoint*                                 getPoints(void);
-  
   /** \brief Get Debug Lines.
   */
-  DebugLine*                                  getLines(void);
-  
-  /** \brief Get Debug Triangles.
+  float*                                      getLines(void);
+
+  /** \brief Get Debug colours
   */
-  DebugTriangle*                              getTriangles(void);
-  
-  /** \brief Get number of debug points
-  */
-  unsigned int                                getNbPoints(void) const;
-  
-  /** \brief Get number of debug lines
+  unsigned int*                               getColours(void);
+
+    /** \brief Get number of debug lines
   */
   unsigned int                                getNbLines(void) const;
   
-  /** \brief Get number of debug triangles
-  */
-  unsigned int                                getNbTriangles(void) const;
-
   protected: // Variables
-  
-  NxOgre::Buffer<DebugPoint>                  mPoints;
-  
-  NxOgre::Buffer<DebugLine>                   mLines;
-  
-  NxOgre::Buffer<DebugTriangle>               mTriangles;
-  
-  unsigned int                                mNbPoints;
   
   unsigned int                                mNbLines;
   
-  unsigned int                                mNbTriangles;
-
+  NxOgre::Buffer<float>                       mLines;
+  
+  NxOgre::Buffer<unsigned int>                mColours;
+  
+  
 }; // class ClassName
 
                                                                                        

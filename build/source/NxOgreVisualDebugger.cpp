@@ -136,8 +136,8 @@ void VisualDebugger::draw()
  
  ArrayIterator<Scene*> iterator = mWorld->getScenes();
  mMeshData->mLines.clear();
- mMeshData->mPoints.clear();
- mMeshData->mTriangles.clear();
+ mMeshData->mColours.clear();
+ mMeshData->mNbLines = 0;
 
  for (Scene* scene = iterator.begin(); scene = iterator.next();)
  {
@@ -146,60 +146,25 @@ void VisualDebugger::draw()
   if (renderable == 0)
    continue;
   
-  mMeshData->mLines.append(VisualDebuggerMeshData::DebugLine(Vec3(0,0,0), Vec3(0, 10, 0)));
-  mMeshData->mLines.appendMany(renderable->getNbLines(),renderable->getLines());
-  
-//  mMeshData->mLines.append(renderable->getLines(), renderable->getNbLines() * sizeof(NxDebugLine));
-//  mMeshData->mLines.reserve(renderable->getNbLines() * sizeof(NxDebugLine));
-//  mMeshData->mLines.append(
-//  mMeshData->mLines.merge(renderable->getLines(), renderable->getNbLines() * sizeof(NxDebugLine));
-
- }
-
- mRenderable->drawVisualDebugger(mMeshData);
-#if 0
- ArrayIterator<Scene*> iterator = mWorld->getScenes();
-
- // Scout ahead to see if the Scenes are writable if not return early.
-// for (Scene* scene = iterator.begin(); scene = iterator.next(); )
-//  if (!scene->getScene()->isWritable())
-//   return;
-
- mRenderable->begin();
- {
-
-  for (Scene* scene = iterator.begin(); scene = iterator.next(); )
+  unsigned int nbLines = renderable->getNbLines();
+  const NxDebugLine* lines = renderable->getLines();
+  while(nbLines--)
   {
-   const NxDebugRenderable* renderable = scene->getScene()->getDebugRenderable();
-
-   if (renderable == 0)
-   {
-    mRenderable->addVertex(0,0,0);
-    mRenderable->addVertex(0,1,0);
-    continue; // Just to be safe.
-   }
-   else
-   {
-    mRenderable->addVertex(0,0,0);
-    mRenderable->addVertex(0,0,1);
-   }
-
-   // LINES PASS
-   unsigned int nbLines = renderable->getNbLines();
-   const NxDebugLine* line = renderable->getLines();
-   while(nbLines--)
-   {
-    mRenderable->addVertex(line->p0.x, line->p0.y, line->p0.z);
-    mRenderable->addColour(line->color);
-    mRenderable->addVertex(line->p1.x, line->p1.y, line->p1.z);
-    mRenderable->addColour(line->color);
-    line++;
-   }
-   
+   mMeshData->mLines.append(lines->p0.x);
+   mMeshData->mLines.append(lines->p0.y);
+   mMeshData->mLines.append(lines->p0.z);
+   mMeshData->mLines.append(lines->p1.x);
+   mMeshData->mLines.append(lines->p1.y);
+   mMeshData->mLines.append(lines->p1.z);
+   mMeshData->mColours.append(lines->color);
+   mMeshData->mColours.append(lines->color);
+   lines++;
   }
+  mMeshData->mNbLines += renderable->getNbLines();
  }
- mRenderable->end();
-#endif
+
+ 
+ mRenderable->drawVisualDebugger(mMeshData);
 }
 
                                                                                        

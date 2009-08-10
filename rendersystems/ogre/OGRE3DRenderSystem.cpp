@@ -162,6 +162,7 @@ void OGRE3DRenderSystem::destroyBody(OGRE3DBody* body)
 OGRE3DRenderable* OGRE3DRenderSystem::createRenderable(NxOgre::Enums::RenderableType type, const Ogre::String& materialName)
 {
  OGRE3DRenderable* renderable = new OGRE3DRenderable(type);
+ renderable->setMaterial(materialName);
  mRenderables.insert(renderable);
  return renderable;
 }
@@ -235,19 +236,21 @@ bool OGRE3DRenderSystem::advance(float, const NxOgre::Enums::Priority&)
 
 void OGRE3DRenderSystem::setVisualisationMode(NxOgre::Enums::VisualDebugger type)
 {
+
  if (Ogre::MaterialManager::getSingletonPtr()->resourceExists("OGRE3DRenderSystem.VisualDebugger") == false)
  {
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingletonPtr()->create("OGRE3DRenderSystem.VisualDebugger", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-  material->getTechnique(0)->getPass(0)->setVertexColourTracking(Ogre::TVC_DIFFUSE);
   material->getTechnique(0)->getPass(0)->setDepthBias(1);
+  material->getTechnique(0)->getPass(0)->setAmbient(1,1,1);
+  material->getTechnique(0)->getPass(0)->setSelfIllumination(1,1,1);
   material->getTechnique(0)->setLightingEnabled(false);
-
  }
 
  if (mVisualDebuggerRenderable == 0)
  {
   mVisualDebuggerRenderable = createRenderable(NxOgre::Enums::RenderableType_VisualDebugger, "OGRE3DRenderSystem.VisualDebugger");
   ::NxOgre::World::getWorld()->getVisualDebugger()->setRenderable(mVisualDebuggerRenderable);
+  mVisualDebuggerRenderable->setCastShadows(false);
   mVisualDebuggerNode = mSceneManager->getRootSceneNode()->createChildSceneNode();
   mVisualDebuggerNode->attachObject(mVisualDebuggerRenderable);
  }

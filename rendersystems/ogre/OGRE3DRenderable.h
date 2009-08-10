@@ -72,7 +72,7 @@ class OGRE3DExportClass OGRE3DRenderable : public NxOgre::PointerClass<_OGRE3DRe
       VertexDeclaration_Position           = 0,
       VertexDeclaration_TextureCoordinates = 1,
       VertexDeclaration_Normal             = 2,
-      VertexDeclaration_Colour             = 3,
+      VertexDeclaration_Colour             = 1,
      };
 
      struct RenderProfile

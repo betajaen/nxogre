@@ -33,7 +33,7 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-VisualDebuggerMeshData::VisualDebuggerMeshData(void)
+VisualDebuggerMeshData::VisualDebuggerMeshData(void) : mNbLines(0)
 {
 }
 
@@ -41,42 +41,20 @@ VisualDebuggerMeshData::~VisualDebuggerMeshData(void)
 {
 }
 
-VisualDebuggerMeshData::DebugPoint* VisualDebuggerMeshData::getPoints(void)
+unsigned int* VisualDebuggerMeshData::getColours()
 {
- return mPoints.first();
+ return mColours.first();
 }
 
-
-VisualDebuggerMeshData::DebugLine* VisualDebuggerMeshData::getLines(void)
+float* VisualDebuggerMeshData::getLines(void)
 {
  return mLines.first();
 }
 
-
-VisualDebuggerMeshData::DebugTriangle* VisualDebuggerMeshData::getTriangles(void)
-{
- return mTriangles.first();
-}
-
-
-unsigned int VisualDebuggerMeshData::getNbPoints(void) const
-{
- return mPoints.size();
-}
-
-
 unsigned int VisualDebuggerMeshData::getNbLines(void) const
 {
- return mLines.size();
+ return mNbLines;
 }
-
-
-unsigned int VisualDebuggerMeshData::getNbTriangles(void) const
-{
- return mTriangles.size();
-}
-
-
 
                                                                                        
 
