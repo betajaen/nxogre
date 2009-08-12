@@ -765,6 +765,22 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreCompartment.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCompartment.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCompartmentDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCompartmentDescription.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreCompiler.h"
 			>
 		</File>

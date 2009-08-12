@@ -36,6 +36,7 @@
 #include "NxOgreSphericalJointDescription.h"
 #include "NxOgreRevoluteJointDescription.h"
 #include "NxOgreClothDescription.h"
+#include "NxOgreCompartmentDescription.h"
 
 #include "NxOgreTimeListener.h"
 
@@ -193,6 +194,10 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
 
   /** \brief
   */
+                       Compartment*           createCompartment(const CompartmentDescription&);
+
+  /** \brief
+  */
                        void                   setGravity(const Vec3&);
   
   /** \brief
@@ -338,6 +343,10 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   /** \internal
   */
                        Array<SoftBody*>                 mSoftBodies;
+
+  /** \internal
+  */
+                       Array<Compartment*>              mCompartments;
 
   /** \internal Is Scene processing flag
   */

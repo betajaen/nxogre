@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.h
-    Created on: 25-Jun-09
+    Created on: 11-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -66,6 +66,7 @@ enum
   _Cloth,
   _ClothDescription,
   _ClothRaycastHit,
+  _Compartment,
   _ConstantArray,
   _Convex,
   _D6Joint,
@@ -171,6 +172,7 @@ enum
   _Singleton,
   _SoftBody,
   _SoftBodyDescription,
+  _SoftBodyMesh,
   _Sphere,
   _SphericalJoint,
   _SphericalJointDescription,

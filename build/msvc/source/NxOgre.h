@@ -1,5 +1,5 @@
 /** File: NxOgre.h
-    Created on: 02-Jul-09
+    Created on: 11-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -42,6 +42,8 @@
 #include "NxOgreCloth.h"
 #include "NxOgreClothDescription.h"
 #include "NxOgreCommon.h"
+#include "NxOgreCompartment.h"
+#include "NxOgreCompartmentDescription.h"
 #include "NxOgreCompiler.h"
 #include "NxOgreConvex.h"
 #include "NxOgreD6Joint.h"

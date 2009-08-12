@@ -95,9 +95,9 @@ class NxOgrePublicClass RigidBodyDescription
                         int                    mBodyFlags;
   
   /** \brief Compartment.
-      \default 0
+      \default NULL
   */
-                        unsigned short         mCompartment;
+                        Compartment*           mCompartment;
   
   /** \brief Density (mass calculated by volume).
       \default 0

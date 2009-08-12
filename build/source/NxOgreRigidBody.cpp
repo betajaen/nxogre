@@ -37,6 +37,7 @@
 #include "NxOgreSimple.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreReason.h"
+#include "NxOgreCompartment.h"
 
 #include "NxPhysics.h"
 
@@ -93,7 +94,10 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene)
  NxActorDesc actor_description;
  NxBodyDesc  body_description;
  
- ///  actor_description.compartment = 0
+
+ if (prototype->mCompartment != NULL && prototype->mCompartment->getType() == Enums::CompartmentType_RigidBody)
+  actor_description.compartment = prototype->mCompartment->getCompartment();
+ 
  actor_description.contactReportFlags = 0; //< \todo
  actor_description.density = prototype->mDensity;
  actor_description.dominanceGroup = prototype->mDominanceGroup;
@@ -126,7 +130,6 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene)
 
   if (prototype->mType == Enums::RigidBodyType_Kinematic)
   {
-   printf("KINEMATIC!!!!!!!!!");
    body_description.flags |= NX_BF_KINEMATIC;
   }
  }

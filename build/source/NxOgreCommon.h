@@ -174,9 +174,11 @@ enum PhysXAssertionResponse
 */
 enum TimeStepMethod
 {
- TimeStepMethod_FixedAccumulator = 0, //!< Divides the time equally 
+ TimeStepMethod_Fixed            = 0, //!< Divides the time equally, used with compartments.
+ TimeStepMethod_FixedAccumulator = 0, //!< Divides the time equally, used with scenes.
  TimeStepMethod_Variable         = 1, //!< Uses the time as is.
- TimeStepMethod_Inherit          = 2  //!< Inherit from the main scene, Used with compartments.
+ TimeStepMethod_Inherit          = 2, //!< Inherit from the main scene, Used with compartments.
+
 };
 
 /** \brief Pruning structure for Scenes. Compatible with NxPruningStructure
@@ -702,6 +704,36 @@ enum SoftBodyAttachmentFlags
  SoftBodyAttachmentFlags_Tearable          = (1<<1), //!< \brief When this flag is set, the attachment is tearable.
 };
 
+enum DeviceCode
+{
+ DeviceCode_PPU0                           = 0,      //!< \brief Explicit PPU index corresponds to index numeric value (reserved for future use, currently only PPU 0 is valid). 
+ DeviceCode_PPU1                           = 1,      //!< \brief Not Used.
+ DeviceCode_PPU2                           = 2,      //!< \brief Not Used.
+ DeviceCode_PPU3                           = 3,      //!< \brief Not Used.
+ DeviceCode_PPU4                           = 4,      //!< \brief Not Used.
+ DeviceCode_PPU5                           = 5,      //!< \brief Not Used.
+ DeviceCode_PPU6                           = 6,      //!< \brief Not Used.
+ DeviceCode_PPU7                           = 7,      //!< \brief Not Used.
+ DeviceCode_PPU8                           = 8,      //!< \brief Not Used.
+ DeviceCode_CPU                      = 0xffff0000,   //!< \brief Compartment is to be simulated on CPU.
+ DeviceCode_AutoAssign               = 0xffff0001    //!< \brief Compartment is to be simulated on a processor (PPU or CPU) chosen by the HSM for best performance (CPU is only used in the absence of a PPU). .
+};
+
+enum CompartmentType
+{
+ CompartmentType_RigidBody                 = 0,
+ CompartmentType_Fluid                     = 1,
+ CompartmentType_Cloth                     = 2,
+ CompartmentType_SoftBody                  = 2,
+};
+
+enum CompartmentFlags
+{
+ CompartmentFlags_SleepNotification        = (1<<0),
+ CompartmentFlags_Continuous               = (1<<1),
+ CompartmentFlags_RestrictedScene          = (1<<2),
+ CompartmentFlags_InheritSettings          = (1<<3)
+};
 
 } // namespace Enums
 
@@ -733,7 +765,9 @@ enum SoftBodyAttachmentFlags
 //::             struct                     CircularBufferReferenceCounter; //!<
                  class                      Cloth;                         //!<
                  class                      ClothDescription;              //!<
-                 struct                     ClothRaycastHit;               //!< 
+                 struct                     ClothRaycastHit;               //!<
+                 class                      Compartment;                   //!<
+                 class                      CompartmentDescription;        //!<
         template<class T> class             ConstantArray;                 //!<
                  class                      Convex;                        //!<
                  class                      D6Joint;                       //!<

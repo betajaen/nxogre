@@ -1,5 +1,5 @@
 /** File: NxOgrePhysXPrototypes.h
-    Created on: 25-Jun-09
+    Created on: 11-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.

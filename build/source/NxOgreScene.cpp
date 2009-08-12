@@ -55,6 +55,8 @@
 #include "NxOgreClothDescription.h"
 #include "NxOgreSoftBody.h"
 #include "NxOgreSoftBodyDescription.h"
+#include "NxOgreCompartment.h"
+#include "NxOgreCompartmentDescription.h"
 
 #include "NxPhysics.h"
 
@@ -402,6 +404,13 @@ RevoluteJoint* Scene::createRevoluteJoint(RigidBody* first, RigidBody* second, c
  RevoluteJoint* joint = new RevoluteJoint(first, second, desc);
  mJoints.insert(joint);
  return joint;
+}
+
+Compartment* Scene::createCompartment(const CompartmentDescription& description)
+{
+ Compartment* compartment = new Compartment(description, this);
+ mCompartments.insert(compartment);
+ return compartment;
 }
 
 void Scene::setGravity(const Vec3& vec)

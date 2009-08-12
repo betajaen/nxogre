@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.cpp
-    Created on: 25-Jun-09
+    Created on: 11-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -37,7 +37,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[620] = {
+static const char*  sClasses[622] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -529,6 +529,7 @@ static const char*  sClasses[620] = {
   "Cloth",
   "ClothDescription",
   "ClothRaycastHit",
+  "Compartment",
   "ConstantArray",
   "Convex",
   "D6Joint",
@@ -634,6 +635,7 @@ static const char*  sClasses[620] = {
   "Singleton",
   "SoftBody",
   "SoftBodyDescription",
+  "SoftBodyMesh",
   "Sphere",
   "SphericalJoint",
   "SphericalJointDescription",
