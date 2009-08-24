@@ -115,6 +115,20 @@ class NxOgrePublicClass Compartment : public PointerClass<Classes::_Compartment>
   
 }; // class Box
 
+/** \brief Compartments don't have a userData property. So Scene will store a copy
+           of the compartment pointer and the representive pair. This isn't too efficent
+           but hopefull you won't be fetching over billions of compartments every frame.
+*/
+struct CompartmentArrayPair
+{
+ CompartmentArrayPair()
+ : mOriginal(0), mRepresentative(0) {}
+ CompartmentArrayPair(NxCompartment* original, Compartment* representative)
+ : mOriginal(original), mRepresentative(representative) {}
+ NxCompartment* mOriginal;
+ Compartment*   mRepresentative;
+};
+
                                                                                        
 
 } // namespace NxOgre_Namespace

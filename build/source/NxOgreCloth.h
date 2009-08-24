@@ -417,7 +417,7 @@ class NxOgrePublicClass Cloth : public PointerClass<Classes::_Cloth>, public Tim
   /** \brief
   */
   PhysXMeshData*                                mMeshData;
-
+  
   /** \brief Possible name of the mesh.
   */
   String                                        mName;

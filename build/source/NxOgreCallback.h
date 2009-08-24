@@ -42,19 +42,42 @@ class NxOgrePublicClass Callback
 {
   
   public: // Functions
-  
+   
+   Callback();
+   
+   virtual ~Callback();
+
    /* \brief A Volume has had an event. Use collisionEvent with Enums::VolumeCollisionType for filtering.
    */
-   virtual void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* rigidBody, Shape* rigidBodyShape, unsigned int collisionEvent) {}
-   
+   virtual void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* rigidBody, Shape* rigidBodyShape, unsigned int collisionEvent);
    
    /** \brief Is called every time a rayquery gets a hit.
        \return True if the ray should continue, or false to abort.
        \warning Do not modify the Scene whilst in the onRaycastHit function; i.e. destroyActor, or createActor. 
        \see NxUserRaycastReport::onHit
    */
-   virtual bool onHitEvent(const RaycastHit&) { return false; }
+   virtual bool onHitEvent(const RaycastHit&);
    
+   /** \brief
+   */
+   virtual void onContact(const ContactPair&);
+   
+   /** \brief A class is using the callback.
+   */
+   void increaseReference();
+   
+   /** \brief A class is no longer using the callback.
+   */
+   void decreaseReference();
+   
+   /** \brief Get the number of references to this callback. Useful for you to decide when the callback should be deleted.
+   */
+   unsigned int getNbReferences() const;
+   
+  private:
+    
+    unsigned int mNbReferences;
+
 }; // class Callback
 
                                                                                        

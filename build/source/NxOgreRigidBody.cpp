@@ -49,7 +49,7 @@ namespace NxOgre_Namespace
                                                                                        
 
 RigidBody::RigidBody()
-: mActor(0), mScene(0)
+: mActor(0), mScene(0), mContactCallback(0)
 {
 }
 
@@ -303,6 +303,16 @@ NxActor* RigidBody::getNxActor(void)
 Scene* RigidBody::getScene(void)
 {
  return mScene;
+}
+
+void RigidBody::setContactCallback(Callback* callback)
+{
+ mContactCallback = callback;
+}
+
+Callback* RigidBody::getContactCallback()
+{
+ return mContactCallback;
 }
 
                                                                                        

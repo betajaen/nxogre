@@ -131,7 +131,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="NxOgreStable.h"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="0"
 			/>
 			<Tool
@@ -721,6 +721,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreCallback.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreCallback.h"
 			>
 		</File>
@@ -789,6 +793,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreContactPair.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreConvex.cpp"
 			>
 		</File>
@@ -842,6 +850,22 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreFixedSceneTimer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluid.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluid.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidDescription.h"
 			>
 		</File>
 		<File
@@ -1149,43 +1173,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreParticle.cpp"
+			RelativePath="..\source\NxOgreParticleData.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreParticle.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleDrain.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleDrain.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleEmitter.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleEmitter.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleGroup.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleGroup.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleRenderer.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreParticleRenderer.h"
+			RelativePath="..\source\NxOgreParticleData.h"
 			>
 		</File>
 		<File
@@ -1262,14 +1254,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgrePointerClass.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgrePointParticleRenderer.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgrePointParticleRenderer.h"
 			>
 		</File>
 		<File

@@ -615,12 +615,12 @@ enum JointSpringType
 */
 enum SphericalJointFlags
 {
- SphericalJointFlags_TwistLimitEnabled = 1 << 0,
- SphericalJointFlags_SwingLimitEnabled = 1 << 1,
- SphericalJointFlags_TwistSpringEnabled = 1 << 2,
- SphericalJointFlags_SwingSpringEnabled = 1 << 3,
- SphericalJointFlags_JointSpringEnabled = 1 << 4,
- SphericalJointFlags_PerpendicularDirectionConstraints = 1 << 5,
+ SphericalJointFlags_TwistLimitEnabled                 = (1<<0),
+ SphericalJointFlags_SwingLimitEnabled                 = (1<<1),
+ SphericalJointFlags_TwistSpringEnabled                = (1<<2),
+ SphericalJointFlags_SwingSpringEnabled                = (1<<3),
+ SphericalJointFlags_JointSpringEnabled                = (1<<4),
+ SphericalJointFlags_PerpendicularDirectionConstraints = (1<<5),
 };
 
 
@@ -628,13 +628,13 @@ enum SphericalJointFlags
 */
 enum WheelFlags
 {
- WheelFlags_AxisContactNormal       = (1<<0), //!< \brief Determines whether the suspension axis or ground contact normal is used for the suspension constraint.
- WheelFlags_InputLatSlipVelocity    = (1<<1), //!< \brief The laterial slip veloicty is used as the input to the tire function, rather than the slip angle.
- WheelFlags_InputLongSlipVelocity   = (1<<2), //!< \brief The longutudal slip veloicty is used as the input to the tire function, rather than the slip angle.
- WheelFlags_UnscaledSpringBehaviour = (1<<3), //!< \brief Does not factor out the suspension travel and wheel radius from the spring force computation. This is the legacy behaviour from the raycast capsule approach.
- WheelFlags_AxleSpeedOverride       = (1<<4), //!< \brief The axle speed is not computed by the simulation but is rather expected to be provided by the user every simulation step via Wheel::setAxleSpeed()
- WheelFlags_EmulateLegacyWheel      = (1<<5), //!< \brief The Wheel will emulate the PhysX legacy raycast capsule based wheel.
- WheelFlags_ClampedFriction         = (1<<6), //!< \brief The Wheel will clamp the force in the friction constraints.
+ WheelFlags_AxisContactNormal           = (1<<0), //!< \brief Determines whether the suspension axis or ground contact normal is used for the suspension constraint.
+ WheelFlags_InputLatSlipVelocity        = (1<<1), //!< \brief The laterial slip veloicty is used as the input to the tire function, rather than the slip angle.
+ WheelFlags_InputLongSlipVelocity       = (1<<2), //!< \brief The longutudal slip veloicty is used as the input to the tire function, rather than the slip angle.
+ WheelFlags_UnscaledSpringBehaviour     = (1<<3), //!< \brief Does not factor out the suspension travel and wheel radius from the spring force computation. This is the legacy behaviour from the raycast capsule approach.
+ WheelFlags_AxleSpeedOverride           = (1<<4), //!< \brief The axle speed is not computed by the simulation but is rather expected to be provided by the user every simulation step via Wheel::setAxleSpeed()
+ WheelFlags_EmulateLegacyWheel          = (1<<5), //!< \brief The Wheel will emulate the PhysX legacy raycast capsule based wheel.
+ WheelFlags_ClampedFriction             = (1<<6), //!< \brief The Wheel will clamp the force in the friction constraints.
 };
 
 enum ClothFlags
@@ -735,6 +735,64 @@ enum CompartmentFlags
  CompartmentFlags_InheritSettings          = (1<<3)
 };
 
+enum ParticleFlags
+{
+ ParticleFlags_CollisionWithStatic         = (1<<0),
+ ParticleFlags_CollisionWithDynamic        = (1<<1),
+ ParticleFlags_Seperated                   = (1<<2),
+ ParticleFlags_MotionLimitReached          = (1<<3)
+};
+
+enum FluidSimulationMethod
+{
+ FluidSimulationMethod_SPH                   = (1<<0),
+ FluidSimulationMethod_NoParticleInteraction = (1<<1),
+ FluidSimulationMethod_MixedMode             = (1<<2)
+};
+
+enum FluidCollisionMethod
+{
+ FluidCollisionMethod_Static                 = (1<<0),
+ FluidCollisionMethod_Dynamic                = (1<<1)
+};
+
+enum FluidFlags
+{
+ FluidFlags_Visualisation                    = (1<<0), //!< \brief Enables debug visualization for the Fluid.
+ FluidFlags_DisableGravity                   = (1<<1), //!< \brief Disables scene gravity for the Fluid.
+ FluidFlags_CollisionTwoWay                  = (1<<2), //!< \brief Enable/disable two way collision of fluid with the rigid body scene.
+ FluidFlags_Enabled                          = (1<<3), //!< \brief Enable/disable execution of fluid simulation.
+ FluidFlags_Hardware                         = (1<<4), //!< \brief Defines whether this fluid is simulated on the PPU.
+ FluidFlags_PriorityMode                     = (1<<5), //!< \brief Enable/disable particle priority mode. 
+ FluidFlags_ProjectToPlane                   = (1<<6), //!< \brief Defines whether the particles of this fluid should be projected to a plane.
+ FluidFlags_ForceStrictCookingFormat         = (1<<7)  //!< \note Currently not implemented
+};
+
+enum ContactPairFlags
+{
+ ContactPairFlags_Ignore                     = (1<<0), //!< \brief Disable contact generation
+ ContactPairFlags_StartTouch                 = (1<<1), //!< \brief Pair callback will be called when the pair starts to be in contact.
+ ContactPairFlags_StopTouch                  = (1<<2), //!< \brief Pair callback will be called when the pair stops to be in contact.
+ ContactPairFlags_Touch                      = (1<<3), //!< \brief Pair callback will be called whilst the pair is in contact.
+ ContactPairFlags_Forces                     = (1<<7), //!< \brief The (summed total) frictional force and normal force will be given in the ContactPair struct
+ ContactPairFlags_StartTouchThreshold        = (1<<8), //!< \brief Pair callback will be called when the contact force between two RigidBodies exceeds one of the actor-defined force thresholds.
+ ContactPairFlags_StopTouchThreshold         = (1<<9), //!< \brief Pair callback will be called when the contact force between two RigidBodies falls below one of the actor-defined force thresholds.
+ ContactPairFlags_TouchThreshold             = (1<<10),//!< \brief Pair callback will keep getting called when the contact force between two RigidBodies falls below one of the actor-defined force thresholds.
+ 
+ ContactPairFlags_ContactModifcation         = (1<<16),//!< \brief Generate a callback for all associated contact constraints, making it possible to edit the constraint.
+ 
+ ContactPairFlags_All                        = (
+                                                ContactPairFlags_StartTouch          |
+                                                ContactPairFlags_StopTouch           |
+                                                ContactPairFlags_Touch               |
+                                                ContactPairFlags_Forces              |
+                                                ContactPairFlags_StartTouchThreshold |
+                                                ContactPairFlags_StopTouchThreshold  |
+                                                ContactPairFlags_TouchThreshold
+                                               )
+ 
+};
+
 } // namespace Enums
 
 
@@ -768,6 +826,7 @@ enum CompartmentFlags
                  struct                     ClothRaycastHit;               //!<
                  class                      Compartment;                   //!<
                  class                      CompartmentDescription;        //!<
+                 class                      ContactPair;                   //!<
         template<class T> class             ConstantArray;                 //!<
                  class                      Convex;                        //!<
                  class                      D6Joint;                       //!<
@@ -776,6 +835,13 @@ enum CompartmentFlags
                  class                      ErrorStream;                   //!<
                  class                      FixedJoint;                    //!<
                  class                      FixedSceneTimer;               //!<
+                 class                      Fluid;                         //!<
+                 class                      FluidDescription;              //!<
+                 class                      FluidEmitter;                  //!<
+                 class                      FluidEmitterDescription;       //!<
+                 class                      FluidDrain;                    //!<
+                 class                      FluidDrainDescription;         //!<
+                 class                      FluidPacket;                   //!<
                  class                      HeightField;                   //!<
                  class                      HeightFieldGeometry;           //!<
                  class                      HeightFieldGeometryBlueprint;  //!< 
@@ -791,6 +857,7 @@ enum CompartmentFlags
                  class                      JointLimitSoftDescription;     //!<
                  class                      KinematicActor;                //!<
                  class                      KinematicController;           //!<
+                 class                      ParticleData;                  //!<
      template<unsigned int Ti> class        PointerClass;                  //!<
                  class                      PhysXOutputStream;             //!<
                  class                      PhysXUserAllocator;            //!<
@@ -819,12 +886,8 @@ enum CompartmentFlags
                  class                      PlaneGeometry;                 //!<
                  class                      PlaneGeometryPrototype;        //!<
                  class                      Particle;                      //!<
-                 class                      ParticleGroup;                 //!<
-                 class                      ParticleEmitter;               //!<
-                 class                      ParticleDrain;                 //!<
-                 class                      ParticleRenderer;              //!<
                  class                      PhysXMeshData;                 //!<
-                 class                      PhysXTriggerCallback;          //!< \internal Do Not Use.
+                 class                      PhysXCallback;                 //!< \internal Do Not Use.
                  class                      PhysXPointer;                  //!<
                  class                      PointParticleRenderer;         //!<
                  class                      PointRenderable;               //!<

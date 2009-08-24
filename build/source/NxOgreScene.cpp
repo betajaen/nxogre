@@ -39,7 +39,6 @@
 #include "NxOgreMaterial.h"
 #include "NxOgreMaterialPrototype.h"
 #include "NxOgreVolume.h"
-#include "NxOgreParticleGroup.h"
 #include "NxOgreSphericalJoint.h"
 #include "NxOgreFixedJoint.h"
 #include "NxOgreRevoluteJoint.h"
@@ -76,7 +75,7 @@ Scene::Scene(ScenePrototype* prototype, NxPhysicsSDK* sdk)
   mSceneTimer(0)
 {
 
- mPhysXCallback = NxOgre_New(PhysXTriggerCallback)(this);
+ mPhysXCallback = NxOgre_New(PhysXCallback)(this);
 
  mName = prototype->mName;
 
@@ -87,11 +86,12 @@ Scene::Scene(ScenePrototype* prototype, NxPhysicsSDK* sdk)
  mProcessing = false;
 
  scene_description.userTriggerReport = mPhysXCallback;
+ scene_description.userContactReport = mPhysXCallback;
  
  scene_description.timeStepMethod = NX_TIMESTEP_VARIABLE; // temp.
-
+ 
  mScene = mSDK->createScene(scene_description);
-
+ 
  if (mScene == 0)
  {
   SharedStringStream message(SharedStringStream::_LARGE); 
@@ -103,7 +103,7 @@ Scene::Scene(ScenePrototype* prototype, NxPhysicsSDK* sdk)
    
   if (mSDK == 0)
    message << " - NxPhysicsSDK is not created.\n";
-
+  
   message << Reason::whyAsStream(scene_description).get();
   
   // Hey there! Got an assertion that points to here?
@@ -345,19 +345,6 @@ Volume* Scene::createVolume(Shapes shapes, const Matrix44& pose, Callback* callb
  return volume;
 }
 
-ParticleGroup* Scene::createParticleGroup(ParticleRenderer* renderer, SimpleShape* shape, Real mass, NxOgre::Enums::Priority priority)
-{
- ParticleGroup* group = NxOgre_New(ParticleGroup)(this, renderer, shape, mass, priority);
- mParticleGroups.insert(group);
- return group;
-}
-
-void Scene::destroyParticleGroup(ParticleGroup* group)
-{
- mParticleGroups.remove(group);
- NxOgre_Delete(group);
-}
-
 void Scene::destroyJoint(Joint* joint)
 {
  mJoints.remove(joint);
@@ -410,6 +397,7 @@ Compartment* Scene::createCompartment(const CompartmentDescription& description)
 {
  Compartment* compartment = new Compartment(description, this);
  mCompartments.insert(compartment);
+ mCompartmentsPair.insert(CompartmentArrayPair(compartment->getCompartment(), compartment));
  return compartment;
 }
 
@@ -495,7 +483,6 @@ unsigned int Scene::raycastAllBounds(const Ray& ray, Callback* callback, Enums::
  return mScene->raycastAllBounds(inRay, report, NxShapesType(int(type)), -1, maxDistance, hintFlags, &mask);
 }
 
-
 RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, unsigned int group, Real maxDistance, unsigned int hintFlags) const
 {
 
@@ -565,7 +552,6 @@ TimeStep& Scene::getTimeStep(void)
  return mTimeStep;
 }
 
-
 void Scene::registerMachine(Machine* machine)
 {
  mMachines.insert(machine);
@@ -575,7 +561,6 @@ void Scene::unregisterMachine(Machine* machine)
 {
  mMachines.remove(machine);
 }
-
 
 Cloth* Scene::createCloth(const ClothDescription& description, Renderable* renderable, Enums::Priority rp)
 {
@@ -590,7 +575,6 @@ void Scene::destroyCloth(Cloth* cloth)
  NxOgre_Delete(cloth);
 }
 
-
 SoftBody* Scene::createSoftBody(const SoftBodyDescription& description, Renderable* renderable, Enums::Priority rp)
 {
  SoftBody* cloth = NxOgre_New(SoftBody)(description, renderable, rp, this);
@@ -602,6 +586,21 @@ void Scene::destroySoftBody(SoftBody* cloth)
 {
  mSoftBodies.remove(cloth);
  NxOgre_Delete(cloth);
+}
+
+Compartment* Scene::findCompartment(NxCompartment* lookup)
+{
+ for (unsigned int i = 0; i < mCompartmentsPair.size(); i++)
+ {
+  if (mCompartmentsPair[i].mOriginal = lookup)
+   return mCompartmentsPair[i].mRepresentative;
+ }
+ return 0;
+}
+
+void Scene::setActorFlags(RigidBody* a, RigidBody* b, unsigned int contact_flags)
+{
+ mScene->setActorPairFlags(*a->getNxActor(), *b->getNxActor(), contact_flags);
 }
 
                                                                                        

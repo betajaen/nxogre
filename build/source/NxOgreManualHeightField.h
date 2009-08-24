@@ -67,7 +67,7 @@ class NxOgrePublicClass ManualHeightField
     
   /** \brief Get the name of the heightfield.
   */
-  String                                name(void) const;
+  String                                      name(void) const;
 
   /** \brief Text
   */

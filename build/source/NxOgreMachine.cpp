@@ -43,7 +43,6 @@ Machine::~Machine()
 
 void Machine::simulate(float user_deltaTime)
 {
- 
  ActorMachinePart::simulate(user_deltaTime);
  
  ArrayIterator<MachinePart*> it = mMachineParts.getIterator();

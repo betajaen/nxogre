@@ -54,6 +54,11 @@ typedef bml::QuaternionT<double>     Quat;
 
 #endif
 
+typedef bml::Vector2<float>          SingleVec2;
+typedef bml::Vector3<float>          SingleVec3;
+typedef bml::Vector4<float>          SingleVec4;
+typedef bml::QuaternionT<float>      SingleQuat;
+
 typedef bml::Vector2<double>         DoubleVec2;
 typedef bml::Vector3<double>         DoubleVec3;
 typedef bml::Vector4<double>         DoubleVec4;

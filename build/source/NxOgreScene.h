@@ -37,6 +37,7 @@
 #include "NxOgreRevoluteJointDescription.h"
 #include "NxOgreClothDescription.h"
 #include "NxOgreCompartmentDescription.h"
+#include "NxOgreCompartment.h"
 
 #include "NxOgreTimeListener.h"
 
@@ -170,14 +171,6 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \brief
   */
-                       ParticleGroup*         createParticleGroup(ParticleRenderer*, SimpleShape* particleShape, Real particleMass = 0.0001f, NxOgre::Enums::Priority timeListenerPriority = NxOgre::Enums::Priority_Medium);
-  
-  /** \brief
-  */
-                       void                   destroyParticleGroup(ParticleGroup*);
-  
-  /** \brief
-  */
                        Cloth*                 createCloth(const ClothDescription&, Renderable*, Enums::Priority render_priority = Enums::Priority_MediumLow);
   
   /** \brief
@@ -195,6 +188,11 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   /** \brief
   */
                        Compartment*           createCompartment(const CompartmentDescription&);
+
+  /** \brief Find a NxOgre Compartment based upon it's PhysX pointer equilvent.
+      \note This function is a little un-efficent. Try not to use it thousands of times at once in a frame if you have a huge amount of compartments.
+  */
+                       Compartment*           findCompartment(NxCompartment*);
 
   /** \brief
   */
@@ -265,12 +263,16 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \internal
   */
-                       PhysXTriggerCallback*  getPhysXCallback(void);
+                       PhysXCallback*         getPhysXCallback(void);
   
   /** \brief Get the current timestep in the Scene.
   */
   
                        TimeStep&              getTimeStep(void);
+  
+  /** \brief
+  */
+                       void                   setActorFlags(RigidBody*, RigidBody*, unsigned int contact_flags);
   
   protected: // Functions
   
@@ -286,9 +288,9 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \brief Name as a String. Use Scene::getName() to fetch, or Scene::setName() to set.
   */
-                       String                     mName;
+                       String                           mName;
   
-  /** \internal What Scene is associated with.          
+  /** \internal What Scene is associated with
   */
                        NxScene*                         mScene;
   
@@ -320,10 +322,6 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        Array<Material*>                 mMaterials;
   
-  /** \internal Master particle groups array
-  */
-                       Array<ParticleGroup*>            mParticleGroups;
-  
   /** \internal Master joints array
   */
                        Array<Joint*>                    mJoints;
@@ -348,6 +346,10 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        Array<Compartment*>              mCompartments;
 
+  /** \internal
+  */
+                       Array<CompartmentArrayPair>      mCompartmentsPair;
+
   /** \internal Is Scene processing flag
   */
                        bool                             mProcessing;
@@ -362,7 +364,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \internal Scene user callback.
   */
-                       PhysXTriggerCallback*            mPhysXCallback;
+                       PhysXCallback*                   mPhysXCallback;
   
   /** \internal Current SceneTimer
   */

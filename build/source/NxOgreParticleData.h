@@ -1,5 +1,5 @@
-/** File: NxOgreParticleEmitter.h
-    Created on: 16-Feb-09
+/** File: NxOgreParticleData.h
+    Created on: 11-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
 
@@ -21,8 +21,8 @@
     along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NXOGRE_PARTICLEMITTER_H
-#define NXOGRE_PARTICLEMITTER_H
+#ifndef NXOGRE_PARTICLEDATA_H
+#define NXOGRE_PARTICLEDATA_H
 
                                                                                        
 
@@ -38,32 +38,53 @@ namespace NxOgre_Namespace
 
 /** \brief
 */
-class NxOgrePublicClass ParticleEmitter
+class NxOgrePublicClass ParticleData
 {
   
   public: // Functions
   
-  /** \brief Emit a number of particles.
-      \return The number of partilces that could not be emitted.
+  /** \brief
   */
-  unsigned int                                emit(unsigned int);
+  ParticleData(unsigned int initialParticleCount = 1);
   
-  protected: // Functions
-  
-  /** \brief Text
+  /** \brief
   */
-                                              ParticleEmitter(ParticleGroup*);
+ ~ParticleData();
   
-  /** \brief Text
+  /** \brief Number of particles.
+      \note  Each buffer size must equal to this.
   */
-                                             ~ParticleEmitter(void);
+  SharedPointer<unsigned int> mNbParticles;
   
-  protected: // Variables
+  /** \brief
+  */
+  Buffer<SingleVec3>       mParticlePositions;
   
-  ParticleGroup*                              mParticleGroup;
+  /** \brief
+  */
+  Buffer<SingleVec3>       mParticleVelocities;
   
+  /** \brief
+  */
+  Buffer<SingleVec3>       mParticleLifetimes;
+    
+  /** \brief
+  */
+  Buffer<SingleVec3>       mParticleDensities;
   
-}; // class ClassName
+  /** \brief
+  */
+  Buffer<unsigned int>     mParticleIDs;
+  
+  /** \brief
+  */
+  Buffer<unsigned int>     mParticleFlags;
+  
+  /** \brief
+  */
+  Buffer<SingleVec3>       mParticleCollisionNormals;
+  
+}; // class ParticleData
 
                                                                                        
 

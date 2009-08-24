@@ -1,5 +1,5 @@
-/** File: NxOgreParticleRenderer.cpp
-    Created on: 17-Feb-09
+/** File: NxOgreParticleData.cpp
+    Created on: 13-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
 
@@ -24,11 +24,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgrePointParticleRenderer.h"
-#include "NxOgreRigidBodyFunctions.h"
-#include "NxOgreParticle.h"
-#include "NxOgreRenderable.h"
-#include "NxOgreActiveParticle.h"
+#include "NxOgreParticleData.h"
 
                                                                                        
 
@@ -37,39 +33,14 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-PointParticleRenderer::PointParticleRenderer(Renderable* renderable) : ParticleRenderer(renderable)
+ParticleData::ParticleData(unsigned int initialParticleCount)
 {
+ mNbParticles = SharedPointer<unsigned int>(new unsigned int);
 }
 
-PointParticleRenderer::~PointParticleRenderer(void)
+ParticleData::~ParticleData()
 {
 }
-
-void PointParticleRenderer::draw(CircularBuffer<ActiveParticle>& particles)
-{
-#if 0
- unsigned int particlesSize = particles.capacity();
- if (particlesSize == 0)
-  return;
-
- mRenderable->begin();
- Vec3 p;
-
- for (unsigned int i=0;i < particlesSize;i++)
- {
-  ActiveParticle& particle = particles.fetch();
-  p = ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(particle.mParticle->getNxActor());
-  mRenderable->addVertex(p.x, p.y, p.z);
- }
- mRenderable->end();
-#endif
-}
-
-NxOgre::Enums::RenderableType PointParticleRenderer::getRenderableType() const
-{
- return NxOgre::Enums::RenderableType_ParticlePoints;
-}
-
 
                                                                                        
 

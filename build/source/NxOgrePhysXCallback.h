@@ -44,21 +44,25 @@ namespace NxOgre_Namespace
 
 /** \brief
 */
-class NxOgrePublicClass PhysXTriggerCallback : public PointerClass<Classes::_PhysXTriggerCallback>
+class NxOgrePublicClass PhysXCallback : public PointerClass<Classes::_PhysXTriggerCallback>
                                              , public NxUserTriggerReport
+                                             , public NxUserContactReport
 {
   
   public: // Functions
   
-   PhysXTriggerCallback(Scene*);
-  ~PhysXTriggerCallback();
-
+   PhysXCallback(Scene*);
+  
+  ~PhysXCallback();
+  
    void onTrigger(NxShape& triggerShape, NxShape& otherShape, NxTriggerFlag status);
+  
+   void onContactNotify(NxContactPair& pair, NxU32 events);
   
   protected: // Variables
   
    Scene*    mScene;
-   Callback* mRaycastCallback;
+  
 }; // class ClassName
 
 #endif

@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.cpp
-    Created on: 11-Aug-09
+    Created on: 14-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -530,6 +530,7 @@ static const char*  sClasses[622] = {
   "ClothDescription",
   "ClothRaycastHit",
   "Compartment",
+  "CompartmentDescription",
   "ConstantArray",
   "Convex",
   "D6Joint",
@@ -538,6 +539,8 @@ static const char*  sClasses[622] = {
   "ErrorStream",
   "FixedJoint",
   "FixedSceneTimer",
+  "Fluid",
+  "FluidDescription",
   "Geometry",
   "HeightField",
   "HeightFieldGeometry",
@@ -581,10 +584,7 @@ static const char*  sClasses[622] = {
   "MSWindowsFileResourceProtocol",
   "NxShapeFunctions",
   "Particle",
-  "ParticleDrain",
-  "ParticleEmitter",
-  "ParticleGroup",
-  "ParticleRenderer",
+  "ParticleData",
   "PhysXMeshData",
   "PhysXOutputStream",
   "PhysXPointer",

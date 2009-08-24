@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.h
-    Created on: 11-Aug-09
+    Created on: 14-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -67,6 +67,7 @@ enum
   _ClothDescription,
   _ClothRaycastHit,
   _Compartment,
+  _CompartmentDescription,
   _ConstantArray,
   _Convex,
   _D6Joint,
@@ -75,6 +76,8 @@ enum
   _ErrorStream,
   _FixedJoint,
   _FixedSceneTimer,
+  _Fluid,
+  _FluidDescription,
   _Geometry,
   _HeightField,
   _HeightFieldGeometry,
@@ -118,10 +121,7 @@ enum
   _MSWindowsFileResourceProtocol,
   _NxShapeFunctions,
   _Particle,
-  _ParticleDrain,
-  _ParticleEmitter,
-  _ParticleGroup,
-  _ParticleRenderer,
+  _ParticleData,
   _PhysXMeshData,
   _PhysXOutputStream,
   _PhysXPointer,

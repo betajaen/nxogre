@@ -1,5 +1,5 @@
-/** File: NxOgreParticle.cpp
-    Created on: 15-Dec-09
+/** File: NxOgreCallback.cpp
+    Created on: 22-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
 
@@ -24,9 +24,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreParticle.h"
-#include "NxOgreParticleGroup.h"
-#include "NxOgreRigidBodyFunctions.h"
+#include "NxOgreCallback.h"
 
                                                                                        
 
@@ -35,15 +33,45 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-Particle::Particle(SimpleShape* shape, const Matrix44& matrix, ParticleGroup* particleGroup)
-: RigidBody()
+Callback::Callback() : mNbReferences(0)
 {
- create(matrix, shape, particleGroup->getParticleMass(), particleGroup->getScene());
 }
 
-Particle::~Particle(void)
+Callback::~Callback()
+{
+ // virtual function.
+}
+
+void Callback::onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* rigidBody, Shape* rigidBodyShape, unsigned int collisionEvent)
+{
+ // virtual function.
+}
+
+bool Callback::onHitEvent(const RaycastHit&)
+{
+ return false;
+}
+
+void Callback::onContact(const ContactPair&)
 {
 }
+
+void Callback::increaseReference()
+{
+ mNbReferences++;
+}
+
+void Callback::decreaseReference()
+{
+ mNbReferences--;
+}
+
+unsigned int Callback::getNbReferences() const
+{
+ return mNbReferences;
+}
+
+
 
                                                                                        
 

@@ -59,7 +59,7 @@ class NxOgrePublicClass Machine : public ActorMachinePart
   
   /** \brief
   */
-  void                                        simulate(float user_deltaTime);
+  virtual void                                simulate(float user_deltaTime);
   
   protected: // Variables
   

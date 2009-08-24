@@ -59,6 +59,15 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
   */
   virtual               unsigned int          getType() const;
   
+  /** \brief Set a callback for contact reporting.
+      \note  As this contact can be shared between RigidBodies it is upto YOU to delete the callback at the appropriate time.
+  */
+                        void                  setContactCallback(Callback*);
+  
+  /** \brief Get the assigned callback for contact reporting.
+  */
+                        Callback*             getContactCallback();
+  
   protected: // Function
   
   /** \brief Text
@@ -86,6 +95,8 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
                         NxActor*              mActor;
   
                         Scene*                mScene;
+  
+                        Callback*             mContactCallback;
   
 }; // class RigidBody
 

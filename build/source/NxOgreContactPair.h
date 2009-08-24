@@ -1,5 +1,5 @@
-/** File: NxOgreParticleDrain.cpp
-    Created on: 17-Feb-09
+/** File: NxOgreContactPair.h
+    Created on: 20-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
 
@@ -21,10 +21,13 @@
     along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef NXOGRE_CONTACTPAIR_H
+#define NXOGRE_CONTACTPAIR_H
+
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreParticleDrain.h"
+#include "NxOgreCommon.h"
 
                                                                                        
 
@@ -33,10 +36,32 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-
+/** \brief
+*/
+class ContactPair
+{
+ public:
+  
+  /** \brief The two RigidBodies that are in contact
+  */
+  RigidBody* mFirst, *mSecond;
+  
+  /** \brief The total contact normal force that was applied for this pair, to maintain nonpenetration constraints.
+             You should set Enums::ContactPairFlags_Forces in order to receive this value. 
+  */
+  Vec3       mSumNormalForce;
+  
+  /** \brief The total tangential force that was applied for this pair.
+             You should set Enums::ContactPairFlags_Forces in order to receive this value. 
+  */
+  Vec3       mSumFrictionForce;
+  
+};
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace PhysXEntityReport
 
                                                                                        
+
+#endif

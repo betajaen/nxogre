@@ -33,6 +33,7 @@
 #include "NxOgreBox.h"
 #include "NxOgreRigidBodyFunctions.h"
 #include "NxOgreRigidBody.h"
+#include "NxOgreContactPair.h"
 
                                                                                        
 
@@ -41,17 +42,17 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-PhysXTriggerCallback::PhysXTriggerCallback(Scene* scene) : mScene(scene)
+PhysXCallback::PhysXCallback(Scene* scene) : mScene(scene)
 {
 }
 
-PhysXTriggerCallback::~PhysXTriggerCallback()
+PhysXCallback::~PhysXCallback()
 {
 }
 
-void PhysXTriggerCallback::onTrigger(NxShape& triggerShape, NxShape& physxCollisionShape, NxTriggerFlag status)
+void PhysXCallback::onTrigger(NxShape& triggerShape, NxShape& physxCollisionShape, NxTriggerFlag status)
 {
-
+ 
  if (!triggerShape.getActor().userData && !physxCollisionShape.getActor().userData)
   return;
  
@@ -61,6 +62,32 @@ void PhysXTriggerCallback::onTrigger(NxShape& triggerShape, NxShape& physxCollis
  
  Volume* volume = static_cast<Volume*>(rbody);
  volume->getCallback()->onVolumeEvent(volume, ptrV->get<Shape>(), ptrC->getParent<RigidBody>(), ptrC->get<Shape>(), status);
+ 
+}
+
+void PhysXCallback::onContactNotify(NxContactPair &pair, NxU32 events)
+{
+ 
+ if (pair.isDeletedActor[0] || pair.isDeletedActor[1])
+  return;
+ 
+ if (!pair.actors[0]->userData && !pair.actors[1]->userData)
+  return;
+ 
+ RigidBody* rbody_a = pointer_representive_cast<RigidBody>(pair.actors[0]->userData);
+ RigidBody* rbody_b = pointer_representive_cast<RigidBody>(pair.actors[1]->userData);
+ 
+ ContactPair contact_pair;
+ contact_pair.mFirst = rbody_a;
+ contact_pair.mSecond = rbody_b;
+ contact_pair.mSumFrictionForce = pair.sumFrictionForce;
+ contact_pair.mSumNormalForce = pair.sumNormalForce;
+ 
+ if (rbody_a->getContactCallback() != 0)
+  rbody_a->getContactCallback()->onContact(contact_pair);
+ 
+ if (rbody_b->getContactCallback() != 0)
+  rbody_b->getContactCallback()->onContact(contact_pair);
  
 }
 

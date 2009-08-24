@@ -90,6 +90,13 @@ class PhysXPointer : public PointerClass<Classes::_PhysXPointer>
 
 #define pointer_cast(userData) static_cast<PhysXPointer*>(userData)
 
+template<class rep_class> rep_class* pointer_representive_cast(void* ptr)
+{
+ if (ptr)
+  return static_cast<PhysXPointer*>(ptr)->get<rep_class>();
+ return 0;
+}
+
                                                                                        
 
 } // namespace NxOgre_Namespace

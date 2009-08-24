@@ -226,9 +226,9 @@ namespace Functions
     {
       public:
 
-       static inline size_t size(SharedArray* shared_array)
+       static inline unsigned int size(SharedArray* shared_array)
        {
-        return size_t(shared_array->_Last - shared_array->_First);
+        return unsigned int(shared_array->_Last - shared_array->_First);
        }
 
        static inline size_t capacity(SharedArray* shared_array)
@@ -678,7 +678,7 @@ template<typename T> class  Array<T*>
     return *this;
    }
 
-   size_t size(void) const
+   unsigned int size(void) const
    {
     return TRead::size(_T);
    }

@@ -1,5 +1,5 @@
 /** File: NxOgre.h
-    Created on: 11-Aug-09
+    Created on: 24-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -45,6 +45,7 @@
 #include "NxOgreCompartment.h"
 #include "NxOgreCompartmentDescription.h"
 #include "NxOgreCompiler.h"
+#include "NxOgreContactPair.h"
 #include "NxOgreConvex.h"
 #include "NxOgreD6Joint.h"
 #include "NxOgreD6JointDescription.h"
@@ -52,6 +53,8 @@
 #include "NxOgreErrorStream.h"
 #include "NxOgreFixedJoint.h"
 #include "NxOgreFixedSceneTimer.h"
+#include "NxOgreFluid.h"
+#include "NxOgreFluidDescription.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreHeightField.h"
 #include "NxOgreHeightFieldGeometry.h"
@@ -92,11 +95,7 @@
 #include "NxOgreMSWindowsFileResourceProtocol.h"
 #include "NxOgreNodeRenderable.h"
 #include "NxOgreNXSFunctions.h"
-#include "NxOgreParticle.h"
-#include "NxOgreParticleDrain.h"
-#include "NxOgreParticleEmitter.h"
-#include "NxOgreParticleGroup.h"
-#include "NxOgreParticleRenderer.h"
+#include "NxOgreParticleData.h"
 #include "NxOgrePhysXCallback.h"
 #include "NxOgrePhysXMeshData.h"
 #include "NxOgrePhysXOutputStream.h"
@@ -108,7 +107,6 @@
 #include "NxOgrePhysXUserEntityReport.h"
 #include "NxOgrePlaneGeometry.h"
 #include "NxOgrePointerClass.h"
-#include "NxOgrePointParticleRenderer.h"
 #include "NxOgrePointRenderable.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreRay.h"

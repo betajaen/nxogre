@@ -29,16 +29,16 @@
 namespace bml
 {
  
- static const float  Pi        = 3.141592653589793f;
- static const float  HalfPi    = 1.57079632679489661923f;
- static const float  TwoPi     = 6.28318530717958647692f;
- static const float  InversePi = 0.31830988618379067154f;
+ static const float  Pi         = 3.141592653589793f;
+ static const float  HalfPi     = 1.57079632679489661923f;
+ static const float  TwoPi      = 6.28318530717958647692f;
+ static const float  InversePi  = 0.31830988618379067154f;
  
  static const double PiD        = 3.141592653589793f;
  static const double HalfPiD    = 1.57079632679489661923f;
  static const double TwoPiD     = 6.28318530717958647692f;
  static const double InversePiD = 0.31830988618379067154f;
-
+ 
 };
 
 #endif
