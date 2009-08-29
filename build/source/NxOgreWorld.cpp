@@ -254,6 +254,14 @@ Scene* World::createScene(ScenePrototype* prototype)
  return scene;
 }
 
+void World::destroyScene(Scene* scene)
+{
+ if (scene == 0)
+  return;
+ mScenes.remove(scene);
+ NxOgre_Delete(scene);
+}
+
 bool World::hasHardware(void) const
 {
  if (mDeadSDK)

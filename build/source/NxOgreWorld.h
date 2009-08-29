@@ -87,6 +87,10 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   */
                        Scene*                 createScene(ScenePrototype*);
 
+  /** \brief Destroys a single scene
+  */
+                       void                   destroyScene(Scene*);
+
   /** \brief Does the current computer have a PhysX accelerator, or a GPU capable of PhysX acceleration?
   */
                        bool                   hasHardware(void) const;
