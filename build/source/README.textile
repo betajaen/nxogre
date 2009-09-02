@@ -1,0 +1,13 @@
+h1. Do not link to this directory
+
+On a successful compile, the build solution will copy all related headers and libraries to the "sdk" directory.
+
+These are the following parameters you should append to your project linker settings.
+
+* Additional Include Directories (.h) -> @c:/dev/NxOgre/sdk/@
+* Additional Library Directories (.lib) -> @c:/dev/NxOgre/sdk/@
+* Additional Dependencies -> @NxOgre.lib@ for Release or @NxOgre_Debug.lib@ for Debug.
+
+Copy the file @c:/dev/NxOgre/sdk/NxOgre.dll@ or @NxOgre_Debug.dll@ to your application directory.
+
+For a first time user, you should follow one of the many tutorials by Spacegaier or have a look at Cake to set up your application.
