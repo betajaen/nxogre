@@ -31,5 +31,5 @@ Currently the Git versions has the build solutions for Visual Studio 2005 and Vi
 If you have any problems. 
 
 * Make sure you've gone through all steps of all the items in the checklist. 
-* Check of the "forums":/forums for anyone else having your problems.
+* Check of the "forums":http:://nxogre.org/forums for anyone else having your problems.
 * Make a post asking for help.
