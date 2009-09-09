@@ -186,7 +186,7 @@ bool MSWindowsFileResource::atEnd(void) const
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
-  return feof(mFile) == 1;
+  return feof(mFile);
  }
  return false;
 }

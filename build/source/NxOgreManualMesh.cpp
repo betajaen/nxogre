@@ -227,25 +227,21 @@ Mesh* ManualMesh::end(bool cleanUp, const ArchiveResourceIdentifier& cookingTarg
 
  Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_ReadAndWrite);
 
- switch(mMesh->mType)
+ if (mMesh->mType == Enums::MeshType_Convex)
  {
-  case Enums::MeshType_Convex:
-  {
-   Functions::Mesh::createConvexMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes);
-  }
-  case Enums::MeshType_Triangle:
-  {
-   Functions::Mesh::createTriangleMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mMaterials);
-  }
-  case Enums::MeshType_Cloth:
-  {
-   Functions::Mesh::createClothMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mTextureCoordinates, mMesh->mFlags, mMesh->mMasses, 0, Real(0.0));
-  }
-  case Enums::MeshType_SoftBody:
-  {
-   Functions::Mesh::createSoftBodyMesh(cookingResource, mMesh->mVertices, mMesh->mTetrahedra);
-  }
-  break;
+  Functions::Mesh::createConvexMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes);
+ }
+ else if (mMesh->mType == Enums::MeshType_Triangle)
+ {
+  Functions::Mesh::createTriangleMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mMaterials);
+ }
+ else if (mMesh->mType == Enums::MeshType_Cloth)
+ {
+  Functions::Mesh::createClothMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mTextureCoordinates, mMesh->mFlags, mMesh->mMasses, 0, Real(0.0));
+ }
+ else if (mMesh->mType == Enums::MeshType_SoftBody)
+ {
+  Functions::Mesh::createSoftBodyMesh(cookingResource, mMesh->mVertices, mMesh->mTetrahedra);
  }
  
  cookingResource->seekBeginning();
@@ -263,25 +259,21 @@ void ManualMesh::endCookOnly(bool cleanUp, ArchiveResourceIdentifier& cookingTar
  
  Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_WriteOnly);
  
- switch(mMesh->mType)
+ if (mMesh->mType == Enums::MeshType_Convex)
  {
-  case Enums::MeshType_Convex:
-  {
-   Functions::Mesh::createConvexMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes);
-  }
-  case Enums::MeshType_Triangle:
-  {
-   Functions::Mesh::createTriangleMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mMaterials);
-  }
-  case Enums::MeshType_Cloth:
-  {
-   Functions::Mesh::createClothMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mTextureCoordinates, mMesh->mFlags, mMesh->mMasses, 0, Real(0.0));
-  }
-  case Enums::MeshType_SoftBody:
-  {
-   Functions::Mesh::createSoftBodyMesh(cookingResource, mMesh->mVertices, mMesh->mTetrahedra);
-  }
-  break;
+  Functions::Mesh::createConvexMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes);
+ }
+ else if (mMesh->mType == Enums::MeshType_Triangle)
+ {
+  Functions::Mesh::createTriangleMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mMaterials);
+ }
+ else if (mMesh->mType == Enums::MeshType_Cloth)
+ {
+  Functions::Mesh::createClothMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mTextureCoordinates, mMesh->mFlags, mMesh->mMasses, 0, Real(0.0));
+ }
+ else if (mMesh->mType == Enums::MeshType_SoftBody)
+ {
+  Functions::Mesh::createSoftBodyMesh(cookingResource, mMesh->mVertices, mMesh->mTetrahedra);
  }
  
  ResourceSystem::getSingleton()->close(cookingResource);

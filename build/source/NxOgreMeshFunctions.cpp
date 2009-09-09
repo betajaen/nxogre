@@ -162,30 +162,18 @@ NxOgrePublicFunction bool    createConvexMesh(Resource* cookTo, Buffer<float>& v
 
 bool createSoftBodyMesh(Resource* resource, Buffer<float>& vertices, Buffer<unsigned int>& tetrahedra)
 {
- printf("sb.1\n");
+
  NxSoftBodyMeshDesc description;
  description.setToDefault();
  description.vertices             = vertices.first();
  description.vertexStrideBytes    = sizeof(float) * 3;
  description.numVertices          = vertices.size() / 3;
-
- printf("sb.2\n");
  description.tetrahedra              = tetrahedra.first();
  description.tetrahedronStrideBytes  = sizeof(unsigned int) * 4;
  description.numTetrahedra           = tetrahedra.size() / 4 / 2;
 
- printf("vertices = %i\ntetrahedra = %i\n", description.numVertices, description.numTetrahedra);
-
- printf("description valid = %i\n", description.isValid()); 
- printf("sb.3\n");
  NxCookingInterface* cookingInterface = World::getWorld()->getPhysXCookingInterface();
-
- printf("Cooking interface: %p\n", cookingInterface);
-
- printf("sb.4\n");
  bool b = cookingInterface->NxCookSoftBodyMesh(description, PhysXStream(resource));
-
- printf("sb.5\n");
  return b;
 }
 
@@ -218,22 +206,26 @@ NxOgrePublicFunction bool createClothMesh(Resource* resource, Buffer<float>& ver
 */
 // description.weldingDistance = weldingDistance;
 // description.flags = cookingFlags;
- 
+
+#if 0
  printf("Description valid? %i\n", description.isValid());
  printf(" numVertices: %i, buffer size: %i\n", description.numVertices, vertices.size());
  printf(" numTriangles: %i, buffer size: %i\n", description.numTriangles, indexes.size());
-
+#endif
 
  NxCookingInterface* cookingInterface = World::getWorld()->getPhysXCookingInterface();
+#if 0
  printf("Cooking interface: %p\n", cookingInterface);
- 
+#endif
  bool b = cookingInterface->NxCookClothMesh(description, PhysXStream(resource));
  
  // Extended data.
  //  The coordinates are written first, and the header is written at the end of the file (in reverse).
  if (texture_coords.size())
  {
+#if 0
   printf("Saving texture coordinates\n");
+#endif
   saveExtendedCloth(resource, texture_coords);
  }
  return b;
