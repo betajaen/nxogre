@@ -80,7 +80,7 @@ class NxOgrePublicClass RigidBodyDescription
         description.mActorFlags |= Enums::ActorFlags_ContactModification;
        </code>
   */
-                        int                    mActorFlags;
+                        unsigned int           mActorFlags;
   
   /** \brief Body flags, which is to be used with the or operator (|, |=).
       \see Enums::ActorFlags
@@ -92,7 +92,18 @@ class NxOgrePublicClass RigidBodyDescription
        </code>
       \note  If your RigidBody is a Volume or StaticGeometry then these flags are ignored.
   */
-                        int                    mBodyFlags;
+                        unsigned int           mBodyFlags;
+  
+  /** \brief Contact report flags
+      \see Enums::ContactPairFlags
+      \default 0 (No Flags)
+      \example
+       <code>
+        description.mContactReportFlags |= Enums::ContactPairFlags_StartTouch;
+        description.mContactReportFlags |= Enums::ContactPairFlags_Forces;
+       </code>
+  */
+                        unsigned int           mContactReportFlags;
   
   /** \brief Compartment.
       \default NULL

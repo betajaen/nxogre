@@ -56,12 +56,20 @@ void PhysXCallback::onTrigger(NxShape& triggerShape, NxShape& physxCollisionShap
  if (!triggerShape.getActor().userData && !physxCollisionShape.getActor().userData)
   return;
  
- PhysXPointer* ptrV = pointer_cast(triggerShape.userData);
- PhysXPointer* ptrC = pointer_cast(physxCollisionShape.userData);
- RigidBody* rbody = ptrV->getParent<RigidBody>();
+ Shape* volume_shape = pointer_representive_cast<Shape>(triggerShape.userData);
+ RigidBody* rb_volume = pointer_parent_cast<RigidBody>(triggerShape.userData);
+ Volume* volume = static_cast<Volume*>(rb_volume);
  
- Volume* volume = static_cast<Volume*>(rbody);
- volume->getCallback()->onVolumeEvent(volume, ptrV->get<Shape>(), ptrC->getParent<RigidBody>(), ptrC->get<Shape>(), status);
+ Shape* collision_shape = 0;
+ RigidBody* collision_body = 0;
+
+ if (physxCollisionShape.userData)
+ {
+  collision_shape = pointer_representive_cast<Shape>(physxCollisionShape.userData);
+  collision_body  = pointer_parent_cast<RigidBody>(physxCollisionShape.userData);
+ }
+ 
+ volume->getVolumeCallback()->onVolumeEvent(volume, volume_shape, collision_body, collision_shape, status);
  
 }
 

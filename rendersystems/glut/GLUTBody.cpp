@@ -34,7 +34,7 @@
                                                                                        
 
 GLUTBody::GLUTBody(GLUTBodyPrototype* prototype, NxOgre::Scene* scene)
-: Actor(prototype->mShapes, scene) // Take notice of the constructor we are using, it's designed for
+: Actor(scene) // Take notice of the constructor we are using, it's designed for
 {                                  // classes that inherit from Actor. Copying over the shapes array is
                                    // essential, since RigidBody could be a particle or a tree it doesn't
                                    // implement it's own shapes array for memory reasons, but actors do.
@@ -42,7 +42,7 @@ GLUTBody::GLUTBody(GLUTBodyPrototype* prototype, NxOgre::Scene* scene)
 
  // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated
  // as a normal RigidBody. 
- create(prototype, scene);
+ create(prototype, scene, &mShapes);
 
  // Since NxOgre doesn't know or care about our GL stuff, we copy it over. This is the correct time to create
  // or turn on things related to the GLUTBody.

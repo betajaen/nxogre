@@ -889,6 +889,7 @@ enum ContactPairFlags
                  class                      PhysXMeshData;                 //!<
                  class                      PhysXCallback;                 //!< \internal Do Not Use.
                  class                      PhysXPointer;                  //!<
+                 class                      PhysXShapePointer;             //!<
                  class                      PointParticleRenderer;         //!<
                  class                      PointRenderable;               //!<
                  class                      Resource;                      //!<

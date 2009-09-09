@@ -41,21 +41,19 @@ namespace NxOgre_Namespace
                                                                                        
 
 
-Volume::Volume(Shapes shapes, Scene* scene, Callback* callback)
+Volume::Volume(Scene* scene, Callback* callback)
 : RigidBody(),
   mScene(scene),
-  mShapes(shapes),
-  mCallback(callback)
+  mVolumeCallback(callback)
 {
 }
 
 Volume::Volume(RigidBodyPrototype* prototype, Scene* scene, Callback* callback)
 : RigidBody(),
   mScene(scene),
-  mShapes(prototype->mShapes), 
-  mCallback(callback)
+  mVolumeCallback(callback)
 {
- create(prototype, scene);
+ create(prototype, scene, &mShapes);
 }
 
 Volume::~Volume(void)
@@ -109,19 +107,19 @@ unsigned int Volume::getNbShapes(void) const
  return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getNbShapes(mActor);
 }
 
-Callback* Volume::getCallback()
+Callback* Volume::getVolumeCallback()
 {
- return mCallback;
+ return mVolumeCallback;
 }
 
-void Volume::setCallback(Callback* callback)
+void Volume::setVolumeCallback(Callback* callback)
 {
- mCallback = callback;
+ mVolumeCallback = callback;
 }
 
-void Volume::removeCallback()
+void Volume::removeVolumeCallback()
 {
- mCallback = World::getWorld()->getNullCallback();
+ mVolumeCallback = World::getWorld()->getNullCallback();
 }
 
                                                                                        

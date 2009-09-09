@@ -48,8 +48,15 @@ class NxOgrePublicClass Callback
    virtual ~Callback();
 
    /* \brief A Volume has had an event. Use collisionEvent with Enums::VolumeCollisionType for filtering.
+      \param Volume of the collision_body has an event with.
+      \param volumeShape the specific shape of the volume.
+      \param collision_body The collision_body in question.
+      \param collision_shape The shape in contact with the volumeShape.
+      \param collisionEvent The type of collision.
+      \note Depending on the RigidBody the collision_shape may be zero, you should always check
+            to see if the pointer exists before using it!
    */
-   virtual void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* rigidBody, Shape* rigidBodyShape, unsigned int collisionEvent);
+   virtual void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent);
    
    /** \brief Is called every time a rayquery gets a hit.
        \return True if the ray should continue, or false to abort.

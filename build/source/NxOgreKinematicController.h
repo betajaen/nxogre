@@ -95,6 +95,10 @@ class NxOgrePublicClass KinematicController : public PointerClass<Classes::_Kine
   */
                     Scene*                    mScene;
   
+  /** \brief
+  */
+                    Shapes                    mShapes;
+
   /** \brief Max Iterations per move.
       \default 10
   */

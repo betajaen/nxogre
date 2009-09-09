@@ -46,6 +46,58 @@
 namespace NxOgre_Namespace
 {
 
+/** \brief This namespace and functions is an alternate to group of if/elseif/else statements.
+*/
+namespace PhysXShapeBinder
+{
+ 
+ typedef void (*PhysXShapeBindingFunctionPtr)(NxShape*);
+ 
+ PhysXShapeBindingFunctionPtr       gFunctions[NX_SHAPE_COUNT];
+ 
+#define NXOGRE_SHAPE_BINDFUNCTION(BINDING_FUNCTION, PHYSX_SHAPE, PHYSX_FUNCTION)                     \
+ void BINDING_FUNCTION (NxShape* physx_shape)                                                        \
+ {                                                                                                   \
+  Shape* shape = pointer_representive_cast<Shape>(physx_shape->userData);                            \
+  shape->assign(physx_shape->PHYSX_FUNCTION());                                                      \
+ }                                                                                                    
+
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxPlaneShape_BindFunction,  NxPlaneShape, isPlane)
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxSphereShape_BindFunction, NxSphereShape, isSphere)
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxBoxShape_BindFunction, NxBoxShape, isBox)
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxCapsuleShape_BindFunction, NxCapsuleShape, isCapsule)
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxWheelShape_BindFunction, NxWheelShape, isWheel)
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxConvexShape_BindFunction, NxConvexShape, isConvexMesh)
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxTriangleMeshShape_BindFunction, NxTriangleMeshShape, isTriangleMesh)
+ NXOGRE_SHAPE_BINDFUNCTION(PhysX_NxHeightFieldShape_BindFunction, NxHeightFieldShape, isHeightField)
+ 
+ void PhysX_BindFunction_NULL(NxShape*)
+ {}
+
+ struct PhysXShapeSelfBindingT
+ {
+  PhysXShapeSelfBindingT()
+  {
+   gFunctions[NX_SHAPE_PLANE]       = &PhysX_NxPlaneShape_BindFunction;
+   gFunctions[NX_SHAPE_SPHERE]      = &PhysX_NxSphereShape_BindFunction;
+   gFunctions[NX_SHAPE_BOX]         = &PhysX_NxBoxShape_BindFunction;
+   gFunctions[NX_SHAPE_CAPSULE]     = &PhysX_NxCapsuleShape_BindFunction;
+   gFunctions[NX_SHAPE_WHEEL]       = &PhysX_NxWheelShape_BindFunction;
+   gFunctions[NX_SHAPE_CONVEX]      = &PhysX_NxConvexShape_BindFunction;
+   gFunctions[NX_SHAPE_MESH]        = &PhysX_NxTriangleMeshShape_BindFunction;
+   gFunctions[NX_SHAPE_RAW_MESH]    = &PhysX_BindFunction_NULL;
+   gFunctions[NX_SHAPE_COMPOUND]    = &PhysX_BindFunction_NULL;
+  }
+ } PhysXShapeSelfBindingT;
+ 
+ inline void BindShape(NxShape* shape)
+ {
+  (*gFunctions[shape->getType()])(shape);
+ }
+ 
+
+};
+
                                                                                        
 
 RigidBody::RigidBody()
@@ -62,7 +114,13 @@ unsigned int RigidBody::getType() const
  return Enums::RigidBodyType_Unknown;
 }
 
-void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene)
+
+
+                                                                                       
+
+
+
+void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene, Shapes* final_shapes)
 {
 
  if (mActor != 0)
@@ -90,75 +148,29 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene)
  }
 
  mScene = scene;
-
+ 
+ 
  NxActorDesc actor_description;
  NxBodyDesc  body_description;
  
-
- if (prototype->mCompartment != NULL && prototype->mCompartment->getType() == Enums::CompartmentType_RigidBody)
-  actor_description.compartment = prototype->mCompartment->getCompartment();
+ // Copy over the prototype into the Actor and possible Body descriptions.
+ Functions::PrototypeFunctions::RigidBodyPrototypeToNxActorAndNxBodyDesc(prototype, actor_description, body_description);
  
- actor_description.contactReportFlags = 0; //< \todo
- actor_description.density = prototype->mDensity;
- actor_description.dominanceGroup = prototype->mDominanceGroup;
- actor_description.flags = prototype->mActorFlags;
- actor_description.forceFieldMaterial = prototype->mForceFieldMaterial;
- actor_description.globalPose.setRowMajor44(prototype->mGlobalPose.ptr());
- actor_description.group = prototype->mGroup;
- actor_description.name = prototype->mName.c_str();
+ // Create the shapes, and bind them to the shape that represents them - or not.
 
- if (prototype->mType == Enums::RigidBodyType_Dynamic || prototype->mType == Enums::RigidBodyType_Kinematic)
- {
-  body_description.angularDamping = prototype->mAngularDamping;
-  Functions::XYZ<Vec3, NxVec3>(prototype->mAngularVelocity, body_description.angularVelocity);
-  body_description.CCDMotionThreshold = prototype->mCCDMotionThreshold;
-  body_description.contactReportThreshold = prototype->mContactReportThreshold;
-  body_description.flags = prototype->mBodyFlags;
-  body_description.linearDamping = prototype->mLinearDamping;
-  Functions::XYZ<Vec3, NxVec3>(prototype->mLinearVelocity, body_description.linearVelocity);
-  body_description.mass = prototype->mMass;
-  body_description.massLocalPose.setColumnMajor44(prototype->mMassLocalPose.ptr());
-  Functions::XYZ<Vec3, NxVec3>(prototype->mMassSpaceInertia, body_description.massSpaceInertia);
-  body_description.maxAngularVelocity = prototype->mMaxAngularVelocity;
-  body_description.sleepAngularVelocity = prototype->mSleepAngularVelocity;
-  body_description.sleepDamping = prototype->mSleepDamping;
-  body_description.sleepEnergyThreshold = prototype->mSleepEnergyThreshold;
-  body_description.sleepLinearVelocity = prototype->mSleepLinearVelocity;
-  body_description.solverIterationCount = prototype->mSolverIterationCount;
-  body_description.wakeUpCounter = prototype->mWakeUpCounter;
-  actor_description.body = &body_description;
-
-  if (prototype->mType == Enums::RigidBodyType_Kinematic)
-  {
-   body_description.flags |= NX_BF_KINEMATIC;
-  }
- }
- else if (prototype->mType == Enums::RigidBodyType_Geometry)
- {
- }
- else if (prototype->mType == Enums::RigidBodyType_Volume)
- {
-  for (unsigned int i=0;i < prototype->mShapes.size(); i++)
-  {
-   prototype->mShapes[i]->getBlueprint()->mFlags |= prototype->mVolumeCollisionType;
-  }
- }
-
- // Create the shapes.
  for (unsigned int i=0;i < prototype->mShapes.size(); i++)
  {
-  
-  NxShapeDesc* description = prototype->mShapes[i]->create();
-  
+  Shape* shape = prototype->mShapes[i];
+  NxShapeDesc* description = shape->create();
   if (description)
   {
-   description->userData = (void*) i;
+   if (final_shapes)
+    description->userData = (void*) NxOgre_New(PhysXPointer)(shape, shape->getClassType(), this);
    actor_description.shapes.push_back(description);
-   continue;
   }
-  
  }
-
+ 
+ 
  mActor = mScene->getScene()->createActor(actor_description);
  
  if (mActor == 0)
@@ -169,63 +181,30 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene)
   NxOgre_ThrowError(ss.get());
   return;
  }
-
- NxShape*const* shapes = mActor->getShapes();
- NxU32 nShapes = mActor->getNbShapes();
-  while (nShapes--)
-  {
-   
-   NxShape* physxShape = shapes[nShapes];
-   int index = (int) physxShape->userData;
-   Shape* shape = prototype->mShapes[index];
-   
-   if (physxShape->getType() == NX_SHAPE_BOX)
-   {
-    NxBoxShape* actualShape = physxShape->isBox();
-    shape->assign(actualShape);
-   }
-   else if (physxShape->getType() == NX_SHAPE_SPHERE)
-   {
-    NxSphereShape* actualShape = physxShape->isSphere();
-    shape->assign(actualShape);
-   }
-   else if (physxShape->getType() == NX_SHAPE_CAPSULE)
-   {
-    NxCapsuleShape* actualShape = physxShape->isCapsule();
-    shape->assign(actualShape);
-   }
-   else if (physxShape->getType() == NX_SHAPE_PLANE)
-   {
-    NxPlaneShape* actualShape = physxShape->isPlane();
-    shape->assign(actualShape);
-   }
-   else if (physxShape->getType() == NX_SHAPE_CONVEX)
-   {
-    NxConvexShape* actualShape = physxShape->isConvexMesh();
-    shape->assign(actualShape);
-   }
-   else if (physxShape->getType() == NX_SHAPE_MESH)
-   {
-    NxTriangleMeshShape* actualShape = physxShape->isTriangleMesh();
-    shape->assign(actualShape);
-   }
-   else if (physxShape->getType() == NX_SHAPE_HEIGHTFIELD)
-   {
-    NxHeightFieldShape* actualShape = physxShape->isHeightField();
-    shape->assign(actualShape);
-   }
-   else if (physxShape->getType() == NX_SHAPE_WHEEL)
-   {
-    NxWheelShape* actualShape = physxShape->isWheel();
-    shape->assign(actualShape);
-   }
-
-   physxShape->userData = NxOgre_New(PhysXPointer)(shape, shape->getClassType(), this);
-  }
  
- mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType()); 
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+ 
+ if (final_shapes)
+ {
+  NxShape* const* shapes = mActor->getShapes();
+  NxU32 nbShapes = mActor->getNbShapes();
+  
+  while (nbShapes--)
+  {
+   NxShape* physx_shape = shapes[nbShapes];
+   PhysXShapeBinder::BindShape(physx_shape);
+   final_shapes->insert(pointer_representive_cast<Shape>(physx_shape->userData));
+  }
+ }
  
 }
+
+
+
+                                                                                       
+
+
+
 
 void RigidBody::create(const Matrix44& pose, SimpleShape* shape, Real mass, Scene* scene)
 {
@@ -270,25 +249,20 @@ void RigidBody::create(const Matrix44& pose, SimpleShape* shape, Real mass, Scen
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType()); 
 }
 
+
+
 void RigidBody::destroy(void)
 {
  if (mActor)
  {
-  NxShape*const* shapes = mActor->getShapes();
-  NxU32 nShapes = mActor->getNbShapes();
-  while (nShapes--)
-  {
-   NxShape* shape = shapes[nShapes];
-   PhysXPointer* ptr = pointer_cast(shape->userData);
-   NxOgre_Delete(ptr);
-  }
-
   PhysXPointer* ptr = pointer_cast(mActor->userData);
   NxOgre_Delete(ptr);
   NxScene& scene = mActor->getScene();
   scene.releaseActor(*mActor);
  }
 }
+
+
 
 bool RigidBody::isDynamic(void) const
 {

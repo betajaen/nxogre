@@ -25,6 +25,7 @@
 #include "bml/prototypes.h"
 #include "bml/math.h"
 #include "bml/vector.h"
+#include "bml/quaternion.h"
 #include "string.h"
 
 namespace bml

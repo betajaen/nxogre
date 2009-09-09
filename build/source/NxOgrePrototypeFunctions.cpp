@@ -45,6 +45,8 @@
 #include "NxOgreClothDescription.h"
 #include "NxOgreSoftBodyDescription.h"
 
+#include "NxOgreCompartment.h"
+
 #include "NxPhysics.h"
 
                                                                                        
@@ -172,8 +174,55 @@ void PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(const RigidBod
 
 void PrototypeFunctions::RigidBodyPrototypeToNxActorAndNxBodyDesc(RigidBodyPrototype* prototype, NxActorDesc& actor_description, NxBodyDesc& body_description)
 {
+ 
+ if (prototype->mCompartment != NULL && prototype->mCompartment->getType() == Enums::CompartmentType_RigidBody)
+  actor_description.compartment = prototype->mCompartment->getCompartment();
+ 
+ actor_description.contactReportFlags = prototype->mContactReportFlags;
+ actor_description.density = prototype->mDensity;
+ actor_description.dominanceGroup = prototype->mDominanceGroup;
+ actor_description.flags = prototype->mActorFlags;
+ actor_description.forceFieldMaterial = prototype->mForceFieldMaterial;
+ actor_description.globalPose.setRowMajor44(prototype->mGlobalPose.ptr());
+ actor_description.group = prototype->mGroup;
+ actor_description.name = prototype->mName.c_str();
+ 
+ if (prototype->mType == Enums::RigidBodyType_Dynamic || prototype->mType == Enums::RigidBodyType_Kinematic)
+ {
+  body_description.angularDamping = prototype->mAngularDamping;
+  Functions::XYZ<Vec3, NxVec3>(prototype->mAngularVelocity, body_description.angularVelocity);
+  body_description.CCDMotionThreshold = prototype->mCCDMotionThreshold;
+  body_description.contactReportThreshold = prototype->mContactReportThreshold;
+  body_description.flags = prototype->mBodyFlags;
+  body_description.linearDamping = prototype->mLinearDamping;
+  Functions::XYZ<Vec3, NxVec3>(prototype->mLinearVelocity, body_description.linearVelocity);
+  body_description.mass = prototype->mMass;
+  body_description.massLocalPose.setColumnMajor44(prototype->mMassLocalPose.ptr());
+  Functions::XYZ<Vec3, NxVec3>(prototype->mMassSpaceInertia, body_description.massSpaceInertia);
+  body_description.maxAngularVelocity = prototype->mMaxAngularVelocity;
+  body_description.sleepAngularVelocity = prototype->mSleepAngularVelocity;
+  body_description.sleepDamping = prototype->mSleepDamping;
+  body_description.sleepEnergyThreshold = prototype->mSleepEnergyThreshold;
+  body_description.sleepLinearVelocity = prototype->mSleepLinearVelocity;
+  body_description.solverIterationCount = prototype->mSolverIterationCount;
+  body_description.wakeUpCounter = prototype->mWakeUpCounter;
+  actor_description.body = &body_description;
 
-
+  if (prototype->mType == Enums::RigidBodyType_Kinematic)
+  {
+   body_description.flags |= NX_BF_KINEMATIC;
+  }
+ }
+ else if (prototype->mType == Enums::RigidBodyType_Geometry)
+ {
+ }
+ else if (prototype->mType == Enums::RigidBodyType_Volume)
+ {
+  for (unsigned int i=0;i < prototype->mShapes.size(); i++)
+  {
+   prototype->mShapes[i]->getBlueprint()->mFlags |= prototype->mVolumeCollisionType;
+  }
+ }
 }
 
 void PrototypeFunctions::MaterialDescriptionToMaterialPrototype(const MaterialDescription& description, MaterialPrototype* prototype)

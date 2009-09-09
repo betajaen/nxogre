@@ -130,6 +130,20 @@ Archive* ResourceSystem::openArchive(const String& name, const UniformResourceId
  return archive;
 }
 
+void ResourceSystem::closeArchive(const NxOgre::String &name)
+{
+  for (unsigned int i=0;i < mArchives.size(); i++)
+ {
+  if (mArchives[i]->getName() == name)
+  {
+   mArchives.remove(i);
+   Archive* archive = mArchives[i];
+   NxOgre_Delete(archive);
+   return;
+  }
+ }
+}
+
                                                                                        
 
 } // namespace NxOgre_Namespace

@@ -22,7 +22,7 @@
 #ifndef bml_h_0994ca7c_aedf_48cd_875c_6b4345f6e4bb
 #define bml_h_0994ca7c_aedf_48cd_875c_6b4345f6e4bb
 
-#include "bml/prototypes.h"
+//#include "bml/prototypes.h"
 #include "bml/math.h"
 #include "bml/vector.h"
 #include "bml/quaternion.h"

@@ -85,7 +85,7 @@ KinematicController::KinematicController(const NxOgre::Vec3 &size, const NxOgre:
 // mShape = NxOgre_New(Box)(boxSize);
 // prototype->mShapes.insert(mShape);
 
- create(prototype, mScene);
+ create(prototype, mScene, &mShapes);
 
  NxOgre_Delete(prototype);
 }

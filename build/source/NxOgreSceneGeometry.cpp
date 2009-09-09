@@ -39,19 +39,17 @@ namespace NxOgre_Namespace
                                                                                        
 
 
-SceneGeometry::SceneGeometry(Shapes shapes, Scene* scene)
+SceneGeometry::SceneGeometry(Scene* scene)
 : RigidBody(),
-  mScene(scene),
-  mShapes(shapes)
+  mScene(scene)
 {
 }
 
 SceneGeometry::SceneGeometry(RigidBodyPrototype* prototype, Scene* scene)
 : RigidBody(),
-  mScene(scene),
-  mShapes(prototype->mShapes)
+  mScene(scene)
 {
- create(prototype, scene);
+ create(prototype, scene, &mShapes);
 }
 
 SceneGeometry::~SceneGeometry(void)

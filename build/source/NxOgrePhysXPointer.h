@@ -31,6 +31,10 @@
 
                                                                                        
 
+class NxShape;
+
+                                                                                       
+
 namespace NxOgre_Namespace
 {
 
@@ -40,6 +44,8 @@ namespace NxOgre_Namespace
            variable in a PhysX class. A parent class may be attached to the Pointer, however
            no class type is specified. It is assumed that the user will know exactly what
            the parent class is, based upon the type of the represented class.
+    \note  Shapes are the exception to this rule, and have 0 or very briefly their representive
+           Shape as userData. 
 */
 class PhysXPointer : public PointerClass<Classes::_PhysXPointer>
 {
@@ -88,12 +94,31 @@ class PhysXPointer : public PointerClass<Classes::_PhysXPointer>
   
 };
 
+
+/** \brief Handy helper macro to get a PhysXPointer instance.
+    \usage PhysXPointer* ptr = pointer_cast(physx_class->userData);
+*/
 #define pointer_cast(userData) static_cast<PhysXPointer*>(userData)
 
-template<class rep_class> rep_class* pointer_representive_cast(void* ptr)
+/** \brief Handy helper function to get a PhysX userData's representive class.
+    \usage MyClass* my_class = pointer_representive_cast<MyClass>(physx_class->userData);
+    \return The representive class or 0 if userData is null.
+*/
+template<class rep_class> inline rep_class* pointer_representive_cast(void* userData)
 {
- if (ptr)
-  return static_cast<PhysXPointer*>(ptr)->get<rep_class>();
+ if (userData)
+  return static_cast<PhysXPointer*>(userData)->get<rep_class>();
+ return 0;
+}
+
+/** \brief Handy helper function to get a PhysX userData's parent class.
+    \usage ParentClass* parent = pointer_parent_cast<ParentClass>(physx_class->userData);
+    \return The parent class or 0 if userData is null.
+*/
+template<class parent_class> inline parent_class* pointer_parent_cast(void* userData)
+{
+ if (userData)
+  return static_cast<PhysXPointer*>(userData)->getParent<parent_class>();
  return 0;
 }
 

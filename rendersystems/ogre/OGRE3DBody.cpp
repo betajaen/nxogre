@@ -39,17 +39,14 @@ unsigned int OGRE3DBody::mNextBodyID = 0;
                                                                                        
 
 OGRE3DBody::OGRE3DBody(OGRE3DRigidBodyPrototype* prototype, OGRE3DRenderSystem* rendersystem)
-: Actor(prototype->mShapes, rendersystem->getScene()),
+: Actor(rendersystem->getScene()),
                                    // Take notice of the constructor we are using, it's designed for
                                    // classes that inherit from Actor. 
  mNode(0), mEntity(0), mSceneManager(0), mRenderPriority(prototype->mRenderPriority)
 {
- // Copy the prototype shapes over to mShapes.
- mShapes = prototype->mShapes;
-
  // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated
  // as a normal RigidBody. 
- create(prototype, rendersystem->getScene());
+ create(prototype, rendersystem->getScene(), &mShapes);
 
  // Since NxOgre doesn't know or care about our Ogre stuff, we copy it over. This is the correct time to create
  // or turn on things related to the OGRE3DBody.

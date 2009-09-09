@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.h
-    Created on: 14-Aug-09
+    Created on: 30-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -69,6 +69,7 @@ enum
   _Compartment,
   _CompartmentDescription,
   _ConstantArray,
+  _ContactPair,
   _Convex,
   _D6Joint,
   _D6JointDescription,
@@ -78,6 +79,11 @@ enum
   _FixedSceneTimer,
   _Fluid,
   _FluidDescription,
+  _FluidDrain,
+  _FluidDrainDescription,
+  _FluidEmitter,
+  _FluidEmitterDescription,
+  _FluidPacket,
   _Geometry,
   _HeightField,
   _HeightFieldGeometry,
@@ -122,10 +128,11 @@ enum
   _NxShapeFunctions,
   _Particle,
   _ParticleData,
+  _PhysXCallback,
   _PhysXMeshData,
   _PhysXOutputStream,
   _PhysXPointer,
-  _PhysXTriggerCallback,
+  _PhysXShapePointer,
   _PhysXUserAllocator,
   _PlaneGeometry,
   _PlaneGeometryPrototype,

@@ -123,7 +123,7 @@ class NxOgrePublicClass SceneGeometry : public PointerClass<Classes::_SceneGeome
 
   /** \internal Classes that inherit from SceneGeometry should use this constructor.
   */
-                                              SceneGeometry(Shapes, Scene*);
+                                              SceneGeometry(Scene*);
   
   /** \internal Use Scene::createSceneGeometry
   */

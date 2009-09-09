@@ -44,9 +44,9 @@ namespace NxOgre_Namespace
 
 /** \brief
 */
-class NxOgrePublicClass PhysXCallback : public PointerClass<Classes::_PhysXTriggerCallback>
-                                             , public NxUserTriggerReport
-                                             , public NxUserContactReport
+class NxOgrePublicClass PhysXCallback : public PointerClass<Classes::_PhysXCallback>,
+                                        public NxUserTriggerReport,
+                                        public NxUserContactReport
 {
   
   public: // Functions

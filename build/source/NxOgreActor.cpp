@@ -38,25 +38,20 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-Actor::Actor(Shapes shapes, Scene* scene)
-: RigidBody(),
-  mScene(scene),
-  mShapes(shapes)
+Actor::Actor(Scene* scene) : RigidBody(), mScene(scene)
 {
 }
 
 Actor::Actor(RigidBodyPrototype* prototype, Scene* scene)
 : RigidBody(),
-  mScene(scene),
-  mShapes(prototype->mShapes)
+  mScene(scene)
 {
- create(prototype, scene);
+ create(prototype, scene, &mShapes);
 }
 
 Actor::~Actor(void)
 {
  destroy();
- mShapes.destroyAll();
 }
 
 unsigned int Actor::getClassType() const 

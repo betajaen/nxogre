@@ -39,10 +39,9 @@ namespace NxOgre_Namespace
                                                                                        
 
 
-KinematicActor::KinematicActor(Shapes shapes, Scene* scene)
+KinematicActor::KinematicActor(Scene* scene)
 : RigidBody(),
-  mScene(scene),
-  mShapes(shapes)
+  mScene(scene)
 {
 }
 
@@ -50,7 +49,7 @@ KinematicActor::KinematicActor(RigidBodyPrototype* prototype, Scene* scene)
 : RigidBody(),
   mScene(scene)
 {
- create(prototype, scene);
+ create(prototype, scene, &mShapes);
 }
 
 KinematicActor::~KinematicActor(void)

@@ -39,7 +39,7 @@ unsigned int OGRE3DKinematicBody::mNextBodyID = 0;
                                                                                        
 
 OGRE3DKinematicBody::OGRE3DKinematicBody(OGRE3DRigidBodyPrototype* prototype, OGRE3DRenderSystem* rendersystem)
-: KinematicActor(prototype->mShapes, rendersystem->getScene()),
+: KinematicActor(rendersystem->getScene()),
                                    // Take notice of the constructor we are using, it's designed for
                                    // classes that inherit from Actor. 
  mNode(0), mEntity(0), mSceneManager(0), mRenderPriority(prototype->mRenderPriority)
@@ -47,7 +47,7 @@ OGRE3DKinematicBody::OGRE3DKinematicBody(OGRE3DRigidBodyPrototype* prototype, OG
  // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated
  // as a normal RigidBody. 
  
- create(prototype, rendersystem->getScene());
+ create(prototype, rendersystem->getScene(), &mShapes);
  
  // Since NxOgre doesn't know or care about our Ogre stuff, we copy it over. This is the correct time to create
  // or turn on things related to the OGRE3DKinematicBody.

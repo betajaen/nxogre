@@ -78,13 +78,19 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
   */
   virtual                                    ~RigidBody(void);
   
-  /** \internal
+  /** \brief Create an NxActor based upon the RigidBodyPrototype, in the Scene.
+      
   */
-  virtual               void                  create(RigidBodyPrototype*, Scene*);
+  virtual               void                  create(RigidBodyPrototype*, Scene* scene, Shapes* shapes);
   
-  /** \internal
+  /** \brief Create an NxActor using a more simplier form of position, mass, and collision shape.
+      \note  A dynamic actor will be created based upon if the mass is 0 or not.
+      \param  matrix_pose  Position and orientation of the NxActor.
+      \param  shape        Simple shape to use (Automatically deleted after used)
+      \param  mass         Mass of the NxActor. Set 0 for a static NxActor.
+      \param  scene        Scene to put the NxActor in.
   */
-  virtual               void                  create(const Matrix44&, SimpleShape*, Real mass, Scene*);
+  virtual               void                  create(const Matrix44& matrix_pose, SimpleShape* shape, Real mass, Scene* scene);
   
   /** \internal
   */

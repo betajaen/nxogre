@@ -399,7 +399,7 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   
   /** \internal Classes that inherit from Actor should use this constructor.
   */
-                                              Actor(Shapes, Scene*);
+                                              Actor(Scene*);
   
   /** \internal Use Scene::createActor
   */

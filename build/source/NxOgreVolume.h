@@ -79,7 +79,7 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
 
   /** \brief Retrieves the Volumes world space position.
   */
-                                      Vec3                  getGlobalPosition(void) const;
+                                      Vec3                   getGlobalPosition(void) const;
 
   /** \brief Retrieves the Volumes world space orientation.
   */
@@ -87,7 +87,7 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
   
   /** \brief Retrieves the Volumes world space orientation.
   */
-                                      Quat                  getGlobalOrientationQuat(void) const;
+                                      Quat                   getGlobalOrientationQuat(void) const;
 
   /** \brief Creates a new shape and adds it to the list of shapes of this Volume. 
   */
@@ -103,29 +103,29 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
   
   /** \brief Get the callback
   */
-                                      Callback*              getCallback();
+                                      Callback*              getVolumeCallback();
   
   /** \brief Set the callback
   */
-                                      void                   setCallback(Callback*);
+                                      void                   setVolumeCallback(Callback*);
   
   /** \brief Remove the callback, and replace it with a Null one.
   */
-                                      void                   removeCallback();
+                                      void                   removeVolumeCallback();
 
   protected: // Functions
   
   /** \internal Classes that inherit from Volume should use this constructor.
   */
-                                              Volume(Shapes, Scene*, Callback*);
+                                                             Volume(Scene*, Callback*);
   
   /** \internal Use Scene::createVolume
   */
-                                              Volume(RigidBodyPrototype*, Scene*, Callback*);
+                                                             Volume(RigidBodyPrototype*, Scene*, Callback*);
   
   /** \internal Use Scene::destroyVolume
   */
-  virtual                                    ~Volume(void);
+  virtual                                                   ~Volume(void);
   
 
   protected: // Variables
@@ -136,7 +136,8 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
   
                        Shapes                mShapes;
   
-                       Callback*             mCallback;
+                       Callback*             mVolumeCallback;
+  
 }; // class ClassName
 
                                                                                        

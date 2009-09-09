@@ -185,6 +185,10 @@ class NxOgrePublicClass Shape : public PointerClass<Classes::_Shape>
   */
                       NxShape*                getAbstractShape();
 
+  /** \internal
+  */
+  virtual               void                  assign(NxShape*) = 0;
+  
   protected:
   
   /** \brief Optional name of the Shape
@@ -212,10 +216,6 @@ class NxOgrePublicClass Shape : public PointerClass<Classes::_Shape>
   /** \internal
   */
   virtual               void                  assignAbstract(NxShape*);
-  
-  /** \internal
-  */
-  virtual               void                  assign(NxShape*) = 0;
   
 }; // class Shape
 

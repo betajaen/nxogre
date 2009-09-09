@@ -206,7 +206,7 @@ class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_Kinematic
   
   /** \internal Classes that inherit from KinematicActor should use this constructor.
   */
-                                              KinematicActor(Shapes, Scene*);
+                                              KinematicActor(Scene*);
   
   /** \internal Use Scene::createKinematicActor
   */

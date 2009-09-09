@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.cpp
-    Created on: 14-Aug-09
+    Created on: 30-Aug-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -37,7 +37,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[622] = {
+static const char*  sClasses[629] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -532,6 +532,7 @@ static const char*  sClasses[622] = {
   "Compartment",
   "CompartmentDescription",
   "ConstantArray",
+  "ContactPair",
   "Convex",
   "D6Joint",
   "D6JointDescription",
@@ -541,6 +542,11 @@ static const char*  sClasses[622] = {
   "FixedSceneTimer",
   "Fluid",
   "FluidDescription",
+  "FluidDrain",
+  "FluidDrainDescription",
+  "FluidEmitter",
+  "FluidEmitterDescription",
+  "FluidPacket",
   "Geometry",
   "HeightField",
   "HeightFieldGeometry",
@@ -585,10 +591,11 @@ static const char*  sClasses[622] = {
   "NxShapeFunctions",
   "Particle",
   "ParticleData",
+  "PhysXCallback",
   "PhysXMeshData",
   "PhysXOutputStream",
   "PhysXPointer",
-  "PhysXTriggerCallback",
+  "PhysXShapePointer",
   "PhysXUserAllocator",
   "PlaneGeometry",
   "PlaneGeometryPrototype",
