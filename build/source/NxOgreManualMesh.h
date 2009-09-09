@@ -37,6 +37,29 @@ namespace NxOgre_Namespace
 
                                                                                        
 
+class NxOgrePublicClass MeshData : public PointerClass<Classes::_MeshData>
+{
+  
+ public:
+  
+  MeshData();
+ ~MeshData();
+  
+  String                           mName;
+  NxOgre::Enums::MeshType          mType;
+  Buffer<float>                    mVertices;
+  Buffer<unsigned int>             mIndexes;
+  Buffer<float>                    mNormals;
+  Buffer<float>                    mTextureCoordinates;
+  Buffer<unsigned int>             mTetrahedra;
+  Buffer<MaterialIdentifier>       mMaterials;
+  Buffer<unsigned int>             mFlags;
+  Buffer<float>                    mMasses;
+  
+};
+
+                                                                                       
+
 /** \brief ManualMesh is a class of functions designed to create PhysX meshes, cloth and tetrahedra soft bodies, within
            code. ManualMesh can also be used to convert one file-format to a PhysX one.
     \example
@@ -175,7 +198,7 @@ class NxOgrePublicClass ManualMesh
   
   protected: // Variables
   
-  ManualMeshData*                             mMesh;
+  MeshData*                             mMesh;
   RefT*                                       mRef;
   
 }; // class ManualMesh

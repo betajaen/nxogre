@@ -868,10 +868,10 @@ enum ContactPairFlags
                  class                      MaterialPrototype;             //!<
                  class                      ManualMesh;                    //!<
 //::             struct                     ManualMeshReferenceCounter;    //!<
-                 class                      ManualMeshData;                //!<
+                 class                      MeshData;                //!<
                  class                      ManualHeightField;             //!<
 //::             struct                  ManualHeightFieldReferenceCounter //!<
-                 class                      ManualHeightFieldData;         //!<
+                 class                      HeightFieldData;         //!<
                  class                      Memory;                        //!<
                  class                      MemoryArchive;                 //!<
                  class                      MemoryResource;                //!<

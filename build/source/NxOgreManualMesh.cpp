@@ -39,39 +39,17 @@ namespace NxOgre_Namespace
 
                                                                                        
  
-class ManualMeshData : public PointerClass<Classes::_ManualMeshData>
-{
- friend class ManualMesh;
- 
- public:
- 
-  ManualMeshData();
- ~ManualMeshData();
- 
- protected:
-  String                           mName;
-  NxOgre::Enums::MeshType          mType;
-  Buffer<float>                    mVertices;
-  Buffer<unsigned int>             mIndexes;
-  Buffer<float>                    mNormals;
-  Buffer<float>                    mTextureCoordinates;
-  Buffer<unsigned int>             mTetrahedra;
-  Buffer<MaterialIdentifier>       mMaterials;
-  Buffer<unsigned int>             mFlags;
-  Buffer<float>                    mMasses;
-};
- 
-ManualMeshData::ManualMeshData() : mType(NxOgre::Enums::MeshType_Unknown)
+MeshData::MeshData() : mType(NxOgre::Enums::MeshType_Unknown)
 {
 }
 
-ManualMeshData::~ManualMeshData()
+MeshData::~MeshData()
 {
 }
 
 ManualMesh::ManualMesh(void)
 {
- mMesh = new ManualMeshData();
+ mMesh = new MeshData();
 
  mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ManualMeshReferenceCounter);
  (*mRef) = 1;

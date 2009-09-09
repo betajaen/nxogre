@@ -38,30 +38,7 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-class ManualHeightFieldData : public PointerClass<Classes::_ManualHeightFieldData>
-{
- friend class ManualHeightField;
- 
- public:
- 
-  ManualHeightFieldData();
- ~ManualHeightFieldData();
- 
- protected:
-  String                               mName;
-  Enums::Axis                                mAxis;
-  unsigned int                               mNbRows;
-  unsigned int                               mNbColumns;
-  Array<HeightFieldSample>                   mSamples;
-  Real                                       mThickness;
-  Real                                       mVerticalExtent;
-  Real                                       mConvexEdgeThreshold;
-  bool                                       mNoEdgeBoundaries;
-};
-
-
-
-ManualHeightFieldData::ManualHeightFieldData()
+HeightFieldData::HeightFieldData()
  : mNbRows(0),
    mNbColumns(0),
    mAxis(Enums::Y),
@@ -72,13 +49,13 @@ ManualHeightFieldData::ManualHeightFieldData()
 {
 }
 
-ManualHeightFieldData::~ManualHeightFieldData()
+HeightFieldData::~HeightFieldData()
 {
 }
 
 ManualHeightField::ManualHeightField(void)
 {
- mHeightField = new ManualHeightFieldData();
+ mHeightField = new HeightFieldData();
  mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ManualHeightFieldReferenceCounter);
  (*mRef) = 1;
 }

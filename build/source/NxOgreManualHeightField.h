@@ -36,6 +36,26 @@ namespace NxOgre_Namespace
 
                                                                                        
 
+class NxOgrePublicClass HeightFieldData : public PointerClass<Classes::_HeightFieldData>
+{
+ 
+ public:
+ 
+  HeightFieldData();
+ ~HeightFieldData();
+ 
+  String                                     mName;
+  Enums::Axis                                mAxis;
+  unsigned int                               mNbRows;
+  unsigned int                               mNbColumns;
+  Array<HeightFieldSample>                   mSamples;
+  Real                                       mThickness;
+  Real                                       mVerticalExtent;
+  Real                                       mConvexEdgeThreshold;
+  bool                                       mNoEdgeBoundaries;
+  
+};
+
 /** \brief
 */
 class NxOgrePublicClass ManualHeightField
@@ -137,7 +157,7 @@ class NxOgrePublicClass ManualHeightField
   
   protected: // Variables
   
-  ManualHeightFieldData*                      mHeightField;
+  HeightFieldData*                      mHeightField;
   RefT*                                       mRef;
   
   

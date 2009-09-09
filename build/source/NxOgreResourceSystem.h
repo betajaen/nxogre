@@ -65,6 +65,10 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre_Namespace::Singleton<Re
   /** \brief Close an archive, and close any resources of that archive.
   */
                        void                   closeArchive(const String& name);
+
+  /** \brief Get archive by name
+  */
+                       Archive*               getArchiveByName(const String& name);
   
   protected:
   

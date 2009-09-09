@@ -59,7 +59,7 @@ ResourceSystem::~ResourceSystem()
 
 Resource* ResourceSystem::open(const ArchiveResourceIdentifier& ari, Enums::ResourceAccess access)
 {
- Archive* archive;
+ Archive* archive = 0;
  for (unsigned int i=0;i < mArchives.size(); i++)
  {
   if (mArchives[i]->getNameHash() == ari.getArchiveHash())
@@ -143,6 +143,16 @@ void ResourceSystem::closeArchive(const NxOgre::String &name)
   }
  }
 }
+
+Archive* ResourceSystem::getArchiveByName(const String& name)
+{
+ for (unsigned int i=0;i < mArchives.size(); i++)
+  if (mArchives[i]->getName() == name)
+   return mArchives[i];
+ 
+ return 0;
+}
+
 
                                                                                        
 

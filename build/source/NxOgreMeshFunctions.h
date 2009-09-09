@@ -73,6 +73,10 @@ NxOgrePublicFunction MeshStats calculateStats(NxOgre::Mesh*);
 */
 NxOgrePublicFunction bool  createTriangleMesh(Resource* cookTo, Buffer<float>& vertices, Buffer<unsigned int>& indexes, Buffer<MaterialIdentifier>& materials);
 
+/** \brief
+*/
+NxOgrePublicFunction void  saveTriangleMesh(NxTriangleMesh*, MeshData*);
+
 /** \brief Create a Convex Mesh/Point Cloud from a set of vertices and some optional indexes. It is cooked to a resource, which can be
            saved to a file as a "NXS" file. To read the mesh into PhysX then load it in via the MeshManager e.x. MeshManager::load(resource).
     \param resource   The triangle mesh to save to.
@@ -90,6 +94,11 @@ NxOgrePublicFunction bool  createTriangleMesh(Resource* cookTo, Buffer<float>& v
     </code>
 */
 NxOgrePublicFunction bool  createConvexMesh(Resource* resource, Buffer<float>& vertices, Buffer<unsigned int>& indexes);
+
+/** \brief
+*/
+NxOgrePublicFunction void  saveConvexMesh(NxConvexMesh*, MeshData*);
+
 
 /** \brief Create a cloth from a set of vertices, indexes and some optional texture coordinates. It is cooked to a resource, which can be
            saved to a file as a "xcl" file. To read the mesh into PhysX then load it in via the MeshManager e.x. MeshManager::load(resource).
@@ -109,10 +118,13 @@ NxOgrePublicFunction bool  createConvexMesh(Resource* resource, Buffer<float>& v
 */
 NxOgrePublicFunction bool createClothMesh(Resource* cookTo, Buffer<float>& vertices, Buffer<unsigned int>& indexes, Buffer<float>& texture_coords, Buffer<unsigned int>& flags, Buffer<float>& masses, unsigned int cookingFlags, float weldingDistance);
 
+/** \brief
+*/
+NxOgrePublicFunction void  saveClothMesh(NxClothMesh*, MeshData*);
+
 /** \brief Create a simple tetrahedra
 */
 NxOgrePublicFunction bool createSoftBodyMesh(Resource* cookTo, Buffer<float>& vertices, Buffer<unsigned int>& tetrahedra);
-
 
 /** \brief Helper function to create flat cloth.
 */

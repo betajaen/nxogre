@@ -29,6 +29,7 @@
 #include "NxOgrePhysXStream.h"
 #include "NxOgreNXSFunctions.h"
 #include "NxOgreMeshFunctions.h"
+#include "NxOgreManualMesh.h"
 
 #include "NxPhysics.h"
 
@@ -181,6 +182,24 @@ Buffer<float>& Mesh::getTextureCoords()
 {
  return mTextureCoords;
 }
+
+MeshData* Mesh::getMeshData()
+{
+ MeshData* data = NxOgre_New(MeshData)();
+ 
+ if (mType == NxOgre::Enums::MeshType_Triangle)
+  NxOgre::Functions::Mesh::saveTriangleMesh(mMesh.mTriangle, data);
+ else if (mType == NxOgre::Enums::MeshType_Convex)
+  NxOgre::Functions::Mesh::saveConvexMesh(mMesh.mConvex, data);
+ else if (mType == NxOgre::Enums::MeshType_Cloth)
+  NxOgre::Functions::Mesh::saveClothMesh(mMesh.mCloth, data);
+// else if (mType == NxOgre::Enums::MeshType_SoftBody)
+//  NxOgre::Functions::Mesh::saveSoftBodyMesh(mMesh.mSoftBody, data);
+
+ 
+ return data;
+}
+
 
 
                                                                                        
