@@ -146,7 +146,6 @@ bool MSWindowsFileResource::seek(size_t to)
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
-  printf("Seeking\n");
   fseek(mFile, to, SEEK_SET);
   return true;
  }

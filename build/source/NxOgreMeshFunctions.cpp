@@ -360,12 +360,44 @@ void  saveTriangleMesh(NxTriangleMesh* triangle, MeshData* mesh)
  NxTriangleMeshDesc desc;
  triangle->saveToDesc(desc);
 
- mesh->mVertices.appendMany(desc.numVertices / 3 * desc.pointStrideBytes, desc.points);
+ mesh->mVertices.reserve(desc.numVertices * 3);
+
+ const float* vertices = static_cast<const float*>(desc.points);
+ for (unsigned int i=0; i < desc.numVertices * 3;i++)
+ {
+  mesh->mVertices.append(vertices[i]);
+ }
+ 
  if (desc.triangles)
-  mesh->mIndexes.appendMany(desc.numTriangles * desc.triangleStrideBytes / 3, desc.triangles);
+ {
+  mesh->mIndexes.reserve(desc.numTriangles * 3);
+  if (desc.flags & NX_MF_16_BIT_INDICES)
+  {
+   const unsigned short* indexes = static_cast<const unsigned short*>(desc.triangles);
+   for (unsigned int i=0; i < desc.numTriangles * 3;i++)
+   {
+    mesh->mIndexes.append(indexes[i]);
+   }
+  }
+  else
+  {
+   const unsigned int* indexes = static_cast<const unsigned int*>(desc.triangles);
+   for (unsigned int i=0; i < desc.numTriangles * 3;i++)
+   {
+    mesh->mIndexes.append(indexes[i]);
+   }
+  }
+ }
  
  if (desc.materialIndices)
-  mesh->mMaterials.appendMany(desc.numTriangles / 3 * desc.materialIndexStride, desc.materialIndices);
+ {
+  mesh->mMaterials.reserve(desc.numTriangles * 3);
+  const unsigned short* indexes = static_cast<const unsigned short*>(desc.materialIndices);
+  for (unsigned int i=0; i < desc.numTriangles * 3;i++)
+  {
+    mesh->mMaterials.append(indexes[i]);
+  }
+ }
  
 }
 
@@ -401,10 +433,9 @@ void  saveConvexMesh(NxConvexMesh* convex, MeshData* mesh)
     mesh->mIndexes.append(indexes[i]);
    }
   }
- 
-  //mesh->mIndexes.appendMany(desc.numTriangles * sizeof(unsigned int), desc.triangles);
-  
  }
+
+
 }
 
 void  saveClothMesh(NxClothMesh* cloth, MeshData* mesh)
@@ -412,17 +443,52 @@ void  saveClothMesh(NxClothMesh* cloth, MeshData* mesh)
  NxClothMeshDesc desc;
  cloth->saveToDesc(desc);
  
- mesh->mVertices.appendMany(desc.numVertices * desc.pointStrideBytes, desc.points);
- 
+ mesh->mVertices.reserve(desc.numVertices * 3);
+
+ const float* vertices = static_cast<const float*>(desc.points);
+ for (unsigned int i=0; i < desc.numVertices * 3;i++)
+ {
+  mesh->mVertices.append(vertices[i]);
+ }
+
  if (desc.triangles)
-  mesh->mIndexes.appendMany(desc.numTriangles * desc.triangleStrideBytes, desc.triangles);
+ {
+  mesh->mIndexes.reserve(desc.numTriangles * 3);
+  if (desc.flags & NX_MF_16_BIT_INDICES)
+  {
+   const unsigned short* indexes = static_cast<const unsigned short*>(desc.triangles);
+   for (unsigned int i=0; i < desc.numTriangles * 3;i++)
+   {
+    mesh->mIndexes.append(indexes[i]);
+   }
+  }
+  else
+  {
+   const unsigned int* indexes = static_cast<const unsigned int*>(desc.triangles);
+   for (unsigned int i=0; i < desc.numTriangles * 3;i++)
+   {
+    mesh->mIndexes.append(indexes[i]);
+   }
+  }
+ }
  
  if (desc.vertexFlags)
-  mesh->mFlags.appendMany(desc.numVertices * desc.vertexFlagStrideBytes, desc.vertexFlags);
+ {
+  mesh->mFlags.reserve(desc.numVertices * 3);
+  const unsigned int* flags = static_cast<const unsigned int*>(desc.vertexFlags);
+  for (unsigned int i=0; i < desc.numVertices * 3;i++)
+   mesh->mFlags.append(flags[i]);
+ }
  
  if (desc.vertexMasses)
-  mesh->mMasses.appendMany(desc.numVertices * desc.vertexMassStrideBytes, desc.vertexMasses);
- 
+ {
+  mesh->mFlags.reserve(desc.numVertices * 3);
+  const unsigned float* masses = static_cast<const unsigned float*>(desc.vertexFlags);
+  for (unsigned int i=0; i < desc.numVertices * 3;i++)
+   mesh->mFlags.append(masses[i]);
+ }
+
+
 }
 
 

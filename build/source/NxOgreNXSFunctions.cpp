@@ -106,8 +106,6 @@ extern inline Enums::MeshType getMeshType(Resource* resource)
  resource->seekBeginning();
  resource->seek(4);
  resource->readCharArray(meshType, 4);
- 
- printf("MESH HEADER = %c%c%c%c\n", meshType[0], meshType[1], meshType[2], meshType[3]);
 
  // NxConvexMesh
  if ( (meshType[0] == 'C' && meshType[1] == 'V' && meshType[2] == 'X' && meshType[3] == 'M')  )

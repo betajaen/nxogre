@@ -114,11 +114,7 @@ unsigned int RigidBody::getType() const
  return Enums::RigidBodyType_Unknown;
 }
 
-
-
                                                                                        
-
-
 
 void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene, Shapes* final_shapes)
 {
@@ -199,12 +195,7 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene, Shapes* fina
  
 }
 
-
-
                                                                                        
-
-
-
 
 void RigidBody::create(const Matrix44& pose, SimpleShape* shape, Real mass, Scene* scene)
 {
@@ -249,8 +240,6 @@ void RigidBody::create(const Matrix44& pose, SimpleShape* shape, Real mass, Scen
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType()); 
 }
 
-
-
 void RigidBody::destroy(void)
 {
  if (mActor)
@@ -261,8 +250,6 @@ void RigidBody::destroy(void)
   scene.releaseActor(*mActor);
  }
 }
-
-
 
 bool RigidBody::isDynamic(void) const
 {
