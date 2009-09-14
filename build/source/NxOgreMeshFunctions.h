@@ -71,7 +71,7 @@ NxOgrePublicFunction MeshStats calculateStats(NxOgre::Mesh*);
      Mesh* mesh = MeshManager::getSingleton()->load(resource, "Test");
     </code>
 */
-NxOgrePublicFunction bool  createTriangleMesh(Resource* cookTo, Buffer<float>& vertices, Buffer<unsigned int>& indexes, Buffer<MaterialIdentifier>& materials);
+NxOgrePublicFunction bool  createTriangleMesh(Resource*, MeshData*);
 
 /** \brief
 */
@@ -93,7 +93,7 @@ NxOgrePublicFunction void  saveTriangleMesh(NxTriangleMesh*, MeshData*);
      Mesh* mesh = MeshManager::getSingleton()->load(resource, "Test");
     </code>
 */
-NxOgrePublicFunction bool  createConvexMesh(Resource* resource, Buffer<float>& vertices, Buffer<unsigned int>& indexes);
+NxOgrePublicFunction bool  createConvexMesh(Resource* resource, MeshData*);
 
 /** \brief
 */
@@ -116,7 +116,7 @@ NxOgrePublicFunction void  saveConvexMesh(NxConvexMesh*, MeshData*);
      Mesh* mesh = MeshManager::getSingleton()->load(resource, "Test");
     </code>
 */
-NxOgrePublicFunction bool createClothMesh(Resource* cookTo, Buffer<float>& vertices, Buffer<unsigned int>& indexes, Buffer<float>& texture_coords, Buffer<unsigned int>& flags, Buffer<float>& masses, unsigned int cookingFlags, float weldingDistance);
+NxOgrePublicFunction bool createClothMesh(Resource* cookTo, MeshData*);
 
 /** \brief
 */
@@ -124,20 +124,20 @@ NxOgrePublicFunction void  saveClothMesh(NxClothMesh*, MeshData*);
 
 /** \brief Create a simple tetrahedra
 */
-NxOgrePublicFunction bool createSoftBodyMesh(Resource* cookTo, Buffer<float>& vertices, Buffer<unsigned int>& tetrahedra);
+NxOgrePublicFunction bool createSoftBodyMesh(Resource* cookTo, MeshData*);
+
+/** \brief Read texture coordinates from an extended cloth NXS mesh (xcl).
+*/
+NxOgrePublicFunction void loadExtendedCloth(Resource* resource, Buffer<float>&);
+
+/** \brief Write texture coordinates to an extended cloth NXS mesh (xcl), resource pointer is expected to be at the end of the file.
+*/
+NxOgrePublicFunction void saveExtendedCloth(Resource* resource, Buffer<float>&);
 
 /** \brief Helper function to create flat cloth.
 */
 NxOgrePublicFunction ::NxOgre::Mesh*  generateFlatCloth(const ArchiveResourceIdentifier& target, const Vec2& size, Real distanceBetweenVertices);
 
-
-/** \brief Read texture coordinates from an extended cloth NXS mesh (xcl).
-*/
-NxOgrePublicFunction void loadExtendedCloth(Resource* resource, Buffer<float>& texture_coords);
-
-/** \brief Write texture coordinates to an extended cloth NXS mesh (xcl), resource pointer is expected to be at the end of the file.
-*/
-NxOgrePublicFunction void saveExtendedCloth(Resource* resource, Buffer<float>& texture_coords);
 
                                                                                        
 

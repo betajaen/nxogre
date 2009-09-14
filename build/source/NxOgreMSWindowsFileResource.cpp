@@ -134,7 +134,7 @@ size_t MSWindowsFileResource::getSize(void) const
  if (mStatus != Enums::ResourceStatus_Opened)
   return 0;
 
- size_t pos = ftell(mFile), size = 0;
+ long pos = ftell(mFile), size = 0;
 
  fseek(mFile, 0, SEEK_END);
  size = ftell(mFile);

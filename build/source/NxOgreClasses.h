@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.h
-    Created on: 30-Aug-09
+    Created on: 14-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -86,6 +86,7 @@ enum
   _FluidPacket,
   _Geometry,
   _HeightField,
+  _HeightFieldData,
   _HeightFieldGeometry,
   _HeightFieldGeometryBlueprint,
   _HeightFieldManager,
@@ -106,10 +107,8 @@ enum
   _Machine,
   _MachinePart,
   _ManualHeightField,
-  _HeightFieldData,
   _ManualHeightFieldReferenceCounter,
   _ManualMesh,
-  _MeshData,
   _ManualMeshReferenceCounter,
   _Material,
   _MaterialDescription,
@@ -119,6 +118,7 @@ enum
   _MemoryResource,
   _MemoryResourceProtocol,
   _Mesh,
+  _MeshData,
   _MeshManager,
   _MeshStats,
   _MotorDescription,

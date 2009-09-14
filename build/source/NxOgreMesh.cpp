@@ -30,6 +30,7 @@
 #include "NxOgreNXSFunctions.h"
 #include "NxOgreMeshFunctions.h"
 #include "NxOgreManualMesh.h"
+#include "NxOgreMeshData.h"
 
 #include "NxPhysics.h"
 
@@ -126,10 +127,7 @@ void Mesh::load(Resource* resource)
  
  // Check for extended NxOgre data.
  if (mType == Enums::MeshType_Cloth)
- {
   NxOgre::Functions::Mesh::loadExtendedCloth(resource, mTextureCoords);
-  printf("Texture Coords size %i\n", mTextureCoords.size());
- }
 
 }
 
@@ -186,7 +184,7 @@ Buffer<float>& Mesh::getTextureCoords()
 MeshData* Mesh::getMeshData()
 {
  MeshData* data = NxOgre_New(MeshData)();
- 
+ data->mType = getType();
  if (mType == NxOgre::Enums::MeshType_Triangle)
   NxOgre::Functions::Mesh::saveTriangleMesh(mMesh.mTriangle, data);
  else if (mType == NxOgre::Enums::MeshType_Convex)
@@ -195,7 +193,6 @@ MeshData* Mesh::getMeshData()
   NxOgre::Functions::Mesh::saveClothMesh(mMesh.mCloth, data);
 // else if (mType == NxOgre::Enums::MeshType_SoftBody)
 //  NxOgre::Functions::Mesh::saveSoftBodyMesh(mMesh.mSoftBody, data);
-
  
  return data;
 }

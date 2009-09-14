@@ -26,6 +26,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreManualMesh.h"
 #include "NxOgreMesh.h"
+#include "NxOgreMeshData.h"
 #include "NxOgreResourceSystem.h"
 #include "NxOgreMeshFunctions.h"
 #include "NxOgreMeshManager.h"
@@ -38,14 +39,6 @@ namespace NxOgre_Namespace
 {
 
                                                                                        
- 
-MeshData::MeshData() : mType(NxOgre::Enums::MeshType_Unknown)
-{
-}
-
-MeshData::~MeshData()
-{
-}
 
 ManualMesh::ManualMesh(void)
 {
@@ -110,6 +103,16 @@ void ManualMesh::begin(NxOgre::Enums::MeshType type, unsigned int estimatedVerti
  
 }
 
+void ManualMesh::clean()
+{
+ mMesh->clear();
+}
+
+void ManualMesh::name(const String& name)
+{
+ mMesh->mName = name;
+}
+
 void ManualMesh::name(const char* name)
 {
  mMesh->mName = name;
@@ -118,6 +121,22 @@ void ManualMesh::name(const char* name)
 String ManualMesh::name(void) const
 {
  return mMesh->mName;
+}
+
+void ManualMesh::acquire(MeshData* data)
+{
+ 
+ if(--(*mRef) == 0)
+ {
+  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  delete mMesh;
+ }
+ 
+ mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ManualMeshReferenceCounter);
+ (*mRef) = 1;
+ 
+ mMesh = data;
+ 
 }
 
 void ManualMesh::vertex(float x, float y, float z)
@@ -202,32 +221,25 @@ bool ManualMesh::isValid(void) const
 
 Mesh* ManualMesh::end(bool cleanUp, const ArchiveResourceIdentifier& cookingTarget)
 {
-
+ 
  Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_ReadAndWrite);
-
- if (mMesh->mType == Enums::MeshType_Convex)
- {
-  Functions::Mesh::createConvexMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes);
- }
- else if (mMesh->mType == Enums::MeshType_Triangle)
- {
-  Functions::Mesh::createTriangleMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mMaterials);
- }
- else if (mMesh->mType == Enums::MeshType_Cloth)
- {
-  Functions::Mesh::createClothMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mTextureCoordinates, mMesh->mFlags, mMesh->mMasses, 0, Real(0.0));
- }
- else if (mMesh->mType == Enums::MeshType_SoftBody)
- {
-  Functions::Mesh::createSoftBodyMesh(cookingResource, mMesh->mVertices, mMesh->mTetrahedra);
- }
+ 
+ mMesh->cook(cookingResource);
  
  cookingResource->seekBeginning();
 
- Mesh* mesh = MeshManager::getSingleton()->load(cookingResource);
-
+ Mesh* mesh = 0;
+ 
+ if (mMesh->mName.length() == 0)
+  mesh = MeshManager::getSingleton()->load(cookingResource);
+ else
+  mesh = MeshManager::getSingleton()->load(cookingResource, mMesh->mName);
+  
  if (cookingResource->getStatus() == Enums::ResourceStatus_Opened)
   ResourceSystem::getSingleton()->close(cookingResource);
+ 
+ if (cleanUp)
+  clean();
  
  return mesh;
 }
@@ -237,26 +249,14 @@ void ManualMesh::endCookOnly(bool cleanUp, ArchiveResourceIdentifier& cookingTar
  
  Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_WriteOnly);
  
- if (mMesh->mType == Enums::MeshType_Convex)
- {
-  Functions::Mesh::createConvexMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes);
- }
- else if (mMesh->mType == Enums::MeshType_Triangle)
- {
-  Functions::Mesh::createTriangleMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mMaterials);
- }
- else if (mMesh->mType == Enums::MeshType_Cloth)
- {
-  Functions::Mesh::createClothMesh(cookingResource, mMesh->mVertices, mMesh->mIndexes, mMesh->mTextureCoordinates, mMesh->mFlags, mMesh->mMasses, 0, Real(0.0));
- }
- else if (mMesh->mType == Enums::MeshType_SoftBody)
- {
-  Functions::Mesh::createSoftBodyMesh(cookingResource, mMesh->mVertices, mMesh->mTetrahedra);
- }
+ mMesh->cook(cookingResource);
  
  ResourceSystem::getSingleton()->close(cookingResource);
+ 
+ if (cleanUp)
+  clean();
+ 
 }
-
 
                                                                                        
 

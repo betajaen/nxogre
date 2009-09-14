@@ -55,7 +55,7 @@ class NxOgrePublicClass SceneGeometry : public PointerClass<Classes::_SceneGeome
 
   using ::NxOgre::PointerClass<Classes::_SceneGeometry>::getClassType;
   
-  protected: // Functions
+  public: // Functions
   
   /** \brief 
   */

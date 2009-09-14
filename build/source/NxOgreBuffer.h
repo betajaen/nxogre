@@ -252,12 +252,12 @@ template<typename T> class  Buffer
     return *this;
    }
 
-   size_t size(void) const
+   unsigned int size(void) const
    {
     return TFunctions::size(_T);
    }
 
-   size_t capacity(void) const
+   unsigned int capacity(void) const
    {
     return TFunctions::capacity(_T);
    }
@@ -272,7 +272,7 @@ template<typename T> class  Buffer
     return *(_T->_First + nth_pos);
    }
 
-   size_t where(const T& t) const
+   unsigned int where(const T& t) const
    {
     return TFunctions::where(_T, t);
    }

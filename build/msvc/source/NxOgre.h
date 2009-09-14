@@ -1,5 +1,5 @@
 /** File: NxOgre.h
-    Created on: 24-Aug-09
+    Created on: 14-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -86,6 +86,7 @@
 #include "NxOgreMemoryResource.h"
 #include "NxOgreMemoryResourceProtocol.h"
 #include "NxOgreMesh.h"
+#include "NxOgreMeshData.h"
 #include "NxOgreMeshFunctions.h"
 #include "NxOgreMeshManager.h"
 #include "NxOgreMeshStats.h"

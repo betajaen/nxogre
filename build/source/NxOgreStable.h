@@ -39,8 +39,8 @@
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 5
-#define NxOgreVersionRelease 5
-#define NxOgreCodeName "BloodyMess(UNSTABLE)"
+#define NxOgreVersionRelease 6
+#define NxOgreCodeName "Git"
 
                                                                                        
 

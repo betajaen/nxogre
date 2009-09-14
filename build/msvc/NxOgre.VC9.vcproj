@@ -314,7 +314,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgreStatic.dll&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;"
+				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgreStatic.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -1098,6 +1098,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreMesh.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshData.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshData.h"
 			>
 		</File>
 		<File

@@ -37,45 +37,21 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-class NxOgrePublicClass MeshData : public PointerClass<Classes::_MeshData>
-{
-  
- public:
-  
-  MeshData();
- ~MeshData();
-  
-  String                           mName;
-  NxOgre::Enums::MeshType          mType;
-  Buffer<float>                    mVertices;
-  Buffer<unsigned int>             mIndexes;
-  Buffer<float>                    mNormals;
-  Buffer<float>                    mTextureCoordinates;
-  Buffer<unsigned int>             mTetrahedra;
-  Buffer<MaterialIdentifier>       mMaterials;
-  Buffer<unsigned int>             mFlags;
-  Buffer<float>                    mMasses;
-  
-};
-
-                                                                                       
-
 /** \brief ManualMesh is a class of functions designed to create PhysX meshes, cloth and tetrahedra soft bodies, within
-           code. ManualMesh can also be used to convert one file-format to a PhysX one.
+           code. ManualMesh can also be used to convert a file-format to a PhysX one.
     \example
      <code>
       ManualMesh m;
       m.begin(NxOgre::Enums::MeshType_Convex, 4);
        m.vertex(-1,-1);
-       m.vertex(-1,1);
-       m.vertex(1,-1);
-       m.vertex(1,1);
+       m.vertex(-1, 1);
+       m.vertex( 1,-1);
+       m.vertex( 1, 1);
       Mesh* mesh = m.end();
      </code>
 */
 class NxOgrePublicClass ManualMesh
 {
-  
   
   public: // Functions
   
@@ -95,12 +71,11 @@ class NxOgrePublicClass ManualMesh
   /** \brief ManualMesh destructor.
   */
                                              ~ManualMesh(void);
-
+  
   /** \brief Assignment operator
   */
   ManualMesh&                                 operator=(ManualMesh& other);
-
-
+  
   /** \brief Begin a definition of a mesh using type
       \param estimatedVerticesSize Rough estimate of how many vertices there are. ManualMesh will auto-resize if needed.
       \param estimatedTriangleSize Rough estimate of how many triangles there are. If value is "AUTO_CALCULATE_TRIANGLES" then it will
@@ -108,14 +83,27 @@ class NxOgrePublicClass ManualMesh
   */
   void                                        begin(NxOgre::Enums::MeshType type, unsigned int estimatedVerticesSize = 12, unsigned int AUTO_CALCULATE_TRIANGLES = -1);
   
-  /** \brief Set the name of the mesh, otherwise sequentially generate one.
+  /** \brief Set the name of the mesh.
   */
-  void                                        name(const char* = 0);
-    
+  void                                        name(const String& name);
+  
+  /** \brief Set the name of the mesh.
+  */
+  void                                        name(const char*);
+  
   /** \brief Get the name of the mesh.
   */
-  String                                name(void) const;
+  String                                      name(void) const;
   
+  /** \brief Clean the meshdata
+  */
+  void                                        clean();
+
+  /** \brief Use the current mesh data and deallocate/unreference the existing mesh data.
+      \note Do not use the mesh data from an existing ManualMesh as the mesh data may be unexpectedly deleted!
+  */
+  void                                        acquire(MeshData*);
+
   /** \brief Add a vertex
       \for   Triangle, Convex, Cloth, Tetrahedra.
   */
@@ -189,7 +177,6 @@ class NxOgrePublicClass ManualMesh
   */
   Mesh*                                       end(bool cleanUp = true, const ArchiveResourceIdentifier& cookingTarget = ArchiveResourceIdentifier("memory:"));
   
-  
   /** \brief Cook the mesh to a ResourceIdentifier target (default is memory).
       \param cleanUp  Clear the buffers after cooking.
       \param cookingTarget  Tell PhysX to save to a target, in other words. Save the mesh to a file, save in memory, or to something else.
@@ -198,7 +185,8 @@ class NxOgrePublicClass ManualMesh
   
   protected: // Variables
   
-  MeshData*                             mMesh;
+  MeshData*                                   mMesh;
+  
   RefT*                                       mRef;
   
 }; // class ManualMesh

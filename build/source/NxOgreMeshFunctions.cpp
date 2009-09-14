@@ -34,6 +34,7 @@
 #include "NxOgreMesh.h"
 #include "NxOgreMeshStats.h"
 #include "NxOgreManualMesh.h"
+#include "NxOgreMeshData.h"
 
 #ifndef NXOGRE_OPTIONS_MINIMAL
 
@@ -86,8 +87,6 @@ inline MeshStats _calculateNxSoftBodyStats(::NxOgre::Mesh* mesh)
  return MeshStats(desc.numVertices,desc.numTetrahedra * 4,0,0,desc.numTetrahedra);
 }
 
-/** \brief Calculate the number of vertices, indices, texture coordinates, tetrahedra of a mesh.
-*/
 NxOgrePublicFunction MeshStats calculateStats(::NxOgre::Mesh* mesh)
 {
  MeshStats stats;
@@ -110,25 +109,22 @@ NxOgrePublicFunction MeshStats calculateStats(::NxOgre::Mesh* mesh)
 }
 
 
-NxOgrePublicFunction bool  createTriangleMesh
-                 (
-                  Resource* cookTo,
-                  Buffer<float>& vertices,
-                  Buffer<unsigned int>& indexes,
-                  Buffer<MaterialIdentifier>& materials
-                 )
+NxOgrePublicFunction bool  createTriangleMesh(Resource* cookTo, MeshData* mesh_data)
 {
  NxTriangleMeshDesc description;
  
- description.points               = vertices.first();
+ description.points               = mesh_data->mVertices.first();
  description.pointStrideBytes     = sizeof(float) * 3;
- description.numVertices          = vertices.size() / 3;
+ description.numVertices          = mesh_data->mVertices.size() / 3;
  
- description.triangles            = indexes.first();
- description.triangleStrideBytes  = 3 * sizeof(unsigned int);
- description.numTriangles         = indexes.size() / 3;
- 
- description.materialIndices      = materials.first();
+ if (mesh_data->mIndexes.size())
+ {
+  description.triangles            = mesh_data->mIndexes.first();
+  description.triangleStrideBytes  = 3 * sizeof(unsigned int);
+  description.numTriangles         = mesh_data->mIndexes.size() / 3;
+ }
+
+ description.materialIndices      = mesh_data->mMaterials.first();
  description.materialIndexStride  = sizeof(MaterialIdentifier);
  
  NxCookingInterface* cookingInterface = World::getWorld()->getPhysXCookingInterface();
@@ -136,20 +132,19 @@ NxOgrePublicFunction bool  createTriangleMesh
  return cookingInterface->NxCookTriangleMesh(description, PhysXStream(cookTo));
 }
 
-/** \brief Create a  Convex Mesh/Point Cloud
-*/
-NxOgrePublicFunction bool    createConvexMesh(Resource* cookTo, Buffer<float>& vertices, Buffer<unsigned int>& indexes)
+NxOgrePublicFunction bool   createConvexMesh(Resource* cookTo, NxOgre::MeshData* mesh_data)
 {
- NxConvexMeshDesc description;
- description.points               = vertices.first();
- description.pointStrideBytes     = sizeof(float) * 3;
- description.numVertices          = vertices.size() / 3;
  
- if (indexes.size())
+ NxConvexMeshDesc description;
+ description.points               = mesh_data->mVertices.first();
+ description.pointStrideBytes     = sizeof(float) * 3;
+ description.numVertices          = mesh_data->mVertices.size() / 3;
+ 
+ if (mesh_data->mIndexes.size())
  {
-  description.triangles           = indexes.first();
+  description.triangles           = mesh_data->mIndexes.first();
   description.triangleStrideBytes = 3 * sizeof(unsigned int);
-  description.numTriangles        = indexes.size() / 3;
+  description.numTriangles        = mesh_data->mIndexes.size() / 3;
  }
  else
   description.flags              |= NX_CF_COMPUTE_CONVEX;
@@ -159,76 +154,85 @@ NxOgrePublicFunction bool    createConvexMesh(Resource* cookTo, Buffer<float>& v
  return cookingInterface->NxCookConvexMesh(description, PhysXStream(cookTo));
 }
 
-
-
-bool createSoftBodyMesh(Resource* resource, Buffer<float>& vertices, Buffer<unsigned int>& tetrahedra)
+bool createSoftBodyMesh(Resource* resource, NxOgre::MeshData* mesh_data)
 {
-
+ 
  NxSoftBodyMeshDesc description;
  description.setToDefault();
- description.vertices             = vertices.first();
- description.vertexStrideBytes    = sizeof(float) * 3;
- description.numVertices          = vertices.size() / 3;
- description.tetrahedra              = tetrahedra.first();
- description.tetrahedronStrideBytes  = sizeof(unsigned int) * 4;
- description.numTetrahedra           = tetrahedra.size() / 4 / 2;
-
+ description.vertices                = mesh_data->mVertices.first();
+ description.vertexStrideBytes       = sizeof(float) * 3;
+ description.numVertices             = mesh_data->mVertices.size() / 3;
+ 
+  if (mesh_data->mMasses.size())
+ {
+  description.vertexMasses          = mesh_data->mMasses.first();
+  description.vertexMassStrideBytes = sizeof(float);
+ }
+ 
+ if (mesh_data->mFlags.size())
+ {
+  description.vertexFlags           = mesh_data->mFlags.first();
+  description.vertexFlagStrideBytes = sizeof(unsigned int);
+ }
+ 
+ if (mesh_data->mTetrahedra.size())
+ {
+  description.tetrahedra              = mesh_data->mTetrahedra.first();
+  description.tetrahedronStrideBytes  = sizeof(unsigned int) * 4;
+  description.numTetrahedra           = mesh_data->mTetrahedra.size() / 4 / 2;
+ }
+ 
  NxCookingInterface* cookingInterface = World::getWorld()->getPhysXCookingInterface();
- bool b = cookingInterface->NxCookSoftBodyMesh(description, PhysXStream(resource));
- return b;
+ 
+ return cookingInterface->NxCookSoftBodyMesh(description, PhysXStream(resource));
 }
 
 
 /** \brief Create a  Convex Mesh/Point Cloud
 */
-NxOgrePublicFunction bool createClothMesh(Resource* resource, Buffer<float>& vertices, Buffer<unsigned int>& indexes, Buffer<float>& texture_coords, Buffer<unsigned int>& flags, Buffer<float>& masses, unsigned int cookingFlags, float weldingDistance)
+NxOgrePublicFunction bool createClothMesh(Resource* resource, NxOgre::MeshData* mesh_data)
 {
+ 
  NxClothMeshDesc description;
  description.setToDefault();
- description.points               = vertices.first();
- description.pointStrideBytes     = sizeof(float) * 3;
- description.numVertices          = vertices.size();
  
- description.triangles           = indexes.first();
- description.triangleStrideBytes = 3 * sizeof(unsigned int);
- description.numTriangles        = indexes.size() / 3;
- /*
- if (masses.size())
+ description.points                = mesh_data->mVertices.first();
+ description.pointStrideBytes      = sizeof(float) * 3;
+ description.numVertices           = mesh_data->mVertices.size();
+ 
+ if (mesh_data->mIndexes.size())
  {
-  description.vertexMasses = masses.first();
-  description.vertexFlagStrideBytes = sizeof(float);
+  description.triangles             = mesh_data->mIndexes.first();
+  description.triangleStrideBytes   = 3 * sizeof(unsigned int);
+  description.numTriangles          = mesh_data->mIndexes.size() / 3;
  }
-
- if (flags.size())
+ 
+ if (mesh_data->mMasses.size())
  {
-  description.vertexFlags = flags.first();
+  description.vertexMasses          = mesh_data->mMasses.first();
+  description.vertexMassStrideBytes = sizeof(float);
+ }
+ 
+ if (mesh_data->mFlags.size())
+ {
+  description.vertexFlags           = mesh_data->mFlags.first();
   description.vertexFlagStrideBytes = sizeof(unsigned int);
  }
-*/
-// description.weldingDistance = weldingDistance;
-// description.flags = cookingFlags;
-
-#if 0
- printf("Description valid? %i\n", description.isValid());
- printf(" numVertices: %i, buffer size: %i\n", description.numVertices, vertices.size());
- printf(" numTriangles: %i, buffer size: %i\n", description.numTriangles, indexes.size());
-#endif
+ 
+ description.flags                 = mesh_data->mMeshFlags;
+ description.weldingDistance       = mesh_data->mClothWeldingDistance;
 
  NxCookingInterface* cookingInterface = World::getWorld()->getPhysXCookingInterface();
-#if 0
- printf("Cooking interface: %p\n", cookingInterface);
-#endif
+
  bool b = cookingInterface->NxCookClothMesh(description, PhysXStream(resource));
  
  // Extended data.
  //  The coordinates are written first, and the header is written at the end of the file (in reverse).
- if (texture_coords.size())
+ if (mesh_data->mTextureCoordinates.size())
  {
-#if 0
-  printf("Saving texture coordinates\n");
-#endif
-  saveExtendedCloth(resource, texture_coords);
+  saveExtendedCloth(resource, mesh_data->mTextureCoordinates);
  }
+ 
  return b;
 }
 
@@ -483,7 +487,7 @@ void  saveClothMesh(NxClothMesh* cloth, MeshData* mesh)
  if (desc.vertexMasses)
  {
   mesh->mFlags.reserve(desc.numVertices * 3);
-  const unsigned float* masses = static_cast<const unsigned float*>(desc.vertexFlags);
+  const float* masses = static_cast<const float*>(desc.vertexMasses);
   for (unsigned int i=0; i < desc.numVertices * 3;i++)
    mesh->mFlags.append(masses[i]);
  }

@@ -1,5 +1,5 @@
 /** File: NxOgreClasses.cpp
-    Created on: 30-Aug-09
+    Created on: 14-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -549,6 +549,7 @@ static const char*  sClasses[629] = {
   "FluidPacket",
   "Geometry",
   "HeightField",
+  "HeightFieldData",
   "HeightFieldGeometry",
   "HeightFieldGeometryBlueprint",
   "HeightFieldManager",
@@ -569,10 +570,8 @@ static const char*  sClasses[629] = {
   "Machine",
   "MachinePart",
   "ManualHeightField",
-  "HeightFieldData",
   "ManualHeightFieldReferenceCounter",
   "ManualMesh",
-  "MeshData",
   "ManualMeshReferenceCounter",
   "Material",
   "MaterialDescription",
@@ -582,6 +581,7 @@ static const char*  sClasses[629] = {
   "MemoryResource",
   "MemoryResourceProtocol",
   "Mesh",
+  "MeshData",
   "MeshManager",
   "MeshStats",
   "MotorDescription",

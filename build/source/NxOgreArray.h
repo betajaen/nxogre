@@ -560,12 +560,12 @@ template<typename T> class  Array
     return *this;
    }
 
-   size_t size(void) const
+   unsigned int size(void) const
    {
     return _Array->size();
    }
 
-   size_t capacity(void) const
+   unsigned int capacity(void) const
    {
     return _Array->capacity();
    }

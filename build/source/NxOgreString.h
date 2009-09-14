@@ -175,13 +175,12 @@ class StringBase : public PointerClass<Classes::_StringBase>
    if (string == 0)
     return 0;
    unsigned int length = 0;
-
+    
    while(string[length++] != 0)
     ;
    return length;
-
   }
-
+  
   unsigned int mReferences;
   char*        mString;
   unsigned int mStringSize;
@@ -212,6 +211,12 @@ class String
   inline ~String()
   {
    mString = _free(mString);
+  }
+
+  inline void clear()
+  {
+   _free(mString);
+   mString = _new(0);
   }
 
   inline String& operator=(const String& other)
@@ -258,8 +263,6 @@ class String
    inline StringBase* _free(StringBase* str)
    {
     
-    // printf("Freeing %p\n", str);
-    
     if (str == 0)
      return 0;
     
@@ -274,13 +277,11 @@ class String
 
    inline StringBase* _new(const char* string)
    {
-    // printf("Acquiring new %s\n", string);
     return new StringBase(string);
    }
 
    inline StringBase* _acquire(StringBase* str = 0)
    {
-    // printf("Acquiring %p\n", str);
     if (str == 0)
     {
      return new StringBase();
