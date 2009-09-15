@@ -2,7 +2,7 @@
     Created on: 10-Nov-08
     Author: Robin Southern "betajaen"
     Last-Modified-For: PhysX 2.8.1
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

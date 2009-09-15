@@ -1,7 +1,7 @@
 /** File: NxOgreParticleData.h
     Created on: 11-Aug-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -58,19 +58,19 @@ class NxOgrePublicClass ParticleData
   
   /** \brief
   */
-  Buffer<SingleVec3>       mParticlePositions;
+  Buffer<Vec3>       mParticlePositions;
   
   /** \brief
   */
-  Buffer<SingleVec3>       mParticleVelocities;
+  Buffer<Vec3>       mParticleVelocities;
   
   /** \brief
   */
-  Buffer<SingleVec3>       mParticleLifetimes;
+  Buffer<Vec3>       mParticleLifetimes;
     
   /** \brief
   */
-  Buffer<SingleVec3>       mParticleDensities;
+  Buffer<Vec3>       mParticleDensities;
   
   /** \brief
   */
@@ -82,7 +82,7 @@ class NxOgrePublicClass ParticleData
   
   /** \brief
   */
-  Buffer<SingleVec3>       mParticleCollisionNormals;
+  Buffer<Vec3>       mParticleCollisionNormals;
   
 }; // class ParticleData
 

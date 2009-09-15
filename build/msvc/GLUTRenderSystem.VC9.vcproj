@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetDir)NxOgreGLUT_Debug.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\rendersystems\glut\*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy &quot;$(TargetDir)NxOgreGLUT_Debug.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\..\rendersystems\glut\*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y"
 			/>
 		</Configuration>
 		<Configuration
@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetDir)NxOgreGLUT.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;"
+				CommandLine="xcopy &quot;$(TargetDir)NxOgreGLUT.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\..\rendersystems\glut\*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

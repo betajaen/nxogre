@@ -1,7 +1,7 @@
 /** File: NxOgreRigidBodyFunctions.h
     Created on: 10-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     (c) Copyright, 2008 by Robin Southern, http://www.nxogre.org
 

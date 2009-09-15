@@ -1,7 +1,7 @@
 /** File: NxOgreManualHeightField.h
     Created on: 22-Mar-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

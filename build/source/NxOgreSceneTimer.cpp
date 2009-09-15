@@ -1,7 +1,7 @@
 /** File: NxOgreSceneTimer.cpp
     Created on: 8-May-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

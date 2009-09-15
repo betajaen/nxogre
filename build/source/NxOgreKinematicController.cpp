@@ -1,7 +1,7 @@
 /** File: NxOgreKinematicController.cpp
     Created on: 22-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -25,7 +25,6 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreKinematicController.h"
-#include "NxOgreKinematicFunctions.h"
 #include "NxOgreErrorStream.h"
 #include "NxOgreScene.h"
 #include "NxOgreShape.h"

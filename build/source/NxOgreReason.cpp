@@ -1,7 +1,7 @@
 /** File: NxOgreReason.cpp
     Created on: 6-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -313,11 +313,11 @@ SharedStringStream Reason::whyAsStream(const NxJointDesc& description)
 
  for (unsigned int i=0; i<2;i++)
  {
-  if (Functions::Math::abs(description.localAxis[i].magnitudeSquared() - 1.0f) > 0.1f)
+  if (Math::abs(description.localAxis[i].magnitudeSquared() - 1.0f) > 0.1f)
    message << "- (NxJointDesc:7) LocalAxis " << i << "\n";
-  if (Functions::Math::abs(description.localNormal[i].magnitudeSquared() - 1.0f) > 0.1f)
+  if (Math::abs(description.localNormal[i].magnitudeSquared() - 1.0f) > 0.1f)
    message << "- (NxJointDesc:8) LocalNormal " << i << "\n";
-  if (Functions::Math::abs(description.localAxis[i].dot(description.localNormal[i])) > 0.1f)
+  if (Math::abs(description.localAxis[i].dot(description.localNormal[i])) > 0.1f)
    message << "- (NxJointDesc:9) Orthogonal pairs " << i << "\n";
  }
 

@@ -1,7 +1,7 @@
 /** File: NxOgreRaycastHit.h
     Created on: 19-Apr-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -50,11 +50,11 @@ struct NxOgrePublicClass RaycastHit
   
   /** \brief Impact point in world space.
   */
-  Vec3              mWorldImpact;
+  Vec3               mWorldImpact;
   
   /** \brief Impact normal in world space.
   */
-  Vec3              mWorldNormal;
+  Vec3               mWorldNormal;
   
   /** \brief Index of touched face of the mesh (if it's a mesh).
   */

@@ -96,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre_Debug.dll&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre_Debug.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre_Debug.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyCake\application\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre_Debug.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyFlour\application\&quot;&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk Debug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -177,7 +177,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre.dll&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyCake\application\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyFlour\application\&quot;&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk Release NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -207,7 +207,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="source/;../../source/;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;;../../dependencies"
-				PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_STATIC_LIBRARY;NXOGRE_OPTIONS_USE_LOG;NXOGRE_MEMORY_DEBUGGER_USEFILE;NXOGRE_MEMORY_DEBUGGER_FILE=&quot;NxOgreLeaks.txt&quot;"
+				PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_STATIC_LIBRARY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -247,7 +247,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgreStatic_Debug.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk DebugStatic NO_DLL NxOgre_DebugStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -314,7 +314,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgreStatic.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk ReleaseStatic NO_DLL NxOgre_ReleaseStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -395,7 +395,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre.dll&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyCake\application\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyFlour\application\&quot;&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk Minimal NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -478,7 +478,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre_Debug.dll&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgre_Debug.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre_Debug.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyCake\application\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\sdk\NxOgre_Debug.dll&quot; &quot;$(SolutionDir)..\..\..\BloodyFlour\application\&quot;&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk MinimalDebug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -545,49 +545,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;$(SolutionDir)..\..\sdk&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)NxOgreStatic.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)source\NxOgre*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;&#x0D;&#x0A;&#x0D;&#x0A;mkdir &quot;$(SolutionDir)..\..\sdk\bml&quot;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\dependencies\bml\*.h&quot; &quot;$(SolutionDir)..\..\sdk\bml\&quot;&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk MinimalStatic NO_DLL NxOgreStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
 	<References>
 	</References>
 	<Files>
-		<Filter
-			Name="bml"
-			>
-			<File
-				RelativePath="..\..\dependencies\bml\bml.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\dependencies\bml\bounds.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\dependencies\bml\constants.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\dependencies\bml\math.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\dependencies\bml\matrix.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\dependencies\bml\prototypes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\dependencies\bml\quaternion.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\dependencies\bml\vector.h"
-				>
-			</File>
-		</Filter>
 		<File
 			RelativePath=".\source\malloc.c.h"
 			>
@@ -706,6 +670,10 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreAssociativeArray.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBounds.h"
 			>
 		</File>
 		<File
@@ -909,6 +877,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreHeightFieldSample.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreIntVectors.cpp"
 			>
 		</File>
@@ -941,6 +913,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreJointFunctions.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreJointLimitDescription.cpp"
 			>
 		</File>
@@ -970,14 +946,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreKinematicController.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreKinematicFunctions.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreKinematicFunctions.h"
 			>
 		</File>
 		<File
@@ -1281,6 +1249,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreQuat.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreQuat.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreRay.cpp"
 			>
 		</File>
@@ -1438,14 +1414,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreSceneRenderable.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSceneRenderer.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSceneRenderer.h"
 			>
 		</File>
 		<File
@@ -1685,11 +1653,19 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreVec.cpp"
+			RelativePath="..\source\NxOgreVec.h"
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreVec.h"
+			RelativePath="..\source\NxOgreVec2.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec3.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec4.cpp"
 			>
 		</File>
 		<File

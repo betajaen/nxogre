@@ -1,7 +1,7 @@
 /** File: NxOgreMemoryDebugger.cpp
     Created on: 2-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -63,7 +63,6 @@ extern void setNxOgreCreationStatus(int b)
 }
 
 
-
 #if NxOgreCompiler == NxOgreCompilerMSVC
  #define NXOGRE_COMPILER_STRING "Microsoft Visual C++ (" NxOgre_Stringify(_MSC_VER) ")"
 #elif NxOgreCompiler == NxOgreCompilerGNUC
@@ -92,9 +91,9 @@ extern void setNxOgreCreationStatus(int b)
  #define NXOGRE_DYNAMIC_LIBRARY_STRING ""
 #endif
 
-# if (NxOgreMemoryDebugger == 1)
+#if (NxOgreMemoryDebugger == 1)
 ::NxOgre_Namespace::MemoryDebugger gMemoryDebugger;
-# endif
+#endif
 
                                                                                        
 
@@ -131,13 +130,11 @@ void* MemoryDebugger::addAllocation(void* ptr, size_t size, unsigned int class_i
  _Last->_File = file;
  _Last->_Line = line;
  _Last++;
-
  return ptr;
 }
 
 void MemoryDebugger::removeAllocation(void* ptr)
 {
-
  VtIterator begin = _First, last = _Last;
  for (;begin != last; ++begin)
   if (ptr == begin->_Ptr)
@@ -157,7 +154,6 @@ void MemoryDebugger::changeAllocation(void* ptr, void* new_ptr, size_t new_size)
    begin->_Ptr = new_ptr;
    begin->_Size = new_size;
   }
-
 }
 
 unsigned int MemoryDebugger::_size() const
@@ -197,7 +193,6 @@ void MemoryDebugger::_reserve(unsigned int new_size)
 
 void MemoryDebugger::_resize(unsigned int new_size)
 {
-
  VtIterator new_first = (VtIterator) NxOgreMalloc(new_size * sizeof(Vt));
  _copy(_First, _Last, new_first);
  _range_destruct(_First, _Last);
@@ -216,7 +211,6 @@ void MemoryDebugger::_range_destruct(VtIterator begin, VtIterator end)
 
 void MemoryDebugger::clean(void)
 {
-
  if (_CleanAllowed && (_size() < _capacity() / 2))
  {
   _reserve(_size() + 16);

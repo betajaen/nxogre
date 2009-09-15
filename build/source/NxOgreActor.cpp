@@ -1,7 +1,7 @@
 /** File: NxOgreActor.cpp
     Created on: 8-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

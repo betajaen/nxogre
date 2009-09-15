@@ -1,7 +1,7 @@
 /** File: NxOgreFunctions.cpp
     Created on: 5-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

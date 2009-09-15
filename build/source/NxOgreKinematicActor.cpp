@@ -1,7 +1,7 @@
 /** File: NxOgreKinematicActor.cpp
     Created on: 20-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -210,9 +210,9 @@ void KinematicActor::moveGlobalOrientation (const Matrix33& r33)
  ::NxOgre_Namespace::Functions::RigidBodyFunctions::moveGlobalOrientation(r33, mActor);
 }
 
-void KinematicActor::moveGlobalOrientationQuat (const Vec4& r4)
+void KinematicActor::moveGlobalOrientationQuat (const Quat& q)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::moveGlobalOrientationQuat(r4, mActor);
+ ::NxOgre_Namespace::Functions::RigidBodyFunctions::moveGlobalOrientationQuat(q, mActor);
 }
 
                                                                                        

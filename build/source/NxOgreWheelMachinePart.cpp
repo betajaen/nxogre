@@ -1,7 +1,7 @@
 /** File: NxOgreWheelMachinePart.cpp
     Created on: 19-May-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -85,7 +85,7 @@ void WheelMachinePart::simulate(float time)
 
 
   NxQuat quat;wheelPose.M.toQuat(quat);
- mPointRenderable->render(wheelPose.t, quat);
+  mPointRenderable->render(wheelPose.t, quat);
 }
 
                                                                                        

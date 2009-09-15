@@ -1,7 +1,7 @@
 /** File: NxOgreArchiveResourceIdentifier.cpp
     Created on: 4-Mar-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

@@ -1,7 +1,7 @@
 /** File: NxOgreCommon.h
     Created on: 2-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -40,9 +40,11 @@
 #include "NxOgreMath.h"
 #include "NxOgreTuple.h"
 #include "NxOgreVec.h"
-#include "NxOgreIntVectors.h"
+#include "NxOgreQuat.h"
+#include "NxOgreBounds.h"
 #include "NxOgreMatrix.h"
 #include "NxOgreString.h"
+#include "NxOgreIntVectors.h"
 #include "NxOgreSharedStringStream.h"
 #include "NxOgreUniformResourceIdentifier.h"
 #include "NxOgreArchiveResourceIdentifier.h"
@@ -958,6 +960,9 @@ enum ContactPairFlags
                  class                      WorldDescription;              //!<
                  class                      WorldPrototype;                //!<
 
+                 typedef                    BoundsT<Vec2>           Bounds2;
+                 typedef                    BoundsT<Vec3>           Bounds3;
+                 typedef                    BoundsT<Vec4>           Bounds4;
 
                                                                                        
 

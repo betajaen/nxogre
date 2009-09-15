@@ -1,5 +1,5 @@
 /** File: NxOgre.h
-    Created on: 14-Sep-09
+    Created on: 15-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -25,7 +25,6 @@
 #ifndef NXOGRE_H
 #define NXOGRE_H
 
-#include <bml/bml.h>
 #include "NxOgreAccumulativeSceneTimer.h"
 #include "NxOgreActiveParticle.h"
 #include "NxOgreActor.h"
@@ -33,6 +32,7 @@
 #include "NxOgreArchive.h"
 #include "NxOgreArchiveResourceIdentifier.h"
 #include "NxOgreArray.h"
+#include "NxOgreBounds.h"
 #include "NxOgreBox.h"
 #include "NxOgreBuffer.h"
 #include "NxOgreCallback.h"
@@ -70,7 +70,6 @@
 #include "NxOgreJointLimitSoftDescription.h"
 #include "NxOgreKinematicActor.h"
 #include "NxOgreKinematicController.h"
-#include "NxOgreKinematicFunctions.h"
 #include "NxOgreMachine.h"
 #include "NxOgreMachinePart.h"
 #include "NxOgreManualHeightField.h"
@@ -110,6 +109,7 @@
 #include "NxOgrePointerClass.h"
 #include "NxOgrePointRenderable.h"
 #include "NxOgrePrototypeFunctions.h"
+#include "NxOgreQuat.h"
 #include "NxOgreRay.h"
 #include "NxOgreRaycastHit.h"
 #include "NxOgreReason.h"
@@ -124,7 +124,6 @@
 #include "NxOgreRevoluteJointDescription.h"
 #include "NxOgreRigidBody.h"
 #include "NxOgreRigidBodyDescription.h"
-#include "NxOgreRigidBodyDynamicFunctions.h"
 #include "NxOgreRigidBodyFunctions.h"
 #include "NxOgreRigidBodyPrototype.h"
 #include "NxOgreScene.h"
@@ -132,7 +131,6 @@
 #include "NxOgreSceneGeometry.h"
 #include "NxOgreScenePrototype.h"
 #include "NxOgreSceneRenderable.h"
-#include "NxOgreSceneRenderer.h"
 #include "NxOgreSceneTimer.h"
 #include "NxOgreShape.h"
 #include "NxOgreShapeBlueprint.h"

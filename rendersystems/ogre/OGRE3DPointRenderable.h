@@ -1,9 +1,9 @@
 /** File: OGRE3DPointRenderable.h
     Created on: 18-May-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
-    Copyright (c) 2008 Robin Southern
+    Copyright (c) 2008-2009 Robin Southern
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

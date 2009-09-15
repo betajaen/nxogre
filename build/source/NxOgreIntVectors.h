@@ -1,7 +1,7 @@
 /** File: NxOgreIntVectors.h
     Created on: 15-Apr-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -42,120 +42,52 @@ class NxOgrePublicClass int2
 {
   
   public: // Functions
-  
-   int2(void)
-   : x(0), y(0)
-   {
-   }
-
-   int2(int _x, int _y)
-   : x(_x), y(_y)
-   {
-   }
-
-   ~int2(void)
-   {
-   }
-
-   void operator+=(const int2& other)
-   {
-    x += other.x;
-    y += other.y;
-   }
-
-   void operator-=(const int2& other)
-   {
-    x -= other.x;
-    y -= other.y;
-   }
-
-   void operator*=(const int2& other)
-   {
-    x *= other.x;
-    y *= other.y;
-   }
-
-   void operator/=(const int2& other)
-   {
-    x /= other.x;
-    y /= other.y;
-   }
-
-   void operator*=(int r)
-   {
-    x *= r;
-    y *= r;
-   }
-  
-                        int                    x //< X component.
-                                              ,y //< Y component.
-                                              ;
-  
-  
+   
+   int2(void);
+   
+   int2(int _x, int _y);
+   
+  ~int2(void);
+   
+   void operator+=(const int2& other);
+   
+   void operator-=(const int2& other);
+   
+   void operator*=(const int2& other);
+   
+   void operator/=(const int2& other);
+   
+   void operator*=(int r);
+   
+   int x, y;
+   
 }; // class int2
 
 /** \brief int3 is a mathemical 3 row vector with a int as a datatype.
 */
 class NxOgrePublicClass int3
 {
-  
+   
   public: // Functions
-  
-    int3(void)
-    : x(0), y(0), z(0)
-    {
-    }
-
-    int3(int _x, int _y, int _z)
-    : x(_x), y(_y), z(_z)
-    {
-    }
-
-    ~int3(void)
-    {
-    }
-
-    void operator+=(const int3& other)
-    {
-     x += other.x;
-     y += other.y;
-     z += other.z;
-    }
-
-    void operator-=(const int3& other)
-    {
-     x -= other.x;
-     y -= other.y;
-     z -= other.z;
-    }
-
-    void operator*=(const int3& other)
-    {
-     x *= other.x;
-     y *= other.y;
-     z *= other.z;
-    }
-
-    void operator/=(const int3& other)
-    {
-     x /= other.x;
-     y /= other.y;
-     z /= other.z;
-    }
-
-    void operator*=(int r)
-    {
-     x *= r;
-     y *= r;
-     z *= r;
-    }
-  
-                        int                    x //< X component.
-                                              ,y //< Y component.
-                                              ,z //< Z component.
-                                              ;
-  
-  
+   
+    int3(void);
+   
+    int3(int _x, int _y, int _z);
+   
+   ~int3(void);
+   
+    void operator+=(const int3& other);
+   
+    void operator-=(const int3& other);
+   
+    void operator*=(const int3& other);
+   
+    void operator/=(const int3& other);
+   
+    void operator*=(int r);
+   
+    int x, y, z;
+   
 }; // class ClassName
 
 
@@ -163,71 +95,27 @@ class NxOgrePublicClass int3
 */
 class NxOgrePublicClass int4
 {
-  
-  
+   
   public: // Functions
-  
-     int4(void)
-     : w(0), x(0), y(0), z(0)
-     {
-     }
-
-     int4(int _w, int _x, int _y, int _z)
-     : w(_w), x(_x), y(_y), z(_z)
-     {
-     }
-
-     ~int4(void)
-     {
-     }
-
-     void operator+=(const int4& other)
-     {
-      w += other.w;
-      x += other.x;
-      y += other.y;
-      z += other.z;
-     }
-
-     void operator-=(const int4& other)
-     {
-      w -= other.w;
-      x -= other.x;
-      y -= other.y;
-      z -= other.z;
-     }
-
-     void operator*=(const int4& other)
-     {
-      w *= other.w;
-      x *= other.x;
-      y *= other.y;
-      z *= other.z;
-     }
-
-     void operator/=(const int4& other)
-     {
-      w /= other.w;
-      x /= other.x;
-      y /= other.y;
-      z /= other.z;
-     }
-
-     void operator*=(int r)
-     {
-      w *= r;
-      x *= r;
-      y *= r;
-      z *= r;
-     }
-  
-                        int                    w //< W (1st) component.
-                                              ,x //< X (2nd) component.
-                                              ,y //< Y (3rd) component.
-                                              ,z //< Z (4th) component.
-                                              ;
-  
-  
+   
+   int4(void);
+   
+   int4(int _w, int _x, int _y, int _z);
+   
+  ~int4(void);
+   
+   void operator+=(const int4& other);
+   
+   void operator-=(const int4& other);
+   
+   void operator*=(const int4& other);
+   
+   void operator/=(const int4& other);
+   
+   void operator*=(int r);
+   
+   int w, x, y, z;
+   
 }; // class ClassName
 
                                                                                        

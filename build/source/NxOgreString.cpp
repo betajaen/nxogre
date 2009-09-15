@@ -1,7 +1,7 @@
 /** File: NxOgreSharedString.cpp
     Created on: 4-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     (c) Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

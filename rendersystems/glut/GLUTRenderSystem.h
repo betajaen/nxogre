@@ -1,9 +1,9 @@
 /** File: GLUTRenderSystem.h
     Created on: 9-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
-    Copyright (c) 2008 Robin Southern
+    Copyright (c) 2008-2009 Robin Southern
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRender
 
      /** \brief
      */
-     GLUTBody*                            createBody(NxOgre::Shape*, NxOgre::Real3 position, GLUTShape, Size3 size, Colour colour = Colour(1,1,1), bool shadows = true, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     GLUTBody*                            createBody(NxOgre::Shape*, NxOgre::Vec3 position, GLUTShape, Size3 size, Colour colour = Colour(1,1,1), bool shadows = true, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
 
      /** \brief
      */

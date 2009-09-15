@@ -1,7 +1,7 @@
 /** File: NxOgreXXX.h
     Created on: X-XXX-XX
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -27,6 +27,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "math.h"
 
                                                                                        
 
@@ -35,117 +36,281 @@ namespace NxOgre_Namespace
 
                                                                                        
 
-namespace Functions
-{
-
-                                                                                       
-
-/** \brief
-*/
 namespace Math
 {
-/*
-    const Real PI;
-    const Real HALF_PI;
-    const Real TWO_PI;
-    const Real INVERSE_PI;
 
+ static const float  Pi         = 3.141592653589793f;
+ static const float  HalfPi     = 1.57079632679489661923f;
+ static const float  TwoPi      = 6.28318530717958647692f;
+ static const float  InversePi  = 0.31830988618379067154f;
+ 
+ static const double PiD        = 3.141592653589793f;
+ static const double HalfPiD    = 1.57079632679489661923f;
+ static const double TwoPiD     = 6.28318530717958647692f;
+ static const double InversePiD = 0.31830988618379067154f;
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-    const DoubleReal PI_DOUBLE;
-    const DoubleReal HALF_PI_DOUBLE;
-    const DoubleReal TWO_PI_DOUBLE;
-    const DoubleReal INVERSE_PI_DOUBLE;
-#endif
-*/
-   /** \brief Find the sine of an angle, in radians.
-   */
-   NxOgrePublicFunction  Real          sin(Real);
+template<typename T> inline T nearEqual(const T& a, const T& b, const T& tolerance)
+{
+ return Math::abs(a - b) <= tolerance;
+}
 
-   /** \brief Fine the cosine of an angle, in radians.
-   */
-   NxOgrePublicFunction  Real          cos(Real);
+template<typename T> inline T lerp(const T& a, const T& b, const T& alpha) 
+{
+ return alpha * (b - a) + a;
+}
 
-   /** \brief Find both the sin and cos of an angle, in radians.
-   */
-   NxOgrePublicFunction  void          sinCos(Real a, Real& sine, Real& cosine);
+template<typename T> inline T abs(T v)
+{
+ return v >= (T) 0 ? v : -v;
+}
 
-   /** \brief Find the tangent of an angle, in randians.
-   */
-   NxOgrePublicFunction  Real          tan(Real);
+template<typename T> inline T trunc(const T& v)
+{
+ return T( (v < (T) 0 ) ? math::ceil(v) : math::floor(v) );
+}
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-   /** \brief Find the sine of an angle, in radians.
-   */
-   NxOgrePublicFunction  DoubleReal    sin(DoubleReal);
-#endif
+template<typename T> inline T round(const T& v)
+{
+ return T( math::floor(v + (T) 0.5 ) );
+}
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-   /** \brief Find the sine of an angle, in radians.
-   */
-   NxOgrePublicFunction  DoubleReal    cos(DoubleReal);
-#endif
+inline float abs(float v)
+{
+ return ::fabsf(v);
+}
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-   /** \brief Find the sine of an angle, in radians.
-   */
-   NxOgrePublicFunction  void          sinCos(DoubleReal a, DoubleReal& sin, DoubleReal& cosine);
-#endif
+inline double abs(double v)
+{
+ return ::fabs(v);
+}
 
-  /** \brief Find the arcsine of an angle, in radians.
-   */
-   NxOgrePublicFunction  Real          asin(Real);
+inline int abs(int v)
+{
+ return ::abs(v);
+}
 
-   /** \brief Fine the arccosine of an angle, in radians.
-   */
-   NxOgrePublicFunction  Real          acos(Real);
+inline long abs(long v)
+{
+ return ::labs(v);
+}
 
-   /** \brief Find the arctangent of an angle, in randians.
-   */
-   NxOgrePublicFunction  Real          atan(Real);
+inline float ceil(float v)
+{
+ return ::ceilf(v);
+}
 
-   /** \brief Find the tangent of an angle, in randians.
-   */
-   NxOgrePublicFunction  Real          atan2(Real);
+inline double ceil(double v)
+{
+ return ::ceil(v);
+}
 
+inline float floor(float v)
+{
+ return ::floorf(v);
+}
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-   /** \brief Find the sine of an angle, in radians.
-   */
-   NxOgrePublicFunction  DoubleReal    tan(DoubleReal);
-#endif
+inline double floor(double v)
+{
+ return ::floor(v);
+}
 
-   /** \brief Perform a square root 
-   */
-   NxOgrePublicFunction  Real          sqrt(Real);
+template<typename T>
+inline T min(const T& a, const T& b)
+{
+ return (a > b) ? b : a;
+}
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-   /** \brief Perform a square root 
-   */
-   NxOgrePublicFunction  DoubleReal    sqrtDouble(DoubleReal);
-#endif
+template<typename T>
+inline T min(const T& a, const T& b, const T& c)
+{
+ return min(min(a, b), c);
+}
 
-   /** \brief Generate a random Real number between a and b.
-   */
-   NxOgrePublicFunction  Real          random(Real a, Real b);
-   
-   /** \brief Generate a random integer between a and b.
-   */
-   NxOgrePublicFunction  int           random(int a, int b);
-   
-   NxOgrePublicFunction  Real          abs(Real);
+template<typename T>
+inline T max(const T& a, const T& b)
+{
+ return (a > b) ? a : b;
+}
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-   /** \brief Perform a square root 
-   */
-   NxOgrePublicFunction  DoubleReal    abs(DoubleReal);
-#endif
+template<typename T>
+inline T max(const T& a, const T& b, const T& c)
+{
+ return max(max(a, b), c);
+}
 
-} // namespace Math
+template<typename T>
+inline T clamp(const T& val, const T& min, const T& max)
+{
+ if (val > max) return max;
+ else if (val < min) return min;
+ return val;
+}
+
+inline float sqrt(float v)
+{
+ return ::sqrtf(v);
+}
+
+inline double sqrt(double v)
+{
+ return ::sqrt(v);
+}
+
+inline float arccos( float v)
+{
+ if (-1.0f < v)
+ {
+  if (v < 1.0f)
+   return acosf(v);
+  else
+   return 0.0f;
+ }
+ else
+  return Pi;
+}
+
+inline double arccos( double v)
+{
+ if (-1.0 < v)
+ {
+  if (v < 1.0)
+   return acos(v);
+  else
+   return 0.0;
+ }
+ else
+  return PiD;
+}
+
+inline float arcsin( float v)
+{
+ if (-1.0f < v)
+ {
+  if (v < 1.0f)
+   return asinf(v);
+  else
+   return -HalfPi;
+ }
+ else
+  return HalfPi;
+}
+
+inline double arcsin( double v)
+{
+ if (-1.0 < v)
+ {
+  if (v < 1.0)
+   return asin(v);
+  else
+   return -HalfPi;
+ }
+ else
+  return HalfPi;
+}
+
+inline float arctan( float v)
+{
+ return ::atanf(v);
+}
+
+inline double arctan( double v)
+{
+ return ::atan(v);
+}
+
+inline float arctan2( float y, float x)
+{
+ return ::atan2f(y, x);
+}
+
+inline double arctan2( double y, double x)
+{
+ return ::atan2(y, x);
+}
+
+inline float sin(float v)
+{
+ return ::sinf(v);
+}
+
+inline double sin(double v)
+{
+ return ::sin(v);
+}
+
+inline float cos(float v)
+{
+ return ::cosf(v);
+}
+
+inline double cos(double v)
+{
+ return ::cos(v);
+}
+
+inline float tan(float v)
+{
+ return ::tanf(v);
+}
+
+inline double tan(double v)
+{
+ return ::tan(v);
+}
+
+inline float exp(float v)
+{
+ return ::expf(v);
+}
+
+inline double exp(double v)
+{
+ return ::exp(v);
+}
+
+inline float pow(float base, float exponent)
+{
+ return ::powf(base, exponent);
+}
+
+inline double pow(double base, double exponent)
+{
+ return ::pow(base, exponent);
+}
+
+inline void seedRandom(unsigned int seed)
+{
+ ::srand(seed);
+}
+
+inline float random()
+{
+ return float(::rand()) / float(RAND_MAX);
+}
+
+inline double randomD()
+{
+ return double(::rand()) / double(RAND_MAX);
+}
+
+inline float random(float x1, float x2)
+{
+ float r = random();
+ float s = x2 - x1;
+ return float(r * s + x1);
+}
+
+inline double random(double x1, double x2)
+{
+ double r = random();
+ double s = x2 - x1;
+ return double(r * s + x1);
+}
+
 
                                                                                        
 
-} // namespace Functions
+} // namespace Math
 
                                                                                        
 

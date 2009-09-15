@@ -1,7 +1,7 @@
 /** File: NxOgreMesh.h
     Created on: 15-Jan-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

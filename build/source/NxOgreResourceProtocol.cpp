@@ -1,7 +1,7 @@
 /** File: NxOgreResourceProtocol.cpp
     Created on: 08-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 

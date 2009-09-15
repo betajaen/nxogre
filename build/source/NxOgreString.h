@@ -1,7 +1,7 @@
 /** File: NxOgreSharedString.h
     Created on: 4-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     (c) Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -40,7 +40,7 @@ namespace NxOgre_Namespace
 
 class String;
 
-class StringBase : public PointerClass<Classes::_StringBase>
+class NxOgrePublicClass StringBase : public PointerClass<Classes::_StringBase>
 {
  
  friend class String;
@@ -189,7 +189,7 @@ class StringBase : public PointerClass<Classes::_StringBase>
 };
 
 
-class String
+class NxOgrePublicClass String
 {
  public:
   

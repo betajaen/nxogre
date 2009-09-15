@@ -1,7 +1,7 @@
 /** File: NxOgreKinematicActor.h
     Created on: 20-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
@@ -187,7 +187,7 @@ class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_Kinematic
   
   /** \brief The moveGlobal* calls serve to move kinematically controlled dynamic actors through the game world. 
   */
-                                      void                   moveGlobalOrientationQuat (const Vec4&);
+                                      void                   moveGlobalOrientationQuat (const Quat&);
 
   /** \brief Creates a new shape and adds it to the list of shapes of this actor. 
   */

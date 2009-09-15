@@ -1,9 +1,9 @@
 /** File: GLUTRenderSystem.h
     Created on: 9-Nov-08
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
-    Copyright (c) 2008 Robin Southern
+    Copyright (c) 2008-2009 Robin Southern
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -64,15 +64,15 @@ enum GLUTShape
 
 /** \brief RGB colour using three floats as intensity values from 0.0 to 1.0
 */
-typedef NxOgre::Real3 Colour;
+typedef NxOgre::Vec3 Colour;
 
 /** \brief A typedef to represent the size of a GLUT_box as three floats.
 */
-typedef NxOgre::Real3 Size3;
+typedef NxOgre::Vec3 Size3;
 
 /** \brief A typedef to represent the size of a GLUT_Capsule and GLUT_Plane as two floats.
 */
-typedef NxOgre::Real2 Size2;
+typedef NxOgre::Vec2 Size2;
 
                                                                                        
 

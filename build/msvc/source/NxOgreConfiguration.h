@@ -2,7 +2,7 @@
     File: NxOgreConfiguration.h
     Created on: 3-Nov-03
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
     
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
     

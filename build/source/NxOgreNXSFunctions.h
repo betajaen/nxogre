@@ -1,7 +1,7 @@
 /** File: NxOgreNXSFunctions.h
     Created on: 28-Feb-09
     Author: Robin Southern "betajaen"
-    SVN: $Id$
+    
 
     © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
 
