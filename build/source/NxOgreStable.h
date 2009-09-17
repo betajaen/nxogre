@@ -35,13 +35,15 @@
 #include "limits.h"
 #include "float.h"
 #include <stdlib.h>
+#include <string>
+#include <sstream>
 
                                                                                        
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 5
-#define NxOgreVersionRelease 6
-#define NxOgreCodeName "Git"
+#define NxOgreVersionRelease 7
+#define NxOgreCodeName "stl_experiment"
 
                                                                                        
 

@@ -932,8 +932,6 @@ enum ContactPairFlags
  template<class T, unsigned int Ti> class   Singleton;                     //!<
 //::             class                      SharedBuffer;                  //!<
                  class                      SharedKinematicFunctions;      //!<
-                 class                      String;                        //!<
-                 class                      StringBase;                    //!<
                  class                      SoftBody;                      //!<
                  class                      SoftBodyDescription;           //!<
                  class                      SoftBodyMesh;                  //!<
