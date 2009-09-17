@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="source/;../../source/;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;;../../dependencies"
+				AdditionalIncludeDirectories="source/;../../source/;../../libs/;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_DYNAMIC_LIBRARY;NXOGRE_OPTIONS_USE_LOG;NXOGRE_MEMORY_DEBUGGER_USEFILE;NXOGRE_MEMORY_DEBUGGER_FILE=&quot;NxOgreLeaks.txt&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

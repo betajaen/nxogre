@@ -37,6 +37,12 @@
 #include <stdlib.h>
 #include <string>
 #include <sstream>
+#include <boost/algorithm/string.hpp>
+#include <map>
+#include <vector>
+#include <boost/ptr_container/ptr_map.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
+
 
                                                                                        
 
