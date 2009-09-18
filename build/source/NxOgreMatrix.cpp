@@ -28,7 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreMatrix.h"
-#include "NxOgreVec.h"
+#include "NxOgreVec3.h"
 #include "NxOgreQuat.h"
 
                                                                                        

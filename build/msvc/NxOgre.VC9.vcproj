@@ -1641,11 +1641,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreVec.h"
+			RelativePath="..\source\NxOgreVec2.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreVec2.cpp"
+			RelativePath="..\source\NxOgreVec2.h"
 			>
 		</File>
 		<File
@@ -1653,7 +1653,15 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreVec3.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreVec4.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec4.h"
 			>
 		</File>
 		<File

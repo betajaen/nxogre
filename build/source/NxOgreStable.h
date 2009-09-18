@@ -53,7 +53,7 @@
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 6
 #define NxOgreVersionRelease 0
-#define NxOgreCodeName "detritus"
+#define NxOgreCodeName "Detritus"
 #define NxOgreBranch "detritus"
 
                                                                                        
@@ -83,10 +83,6 @@
 #endif
 
                                                                                        
-
-/** \brief
-*/
-#define NxOgre NxOgre
 
 /** \brief Global new operator/function for every NxOgre class that requires to be a pointer.
     \example
