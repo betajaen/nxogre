@@ -1,25 +1,30 @@
-/** File: NxOgreCircularBuffer.h
-    Created on: 15-Feb-09
-    Author: Robin Southern "betajaen"
+/** 
     
-
-    © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
-
     This file is part of NxOgre.
-
-    NxOgre is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    NxOgre is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+    
 */
+
+                                                                                       
 
 #ifndef NXOGRE_CIRCULARBUFFER_H
 #define NXOGRE_CIRCULARBUFFER_H
@@ -32,7 +37,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -48,7 +53,7 @@ namespace Functions
   {
     public:
 
-    friend class ::NxOgre_Namespace::CircularBuffer<T>;
+    friend class ::NxOgre::CircularBuffer<T>;
     
     typedef typename T* TIterator;
     
@@ -58,7 +63,7 @@ namespace Functions
     {
       public:
         
-        SharedCircularBuffer(int type = ::NxOgre_Namespace::Classes::USER_CLASS)
+        SharedCircularBuffer(int type = ::NxOgre::Classes::USER_CLASS)
         {
          _First = _End = _Read = _Write = 0;
          _Type = type;
@@ -67,18 +72,18 @@ namespace Functions
         ~SharedCircularBuffer()
         {
          if (_First)
-          NxOgre_Namespace::Memory::unallocate(_First);
+          NxOgre::Memory::unallocate(_First);
          _First = _End = _Read = _Write = 0;
         }
         
         void* operator new(size_t size)
         {
-         return NxOgre_Allocate(size, ::NxOgre_Namespace::Classes::_SharedCircularBuffer);
+         return NxOgre_Allocate(size, ::NxOgre::Classes::_SharedCircularBuffer);
         }
         
         void operator delete(void* ptr)
         {
-         ::NxOgre_Namespace::Memory::unallocate(ptr);
+         ::NxOgre::Memory::unallocate(ptr);
         }
         
         TIterator _First, _End, _Read, _Write;
@@ -136,10 +141,10 @@ namespace Functions
         
        static void resize(SharedCircularBuffer* shared_buffer, size_t new_size)
        {
-        TIterator new_first = (TIterator) ::NxOgre_Namespace::Memory::allocate(new_size * sizeof(T), -(shared_buffer->_Type));
+        TIterator new_first = (TIterator) ::NxOgre::Memory::allocate(new_size * sizeof(T), -(shared_buffer->_Type));
         copy(shared_buffer->_First, shared_buffer->_End, new_first);
         range_destruct(shared_buffer->_First, shared_buffer->_End);
-        ::NxOgre_Namespace::Memory::unallocate(shared_buffer->_First);
+        ::NxOgre::Memory::unallocate(shared_buffer->_First);
         shared_buffer->_End = new_first + new_size;
         shared_buffer->_First = new_first;
        }
@@ -170,23 +175,23 @@ namespace Functions
 template<typename T> class  CircularBuffer
 {
   
-  typedef typename ::NxOgre_Namespace::Functions::CircularBufferFunctions<T>::TIterator  Iterator;
-  typedef typename ::NxOgre_Namespace::Functions::CircularBufferFunctions<T>::SharedCircularBuffer TPayload;
-  typedef typename ::NxOgre_Namespace::Functions::CircularBufferFunctions<T>::Functions  TFunctions;
+  typedef typename ::NxOgre::Functions::CircularBufferFunctions<T>::TIterator  Iterator;
+  typedef typename ::NxOgre::Functions::CircularBufferFunctions<T>::SharedCircularBuffer TPayload;
+  typedef typename ::NxOgre::Functions::CircularBufferFunctions<T>::Functions  TFunctions;
 
   public:
 
    CircularBuffer(void)
    {
-    _T = NxOgre_New(TPayload)(::NxOgre_Namespace::Classes::USER_CLASS);
-    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_CircularBufferReferenceCounter);
+    _T = NxOgre_New(TPayload)(::NxOgre::Classes::USER_CLASS);
+    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_CircularBufferReferenceCounter);
     (*_Usage) = 1;
    };
 
    CircularBuffer(int type)
    {
     _T = NxOgre_New(TPayload)(type);
-    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_CircularBufferReferenceCounter);
+    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_CircularBufferReferenceCounter);
     (*_Usage) = 1;
    };
 
@@ -202,7 +207,7 @@ template<typename T> class  CircularBuffer
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre_Namespace::Memory::unallocate(_Usage);
+     ::NxOgre::Memory::unallocate(_Usage);
      delete _T;
     }
    }
@@ -211,7 +216,7 @@ template<typename T> class  CircularBuffer
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre_Namespace::Memory::unallocate(_Usage);
+     ::NxOgre::Memory::unallocate(_Usage);
      delete _T;
     }
     _T      = other._T;
@@ -261,7 +266,7 @@ template<typename T> class  CircularBuffer
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

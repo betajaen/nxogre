@@ -1,24 +1,27 @@
-/** File: NxOgrePhysXStream.cpp
-    Created on: 28-Feb-09
-    Author: Robin Southern "betajaen"
+/** 
     
-
-    © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
-
     This file is part of NxOgre.
-
-    NxOgre is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    NxOgre is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+    
 */
 
                                                                                        
@@ -32,116 +35,10 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
-
-#if 0
-PhysXStream::PhysXStream(Resource* resource) : mResource(resource)
-{
-  fp = fopen("physxstream.bin", "wb");
-}
-
-PhysXStream::~PhysXStream()
-{
-	if(fp)
-   fclose(fp);
-}
-
-// Loading API
-NxU8 PhysXStream::readByte() const
-{
-	NxU8 b;
-	size_t r = fread(&b, sizeof(NxU8), 1, fp);
-	NX_ASSERT(r);
-	return b;
-}
-
-NxU16 PhysXStream::readWord() const
-{
-	NxU16 w;
-	size_t r = fread(&w, sizeof(NxU16), 1, fp);
-	NX_ASSERT(r);
-	return w;
-}
-
-NxU32 PhysXStream::readDword() const
-{
-	NxU32 d;
-	size_t r = fread(&d, sizeof(NxU32), 1, fp);
-	NX_ASSERT(r);
-	return d;
-}
-
-float PhysXStream::readFloat() const
-{
-	NxReal f;
-	size_t r = fread(&f, sizeof(NxReal), 1, fp);
-	NX_ASSERT(r);
-	return f;
-}
-
-double PhysXStream::readDouble() const
-{
-	NxF64 f;
-	size_t r = fread(&f, sizeof(NxF64), 1, fp);
-	NX_ASSERT(r);
-	return f;
-}
-
-void PhysXStream::readBuffer(void* buffer, NxU32 size)	const
-{
-	size_t w = fread(buffer, size, 1, fp);
-	NX_ASSERT(w);
-}
-
-// Saving API
-NxStream& PhysXStream::storeByte(NxU8 b)
-{
-	size_t w = fwrite(&b, sizeof(NxU8), 1, fp);
-	NX_ASSERT(w);
-	return *this;
-}
-
-NxStream& PhysXStream::storeWord(NxU16 w)
-{
-	size_t ww = fwrite(&w, sizeof(NxU16), 1, fp);
-	NX_ASSERT(ww);
-	return *this;
-}
-
-NxStream& PhysXStream::storeDword(NxU32 d)
-{
-	size_t w = fwrite(&d, sizeof(NxU32), 1, fp);
-	NX_ASSERT(w);
-	return *this;
-}
-
-NxStream& PhysXStream::storeFloat(NxReal f)
-{
-	size_t w = fwrite(&f, sizeof(NxReal), 1, fp);
-	NX_ASSERT(w);
-	return *this;
-}
-
-NxStream& PhysXStream::storeDouble(NxF64 f)
-{
-	size_t w = fwrite(&f, sizeof(NxF64), 1, fp);
-	NX_ASSERT(w);
-	return *this;
-}
-
-NxStream& PhysXStream::storeBuffer(const void* buffer, NxU32 size)
-{
-	size_t w = fwrite(buffer, size, 1, fp);
-	NX_ASSERT(w);
-	return *this;
-}
-
-
-
-#else
 
 PhysXStream::PhysXStream(Resource* resource) : mResource(resource)
 {
@@ -232,9 +129,8 @@ NxStream& PhysXStream::storeDword(NxI32 d)
  return storeDword(NxU32(d));
 }
 
-#endif
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

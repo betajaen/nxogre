@@ -1,25 +1,30 @@
-/** File: NxOgreArray.h
-    Created on: 2-Nov-08
-    Author: Robin Southern "betajaen"
+/** 
     
-
-    © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
-
     This file is part of NxOgre.
-
-    NxOgre is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    NxOgre is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+    
 */
+
+                                                                                       
 
 #ifndef NXOGRE_ARRAY_H
 #define NXOGRE_ARRAY_H
@@ -33,7 +38,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -57,7 +62,7 @@ namespace Functions
       
       typedef typename T* TIterator;
       
-      SharedArray(int type = ::NxOgre_Namespace::Classes::_ArrayUnknown)
+      SharedArray(int type = ::NxOgre::Classes::_ArrayUnknown)
       {
        _First = _Last = _End = 0;
        _Type = type;
@@ -69,19 +74,19 @@ namespace Functions
        if (_First)
        {
         range_destruct(_First, _End);
-        ::NxOgre_Namespace::Memory::unallocate(_First);
+        ::NxOgre::Memory::unallocate(_First);
        }
        _First = _Last = _End = 0;
       }
       
       void* operator new(size_t size)
       {
-       return NxOgre_Allocate(size, ::NxOgre_Namespace::Classes::_SharedArray);
+       return NxOgre_Allocate(size, ::NxOgre::Classes::_SharedArray);
       }
       
       void operator delete(void* ptr)
       {
-       ::NxOgre_Namespace::Memory::unallocate(ptr);
+       ::NxOgre::Memory::unallocate(ptr);
       }
        
       size_t size(void)
@@ -150,7 +155,7 @@ namespace Functions
        range_construct(new_first, new_first + new_size);
        copy(_First, _Last, new_first);
        range_destruct(_First, _End);
-       ::NxOgre_Namespace::Memory::unallocate(_First);
+       ::NxOgre::Memory::unallocate(_First);
        _End = new_first + new_size;
        _Last = new_first + size();
        _First = new_first;
@@ -183,9 +188,9 @@ namespace Functions
   {
     public:
 
-    friend class ::NxOgre_Namespace::Array<T*>;
-    friend class ::NxOgre_Namespace::ConstantArray<T*>;
-    friend class ::NxOgre_Namespace::ArrayIterator<T*>;
+    friend class ::NxOgre::Array<T*>;
+    friend class ::NxOgre::ConstantArray<T*>;
+    friend class ::NxOgre::ArrayIterator<T*>;
     
     typedef typename T** TIterator;
     
@@ -195,7 +200,7 @@ namespace Functions
     {
       public:
 
-        inline SharedArray(int type = ::NxOgre_Namespace::Classes::USER_CLASS)
+        inline SharedArray(int type = ::NxOgre::Classes::USER_CLASS)
         {
          _First = _Last = _End = 0;
          _Type = type;
@@ -204,18 +209,18 @@ namespace Functions
         inline ~SharedArray()
         {
          if (_First)
-          ::NxOgre_Namespace::Memory::unallocate(_First);
+          ::NxOgre::Memory::unallocate(_First);
          _First = _Last = _End = 0;
         }
 
         inline void* operator new(size_t size)
         {
-         return NxOgre_Allocate(size, ::NxOgre_Namespace::Classes::_SharedArray);
+         return NxOgre_Allocate(size, ::NxOgre::Classes::_SharedArray);
         }
 
         inline void operator delete(void* ptr)
         {
-         ::NxOgre_Namespace::Memory::unallocate(ptr);
+         ::NxOgre::Memory::unallocate(ptr);
         }
 
         TIterator _First, _Last, _End;
@@ -332,7 +337,7 @@ namespace Functions
         TIterator new_first = (TIterator) NxOgre_Allocate(new_size * sizeof(T*), -(shared_array->_Type));
         copy(shared_array->_First, shared_array->_Last, new_first);
         /// range_destruct(shared_array->_First, shared_array->_Last);
-        ::NxOgre_Namespace::Memory::unallocate(shared_array->_First);
+        ::NxOgre::Memory::unallocate(shared_array->_First);
         shared_array->_End = new_first + new_size;
         shared_array->_Last = new_first + size(shared_array);
         shared_array->_First = new_first;
@@ -352,8 +357,8 @@ namespace Functions
 template<typename T> class  ArrayIterator
 {
   
-  typedef typename ::NxOgre_Namespace::Functions::SharedArray<T>            TPayload;
-  typedef typename ::NxOgre_Namespace::Functions::SharedArray<T>::TIterator TIterator;
+  typedef typename ::NxOgre::Functions::SharedArray<T>            TPayload;
+  typedef typename ::NxOgre::Functions::SharedArray<T>::TIterator TIterator;
   
   public:
   
@@ -440,8 +445,8 @@ template<typename T> class  ArrayIterator
 template<typename T> class  ArrayIterator<T*>
 {
   
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T*>::SharedArray TPayload;
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T*>::TIterator TIterator;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T*>::SharedArray TPayload;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T*>::TIterator TIterator;
   
   public:
   
@@ -518,14 +523,14 @@ template<typename T> class  ArrayIterator<T*>
 template<typename T> class  Array
 {
   
-  typedef typename ::NxOgre_Namespace::Functions::SharedArray<T> SharedArrayT;
+  typedef typename ::NxOgre::Functions::SharedArray<T> SharedArrayT;
 
   public:
 
    Array(void)
    {
     // printf("Array constructor\n");
-    _Array = NxOgre_New(SharedArrayT)(::NxOgre_Namespace::Classes::_ArrayUnknown);
+    _Array = NxOgre_New(SharedArrayT)(::NxOgre::Classes::_ArrayUnknown);
    };
 
    Array(int type)
@@ -625,27 +630,27 @@ template<typename T> class  Array<T*>
   
   friend class ArrayIterator<T*>;
   
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T*>::SharedArray TPayload;
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T*>::Read    TRead;
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T*>::Write   TWrite;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T*>::SharedArray TPayload;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T*>::Read    TRead;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T*>::Write   TWrite;
 
   public:
 
-   typedef typename ::NxOgre_Namespace::ArrayIterator<T*> Iterator;
+   typedef typename ::NxOgre::ArrayIterator<T*> Iterator;
 
    Array(void)
    {
-    _T = new TPayload(::NxOgre_Namespace::Classes::USER_CLASS);
-    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ArrayReferenceCounter);
+    _T = new TPayload(::NxOgre::Classes::USER_CLASS);
+    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ArrayReferenceCounter);
 
-//::NxOgre_Namespace::Memory::allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ArrayReferenceCounter);
+//::NxOgre::Memory::allocate(sizeof(RefT), ::NxOgre::Classes::_ArrayReferenceCounter);
     (*_Usage) = 1;
    };
   
    Array(int type)
    {
     _T = new TPayload(type);
-    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ArrayReferenceCounter);
+    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ArrayReferenceCounter);
     (*_Usage) = 1;
    };
 
@@ -660,7 +665,7 @@ template<typename T> class  Array<T*>
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre_Namespace::Memory::unallocate(_Usage);
+     ::NxOgre::Memory::unallocate(_Usage);
      delete _T;
     }
    }
@@ -669,7 +674,7 @@ template<typename T> class  Array<T*>
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre_Namespace::Memory::unallocate(_Usage);
+     ::NxOgre::Memory::unallocate(_Usage);
      delete _T;
     }
     _T      = other._T;
@@ -748,8 +753,8 @@ template<typename T> class  ConstantArray
 {
   friend class ArrayIterator<T>;
   
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T>::SharedArray TPayload;
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T>::Read    TRead;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T>::SharedArray TPayload;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T>::Read    TRead;
 
   public:
 
@@ -824,12 +829,12 @@ template<typename T> class  ConstantArray<T*>
   
   friend class ArrayIterator<T*>;
   
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T*>::SharedArray TPayload;
-  typedef typename ::NxOgre_Namespace::Functions::ArrayFunctions<T*>::Read        TRead;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T*>::SharedArray TPayload;
+  typedef typename ::NxOgre::Functions::ArrayFunctions<T*>::Read        TRead;
 
   public:
 
-   typedef typename ::NxOgre_Namespace::ArrayIterator<T*> Iterator;
+   typedef typename ::NxOgre::ArrayIterator<T*> Iterator;
 
    ConstantArray(const Array<T*>& other)
    {
@@ -903,7 +908,7 @@ template<typename T> class  ConstantArray<T*>
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

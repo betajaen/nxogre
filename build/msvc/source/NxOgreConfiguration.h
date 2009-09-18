@@ -1,13 +1,13 @@
-/** Description: Configuration file for NxOgre for a Windows compiler.
-    File: NxOgreConfiguration.h
-    Created on: 3-Nov-03
-    Author: Robin Southern "betajaen"
+/** 
+    
+    This file is part of NxOgre.
+    
+    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
     
     
-    © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
-    
-    This file may be modified by the user and does not fall under the terms of the LGPL
 */
+
+                                                                                       
 
 #ifndef NXOGRE_MSWINDOWS_CONFIGURATION_H
 #define NXOGRE_MSWINDOWS_CONFIGURATION_H

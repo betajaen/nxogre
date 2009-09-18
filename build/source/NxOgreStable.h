@@ -1,25 +1,30 @@
-/** File: NxOgreStable.h
-    Created on: 1-Nov-08
-    Author: Robin Southern "betajaen"
-    SVN-Meta: $Id$
-
-    © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
-
+/** 
+    
     This file is part of NxOgre.
-
-    NxOgre is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    NxOgre is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+    
 */
+
+                                                                                       
 
 #ifndef NXOGRE_STABLE_H
 #define NXOGRE_STABLE_H
@@ -62,7 +67,7 @@
 #endif
 
 #ifndef NxOgreArchitecture
-#  define  NxOgreArchitecture NxOgreArchitecture32Bit
+#  define NxOgreArchitecture NxOgreArchitecture32Bit
 #endif
 
 #ifndef NxOgrePublicClass
@@ -81,7 +86,7 @@
 
 /** \brief
 */
-#define NxOgre_Namespace NxOgre
+#define NxOgre NxOgre
 
 /** \brief Global new operator/function for every NxOgre class that requires to be a pointer.
     \example
@@ -105,7 +110,7 @@
       myClass* myclass_ptr = NxOgre_NewT(myClass)(arg0, arg1, ...);
      </code>
 */
-#define  NxOgre_NewT(USER_CLASS) new (::NxOgre_Namespace::Memory::allocate(sizeof(USER_CLASS), ::NxOgre_Namespace::Classes::_UserClass, __FILE__, __LINE__)) USER_CLASS
+#define  NxOgre_NewT(USER_CLASS) new (::NxOgre::Memory::allocate(sizeof(USER_CLASS), ::NxOgre::Classes::_UserClass, __FILE__, __LINE__)) USER_CLASS
 
 /** \brief Global delete operator/function for every NxOgre class that requires to be deleted.
     \example
@@ -121,7 +126,7 @@
        NxOgre_DeleteT(myClass, myclass_ptr);
      </code>
 */
-#define NxOgre_DeleteT(TYPE, PTR) {if(PTR){PTR->~TYPE();::NxOgre_Namespace::Memory::unallocate(PTR);PTR=0}}
+#define NxOgre_DeleteT(TYPE, PTR) {if(PTR){PTR->~TYPE();::NxOgre::Memory::unallocate(PTR);PTR=0}}
 
 /** \brief NxOgre's version of "malloc"; always used by NxOgre and PhysX, and can be used by the user if needed.
     \example
@@ -130,9 +135,9 @@
       </code>
 */
 #if NxOgreMemoryDebugger == 1
-#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre_Namespace::Memory::allocate(SIZE, CLASSES_TYPE, __FILE__, __LINE__);
+#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre::Memory::allocate(SIZE, CLASSES_TYPE, __FILE__, __LINE__);
 #else
-#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre_Namespace::Memory::allocate(SIZE);
+#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre::Memory::allocate(SIZE);
 #endif
 
 /** \brief NxOgre's version of "free"; always used by NxOgre and PhysX, and can be used by the user if needed.
@@ -141,7 +146,7 @@
       NxOgre_Unallocate(i);
       </code>
 */
-#define NxOgre_Unallocate(PTR) {if(PTR){::NxOgre_Namespace::Memory::unallocate(PTR);PTR=0;}}
+#define NxOgre_Unallocate(PTR) {if(PTR){::NxOgre::Memory::unallocate(PTR);PTR=0;}}
 
 /** \brief NxOgre's version of "realloc"; always used by NxOgre and PhysX, and can be used by the user if needed.
     \example
@@ -149,23 +154,23 @@
        i = NxOgre_Reallocate(i, sizeof(int) * 2);
       </code>
 */
-#define NxOgre_Reallocate(PTR, NEW_SIZE)      ::NxOgre_Namespace::Memory::reallocate(PTR, NEW_SIZE)
+#define NxOgre_Reallocate(PTR, NEW_SIZE)      ::NxOgre::Memory::reallocate(PTR, NEW_SIZE)
 
 /** \brief Throw a very critical error and assert.
 */
-#define NxOgre_ThrowAssertion(COND, MESSAGE)  {if(COND){::NxOgre_Namespace::ErrorStream::getSingleton()->throwAssertion(MESSAGE, __FILE__, __LINE__);}assert(COND);}
+#define NxOgre_ThrowAssertion(COND, MESSAGE)  {if(COND){::NxOgre::ErrorStream::getSingleton()->throwAssertion(MESSAGE, __FILE__, __LINE__);}assert(COND);}
 
 /** \brief Throw a critical (but do not assert) error.
 */
-#define NxOgre_ThrowError(MESSAGE)            ::NxOgre_Namespace::ErrorStream::getSingleton()->throwError(MESSAGE, __FILE__, __LINE__)
+#define NxOgre_ThrowError(MESSAGE)            ::NxOgre::ErrorStream::getSingleton()->throwError(MESSAGE, __FILE__, __LINE__)
 
 /** \brief Throw a non-critical error.
 */
-#define NxOgre_ThrowWarning(MESSAGE)          ::NxOgre_Namespace::ErrorStream::getSingleton()->throwWarning(MESSAGE, __FILE__, __LINE__)
+#define NxOgre_ThrowWarning(MESSAGE)          ::NxOgre::ErrorStream::getSingleton()->throwWarning(MESSAGE, __FILE__, __LINE__)
 
 /** \brief Throw a non-error.
 */
-#define NxOgre_ThrowNotice(MESSAGE)           ::NxOgre_Namespace::ErrorStream::getSingleton()->throwNotice(MESSAGE, __FILE__, __LINE__)
+#define NxOgre_ThrowNotice(MESSAGE)           ::NxOgre::ErrorStream::getSingleton()->throwNotice(MESSAGE, __FILE__, __LINE__)
 
 /** \brief Compiler macro to cause a compiler error if the expression is false.
 */
@@ -197,7 +202,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
 /** \brief All floating-types are called "Real" in NxOgre; this allows single or double precision of every
@@ -217,7 +222,7 @@ typedef double DoubleReal;
 */
 typedef unsigned short RefT;
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

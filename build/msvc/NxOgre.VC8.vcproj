@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="source/;../../source/;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;;../../dependencies"
+				AdditionalIncludeDirectories="source/;../../source/;&quot;$(BOOST_HOME)/&quot;;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_DYNAMIC_LIBRARY;NXOGRE_OPTIONS_USE_LOG;NXOGRE_MEMORY_DEBUGGER_USEFILE;NXOGRE_MEMORY_DEBUGGER_FILE=&quot;NxOgreLeaks.txt&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -669,10 +669,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreAssociativeArray.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreBounds.h"
 			>
 		</File>
@@ -765,6 +761,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreContainers.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreConvex.cpp"
 			>
 		</File>
@@ -786,10 +786,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreD6JointDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreDebuggable.h"
 			>
 		</File>
 		<File
@@ -889,6 +885,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreIterators.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreJoint.cpp"
 			>
 		</File>
@@ -910,10 +910,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreJointDriveDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreJointFunctions.h"
 			>
 		</File>
 		<File
@@ -1325,10 +1321,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreRestingParticle.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreRevoluteJoint.cpp"
 			>
 		</File>
@@ -1438,10 +1430,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreShapeBlueprint.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSharedBuffer.h"
 			>
 		</File>
 		<File

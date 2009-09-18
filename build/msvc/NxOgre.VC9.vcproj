@@ -669,10 +669,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreAssociativeArray.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreBounds.h"
 			>
 		</File>
@@ -790,10 +786,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreD6JointDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreDebuggable.h"
 			>
 		</File>
 		<File
@@ -918,10 +910,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreJointDriveDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreJointFunctions.h"
 			>
 		</File>
 		<File
@@ -1333,10 +1321,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreRestingParticle.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreRevoluteJoint.cpp"
 			>
 		</File>
@@ -1446,10 +1430,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreShapeBlueprint.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSharedBuffer.h"
 			>
 		</File>
 		<File

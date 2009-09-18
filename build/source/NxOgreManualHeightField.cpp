@@ -1,24 +1,27 @@
-/** File: NxOgreManualHeightField.cpp
-    Created on: 22-Mar-09
-    Author: Robin Southern "betajaen"
+/** 
     
-
-    © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
-
     This file is part of NxOgre.
-
-    NxOgre is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    NxOgre is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+    
 */
 
                                                                                        
@@ -33,7 +36,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -56,7 +59,7 @@ HeightFieldData::~HeightFieldData()
 ManualHeightField::ManualHeightField(void)
 {
  mHeightField = new HeightFieldData();
- mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ManualHeightFieldReferenceCounter);
+ mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ManualHeightFieldReferenceCounter);
  (*mRef) = 1;
 }
 
@@ -64,7 +67,7 @@ ManualHeightField::~ManualHeightField(void)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  ::NxOgre::Memory::unallocate(mRef);
   delete mHeightField;
  }
 }
@@ -73,7 +76,7 @@ ManualHeightField& ManualHeightField::operator=(ManualHeightField& other)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  ::NxOgre::Memory::unallocate(mRef);
   delete mHeightField;
  }
  mHeightField   = other.mHeightField;
@@ -216,6 +219,6 @@ void ManualHeightField::sample(short height, MaterialIdentifier mat0, MaterialId
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

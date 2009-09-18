@@ -1,24 +1,27 @@
-/** File: NxOgreSceneGeometry.cpp
-    Created on: 13-Nov-08
-    Author: Robin Southern "betajaen"
+/** 
     
-
-    © Copyright, 2008-2009 by Robin Southern, http://www.nxogre.org
-
     This file is part of NxOgre.
-
-    NxOgre is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    NxOgre is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+    
 */
 
                                                                                        
@@ -33,7 +36,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -65,42 +68,42 @@ unsigned int SceneGeometry::getClassType() const
 
 void SceneGeometry::setGroup(GroupIdentifier SceneGeometryGroup)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setGroup(SceneGeometryGroup, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setGroup(SceneGeometryGroup, mActor);
 }
 
 GroupIdentifier SceneGeometry::getGroup(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGroup(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGroup(mActor);
 }
 
 unsigned int SceneGeometry::getContactReportFlags(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
 }
 
 void SceneGeometry::setContactReportFlags(unsigned int flags)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
 }
 
 Matrix44 SceneGeometry::getGlobalPose(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalPose(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
 }
 
 Vec3 SceneGeometry::getGlobalPosition(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
 }
 
 Matrix33 SceneGeometry::getGlobalOrientation(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
 }
 
 Quat SceneGeometry::getGlobalOrientationQuat(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
 }
 
 
@@ -116,11 +119,11 @@ void SceneGeometry::releaseShape(Shape*)
 
 unsigned int SceneGeometry::getNbShapes(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getNbShapes(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
 }
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
