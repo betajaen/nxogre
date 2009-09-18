@@ -42,7 +42,16 @@ typedef std::string String;
 
 typedef std::stringstream StringStream;
 
+typedef size_t StringHash;
+
 static const String BLANK_STRING = String();
+
+namespace Functions
+{
+ 
+ static const boost::hash<std::string> StringHash;
+ 
+}
 
                                                                                        
 

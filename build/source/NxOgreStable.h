@@ -36,20 +36,20 @@
 #include "float.h"
 #include <stdlib.h>
 #include <string>
+#include <boost/functional/hash.hpp>
 #include <sstream>
-#include <boost/algorithm/string.hpp>
-#include <map>
 #include <vector>
-#include <boost/ptr_container/ptr_map.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
-
+#include <map>
+#include <boost/ptr_container/ptr_map.hpp>
 
                                                                                        
 
 #define NxOgreVersionMajor 1
-#define NxOgreVersionMinor 5
-#define NxOgreVersionRelease 7
-#define NxOgreCodeName "stl_experiment"
+#define NxOgreVersionMinor 6
+#define NxOgreVersionRelease 0
+#define NxOgreCodeName "detritus"
+#define NxOgreBranch "detritus"
 
                                                                                        
 

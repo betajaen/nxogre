@@ -218,7 +218,7 @@ World::~World(void)
  NxOgre_Delete(mRemoteDebugger);
  NxOgre_Delete(mVisualDebugger);
  
- mScenes.destroyAll();
+ mScenes.clear();
  
  if (!mDeadSDK && mSDK)
   mSDK->release();
@@ -250,7 +250,8 @@ Scene* World::createScene(const NxOgre::SceneDescription& description)
 Scene* World::createScene(ScenePrototype* prototype)
 {
  Scene* scene = NxOgre_New(Scene)(prototype, mSDK);
- mScenes.insert(scene);
+ StringHash hash = scene->getNameHash();
+ mScenes.insert(hash, scene);
  return scene;
 }
 
@@ -258,8 +259,11 @@ void World::destroyScene(Scene* scene)
 {
  if (scene == 0)
   return;
- mScenes.remove(scene);
+ 
+ StringHash hash = scene->getNameHash();
+ mScenes.release(mScenes.find(hash));
  NxOgre_Delete(scene);
+ 
 }
 
 bool World::hasHardware(void) const
@@ -289,9 +293,9 @@ RemoteDebugger* World::getRemoteDebugger()
  return mRemoteDebugger;
 }
 
-ArrayIterator<Scene*> World::getScenes()
+World::SceneIterator World::getScenes()
 {
- return ArrayIterator<Scene*>(mScenes);
+ return SceneIterator(mScenes);
 }
 
 NxPhysicsSDK* World::getPhysXSDK(void)

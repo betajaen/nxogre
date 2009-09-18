@@ -55,6 +55,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   friend class World;
   friend class Functions::ArrayFunctions<Scene*>::Write;
+  template<class T> friend inline void boost::checked_delete(T*);
   
   public: // Functions
   
@@ -63,9 +64,9 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        const char*            getName(void) const;
   
-  /** \brief Set the name of the Scene.
+  /** \brief Get the hash of the name of the Scene.
   */
-                       void                   setName(const char*);
+                       StringHash             getNameHash(void) const;
   
   /** \brief
   */
@@ -289,6 +290,10 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   /** \brief Name as a String. Use Scene::getName() to fetch, or Scene::setName() to set.
   */
                        String                           mName;
+  
+  /** \brief Name as a String as a hash.
+  */
+                       StringHash                       mNameHash;
   
   /** \internal What Scene is associated with
   */

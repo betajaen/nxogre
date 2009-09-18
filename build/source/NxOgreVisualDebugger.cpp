@@ -134,14 +134,16 @@ void VisualDebugger::setVisualisationMode(NxOgre::Enums::VisualDebugger dm)
 void VisualDebugger::draw()
 {
  
- ArrayIterator<Scene*> iterator = mWorld->getScenes();
+ World::SceneIterator iterator = mWorld->getScenes();
+ //ArrayIterator<Scene*> iterator = mWorld->getScenes();
  mMeshData->mLines.clear();
  mMeshData->mColours.clear();
  mMeshData->mNbLines = 0;
 
- for (Scene* scene = iterator.begin(); scene = iterator.next();)
+ //for (Scene* scene = iterator.begin(); scene = iterator.next();)
+ for (iterator.begin(); iterator != iterator.end(); ++iterator)
  {
-  const NxDebugRenderable* renderable = scene->getScene()->getDebugRenderable();
+  const NxDebugRenderable* renderable = iterator->getScene()->getDebugRenderable();
   
   if (renderable == 0)
    continue;

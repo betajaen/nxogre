@@ -30,6 +30,7 @@
 #include "NxOgreCommon.h"
 
 #include "NxOgreWorldDescription.h"
+#include "NxOgreScene.h"
 #include "NxOgreSceneDescription.h"
 
                                                                                        
@@ -45,6 +46,9 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
 {
   
   public: // Functions
+  
+  typedef multimap<StringHash, Scene>::type          Scenes;
+  typedef multimap<StringHash, Scene>::user_iterator SceneIterator;
   
   /** \brief Pre-create singletons of NxOgre (ResourceSystem, MeshManager, HeightFieldManager, ErrorStream, etc.)
   */
@@ -111,7 +115,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   
   /** \brief
   */
-                       ArrayIterator<Scene*>  getScenes(void);
+                       SceneIterator          getScenes(void);
   
   /** \brief
   */
@@ -165,7 +169,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
 
   /** \brief Master copy of all the Scenes in the World.
   */
-                      Array<Scene*>           mScenes;
+                      Scenes                  mScenes;
 
   /** \brief World's time controller instance
   */

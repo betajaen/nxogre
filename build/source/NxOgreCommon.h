@@ -35,6 +35,8 @@
 #include "NxOgreSharedBuffer.h"
 #include "NxOgreSingleton.h"
 #include "NxOgreArray.h"
+#include "NxOgreContainers.h"
+#include "NxOgreIterators.h"
 #include "NxOgreBuffer.h"
 #include "NxOgreCircularBuffer.h"
 #include "NxOgreMath.h"

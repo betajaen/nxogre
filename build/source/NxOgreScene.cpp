@@ -78,7 +78,8 @@ Scene::Scene(ScenePrototype* prototype, NxPhysicsSDK* sdk)
  mPhysXCallback = NxOgre_New(PhysXCallback)(this);
 
  mName = prototype->mName;
-
+ mNameHash = Functions::StringHash(mName);
+ 
  NxSceneDesc scene_description;
  Functions::PrototypeFunctions::ScenePrototypeToNxSceneDesc(prototype, scene_description);
  mProcessingPriority = prototype->mProcessingPriority;
@@ -146,14 +147,14 @@ Scene::~Scene(void)
  }
 }
 
-void Scene::setName(const char* name)
-{
- mName = name;
-}
-
 const char* Scene::getName(void) const
 {
  return mName.c_str();
+}
+
+StringHash Scene::getNameHash(void) const
+{
+ return mNameHash;
 }
 
 unsigned int Scene::getNbActors(void) const
