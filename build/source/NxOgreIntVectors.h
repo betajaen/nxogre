@@ -31,7 +31,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -120,7 +120,7 @@ class NxOgrePublicClass int4
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

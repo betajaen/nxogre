@@ -31,7 +31,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -109,7 +109,7 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -33,7 +33,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -65,42 +65,42 @@ unsigned int SceneGeometry::getClassType() const
 
 void SceneGeometry::setGroup(GroupIdentifier SceneGeometryGroup)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setGroup(SceneGeometryGroup, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setGroup(SceneGeometryGroup, mActor);
 }
 
 GroupIdentifier SceneGeometry::getGroup(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGroup(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGroup(mActor);
 }
 
 unsigned int SceneGeometry::getContactReportFlags(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
 }
 
 void SceneGeometry::setContactReportFlags(unsigned int flags)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
 }
 
 Matrix44 SceneGeometry::getGlobalPose(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalPose(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
 }
 
 Vec3 SceneGeometry::getGlobalPosition(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
 }
 
 Matrix33 SceneGeometry::getGlobalOrientation(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
 }
 
 Quat SceneGeometry::getGlobalOrientationQuat(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
 }
 
 
@@ -116,11 +116,11 @@ void SceneGeometry::releaseShape(Shape*)
 
 unsigned int SceneGeometry::getNbShapes(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getNbShapes(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
 }
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

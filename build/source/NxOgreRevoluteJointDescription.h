@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -110,7 +110,7 @@ class NxOgrePublicClass RevoluteJointDescription : public JointDescription
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

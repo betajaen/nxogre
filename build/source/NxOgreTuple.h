@@ -30,7 +30,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -103,7 +103,7 @@ class NxOgrePublicClass Quadruple
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

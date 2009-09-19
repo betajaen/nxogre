@@ -30,7 +30,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -75,6 +75,6 @@ Enums::ShapeFunctionType PlaneGeometry::getShapeFunctionType() const
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

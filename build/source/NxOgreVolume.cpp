@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -64,47 +64,47 @@ Volume::~Volume(void)
 
 void Volume::setGlobalPose(const Matrix44& matrix)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setGlobalPose(matrix, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setGlobalPose(matrix, mActor);
 }
 
 void Volume::setGlobalPosition (const Vec3& r3)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setGlobalPosition(r3, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setGlobalPosition(r3, mActor);
 }
 
 void Volume::setGlobalOrientation(const Matrix33& r33)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setGlobalOrientation(r33, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientation(r33, mActor);
 }
 
 void Volume::setGlobalOrientationQuat(const Quat& r4)
 {
- ::NxOgre_Namespace::Functions::RigidBodyFunctions::setGlobalOrientationQuat(r4, mActor);
+ ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientationQuat(r4, mActor);
 }
 
 Matrix44 Volume::getGlobalPose(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalPose(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
 }
 
 Vec3 Volume::getGlobalPosition(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
 }
 
 Matrix33 Volume::getGlobalOrientation(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
 }
 
 Quat Volume::getGlobalOrientationQuat(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
 }
 
 unsigned int Volume::getNbShapes(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::getNbShapes(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
 }
 
 Callback* Volume::getVolumeCallback()
@@ -124,6 +124,6 @@ void Volume::removeVolumeCallback()
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

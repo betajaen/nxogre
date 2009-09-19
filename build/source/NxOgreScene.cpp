@@ -61,7 +61,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -605,6 +605,6 @@ void Scene::setActorFlags(RigidBody* a, RigidBody* b, unsigned int contact_flags
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

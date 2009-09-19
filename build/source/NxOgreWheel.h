@@ -34,7 +34,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -219,7 +219,7 @@ class NxOgrePublicClass Wheel : public PointerClass<Classes::_Wheel>, public Sha
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

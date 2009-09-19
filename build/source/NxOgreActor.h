@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -426,7 +426,7 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

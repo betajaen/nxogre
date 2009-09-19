@@ -32,7 +32,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -382,7 +382,7 @@ class NxOgrePublicClass Fluid : public PointerClass<Classes::_Fluid>, public Tim
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

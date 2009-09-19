@@ -28,7 +28,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -540,6 +540,6 @@ SharedStringStream Reason::whyAsStream(const NxMaterialDesc& desc)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

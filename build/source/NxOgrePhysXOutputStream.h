@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -86,7 +86,7 @@ class NxOgrePublicClass PhysXOutputStream : public PointerClass<Classes::_PhysXO
 #endif
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

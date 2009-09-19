@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -118,7 +118,7 @@ class NxOgrePublicClass Box : public PointerClass<Classes::_Box>, public Shape
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

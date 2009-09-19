@@ -31,7 +31,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -221,7 +221,7 @@ class NxOgrePublicClass Shape : public PointerClass<Classes::_Shape>
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

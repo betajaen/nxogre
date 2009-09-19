@@ -34,7 +34,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -149,7 +149,7 @@ class NxOgrePublicClass SceneGeometry : public PointerClass<Classes::_SceneGeome
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

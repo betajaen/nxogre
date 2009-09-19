@@ -30,7 +30,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -67,6 +67,6 @@ Enums::ShapeFunctionType Sphere::getShapeFunctionType() const
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

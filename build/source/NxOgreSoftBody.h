@@ -32,7 +32,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -119,7 +119,7 @@ class NxOgrePublicClass SoftBody : public PointerClass<Classes::_SoftBody>, publ
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

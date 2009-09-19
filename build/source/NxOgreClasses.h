@@ -1,5 +1,4 @@
 /** File: NxOgreClasses.h
-    Created on: 15-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -21,10 +20,14 @@
     You should have received a copy of the GNU Lesser General Public License
     along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #ifndef NXOGRE_CLASSES_H
 #define NXOGRE_CLASSES_H
 
-namespace NxOgre_Namespace
+                                                                                       
+
+
+namespace NxOgre
 {
 
 namespace Classes
@@ -94,10 +97,6 @@ enum
   _int2,
   _int3,
   _int4,
-  _ionFlag,
-  _ionsFlags_16bitIndices,
-  _ionsFlags_FlipNormals,
-  _ionsFlags_HardwareMes,
   _Joint,
   _JointDescription,
   _JointLimitDescription,
@@ -213,12 +212,8 @@ enum
   const char*  TypeToCStr(int i);
 
                                                                                        
-
 } // namespace Classes
-
-                                                                                       
-
-} // namespace NXOGRE_NAMESPACE
+} // namespace NxOgre
 
                                                                                        
 #endif

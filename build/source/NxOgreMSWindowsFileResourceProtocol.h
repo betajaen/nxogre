@@ -34,7 +34,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -103,7 +103,7 @@ class NxOgrePublicClass MSWindowsFileResourceProtocol : public PointerClass<Clas
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -33,7 +33,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -312,7 +312,7 @@ class NxOgrePublicClass MemoryResource : public PointerClass<Classes::_MemoryRes
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

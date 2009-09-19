@@ -36,7 +36,7 @@ template<> ::NxOgre::ErrorStream* ::NxOgre::Singleton<NxOgre::ErrorStream, ::NxO
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -139,6 +139,6 @@ void ErrorStream::setLogResource(Resource* resource)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

@@ -30,7 +30,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -446,6 +446,6 @@ Vec3 Matrix44::operator*(const Vec3& other) const
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

@@ -324,6 +324,6 @@ const Real& Vec3::operator[](const size_t i) const
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

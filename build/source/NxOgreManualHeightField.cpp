@@ -33,7 +33,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -56,7 +56,7 @@ HeightFieldData::~HeightFieldData()
 ManualHeightField::ManualHeightField(void)
 {
  mHeightField = new HeightFieldData();
- mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ManualHeightFieldReferenceCounter);
+ mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ManualHeightFieldReferenceCounter);
  (*mRef) = 1;
 }
 
@@ -64,7 +64,7 @@ ManualHeightField::~ManualHeightField(void)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  ::NxOgre::Memory::unallocate(mRef);
   delete mHeightField;
  }
 }
@@ -73,7 +73,7 @@ ManualHeightField& ManualHeightField::operator=(ManualHeightField& other)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  ::NxOgre::Memory::unallocate(mRef);
   delete mHeightField;
  }
  mHeightField   = other.mHeightField;
@@ -216,6 +216,6 @@ void ManualHeightField::sample(short height, MaterialIdentifier mat0, MaterialId
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

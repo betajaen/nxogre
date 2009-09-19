@@ -33,7 +33,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -113,7 +113,7 @@ class NxOgrePublicClass SharedBuffer
    if (mBuffer == 0)
     mBuffer = NxOgre_New(TBuffer)();
    mBuffer->mLocked = true;
-   TIterator new_first = (TIterator) ::NxOgre_Namespace::Memory::allocate(new_size * sizeof(T), Classes::USER_CLASS, __FILE__, __LINE__);
+   TIterator new_first = (TIterator) ::NxOgre::Memory::allocate(new_size * sizeof(T), Classes::USER_CLASS, __FILE__, __LINE__);
    if (copy_data)
     if (new_size < size())
      Memory::copy(new_first, mBuffer->mStart, new_size);
@@ -215,7 +215,7 @@ class NxOgrePublicClass SharedBuffer<T*>
    if (mBuffer == 0)
     mBuffer = NxOgre_New(TBuffer)();
    mBuffer->mLocked = true;
-   TIterator new_first = (TIterator) ::NxOgre_Namespace::Memory::allocate(new_size * sizeof(T*), Classes::USER_CLASS, __FILE__, __LINE__);
+   TIterator new_first = (TIterator) ::NxOgre::Memory::allocate(new_size * sizeof(T*), Classes::USER_CLASS, __FILE__, __LINE__);
    if (copy_data)
     if (new_size < size())
      Memory::copy(new_first, mBuffer->mStart, new_size);
@@ -241,7 +241,7 @@ class NxOgrePublicClass SharedBuffer<T*>
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

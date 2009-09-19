@@ -31,7 +31,7 @@
 #include "NxPhysics.h"
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -125,6 +125,6 @@ unsigned int Compartment::getFlags() const
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

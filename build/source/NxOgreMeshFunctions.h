@@ -32,7 +32,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -149,7 +149,7 @@ NxOgrePublicFunction ::NxOgre::Mesh*  generateFlatCloth(const ArchiveResourceIde
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

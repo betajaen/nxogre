@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
 class Resource;
@@ -61,7 +61,7 @@ class NxOgrePublicClass Error : public PointerClass<Classes::_ErrorStream>
 /** \brief ErrorStream handles all NxOgre and PhysX errors. It is also the source of
            all assertions caused by NxOgre and PhysX.
 */
-class NxOgrePublicClass ErrorStream : public ::NxOgre_Namespace::Singleton<ErrorStream, ::NxOgre_Namespace::Classes::_ErrorStream>
+class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::NxOgre::Classes::_ErrorStream>
 {
   
   friend class World;
@@ -123,7 +123,7 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre_Namespace::Singleton<Error
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

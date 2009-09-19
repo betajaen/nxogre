@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -68,7 +68,7 @@ class NxOgrePublicClass PhysXCallback : public PointerClass<Classes::_PhysXCallb
 #endif
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

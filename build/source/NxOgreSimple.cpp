@@ -30,7 +30,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -122,6 +122,6 @@ extern void NxCapsuleToSimpleCapsule(const NxCapsule& t, SimpleCapsule& s)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

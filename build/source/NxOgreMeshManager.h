@@ -31,14 +31,14 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
 
 /** \brief MeshManager holds all meshes that are currently in the World.
 */
-class NxOgrePublicClass MeshManager: public ::NxOgre_Namespace::Singleton<MeshManager, ::NxOgre_Namespace::Classes::_MeshManager>
+class NxOgrePublicClass MeshManager: public ::NxOgre::Singleton<MeshManager, ::NxOgre::Classes::_MeshManager>
 {
   
   friend class World;
@@ -85,7 +85,7 @@ class NxOgrePublicClass MeshManager: public ::NxOgre_Namespace::Singleton<MeshMa
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

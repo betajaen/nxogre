@@ -32,7 +32,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -57,7 +57,7 @@ namespace NxOgre_Namespace
            into the next one. This can be achived via the ScenePrototype/SceneDescription.
            
 */
-class NxOgrePublicClass TimeController : public ::NxOgre_Namespace::Singleton<TimeController, ::NxOgre_Namespace::Classes::_TimeController>
+class NxOgrePublicClass TimeController : public ::NxOgre::Singleton<TimeController, ::NxOgre::Classes::_TimeController>
 {
   
   typedef void (TimeController::*AdvancedFunc)(Real);
@@ -125,7 +125,7 @@ class NxOgrePublicClass TimeController : public ::NxOgre_Namespace::Singleton<Ti
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -34,7 +34,7 @@ template<> NxOgre::TimeController* NxOgre::Singleton<NxOgre::TimeController, NxO
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -131,6 +131,6 @@ void TimeController::_pause(Real)
 {
 }
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

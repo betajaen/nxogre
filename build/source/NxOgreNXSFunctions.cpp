@@ -29,7 +29,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -156,6 +156,6 @@ extern inline Enums::MeshType getMeshType(Resource* resource)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

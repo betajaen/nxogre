@@ -32,7 +32,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -48,7 +48,7 @@ namespace Functions
   {
     public:
     
-    friend class ::NxOgre_Namespace::Buffer<T>;
+    friend class ::NxOgre::Buffer<T>;
     
     typedef typename T* TIterator;
     
@@ -58,7 +58,7 @@ namespace Functions
     {
       public:
         
-        SharedBuffer(int type = ::NxOgre_Namespace::Classes::USER_CLASS)
+        SharedBuffer(int type = ::NxOgre::Classes::USER_CLASS)
         {
          _First = _Last = _End = 0;
          _Type = type;
@@ -67,18 +67,18 @@ namespace Functions
         ~SharedBuffer()
         {
          if (_First)
-          ::NxOgre_Namespace::Memory::unallocate(_First);
+          ::NxOgre::Memory::unallocate(_First);
          _First = _Last = _End = 0;
         }
         
         void* operator new(size_t size)
         {
-         return NxOgre_Allocate(size, ::NxOgre_Namespace::Classes::_SharedBuffer);
+         return NxOgre_Allocate(size, ::NxOgre::Classes::_SharedBuffer);
         }
         
         void operator delete(void* ptr)
         {
-         ::NxOgre_Namespace::Memory::unallocate(ptr);
+         ::NxOgre::Memory::unallocate(ptr);
         }
         
         TIterator _First, _Last, _End;
@@ -176,7 +176,7 @@ namespace Functions
         TIterator new_first = (TIterator) NxOgre_Allocate(new_size * sizeof(T), -(shared_list->_Type));
         copy(shared_list->_First, shared_list->_Last, new_first);
         range_destruct(shared_list->_First, shared_list->_Last);
-        ::NxOgre_Namespace::Memory::unallocate(shared_list->_First);
+        ::NxOgre::Memory::unallocate(shared_list->_First);
         shared_list->_End = new_first + new_size;
         shared_list->_Last = new_first + size(shared_list);
         shared_list->_First = new_first;
@@ -202,23 +202,23 @@ namespace Functions
 template<typename T> class  Buffer
 {
   
-  typedef typename ::NxOgre_Namespace::Functions::BufferFunctions<T>::TIterator  Iterator;
-  typedef typename ::NxOgre_Namespace::Functions::BufferFunctions<T>::SharedBuffer TPayload;
-  typedef typename ::NxOgre_Namespace::Functions::BufferFunctions<T>::Functions  TFunctions;
+  typedef typename ::NxOgre::Functions::BufferFunctions<T>::TIterator  Iterator;
+  typedef typename ::NxOgre::Functions::BufferFunctions<T>::SharedBuffer TPayload;
+  typedef typename ::NxOgre::Functions::BufferFunctions<T>::Functions  TFunctions;
 
   public:
 
    Buffer(void)
    {
-    _T = NxOgre_New(TPayload)(::NxOgre_Namespace::Classes::_BufferUnknown);
-    _Usage = (RefT*)  NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_BufferReferenceCounter);
+    _T = NxOgre_New(TPayload)(::NxOgre::Classes::_BufferUnknown);
+    _Usage = (RefT*)  NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_BufferReferenceCounter);
     (*_Usage) = 1;
    };
 
    Buffer(int type)
    {
     _T = NxOgre_New(TPayload)(type);
-    _Usage = (RefT*)  NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_BufferReferenceCounter);
+    _Usage = (RefT*)  NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_BufferReferenceCounter);
     (*_Usage) = 1;
    };
 
@@ -234,7 +234,7 @@ template<typename T> class  Buffer
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre_Namespace::Memory::unallocate(_Usage);
+     ::NxOgre::Memory::unallocate(_Usage);
      delete _T;
     }
    }
@@ -243,7 +243,7 @@ template<typename T> class  Buffer
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre_Namespace::Memory::unallocate(_Usage);
+     ::NxOgre::Memory::unallocate(_Usage);
      delete _T;
     }
     _T      = other._T;
@@ -390,7 +390,7 @@ template<typename T> class  ReadOnlyBuffer
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

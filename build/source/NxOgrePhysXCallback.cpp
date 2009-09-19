@@ -37,7 +37,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -101,6 +101,6 @@ void PhysXCallback::onContactNotify(NxContactPair &pair, NxU32 events)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

@@ -32,7 +32,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -111,19 +111,19 @@ void PhysXMeshData::_configure(size_t verts, size_t indices, size_t parent_indic
  mIndices.reserve(indices);
  mParentIndices.reserve(parent_indices);
 
- mNbVertices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre_Namespace::Classes::_unsigned_int);
+ mNbVertices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre::Classes::_unsigned_int);
  (*mNbVertices) = 0;
 
- mNbIndices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre_Namespace::Classes::_unsigned_int);
+ mNbIndices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre::Classes::_unsigned_int);
  (*mNbIndices) = 0;
 
- mNbParentIndices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre_Namespace::Classes::_unsigned_int);
+ mNbParentIndices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre::Classes::_unsigned_int);
  (*mNbParentIndices) = 0;
 
 }
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

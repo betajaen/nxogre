@@ -33,7 +33,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -101,6 +101,6 @@ bool NxOgrePublicFunction RayPlaneIntersect(const Ray& ray, const SimplePlane& s
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

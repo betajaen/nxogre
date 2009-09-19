@@ -34,7 +34,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -95,7 +95,7 @@ class NxOgrePublicClass MemoryDebugger
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
 
                                                                                        

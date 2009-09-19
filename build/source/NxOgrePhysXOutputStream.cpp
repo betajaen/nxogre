@@ -31,7 +31,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -68,9 +68,9 @@ void PhysXOutputStream::reportError(NxErrorCode code, const char * message, cons
  stream << message << "\nNxErroCode:" << Reason::toCStr(code);
 
  if (code == NXE_DB_WARNING)
-  ::NxOgre_Namespace::ErrorStream::getSingleton()->throwWarning(stream.get(), file, line);
+  ::NxOgre::ErrorStream::getSingleton()->throwWarning(stream.get(), file, line);
  else
-  ::NxOgre_Namespace::ErrorStream::getSingleton()->throwError(stream.get(), file, line);
+  ::NxOgre::ErrorStream::getSingleton()->throwError(stream.get(), file, line);
 
 
 }
@@ -81,7 +81,7 @@ NxAssertResponse PhysXOutputStream::reportAssertViolation(const char * message, 
  SharedStringStream stream;
  stream << "PhysX assertion:\n" << message;
  
- ::NxOgre_Namespace::ErrorStream::getSingleton()->throwAssertion(stream.get(), file, line);
+ ::NxOgre::ErrorStream::getSingleton()->throwAssertion(stream.get(), file, line);
  
  return mAssertionResponse;
 }
@@ -94,6 +94,6 @@ void PhysXOutputStream::print(const char* message)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

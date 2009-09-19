@@ -29,7 +29,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace 
+namespace NxOgre 
 {
 
                                                                                        
@@ -94,6 +94,6 @@ void PhysXUserAllocator::checkDEBUG(void)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

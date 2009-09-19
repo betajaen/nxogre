@@ -1,5 +1,4 @@
 /** File: NxOgre.h
-    Created on: 15-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -24,6 +23,8 @@
 
 #ifndef NXOGRE_H
 #define NXOGRE_H
+
+                                                                                       
 
 #include "NxOgreAccumulativeSceneTimer.h"
 #include "NxOgreActiveParticle.h"

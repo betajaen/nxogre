@@ -28,11 +28,11 @@
 
                                                                                        
 
-const char ::NxOgre_Namespace::Resource::NULL_BYTE = 0;
+const char ::NxOgre::Resource::NULL_BYTE = 0;
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -74,6 +74,6 @@ unsigned int Resource::getNbWriteOperations() const
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

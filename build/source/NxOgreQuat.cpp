@@ -493,6 +493,6 @@ Quat::Quat(const Quat& other)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

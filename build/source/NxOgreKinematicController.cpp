@@ -38,7 +38,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -390,6 +390,6 @@ void KinematicController::sweepCollisionResponse(Vec3& target, const Vec3& curre
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

@@ -1,5 +1,4 @@
 /** File: NxOgreClasses.cpp
-    Created on: 15-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -27,7 +26,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -37,7 +36,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[629] = {
+static const char*  sClasses[625] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -557,10 +556,6 @@ static const char*  sClasses[629] = {
   "int2",
   "int3",
   "int4",
-  "ionFlag",
-  "ionsFlags_16bitIndices",
-  "ionsFlags_FlipNormals",
-  "ionsFlags_HardwareMes",
   "Joint",
   "JointDescription",
   "JointLimitDescription",

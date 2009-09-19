@@ -33,7 +33,7 @@ template<> NxOgre::MeshManager* NxOgre::Singleton<NxOgre::MeshManager, NxOgre::C
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -103,6 +103,6 @@ Mesh* MeshManager::getByName(const String& meshIdentifier)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

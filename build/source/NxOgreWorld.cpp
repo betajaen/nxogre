@@ -51,7 +51,7 @@ extern void setNxOgreCreationStatus(int);
 #endif
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -182,7 +182,7 @@ World::World(NxOgre::WorldPrototype* prototype)
  mPhysXUserAllocator = NxOgre_New(PhysXUserAllocator)();
   
  NxPhysicsSDKDesc sdk_description;
- ::NxOgre_Namespace::Functions::PrototypeFunctions::WorldPrototypeToNxPhysicsSDKDesc(prototype, sdk_description);
+ ::NxOgre::Functions::PrototypeFunctions::WorldPrototypeToNxPhysicsSDKDesc(prototype, sdk_description);
   
  NxSDKCreateError errorCode = NXCE_NO_ERROR;
  mSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, mPhysXUserAllocator, mPhysXOutputStream, sdk_description, &errorCode); 
@@ -306,6 +306,6 @@ NxCookingInterface* World::getPhysXCookingInterface(void)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

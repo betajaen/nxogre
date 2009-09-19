@@ -92,12 +92,12 @@ extern void setNxOgreCreationStatus(int b)
 #endif
 
 #if (NxOgreMemoryDebugger == 1)
-::NxOgre_Namespace::MemoryDebugger gMemoryDebugger;
+::NxOgre::MemoryDebugger gMemoryDebugger;
 #endif
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                      
@@ -278,7 +278,7 @@ void MemoryDebugger::writeAllocationsToFile(const char* fileName)
   }
   else
   {
-   fprintf(file, "      Type: %s\n", ::NxOgre_Namespace::Classes::TypeToCStr(allocType));
+   fprintf(file, "      Type: %s\n", ::NxOgre::Classes::TypeToCStr(allocType));
   }
   
   if (allocation->_Size >= 1024)
@@ -347,7 +347,7 @@ void MemoryDebugger::writeAllocationsToFile(const char* fileName)
 #undef NXOGRE_ACCURACY_STRING
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -36,7 +36,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -562,6 +562,6 @@ extern inline RigidBody* NxShapeToRigidBody(NxShape& shape)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

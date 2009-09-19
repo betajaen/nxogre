@@ -51,7 +51,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -493,6 +493,6 @@ void PrototypeFunctions::SoftBodyDescriptionToNxSoftBodyDesc(const SoftBodyDescr
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

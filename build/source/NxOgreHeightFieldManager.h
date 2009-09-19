@@ -31,14 +31,14 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
 
 /** \brief HeightFieldManager holds all HeightFieldes that are currently in the World.
 */
-class NxOgrePublicClass HeightFieldManager: public ::NxOgre_Namespace::Singleton<HeightFieldManager, ::NxOgre_Namespace::Classes::_HeightFieldManager>
+class NxOgrePublicClass HeightFieldManager: public ::NxOgre::Singleton<HeightFieldManager, ::NxOgre::Classes::_HeightFieldManager>
 {
   
   friend class World;
@@ -86,7 +86,7 @@ class NxOgrePublicClass HeightFieldManager: public ::NxOgre_Namespace::Singleton
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

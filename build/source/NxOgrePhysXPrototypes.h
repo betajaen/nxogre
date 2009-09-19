@@ -1,5 +1,4 @@
 /** File: NxOgrePhysXPrototypes.h
-    Created on: 15-Sep-09
     Author: Robin Southern "betajaen"
     SVN: $Id$
     This is an automatically created file.
@@ -11,8 +10,13 @@
     This file is released under the public domain.
 */
 
+                                                                                       
+
 #ifndef NXOGRE_PHYSX_PROTOTYPES_H
 #define NXOGRE_PHYSX_PROTOTYPES_H
+
+                                                                                       
+
 
 /*
     

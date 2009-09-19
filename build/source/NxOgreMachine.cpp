@@ -28,7 +28,7 @@
 #include "NxOgreWheelMachinePart.h"
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -59,6 +59,6 @@ MachinePart* Machine::createWheelMachinePart(Wheel* wheel, PointRenderable* poin
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

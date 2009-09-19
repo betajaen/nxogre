@@ -35,7 +35,7 @@ template<> NxOgre::ResourceSystem* NxOgre::Singleton<NxOgre::ResourceSystem, NxO
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -156,6 +156,6 @@ Archive* ResourceSystem::getArchiveByName(const String& name)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

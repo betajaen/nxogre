@@ -33,7 +33,7 @@ template<> NxOgre::HeightFieldManager* NxOgre::Singleton<NxOgre::HeightFieldMana
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -102,6 +102,6 @@ HeightField* HeightFieldManager::getByName(const String& meshIdentifier)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

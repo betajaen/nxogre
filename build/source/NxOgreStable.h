@@ -71,10 +71,6 @@
 
                                                                                        
 
-/** \brief
-*/
-#define NxOgre_Namespace NxOgre
-
 /** \brief Global new operator/function for every NxOgre class that requires to be a pointer.
     \example
      <code>
@@ -97,7 +93,7 @@
       myClass* myclass_ptr = NxOgre_NewT(myClass)(arg0, arg1, ...);
      </code>
 */
-#define  NxOgre_NewT(USER_CLASS) new (::NxOgre_Namespace::Memory::allocate(sizeof(USER_CLASS), ::NxOgre_Namespace::Classes::_UserClass, __FILE__, __LINE__)) USER_CLASS
+#define  NxOgre_NewT(USER_CLASS) new (::NxOgre::Memory::allocate(sizeof(USER_CLASS), ::NxOgre::Classes::_UserClass, __FILE__, __LINE__)) USER_CLASS
 
 /** \brief Global delete operator/function for every NxOgre class that requires to be deleted.
     \example
@@ -113,7 +109,7 @@
        NxOgre_DeleteT(myClass, myclass_ptr);
      </code>
 */
-#define NxOgre_DeleteT(TYPE, PTR) {if(PTR){PTR->~TYPE();::NxOgre_Namespace::Memory::unallocate(PTR);PTR=0}}
+#define NxOgre_DeleteT(TYPE, PTR) {if(PTR){PTR->~TYPE();::NxOgre::Memory::unallocate(PTR);PTR=0}}
 
 /** \brief NxOgre's version of "malloc"; always used by NxOgre and PhysX, and can be used by the user if needed.
     \example
@@ -122,9 +118,9 @@
       </code>
 */
 #if NxOgreMemoryDebugger == 1
-#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre_Namespace::Memory::allocate(SIZE, CLASSES_TYPE, __FILE__, __LINE__);
+#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre::Memory::allocate(SIZE, CLASSES_TYPE, __FILE__, __LINE__);
 #else
-#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre_Namespace::Memory::allocate(SIZE);
+#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre::Memory::allocate(SIZE);
 #endif
 
 /** \brief NxOgre's version of "free"; always used by NxOgre and PhysX, and can be used by the user if needed.
@@ -133,7 +129,7 @@
       NxOgre_Unallocate(i);
       </code>
 */
-#define NxOgre_Unallocate(PTR) {if(PTR){::NxOgre_Namespace::Memory::unallocate(PTR);PTR=0;}}
+#define NxOgre_Unallocate(PTR) {if(PTR){::NxOgre::Memory::unallocate(PTR);PTR=0;}}
 
 /** \brief NxOgre's version of "realloc"; always used by NxOgre and PhysX, and can be used by the user if needed.
     \example
@@ -141,23 +137,23 @@
        i = NxOgre_Reallocate(i, sizeof(int) * 2);
       </code>
 */
-#define NxOgre_Reallocate(PTR, NEW_SIZE)      ::NxOgre_Namespace::Memory::reallocate(PTR, NEW_SIZE)
+#define NxOgre_Reallocate(PTR, NEW_SIZE)      ::NxOgre::Memory::reallocate(PTR, NEW_SIZE)
 
 /** \brief Throw a very critical error and assert.
 */
-#define NxOgre_ThrowAssertion(COND, MESSAGE)  {if(COND){::NxOgre_Namespace::ErrorStream::getSingleton()->throwAssertion(MESSAGE, __FILE__, __LINE__);}assert(COND);}
+#define NxOgre_ThrowAssertion(COND, MESSAGE)  {if(COND){::NxOgre::ErrorStream::getSingleton()->throwAssertion(MESSAGE, __FILE__, __LINE__);}assert(COND);}
 
 /** \brief Throw a critical (but do not assert) error.
 */
-#define NxOgre_ThrowError(MESSAGE)            ::NxOgre_Namespace::ErrorStream::getSingleton()->throwError(MESSAGE, __FILE__, __LINE__)
+#define NxOgre_ThrowError(MESSAGE)            ::NxOgre::ErrorStream::getSingleton()->throwError(MESSAGE, __FILE__, __LINE__)
 
 /** \brief Throw a non-critical error.
 */
-#define NxOgre_ThrowWarning(MESSAGE)          ::NxOgre_Namespace::ErrorStream::getSingleton()->throwWarning(MESSAGE, __FILE__, __LINE__)
+#define NxOgre_ThrowWarning(MESSAGE)          ::NxOgre::ErrorStream::getSingleton()->throwWarning(MESSAGE, __FILE__, __LINE__)
 
 /** \brief Throw a non-error.
 */
-#define NxOgre_ThrowNotice(MESSAGE)           ::NxOgre_Namespace::ErrorStream::getSingleton()->throwNotice(MESSAGE, __FILE__, __LINE__)
+#define NxOgre_ThrowNotice(MESSAGE)           ::NxOgre::ErrorStream::getSingleton()->throwNotice(MESSAGE, __FILE__, __LINE__)
 
 /** \brief Compiler macro to cause a compiler error if the expression is false.
 */
@@ -189,7 +185,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
 /** \brief All floating-types are called "Real" in NxOgre; this allows single or double precision of every
@@ -209,7 +205,7 @@ typedef double DoubleReal;
 */
 typedef unsigned short RefT;
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

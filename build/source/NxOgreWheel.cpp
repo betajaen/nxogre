@@ -40,7 +40,7 @@ NxOgre::WheelBlueprint NxOgre::Wheel::DefaultWheelBlueprint;
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -353,6 +353,6 @@ NxWheelShape* Wheel::getWheelShape()
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

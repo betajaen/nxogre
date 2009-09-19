@@ -43,7 +43,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
 /** \brief This namespace and functions is an alternate to group of if/elseif/else statements.
@@ -253,7 +253,7 @@ void RigidBody::destroy(void)
 
 bool RigidBody::isDynamic(void) const
 {
- return ::NxOgre_Namespace::Functions::RigidBodyFunctions::isDynamic(mActor);
+ return ::NxOgre::Functions::RigidBodyFunctions::isDynamic(mActor);
 }
 
 NxActor* RigidBody::getNxActor(void)
@@ -278,6 +278,6 @@ Callback* RigidBody::getContactCallback()
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

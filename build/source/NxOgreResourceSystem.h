@@ -31,14 +31,14 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
 
 /** \brief
 */
-class NxOgrePublicClass ResourceSystem : public ::NxOgre_Namespace::Singleton<ResourceSystem, ::NxOgre_Namespace::Classes::_ResourceSystem>
+class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSystem, ::NxOgre::Classes::_ResourceSystem>
 {
   
   friend class World;
@@ -89,7 +89,7 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre_Namespace::Singleton<Re
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

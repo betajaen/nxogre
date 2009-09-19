@@ -32,7 +32,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -103,7 +103,7 @@ class NxOgrePublicClass PhysXMeshData : public NxOgre::PointerClass<Classes::_Ph
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -31,7 +31,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -113,7 +113,7 @@ class NxOgrePublicClass ShapeBlueprint : public PointerClass<Classes::_ShapeBlue
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

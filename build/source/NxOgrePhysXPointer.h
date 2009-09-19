@@ -35,7 +35,7 @@ class NxShape;
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -124,7 +124,7 @@ template<class parent_class> inline parent_class* pointer_parent_cast(void* user
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -35,7 +35,7 @@ class NxPhysicsSDKDesc;
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -156,7 +156,7 @@ class NxOgrePublicClass PrototypeFunctions
 } // namespace Functions
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

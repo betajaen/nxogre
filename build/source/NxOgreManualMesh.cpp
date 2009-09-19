@@ -35,7 +35,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -44,7 +44,7 @@ ManualMesh::ManualMesh(void)
 {
  mMesh = new MeshData();
 
- mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ManualMeshReferenceCounter);
+ mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ManualMeshReferenceCounter);
  (*mRef) = 1;
 }
 
@@ -52,7 +52,7 @@ ManualMesh::~ManualMesh(void)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  ::NxOgre::Memory::unallocate(mRef);
   delete mMesh;
  }
 }
@@ -61,7 +61,7 @@ ManualMesh& ManualMesh::operator=(ManualMesh& other)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  ::NxOgre::Memory::unallocate(mRef);
   delete mMesh;
  }
  mMesh      = other.mMesh;
@@ -128,11 +128,11 @@ void ManualMesh::acquire(MeshData* data)
  
  if(--(*mRef) == 0)
  {
-  ::NxOgre_Namespace::Memory::unallocate(mRef);
+  ::NxOgre::Memory::unallocate(mRef);
   delete mMesh;
  }
  
- mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre_Namespace::Classes::_ManualMeshReferenceCounter);
+ mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ManualMeshReferenceCounter);
  (*mRef) = 1;
  
  mMesh = data;
@@ -260,6 +260,6 @@ void ManualMesh::endCookOnly(bool cleanUp, ArchiveResourceIdentifier& cookingTar
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

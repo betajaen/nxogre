@@ -52,12 +52,12 @@
                                                                                        
 
 #if (NxOgreMemoryDebugger == 1)
- extern NxOgre_Namespace::MemoryDebugger gMemoryDebugger;
+ extern NxOgre::MemoryDebugger gMemoryDebugger;
 #endif
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -156,6 +156,6 @@ void Memory::copy(void* dest, const void* source, size_t length)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

@@ -42,7 +42,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -558,6 +558,6 @@ void Cloth::setForceFieldMaterial(MaterialIdentifier mi)
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        

@@ -43,7 +43,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 namespace Functions
 {
@@ -499,7 +499,7 @@ void  saveClothMesh(NxClothMesh* cloth, MeshData* mesh)
 
 }
 }
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -34,7 +34,7 @@
 #endif
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -91,7 +91,7 @@ class NxOgrePublicClass PhysXUserAllocator : public PointerClass<Classes::_PhysX
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

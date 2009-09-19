@@ -43,7 +43,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -381,7 +381,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 

@@ -31,7 +31,7 @@
 
                                                                                        
 
-namespace NxOgre_Namespace
+namespace NxOgre
 {
 
                                                                                        
@@ -89,7 +89,7 @@ NxOgre_CompileAssertion(sizeof(RigidBodyRenderable) == 32, "RigidBodyRenderable 
 
                                                                                        
 
-} // namespace NxOgre_Namespace
+} // namespace NxOgre
 
                                                                                        
 
