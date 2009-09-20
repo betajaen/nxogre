@@ -28,10 +28,10 @@
 
 #include "NxOgreStable.h"
 #include "NxOgrePrototypeFunctions.h"
+#include "NxOgreRigidBodyDescription.h"
+#include "NxOgreSceneDescription.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreWorldPrototype.h"
-#include "NxOgreScenePrototype.h"
-#include "NxOgreRigidBodyPrototype.h"
 #include "NxOgreShape.h"
 #include "NxOgreBox.h"
 
@@ -73,158 +73,89 @@ void PrototypeFunctions::WorldPrototypeToNxPhysicsSDKDesc(WorldPrototype* protot
  description.hwPageSize = prototype->mHardwarePageSize;
 }
 
-void PrototypeFunctions::SceneDescriptionToScenePrototype(const SceneDescription& description, ScenePrototype* prototype)
+
+void PrototypeFunctions::SceneDescriptionToNxSceneDesc(const NxOgre::SceneDescription& description, NxSceneDesc& physx_description)
 {
- prototype->mName                         = description.mName;
- prototype->mProcessingPriority           = description.mProcessingPriority;
- prototype->mFetchingPriority             = description.mFetchingPriority;
- prototype->mGravity                      = description.mGravity;
- prototype->mMaxTimeStep                  = description.mMaxTimeStep;
- prototype->mMaxSubSteps                  = description.mMaxSubSteps;
- prototype->mTimeStepMethod               = description.mTimeStepMethod;
- prototype->mBounds.min                   = description.mBounds.min;
- prototype->mBounds.max                   = description.mBounds.max;
- prototype->mMaxDynamicRigidBodies        = description.mMaxDynamicRigidBodies;
- prototype->mMaxDynamicShapes             = description.mMaxDynamicShapes;
- prototype->mMaxNonDynamicRigidBodies     = description.mMaxNonDynamicRigidBodies;
- prototype->mMaxStaticShapes              = description.mMaxStaticShapes;
- prototype->mMaxJoints                    = description.mMaxJoints;
- prototype->mUseHardware                  = description.mUseHardware;
- prototype->mBoundsPlane                  = description.mBoundsPlane;
- prototype->mFlags                        = description.mFlags;
- prototype->mBoundsUpAxis                 = description.mBoundsUpAxis;
- prototype->mBoundsSubdivisionLevel       = description.mBoundsSubdivisionLevel;
- prototype->mPruningStaticStructure       = description.mPruningStaticStructure;
- prototype->mPruningDynamicStructure      = description.mPruningDynamicStructure;
- prototype->mDynamicTreeBuildRateHint     = description.mDynamicTreeBuildRateHint;
- prototype->mWorkerThreadsCount           = description.mWorkerThreadsCount;
- prototype->mWorkerThreadsStackSize       = description.mWorkerThreadsStackSize;
- prototype->mWorkerThreadsPriority        = description.mWorkerThreadsPriority;
- prototype->mWorkerThreadsMask            = description.mWorkerThreadsMask;
- prototype->mBackgroundThreadsCount       = description.mBackgroundThreadsCount;
- prototype->mBackgroundThreadsStackSize   = description.mBackgroundThreadsStackSize;
- prototype->mBackgroundThreadsPriority    = description.mBackgroundThreadsPriority;
- prototype->mBackgroundThreadsMask        = description.mBackgroundThreadsMask;
- prototype->mSimulationThreadMask         = description.mSimulationThreadMask;
- prototype->mSimulationThreadStackSize    = description.mSimulationThreadStackSize;
- prototype->mSimulationThreadPriority     = description.mSimulationThreadPriority;
- prototype->mBroadPhaseType               = description.mBroadPhaseType;
- prototype->mBroadPhaseNbCellsX           = description.mBroadPhaseNbCellsX;
- prototype->mBroadPhaseNbCellsY           = description.mBroadPhaseNbCellsY;
- prototype->mSolverBatchSize              = description.mSolverBatchSize;
+ physx_description.backgroundThreadCount      = description.mBackgroundThreadsCount;
+ physx_description.backgroundThreadMask       = description.mBackgroundThreadsMask;
+ physx_description.backgroundThreadPriority   = NxThreadPriority(int(description.mBackgroundThreadsPriority));
+ physx_description.boundsPlanes               = description.mBoundsPlane;
+ physx_description.bpType                     = NxBroadPhaseType(int(description.mBroadPhaseType));
+ physx_description.dynamicStructure           = NxPruningStructure(int(description.mPruningDynamicStructure));
+ physx_description.dynamicTreeRebuildRateHint = description.mDynamicTreeBuildRateHint;
+ physx_description.flags                      = description.mFlags;
+ Functions::XYZ<Vec3, NxVec3>          ( description.mGravity, physx_description.gravity );
+ physx_description.internalThreadCount        = description.mWorkerThreadsCount;
+ physx_description.maxIter                    = description.mMaxSubSteps;
+ physx_description.maxTimestep                = description.mMaxTimeStep;
+ physx_description.nbGridCellsX               = description.mBroadPhaseNbCellsX;
+ physx_description.nbGridCellsY               = description.mBroadPhaseNbCellsY;
+ physx_description.simThreadMask              = description.mSimulationThreadMask;
+ physx_description.simThreadPriority          = NxThreadPriority(int(description.mSimulationThreadPriority));
+ physx_description.simThreadStackSize         = description.mSimulationThreadStackSize;
+ physx_description.simType                    = description.mUseHardware == true ? NX_SIMULATION_HW : NX_SIMULATION_SW;
+ physx_description.solverBatchSize            = description.mSolverBatchSize;
+ physx_description.staticStructure            = NxPruningStructure(int(description.mPruningStaticStructure));
+ physx_description.subdivisionLevel           = description.mBoundsSubdivisionLevel;
+ physx_description.threadMask                 = description.mWorkerThreadsMask;
+ physx_description.timeStepMethod             = NxTimeStepMethod(int(description.mTimeStepMethod));
+ physx_description.upAxis                     = int(description.mBoundsUpAxis);
+ if (physx_description.upAxis == Enums::NoAxis)
+  physx_description.upAxis = 0;
+ physx_description.workerThreadPriority       = NxThreadPriority(int(description.mWorkerThreadsPriority));
+ physx_description.workerThreadStackSize      = description.mWorkerThreadsStackSize;
 }
 
-void PrototypeFunctions::ScenePrototypeToNxSceneDesc(NxOgre::ScenePrototype* prototype, NxSceneDesc& description)
+void PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(const RigidBodyDescription& description, NxActorDesc& actor_description, NxBodyDesc& body_description)
 {
- description.backgroundThreadCount      = prototype->mBackgroundThreadsCount;
- description.backgroundThreadMask       = prototype->mBackgroundThreadsMask;
- description.backgroundThreadPriority   = NxThreadPriority(int(prototype->mBackgroundThreadsPriority));
- description.boundsPlanes               = prototype->mBoundsPlane;
- description.bpType                     = NxBroadPhaseType(int(prototype->mBroadPhaseType));
- description.dynamicStructure           = NxPruningStructure(int(prototype->mPruningDynamicStructure));
- description.dynamicTreeRebuildRateHint = prototype->mDynamicTreeBuildRateHint;
- description.flags                      = prototype->mFlags;
- Functions::XYZ<Vec3, NxVec3>          ( prototype->mGravity, description.gravity );
- description.internalThreadCount        = prototype->mWorkerThreadsCount;
- description.maxIter                    = prototype->mMaxSubSteps;
- description.maxTimestep                = prototype->mMaxTimeStep;
- description.nbGridCellsX               = prototype->mBroadPhaseNbCellsX;
- description.nbGridCellsY               = prototype->mBroadPhaseNbCellsY;
- description.simThreadMask              = prototype->mSimulationThreadMask;
- description.simThreadPriority          = NxThreadPriority(int(prototype->mSimulationThreadPriority));
- description.simThreadStackSize         = prototype->mSimulationThreadStackSize;
- description.simType                    = prototype->mUseHardware == true ? NX_SIMULATION_HW : NX_SIMULATION_SW;
- description.solverBatchSize            = prototype->mSolverBatchSize;
- description.staticStructure            = NxPruningStructure(int(prototype->mPruningStaticStructure));
- description.subdivisionLevel           = prototype->mBoundsSubdivisionLevel;
- description.threadMask                 = prototype->mWorkerThreadsMask;
- description.timeStepMethod             = NxTimeStepMethod(int(prototype->mTimeStepMethod));
- description.upAxis                     = int(prototype->mBoundsUpAxis);
- if (description.upAxis == Enums::NoAxis)
-  description.upAxis = 0;
- description.workerThreadPriority       = NxThreadPriority(int(prototype->mWorkerThreadsPriority));
- description.workerThreadStackSize      = prototype->mWorkerThreadsStackSize;
+ 
+ if (description.mCompartment != NULL && description.mCompartment->getType() == Enums::CompartmentType_RigidBody)
+  actor_description.compartment = description.mCompartment->getCompartment();
+ 
+ actor_description.contactReportFlags = description.mContactReportFlags;
+ actor_description.density = description.mDensity;
+ actor_description.dominanceGroup = description.mDominanceGroup;
+ actor_description.flags = description.mActorFlags;
+ actor_description.forceFieldMaterial = description.mForceFieldMaterial;
+ actor_description.group = description.mGroup;
+ actor_description.name = description.mName.c_str();
+ 
+ body_description.angularDamping = description.mAngularDamping;
+ Functions::XYZ<Vec3, NxVec3>(description.mAngularVelocity, body_description.angularVelocity);
+ body_description.CCDMotionThreshold = description.mCCDMotionThreshold;
+ body_description.contactReportThreshold = description.mContactReportThreshold;
+ body_description.flags = description.mBodyFlags;
+ body_description.linearDamping = description.mLinearDamping;
+ Functions::XYZ<Vec3, NxVec3>(description.mLinearVelocity, body_description.linearVelocity);
+ body_description.mass = description.mMass;
+ body_description.massLocalPose.setColumnMajor44(description.mMassLocalPose.ptr());
+ Functions::XYZ<Vec3, NxVec3>(description.mMassSpaceInertia, body_description.massSpaceInertia);
+ body_description.maxAngularVelocity = description.mMaxAngularVelocity;
+ body_description.sleepAngularVelocity = description.mSleepAngularVelocity;
+ body_description.sleepDamping = description.mSleepDamping;
+ body_description.sleepEnergyThreshold = description.mSleepEnergyThreshold;
+ body_description.sleepLinearVelocity = description.mSleepLinearVelocity;
+ body_description.solverIterationCount = description.mSolverIterationCount;
+ body_description.wakeUpCounter = description.mWakeUpCounter;
+ actor_description.body = &body_description;
+
+ 
 }
 
-void PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(const RigidBodyDescription& description, RigidBodyPrototype* prototype)
-{
- prototype->mAngularDamping = description.mAngularDamping;
- prototype->mAngularVelocity = description.mAngularVelocity;
- prototype->mActorFlags = description.mActorFlags;
- prototype->mBodyFlags = description.mBodyFlags;
- prototype->mCCDMotionThreshold = description.mCCDMotionThreshold;
- prototype->mCompartment = description.mCompartment;
- prototype->mContactReportThreshold = description.mContactReportThreshold;
- prototype->mDensity = description.mDensity;
- prototype->mDominanceGroup = description.mDominanceGroup;
- prototype->mForceFieldMaterial = description.mForceFieldMaterial;
- prototype->mGroup = description.mGroup;
- prototype->mInternalThreadCount = description.mInternalThreadCount;
- prototype->mLinearDamping = description.mLinearDamping;
- prototype->mLinearVelocity = description.mLinearVelocity;
- prototype->mMass = description.mMass;
- prototype->mMassLocalPose = description.mMassLocalPose;
- prototype->mMassSpaceInertia = description.mMassSpaceInertia;
- prototype->mMaxAngularVelocity = description.mMaxAngularVelocity;
- prototype->mName = description.mName;
- prototype->mSleepAngularVelocity = description.mSleepAngularVelocity;
- prototype->mSleepDamping = description.mSleepDamping;
- prototype->mSleepEnergyThreshold = description.mSleepEnergyThreshold;
- prototype->mSleepLinearVelocity = description.mSleepLinearVelocity;
- prototype->mSolverIterationCount = description.mSolverIterationCount;
-}
-
-void PrototypeFunctions::RigidBodyPrototypeToNxActorAndNxBodyDesc(RigidBodyPrototype* prototype, NxActorDesc& actor_description, NxBodyDesc& body_description)
+void PrototypeFunctions::RigidBodyDescriptionToNxActorDesc(const RigidBodyDescription& description, NxActorDesc& actor_description)
 {
  
- if (prototype->mCompartment != NULL && prototype->mCompartment->getType() == Enums::CompartmentType_RigidBody)
-  actor_description.compartment = prototype->mCompartment->getCompartment();
+ if (description.mCompartment != NULL && description.mCompartment->getType() == Enums::CompartmentType_RigidBody)
+  actor_description.compartment = description.mCompartment->getCompartment();
  
- actor_description.contactReportFlags = prototype->mContactReportFlags;
- actor_description.density = prototype->mDensity;
- actor_description.dominanceGroup = prototype->mDominanceGroup;
- actor_description.flags = prototype->mActorFlags;
- actor_description.forceFieldMaterial = prototype->mForceFieldMaterial;
- actor_description.globalPose.setRowMajor44(prototype->mGlobalPose.ptr());
- actor_description.group = prototype->mGroup;
- actor_description.name = prototype->mName.c_str();
+ actor_description.contactReportFlags = description.mContactReportFlags;
+ actor_description.density = description.mDensity;
+ actor_description.dominanceGroup = description.mDominanceGroup;
+ actor_description.flags = description.mActorFlags;
+ actor_description.forceFieldMaterial = description.mForceFieldMaterial;
+ actor_description.group = description.mGroup;
+ actor_description.name = description.mName.c_str();
  
- if (prototype->mType == Enums::RigidBodyType_Dynamic || prototype->mType == Enums::RigidBodyType_Kinematic)
- {
-  body_description.angularDamping = prototype->mAngularDamping;
-  Functions::XYZ<Vec3, NxVec3>(prototype->mAngularVelocity, body_description.angularVelocity);
-  body_description.CCDMotionThreshold = prototype->mCCDMotionThreshold;
-  body_description.contactReportThreshold = prototype->mContactReportThreshold;
-  body_description.flags = prototype->mBodyFlags;
-  body_description.linearDamping = prototype->mLinearDamping;
-  Functions::XYZ<Vec3, NxVec3>(prototype->mLinearVelocity, body_description.linearVelocity);
-  body_description.mass = prototype->mMass;
-  body_description.massLocalPose.setColumnMajor44(prototype->mMassLocalPose.ptr());
-  Functions::XYZ<Vec3, NxVec3>(prototype->mMassSpaceInertia, body_description.massSpaceInertia);
-  body_description.maxAngularVelocity = prototype->mMaxAngularVelocity;
-  body_description.sleepAngularVelocity = prototype->mSleepAngularVelocity;
-  body_description.sleepDamping = prototype->mSleepDamping;
-  body_description.sleepEnergyThreshold = prototype->mSleepEnergyThreshold;
-  body_description.sleepLinearVelocity = prototype->mSleepLinearVelocity;
-  body_description.solverIterationCount = prototype->mSolverIterationCount;
-  body_description.wakeUpCounter = prototype->mWakeUpCounter;
-  actor_description.body = &body_description;
-
-  if (prototype->mType == Enums::RigidBodyType_Kinematic)
-  {
-   body_description.flags |= NX_BF_KINEMATIC;
-  }
- }
- else if (prototype->mType == Enums::RigidBodyType_Geometry)
- {
- }
- else if (prototype->mType == Enums::RigidBodyType_Volume)
- {
-  for (unsigned int i=0;i < prototype->mShapes.size(); i++)
-  {
-   prototype->mShapes[i]->getBlueprint()->mFlags |= prototype->mVolumeCollisionType;
-  }
- }
 }
 
 void PrototypeFunctions::MaterialDescriptionToMaterialPrototype(const MaterialDescription& description, MaterialPrototype* prototype)

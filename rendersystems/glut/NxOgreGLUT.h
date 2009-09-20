@@ -30,7 +30,7 @@
                                                                                        
 
 #include "GLUTBody.h"
-#include "GLUTBodyPrototype.h"
+#include "GLUTBodyDescription.h"
 #include "GLUTRenderSystem.h"
 
                                                                                        

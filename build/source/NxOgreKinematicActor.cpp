@@ -32,7 +32,6 @@
 #include "NxOgreScene.h"
 #include "NxOgreShape.h"
 #include "NxOgreRigidBodyFunctions.h"
-#include "NxOgreRigidBodyPrototype.h"
 
                                                                                        
 
@@ -43,16 +42,27 @@ namespace NxOgre
 
 
 KinematicActor::KinematicActor(Scene* scene)
-: RigidBody(),
-  mScene(scene)
+: RigidBody(), mScene(scene)
 {
 }
 
-KinematicActor::KinematicActor(RigidBodyPrototype* prototype, Scene* scene)
-: RigidBody(),
-  mScene(scene)
+KinematicActor::KinematicActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+: RigidBody(), mScene(scene)
 {
- create(prototype, scene, &mShapes);
+ mName = description.mName;
+ mNameHash = Functions::StringHash(mName);
+ mShapes.push_back(shape);
+ 
+ createKinematicActor(pose, description, scene, shape);
+}
+
+KinematicActor::KinematicActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+: RigidBody(), mScene(scene)
+{
+ mName = description.mName;
+ mNameHash = Functions::StringHash(mName);
+ 
+ createKinematicActor(pose, description, scene, shapes);
 }
 
 KinematicActor::~KinematicActor(void)
@@ -60,12 +70,10 @@ KinematicActor::~KinematicActor(void)
  destroy();
 }
 
-
 unsigned int KinematicActor::getClassType() const
 {
  return Classes::_KinematicActor;
 }
-
 
 void KinematicActor::setGroup(GroupIdentifier actorGroup)
 {
@@ -181,7 +189,6 @@ Quat KinematicActor::getGlobalOrientationQuat(void) const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
 }
-
 
 void KinematicActor::createShape(Shape*)
 {

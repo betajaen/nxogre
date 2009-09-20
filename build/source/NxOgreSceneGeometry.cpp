@@ -32,7 +32,7 @@
 #include "NxOgreScene.h"
 #include "NxOgreShape.h"
 #include "NxOgreRigidBodyFunctions.h"
-#include "NxOgreRigidBodyPrototype.h"
+#include "NxOgreRigidBodyDescription.h"
 
                                                                                        
 
@@ -48,17 +48,23 @@ SceneGeometry::SceneGeometry(Scene* scene)
 {
 }
 
-SceneGeometry::SceneGeometry(RigidBodyPrototype* prototype, Scene* scene)
+SceneGeometry::SceneGeometry(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(),
   mScene(scene)
 {
- create(prototype, scene, &mShapes);
+ createSceneGeometry(pose, description, scene, shape);
+}
+
+SceneGeometry::SceneGeometry(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+: RigidBody(),
+  mScene(scene)
+{
+ createSceneGeometry(pose, description, scene, shapes);
 }
 
 SceneGeometry::~SceneGeometry(void)
 {
  destroy();
- mShapes.destroyAll();
 }
 
 unsigned int SceneGeometry::getClassType() const

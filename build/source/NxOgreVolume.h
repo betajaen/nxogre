@@ -52,14 +52,12 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
   
   friend class Scene;
   friend class Functions::ArrayFunctions<Volume*>::Write;
+  template<class T> friend inline void boost::checked_delete(T*);
   
   public:
   
-
    using ::NxOgre::PointerClass<Classes::_Volume>::operator new;
-
    using ::NxOgre::PointerClass<Classes::_Volume>::operator delete;
-  
    using ::NxOgre::PointerClass<Classes::_Volume>::getClassType;
   
   /** \brief Methods for setting a dynamic Volume's pose in the world. 
@@ -126,7 +124,11 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
   
   /** \internal Use Scene::createVolume
   */
-                                                             Volume(RigidBodyPrototype*, Scene*, Callback*);
+                                                             Volume(Shape*, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
+  
+  /** \internal Use Scene::createActor
+  */
+                                                             Volume(Shapes&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
   
   /** \internal Use Scene::destroyVolume
   */

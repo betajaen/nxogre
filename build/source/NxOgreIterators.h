@@ -44,10 +44,10 @@ namespace NxOgre
 /** \brief Forward iterator for Containers
     \usage
      <code>
-        vector_iterator<T> it = ...
-        
-        for(it.begin(); it != it.end(); ++it)
-         it->function();
+      vector_iterator<T> it = ...
+
+      for(it.begin(); it != it.end(); ++it)
+       it->function();
      </code>
 */
 template<typename value_type> class vector_iterator

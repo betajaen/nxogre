@@ -130,9 +130,13 @@ class NxOgrePublicClass SceneGeometry : public PointerClass<Classes::_SceneGeome
   */
                                               SceneGeometry(Scene*);
   
-  /** \internal Use Scene::createSceneGeometry
+  /** \internal Use Scene::createActor
   */
-                                              SceneGeometry(RigidBodyPrototype*, Scene*);
+                                              SceneGeometry(Shape*, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  
+  /** \internal Use Scene::createActor
+  */
+                                              SceneGeometry(Shapes&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::destroySceneGeometry
   */

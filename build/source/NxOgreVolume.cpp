@@ -32,7 +32,7 @@
 #include "NxOgreScene.h"
 #include "NxOgreShape.h"
 #include "NxOgreRigidBodyFunctions.h"
-#include "NxOgreRigidBodyPrototype.h"
+#include "NxOgreRigidBodyDescription.h"
 
 #include "NxOgreWorld.h"
 
@@ -51,18 +51,25 @@ Volume::Volume(Scene* scene, Callback* callback)
 {
 }
 
-Volume::Volume(RigidBodyPrototype* prototype, Scene* scene, Callback* callback)
+Volume::Volume(Shape* shape, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
 : RigidBody(),
   mScene(scene),
   mVolumeCallback(callback)
 {
- create(prototype, scene, &mShapes);
+ createVolume(pose, type, scene, shape);
+}
+
+Volume::Volume(Shapes& shapes, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
+: RigidBody(),
+  mScene(scene),
+  mVolumeCallback(callback)
+{
+ createVolume(pose, type, scene, shapes);
 }
 
 Volume::~Volume(void)
 {
  destroy();
- mShapes.destroyAll();
 }
 
 void Volume::setGlobalPose(const Matrix44& matrix)

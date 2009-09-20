@@ -192,7 +192,7 @@ class NxOgrePublicClass Shape : public PointerClass<Classes::_Shape>
 
   /** \internal
   */
-  virtual               void                  assign(NxShape*) = 0;
+  virtual               void                  assign(NxShape*) {}
   
   protected:
   
@@ -216,13 +216,24 @@ class NxOgrePublicClass Shape : public PointerClass<Classes::_Shape>
   
   /** \internal
   */
-  virtual               NxShapeDesc*          create() = 0;
+  virtual               NxShapeDesc*          create() {return 0;}
 
   /** \internal
   */
   virtual               void                  assignAbstract(NxShape*);
   
 }; // class Shape
+
+
+                                                                                       
+
+/** \brief A collection of shapes handed to a RigidBody (short term storage).
+*/
+typedef std::vector<Shape*> Shapes;
+
+/** \brief A collection of shapes that belong to a RigidBody (long term storage).
+*/
+typedef vector<Shape>::type CollisionModel;
 
                                                                                        
 

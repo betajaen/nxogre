@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\rendersystems\glut\include;..\..\sdk\;&quot;$(PHYSX_DIR)\Graphics\include\win32&quot;"
+				AdditionalIncludeDirectories="..\..\rendersystems\glut\include;..\..\sdk\;&quot;$(PHYSX_DIR)\Graphics\include\win32&quot;;&quot;$(BOOST_HOME)&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;GLUT_FOR_NXOGRE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy &quot;$(TargetDir)NxOgreGLUT_Debug.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\..\rendersystems\glut\*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y"
+				CommandLine="xcopy &quot;$(TargetDir)NxOgreGLUT_Debug.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\..\rendersystems\glut\*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -161,11 +161,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\rendersystems\glut\GLUTBodyPrototype.cpp"
+			RelativePath="..\..\rendersystems\glut\GLUTBodyDescription.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\rendersystems\glut\GLUTBodyPrototype.h"
+			RelativePath="..\..\rendersystems\glut\GLUTBodyDescription.h"
 			>
 		</File>
 		<File

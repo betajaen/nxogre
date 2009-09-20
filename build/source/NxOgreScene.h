@@ -34,6 +34,12 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
+#include "NxOgreActor.h"
+#include "NxOgreSceneGeometry.h"
+#include "NxOgreKinematicActor.h"
+#include "NxOgreVolume.h"
+#include "NxOgreShape.h"
+
 #include "NxOgrePointerClass.h"
 #include "NxOgreRigidBodyDescription.h"
 #include "NxOgreMaterialDescription.h"
@@ -64,10 +70,22 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   public: // Functions
   
+  typedef  multimap<StringHash, Actor>::type                    Actors;
+  typedef  multimap<StringHash, Actor>::user_iterator           ActorIterator;
+
+  typedef  multimap<StringHash, SceneGeometry>::type            SceneGeometries;
+  typedef  multimap<StringHash, SceneGeometry>::user_iterator   SceneGeometryIterator;
+
+  typedef  multimap<StringHash, KinematicActor>::type           KinematicActors;
+  typedef  multimap<StringHash, KinematicActor>::user_iterator  KinematicActorIterator;
+
+  typedef  multimap<StringHash, Volume>::type                   Volumes;
+  typedef  multimap<StringHash, Volume>::user_iterator          VolumeIterator;
+
   
   /** \brief Get the name of the Scene if it has one; otherwise NULL is returned.
   */
-                       const char*            getName(void) const;
+                       String                 getName(void) const;
   
   /** \brief Get the hash of the name of the Scene.
   */
@@ -75,27 +93,27 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \brief
   */
+                       unsigned int           getNbRigidBodies(void) const;
+  
+  /** \brief
+  */
                        unsigned int           getNbActors(void) const;
   
   /** \brief
   */
-                       ArrayIterator<Actor*>  getActors(void);
-
-  /** \brief
-  */
-                       Actor*                 createActor(RigidBodyPrototype*);
-
+                       ActorIterator          getActors(void);
+  
   /** \brief Create an actor somewhere in the scene
   */
                        Actor*                 createActor(Shape*, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
   
   /** \brief Create an actor somewhere in the scene
   */
-                       Actor*                 createActor(Shapes, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       Actor*                 createActor(Shapes&, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
   
   /** \brief
   */
-                       SceneGeometry*         createSceneGeometry(Shapes, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       SceneGeometry*         createSceneGeometry(Shapes&, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
   
   /** \brief
   */
@@ -108,7 +126,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \brief
   */
-                       KinematicActor*        createKinematicActor(Shapes, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       KinematicActor*        createKinematicActor(Shapes&, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
 
   /** \brief Create a volume for collision detection in a shape, based on the PhysX Trigger system.
       \note  Volumes are RigidBodies can be treated as so, but can never be moved via forces.
@@ -117,7 +135,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \brief;
   */
-                       Volume*                createVolume(Shapes, const Matrix44&, Callback*, Enums::VolumeCollisionType = Enums::VolumeCollisionType_All);
+                       Volume*                createVolume(Shapes&, const Matrix44&, Callback*, Enums::VolumeCollisionType = Enums::VolumeCollisionType_All);
   
   /** \brief
   */
@@ -196,9 +214,8 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
                        Compartment*           createCompartment(const CompartmentDescription&);
 
   /** \brief Find a NxOgre Compartment based upon it's PhysX pointer equilvent.
-      \note This function is a little un-efficent. Try not to use it thousands of times at once in a frame if you have a huge amount of compartments.
   */
-                       Compartment*           findCompartment(NxCompartment*);
+                       Compartment*           getCompartment(NxCompartment*);
 
   /** \brief
   */
@@ -284,7 +301,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \internal Use World::createScene()
   */
-                                              Scene(ScenePrototype*, NxPhysicsSDK*);
+                                              Scene(const SceneDescription&, NxPhysicsSDK*);
   
   /** \internal Use World::destroyScene()
   */
@@ -310,15 +327,15 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
    
   /** \internal Master actors array
   */
-                       Array<Actor*>                    mActors;
+                       Actors                           mActors;
   
   /** \internal Master scene geometries array
   */
-                       Array<SceneGeometry*>            mSceneGeometries;
+                       SceneGeometries                  mSceneGeometries;
   
   /** \internal Master kinematic actors array
   */
-                       Array<KinematicActor*>           mKinematicActors;
+                       KinematicActors                  mKinematicActors;
   
   /** \internal Master kinematic controllers array
   */
@@ -326,7 +343,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \internal Master volumes array
   */
-                       Array<Volume*>                   mVolumes;
+                       Volumes                          mVolumes;
   
   /** \internal Master materials array
   */
@@ -358,7 +375,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
 
   /** \internal
   */
-                       Array<CompartmentArrayPair>      mCompartmentsPair;
+                std::map<NxCompartment*, Compartment*>  mCompartmentPairs;
 
   /** \internal Is Scene processing flag
   */

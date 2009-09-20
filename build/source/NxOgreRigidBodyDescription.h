@@ -59,15 +59,14 @@ class NxOgrePublicClass RigidBodyDescription
   */
                         bool                   valid(void);
   
-  /** \brief Disable the inbuilt file resource system. Useful when you want override the existing one, with your own.
-      \default false
+  /** \brief Clone the properties of this into another RigidBodyDescription or a class derived from it.
   */
-  bool                                         mNoFileResourceSystem;
+                        void                   clone(RigidBodyDescription& target) const;
   
   /** \brief Optional name of the RigidBody
       \note  Apart from Actors (and probably derivations of), names are ignored.
   */
-                        String           mName;
+  String           mName;
   
   /** \brief Type of RigidBody
       \default RigidBodyType_Dynamic
@@ -85,7 +84,7 @@ class NxOgrePublicClass RigidBodyDescription
         description.mActorFlags |= Enums::ActorFlags_ContactModification;
        </code>
   */
-                        unsigned int           mActorFlags;
+  unsigned int           mActorFlags;
   
   /** \brief Body flags, which is to be used with the or operator (|, |=).
       \see Enums::ActorFlags
@@ -97,7 +96,7 @@ class NxOgrePublicClass RigidBodyDescription
        </code>
       \note  If your RigidBody is a Volume or StaticGeometry then these flags are ignored.
   */
-                        unsigned int           mBodyFlags;
+  unsigned int           mBodyFlags;
   
   /** \brief Contact report flags
       \see Enums::ContactPairFlags
@@ -108,125 +107,120 @@ class NxOgrePublicClass RigidBodyDescription
         description.mContactReportFlags |= Enums::ContactPairFlags_Forces;
        </code>
   */
-                        unsigned int           mContactReportFlags;
+  unsigned int           mContactReportFlags;
   
   /** \brief Compartment.
       \default NULL
   */
-                        Compartment*           mCompartment;
+  Compartment*           mCompartment;
   
   /** \brief Density (mass calculated by volume).
       \default 0
       \note When setting Density the mass must be set to zero, and when the mass is set the density must be zero.
   */
-                        Real                   mDensity;
+  Real                   mDensity;
 
   /** \brief DominanceGroup
       \default 0
   */
-                        unsigned short         mDominanceGroup;
+  unsigned short         mDominanceGroup;
 
   /** \brief ActorGroup this Actor belongs to.
       \default 0
   */
-                        unsigned short         mGroup;
+  unsigned short         mGroup;
 
   /** \brief Angular Damping.
       \default 0.05f;
   */
-                        Real                   mAngularDamping;
+  Real                   mAngularDamping;
 
   /** \brief The initial angular velocity of the actor.
       \default Vec3::ZERO
   */
-                        Vec3                  mAngularVelocity;
+  Vec3                  mAngularVelocity;
 
   /** \brief CCD Motion Threshold.
       \default 0
   */
-                        Real                   mCCDMotionThreshold;
+  Real                   mCCDMotionThreshold;
 
   /** \brief The force threshold for contact reports.
       \default NxOgreRealMax
   */
-                        Real                   mContactReportThreshold;
+  Real                   mContactReportThreshold;
 
   /** \brief Force Field Material Index.
       \default 0
   */
-                        unsigned short         mForceFieldMaterial;
+  unsigned short         mForceFieldMaterial;
 
   /** \brief The number of SDK managed worker threads used when running the simulation in parallel.
       \default 0
   */
-                        unsigned int           mInternalThreadCount;
+  unsigned int           mInternalThreadCount;
 
   /** \brief Linear Damping of the Actor
       \default 0.0f
   */
-                        Real                   mLinearDamping;
+  Real                   mLinearDamping;
 
   /** \brief Initial linear velocity of the actor
       \default Vec3::ZERO
   */
-                        Vec3                  mLinearVelocity;
+  Vec3                  mLinearVelocity;
 
   /** \brief Mass of a non-dynamic RigidBody
       \default 1.0
       \note When setting Mass the Density must be set to zero, and when the Density is set the Mass must be zero.
   */
-                       Real                    mMass;
+  Real                    mMass;
 
   /** \brief Mass Local Pose of the body portion of the Actor
       \default matrix44_identity
   */
-                       Matrix44                mMassLocalPose;
+  Matrix44                mMassLocalPose;
 
   /** \brief Diagonal mass space inertia tensor in bodies mass frame.
       \default Vec3::ZERO
   */
-                       Vec3                   mMassSpaceInertia;
+  Vec3                    mMassSpaceInertia;
 
   /** \brief Maximum angular velocity of the Actor
       \default -1.0f (PhysX assumes this to be a maximum linear velocity)
   */
-                       Real                    mMaxAngularVelocity;
+  Real                    mMaxAngularVelocity;
 
   /** \brief Maximum angular velocity at which body can go to sleep.
       \default -1.0f (No maximum)
   */
-                       Real                    mSleepAngularVelocity;
+  Real                    mSleepAngularVelocity;
 
   /** \brief Damping factor for bodies that are about to sleep.
       \default 0
   */
-                       Real                    mSleepDamping;
+  Real                    mSleepDamping;
 
   /** \brief Threshold for the energy-based sleeping algorithm.
       \default 0.005
       \note Only used when the mBodyFlags.mEnergySleepTest flag is set.
   */
-                       Real                    mSleepEnergyThreshold;
+  Real                    mSleepEnergyThreshold;
 
   /** \brief Maximum linear velocity at which body can go to sleep.
       \default -1.0f (No maximum)
   */
-                       Real                    mSleepLinearVelocity;
+  Real                    mSleepLinearVelocity;
 
   /** \brief Number of solver iterations performed when processing joint/contacts connected to this body.
       \default 4
   */
-                       unsigned int            mSolverIterationCount;
+  unsigned int            mSolverIterationCount;
 
   /** \brief The body's initial wake up counter.
       \default 0.02
   */
-                       Real                    mWakeUpCounter;
-
-  /** \brief Volume collision type if the RigidBody is a Volume.
-      \default Enums::VolumeCollisionFlags_None
-  */
-                 Enums::VolumeCollisionType    mVolumeCollisionType;
+  Real                    mWakeUpCounter;
 
 }; // class RigidBodyDescription
 

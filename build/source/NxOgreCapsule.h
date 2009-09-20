@@ -109,7 +109,7 @@ class NxOgrePublicClass Capsule : public PointerClass<Classes::_Capsule>, public
   protected:
 
                       NxCapsuleShape*         mCapsuleShape;
-  
+
 }; // class Capsule
 
                                                                                        

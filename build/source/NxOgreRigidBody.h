@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreShape.h"
 
                                                                                        
 
@@ -47,6 +48,10 @@ namespace NxOgre
 class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
 {
   public: // Functions
+  
+  /** \brief Get the hashed name of the RigidBody, otherwise BLANK_HASH.
+  */
+                        StringHash            getNameHash() const;
   
   /** \brief Retrieves the scene which this rigid body belongs to. 
   */
@@ -83,23 +88,27 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
   */
   virtual                                    ~RigidBody(void);
   
-  /** \brief Create an NxActor based upon the RigidBodyPrototype, in the Scene.
-      
-  */
-  virtual               void                  create(RigidBodyPrototype*, Scene* scene, Shapes* shapes);
+               void                  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
   
-  /** \brief Create an NxActor using a more simplier form of position, mass, and collision shape.
-      \note  A dynamic actor will be created based upon if the mass is 0 or not.
-      \param  matrix_pose  Position and orientation of the NxActor.
-      \param  shape        Simple shape to use (Automatically deleted after used)
-      \param  mass         Mass of the NxActor. Set 0 for a static NxActor.
-      \param  scene        Scene to put the NxActor in.
-  */
-  virtual               void                  create(const Matrix44& matrix_pose, SimpleShape* shape, Real mass, Scene* scene);
+               void                  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
   
-  /** \internal
+               void                  createSceneGeometry(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
+  
+               void                  createSceneGeometry(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+
+               void                  createKinematicActor(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
+  
+               void                  createKinematicActor(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+  
+               void                  createVolume(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shape*);
+               
+               void                  createVolume(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shapes&);
+
+
+
+  /** \brief Destroy NxActor.
   */
-  virtual               void                  destroy(void);
+                void                  destroy(void);
   
   protected: // Variables
   
@@ -108,6 +117,10 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
                         Scene*                mScene;
   
                         Callback*             mContactCallback;
+  
+                        StringHash            mNameHash;
+  
+                        CollisionModel        mShapes;
   
 }; // class RigidBody
 

@@ -50,14 +50,17 @@ typedef std::stringstream StringStream;
 
 typedef size_t StringHash;
 
-static const String BLANK_STRING = String();
-
 namespace Functions
 {
  
  static const boost::hash<std::string> StringHash;
  
 }
+
+static const String BLANK_STRING = String();
+
+static const StringHash BLANK_HASH = Functions::StringHash(BLANK_STRING);
+
 
                                                                                        
 

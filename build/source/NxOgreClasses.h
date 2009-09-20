@@ -156,7 +156,6 @@ enum
   _RevoluteJointDescription,
   _RigidBody,
   _RigidBodyDescription,
-  _RigidBodyPrototype,
   _Scene,
   _SceneDescription,
   _SceneGeometry,

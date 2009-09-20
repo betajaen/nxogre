@@ -67,7 +67,34 @@ void RigidBodyDescription::reset(void)
  mSleepLinearVelocity = Real(-1.0);
  mSolverIterationCount = 4;
  mWakeUpCounter = Real(0.02);
- mVolumeCollisionType = Enums::VolumeCollisionType_None;
+}
+
+void RigidBodyDescription::clone(RigidBodyDescription& target) const
+{
+ target.mActorFlags = mActorFlags;
+ target.mAngularDamping = mAngularDamping;
+ target.mAngularVelocity = mAngularVelocity;
+ target.mBodyFlags = mBodyFlags;
+ target.mCCDMotionThreshold = mCCDMotionThreshold;
+ target.mCompartment = mCompartment;
+ target.mContactReportThreshold = mContactReportThreshold;
+ target.mDensity = mDensity;
+ target.mDominanceGroup = mDominanceGroup;
+ target.mForceFieldMaterial = mForceFieldMaterial;
+ target.mGroup = mGroup;
+ target.mInternalThreadCount = mInternalThreadCount;
+ target.mLinearDamping = mLinearDamping;
+ target.mLinearVelocity = mLinearVelocity;
+ target.mMass = mMass;
+ target.mMassLocalPose = mMassLocalPose;
+ target.mMassSpaceInertia = mMassSpaceInertia;
+ target.mMaxAngularVelocity = mMaxAngularVelocity;
+ target.mSleepAngularVelocity = mSleepAngularVelocity;
+ target.mSleepDamping = mSleepDamping;
+ target.mSleepEnergyThreshold = mSleepEnergyThreshold;
+ target.mSleepLinearVelocity = mSleepLinearVelocity;
+ target.mSolverIterationCount = mSolverIterationCount;
+ target.mWakeUpCounter = mWakeUpCounter;
 }
 
 bool RigidBodyDescription::valid(void)

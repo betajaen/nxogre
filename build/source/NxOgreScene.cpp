@@ -29,11 +29,11 @@
 #include "NxOgreStable.h"
 #include "NxOgreScene.h"
 
-#include "NxOgreScenePrototype.h"
+#include "NxOgreSceneDescription.h"
 #include "NxOgreSceneTimer.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreReason.h"
-#include "NxOgreRigidBodyPrototype.h"
+#include "NxOgreRigidBodyDescription.h"
 #include "NxOgreActor.h"
 #include "NxOgreSceneGeometry.h"
 #include "NxOgreKinematicActor.h"
@@ -69,24 +69,22 @@ namespace NxOgre
 
                                                                                        
 
-Scene::Scene(ScenePrototype* prototype, NxPhysicsSDK* sdk)
+Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 : mScene(0),
   mSDK(sdk),
-  mActors(Classes::_Actor),
-  mSceneGeometries(Classes::_SceneGeometry),
   mPhysXCallback(0),
   mSceneTimer(0)
 {
 
  mPhysXCallback = NxOgre_New(PhysXCallback)(this);
 
- mName = prototype->mName;
+ mName = description.mName;
  mNameHash = Functions::StringHash(mName);
  
  NxSceneDesc scene_description;
- Functions::PrototypeFunctions::ScenePrototypeToNxSceneDesc(prototype, scene_description);
- mProcessingPriority = prototype->mProcessingPriority;
- mFetchingPriority = prototype->mFetchingPriority;
+ Functions::PrototypeFunctions::SceneDescriptionToNxSceneDesc(description, scene_description);
+ mProcessingPriority = description.mProcessingPriority;
+ mFetchingPriority = description.mFetchingPriority;
  mProcessing = false;
 
  scene_description.userTriggerReport = mPhysXCallback;
@@ -136,11 +134,11 @@ Scene::~Scene(void)
 /// TimeController::getSingleton()->removeListener(this);
  if (mSDK && mScene)
  {
-  mActors.destroyAll();
-  mSceneGeometries.destroyAll();
-  mKinematicActors.destroyAll();
+  mActors.clear();
+  mSceneGeometries.clear();
+  mKinematicActors.clear();
   mKinematicControllers.destroyAll();
-  mVolumes.destroyAll();
+  mVolumes.clear();
   mMaterials.destroyAll();
   mCloths.destroyAll();
   mSoftBodies.destroyAll();
@@ -150,9 +148,9 @@ Scene::~Scene(void)
  }
 }
 
-const char* Scene::getName(void) const
+String Scene::getName(void) const
 {
- return mName.c_str();
+ return mName;
 }
 
 StringHash Scene::getNameHash(void) const
@@ -160,67 +158,52 @@ StringHash Scene::getNameHash(void) const
  return mNameHash;
 }
 
+unsigned int Scene::getNbRigidBodies(void) const
+{
+ return mScene->getNbActors();
+}
+
 unsigned int Scene::getNbActors(void) const
 {
  return mActors.size();
 }
 
-ArrayIterator<Actor*> Scene::getActors(void)
+Scene::ActorIterator Scene::getActors(void)
 {
- return mActors.getIterator();
+ return Scene::ActorIterator(mActors);
 }
 
-Actor* Scene::createActor(Shapes shapes, const Matrix44& pose, const RigidBodyDescription& description)
+Actor* Scene::createActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- prototype->mShapes = shapes;
- prototype->mType = Enums::RigidBodyType_Dynamic;
- prototype->mGlobalPose = pose;
- Actor* actor = NxOgre_New(Actor)(prototype, this);
- NxOgre_Delete(prototype);
- mActors.insert(actor);
+ Actor* actor = NxOgre_New(Actor)(shapes, pose, description, this);
+ StringHash hash = actor->getNameHash();
+ mActors.insert(hash, actor);
  return actor;
 }
 
   
 Actor* Scene::createActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- prototype->mShapes.insert(shape);
- prototype->mType = Enums::RigidBodyType_Dynamic;
- prototype->mGlobalPose = pose;
- Actor* actor = NxOgre_New(Actor)(prototype, this);
- NxOgre_Delete(prototype);
- mActors.insert(actor);
+ Actor* actor = NxOgre_New(Actor)(shape, pose, description, this);
+ StringHash hash = actor->getNameHash();
+ mActors.insert(hash, actor);
  return actor;
 }
 
-SceneGeometry* Scene::createSceneGeometry(Shapes shapes, const Matrix44& pose, const RigidBodyDescription& description)
+SceneGeometry* Scene::createSceneGeometry(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- prototype->mShapes = shapes;
- prototype->mType = Enums::RigidBodyType_Geometry;
- prototype->mGlobalPose = pose;
- SceneGeometry* scene_geometry = NxOgre_New(SceneGeometry)(prototype, this);
- NxOgre_Delete(prototype);
- mSceneGeometries.insert(scene_geometry);
- return scene_geometry;
+ SceneGeometry* sg = NxOgre_New(SceneGeometry)(shapes, pose, description, this);
+ StringHash hash = sg->getNameHash();
+ mSceneGeometries.insert(hash, sg);
+ return sg;
 }
 
 SceneGeometry* Scene::createSceneGeometry(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- prototype->mShapes.insert(shape);
- prototype->mType = Enums::RigidBodyType_Geometry;
- prototype->mGlobalPose = pose;
- SceneGeometry* scene_geometry = NxOgre_New(SceneGeometry)(prototype, this);
- NxOgre_Delete(prototype);
- mSceneGeometries.insert(scene_geometry);
- return scene_geometry;
+ SceneGeometry* sg = NxOgre_New(SceneGeometry)(shape, pose, description, this);
+ StringHash hash = sg->getNameHash();
+ mSceneGeometries.insert(hash, sg);
+ return sg;
 }
 
 
@@ -292,28 +275,18 @@ Material* Scene::getMaterial(const MaterialIdentifier& identifier)
 
 KinematicActor* Scene::createKinematicActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- prototype->mShapes.insert(shape);
- prototype->mGlobalPose = pose;
- prototype->mType = Enums::RigidBodyType_Kinematic;
- KinematicActor* kactor = NxOgre_New(KinematicActor)(prototype, this);
- NxOgre_Delete(prototype);
- mKinematicActors.insert(kactor);
- return kactor;
+ KinematicActor* ka = NxOgre_New(KinematicActor)(shape, pose, description, this);
+ StringHash hash = ka->getNameHash();
+ mKinematicActors.insert(hash, ka);
+ return ka;
 }
 
-KinematicActor* Scene::createKinematicActor(Shapes shapes, const Matrix44& pose, const RigidBodyDescription& description)
+KinematicActor* Scene::createKinematicActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- prototype->mShapes = shapes;
- prototype->mGlobalPose = pose;
- prototype->mType = Enums::RigidBodyType_Kinematic;
- KinematicActor* kactor = NxOgre_New(KinematicActor)(prototype, this);
- NxOgre_Delete(prototype);
- mKinematicActors.insert(kactor);
- return kactor;
+ KinematicActor* ka = NxOgre_New(KinematicActor)(shapes, pose, description, this);
+ StringHash hash = ka->getNameHash();
+ mKinematicActors.insert(hash, ka);
+ return ka;
 }
 
 KinematicController* Scene::createKinematicController(const Vec3& size, const Vec3& globalPosition)
@@ -325,28 +298,18 @@ KinematicController* Scene::createKinematicController(const Vec3& size, const Ve
 
 Volume* Scene::createVolume(Shape* shape, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- prototype->mShapes.insert(shape);
- prototype->mGlobalPose = pose;
- prototype->mType = Enums::RigidBodyType_Volume;
- prototype->mVolumeCollisionType = vct;
- Volume* volume = NxOgre_New(Volume)(prototype, this, callback);
- NxOgre_Delete(prototype);
- mVolumes.insert(volume);
- return volume;
+ Volume* vol = NxOgre_New(Volume)(shape, pose, vct, this, callback);
+ StringHash hash = vol->getNameHash();
+ mVolumes.insert(hash, vol);
+ return vol;
 }
 
-Volume* Scene::createVolume(Shapes shapes, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
+Volume* Scene::createVolume(Shapes& shapes, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- prototype->mShapes = shapes;
- prototype->mGlobalPose = pose;
- prototype->mType = Enums::RigidBodyType_Volume;
- prototype->mVolumeCollisionType = vct;
- Volume* volume = NxOgre_New(Volume)(prototype, this, callback);
- NxOgre_Delete(prototype);
- mVolumes.insert(volume);
- return volume;
+ Volume* vol = NxOgre_New(Volume)(shapes, pose, vct, this, callback);
+ StringHash hash = vol->getNameHash();
+ mVolumes.insert(hash, vol);
+ return vol;
 }
 
 void Scene::destroyJoint(Joint* joint)
@@ -401,7 +364,7 @@ Compartment* Scene::createCompartment(const CompartmentDescription& description)
 {
  Compartment* compartment = new Compartment(description, this);
  mCompartments.insert(compartment);
- mCompartmentsPair.insert(CompartmentArrayPair(compartment->getCompartment(), compartment));
+ mCompartmentPairs[compartment->getCompartment()] = compartment;
  return compartment;
 }
 
@@ -592,19 +555,17 @@ void Scene::destroySoftBody(SoftBody* cloth)
  NxOgre_Delete(cloth);
 }
 
-Compartment* Scene::findCompartment(NxCompartment* lookup)
-{
- for (unsigned int i = 0; i < mCompartmentsPair.size(); i++)
- {
-  if (mCompartmentsPair[i].mOriginal = lookup)
-   return mCompartmentsPair[i].mRepresentative;
- }
- return 0;
-}
-
 void Scene::setActorFlags(RigidBody* a, RigidBody* b, unsigned int contact_flags)
 {
  mScene->setActorPairFlags(*a->getNxActor(), *b->getNxActor(), contact_flags);
+}
+
+Compartment* Scene::getCompartment(NxCompartment* compartment)
+{
+ std::map<NxCompartment*, Compartment*>::iterator it = mCompartmentPairs.find(compartment);
+ if (it == mCompartmentPairs.end())
+  return 0;
+ return (*it).second;
 }
 
                                                                                        

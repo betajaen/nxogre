@@ -38,41 +38,41 @@ namespace NxOgre
                                                                                        
 
 Quat::Quat(void)
- {
-  identity();
- }
+{
+ identity();
+}
  
 Quat::Quat(const Quat& other)
- {
-  set(other);
- }
+{
+ set(other);
+}
 
- Quat::Quat(const Real& w_val, const Real& x_val, const Real& y_val, const Real& z_val)
- {
-  setWXYZ(w_val, x_val, y_val, z_val);
- }
-  
- Quat::Quat(const Matrix33& other)
- {
-  set(other);
- }
-  
- Quat::Quat(const Matrix44& other)
- {
-  set(other);
- }
+Quat::Quat(const Real& w_val, const Real& x_val, const Real& y_val, const Real& z_val)
+{
+ setWXYZ(w_val, x_val, y_val, z_val);
+}
  
-  Quat Quat::operator=(const Matrix33& other)
- {
-  set(other);
-  return *this;
- }
+Quat::Quat(const Matrix33& other)
+{
+ set(other);
+}
  
-  Quat Quat::operator=(const Matrix44& other)
- {
-  set(other);
-  return *this;
- }
+Quat::Quat(const Matrix44& other)
+{
+ set(other);
+}
+
+Quat Quat::operator=(const Matrix33& other)
+{
+ set(other);
+ return *this;
+}
+
+Quat Quat::operator=(const Matrix44& other)
+{
+ set(other);
+ return *this;
+}
  
  // This function was adopted from the OGRE3D Library,Quat class from http://www.ogre3d.org
  void Quat::set(const Matrix33& kRot)

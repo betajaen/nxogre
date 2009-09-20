@@ -30,15 +30,13 @@
 #include "GLUTRenderSystem.h"
 #include "NxOgre.h"
 #include "GLUTBody.h"
-#include "GLUTBodyPrototype.h"
+#include "GLUTBodyDescription.h"
 
                                                                                        
 
 
-GLUTRenderSystem::GLUTRenderSystem(NxOgre::Scene* scene, NxOgre::Enums::Priority priority)
-: mScene(scene)
+GLUTRenderSystem::GLUTRenderSystem(void)
 {
- NxOgre::TimeController::getSingleton()->addTimeListener(this, priority);
 }
 
 GLUTRenderSystem::~GLUTRenderSystem(void)
@@ -46,55 +44,42 @@ GLUTRenderSystem::~GLUTRenderSystem(void)
  mBodies.destroyAll();
 }
 
-GLUTBody* GLUTRenderSystem::createBody(NxOgre::Shape* shape, NxOgre::Vec3 position, GLUTShape glut_shape, Size3 size, Colour colour, bool shadows, const NxOgre::RigidBodyDescription& description)
+GLUTBody* GLUTRenderSystem::createGLUTBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, NxOgre::Scene* scene, const NxOgre::RigidBodyDescription& description)
 {
- // Create a GLUTPrototype using the NxOgre_New macro, all NxOgre classes and classes that
- // use PointerClass should use NxOgre_New and NxOgre_Delete.
- GLUTBodyPrototype* prototype = NxOgre_New(GLUTBodyPrototype)();
-
- // Send the physics stuff from the description into the prototype. This is quite important.
- NxOgre::Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
  
- // We want a dynamic rigid body, that jumps around in the fields with other dynamic rigid bodies.
- prototype->mType = NxOgre::Enums::RigidBodyType_Dynamic;
+ GLUTBodyDescription glut_description;
+ description.clone(glut_description); // Copy our RigidBodyDescription properties into our GLUTBodyDescription.
 
- // Copy the position over to the prototype.
- prototype->mGlobalPose.identity();
- prototype->mGlobalPose.set(position);
+ // Set up our visualisation properties of the other half of the GLUTBodyDescription.
+ glut_description.mWidth = 1.0f;
+ glut_description.mHeight = 1.0f;
+ glut_description.mDepth = 1.0f;
+ glut_description.mColourRed = 1.0f;
+ glut_description.mColourGreen = 0.5f;;
+ glut_description.mColourBlue = 1.0f;
+ glut_description.mShadows = true;
+ glut_description.mVisualShape = GLUT_Box;
 
- // Add the shape to the list of shapes in the prototype.
- prototype->mShapes.insert(shape);
-
- // And our bits.
- prototype->mWidth = size.x;
- prototype->mHeight = size.y;
- prototype->mDepth = size.z;
- prototype->mColourRed = colour.x;
- prototype->mColourGreen = colour.y;
- prototype->mColourBlue = colour.z;
- prototype->mShadows = shadows;
- prototype->mVisualShape = glut_shape;
-
- // Create the body using again the NxOgre_New macro. Passing on the prototype we just created and a copy
- // of the scene pointer. we are using.
- GLUTBody* body = NxOgre_New(GLUTBody)(prototype, mScene);
+ // Create the body using again the NxOgre_New macro.
+ // Passing on;
+ //   - The Shape
+ //   - Where we want it to be.
+ //   - GLUTBodyDescription
+ //   - And Scene.
+ GLUTBody* body = NxOgre_New(GLUTBody)(shape, pose, glut_description, scene);
 
  // Make a local copy of the body pointer, for rendering and deleting.
  mBodies.insert(body);
-
- // Since the GLUTBody and NxOgre no longer needs the prototype, and we don't either. It's time to clean up.
- NxOgre_Delete(prototype);
 
  // And we are done.
  return body;
 }
 
-bool GLUTRenderSystem::advance(float deltaTime, const ::NxOgre::Enums::Priority&)
+void GLUTRenderSystem::drawBodies()
 {
  NxOgre::Array<GLUTBody*>::Iterator it = mBodies.getIterator();
  for (GLUTBody* body = it.begin();body = it.next();)
   body->render();
- return true;
 }
 
                                                                                        

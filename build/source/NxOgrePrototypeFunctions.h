@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreShape.h"
 
 #ifdef NXOGRE_SDK
 class NxPhysicsSDKDesc;
@@ -63,25 +64,20 @@ class NxOgrePublicClass PrototypeFunctions
 #ifdef NXOGRE_SDK
   /** \brief Copies all relevant ScenePrototype properties to a NxSceneDesc
   */
-  static void ScenePrototypeToNxSceneDesc(ScenePrototype*, NxSceneDesc&);
+  static void SceneDescriptionToNxSceneDesc(const SceneDescription&, NxSceneDesc&);
 #endif
 
-#ifdef NXOGRE_SDK
-  /** \brief Copies all relevant SceneDescription properties to a ScenePrototype
-  */
-  static void SceneDescriptionToScenePrototype(const SceneDescription&, ScenePrototype*);
-#endif
-
-  /** \brief
-  */
-  static void RigidBodyDescriptionToRigidBodyPrototype(const RigidBodyDescription&, RigidBodyPrototype*);
 
 #ifdef NXOGRE_SDK
   /** \brief Copies all relevant RigidBodyPrototype properties to a NxActorDesc and NxBodyDesc.
-             NxBodyDesc will be tied to the NxActorDesc if a mass is more than 1, otherwise it is ignored
-             as well as coping it's properties from the prototype.
   */
-  static void RigidBodyPrototypeToNxActorAndNxBodyDesc(RigidBodyPrototype*, NxActorDesc&, NxBodyDesc&);
+  static void RigidBodyDescriptionToNxActorAndNxBodyDesc(const RigidBodyDescription&, NxActorDesc&, NxBodyDesc&);
+#endif
+
+#ifdef NXOGRE_SDK
+  /** \brief Copies all relevant RigidBodyPrototype properties to a NxActorDesc and NxBodyDesc.
+  */
+  static void RigidBodyDescriptionToNxActorDesc(const RigidBodyDescription&, NxActorDesc&);
 #endif
 
   /** \brief Copies all relevant MaterialDescription properties to a MaterialPrototype.

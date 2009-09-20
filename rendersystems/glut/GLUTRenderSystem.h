@@ -35,13 +35,13 @@
 
                                                                                        
 
-class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRenderSystem>, public NxOgre::TimeListener
+class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRenderSystem>
 {
   public:
 
      /** \brief
      */
-     GLUTRenderSystem(NxOgre::Scene*, NxOgre::Enums::Priority render_priority = NxOgre::Enums::Priority_Medium);
+     GLUTRenderSystem(void);
 
      /** \brief
      */
@@ -49,15 +49,14 @@ class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRender
 
      /** \brief
      */
-     GLUTBody*                            createBody(NxOgre::Shape*, NxOgre::Vec3 position, GLUTShape, Size3 size, Colour colour = Colour(1,1,1), bool shadows = true, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     GLUTBody*                            createGLUTBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, NxOgre::Scene*, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
 
      /** \brief
      */
-     bool                                 advance(float deltaTime, const ::NxOgre::Enums::Priority&);
-
+     void                                 drawBodies();
+     
   protected:
-
-     NxOgre::Scene*           mScene;
+     
      NxOgre::Array<GLUTBody*> mBodies;
 };
 

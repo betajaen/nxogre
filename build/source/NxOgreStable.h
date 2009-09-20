@@ -168,6 +168,10 @@
 */
 #define NxOgre_ThrowNotice(MESSAGE)           ::NxOgre::ErrorStream::getSingleton()->throwNotice(MESSAGE, __FILE__, __LINE__)
 
+/** \brief Throw an error and return, if condition is true.
+*/
+#define NxOgre_ThrowIf(COND, MESSAGE) if(COND){::NxOgre::ErrorStream::getSingleton()->throwError(MESSAGE, __FILE__, __LINE__);return;}
+
 /** \brief Compiler macro to cause a compiler error if the expression is false.
 */
 #define NxOgre_CompileAssertion(exp, reason)  extern char __Assertion##reason__[ size_t((exp) ? 1 : -1) ]

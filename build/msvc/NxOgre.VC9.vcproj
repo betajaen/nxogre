@@ -1361,14 +1361,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreRigidBodyPrototype.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreRigidBodyPrototype.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreScene.cpp"
 			>
 		</File>
@@ -1390,14 +1382,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreSceneGeometry.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreScenePrototype.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreScenePrototype.h"
 			>
 		</File>
 		<File

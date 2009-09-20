@@ -40,7 +40,7 @@
 #include "NxOgrePhysXOutputStream.h"
 #include "NxOgrePhysXUserAllocator.h"
 #include "NxOgreScene.h"
-#include "NxOgreScenePrototype.h"
+#include "NxOgreSceneDescription.h"
 #include "NxOgreCallback.h"
 #include "NxOgreVisualDebugger.h"
 #include "NxOgreRemoteDebugger.h"
@@ -82,9 +82,9 @@ void World::precreateSingletons(void)
   NxOgre_New(HeightFieldManager)();
  if (TimeController::getSingleton() == 0)
   NxOgre_New(TimeController)();
-  
-  ResourceSystem::getSingleton()->openArchive("internal-cwd", "file:.");
-  
+ 
+ ResourceSystem::getSingleton()->openArchive("internal-cwd", "file:.");
+ 
 #ifdef NXOGRE_OPTIONS_USE_LOG
  {
   Resource* resource = ResourceSystem::getSingleton()->open("internal-cwd:NxOgre.log", Enums::ResourceAccess_WriteOnly);
@@ -243,16 +243,7 @@ bool World::isDead(void) const
 
 Scene* World::createScene(const NxOgre::SceneDescription& description)
 {
- ScenePrototype* prototype = NxOgre_New(ScenePrototype)();
- Functions::PrototypeFunctions::SceneDescriptionToScenePrototype(description, prototype);
- Scene* scene = createScene(prototype);
- NxOgre_Delete(prototype);
- return scene;
-}
-
-Scene* World::createScene(ScenePrototype* prototype)
-{
- Scene* scene = NxOgre_New(Scene)(prototype, mSDK);
+ Scene* scene = NxOgre_New(Scene)(description, mSDK);
  StringHash hash = scene->getNameHash();
  mScenes.insert(hash, scene);
  return scene;

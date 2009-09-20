@@ -28,33 +28,30 @@
                                                                                        
 
 #include "GLUTBody.h"
-#include "GLUTBodyPrototype.h"
+#include "GLUTBodyDescription.h"
 #include <GL/glut.h>
 
                                                                                        
 
-GLUTBody::GLUTBody(GLUTBodyPrototype* prototype, NxOgre::Scene* scene)
-: Actor(scene) // Take notice of the constructor we are using, it's designed for
-{                                  // classes that inherit from Actor. Copying over the shapes array is
-                                   // essential, since RigidBody could be a particle or a tree it doesn't
-                                   // implement it's own shapes array for memory reasons, but actors do.
-                                   // Hense the copying.
-
+GLUTBody::GLUTBody(NxOgre::Shape* shape, const NxOgre::Matrix44& globalPose, const GLUTBodyDescription& description, NxOgre::Scene* scene)
+: Actor(scene) // Take notice of the constructor we are using, it's designed for classes that inherit from Actor.
+{
+ 
  // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated
  // as a normal RigidBody. 
- create(prototype, scene, &mShapes);
+ createDynamic(globalPose, description, scene, shape);
 
  // Since NxOgre doesn't know or care about our GL stuff, we copy it over. This is the correct time to create
  // or turn on things related to the GLUTBody.
 
- mVisualShape = prototype->mVisualShape;
- mWidth = prototype->mWidth;
- mHeight = prototype->mHeight;
- mDepth = prototype->mDepth;
- mColourRed = prototype->mColourRed;
- mColourGreen = prototype->mColourGreen;
- mColourBlue = prototype->mColourBlue;
- mShadows = prototype->mShadows;
+ mVisualShape = description.mVisualShape;
+ mWidth = description.mWidth;
+ mHeight = description.mHeight;
+ mDepth = description.mDepth;
+ mColourRed = description.mColourRed;
+ mColourGreen = description.mColourGreen;
+ mColourBlue = description.mColourBlue;
+ mShadows = description.mShadows;
 
  // No cleaning up the prototype here, it's not ours to do so.
 }
@@ -68,8 +65,6 @@ GLUTBody::~GLUTBody()
 
 void GLUTBody::render(void)
 {
-
-  // Render actor
   glPushMatrix();
   float glMat[16];
   
@@ -93,36 +88,8 @@ void GLUTBody::render(void)
 
    break;
   }
-
+  
   glPopMatrix();
-
-  // Render shadow
-  glPushMatrix();
-  const static float shadowMat[]={ 1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1 };
-  glMultMatrixf(shadowMat);
-  glMultMatrixf(glMat);
-  glDisable(GL_LIGHTING);
-  glColor4f(0.1f, 0.2f, 0.3f, 1.0f);
-
-  switch (mVisualShape)
-  {
-   case GLUT_Box:
-    glScalef(mWidth, mHeight, mDepth);
-    glutSolidCube(1);
-   break;
-
-   case GLUT_Sphere:
-    glutSolidSphere(mWidth, 4, 4);
-   break;
-
-   case GLUT_Capsule:
-
-   break;
-  }
-
-  glEnable(GL_LIGHTING);
-  glPopMatrix();
-
 }
 
                                                                                        

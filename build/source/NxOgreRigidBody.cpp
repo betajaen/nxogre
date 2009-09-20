@@ -32,7 +32,7 @@
 #include "NxOgreScene.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreErrorStream.h"
-#include "NxOgreRigidBodyPrototype.h"
+#include "NxOgreRigidBodyDescription.h"
 #include "NxOgreShape.h"
 #include "NxOgreShapeBlueprint.h"
 #include "NxOgreFunctions.h"
@@ -42,7 +42,7 @@
 #include "NxOgreReason.h"
 #include "NxOgreCompartment.h"
 
-#include "NxPhysics.h"
+#include "NxActor.h"
 
                                                                                        
 
@@ -104,7 +104,7 @@ namespace PhysXShapeBinder
                                                                                        
 
 RigidBody::RigidBody()
-: mActor(0), mScene(0), mContactCallback(0)
+: mActor(0), mScene(0), mContactCallback(0), mNameHash(BLANK_HASH)
 {
 }
 
@@ -117,58 +117,72 @@ unsigned int RigidBody::getType() const
  return Enums::RigidBodyType_Unknown;
 }
 
-                                                                                       
+void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shape* shape)
+{
+ 
+ NxOgre_ThrowIf(mActor, "createDynamic tried to create an actor, but this RigidBody already has an actor.");
+ NxOgre_ThrowIf(shape == 0, "createDynamic tried to create an actor, but has no shape (Null Pointer).");
+ NxOgre_ThrowIf(scene == 0, "createDynamic tried to create an actor, but has no scene (Null Pointer).");
+ 
+ mScene = scene;
+ 
+ NxActorDesc actor_description;
+ NxBodyDesc body_description;
 
-void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene, Shapes* final_shapes)
+ actor_description.globalPose.setRowMajor44(pose.ptr());
+ actor_description.body = &body_description;
+
+ Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+ 
+ NxShapeDesc* shape_description = shape->create();
+ if (shape_description)
+ {
+  shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shape, shape->getClassType(), this);
+  actor_description.shapes.push_back(shape_description);
+ }
+  
+ mActor = mScene->getScene()->createActor(actor_description);
+ 
+ NxOgre_Delete(shape_description);
+ 
+ NxShape* const* physx_shapes = mActor->getShapes();
+ NxU32 nbShapes = mActor->getNbShapes();
+ 
+ while (nbShapes--)
+ {
+  NxShape* physx_shape = physx_shapes[nbShapes];
+  PhysXShapeBinder::BindShape(physx_shape);
+  mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
+ }
+ 
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+}
+
+void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shapes& shapes)
 {
 
- if (mActor != 0)
- {
-  NxOgre_ThrowError("RigidBody tried to create an actor that was already created.");
-  return;
- }
- 
- if (prototype == 0)
- {
-  NxOgre_ThrowError("RigidBody tried to create an actor that has no prototype.");
-  return;
- }
- 
- if (scene == 0)
- {
-  NxOgre_ThrowError("RigidBody tried to create an actor that has no scene.");
-  return;
- }
-
- if (prototype->mShapes.size() == 0)
- {
-  NxOgre_ThrowError("RigidBody has no shapes.");
-  return;
- }
+ NxOgre_ThrowIf(mActor, "createVolume tried to create an actor, but this RigidBody already has an actor.");
+ NxOgre_ThrowIf(shapes.size() == 0, "createVolume tried to create an actor, but has no shape (Null Pointer).");
+ NxOgre_ThrowIf(scene == 0, "createVolume tried to create an actor, but has no scene (Null Pointer).");
 
  mScene = scene;
  
- 
  NxActorDesc actor_description;
- NxBodyDesc  body_description;
- 
- // Copy over the prototype into the Actor and possible Body descriptions.
- Functions::PrototypeFunctions::RigidBodyPrototypeToNxActorAndNxBodyDesc(prototype, actor_description, body_description);
- 
- // Create the shapes, and bind them to the shape that represents them - or not.
+ NxBodyDesc body_description;
 
- for (unsigned int i=0;i < prototype->mShapes.size(); i++)
+ actor_description.globalPose.setRowMajor44(pose.ptr());
+ actor_description.body = &body_description;
+
+ Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+  for (unsigned int i=0;i < shapes.size(); i++)
  {
-  Shape* shape = prototype->mShapes[i];
-  NxShapeDesc* description = shape->create();
-  if (description)
+  NxShapeDesc* shape_description = shapes[i]->create();
+  if (shape_description)
   {
-   if (final_shapes)
-    description->userData = (void*) NxOgre_New(PhysXPointer)(shape, shape->getClassType(), this);
-   actor_description.shapes.push_back(description);
+   shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shapes[i], shapes[i]->getClassType(), this);
+   actor_description.shapes.push_back(shape_description);
   }
  }
- 
  
  mActor = mScene->getScene()->createActor(actor_description);
  
@@ -181,82 +195,320 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene, Shapes* fina
   return;
  }
  
- mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
- 
- if (final_shapes)
+  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
  {
-  NxShape* const* shapes = mActor->getShapes();
-  NxU32 nbShapes = mActor->getNbShapes();
-  
-  while (nbShapes--)
-  {
-   NxShape* physx_shape = shapes[nbShapes];
-   PhysXShapeBinder::BindShape(physx_shape);
-   final_shapes->insert(pointer_representive_cast<Shape>(physx_shape->userData));
-  }
+  NxShapeDesc* description = actor_description.shapes[i];
+  NxOgre_Delete(description);
  }
+ NxShape* physx_shape = mActor->getShapes()[0];
+ PhysXShapeBinder::BindShape(physx_shape);
+ mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
+
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
  
 }
 
-                                                                                       
-
-void RigidBody::create(const Matrix44& pose, SimpleShape* shape, Real mass, Scene* scene)
+void RigidBody::createSceneGeometry(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shape* shape)
 {
-  if (mActor != 0)
- {
-  NxOgre_ThrowError("RigidBody tried to create an actor that was already created.");
-  return;
- }
- 
- if (shape == 0)
- {
-  NxOgre_ThrowError("RigidBody tried to create an actor that has no shape.");
-  return;
- }
- 
- if (scene == 0)
- {
-  NxOgre_ThrowError("RigidBody tried to create an actor that has no scene.");
-  return;
- }
+
+ NxOgre_ThrowIf(mActor, "createSceneGeometry tried to create an actor, but this RigidBody already has an actor.");
+ NxOgre_ThrowIf(shape == 0, "createSceneGeometry tried to create an actor, but has no shape (Null Pointer).");
+ NxOgre_ThrowIf(scene == 0, "createSceneGeometry tried to create an actor, but has no scene (Null Pointer).");
+
+ mScene = scene;
  
  NxActorDesc actor_description;
- NxBodyDesc  body_description;
- 
+
  actor_description.globalPose.setRowMajor44(pose.ptr());
- Functions::SimpleShapeToActorDescription(actor_description, shape);
+
+ Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorDesc(description, actor_description);
  
- if (mass)
+ NxShapeDesc* shape_description = shape->create();
+ if (shape_description)
  {
-  body_description.mass = mass;
-  actor_description.body = &body_description;
+  shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shape, shape->getClassType(), this);
+  actor_description.shapes.push_back(shape_description);
+ }
+  
+ mActor = mScene->getScene()->createActor(actor_description);
+ 
+ NxOgre_Delete(shape_description);
+ 
+ NxShape* const* physx_shapes = mActor->getShapes();
+ NxU32 nbShapes = mActor->getNbShapes();
+ 
+ while (nbShapes--)
+ {
+  NxShape* physx_shape = physx_shapes[nbShapes];
+  PhysXShapeBinder::BindShape(physx_shape);
+  mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
  }
  
- mActor = scene->getScene()->createActor(actor_description);
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+}
+
+void RigidBody::createSceneGeometry(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shapes& shapes)
+{
+
+ NxOgre_ThrowIf(mActor, "createSceneGeometry tried to create an actor, but this RigidBody already has an actor.");
+ NxOgre_ThrowIf(shapes.size() == 0, "createSceneGeometry tried to create an actor, but has no shape (Null Pointer).");
+ NxOgre_ThrowIf(scene == 0, "createSceneGeometry tried to create an actor, but has no scene (Null Pointer).");
+
+ mScene = scene;
+ 
+ NxActorDesc actor_description;
+
+ actor_description.globalPose.setRowMajor44(pose.ptr());
+
+ Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorDesc(description, actor_description);
+  for (unsigned int i=0;i < shapes.size(); i++)
+ {
+  NxShapeDesc* shape_description = shapes[i]->create();
+  if (shape_description)
+  {
+   shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shapes[i], shapes[i]->getClassType(), this);
+   actor_description.shapes.push_back(shape_description);
+  }
+ }
+ 
+ mActor = mScene->getScene()->createActor(actor_description);
  
  if (mActor == 0)
  {
-  NxOgre_ThrowError("RigidBody actor was not created.");
+  SharedStringStream ss;
+  ss << "RigidBody actor was not created! \n"
+     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
+  NxOgre_ThrowError(ss.get());
   return;
  }
+ 
+  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
+ {
+  NxShapeDesc* description = actor_description.shapes[i];
+  NxOgre_Delete(description);
+ }
+ NxShape* physx_shape = mActor->getShapes()[0];
+ PhysXShapeBinder::BindShape(physx_shape);
+ mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
 
- mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType()); 
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+}
+
+void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shape* shape)
+{
+
+ NxOgre_ThrowIf(mActor, "createKinematicActor tried to create an actor, but this RigidBody already has an actor.");
+ NxOgre_ThrowIf(shape == 0, "createKinematicActor tried to create an actor, but has no shape (Null Pointer).");
+ NxOgre_ThrowIf(scene == 0, "createKinematicActor tried to create an actor, but has no scene (Null Pointer).");
+
+ mScene = scene;
+ 
+ NxActorDesc actor_description;
+ NxBodyDesc body_description;
+
+ actor_description.globalPose.setRowMajor44(pose.ptr());
+ actor_description.body = &body_description;
+ body_description.flags |= NX_BF_KINEMATIC;
+ 
+ Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+ 
+ NxShapeDesc* shape_description = shape->create();
+ if (shape_description)
+ {
+  shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shape, shape->getClassType(), this);
+  actor_description.shapes.push_back(shape_description);
+ }
+  
+ mActor = mScene->getScene()->createActor(actor_description);
+ 
+ NxOgre_Delete(shape_description);
+ 
+ NxShape* const* physx_shapes = mActor->getShapes();
+ NxU32 nbShapes = mActor->getNbShapes();
+ 
+ while (nbShapes--)
+ {
+  NxShape* physx_shape = physx_shapes[nbShapes];
+  PhysXShapeBinder::BindShape(physx_shape);
+  mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
+ }
+ 
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+}
+
+void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shapes& shapes)
+{
+
+ NxOgre_ThrowIf(mActor, "createKinematicActor tried to create an actor, but this RigidBody already has an actor.");
+ NxOgre_ThrowIf(shapes.size() == 0, "createKinematicActor tried to create an actor, but has no shape (Null Pointer).");
+ NxOgre_ThrowIf(scene == 0, "createKinematicActor tried to create an actor, but has no scene (Null Pointer).");
+
+ mScene = scene;
+ 
+ NxActorDesc actor_description;
+ NxBodyDesc body_description;
+
+ actor_description.globalPose.setRowMajor44(pose.ptr());
+ actor_description.body = &body_description;
+ body_description.flags |= NX_BF_KINEMATIC;
+
+ Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+  for (unsigned int i=0;i < shapes.size(); i++)
+ {
+  NxShapeDesc* shape_description = shapes[i]->create();
+  if (shape_description)
+  {
+   shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shapes[i], shapes[i]->getClassType(), this);
+   actor_description.shapes.push_back(shape_description);
+  }
+ }
+ 
+ mActor = mScene->getScene()->createActor(actor_description);
+ 
+ if (mActor == 0)
+ {
+  SharedStringStream ss;
+  ss << "RigidBody actor was not created! \n"
+     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
+  NxOgre_ThrowError(ss.get());
+  return;
+ }
+ 
+ for (unsigned int i=0; i < actor_description.shapes.size(); i++)
+ {
+  NxShapeDesc* description = actor_description.shapes[i];
+  NxOgre_Delete(description);
+ }
+ 
+ NxShape* physx_shape = mActor->getShapes()[0];
+ PhysXShapeBinder::BindShape(physx_shape);
+ mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
+ 
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+ 
+}
+
+void RigidBody::createVolume(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, Shape* shape)
+{
+ mScene = scene;
+ 
+ 
+ NxOgre_ThrowIf(mActor, "createVolume tried to create an actor, but this RigidBody already has an actor.")
+ NxOgre_ThrowIf(shape == 0, "createVolume tried to create an actor, but has no shape (Null Pointer).")
+ NxOgre_ThrowIf(scene == 0, "createVolume tried to create an actor, but has no scene (Null Pointer).")
+ 
+ NxActorDesc actor_description;
+ actor_description.body = 0;
+ actor_description.globalPose.setRowMajor44(pose.ptr());
+
+ NxShapeDesc* shape_description = shape->create();
+ if (shape_description)
+ {
+  shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shape, shape->getClassType(), this);
+  shape_description->shapeFlags |= collision_type;
+  actor_description.shapes.push_back(shape_description);
+ }
+  
+ mActor = mScene->getScene()->createActor(actor_description);
+ 
+ if (mActor == 0)
+ {
+  SharedStringStream ss;
+  ss << "RigidBody actor was not created! \n"
+     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
+  NxOgre_ThrowError(ss.get());
+  return;
+ }
+ 
+
+ NxOgre_Delete(shape_description);
+ 
+ NxShape* const* physx_shapes = mActor->getShapes();
+ NxU32 nbShapes = mActor->getNbShapes();
+ 
+ while (nbShapes--)
+ {
+  NxShape* physx_shape = physx_shapes[nbShapes];
+  PhysXShapeBinder::BindShape(physx_shape);
+  mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
+ }
+ 
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+ 
+}
+
+void RigidBody::createVolume(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, Shapes& shapes)
+{
+ mScene = scene;
+ 
+ NxOgre_ThrowIf(mActor, "createVolume tried to create an actor, but this RigidBody already has an actor.");
+ NxOgre_ThrowIf(shapes.size() == 0, "createVolume tried to create an actor, but has no shape (Null Pointer).");
+ NxOgre_ThrowIf(scene == 0, "createVolume tried to create an actor, but has no scene (Null Pointer).");
+
+ NxActorDesc actor_description;
+ actor_description.body = 0;
+ actor_description.globalPose.setRowMajor44(pose.ptr());
+
+ for (unsigned int i=0;i < shapes.size(); i++)
+ {
+  NxShapeDesc* shape_description = shapes[i]->create();
+  if (shape_description)
+  {
+   shape_description->userData = (void*) NxOgre_New(PhysXPointer)(shapes[i], shapes[i]->getClassType(), this);
+   shape_description->shapeFlags |= collision_type;
+   actor_description.shapes.push_back(shape_description);
+  }
+ }
+ 
+ mActor = mScene->getScene()->createActor(actor_description);
+ 
+ if (mActor == 0)
+ {
+  SharedStringStream ss;
+  ss << "RigidBody actor was not created! \n"
+     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
+  NxOgre_ThrowError(ss.get());
+  return;
+ }
+ 
+  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
+ {
+  NxShapeDesc* description = actor_description.shapes[i];
+  NxOgre_Delete(description);
+ }
+ NxShape* physx_shape = mActor->getShapes()[0];
+ PhysXShapeBinder::BindShape(physx_shape);
+ mShapes.push_back(pointer_representive_cast<Shape>(physx_shape->userData));
+
+ mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
+ 
+
+ 
 }
 
 void RigidBody::destroy(void)
 {
- if (mActor)
+ 
+ if (mActor == 0)
+  return;
+ 
+ PhysXPointer* ptr = pointer_cast(mActor->userData);
+ NxOgre_Delete(ptr);
+ 
+ for (CollisionModel::iterator shape = mShapes.begin(); shape != mShapes.end(); shape++)
  {
-  PhysXPointer* ptr = pointer_cast(mActor->userData);
-  NxOgre_Delete(ptr);
-  NxScene& scene = mActor->getScene();
-  scene.releaseActor(*mActor);
+  PhysXPointer* shape_ptr = pointer_cast(shape->getAbstractShape()->userData);
+  NxOgre_Delete(shape_ptr);
  }
+ 
+ NxScene& scene = mActor->getScene();
+ scene.releaseActor(*mActor);
+ 
 }
 
 bool RigidBody::isDynamic(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::isDynamic(mActor);
+ return mActor->isDynamic();
 }
 
 NxActor* RigidBody::getNxActor(void)
@@ -277,6 +529,11 @@ void RigidBody::setContactCallback(Callback* callback)
 Callback* RigidBody::getContactCallback()
 {
  return mContactCallback;
+}
+
+StringHash RigidBody::getNameHash() const
+{
+ return mNameHash;
 }
 
                                                                                        

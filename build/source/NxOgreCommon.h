@@ -163,12 +163,11 @@ enum Priority
 */
 enum RigidBodyType
 {
- RigidBodyType_Dynamic          = -1,  //!< RigidBody is likely to move.
- RigidBodyType_Kinematic        = -2,  //!< RigidBody is likely to move, but it should not have the usual physics properties.
- RigidBodyType_Geometry         = -3,  //!< RigidBody will never move.
- RigidBodyType_Volume           = -4,  //!< RigidBody will never move, and others can pass through it.
- RigidBodyType_Unknown          = -5,  //!< Unknown Type.
- RigidBodyType_DynamicInherited =  0   //!< Non-NxOgre class that is dynamic.
+ RigidBodyType_Dynamic          = 1,  //!< RigidBody is likely to move.
+ RigidBodyType_Kinematic        = 2,  //!< RigidBody is likely to move, but it should not conserve momentum.
+ RigidBodyType_Geometry         = 3,  //!< RigidBody will never move.
+ RigidBodyType_Volume           = 4,  //!< RigidBody will never move, and others can pass through it.
+ RigidBodyType_Unknown          = 0,  //!< Unknown Type.
 };
 
 /** \brief What do when there is an assertion from PhysX
@@ -906,7 +905,6 @@ enum ContactPairFlags
                  class                      ResourceSystem;                //!<
                  class                      RigidBody;                     //!<
                  class                      RigidBodyDescription;          //!<
-                 class                      RigidBodyPrototype;            //!<
                  class                      RemoteDebugger;                //!<
                  class                      RemoteDebuggerListener;        //!<
                  class                      Renderable;                    //!<
@@ -995,10 +993,6 @@ namespace Functions
 /** \brief 1/5th of a second
 */
 #define _1_5 0.2f
-
-/** \brief A Collision Model or an array shape pointers.
-*/
-typedef Array<Shape*> Shapes;
 
 /** \brief Numerical identifier for ActorGroups and ShapeGroups.
 */

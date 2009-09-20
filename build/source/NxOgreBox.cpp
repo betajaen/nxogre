@@ -65,7 +65,7 @@ Box::~Box(void)
 
 NxShapeDesc* Box::create()
 {
- NxBoxShapeDesc* box = new NxBoxShapeDesc();
+ NxBoxShapeDesc* box = NxOgre_New(NxBoxShapeDesc)();
  Shape::createAbstract(box);
  
  box->dimensions.set(mBlueprint->mSize.x * 0.5, mBlueprint->mSize.y * 0.5, mBlueprint->mSize.z * 0.5);

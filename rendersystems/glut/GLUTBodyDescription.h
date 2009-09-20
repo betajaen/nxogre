@@ -24,13 +24,13 @@
     THE SOFTWARE.
 */
 
-#ifndef GLUT_BODYPROTOTYPE_H
-#define GLUT_BODYPROTOTYPE_H
+#ifndef GLUT_BODYDESCRIPTION_H
+#define GLUT_BODYDESCRIPTION_H
 
                                                                                        
 
 #include "NxOgre.h"
-#include "NxOgreRigidBodyPrototype.h"
+#include "NxOgreRigidBodyDescription.h"
 #include "GLUTCommon.h"
 
                                                                                        
@@ -43,25 +43,18 @@
            specific or different in either way - you will need a RigidBodyPrototype. It's just
            how much you use it is important.
 */
-class GLUTExportClass GLUTBodyPrototype : public NxOgre::PointerClass<_GLUTBodyPrototype>, public NxOgre::RigidBodyPrototype
+class GLUTExportClass GLUTBodyDescription : public NxOgre::RigidBodyDescription
 {
   public:
 
-  /** \brief Required since RigidBodyPrototype is also a "PointerClass".
-  */
- using ::NxOgre::PointerClass<_GLUTBodyPrototype>::operator new;
-
-  /** \brief Required since RigidBodyPrototype is also a "PointerClass".
-  */
- using ::NxOgre::PointerClass<_GLUTBodyPrototype>::operator delete;
 
   /** \brief GLUTPrototype constructor
   */
-                                              GLUTBodyPrototype(void);
+                                              GLUTBodyDescription(void);
   
   /** \brief GLUTPrototype destructor
   */
-                                             ~GLUTBodyPrototype(void);
+                                             ~GLUTBodyDescription(void);
   
   /** \brief Reset the RigidBodyPrototype and GLUT bits to it's default state.
   */

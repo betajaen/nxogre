@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\rendersystems\ogre\include;..\..\sdk\;&quot;$(OGRE_HOME)\include\&quot;"
+				AdditionalIncludeDirectories="..\..\rendersystems\ogre\include;..\..\sdk\;&quot;$(OGRE_HOME)\include\&quot;;&quot;$(BOOST_HOME)&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;OGRE3D_FOR_NXOGRE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

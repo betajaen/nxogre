@@ -78,7 +78,7 @@ typedef NxOgre::Vec2 Size2;
 
 class GLUTRenderSystem;
 class GLUTBody;
-class GLUTBodyPrototype;
+class GLUTBodyDescription;
 
                                                                                        
 

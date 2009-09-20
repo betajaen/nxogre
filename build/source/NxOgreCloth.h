@@ -52,247 +52,247 @@ class NxOgrePublicClass Cloth : public PointerClass<Classes::_Cloth>, public Tim
   
   public:
   
-    /** \brief Get the renderable.
-    */
-    Renderable*                                 getRenderable();
+  /** \brief Get the renderable.
+  */
+  Renderable*                                 getRenderable();
+
+  /** \brief Get the mesh shared by the cloth.
+  */
+  Mesh*                                       getMesh();
   
-    /** \brief Get the mesh shared by the cloth.
-    */
-    Mesh*                                       getMesh();
-    
-    /** \internal
-    */
-    NxCloth*                                    getPhysXCloth();
+  /** \internal
+  */
+  NxCloth*                                    getPhysXCloth();
 
-    /** \internal
-    */
-    PhysXMeshData*                              getPhysXMeshData();
+  /** \internal
+  */
+  PhysXMeshData*                              getPhysXMeshData();
 
-    /** \brief Get the cloth's name.
-    */
-    String                                      getName();
+  /** \brief Get the cloth's name.
+  */
+  String                                      getName();
 
-    /** \brief Sets the cloth bending stiffness in the range from 0 to 1.
-    */
-    void                                        setBendingStiffness(Real stiffness);
+  /** \brief Sets the cloth bending stiffness in the range from 0 to 1.
+  */
+  void                                        setBendingStiffness(Real stiffness);
 
-    /** \brief Gets the cloth bending stiffness.
-    */
-    Real                                        getBendingStiffness() const;
+  /** \brief Gets the cloth bending stiffness.
+  */
+  Real                                        getBendingStiffness() const;
 
-    /** \brief Sets the cloth stretching stiffness in the range from 0 to 1.
-    */
-    void                                        setStretchingStiffness(Real stiffness);
+  /** \brief Sets the cloth stretching stiffness in the range from 0 to 1.
+  */
+  void                                        setStretchingStiffness(Real stiffness);
 
-    /** \brief Gets the cloth stretching stiffness.
-    */
-    Real                                        getStretchingStiffness() const;
+  /** \brief Gets the cloth stretching stiffness.
+  */
+  Real                                        getStretchingStiffness() const;
 
-    /** \brief Sets the damping coefficient in the range from 0 to 1.
-    */
-    void                                        setDampingCoefficient(Real damping);
+  /** \brief Sets the damping coefficient in the range from 0 to 1.
+  */
+  void                                        setDampingCoefficient(Real damping);
 
-    /** \brief Gets the damping coefficient.
-    */
-    Real                                        getDampingCoefficient() const;
+  /** \brief Gets the damping coefficient.
+  */
+  Real                                        getDampingCoefficient() const;
 
-    /** \brief Sets the cloth friction coefficient in the range from 0 to 1.
-    */
-    void                                        setFriction(Real friction);
+  /** \brief Sets the cloth friction coefficient in the range from 0 to 1.
+  */
+  void                                        setFriction(Real friction);
 
-    /** \brief Gets the cloth friction coefficient.
-    */
-    Real                                        getFriction() const;
+  /** \brief Gets the cloth friction coefficient.
+  */
+  Real                                        getFriction() const;
 
-    /** \brief Sets the cloth pressure coefficient (must be non negative).
-    */
-    void                                        setPressure(Real pressure);
+  /** \brief Sets the cloth pressure coefficient (must be non negative).
+  */
+  void                                        setPressure(Real pressure);
 
-    /** \brief Retrieves the cloth pressure coefficient.
-    */
-    Real                                        getPressure() const;
+  /** \brief Retrieves the cloth pressure coefficient.
+  */
+  Real                                        getPressure() const;
 
-    /** \brief Sets the cloth tear factor (must be larger than one).
-    */
-    void                                        setTearFactor(Real factor);
+  /** \brief Sets the cloth tear factor (must be larger than one).
+  */
+  void                                        setTearFactor(Real factor);
 
-    /** \brief Retrieves the cloth tear factor.
-    */
-    Real                                        getTearFactor() const;
+  /** \brief Retrieves the cloth tear factor.
+  */
+  Real                                        getTearFactor() const;
 
-    /** \brief Sets the cloth attachment tear factor (must be larger than one).
-    */
-    void                                        setAttachmentTearFactor(Real factor);
+  /** \brief Sets the cloth attachment tear factor (must be larger than one).
+  */
+  void                                        setAttachmentTearFactor(Real factor);
 
-    /** \brief Retrieves the attachment cloth tear factor.
-    */
-    Real                                        getAttachmentTearFactor() const;
+  /** \brief Retrieves the attachment cloth tear factor.
+  */
+  Real                                        getAttachmentTearFactor() const;
 
-    /** \brief Sets the cloth thickness (must be positive).
-    */
-    void                                        setThickness(Real thickness);
+  /** \brief Sets the cloth thickness (must be positive).
+  */
+  void                                        setThickness(Real thickness);
 
-    /** \brief Gets the cloth thickness.
-    */
-    Real                                        getThickness() const;
+  /** \brief Gets the cloth thickness.
+  */
+  Real                                        getThickness() const;
 
-    /** \brief Gets the cloth density.
-    */
-    Real                                        getDensity() const;
+  /** \brief Gets the cloth density.
+  */
+  Real                                        getDensity() const;
 
-    /** \brief Gets the relative grid spacing.
-    */
-    Real                                        getRelativeGridSpacing() const;
+  /** \brief Gets the relative grid spacing.
+  */
+  Real                                        getRelativeGridSpacing() const;
 
-    /** \brief Retrieves the cloth solver iterations.
-    */
-    unsigned int                                getSolverIterations() const;
+  /** \brief Retrieves the cloth solver iterations.
+  */
+  unsigned int                                getSolverIterations() const;
 
-    /** \brief Sets the cloth solver iterations.
-    */
-    void                                        setSolverIterations(unsigned int solverIterations);
+  /** \brief Sets the cloth solver iterations.
+  */
+  void                                        setSolverIterations(unsigned int solverIterations);
 
-    /** \brief Retrieves the cloth solver iterations.
-    */
-    Bounds3                                     getWorldBounds() const;
+  /** \brief Retrieves the cloth solver iterations.
+  */
+  Bounds3                                     getWorldBounds() const;
 
-    /** \brief Attaches the cloth to a shape (Cube, Sphere, Capsule and Convex only)
-    */
-    void                                        attachToShape(Shape*, unsigned int attachmentFlags);
+  /** \brief Attaches the cloth to a shape (Cube, Sphere, Capsule and Convex only)
+  */
+  void                                        attachToShape(Shape*, unsigned int attachmentFlags);
 
-    /** \brief Attaches the cloth to all shapes (Cube, Sphere, Capsule and Convex only), currently colliding. 
-    */
-    void                                        attachToCollidingShapes(unsigned int attachmentFlags);
+  /** \brief Attaches the cloth to all shapes (Cube, Sphere, Capsule and Convex only), currently colliding. 
+  */
+  void                                        attachToCollidingShapes(unsigned int attachmentFlags);
 
-    /** \brief Attaches the cloth to all shapes (Cube, Sphere, Capsule and Convex only), currently colliding. 
-    */
-    void                                        attachVertexToShape(unsigned int vertexId, Shape*, const Vec3& localPos, unsigned int attachmentFlags);
+  /** \brief Attaches the cloth to all shapes (Cube, Sphere, Capsule and Convex only), currently colliding. 
+  */
+  void                                        attachVertexToShape(unsigned int vertexId, Shape*, const Vec3& localPos, unsigned int attachmentFlags);
 
-    /** \brief Attaches the cloth to all shapes (Cube, Sphere, Capsule and Convex only), currently colliding. 
-    */
-    void                                        attachVertexToGlobalPosition(unsigned int vertexId, const Vec3& globalPos);
+  /** \brief Attaches the cloth to all shapes (Cube, Sphere, Capsule and Convex only), currently colliding. 
+  */
+  void                                        attachVertexToGlobalPosition(unsigned int vertexId, const Vec3& globalPos);
 
-    /** \brief Detaches the cloth from a shape it has been attached to before. 
-    */
-    void                                        detachFromShape(Shape*);
+  /** \brief Detaches the cloth from a shape it has been attached to before. 
+  */
+  void                                        detachFromShape(Shape*);
 
-    /** \brief Frees a previously attached cloth point.
-    */
-    void                                        freeVertex(unsigned int vertexId);
+  /** \brief Frees a previously attached cloth point.
+  */
+  void                                        freeVertex(unsigned int vertexId);
 
-    /** \brief Changes the weight of a vertex in the cloth solver for a period of time.
-    */
-    void                                        dominateVertex(unsigned int vertexId, Real expirationTime, Real dominanceWeight);
+  /** \brief Changes the weight of a vertex in the cloth solver for a period of time.
+  */
+  void                                        dominateVertex(unsigned int vertexId, Real expirationTime, Real dominanceWeight);
 
-    /** \brief Return the attachment status of the given vertex.
-    */
-    Enums::ClothVertexAttachmentStatus          getVertexAttachmentStatus(unsigned int vertexId) const;
+  /** \brief Return the attachment status of the given vertex.
+  */
+  Enums::ClothVertexAttachmentStatus          getVertexAttachmentStatus(unsigned int vertexId) const;
 
-    /** \brief Return the shape of the given vertex.
-    */
-    Shape*                                      getVertexAttachmentShape(unsigned int vertexId) const;
+  /** \brief Return the shape of the given vertex.
+  */
+  Shape*                                      getVertexAttachmentShape(unsigned int vertexId) const;
 
-    /** \brief Return the attachment position of the given vertex.
-    */
-    Vec3                                        getVertexAttachmentPosition(unsigned int vertexId) const;
+  /** \brief Return the attachment position of the given vertex.
+  */
+  Vec3                                        getVertexAttachmentPosition(unsigned int vertexId) const;
 
-    /** \brief Attaches the cloth to an rigidbody.
-        \see NxCloth::attachToCore
-    */
-    void                                        attachToCore(RigidBody*, Real impulseThreshold, Real penetrationDepth = Real(0), Real maxDeformationDistance = Real(0));
+  /** \brief Attaches the cloth to an rigidbody.
+      \see NxCloth::attachToCore
+  */
+  void                                        attachToCore(RigidBody*, Real impulseThreshold, Real penetrationDepth = Real(0), Real maxDeformationDistance = Real(0));
 
-    /** \brief Tears a vertex
-    */
-    void                                        tearVertex(const unsigned int vertexId, const Vec3& normal);
+  /** \brief Tears a vertex
+  */
+  void                                        tearVertex(const unsigned int vertexId, const Vec3& normal);
 
-    /** \brief Executes a raycast against the cloth.
-    */
-    ClothRaycastHit                              raycast(const Ray&);
+  /** \brief Executes a raycast against the cloth.
+  */
+  ClothRaycastHit                              raycast(const Ray&);
 
-    /** \brief Gets the collision group the cloth belongs to.
-    */
-    unsigned short                               getGroup();
+  /** \brief Gets the collision group the cloth belongs to.
+  */
+  unsigned short                               getGroup();
 
-    /** \brief Sets the collision mask for filtering
-    */
-    void                                         setGroupsMask(const int4&);
+  /** \brief Sets the collision mask for filtering
+  */
+  void                                         setGroupsMask(const int4&);
 
-    /** \brief Gets the collision mask for filtering
-    */
-    int4                                         getGroupsMask() const;
+  /** \brief Gets the collision mask for filtering
+  */
+  int4                                         getGroupsMask() const;
 
-    /** \brief Sets the valid bounds.
-    */
-    void                                         setValidBounds(const Bounds3&);
+  /** \brief Sets the valid bounds.
+  */
+  void                                         setValidBounds(const Bounds3&);
 
-    /** \brief Gets the valid bounds.
-    */
-    Bounds3                                      getValidBounds() const;
+  /** \brief Gets the valid bounds.
+  */
+  Bounds3                                      getValidBounds() const;
 
-    /** \brief
-    */
-    void                                         setPosition(const Vec3&, unsigned int vertexId);
+  /** \brief
+  */
+  void                                         setPosition(const Vec3&, unsigned int vertexId);
 
-    /** \brief
-    */
-    void                                         setPositions(Buffer<Vec3>& positions);
+  /** \brief
+  */
+  void                                         setPositions(Buffer<Vec3>& positions);
 
-    /** \brief
-    */
-    Vec3                                         getPosition(unsigned int vertexId);
+  /** \brief
+  */
+  Vec3                                         getPosition(unsigned int vertexId);
 
-    /** \brief
-    */
-    void                                         getPositions(Buffer<Vec3>& positions);
+  /** \brief
+  */
+  void                                         getPositions(Buffer<Vec3>& positions);
 
 
-    /** \brief
-    */
-    void                                         setVelocity(const Vec3&, unsigned int vertexId);
+  /** \brief
+  */
+  void                                         setVelocity(const Vec3&, unsigned int vertexId);
 
-    /** \brief
-    */
-    void                                         setVelocities(Buffer<Vec3>& v);
+  /** \brief
+  */
+  void                                         setVelocities(Buffer<Vec3>& v);
 
-    /** \brief Gets the velocity of a particular vertex of the cloth.
-    */
-    Vec3                                         getVelocity(unsigned int vertexId);
+  /** \brief Gets the velocity of a particular vertex of the cloth.
+  */
+  Vec3                                         getVelocity(unsigned int vertexId);
 
-    /** \brief Gets the velocities of the cloth.
-    */
-    void                                         getVelocities(Buffer<Vec3>& v);
+  /** \brief Gets the velocities of the cloth.
+  */
+  void                                         getVelocities(Buffer<Vec3>& v);
 
-    /** \brief Gets the number of cloth particles.
-    */
-    unsigned int                                 getNumberOfParticles();
+  /** \brief Gets the number of cloth particles.
+  */
+  unsigned int                                 getNumberOfParticles();
 
-   /** \brief Sets the collision response coefficient.
-   */
-   void                                          setCollisionResponseCoefficient(Real coefficient);
+  /** \brief Sets the collision response coefficient.
+  */
+  void                                          setCollisionResponseCoefficient(Real coefficient);
 
-   /** \brief Retrieves the collision response coefficient.
-   */
-   Real                                          getCollisionResponseCoefficient() const;
+  /** \brief Retrieves the collision response coefficient.
+  */
+  Real                                          getCollisionResponseCoefficient() const;
 
-   /** \brief Sets the attachment response coefficient (range 0 to 1)
-   */
-   void                                          setAttachmentResponseCoefficient(Real coefficient);
+  /** \brief Sets the attachment response coefficient (range 0 to 1)
+  */
+  void                                          setAttachmentResponseCoefficient(Real coefficient);
 
-   /** \brief Retrieves the attachment response coefficient.
-   */
-   Real                                          getAttachmentResponseCoefficient() const;
+  /** \brief Retrieves the attachment response coefficient.
+  */
+  Real                                          getAttachmentResponseCoefficient() const;
 
-   /** \brief Sets the response coefficient for collisions from fluids to this cloth
-   */
-   void                                          setFromFluidResponseCoefficient(Real coefficient);
+  /** \brief Sets the response coefficient for collisions from fluids to this cloth
+  */
+  void                                          setFromFluidResponseCoefficient(Real coefficient);
 
-   /** \brief Retrieves response coefficient for collisions from fluids to this cloth
-   */
-   Real                                          getFromFluidResponseCoefficient() const;
+  /** \brief Retrieves response coefficient for collisions from fluids to this cloth
+  */
+  Real                                          getFromFluidResponseCoefficient() const;
 
-   /** \brief Sets the response coefficient for collisions from this cloth to fluids
-   */
-   void                                          setToFluidResponseCoefficient(Real coefficient);
+  /** \brief Sets the response coefficient for collisions from this cloth to fluids
+  */
+  void                                          setToFluidResponseCoefficient(Real coefficient);
 
   /** \brief Retrieves response coefficient for collisions from this cloth to fluids.
   */
@@ -400,7 +400,6 @@ class NxOgrePublicClass Cloth : public PointerClass<Classes::_Cloth>, public Tim
   */
   bool                                            advance(float deltaTime, const Enums::Priority&);
   
-  
   protected: // Variables
   
   /** \brief Scene that the cloth belongs to.
@@ -432,6 +431,7 @@ class NxOgrePublicClass Cloth : public PointerClass<Classes::_Cloth>, public Tim
   Enums::Priority                               mPriority;
   
   bool                                          mDrawnAtLeastOnce;
+  
 }; // class Cloth
 
                                                                                        

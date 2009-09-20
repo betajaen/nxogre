@@ -27,24 +27,24 @@
 
                                                                                        
 
-#include "GLUTBodyPrototype.h"
+#include "GLUTBodyDescription.h"
 
                                                                                        
 
-GLUTBodyPrototype::GLUTBodyPrototype(void)
+GLUTBodyDescription::GLUTBodyDescription(void)
 {
  reset();
 }
 
-GLUTBodyPrototype::~GLUTBodyPrototype(void)
+GLUTBodyDescription::~GLUTBodyDescription(void)
 {
  // Nothing to do in here.
 }
 
-void GLUTBodyPrototype::reset(void)
+void GLUTBodyDescription::reset(void)
 {
  // Reset the physics bits.
- RigidBodyPrototype::reset();
+ RigidBodyDescription::reset();
 
  // Reset the visual bits.
  mVisualShape = GLUT_Box;
@@ -57,10 +57,10 @@ void GLUTBodyPrototype::reset(void)
  mShadows = true;
 }
 
-bool GLUTBodyPrototype::valid(void)
+bool GLUTBodyDescription::valid(void)
 {
  // Check to see if the physics bits are valid.
- if (!RigidBodyPrototype::valid())
+ if (!RigidBodyDescription::valid())
   return false;
 
  // Type must be Box, Sphere, Capsule or Plane.

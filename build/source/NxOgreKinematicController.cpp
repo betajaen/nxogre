@@ -32,7 +32,6 @@
 #include "NxOgreScene.h"
 #include "NxOgreShape.h"
 #include "NxOgreBox.h"
-#include "NxOgreRigidBodyPrototype.h"
 #include "NxOgreRigidBody.h"
 #include "NxOgreSimple.h"
 #include "NxOgreFunctions.h"
@@ -78,18 +77,20 @@ KinematicController::KinematicController(const NxOgre::Vec3 &size, const NxOgre:
 
  mHalfHeight = mVolume->mExtents[mUpDirection];
 
- RigidBodyPrototype* prototype = NxOgre_New(RigidBodyPrototype)();
- prototype->mType = Enums::RigidBodyType_Kinematic;
- prototype->mGlobalPose.set(globalPosition);
 
  Vec3 boxSize(size);
  boxSize *= Real(0.8);
-// mShape = NxOgre_New(Box)(boxSize);
-// prototype->mShapes.insert(mShape);
+ mShape = NxOgre_New(Box)(boxSize);
 
- create(prototype, mScene, &mShapes);
+ RigidBodyDescription description;
+ 
+ createKinematicActor(globalPosition, description, mScene, mShape);
 
- NxOgre_Delete(prototype);
+ //Enums::RigidBodyType, const RigidBodyDescription&, Scene* scene, Shapes& shape
+ //create(Enums::RigidBodyType_Kinematic, description, mScene, globalPosition);
+ //create();
+ //create(prototype, mScene, &mShapes);
+
 }
 
 KinematicController::~KinematicController(void)

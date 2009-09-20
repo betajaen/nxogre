@@ -32,7 +32,8 @@
 #include "NxOgreScene.h"
 #include "NxOgreShape.h"
 #include "NxOgreRigidBodyFunctions.h"
-#include "NxOgreRigidBodyPrototype.h"
+
+#include "NxActor.h"
 
                                                                                        
 
@@ -41,15 +42,28 @@ namespace NxOgre
 
                                                                                        
 
-Actor::Actor(Scene* scene) : RigidBody(), mScene(scene)
+Actor::Actor(Scene* scene)
+: RigidBody(), mScene(scene)
 {
 }
 
-Actor::Actor(RigidBodyPrototype* prototype, Scene* scene)
-: RigidBody(),
-  mScene(scene)
+
+Actor::Actor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+: RigidBody(), mScene(scene)
 {
- create(prototype, scene, &mShapes);
+ mName = description.mName;
+ mNameHash = Functions::StringHash(mName);
+ 
+ createDynamic(pose, description, scene, shape);
+}
+
+Actor::Actor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+: RigidBody(), mScene(scene)
+{
+ mName = description.mName;
+ mNameHash = Functions::StringHash(mName);
+ 
+ createDynamic(pose, description, scene, shapes);
 }
 
 Actor::~Actor(void)
@@ -64,407 +78,446 @@ unsigned int Actor::getClassType() const
 
 void Actor::setGroup(GroupIdentifier actorGroup)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGroup(actorGroup, mActor);
+ mActor->setGroup(actorGroup);
 }
 
 GroupIdentifier Actor::getGroup(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGroup(mActor);
+ return mActor->getGroup();
 }
 
 void Actor::setDominanceGroup(GroupIdentifier dominanceGroup)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGroup(dominanceGroup, mActor);
+ mActor->setGroup(dominanceGroup);
 }
 
 GroupIdentifier Actor::getDominanceGroup(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getDominanceGroup(mActor);
+ return mActor->getDominanceGroup();
 }
 
 void Actor::resetPairFiltering(void)
 {
- ::NxOgre::Functions::RigidBodyFunctions::resetPairFiltering(mActor);
+ mActor->resetUserActorPairFiltering();
 }
 
 Real Actor::computeKineticEnergy(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::computeKineticEnergy(mActor);
+ return mActor->computeKineticEnergy();
 }
 
 void Actor::setSolverIterationCount(unsigned int iterCount)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setSolverIterationCount(iterCount, mActor);
+ mActor->setSolverIterationCount(iterCount);
 }
 
 unsigned int Actor::getSolverIterationCount(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getSolverIterationCount(mActor);
+ return mActor->getSolverIterationCount();
 }
 
 Real Actor::getContactReportThreshold(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getContactReportThreshold(mActor);
+ return mActor->getContactReportThreshold();
 }
 
 void Actor::setContactReportThreshold(Real threshold)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setContactReportThreshold(threshold, mActor);
+ mActor->setContactReportThreshold(threshold);
 }
 
 unsigned int Actor::getContactReportFlags(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
+ return mActor->getContactReportFlags();
 }
 
 void Actor::setContactReportFlags(unsigned int flags)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
+ mActor->setContactReportFlags(flags);
 }
 
 unsigned short Actor::getForceFieldMaterial(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getForceFieldMaterial(mActor);
+ return mActor->getForceFieldMaterial();
 }
 
 void Actor::setForceFieldMaterial(unsigned short ffm)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setForceFieldMaterial(ffm, mActor);
+ mActor->setForceFieldMaterial(ffm);
 }
 
 void Actor::setGlobalPose(const Matrix44& matrix)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalPose(matrix, mActor);
+ NxMat34 global_pose;
+ global_pose.setRowMajor44(matrix.ptr());
+ mActor->setGlobalPose(global_pose);
 }
 
-void Actor::setGlobalPosition (const Vec3& r3)
+void Actor::setGlobalPosition(const Vec3& vec)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalPosition(r3, mActor);
+ mActor->setGlobalPosition(vec.as<NxVec3>());
 }
 
-void Actor::setGlobalOrientation(const Matrix33& r33)
+void Actor::setGlobalOrientation(const Matrix33& mat)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientation(r33, mActor);
+ NxMat33 matrix;
+ matrix.setRowMajor(mat.ptr());
+ mActor->setGlobalOrientation(matrix);
 }
 
 void Actor::setGlobalOrientationQuat(const Quat& quat)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientationQuat(quat, mActor);
+ mActor->setGlobalOrientationQuat(quat.as<NxQuat>());
 }
 
 Matrix44 Actor::getGlobalPose(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
+ Matrix44 matrix;
+ mActor->getGlobalPose().getRowMajor44(matrix.ptr());
+ return matrix;
 }
 
 Vec3 Actor::getGlobalPosition(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
+ return Vec3(mActor->getGlobalPosition());
 }
 
 Matrix33 Actor::getGlobalOrientation(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
+ Matrix33 matrix;
+ mActor->getGlobalOrientation().getRowMajor(matrix.ptr());
+ return matrix;
 }
 
 Quat Actor::getGlobalOrientationQuat(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
+ return Quat(mActor->getGlobalOrientationQuat());
 }
 
 unsigned int Actor::getNbShapes(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
+ return mActor->getNbShapes();
 }
 
 void Actor::setCMassOffsetLocalPose(const Matrix44& matrix)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassOffsetLocalPose(matrix, mActor);
+ 
+ NxMat34 global_pose;
+ global_pose.setRowMajor44(matrix.ptr());
+ mActor->setCMassOffsetLocalPose(global_pose);
+ 
 }
 
-void Actor::setCMassOffsetLocalPosition(const Vec3& r3)
+void Actor::setCMassOffsetLocalPosition(const Vec3& vec)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassOffsetLocalPosition(r3, mActor);
+ mActor->setCMassOffsetLocalPosition(vec.as<NxVec3>());
 }
 
-void Actor::setCMassOffsetLocalOrientation(const Matrix33& r33)
+void Actor::setCMassOffsetLocalOrientation(const Matrix33& matrix)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassOffsetLocalOrientation(r33, mActor);
+ NxMat34 global_pose;
+ global_pose.setRowMajor44(matrix.ptr());
+ mActor->setCMassOffsetGlobalPose(global_pose);
 }
 
 void Actor::setCMassOffsetGlobalPose(const Matrix44& matrix)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassOffsetGlobalPose(matrix, mActor);
+ NxMat34 global_pose;
+ global_pose.setRowMajor44(matrix.ptr());
+ mActor->setCMassOffsetGlobalPose(global_pose);
 }
 
-void Actor::setCMassOffsetGlobalPosition(const Vec3& r3)
+void Actor::setCMassOffsetGlobalPosition(const Vec3& vec)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassOffsetGlobalPosition(r3, mActor);
+ mActor->setCMassOffsetGlobalPosition(vec.as<NxVec3>());
 }
 
 void Actor::setCMassOffsetGlobalOrientation(const Matrix33& r33)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassOffsetGlobalOrientation(r33, mActor);
+ NxMat33 global_orientation;
+ global_orientation.setRowMajor(r33.ptr());
+ mActor->setCMassOffsetGlobalOrientation(global_orientation);
 }
 
 void Actor::setCMassGlobalPose(const Matrix44& matrix)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassGlobalPose(matrix, mActor);
+ NxMat34 global_pose;
+ global_pose.setRowMajor44(matrix.ptr());
+ mActor->setCMassGlobalPose(global_pose);
 }
 
-void Actor::setCMassGlobalPosition(const Vec3& r3)
+void Actor::setCMassGlobalPosition(const Vec3& vec)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassGlobalPosition(r3, mActor);
+ mActor->setCMassGlobalPosition(vec.as<NxVec3>());
 }
 
-void Actor::setCMassGlobalOrientation (const Matrix33& r33)
+void Actor::setCMassGlobalOrientation(const Matrix33& r33)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCMassGlobalOrientation(r33, mActor);
+ NxMat33 global_orientation;
+ global_orientation.setRowMajor(r33.ptr());
+ mActor->setCMassGlobalOrientation(global_orientation);
 }
 
 Matrix44 Actor::getCMassLocalPose(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getCMassLocalPose(mActor);
+ Matrix44 global_pose;
+ mActor->getCMassLocalPose().getRowMajor44(global_pose.ptr());
+ return global_pose;
 }
 
 Vec3 Actor::getCMassLocalPosition(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getCMassLocalPosition(mActor);
+ return Vec3(mActor->getCMassLocalPosition());
 }
 
 Matrix33 Actor::getCMassLocalOrientation(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getCMassLocalOrientation(mActor);
+ Matrix33 global_orientation;
+ mActor->getCMassLocalOrientation().getRowMajor(global_orientation.ptr());
+ return global_orientation;
 }
 
 Matrix44 Actor::getCMassGlobalPose(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getCMassGlobalPose(mActor);
+ Matrix44 global_pose;
+ mActor->getCMassGlobalPose().getRowMajor44(global_pose.ptr());
+ return global_pose;
 }
 
 Vec3 Actor::getCMassGlobalPosition(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getCMassGlobalPosition(mActor);
+ return Vec3(mActor->getCMassGlobalPosition());
 }
 
 Matrix33 Actor::getCMassGlobalOrientation(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getCMassGlobalOrientation(mActor);
+ Matrix33 global_orientation;
+ mActor->getCMassGlobalOrientation().getRowMajor(global_orientation.ptr());
+ return global_orientation;
 }
 
 void Actor::setMass(Real mass)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setMass(mass, mActor);
+ mActor->setMass(mass);
 }
 
 Real Actor::getMass(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getMass(mActor);
+ return mActor->getMass();
 }
 
-void Actor::setMassSpaceInertiaTensor(const Vec3& r3)
+void Actor::setMassSpaceInertiaTensor(const Vec3& vec)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setMassSpaceInertiaTensor(r3, mActor);
+ mActor->setMassSpaceInertiaTensor(vec.as<NxVec3>());
 }
 
 Vec3 Actor::getMassSpaceInertiaTensor(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getMassSpaceInertiaTensor(mActor);
+ return Vec3(mActor->getMassSpaceInertiaTensor());
 }
 
 Matrix33 Actor::getGlobalInertiaTensor(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalInertiaTensor(mActor);
+ Matrix33 matrix33;
+ mActor->getGlobalInertiaTensor().getRowMajor(matrix33.ptr());
+ return matrix33;
 }
 
 Matrix33 Actor::getGlobalInertiaTensorInverse(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalInertiaTensorInverse(mActor);
+ Matrix33 matrix33;
+ mActor->getGlobalInertiaTensorInverse().getRowMajor(matrix33.ptr());
+ return matrix33;
 }
 
 bool Actor::updateMassFromShapes(Real density, Real totalMass) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::updateMassFromShapes(density, totalMass, mActor);
+ return mActor->updateMassFromShapes(density, totalMass);
 }
 
 void Actor::setLinearDamping(Real linDamp)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setLinearDamping(linDamp, mActor);
+ mActor->setLinearDamping(linDamp);
 }
 
 Real Actor::getLinearDamping(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getLinearDamping(mActor);
+ return mActor->getLinearDamping();
 }
 
 void Actor::setAngularDamping(Real angDamp)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setAngularDamping(angDamp, mActor);
+ mActor->setAngularDamping(angDamp);
 }
 
 Real Actor::getAngularDamping(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getAngularDamping(mActor);
+ return mActor->getAngularDamping();
 }
 
 void Actor::setLinearVelocity(const Vec3& linVel)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setLinearVelocity(linVel, mActor);
+ mActor->setLinearVelocity(linVel.as<NxVec3>());
 }
 
 void Actor::setAngularVelocity(const Vec3& angVel)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setAngularVelocity(angVel, mActor);
+ mActor->setAngularVelocity(angVel.as<NxVec3>());
 }
 
 Vec3 Actor::getLinearVelocity(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getLinearVelocity(mActor);
+ return Vec3(mActor->getLinearVelocity());
 }
 
 Vec3 Actor::getAngularVelocity (void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getAngularVelocity(mActor);
+ return Vec3(mActor->getAngularVelocity());
 }
 
 void Actor::setMaxAngularVelocity(Real maxAngVel)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setMaxAngularVelocity(maxAngVel, mActor);
+ mActor->setMaxAngularVelocity(maxAngVel);
 }
 
 Real Actor::getMaxAngularVelocity(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getMaxAngularVelocity(mActor);
+ return mActor->getMaxAngularVelocity();
 }
 
 void Actor::setCCDMotionThreshold(Real thresh)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setCCDMotionThreshold(thresh, mActor);
+ mActor->setCCDMotionThreshold(thresh);
 }
 
 Real Actor::getCCDMotionThreshold(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getCCDMotionThreshold(mActor);
+ return mActor->getCCDMotionThreshold();
 }
 
 void Actor::setLinearMomentum(const Vec3& linMoment)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setLinearMomentum(linMoment, mActor);
+ mActor->setLinearMomentum(linMoment.as<NxVec3>());
 }
 
 void Actor::setAngularMomentum(const Vec3& angMoment)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setAngularMomentum(angMoment, mActor);
+ mActor->setAngularMomentum(angMoment.as<NxVec3>());
 }
 
 Vec3 Actor::getLinearMomentum(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getLinearMomentum(mActor);
+ return Vec3(mActor->getLinearMomentum());
 }
 
 Vec3 Actor::getAngularMomentum(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getAngularMomentum(mActor);
+ return Vec3(mActor->getAngularMomentum());
 }
 
 void Actor::addForceAtPos(const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addForceAtPos(force, pos, mode, wakeup, mActor);
+ mActor->addForceAtPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 void Actor::addForceAtLocalPos(const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addForceAtLocalPos(force, pos, mode, wakeup, mActor);
+ mActor->addForceAtLocalPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 void Actor::addLocalForceAtPos(const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addLocalForceAtPos(force, pos, mode, wakeup, mActor);
+ mActor->addLocalForceAtPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
-void Actor::addLocalForceAtLocalPos (const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup)
+void Actor::addLocalForceAtLocalPos(const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addLocalForceAtLocalPos(force, pos, mode, wakeup, mActor);
+ mActor->addLocalForceAtLocalPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 void Actor::addForce(const Vec3& force, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addForce(force, mode, wakeup, mActor);
+ mActor->addForce(force.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 void Actor::addLocalForce(const Vec3& force, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addLocalForce(force, mode, wakeup, mActor);
+ mActor->addLocalForce(force.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
-void Actor::addTorque (const Vec3& torque, Enums::ForceMode mode, bool wakeup)
+void Actor::addTorque(const Vec3& torque, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addTorque(torque, mode, wakeup, mActor);
+ mActor->addTorque(torque.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 void Actor::addLocalTorque(const Vec3& torque, Enums::ForceMode mode, bool wakeup)
 {
- NxOgre::Functions::RigidBodyFunctions::addLocalTorque(torque, mode, wakeup, mActor);
+ mActor->addLocalTorque(torque.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
-Vec3 Actor::getPointVelocity (const Vec3& point) const
+Vec3 Actor::getPointVelocity(const Vec3& point) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getPointVelocity(point, mActor);
+ return Vec3(mActor->getPointVelocity(point.as<NxVec3>()));
 }
 
 Vec3 Actor::getLocalPointVelocity(const Vec3& point) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getLocalPointVelocity(point, mActor);
+ return Vec3(mActor->getLocalPointVelocity(point.as<NxVec3>()));
 }
 
 bool Actor::isGroupSleeping(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::isGroupSleeping(mActor);
+ return mActor->isGroupSleeping();
 }
 
 bool Actor::isSleeping(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::isSleeping(mActor);
+ return mActor->isSleeping();
 }
 
 Real Actor::getSleepLinearVelocity(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getSleepLinearVelocity(mActor);
+ return mActor->getSleepLinearVelocity();
 }
 
 void Actor::setSleepLinearVelocity(Real threshold)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setSleepLinearVelocity(threshold, mActor);
+ mActor->setSleepLinearVelocity(threshold);
 }
 
 Real Actor::getSleepAngularVelocity(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getSleepAngularVelocity(mActor);
+ return mActor->getSleepAngularVelocity();
 }
 
 void Actor::setSleepAngularVelocity(Real threshold)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setSleepAngularVelocity(threshold, mActor);
+ mActor->setSleepAngularVelocity(threshold);
 }
 
 Real Actor::getSleepEnergyThreshold(void) const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getSleepEnergyThreshold(mActor);
+ return mActor->getSleepEnergyThreshold();
 }
 
 void Actor::setSleepEnergyThreshold(Real threshold)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setSleepEnergyThreshold(threshold, mActor);
+ mActor->setSleepEnergyThreshold(threshold);
 }
 
 void Actor::wakeUp(Real wakeCounterValue)
 {
- ::NxOgre::Functions::RigidBodyFunctions::wakeUp(wakeCounterValue, mActor);
+ mActor->wakeUp(wakeCounterValue);
 }
 
 void Actor::putToSleep(void)
 {
- ::NxOgre::Functions::RigidBodyFunctions::putToSleep(mActor);
+ mActor->putToSleep();
+}
+
+Compartment* Actor::getCompartment()
+{
+ return mScene->getCompartment(mActor->getCompartment());
 }
 
                                                                                        

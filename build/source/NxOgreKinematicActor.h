@@ -64,6 +64,8 @@ class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_Kinematic
   friend class Scene;
   friend class Functions::ArrayFunctions<KinematicActor*>::Write;
   
+  template<class T> friend inline void boost::checked_delete(T*);
+  
   public:
   
   using ::NxOgre::PointerClass<Classes::_KinematicActor>::operator new;
@@ -212,11 +214,14 @@ class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_Kinematic
   /** \internal Classes that inherit from KinematicActor should use this constructor.
   */
                                               KinematicActor(Scene*);
-  
   /** \internal Use Scene::createKinematicActor
   */
-                                              KinematicActor(RigidBodyPrototype*, Scene*);
-  
+                                              KinematicActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
+
+  /** \internal Use Scene::createKinematicActor
+  */
+                                              KinematicActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
+
   /** \internal Use Scene::destroyKinematicActor
   */
   virtual                                    ~KinematicActor(void);
@@ -225,13 +230,16 @@ class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_Kinematic
   
   /** \brief Name of the KinematicActor, otherwise a blank string.
   */
-                       String          mName;
+  String          mName;
   
   /** \brief KinematicActor's parent Scene
   */
-                       Scene*                mScene;
+  Scene*          mScene;
   
-                       Shapes                mShapes;
+  /** \brief Shapes belonging to this Actor.
+  */
+  Shapes          mShapes;
+
   
 }; // class KinematicActor
 

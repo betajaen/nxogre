@@ -92,10 +92,6 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   */
                        Scene*                 createScene(const SceneDescription& = SceneDescription());
 
-  /** \brief Create a single scene based of a ScenePrototype
-  */
-                       Scene*                 createScene(ScenePrototype*);
-
   /** \brief Destroys a single scene
   */
                        void                   destroyScene(Scene*);

@@ -73,7 +73,7 @@ class NxOgrePublicClass SceneDescription
   /** \brief Optional name of the Scene
       \default NULL (no name)
   */
-                        String          mName;
+                        String                mName;
   
   /** \brief Acceleration of gravity, measured in ms^-2
       \default 0 0 0

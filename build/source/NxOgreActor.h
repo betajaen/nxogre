@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreShape.h"
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreRigidBody.h"
@@ -52,7 +53,8 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   
   friend class Scene;
   friend class Functions::ArrayFunctions<Actor*>::Write;
-  
+  template<class T> friend inline void boost::checked_delete(T*);
+
   public:
   
   using ::NxOgre::PointerClass<Classes::_Actor>::operator new;
@@ -60,7 +62,11 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   using ::NxOgre::PointerClass<Classes::_Actor>::operator delete;
 
   using ::NxOgre::PointerClass<Classes::_Actor>::getClassType;
-
+  
+  /** \brief Get the name of the Actor or BLANK_STRING
+  */
+  String  getName() const;
+  
   /** \brief
   */
   virtual                             unsigned int           getClassType() const;
@@ -119,9 +125,9 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   /// */
   ///                   NxU32                  linearSweep (const Vec3& motion, NxU32 flags, void *userData, NxU32 nbShapes, NxSweepQueryHit *shapes, NxUserEntityReport< NxSweepQueryHit > *callback, const NxSweepCache *sweepCache=NULL)=0 
  
-  /// /** \brief  Retrieves the actor's simulation compartment, if any. 
-  /// */
-  ///                   NxCompartment*         getCompartment(void) const;
+  /** \brief  Retrieves the actor's simulation compartment, if any. 
+  */
+                     Compartment*                            getCompartment(void);
  
   /** \brief Retrieves the actor's force field material index, default index is 0. 
   */
@@ -408,7 +414,11 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   
   /** \internal Use Scene::createActor
   */
-                                              Actor(RigidBodyPrototype*, Scene*);
+                                              Actor(Shape*, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  
+  /** \internal Use Scene::createActor
+  */
+                                              Actor(Shapes&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::destroyActor
   */
@@ -418,15 +428,12 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   
   /** \brief Name of the Actor, otherwise a blank string.
   */
-                       String          mName;
+                       String                 mName;
   
   /** \brief Actor's parent Scene
   */
-                       Scene*                mScene;
+                       Scene*                 mScene;
   
-  /** \brief
-  */
-                       Shapes                mShapes;
 }; // class ClassName
 
                                                                                        

@@ -87,8 +87,8 @@ class NxOgrePublicClass Callback
    unsigned int getNbReferences() const;
    
   private:
-    
-    unsigned int mNbReferences;
+   
+   unsigned int mNbReferences;
 
 }; // class Callback
 
