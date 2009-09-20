@@ -180,6 +180,12 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene, Shapes* fina
  
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
  
+ for (unsigned int i=0; i < actor_description.shapes.size(); i++)
+ {
+  NxShapeDesc* desc = actor_description.shapes[i];
+  delete desc;
+ }
+ 
  if (final_shapes)
  {
   NxShape* const* shapes = mActor->getShapes();
@@ -192,6 +198,7 @@ void RigidBody::create(RigidBodyPrototype* prototype, Scene* scene, Shapes* fina
    final_shapes->insert(pointer_representive_cast<Shape>(physx_shape->userData));
   }
  }
+
  
 }
 
@@ -237,6 +244,12 @@ void RigidBody::create(const Matrix44& pose, SimpleShape* shape, Real mass, Scen
   return;
  }
 
+ for (unsigned int i=0; i < actor_description.shapes.size(); i++)
+ {
+  NxShapeDesc* desc = actor_description.shapes[i];
+  delete desc;
+ }
+ 
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType()); 
 }
 
