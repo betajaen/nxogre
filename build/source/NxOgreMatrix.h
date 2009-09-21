@@ -28,7 +28,6 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreMatrix.h"
-#include "NxOgreVec.h"
 #include "NxOgreQuat.h"
 
 #include "string.h"
@@ -54,41 +53,41 @@ class NxOgrePublicClass Matrix33
   Size = 9
  };
  
- inline Matrix33();
+  Matrix33();
  
- inline Matrix33(const Real& _00, const Real& _01, const Real& _02,
+  Matrix33(const Real& _00, const Real& _01, const Real& _02,
                  const Real& _10, const Real& _11, const Real& _12,
                  const Real& _20, const Real& _21, const Real& _22);
  
- inline Matrix33(const Real mem[Rows][Cols]);
+  Matrix33(const Real mem[Rows][Cols]);
  
- inline Matrix33(const Matrix33& other);
+  Matrix33(const Matrix33& other);
 
- inline Matrix33(const Quat& quat);
+  Matrix33(const Quat& quat);
 
- inline Matrix33 operator=(const Matrix33& other);
+  Matrix33 operator=(const Matrix33& other);
 
- inline void set(const Matrix33& other);
+  void set(const Matrix33& other);
 
- inline void set(const Real mem[Rows][Cols]);
+  void set(const Real mem[Rows][Cols]);
 
- inline void set(const Quat& quat);
+  void set(const Quat& quat);
 
- inline void set(const Real& w, const Real& x, const Real& y, const Real& z);
+  void set(const Real& w, const Real& x, const Real& y, const Real& z);
 
- inline void set(const Real& _00, const Real& _01, const Real& _02,
+  void set(const Real& _00, const Real& _01, const Real& _02,
                  const Real& _10, const Real& _11, const Real& _12,
                  const Real& _20, const Real& _21, const Real& _22);
 
- inline Real* operator[](size_t row) const;
+  Real* operator[](size_t row) const;
 
- inline void identity();
+  void identity();
   
- inline void zero();
+  void zero();
 
- inline Real* ptr();
+  Real* ptr();
  
- inline const Real* ptr() const;
+  const Real* ptr() const;
  
  protected:
  
@@ -113,65 +112,65 @@ class NxOgrePublicClass Matrix44
   Size = 16
  };
  
- inline Matrix44();
+  Matrix44();
  
- inline Matrix44(const Real& _00, const Real& _01, const Real& _02, const Real& _03,
+  Matrix44(const Real& _00, const Real& _01, const Real& _02, const Real& _03,
                  const Real& _10, const Real& _11, const Real& _12, const Real& _13,
                  const Real& _20, const Real& _21, const Real& _22, const Real& _23,
                  const Real& _30, const Real& _31, const Real& _32, const Real& _33
                 );
  
- inline Matrix44(const Real mem[Rows][Cols]);
+  Matrix44(const Real mem[Rows][Cols]);
  
- inline Matrix44(const Matrix44& other);
+  Matrix44(const Matrix44& other);
  
- inline Matrix44(const Vec3& translation_component);
+  Matrix44(const Vec3& translation_component);
  
- inline Matrix44(const Quat& rotation_asquaternion_component);
+  Matrix44(const Quat& rotation_asquaternion_component);
  
- inline Matrix44(const Vec3& translation_component, const Quat& rotation_asquaternion_component);
+  Matrix44(const Vec3& translation_component, const Quat& rotation_asquaternion_component);
 
- inline Matrix44 operator=(const Matrix44& other);
+  Matrix44 operator=(const Matrix44& other);
  
- inline void set(const Matrix44& other);
+  void set(const Matrix44& other);
  
- inline void set(const Real mem[Rows][Cols]);
+  void set(const Real mem[Rows][Cols]);
  
- inline void set(const Quat& quat);
+  void set(const Quat& quat);
  
- inline void set(const Real& w, const Real& x, const Real& y, const Real& z);
+  void set(const Real& w, const Real& x, const Real& y, const Real& z);
  
- inline void set(const Vec3& vec);
+  void set(const Vec3& vec);
  
- inline void set(const Real& trans_x, const Real& trans_y, const Real& trans_z);
+  void set(const Real& trans_x, const Real& trans_y, const Real& trans_z);
  
  void get(Real& trans_x, Real& trans_y, Real& trans_z) const;
  
- inline void set(const Real& _00, const Real& _01, const Real& _02, const Real& _03,
+  void set(const Real& _00, const Real& _01, const Real& _02, const Real& _03,
                  const Real& _10, const Real& _11, const Real& _12, const Real& _13,
                  const Real& _20, const Real& _21, const Real& _22, const Real& _23,
                  const Real& _30, const Real& _31, const Real& _32, const Real& _33
                 );
 
- inline Real* operator[](size_t row) const;
+  Real* operator[](size_t row) const;
 
  operator Vec3();
 
  operator Vec3() const;
 
- inline void identity();
+  void identity();
 
- inline void translationIdentity();
+  void translationIdentity();
 
- inline void scaleIdentity();
+  void scaleIdentity();
 
- inline void rotationIdentity();
+  void rotationIdentity();
 
- inline void zero();
+  void zero();
 
- inline Real* ptr();
+  Real* ptr();
 
- inline const Real* ptr() const;
+  const Real* ptr() const;
  
  void columnMajor(Real* f_16);
  
