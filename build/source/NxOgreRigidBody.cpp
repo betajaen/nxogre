@@ -85,6 +85,7 @@ namespace PhysXShapeBinder
    gFunctions[NX_SHAPE_WHEEL]       = &PhysX_NxWheelShape_BindFunction;
    gFunctions[NX_SHAPE_CONVEX]      = &PhysX_NxConvexShape_BindFunction;
    gFunctions[NX_SHAPE_MESH]        = &PhysX_NxTriangleMeshShape_BindFunction;
+   gFunctions[NX_SHAPE_HEIGHTFIELD] = &PhysX_NxHeightFieldShape_BindFunction;
    gFunctions[NX_SHAPE_RAW_MESH]    = &PhysX_BindFunction_NULL;
    gFunctions[NX_SHAPE_COMPOUND]    = &PhysX_BindFunction_NULL;
   }
