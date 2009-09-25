@@ -62,6 +62,16 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      /** \brief Create a Body.
      */
      OGRE3DBody*                          createBody(NxOgre::Shapes, NxOgre::Vec3 position, const Ogre::String& meshName, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+          
+     /** \brief Create a Body.
+         \note SceneNode will be now be "owned" by the Body, and will release it and the contents when destroyed.
+     */
+     OGRE3DBody*                          createBody(NxOgre::Shape*, NxOgre::Vec3 position, Ogre::SceneNode*, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     
+     /** \brief Create a Body, with a scenenode.
+         \note SceneNode will be now be "owned" by the Body, and will release it and the contents when destroyed.
+     */
+     OGRE3DBody*                          createBody(NxOgre::Shapes, NxOgre::Vec3 position, Ogre::SceneNode*, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
      
      /** \brief Destroy a Body.
      */

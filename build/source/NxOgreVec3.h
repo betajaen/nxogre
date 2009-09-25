@@ -184,7 +184,15 @@ class NxOgrePublicClass Vec3
    v.z = z;
    return v;
   }
-
+  
+  template<class user_xyz_vector_type>
+  inline void from(const user_xyz_vector_type& vec)
+  {
+   x = vec.x;
+   y = vec.y;
+   z = vec.z;
+  }
+  
   static const Vec3 ZERO;
 
   Real x, y, z;
