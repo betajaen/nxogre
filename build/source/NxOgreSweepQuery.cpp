@@ -26,67 +26,50 @@
 
                                                                                        
 
-
-#ifndef NXOGRE_STRING_H
-#define NXOGRE_STRING_H
-
-                                                                                       
-
 #include "NxOgreStable.h"
+#include "NxOgreSweepQuery.h"
+
+#include "NxScene.h"
+#include "NxShape.h"
 
                                                                                        
 
 namespace NxOgre
 {
 
-                                                                                       
+SweepCache::SweepCache(NxSweepCache* cache)
+: mCache(cache)
+{
+}
 
-typedef std::string String;
-
-typedef std::stringstream StringStream;
-
-typedef unsigned long StringHash;
+NxSweepCache* SweepCache::getCache()
+{
+ return mCache;
+}
 
 namespace Functions
 {
- 
- unsigned long inline StringHash(const char* str)
- {
-  unsigned long hash = 5381;
-  int c = 0;
-  while (c = *str++)
-   hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
 
-  return hash; 
- }
- 
- unsigned long inline StringHash(const String& str)
+void SweepFunctions::NxSweepQueryHitsToBuffer(NxSweepQueryHit* hits, unsigned int size, SweepQueryHits& buffer)
+{
+ buffer.clear();
+ buffer.reserve(size);
+ for (unsigned int i=0; i < size; i++)
  {
-  return StringHash(str.c_str());
- }
- 
- inline size_t find_first_character_of(const ::NxOgre::String& string_val, char search)
- {
-  for (size_t i=0; i < string_val.length(); i++)
-  {
-   if (string_val[i] == search)
-    return i;
-  }
-  return ::NxOgre::String::npos;
+  SweepQueryHit hit;
+  hit.mDistancePercentage = hits[i].t;
+  hit.mFaceID = hits[i].faceID;
+  hit.mHitShape = pointer_representive_cast<Shape>(hits[i].hitShape->userData);
+  hit.mInternalFaceID = hits[i].internalFaceID;
+  hit.mNormal.from<NxVec3>(hits[i].normal);
+  hit.mPoint.from<NxVec3>(hits[i].point);
+  hit.mSweepShape = pointer_representive_cast<Shape>(hits[i].sweepShape->userData);
+  buffer.append(hit);
  }
  
 }
 
-
-static const String BLANK_STRING = String();
-
-static const StringHash BLANK_HASH = Functions::StringHash(BLANK_STRING);
-
+} // namespace Functions
+} // namespace NxOgre
 
                                                                                        
-
-} // namespace NXOGRE_NAMESPACE
-
-                                                                                       
-
-#endif

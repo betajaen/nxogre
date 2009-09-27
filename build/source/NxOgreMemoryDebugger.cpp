@@ -237,11 +237,11 @@ void MemoryDebugger::writeAllocationsToFile(const char* fileName)
  FILE * file;
  file = fopen(fileName,"w");
 
- if (_size() == 0)
+ /*if (_size() == 0)
  {
   fclose(file);
   return;
- }
+ }*/
  
  fprintf(file, "# NxOgre Allocations\n---\nVersions:\n    - NxOgre: %i.%i.%i '%s'\n    - PhysX: %i.%i.%i (%i)\nConfiguration:\n    - Compiler: %s\n    - Accuracy: %s\n    - Build: %s %s\n",
                NxOgreVersionMajor, NxOgreVersionMinor, NxOgreVersionRelease, NxOgreCodeName,

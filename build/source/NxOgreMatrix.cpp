@@ -36,6 +36,28 @@
 namespace NxOgre
 {
 
+#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointDouble
+
+const Matrix33 Matrix33::ZERO(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
+
+const Matrix33 Matrix33::IDENTITY(1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0);
+
+const Matrix44 Matrix44::ZERO(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
+
+const Matrix44 Matrix44::IDENTITY(1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0)
+
+#else
+
+const Matrix33 Matrix33::ZERO(0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f);
+
+const Matrix33 Matrix33::IDENTITY(1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f);
+
+const Matrix44 Matrix44::ZERO(0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f);
+
+const Matrix44 Matrix44::IDENTITY(1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f);
+
+#endif
+
                                                                                        
 
 Matrix33::Matrix33()

@@ -66,21 +66,21 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   friend class World;
   friend class Functions::ArrayFunctions<Scene*>::Write;
-  template<class T> friend inline void boost::checked_delete(T*);
+  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
   
   public: // Functions
   
-  typedef  multimap<StringHash, Actor>::type                    Actors;
-  typedef  multimap<StringHash, Actor>::user_iterator           ActorIterator;
+  typedef  ptr_multihashmap<Actor>                          Actors;
+  typedef  ptr_multihashmap<Actor>::iterator_t           ActorIterator;
 
-  typedef  multimap<StringHash, SceneGeometry>::type            SceneGeometries;
-  typedef  multimap<StringHash, SceneGeometry>::user_iterator   SceneGeometryIterator;
+  typedef  ptr_multihashmap<SceneGeometry>                  SceneGeometries;
+  typedef  ptr_multihashmap<SceneGeometry>::iterator_t   SceneGeometryIterator;
 
-  typedef  multimap<StringHash, KinematicActor>::type           KinematicActors;
-  typedef  multimap<StringHash, KinematicActor>::user_iterator  KinematicActorIterator;
+  typedef  ptr_multihashmap<KinematicActor>                 KinematicActors;
+  typedef  ptr_multihashmap<KinematicActor>::iterator_t  KinematicActorIterator;
 
-  typedef  multimap<StringHash, Volume>::type                   Volumes;
-  typedef  multimap<StringHash, Volume>::user_iterator          VolumeIterator;
+  typedef  ptr_multihashmap<Volume>                         Volumes;
+  typedef  ptr_multihashmap<Volume>::iterator_t          VolumeIterator;
 
   
   /** \brief Get the name of the Scene if it has one; otherwise NULL is returned.
@@ -105,28 +105,28 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \brief Create an actor somewhere in the scene
   */
-                       Actor*                 createActor(Shape*, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       Actor*                 createActor(Shape*, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /** \brief Create an actor somewhere in the scene
   */
-                       Actor*                 createActor(Shapes&, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       Actor*                 createActor(Shapes&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /** \brief
   */
-                       SceneGeometry*         createSceneGeometry(Shapes&, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       SceneGeometry*         createSceneGeometry(Shapes&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /** \brief
   */
-                       SceneGeometry*         createSceneGeometry(Shape*, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       SceneGeometry*         createSceneGeometry(Shape*, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
 
 
   /** \brief
   */
-                       KinematicActor*        createKinematicActor(Shape*, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       KinematicActor*        createKinematicActor(Shape*, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /** \brief
   */
-                       KinematicActor*        createKinematicActor(Shapes&, const Matrix44& = Matrix44_Identity, const RigidBodyDescription& = RigidBodyDescription());
+                       KinematicActor*        createKinematicActor(Shapes&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
 
   /** \brief Create a volume for collision detection in a shape, based on the PhysX Trigger system.
       \note  Volumes are RigidBodies can be treated as so, but can never be moved via forces.
@@ -297,6 +297,20 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        void                   setActorFlags(RigidBody*, RigidBody*, unsigned int contact_flags);
   
+  
+  /** \brief Create a cache for sweep queries.
+      \note  Remember to destroy the cache after use or before the Scene is destroyed!
+  */
+                       SweepCache*            createSweepCache();
+  
+  /** \brief Destroy a cache that was used for sweep queries.
+  */
+                       void                   destroySweepCache(SweepCache*);
+
+  /** \brief
+  */
+                       unsigned int           linearOBBSweep(const SimpleBox&, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits&, unsigned int activeGroups=0xffffffff);
+
   protected: // Functions
   
   /** \internal Use World::createScene()

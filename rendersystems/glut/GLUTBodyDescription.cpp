@@ -52,8 +52,8 @@ void GLUTBodyDescription::reset(void)
  mHeight = 1;
  mDepth = 1;
  mColourRed = 1;
- mColourGreen = 1;
- mColourBlue = 1;
+ mColourGreen = 0;
+ mColourBlue = 0;
  mShadows = true;
 }
 

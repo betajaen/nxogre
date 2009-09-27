@@ -144,7 +144,7 @@ void VisualDebugger::draw()
  mMeshData->mNbLines = 0;
 
  //for (Scene* scene = iterator.begin(); scene = iterator.next();)
- for (iterator.begin(); iterator != iterator.end(); ++iterator)
+ for (; iterator != iterator.end(); ++iterator)
  {
   const NxDebugRenderable* renderable = iterator->getScene()->getDebugRenderable();
   

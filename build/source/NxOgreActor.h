@@ -38,6 +38,7 @@
 #include "NxOgrePointerClass.h"
 #include "NxOgreRigidBody.h"
 #include "NxOgreString.h"
+#include "NxOgreSweepQuery.h"
 
                                                                                        
 
@@ -53,7 +54,7 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   
   friend class Scene;
   friend class Functions::ArrayFunctions<Actor*>::Write;
-  template<class T> friend inline void boost::checked_delete(T*);
+  template<class T> friend inline void Functions::safe_delete(T*);
 
   public:
   
@@ -121,13 +122,13 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   */
                                       void                   setContactReportFlags(unsigned int flags);
    
-  /// /** \brief Performs a linear sweep through space with the actor. 
-  /// */
-  ///                   NxU32                  linearSweep (const Vec3& motion, NxU32 flags, void *userData, NxU32 nbShapes, NxSweepQueryHit *shapes, NxUserEntityReport< NxSweepQueryHit > *callback, const NxSweepCache *sweepCache=NULL)=0 
- 
+  /** \brief Performs a linear sweep through space with the actor. 
+  */
+                                      unsigned int           linearSweep(const Vec3& motion, unsigned int sweep_flags, unsigned int size, SweepQueryHits&, SweepCache* = 0); 
+
   /** \brief  Retrieves the actor's simulation compartment, if any. 
   */
-                     Compartment*                            getCompartment(void);
+                                      Compartment*           getCompartment(void);
  
   /** \brief Retrieves the actor's force field material index, default index is 0. 
   */

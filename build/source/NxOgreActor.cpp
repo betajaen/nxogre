@@ -34,6 +34,7 @@
 #include "NxOgreRigidBodyFunctions.h"
 
 #include "NxActor.h"
+#include "NxScene.h"
 
                                                                                        
 
@@ -519,6 +520,27 @@ Compartment* Actor::getCompartment()
 {
  return mScene->getCompartment(mActor->getCompartment());
 }
+
+unsigned int Actor::linearSweep(const Vec3& motion, unsigned int sweep_flags, unsigned int size, SweepQueryHits& hits, SweepCache* cache)
+{
+ 
+ NxSweepQueryHit* query_hits = (NxSweepQueryHit*) malloc(sizeof(NxSweepQueryHit) * size);
+  
+ unsigned int count = mActor->linearSweep(motion.as<NxVec3>(), sweep_flags, 0, size, query_hits, 0, cache->getCache());
+ Functions::SweepFunctions::NxSweepQueryHitsToBuffer(query_hits, count, hits);
+ 
+ free(query_hits);
+ 
+ return count;
+}
+
+
+/*
+NxU32 Actor::linearSweep (const Vec3& motion, NxU32 flags, void *userData, NxU32 nbShapes, NxSweepQueryHit *shapes, NxUserEntityReport< NxSweepQueryHit > *callback, const NxSweepCache *sweepCache=NULL)
+{
+ NxSweepQueryHit
+}
+*/ 
 
                                                                                        
 

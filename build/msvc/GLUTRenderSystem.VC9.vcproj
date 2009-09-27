@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\rendersystems\glut\include;..\..\sdk\;&quot;$(PHYSX_DIR)\Graphics\include\win32&quot;;&quot;$(BOOST_HOME)&quot;"
+				AdditionalIncludeDirectories="..\..\rendersystems\glut\include;..\..\sdk\;&quot;$(PHYSX_DIR)\Graphics\include\win32&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;GLUT_FOR_NXOGRE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

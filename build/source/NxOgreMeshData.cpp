@@ -79,10 +79,10 @@ void MeshData::cook(Resource* resource)
  
 }
 
-void MeshData::cook(const NxOgre::ArchiveResourceIdentifier& ari)
+void MeshData::cook(const NxOgre::Path& path)
 {
  
- Resource* cookingResource = ResourceSystem::getSingleton()->open(ari, NxOgre::Enums::ResourceAccess_WriteOnly);
+ Resource* cookingResource = ResourceSystem::getSingleton()->open(path, NxOgre::Enums::ResourceAccess_WriteOnly);
  
  cook(cookingResource);
  

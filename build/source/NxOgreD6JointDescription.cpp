@@ -83,19 +83,19 @@ bool D6JointDescription::isValid(void) const
  if (mSwing1Motion == Enums::D6JointMotion_Limited)
  {
   if (mSwing1Limit.mValue < 0.0f) return false;
-  if (mSwing1Limit.mValue > Constants::Pi) return false;
+  if (mSwing1Limit.mValue > Math::Pi) return false;
  }
 
  if (mSwing2Motion == Enums::D6JointMotion_Limited)
  {
   if (mSwing2Limit.mValue < 0.0f) return false;
-  if (mSwing2Limit.mValue > Constants::Pi) return false;
+  if (mSwing2Limit.mValue > Math::Pi) return false;
  }
 
  if (mTwistMotion == Enums::D6JointMotion_Limited)
  {
-  if (mTwistLimit.first.mValue < -Constants::Pi) return false;
-  if (mTwistLimit.second.mValue > Constants::Pi) return false;
+  if (mTwistLimit.first.mValue < -Math::Pi) return false;
+  if (mTwistLimit.second.mValue > Math::Pi) return false;
   if (mTwistLimit.first.mValue > mTwistLimit.second.mValue) return false;
  }
 

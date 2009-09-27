@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "math.h"
+#include "NxOgreVec2.h"
 
                                                                                        
 
@@ -304,14 +305,6 @@ inline float random(float x1, float x2)
  float s = x2 - x1;
  return float(r * s + x1);
 }
-
-inline double random(double x1, double x2)
-{
- double r = random();
- double s = x2 - x1;
- return double(r * s + x1);
-}
-
 
                                                                                        
 

@@ -44,13 +44,15 @@ namespace NxOgre
 
 MemoryResourceProtocol::MemoryResourceProtocol(void) : mHasInit(false)
 {
+ mSingleArchiveName = mProtocolName = "memory";
+ mProtocolHash = Functions::StringHash(mProtocolName);
 }
 
 MemoryResourceProtocol::~MemoryResourceProtocol(void)
 {
 }
 
-Archive* MemoryResourceProtocol::openArchive(const String&, const UniformResourceIdentifier&)
+Archive* MemoryResourceProtocol::openArchive(const String&, const Path&)
 {
  if (mHasInit)
  {
@@ -58,7 +60,7 @@ Archive* MemoryResourceProtocol::openArchive(const String&, const UniformResourc
   return 0;
  }
  
- return new MemoryArchive("memory", UniformResourceIdentifier("memory://"), this);
+ return new MemoryArchive(mSingleArchiveName, BLANK_STRING, this);
 }
 
 void MemoryResourceProtocol::closeArchive(Archive* archive)
@@ -67,12 +69,12 @@ void MemoryResourceProtocol::closeArchive(Archive* archive)
 
 String MemoryResourceProtocol::getProtocol(void)
 {
- return "memory";
+ return mProtocolName;
 }
 
-unsigned long MemoryResourceProtocol::getProtocolHash(void) const
+StringHash MemoryResourceProtocol::getProtocolHash(void) const
 {
- return Functions::generateHash("memory", Enums::HashAlgorithm_DJB2);
+ return mProtocolHash;
 }
 
 bool MemoryResourceProtocol::isSingleArchive(void) const
@@ -87,9 +89,15 @@ bool MemoryResourceProtocol::usesNamelessResources(void) const
 
 void MemoryResourceProtocol::initialise(void)
 {
- // Create the single "memory" archive.
- NxOgre::ResourceSystem::getSingleton()->openArchive("memory", "memory://");
+ // Create a the single archive.
+ NxOgre::ResourceSystem::getSingleton()->openArchive(Path("memory://"), "memory");
+ // Archive has been created, so no longer need to do this agian.
  mHasInit = true;
+}
+
+String MemoryResourceProtocol::calculateArchiveName(const Path&)
+{
+ return mProtocolName;
 }
 
                                                                                        

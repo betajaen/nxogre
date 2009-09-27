@@ -72,11 +72,11 @@ class NxOgrePublicClass MemoryResourceProtocol : public PointerClass<Classes::_M
   
   /** \brief Text
   */
-                       String           getProtocol(void);
+                       String                 getProtocol(void);
   
   /** \brief Text
   */
-                       unsigned long          getProtocolHash(void) const;
+                       StringHash             getProtocolHash(void) const;
   
   /** \brief Is there only one archive by default?
   */
@@ -86,12 +86,16 @@ class NxOgrePublicClass MemoryResourceProtocol : public PointerClass<Classes::_M
   */
                        bool                   usesNamelessResources(void) const;
   
+  /** \brief "memory" will always be returned due to the single archive nature of the MemoryProtocol classes.
+  */
+                       String                 calculateArchiveName(const Path&);
+  
   protected: // Functions
   
   
   /** \internal NOT USED.
   */
-                       Archive*               openArchive(const String&, const UniformResourceIdentifier&);
+                       Archive*               openArchive(const String&, const Path&);
   
   /** \internal NOT USED.
   */
@@ -103,11 +107,17 @@ class NxOgrePublicClass MemoryResourceProtocol : public PointerClass<Classes::_M
 
   protected: // variables
   
+                       String                 mProtocolName;
+  
+                       StringHash             mProtocolHash;
+  
+                       String                 mSingleArchiveName;
 
   /** \brief Has the initialise function been called?
   */
                        bool                   mHasInit;
-}; // class ClassName
+  
+}; // class MemoryResourceProtocol
 
                                                                                        
 

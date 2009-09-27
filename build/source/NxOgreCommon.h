@@ -31,6 +31,8 @@
 
                                                                                        
 
+#include "NxOgrePhysXPrototypes.h"
+#include "NxOgrePointerFunctions.h"
 #include "NxOgreMemory.h"
 #include "NxOgreClasses.h"
 #include "NxOgreErrorStream.h"
@@ -39,8 +41,9 @@
 #include "NxOgreSharedPointer.h"
 #include "NxOgreSingleton.h"
 #include "NxOgreArray.h"
-#include "NxOgreContainers.h"
-#include "NxOgreIterators.h"
+#include "NxOgrePtrVector.h"
+#include "NxOgrePtrHashmap.h"
+#include "NxOgrePtrMultiHashmap.h"
 #include "NxOgreBuffer.h"
 #include "NxOgreCircularBuffer.h"
 #include "NxOgreMath.h"
@@ -54,12 +57,10 @@
 #include "NxOgreString.h"
 #include "NxOgreIntVectors.h"
 #include "NxOgreSharedStringStream.h"
-#include "NxOgreUniformResourceIdentifier.h"
-#include "NxOgreArchiveResourceIdentifier.h"
+#include "NxOgrePath.h"
 #include "NxOgreVertex.h"
 #include "NxOgreTriangle.h"
 #include "NxOgreEntityReport.h"
-#include "NxOgrePhysXPrototypes.h"
 #include "NxOgreTimeStep.h"
 
                                                                                        
@@ -81,16 +82,6 @@ enum Axis
  Z      = (1<<2),
  NoAxis = (1<<3)
 };
-
-/** \brief Matrix translation
-*/
-enum Translation
-{
- T_None,         //!< Set the matrix as it is.
- T_Identity,     //!< Set the matrix to an identity one.
- T_Zero          //!< Set the matrix components to zero.
-};
-
 
 /** \brief Combine mode when two integrals meet.
     \note Compatible with NxCombineMode
@@ -241,6 +232,7 @@ enum ResourceAccess
  ResourceAccess_ReadAndWrite = 1,  //!< Read and write.
  ResourceAccess_WriteOnly    = 2,  //!< Write but do not read
  ResourceAccess_AppendOnly   = 3,  //!< Write to the end of the file only.
+ ResourceAccess_NoAccess     = 4   //!< Resource access is unknown. Probably due to the file hasn't been opened yet.
 };
 
 /** \brief Hashing
@@ -802,6 +794,15 @@ enum ContactPairFlags
  
 };
 
+
+enum SweepFlags
+{
+ SweepFlags_Statics                          = (1 << 0), //!< \brief Sweep vs static objects (SceneGeometries)
+ SweepFlags_Dynamics                         = (1 << 1), //!< \brief Sweep vs dynamic objects (Not SceneGeometries)
+/// SweepFlags_Asynchronous                     = (1 << 2) //!< \brief Asynchronous sweeps (otherwise synchronous)
+ SweepFlags_AllHits                          = (1 << 3) //!< \biref Reports all hits rather than the closest ones.
+};
+
 } // namespace Enums
 
 
@@ -818,8 +819,6 @@ enum ContactPairFlags
                  class                      ActorMachinePart;              //!<
                  class                      Archive;                       //!<
                  class                      ArchiveMetaData;               //!<
-                 class                      ArchiveResourceIdentifier;     //!<
-//::             struct         ArchiveResourceIdentifierReferenceCounter; //!< \internal Do Not Use.
      template<typename T> class             Array;                         //!<
 //::             struct                     ArrayReferenceCounter;         //!< \internal Do Not Use.
 //::             struct                     ArrayUnknown;                  //!< \internal Do Not Use.
@@ -867,6 +866,7 @@ enum ContactPairFlags
                  class                      KinematicActor;                //!<
                  class                      KinematicController;           //!<
                  class                      ParticleData;                  //!<
+                 class                      Path;                          //!<
      template<unsigned int Ti> class        PointerClass;                  //!<
                  class                      PhysXOutputStream;             //!<
                  class                      PhysXUserAllocator;            //!<
@@ -889,9 +889,9 @@ enum ContactPairFlags
                  class                      MeshManager;                   //!<
                  class                      MeshStats;                     //!<
                  class                      MotorDescription;              //!<
-//::             class                      MSWindowsFileArchive;          //!< \brief Part of NxOgre for Windows
-//::             class                      MSWindowsFileResource;         //!< \brief Part of NxOgre for Windows
-//::             class                      MSWindowsFileResourceProtocol; //!< \brief Part of NxOgre for Windows
+//::             class                      FileArchive;          //!< \brief Part of NxOgre for Windows
+//::             class                      FileResource;         //!< \brief Part of NxOgre for Windows
+//::             class                      FileResourceProtocol; //!< \brief Part of NxOgre for Windows
                  class                      PlaneGeometry;                 //!<
                  class                      PlaneGeometryPrototype;        //!<
                  class                      Particle;                      //!<
@@ -947,12 +947,13 @@ enum ContactPairFlags
                  class                      Shape;                         //!<
                  class                      ShapeBlueprint;                //!<
                  class                      SpringDescription;             //!<
+                 class                      SweepCache;                    //!<
+                 struct                     SweepQueryHit;                 //!<
 //::             struct                     TBuffer;                       //!< \brief Part of NxOgreArray.h
                  class                      TimeController;                //!<
                  class                      TimeListener;                  //!<
                  class                      TireFunction;                  //!<
                  class                      TriangleGeometry;              //!<
-                 class                      UniformResourceIdentifier;     //!<
 //::             struct                     URIHash;                       //!< \brief Part of UniformResourceIdentifer
                  class                      VisualDebugger;                //!<
                  class                      VisualDebuggerMeshData;        //!<
@@ -1002,10 +1003,6 @@ typedef unsigned short GroupIdentifier;
 */
 typedef unsigned short MaterialIdentifier;
 
-/** \brief Shorthand for a UniformResourceIdentifier.
-*/
-typedef UniformResourceIdentifier URI;
-
 /** \brief An index in a triangle
 */
 typedef unsigned int Index;
@@ -1026,39 +1023,30 @@ typedef JointDescription FixedJointDescription;
 */
 typedef NxShape** RaycastCache;
 
+/** \brief Buffer of SweepQueryHits
+*/
+typedef Buffer<SweepQueryHit> SweepQueryHits;
 
+// TEMP.
 typedef String SharedString;
+
+//
+static const Path MEMORY_PATH = Path("memory://");
 
                                                                                        
 
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointDouble
- typedef Vec3 DoubleVec3;
-#endif
+#define Matrix33_Zero     NxOgre::Matrix33::ZERO
 
-#define Matrix33_Zero ::NxOgre::Matrix33(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
+#define Matrix33_Identity NxOgre::Matrix33::IDENTITY
 
-#define Matrix33_Identity ::NxOgre::Matrix33(1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0)
+#define Matrix44_Zero     NxOgre::Matrix44::ZERO
 
-#define Matrix44_Zero ::NxOgre::Matrix44(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)
-
-#define Matrix44_Identity ::NxOgre::Matrix44(1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0)
+#define Matrix44_Identity NxOgre::Matrix44::IDENTITY
 
                                                                                        
 
 namespace Constants
 {
-
-static const Real Pi = 3.141592653589793f;
-static const Real HalfPi = 1.57079632679489661923f;
-static const Real TwoPi = 6.28318530717958647692f;
-static const Real InversePi = 0.31830988618379067154f;
-
-#if NxOgreFloatingPointAccuracy == NxOgreFloatingPointFloat
-static const DoubleReal Pi_Double = 3.141592653589793;
-static const DoubleReal HalfPi_Double = 1.57079632679489661923;
-static const DoubleReal TwoPi_Double = 6.28318530717958647692;
-static const DoubleReal InversePi_Double = 0.31830988618379067154;
-#endif
 
 /** \brief Unknown resource size constant.
 */

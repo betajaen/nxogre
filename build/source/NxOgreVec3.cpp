@@ -325,6 +325,11 @@ const Real& Vec3::operator[](const size_t i) const
  return (&x)[i];
 }
 
+Vec3 Vec3::random(float x0, float x1, float y0, float y1, float z0, float z1)
+{
+ return Vec3(Math::random(x0,x1), Math::random(y0,y1), Math::random(z0,z1));
+}
+
                                                                                        
 
 } // namespace NxOgre

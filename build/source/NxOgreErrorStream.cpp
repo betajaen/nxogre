@@ -84,6 +84,13 @@ void ErrorStream::throwError(const char* message, const char* file, unsigned int
  delete error; // temp
 }
 
+void ErrorStream::throwError(const String& message, const char* file, unsigned int line)
+{
+ Error* error = NxOgre_New(Error)(message, String(file), line, 2);
+ print(error);
+ delete error; // temp
+}
+
 void ErrorStream::throwWarning(const char* message, const char* file, unsigned int line)
 {
  Error* error = NxOgre_New(Error)(String(message), String(file), line, 1);

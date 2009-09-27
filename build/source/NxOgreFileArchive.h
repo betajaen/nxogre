@@ -33,7 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
-#include "NxOgreMSWindowsFileResource.h"
+#include "NxOgreFileResource.h"
 #include "NxOgreArchive.h"
 
                                                                                        
@@ -46,34 +46,27 @@ namespace NxOgre
 /** \brief An archive is a collection of resources in one place. It may be implemented as a directory, zip
            file or even a website.
 */
-class NxOgrePublicClass MSWindowsFileArchive : public PointerClass<Classes::_MSWindowsFileArchive>, public Archive
+class NxOgrePublicClass FileArchive : public PointerClass<Classes::_FileArchive>, public Archive
 {
   
   public: // Functions
   
   /** \brief
   */
-                                              MSWindowsFileArchive(const String& name, const UniformResourceIdentifier&, ResourceProtocol*);
+                                              FileArchive(const String& name, const Path&, ResourceProtocol*);
 
   /** \brief Required virtual constructor.
   */
-                                             ~MSWindowsFileArchive(void);
+                                             ~FileArchive(void);
   
   /** \brief
   */
-                 Resource*                  open(const ArchiveResourceIdentifier& ari, NxOgre::Enums::ResourceAccess access);
+                 Resource*                    open(const Path&, NxOgre::Enums::ResourceAccess access);
   
   /** \brief
   */
                  void                         close(Resource*);
   
-  protected:
-  
-  /** \internal
-  */
-                 String                 mPath;
-  
-                 Array<MSWindowsFileResource*> mResources;
   
 }; // class Archive
 

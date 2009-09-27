@@ -26,19 +26,37 @@
 
                                                                                        
 
-#ifndef NXOGRE_COMPILER_H
-#define NXOGRE_COMPILER_H
+#ifndef NXOGRE_POINTERFUNCTIONS_H
+#define NXOGRE_POINTERFUNCTIONS_H
 
+                                                                                       
 
-#define NxOgreCompilerUnknown      0
-#define NxOgreCompilerMSVC         1
-#define NxOgreCompilerGNUC         2
+#include "NxOgreStable.h"
 
-#define NxOgrePlatformUnknown      0
-#define NxOgrePlatformWindows      1
-#define NxOgrePlatformLinux        2
+                                                                                       
 
-#define NxOgreArchitecture32Bit    32
-#define NxOgreArchitecture64Bit    64
+namespace NxOgre
+{
+
+                                                                                       
+
+namespace Functions
+{
+
+template<typename type> inline void safe_delete(type* ptr)
+{
+ if (ptr == 0)
+  return;
+ 
+ delete ptr;
+}
+
+}
+
+                                                                                       
+
+} // namespace NxOgre
+
+                                                                                       
 
 #endif

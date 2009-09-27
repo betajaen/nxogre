@@ -167,6 +167,8 @@ class NxOgrePublicClass Quat
   return q;
  }
 
+ static const Quat IDENTITY;
+
  Real w, x, y, z;
 
 };

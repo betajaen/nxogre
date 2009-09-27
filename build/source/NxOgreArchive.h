@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreResource.h"
 
                                                                                        
 
@@ -49,58 +50,71 @@ class NxOgrePublicClass Archive
   
   public: // Functions
   
-                                              Archive(String name, const UniformResourceIdentifier&, ResourceProtocol*);
+  typedef ptr_vector<Resource>                Resources;
+  typedef ptr_vector<Resource>::iterator_t ResourcesIterator;
+
+  /** \brief Archive Constructor which used by inherited classes of Archive. Use ResourceSystem::openArchive.
+  */
+  Archive(const String& name, const Path&, ResourceProtocol*);
   
   /** \brief Required virtual constructor.
   */
-  virtual                                    ~Archive(void);
+  virtual ~Archive(void);
   
   /** \brief Open a new Resource based on an ArchiveResourceIdentifier, and Resource access permissions.
       \note  Archive* should be the original SharedPointer to this archive.
   */
-  virtual        Resource*                    open(const ArchiveResourceIdentifier&, NxOgre::Enums::ResourceAccess) = 0;
+  virtual Resource* open(const Path& relative_path, NxOgre::Enums::ResourceAccess);
   
   /** \brief Close a Resource
   */
-  virtual        void                         close(Resource*) = 0;
+  virtual void  close(Resource*);
+  
+  /** \brief Get open resources
+  */
+  ResourcesIterator getOpenResources();
   
   /** \brief Get the name of the Archive.
   */
-                   String               getName();
+  String getName();
   
   /** \brief Get the hash of the name of the Archive.
   */
-                   unsigned long              getNameHash();
+  StringHash getNameHash();
   
   /** \brief Get the ResourceProtocol associated with the Archive.
   */
-                   ResourceProtocol*          getProtocol() const;
+  ResourceProtocol* getProtocol() const;
   
-  /** \brief Get the UniformResourceIdentifier that identifies the Archive in the OS.
+  /** \brief Get the path of this archive
   */
-                   UniformResourceIdentifier  getURI();
+  Path getPath() const;
   
   protected: // Variables
   
+  void _addResource(Resource*);
+  
+  void _removeResource(Resource*);
+
   /** \brief Name of the Resource
   */
-                 String                 mName;
+  String mName;
   
   /** \brief Name of the Resource as a hash.
   */
-                 unsigned long                mNameHash;
+  StringHash mNameHash;
+  
+  /** \brief Archive's path.
+  */
+  Path mPath;
   
   /** \brief Parent ResourceProtocol
   */
-                 ResourceProtocol*            mProtocol;
+  ResourceProtocol* mProtocol;
   
-  /** \brief The UniformResourceIdentifier of this Archive; the protocol name and accessor of the archive.
-  */
-                 UniformResourceIdentifier    mURI;
-
   /** \brief Current Resources that are in use by the archive
   */
-                 Array<Resource*>           mCurrentResources;
+  Resources mResources;
   
 }; // class Archive
 

@@ -41,7 +41,7 @@ GLUTRenderSystem::GLUTRenderSystem(void)
 
 GLUTRenderSystem::~GLUTRenderSystem(void)
 {
- mBodies.destroyAll();
+ mBodies.clear();
 }
 
 GLUTBody* GLUTRenderSystem::createGLUTBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, NxOgre::Scene* scene, const NxOgre::RigidBodyDescription& description)
@@ -68,8 +68,9 @@ GLUTBody* GLUTRenderSystem::createGLUTBody(NxOgre::Shape* shape, const NxOgre::M
  //   - And Scene.
  GLUTBody* body = NxOgre_New(GLUTBody)(shape, pose, glut_description, scene);
 
- // Make a local copy of the body pointer, for rendering and deleting.
- mBodies.insert(body);
+ // We own the body, so make a good note of it in mBodies.
+ NxOgre::StringHash hash = body->getNameHash();
+ mBodies.insert(hash, body);
 
  // And we are done.
  return body;
@@ -77,9 +78,13 @@ GLUTBody* GLUTRenderSystem::createGLUTBody(NxOgre::Shape* shape, const NxOgre::M
 
 void GLUTRenderSystem::drawBodies()
 {
- NxOgre::Array<GLUTBody*>::Iterator it = mBodies.getIterator();
- for (GLUTBody* body = it.begin();body = it.next();)
+ for (GLUTBodies::iterator_t body = mBodies.iterator(); body != body.end(); body++)
   body->render();
+}
+
+GLUTRenderSystem::GLUTBodyIterator GLUTRenderSystem::getBodies()
+{
+ return GLUTBodyIterator(mBodies);
 }
 
                                                                                        

@@ -33,6 +33,8 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreResourceProtocol.h"
+#include "NxOgreArchive.h"
 
                                                                                        
 
@@ -50,30 +52,54 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSyst
    
   public: // Functions
   
-  /** \brief Register a resource protocol.
-  */
-                       void                   addProtocol(ResourceProtocol*);
+  typedef ptr_hashmap<ResourceProtocol> Protocols;
   
-  /** \brief Register an archive, using a name and a UniformResourceIdentifier.
+  typedef ptr_hashmap<Archive>          Archives;
+
+  /** \brief Open a resource protocol, pointer is owned by the ResourceSystem when passed on.
+      \note  These can never be closed.
   */
-                       Archive*               openArchive(const String& name, const UniformResourceIdentifier&);
+                       void                   openProtocol(ResourceProtocol*);
   
-  /** \brief Open an resource.
-      \note  In the event of the resource not existing in the archive, the resource system might create one for you.
+  /** \brief Open an archive, using a path.
+      \note  If BLANK_STRING is given as the name, then the ResourceProtocol given will calculate the archive name for you.
+      \usage
+       <code>
+        resource_system_ptr->open("file://c:/Program Files/My Game/", "game");
+       </code>
   */
-                       Resource*              open(const ArchiveResourceIdentifier&, Enums::ResourceAccess);
+                       Archive*               openArchive(const Path& path, const String& name = BLANK_STRING);
+
+  /** \brief Open an resource, using an Path. Archive will be created or opened based of the directories of the file, unless specified
+             by the protocol.
+      \usage
+       <code>
+        resource_system_ptr->open("file://c:/Program Files/My Game/Game.txt", Enums::ResourceAccess_ReadOnly);
+       </code>
+      \note  In the event of the resource not existing in the archive, the ResourceProtocol may create one for you.
+  */
+                       Resource*              open(const Path&, Enums::ResourceAccess);
   
-  /** \brief Close a resources.
+  /** \brief Open a resource with a previously opened archive, using a relative filename or identifier to that archive.
+      \note  This is the fastest way to access a resource.
+  */
+                       Resource*              open(Archive*, const Path& relative_path, Enums::ResourceAccess);
+
+  /** \brief Close a resource.
   */
                        void                   close(Resource*);
   
   /** \brief Close an archive, and close any resources of that archive.
   */
-                       void                   closeArchive(const String& name);
+                       void                   closeArchive(Archive*);
 
-  /** \brief Get archive by name
+  /** \brief Get archive by name.
   */
                        Archive*               getArchiveByName(const String& name);
+  
+  /** \brief Get archive by hash.
+  */
+                       Archive*               getArchiveByHash(const StringHash& hashed_name);
   
   protected:
   
@@ -82,13 +108,15 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSyst
   
                                              ~ResourceSystem();
   
-  /** \brief
+  /** \brief Loaded protocols stored in an associative container using a StringHash as the protocol's lowercase
+             name with the ResourceProtocol stored and owned by the container.
   */
-            Array<ResourceProtocol*>          mProtocols;
+                       Protocols              mProtocols;
   
-  /** \brief
+  /** \brief All current archives opened, referenced by a StringHash of the ArchiveName, and the Archive is stored
+             and owned by the container.
   */
-            Array<Archive*>                 mArchives;
+                       Archives               mArchives;
   
 }; // class ClassName
 

@@ -45,18 +45,18 @@ namespace NxOgre
 
 /** \internal Do not use directly. Use Resource* and ResourceSystem::open
 */
-class NxOgrePublicClass MSWindowsFileResource : public PointerClass<Classes::_MSWindowsFileResource>, public Resource
+class NxOgrePublicClass FileResource : public PointerClass<Classes::_FileResource>, public Resource
 {
   
  public:
   
   /** \brief
   */
-                                             MSWindowsFileResource(const ArchiveResourceIdentifier&, Archive*, Enums::ResourceAccess);
+                                             FileResource(const Path&, Archive*, Enums::ResourceAccess);
   
   /** \brief
   */
-                                            ~MSWindowsFileResource(void);
+                                            ~FileResource(void);
   
   /** \brief Get the type of access of the resource
   */
@@ -306,9 +306,11 @@ class NxOgrePublicClass MSWindowsFileResource : public PointerClass<Classes::_MS
   protected: // Variables
   
                        FILE*                 mFile;
-
- unsigned int mWroteNbBytes;
-}; // class MSWindowsFileResource
+  
+                       unsigned int          mWroteNbBytes;
+  
+                       Path                mFilePath;
+}; // class FileResource
 
                                                                                        
 

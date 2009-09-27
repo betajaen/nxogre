@@ -49,60 +49,6 @@ HeightFieldManager::~HeightFieldManager(void)
 {
 }
 
-HeightField* HeightFieldManager::load(const ArchiveResourceIdentifier& ari)
-{
- Resource* resource = ResourceSystem::getSingleton()->open(ari, NxOgre::Enums::ResourceAccess_ReadOnly);
- if (resource == 0)
-  return 0;
- HeightField* hf = new HeightField(resource);
- hf->setName(ari.getResourceName());
- mLoadedHeightFields.insert(hf);
- return hf;
-}
-
-
-HeightField* HeightFieldManager::load(const ArchiveResourceIdentifier& ari, const String& name)
-{
- Resource* resource = ResourceSystem::getSingleton()->open(ari, NxOgre::Enums::ResourceAccess_ReadOnly);
- if (resource == 0)
-  return 0;
- HeightField* hf = new HeightField(resource);
- hf->setName(name);
- mLoadedHeightFields.insert(hf);
- return hf;
-}
-
-HeightField* HeightFieldManager::load(Resource* resource)
-{
- if (resource == 0)
-  return 0;
- HeightField* hf = new HeightField(resource);
- hf->setName(resource->getArchiveResourceIdentifier().getResourceName());
- mLoadedHeightFields.insert(hf);
- return hf;
-}
-
-HeightField* HeightFieldManager::load(Resource* resource, const String& name)
-{
- if (resource == 0)
-  return 0;
- HeightField* hf = new HeightField(resource);
- hf->setName(name);
- mLoadedHeightFields.insert(hf);
- return hf;
-}
-
-HeightField* HeightFieldManager::getByName(const String& meshIdentifier)
-{
- ArrayIterator<HeightField*> iterator = mLoadedHeightFields.getIterator();
- for (HeightField* hf = iterator.begin(); hf = iterator.next(); )
- {
-  if (hf->getName() == meshIdentifier)
-   return hf;
- }
- return 0;
-}
-
                                                                                        
 
 } // namespace NxOgre

@@ -27,9 +27,13 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreMSWindowsFileResource.h"
+#include "NxOgreFileResource.h"
+#include "NxOgreFileArchive.h"
 #include "NxOgreErrorStream.h"
 
+#ifdef _DEBUG
+#include <iostream>
+#endif
                                                                                        
 
 namespace NxOgre
@@ -37,75 +41,88 @@ namespace NxOgre
 
                                                                                        
 
-MSWindowsFileResource::MSWindowsFileResource(const ArchiveResourceIdentifier& ari, Archive* archive, Enums::ResourceAccess ra)
-:Resource(ari, archive), mWroteNbBytes(0)
-{
- mAccess = ra;
- mStatus = Enums::ResourceStatus_Waiting;
-}
 
-MSWindowsFileResource::~MSWindowsFileResource(void)
+FileResource::FileResource(const Path& path, Archive* archive, Enums::ResourceAccess ra)
+: Resource(path, archive, ra), mWroteNbBytes(0)
 {
 }
 
-Enums::ResourceAccess MSWindowsFileResource::getAccess(void) const
+FileResource::~FileResource(void)
+{
+ if (mStatus == Enums::ResourceStatus_Opened)
+  close();
+
+}
+
+Enums::ResourceAccess FileResource::getAccess(void) const
 {
  return mAccess;
 }
 
-Enums::ResourceStatus MSWindowsFileResource::getStatus(void) const
+Enums::ResourceStatus FileResource::getStatus(void) const
 {
  return mStatus;
 }
 
-Enums::ResourceDirectionality MSWindowsFileResource::getDirectionality(void) const
+Enums::ResourceDirectionality FileResource::getDirectionality(void) const
 {
  return mDirectionality;
 }
 
-void MSWindowsFileResource::open()
+void FileResource::open()
 {
+ 
  if (mStatus == Enums::ResourceStatus_Opened)
   close();
   
  mStatus = Enums::ResourceStatus_Opening;
  mDirectionality = Enums::ResourceDirectionality_Unknown;
  mFile = 0;
-  
- SharedStringStream fullPath;
- fullPath << mArchive->getURI().getLocation();
-
-
- if (!fullPath.endsWith('/'))
-  fullPath << "/" << mArchiveResourceIdentifier.getResourceName();
- else
-  fullPath << mArchiveResourceIdentifier.getResourceName();
  
- switch(mAccess)
+ FileArchive* file_archive = static_cast<FileArchive*>(mArchive);
+ 
+ mFilePath = mArchive->getPath() / mPath;
+
+ std::string os_path = mFilePath.getOSString();
+
+ if (mAccess == Enums::ResourceAccess_ReadOnly)
  {
-  case Enums::ResourceAccess_ReadOnly:
-   mFile = fopen(fullPath.get(), "rb");
-  break;
-  case Enums::ResourceAccess_WriteOnly:
-   mFile = fopen(fullPath.get(), "wb");
-  break;
-  case Enums::ResourceAccess_AppendOnly:
-   mFile = fopen(fullPath.get(),  "ab");
-  break;
-  case Enums::ResourceAccess_ReadAndWrite:
-   mFile = fopen(fullPath.get(),  "rb+");
-  break;
+  #ifdef _DEBUG
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read" << std::endl;
+  #endif
+  mFile = fopen(os_path.c_str(), "rb");
  }
-  
+ else if (mAccess == Enums::ResourceAccess_WriteOnly)
+ {
+  #ifdef _DEBUG
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as write" << std::endl;
+  #endif
+  mFile = fopen(os_path.c_str(), "wb");
+ }
+ else if (mAccess == Enums::ResourceAccess_AppendOnly)
+ {
+  #ifdef _DEBUG
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as append" << std::endl;
+  #endif
+  mFile = fopen(os_path.c_str(), "ab");
+ }
+ else if (mAccess == Enums::ResourceAccess_ReadAndWrite)
+ {
+  #ifdef _DEBUG
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read/write" << std::endl;
+  #endif
+  mFile = fopen(os_path.c_str(), "rb+");
+ }
+ 
  if (mFile == 0)
  {
   mStatus = Enums::ResourceStatus_HasError;
   SharedStringStream ss;
-  ss << "File '" << fullPath.get() << "' could not be opened. -> ";
+  ss << "File '" << os_path << "' could not be opened. -> ";
   NxOgre_ThrowError(ss.get());
   return;
  }
-
+ 
  mStatus = Enums::ResourceStatus_Opened;
  mDirectionality = Enums::ResourceDirectionality_Omidirectional;
  mNbWriteOperations = 0;
@@ -113,7 +130,7 @@ void MSWindowsFileResource::open()
  
 }
 
-void MSWindowsFileResource::close(void)
+void FileResource::close(void)
 {
  mStatus = Enums::ResourceStatus_Closing;
  mDirectionality = Enums::ResourceDirectionality_Unknown;
@@ -121,18 +138,13 @@ void MSWindowsFileResource::close(void)
   fclose(mFile);
  mStatus = Enums::ResourceStatus_Closed;
 
- printf("MSWindowsFileResource Debug---------------------------\n"
-        "ARI       : %s:%s\n"
-        "Read Ops  : %i\n"
-        "Write Ops : %i\n"
-        "------------------------------------------------------\n",
-        mArchiveResourceIdentifier.getArchive(),
-        mArchiveResourceIdentifier.getResourceName(),
-        mNbReadOperations,
-        mNbWriteOperations);
+#ifdef _DEBUG
+ std::cout << "[-] Closing File Resource -> " << mFilePath.getString() << " did R: " << mNbReadOperations << " W: " << mNbWriteOperations << std::endl;
+#endif
+ 
 }
 
-size_t MSWindowsFileResource::getSize(void) const
+size_t FileResource::getSize(void) const
 {
  if (mStatus != Enums::ResourceStatus_Opened)
   return 0;
@@ -145,7 +157,7 @@ size_t MSWindowsFileResource::getSize(void) const
  return size;
 }
 
-bool MSWindowsFileResource::seek(size_t to)
+bool FileResource::seek(size_t to)
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
@@ -155,7 +167,7 @@ bool MSWindowsFileResource::seek(size_t to)
  return false;
 }
 
-bool MSWindowsFileResource::seekBeginning(void)
+bool FileResource::seekBeginning(void)
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
@@ -165,7 +177,7 @@ bool MSWindowsFileResource::seekBeginning(void)
  return false;
 }
 
-bool MSWindowsFileResource::seekEnd(void)
+bool FileResource::seekEnd(void)
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
@@ -175,7 +187,7 @@ bool MSWindowsFileResource::seekEnd(void)
  return false;
 }
 
-bool MSWindowsFileResource::atBeginning(void) const
+bool FileResource::atBeginning(void) const
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
@@ -184,7 +196,7 @@ bool MSWindowsFileResource::atBeginning(void) const
  return false;
 }
 
-bool MSWindowsFileResource::atEnd(void) const
+bool FileResource::atEnd(void) const
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
@@ -193,7 +205,7 @@ bool MSWindowsFileResource::atEnd(void) const
  return false;
 }
 
-size_t MSWindowsFileResource::at(void) const
+size_t FileResource::at(void) const
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
@@ -202,7 +214,7 @@ size_t MSWindowsFileResource::at(void) const
  return Constants::ResourceSizeUnknown;
 }
 
-bool MSWindowsFileResource::write(const void* src, size_t src_size)
+bool FileResource::write(const void* src, size_t src_size)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -211,7 +223,7 @@ bool MSWindowsFileResource::write(const void* src, size_t src_size)
  return true;
 }
 
-bool MSWindowsFileResource::writeNull(void)
+bool FileResource::writeNull(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -219,7 +231,7 @@ bool MSWindowsFileResource::writeNull(void)
  return fwrite(&NULL_BYTE, sizeof(char), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeBool(bool v)
+bool FileResource::writeBool(bool v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -227,7 +239,7 @@ bool MSWindowsFileResource::writeBool(bool v)
  return fwrite(&v, sizeof(bool), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeBool(bool* v, size_t length)
+bool FileResource::writeBool(bool* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -235,7 +247,7 @@ bool MSWindowsFileResource::writeBool(bool* v, size_t length)
  return fwrite(&v, sizeof(char) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeUChar(unsigned char v)
+bool FileResource::writeUChar(unsigned char v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -243,7 +255,7 @@ bool MSWindowsFileResource::writeUChar(unsigned char v)
  return fwrite(&v, sizeof(unsigned char), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeUChar(unsigned char* v, size_t length)
+bool FileResource::writeUChar(unsigned char* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -251,7 +263,7 @@ bool MSWindowsFileResource::writeUChar(unsigned char* v, size_t length)
  return fwrite(&v, sizeof(unsigned char) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeChar(char v)
+bool FileResource::writeChar(char v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -259,7 +271,7 @@ bool MSWindowsFileResource::writeChar(char v)
  return fwrite(&v, sizeof(char), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeChar(char* v, size_t length)
+bool FileResource::writeChar(char* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -267,7 +279,7 @@ bool MSWindowsFileResource::writeChar(char* v, size_t length)
  return fwrite(&v, sizeof(unsigned char) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeUShort(unsigned short v)
+bool FileResource::writeUShort(unsigned short v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -275,7 +287,7 @@ bool MSWindowsFileResource::writeUShort(unsigned short v)
  return fwrite(&v, sizeof(unsigned short), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeUShort(unsigned short* v, size_t length)
+bool FileResource::writeUShort(unsigned short* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -283,7 +295,7 @@ bool MSWindowsFileResource::writeUShort(unsigned short* v, size_t length)
  return fwrite(&v, sizeof(unsigned short) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeShort(short v)
+bool FileResource::writeShort(short v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -291,7 +303,7 @@ bool MSWindowsFileResource::writeShort(short v)
  return fwrite(&v, sizeof(short), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeShort(short* v, size_t length)
+bool FileResource::writeShort(short* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -299,7 +311,7 @@ bool MSWindowsFileResource::writeShort(short* v, size_t length)
  return fwrite(&v, sizeof(short) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeUInt(unsigned int v)
+bool FileResource::writeUInt(unsigned int v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -307,7 +319,7 @@ bool MSWindowsFileResource::writeUInt(unsigned int v)
  return fwrite(&v, sizeof(unsigned int), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeUInt(unsigned int* v, size_t length)
+bool FileResource::writeUInt(unsigned int* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -315,7 +327,7 @@ bool MSWindowsFileResource::writeUInt(unsigned int* v, size_t length)
  return fwrite(&v, sizeof(unsigned int) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeInt(int v)
+bool FileResource::writeInt(int v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -323,7 +335,7 @@ bool MSWindowsFileResource::writeInt(int v)
  return fwrite(&v, sizeof(int), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeInt(int* v, size_t length)
+bool FileResource::writeInt(int* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -331,7 +343,7 @@ bool MSWindowsFileResource::writeInt(int* v, size_t length)
  return fwrite(&v, sizeof(int) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeFloat(float v)
+bool FileResource::writeFloat(float v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -339,7 +351,7 @@ bool MSWindowsFileResource::writeFloat(float v)
  return fwrite(&v, sizeof(float), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeFloat(float* v, size_t length)
+bool FileResource::writeFloat(float* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -347,7 +359,7 @@ bool MSWindowsFileResource::writeFloat(float* v, size_t length)
  return fwrite(&v, sizeof(float) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeDouble(double v)
+bool FileResource::writeDouble(double v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -355,7 +367,7 @@ bool MSWindowsFileResource::writeDouble(double v)
  return fwrite(&v, sizeof(double), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeDouble(double* v, size_t length)
+bool FileResource::writeDouble(double* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -363,7 +375,7 @@ bool MSWindowsFileResource::writeDouble(double* v, size_t length)
  return fwrite(&v, sizeof(double) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeReal(NxOgreRealType v)
+bool FileResource::writeReal(NxOgreRealType v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -371,7 +383,7 @@ bool MSWindowsFileResource::writeReal(NxOgreRealType v)
  return fwrite(&v, sizeof(NxOgreRealType), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeReal(NxOgreRealType* v, size_t length)
+bool FileResource::writeReal(NxOgreRealType* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -379,7 +391,7 @@ bool MSWindowsFileResource::writeReal(NxOgreRealType* v, size_t length)
  return fwrite(&v, sizeof(NxOgreRealType) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeLong(long v)
+bool FileResource::writeLong(long v)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -387,7 +399,7 @@ bool MSWindowsFileResource::writeLong(long v)
  return fwrite(&v, sizeof(long), 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::writeLong(long* v, size_t length)
+bool FileResource::writeLong(long* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
@@ -395,7 +407,7 @@ bool MSWindowsFileResource::writeLong(long* v, size_t length)
  return fwrite(&v, sizeof(long) * length, 1, mFile) == 1;
 }
 
-bool MSWindowsFileResource::readBool(void)
+bool FileResource::readBool(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -403,14 +415,14 @@ bool MSWindowsFileResource::readBool(void)
  return t;
 }
 
-void MSWindowsFileResource::readBoolArray(bool* t, size_t length)
+void FileResource::readBoolArray(bool* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(bool) * length, 1, mFile);
 }
 
-unsigned char MSWindowsFileResource::readUChar(void)
+unsigned char FileResource::readUChar(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -418,14 +430,14 @@ unsigned char MSWindowsFileResource::readUChar(void)
  return t;
 }
 
-void MSWindowsFileResource::readUCharArray(unsigned char* t, size_t length)
+void FileResource::readUCharArray(unsigned char* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(unsigned char) * length, 1, mFile);
 }
 
-char MSWindowsFileResource::readChar(void)
+char FileResource::readChar(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -433,14 +445,14 @@ char MSWindowsFileResource::readChar(void)
  return t;
 }
 
-void MSWindowsFileResource::readCharArray(char* t, size_t length)
+void FileResource::readCharArray(char* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(char) * length, 1, mFile);
 }
 
-unsigned short MSWindowsFileResource::readUShort(void)
+unsigned short FileResource::readUShort(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -448,14 +460,14 @@ unsigned short MSWindowsFileResource::readUShort(void)
  return t;
 }
 
-void MSWindowsFileResource::readUShortArray(unsigned short* t, size_t length)
+void FileResource::readUShortArray(unsigned short* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(unsigned short) * length, 1, mFile);
 }
 
-short MSWindowsFileResource::readShort(void)
+short FileResource::readShort(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -463,14 +475,14 @@ short MSWindowsFileResource::readShort(void)
  return t;
 }
 
-void MSWindowsFileResource::readShortArray(short* t, size_t length)
+void FileResource::readShortArray(short* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(short) * length, 1, mFile);
 }
 
-unsigned int MSWindowsFileResource::readUInt(void)
+unsigned int FileResource::readUInt(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -478,14 +490,14 @@ unsigned int MSWindowsFileResource::readUInt(void)
  return t;
 }
 
-void MSWindowsFileResource::readUIntArray(unsigned int* t, size_t length)
+void FileResource::readUIntArray(unsigned int* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(unsigned int) * length, 1, mFile);
 }
 
-int MSWindowsFileResource::readInt(void)
+int FileResource::readInt(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -493,14 +505,14 @@ int MSWindowsFileResource::readInt(void)
  return t;
 }
 
-void MSWindowsFileResource::readIntArray(int* t, size_t length)
+void FileResource::readIntArray(int* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(int) * length, 1, mFile);
 }
 
-float MSWindowsFileResource::readFloat(void)
+float FileResource::readFloat(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -508,14 +520,14 @@ float MSWindowsFileResource::readFloat(void)
  return t;
 }
 
-void MSWindowsFileResource::readFloatArray(float* t, size_t length)
+void FileResource::readFloatArray(float* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(float) * length, 1, mFile);
 }
 
-double MSWindowsFileResource::readDouble(void)
+double FileResource::readDouble(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -523,14 +535,14 @@ double MSWindowsFileResource::readDouble(void)
  return t;
 }
 
-void MSWindowsFileResource::readDouble(double* t, size_t length)
+void FileResource::readDouble(double* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(double) * length, 1, mFile);
 }
 
-Real MSWindowsFileResource::readReal(void)
+Real FileResource::readReal(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -538,14 +550,14 @@ Real MSWindowsFileResource::readReal(void)
  return t;
 }
 
-void MSWindowsFileResource::readRealArray(NxOgreRealType* t, size_t length)
+void FileResource::readRealArray(NxOgreRealType* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(NxOgreRealType) * length, 1, mFile);
 }
 
-long MSWindowsFileResource::readLong(void)
+long FileResource::readLong(void)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
@@ -553,17 +565,18 @@ long MSWindowsFileResource::readLong(void)
  return t;
 }
 
-void MSWindowsFileResource::readLongArray(long* t, size_t length)
+void FileResource::readLongArray(long* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;
  fread(t, sizeof(long) * length, 1, mFile);
 }
 
-void MSWindowsFileResource::flush()
+void FileResource::flush()
 {
  fflush(mFile);
 }
+
                                                                                        
 
 } // namespace NxOgre

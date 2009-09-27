@@ -65,7 +65,7 @@ class NxOgrePublicClass MeshData : public PointerClass<Classes::_MeshData>
   
   /** \brief
   */
-  void                             cook(const NxOgre::ArchiveResourceIdentifier&);
+  void                             cook(const Path&);
   
   String                           mName;
   

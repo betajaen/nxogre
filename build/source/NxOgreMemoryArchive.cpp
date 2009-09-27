@@ -30,6 +30,10 @@
 #include "NxOgreMemoryArchive.h"
 #include "NxOgreMemoryResource.h"
 
+#ifdef _DEBUG
+#include <iostream>
+#endif
+
                                                                                        
 
 namespace NxOgre
@@ -37,23 +41,40 @@ namespace NxOgre
 
                                                                                        
 
-MemoryArchive::MemoryArchive(const String& name, const UniformResourceIdentifier& uri, ResourceProtocol* protocol)
-: Archive(name, uri, protocol)
+MemoryArchive::MemoryArchive(const String& name, const Path& path, ResourceProtocol* protocol)
+: Archive(name, path, protocol)
 {
+#ifdef _DEBUG
+ std::cout << "[+] Opening Memory Archive" << std::endl;
+#endif
 }
 
 MemoryArchive::~MemoryArchive(void)
 {
+#ifdef _DEBUG
+ std::cout << "[-] Closing Memory Archive" << std::endl;
+#endif
+ mResources.clear();
 }
 
-Resource* MemoryArchive::open(const ArchiveResourceIdentifier& ari, NxOgre::Enums::ResourceAccess)
+Resource* MemoryArchive::open(const Path&, NxOgre::Enums::ResourceAccess)
 {
- return new MemoryResource(ari, this);
+ MemoryResource* resource = new MemoryResource(this);
+ _addResource(resource);
+ resource->open();
+ return resource;
 }
 
-void MemoryArchive::close(Resource*)
+void MemoryArchive::close(Resource* resource)
 {
-
+ if (resource == 0)
+  return;
+ 
+ MemoryResource* memory_resource = static_cast<MemoryResource*>(resource);
+ memory_resource->close();
+ 
+ _removeResource(resource);
+ 
 }
 
                                                                                        

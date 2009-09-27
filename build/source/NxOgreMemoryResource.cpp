@@ -29,6 +29,10 @@
 #include "NxOgreStable.h"
 #include "NxOgreMemoryResource.h"
 
+#ifdef _DEBUG
+#include <iostream>
+#endif
+
                                                                                        
 
 namespace NxOgre
@@ -36,15 +40,15 @@ namespace NxOgre
 
                                                                                        
 
-MemoryResource::MemoryResource(const ArchiveResourceIdentifier& ari, Archive* archive)
-:Resource(ari, archive), mStart(0), mEnd(0), mPointer(0)
+MemoryResource::MemoryResource(Archive* archive)
+:Resource(MEMORY_PATH, archive, Enums::ResourceAccess_ReadAndWrite), mStart(0), mEnd(0), mPointer(0)
 {
 }
 
 MemoryResource::~MemoryResource(void)
 {
- if (mStart)
-  NxOgre_Unallocate(mStart);
+ if (mStatus == Enums::ResourceStatus_Opened)
+  close();
 }
 
 Enums::ResourceStatus MemoryResource::getStatus(void) const
@@ -59,27 +63,42 @@ Enums::ResourceDirectionality MemoryResource::getDirectionality(void) const
 
 void MemoryResource::open(void)
 {
- if (mStatus == Enums::ResourceStatus_Opened)
-  close();
+ if (mStatus == Enums::ResourceStatus_Opened || mStatus == Enums::ResourceStatus_Opening)
+  return;
  
  mStatus = Enums::ResourceStatus_Opening;
  mDirectionality = Enums::ResourceDirectionality_Unknown;
  mAccess = Enums::ResourceAccess_ReadAndWrite;
 
+#ifdef _DEBUG
+ std::cout << "[+] Opening Memory resource" << std::endl;
+#endif
+ 
  mStart = (char*) NxOgre_Allocate(16, Classes::_char);
  mEnd = mStart + 16;
  mPointer = mStart;
  mStatus = Enums::ResourceStatus_Opened;
+ mDirectionality = Enums::ResourceDirectionality_Omidirectional;
+
 }
 
 void MemoryResource::close(void)
 {
+ if (mStatus != Enums::ResourceStatus_Opened)
+  return;
+ 
  mStatus = Enums::ResourceStatus_Closing;
  mDirectionality = Enums::ResourceDirectionality_Unknown;
+
+#ifdef _DEBUG
+ std::cout << "[-] Closing Memory resource. -> End Size is " << int(mEnd - mStart) << " bytes" << std::endl;
+#endif
+ 
  if (mStart)
   NxOgre_Unallocate(mStart);
  mStart = mEnd = mPointer = 0;
  mStatus = Enums::ResourceStatus_Closed;
+ 
 }
 
 Enums::ResourceAccess  MemoryResource::getAccess(void) const
@@ -143,30 +162,40 @@ size_t MemoryResource::at(void) const
 
 bool MemoryResource::write(const void* src, size_t src_size)
 {
- if (mStatus != Enums::ResourceStatus_Opened)
-  return false;
- if (mStatus != mAccess != Enums::ResourceAccess_ReadOnly)
-  return false;
  
+ if (mStatus != Enums::ResourceStatus_Opened)
+ {
+  return false;
+ }
+
+ if (mAccess != Enums::ResourceAccess_ReadAndWrite)
+ {
+  return false;
+ }
  size_t current_size = (mEnd - mStart);
  char* pointer_willbe = mPointer + src_size;
  
+// std::cout << "current_size = " << current_size << std::endl;
+// std::cout << "Pointer will be = " << pointer_willbe << std::endl;
+
  if (pointer_willbe > mStart + current_size)
  {
   mStatus = Enums::ResourceStatus_Maintenance;
   
   size_t new_buffer_size = (current_size * 2) + 1;
+  std::cout << "New buffer size = " << new_buffer_size << std::endl;
   char* new_buffer = (char*) NxOgre_Allocate(new_buffer_size, Classes::_char);
   if (mStart)
    Memory::copy(new_buffer, mStart, current_size);
+
+  size_t pointer_pos = mPointer - mStart;
   NxOgre_Unallocate(mStart);
   
-  size_t pointer_pos = mPointer - mStart;
   mStart = new_buffer;
   mEnd = mStart + new_buffer_size;
   mPointer = mStart + pointer_pos;
   
-  mStatus = Enums::ResourceStatus_Maintenance;
+  mStatus = Enums::ResourceStatus_Opened;
  }
   
  Memory::copy(mPointer, src, src_size);
@@ -449,6 +478,10 @@ void MemoryResource::flush()
  // No code required.
 }
 
+char* MemoryResource::getStart() const
+{
+ return mStart;
+}
 
                                                                                        
 

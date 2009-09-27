@@ -37,8 +37,7 @@ GLUTBody::GLUTBody(NxOgre::Shape* shape, const NxOgre::Matrix44& globalPose, con
 : Actor(scene) // Take notice of the constructor we are using, it's designed for classes that inherit from Actor.
 {
  
- // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated
- // as a normal RigidBody. 
+ // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated as a normal RigidBody. 
  createDynamic(globalPose, description, scene, shape);
 
  // Since NxOgre doesn't know or care about our GL stuff, we copy it over. This is the correct time to create
@@ -48,9 +47,15 @@ GLUTBody::GLUTBody(NxOgre::Shape* shape, const NxOgre::Matrix44& globalPose, con
  mWidth = description.mWidth;
  mHeight = description.mHeight;
  mDepth = description.mDepth;
- mColourRed = description.mColourRed;
- mColourGreen = description.mColourGreen;
- mColourBlue = description.mColourBlue;
+
+ mAmbient.set(1.0f, description.mColourRed,description.mColourGreen,description.mColourBlue);
+ mDiffuse.set(1.0f, 0.6,0.6,0.6);
+ mSpecular.set(1.0f,1.0f,1.0f,1.0f);
+ mEmissive.set(1.0f,0.2f,0.2f,0.2f);
+ mShininess = 25.0f;
+
+
+
  mShadows = description.mShadows;
 
  // No cleaning up the prototype here, it's not ours to do so.
@@ -71,13 +76,19 @@ void GLUTBody::render(void)
   getGlobalPose().columnMajor(glMat);
   
   glMultMatrixf(glMat);
-  glColor4f(mColourRed, mColourGreen, mColourBlue, 1.0f);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, mAmbient.ptr());
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, mDiffuse.ptr());
+  glMaterialfv(GL_FRONT, GL_SPECULAR, mSpecular.ptr());
+  glMaterialfv(GL_FRONT, GL_EMISSION, mEmissive.ptr());
+  glMaterialf(GL_FRONT, GL_SHININESS, mShininess);
 
   switch (mVisualShape)
   {
    case GLUT_Box:
+   {
     glScalef(mWidth, mHeight, mDepth);
     glutSolidCube(1);
+   }
    break;
 
    case GLUT_Sphere:

@@ -45,8 +45,8 @@
 
 //    Prototype classes generated with the PhysX SDK 2.8.1.
 
-                                                                                       
-
+                                                                                         
+  
 class NxActor;                        //< \internal Prototyped class. DO NOT USE.
 class NxActorDesc;                    //< \internal Prototyped class. DO NOT USE.
 class NxActorDescBase;                //< \internal Prototyped class. DO NOT USE.
@@ -217,8 +217,8 @@ struct NxIntegrals;                   //< \internal Prototyped class. DO NOT USE
 struct NxRaycastHit;                  //< \internal Prototyped class. DO NOT USE.
 struct NxSweepQueryHit;               //< \internal Prototyped class. DO NOT USE.
 
-
-                                                                                       
-
-
+  
+                                                                                         
+  
+  
 #endif

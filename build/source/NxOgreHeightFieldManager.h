@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreHeightField.h"
 
                                                                                        
 
@@ -51,29 +52,33 @@ class NxOgrePublicClass HeightFieldManager: public ::NxOgre::Singleton<HeightFie
   
   public: // Functions
   
-  /** \brief Load a HeightField into the World, that can be used in any Scene.
-      \note  It will take the resource name as it's name.
-  */
-  HeightField*                                       load(const ArchiveResourceIdentifier&);
+  typedef ptr_multihashmap<HeightField>             HeightFields;
   
-  /** \brief Load a HeightField into the World, that can be used in any Scene.
-  */
-  HeightField*                                       load(const ArchiveResourceIdentifier&, const String& name);
-    
-  /** \brief Load a HeightField into the World, that can be used in any Scene.
-      \note  It will try to take the resource name as it's name, otherwise a random one will be generated.
-  */
-  HeightField*                                       load(Resource*);
-  
-  /** \brief Load a HeightField into the World, that can be used in any Scene.
-  */
-  HeightField*                                       load(Resource*, const String& name);
-  
-  /** \brief Text
-  */
-  HeightField*                                       getByName(const String& HeightFieldIdentifier);
+  typedef ptr_multihashmap<HeightField>::iterator_t HeightFieldIterator;
   
   protected: // Variables
+  
+  /** \brief Load a heightfield into the World, that can be used in any Scene.
+      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
+  */
+  HeightField*                                       load(const Path&, const String& name = BLANK_STRING);
+  
+  /** \brief Load a heightfield into the World, that can be used in any Scene.
+      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
+  */
+  HeightField*                                       load(Resource*, const String& name = BLANK_STRING);
+  
+  /** \brief Get a heightfield by it's name. (Slower)
+  */
+  HeightField*                                       getByName(const String& name);
+  
+  /** \brief Get a heightfield by it's the hash of its name. (Faster)
+  */
+  HeightField*                                       getByHash(const StringHash& hashed_name);
+  
+  /** \brief
+  */
+  HeightFieldIterator                                getMeshes();
   
   /** \internal See World::precreateSingletons
   */
@@ -82,10 +87,9 @@ class NxOgrePublicClass HeightFieldManager: public ::NxOgre::Singleton<HeightFie
   /** \internal See World::destroySingletons
   */
                                                     ~HeightFieldManager(void);
-  
   /** \brief Known loaded HeightFields in the World.
   */
-  Array<HeightField*>                                mLoadedHeightFields;
+  HeightFields                                       mHeightFields;
   
 }; // class ClassName
 

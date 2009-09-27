@@ -49,17 +49,8 @@ class NxOgrePublicClass Mesh
   
   public: // Functions
   
-  /** \brief Mesh constructor
-  */
-                                              Mesh();
-  
-  /** \brief Mesh constructor, equilvent of calling load(uri);
-  */
-                                              Mesh(Resource*);
-  
-  /** \brief Text
-  */
-                                             ~Mesh(void);
+  friend class MeshManager;
+  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
   
   /** \brief Set the name of this Mesh
   */
@@ -72,6 +63,10 @@ class NxOgrePublicClass Mesh
   /** \brief Get the name of this mesh.
   */
   String                                      getName() const;
+  
+  /** \brief Get the name of this mesh.
+  */
+  StringHash                                  getNameHash() const;
   
   /** \brief Text
   */
@@ -155,10 +150,28 @@ class NxOgrePublicClass Mesh
   */
   String                                      mName;
   
+  /** \brief Hash of the name of the mesh.
+  */
+  StringHash                                  mNameHash;
+
   /** \brief
   */
   MeshStats                                   mMeshStats;
-
+  
+  protected:
+  
+  /** \brief Mesh constructor
+  */
+                                              Mesh();
+  
+  /** \brief Mesh constructor, equilvent of calling load(uri);
+  */
+                                              Mesh(Resource*);
+  
+  /** \brief Text
+  */
+                                             ~Mesh(void);
+  
 }; // class Mesh
 
                                                                                        

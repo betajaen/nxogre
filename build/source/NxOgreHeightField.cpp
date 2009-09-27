@@ -84,19 +84,19 @@ void HeightField::load(Resource* resource)
 {
  if (!Functions::XFunctions::isX(resource))
  {
-  SharedStringStream ss;
-  ss << "Error: " << resource->getArchiveResourceIdentifier().getArchive() << ":" << resource->getArchiveResourceIdentifier().getResourceName() << " is not a NxOgre file. Reasons(s) are:\n";
-  ss << Functions::XFunctions::whyIsNotX(resource);
-  NxOgre_ThrowError(ss.get());
+  StringStream ss;
+  ss << "Error: " << resource->getPath().getString() << " is not a NxOgre file. Reasons(s) are:\n"
+     << Functions::XFunctions::whyIsNotX(resource);
+  NxOgre_ThrowError(ss.str());
   return;
  }
 
  if (!Functions::XFunctions::getXType(resource) == Enums::XType_HeightField)
  {
-  SharedStringStream ss;
-  ss << "Error: " << resource->getArchiveResourceIdentifier().getArchive() << ":" << resource->getArchiveResourceIdentifier().getResourceName() << " is not a NxOgre heightfield file\n";
-  ss << Functions::XFunctions::whyIsNotX(resource);
-  NxOgre_ThrowError(ss.get());
+  StringStream ss;
+  ss << "Error: " << resource->getPath().getString() << " is not a NxOgre heightfield file\n"
+     << Functions::XFunctions::whyIsNotX(resource);
+  NxOgre_ThrowError(ss.str());
   return;
  }
 

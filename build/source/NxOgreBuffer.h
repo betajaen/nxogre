@@ -277,6 +277,16 @@ template<typename T> class  Buffer
     return *(_T->_First + nth_pos);
    }
 
+   T& at(size_t nth_pos)
+   {
+    return *(_T->_First + nth_pos);
+   }
+
+   const T& at(size_t nth_pos) const
+   {
+    return *(_T->_First + nth_pos);
+   }
+
    unsigned int where(const T& t) const
    {
     return TFunctions::where(_T, t);

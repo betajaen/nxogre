@@ -54,7 +54,7 @@ class NxOgrePublicClass MemoryResource : public PointerClass<Classes::_MemoryRes
   
   /** \brief
   */
-                                             MemoryResource(const ArchiveResourceIdentifier&, Archive*);
+                                             MemoryResource(Archive*);
   
   /** \brief
   */
@@ -295,7 +295,11 @@ class NxOgrePublicClass MemoryResource : public PointerClass<Classes::_MemoryRes
   
   /** \brief Flush function. Not applicable to memory
   */
-                       void                   flush();
+                       void                  flush();
+  
+  /** \brief Get the pointer to the first byte of the memory resource
+  */
+                       char*                 getStart() const;
   
   protected:
   

@@ -47,9 +47,12 @@
 */
 class GLUTExportClass GLUTBody : public NxOgre::PointerClass<_GLUTBody>, public NxOgre::Actor
 {
+  
   friend class GLUTRenderSystem;
   friend class ::NxOgre::Functions::ArrayFunctions<GLUTBody*>::Write;
-
+  
+  template<class T> friend inline void NxOgre::Functions::safe_delete(T*);
+  
   public:
   
    /** \brief Required since Actor is also a "PointerClass".
@@ -80,9 +83,11 @@ class GLUTExportClass GLUTBody : public NxOgre::PointerClass<_GLUTBody>, public 
      float         mWidth;
      float         mHeight;
      float         mDepth;
-     float         mColourRed;
-     float         mColourGreen;
-     float         mColourBlue;
+     NxOgre::Vec4  mAmbient;
+     NxOgre::Vec4  mDiffuse;
+     NxOgre::Vec4  mSpecular;
+     NxOgre::Vec4  mEmissive;
+     float         mShininess;
      bool          mShadows;
 
 };

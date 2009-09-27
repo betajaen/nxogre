@@ -52,8 +52,8 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   
   public: // Functions
   
-  typedef multimap<StringHash, Scene>::type          Scenes;
-  typedef multimap<StringHash, Scene>::user_iterator SceneIterator;
+  typedef ptr_multihashmap<Scene>                Scenes;
+  typedef ptr_multihashmap<Scene>::iterator_t SceneIterator;
   
   /** \brief Pre-create singletons of NxOgre (ResourceSystem, MeshManager, HeightFieldManager, ErrorStream, etc.)
   */

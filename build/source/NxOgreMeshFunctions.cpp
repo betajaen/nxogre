@@ -236,7 +236,7 @@ NxOgrePublicFunction bool createClothMesh(Resource* resource, NxOgre::MeshData* 
  return b;
 }
 
-NxOgrePublicFunction ::NxOgre::Mesh* generateFlatCloth(const ArchiveResourceIdentifier& target, const Vec2& size, Real d)
+NxOgrePublicFunction ::NxOgre::Mesh* generateFlatCloth(const Path& path, const Vec2& size, Real d)
 {
  
  int numX = (int) (size.x / d) + 1;
@@ -287,7 +287,7 @@ NxOgrePublicFunction ::NxOgre::Mesh* generateFlatCloth(const ArchiveResourceIden
   
   printf("bt = %i\n", b);
  
-  return mesh.end(true, target);
+  return mesh.end(true, path);
 }
 
 

@@ -109,7 +109,7 @@ Matrix44 Shape::getGlobalPose() const
 {
  if (mBlueprint)
  {
-  return Matrix44_Zero;
+  return Matrix44::ZERO;
  }
  
  Matrix44 matrix;

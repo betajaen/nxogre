@@ -49,7 +49,7 @@ class NxOgrePublicClass MemoryArchive : public Archive
   
   public: // Functions
   
-                                              MemoryArchive(const String& name, const UniformResourceIdentifier&, ResourceProtocol*);
+                                              MemoryArchive(const String& name, const Path&, ResourceProtocol*);
   
   /** \brief Required virtual constructor.
   */
@@ -57,7 +57,7 @@ class NxOgrePublicClass MemoryArchive : public Archive
   
   /** \brief
   */
-                 Resource*                    open(const ArchiveResourceIdentifier&, NxOgre::Enums::ResourceAccess);
+                 Resource*                    open(const Path&, NxOgre::Enums::ResourceAccess);
   
   /** \brief
   */

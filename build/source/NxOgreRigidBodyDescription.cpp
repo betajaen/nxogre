@@ -58,7 +58,7 @@ void RigidBodyDescription::reset(void)
  mLinearDamping = Real(0.0);
  mLinearVelocity = Vec3::ZERO;
  mMass = Real(1.0);
- mMassLocalPose = Matrix44_Identity;
+ mMassLocalPose = Matrix44::IDENTITY;
  mMassSpaceInertia = Vec3::ZERO;
  mMaxAngularVelocity = Real(-1.0);
  mSleepAngularVelocity = Real(-1.0);

@@ -141,7 +141,7 @@ NxOgrePublicFunction void saveExtendedCloth(Resource* resource, Buffer<float>&);
 
 /** \brief Helper function to create flat cloth.
 */
-NxOgrePublicFunction ::NxOgre::Mesh*  generateFlatCloth(const ArchiveResourceIdentifier& target, const Vec2& size, Real distanceBetweenVertices);
+NxOgrePublicFunction ::NxOgre::Mesh*  generateFlatCloth(const Vec2& size, Real distanceBetweenVertices, const Path& path = MEMORY_PATH);
 
 
                                                                                        

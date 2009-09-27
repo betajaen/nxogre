@@ -26,12 +26,13 @@
 
                                                                                        
 
-#ifndef NXOGRE_CONTAINERS_H
-#define NXOGRE_CONTAINERS_H
+#ifndef NXOGRE_SWEEPQUERYHIT_H
+#define NXOGRE_SWEEPQUERYHIT_H
 
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreCommon.h"
 
                                                                                        
 
@@ -40,45 +41,69 @@ namespace NxOgre
 
                                                                                        
 
-
-template<typename value_type>
-class vector_iterator;
-
-template<typename key_type, typename value_type>
-class map_iterator;
-
-template<typename key_type, typename value_type>
-class multimap_iterator;
-
-template<typename value> struct vector
+/** \brief
+*/
+struct NxOgrePublicClass SweepQueryHit
 {
- typedef value                                                      value_type;
- typedef boost::ptr_vector<value_type>                              type;
- typedef typename type::const_iterator                              const_iterator;
- typedef typename type::iterator                                    iterator;
- typedef vector_iterator<value>                                   user_iterator;
+  
+  /** \brief Distance to hit expressed as a percentage of the source motion vector ([0,1] coeff)
+  */
+  float         mDistancePercentage;
+  
+  /** \brief Shape that was hit.
+  */
+  Shape*        mHitShape;
+  
+  /** \brief Shape that hits the hitShape
+  */
+  Shape*        mSweepShape;
+  
+  /** \brief ID of touched triangle (internal)
+  */
+  unsigned int  mInternalFaceID;
+  
+  /** \brief ID of touched triangle (external)
+  */
+  unsigned int  mFaceID;
+  
+  /** \brief World-space impact point
+  */
+  Vec3  mPoint;
+  
+  /** \brief World-space impact normal
+  */
+  Vec3  mNormal;
+  
+}; // class RaycastHit
+
+class NxOgrePublicClass SweepCache : public PointerClass<Classes::_SweepCache>
+{
+ friend Scene;
+ 
+ public:
+  
+  NxSweepCache* getCache();
+  
+ protected:
+  
+  SweepCache(NxSweepCache*);
+  
+  NxSweepCache* mCache;
+  
 };
 
-template<typename key, typename value> struct map
+namespace Functions
 {
- typedef key                                                        key_type;
- typedef value                                                      value_type;
- typedef boost::ptr_map<key_type, value_type>                       type;
- typedef typename type::const_iterator                              const_iterator;
- typedef typename type::iterator                                    iterator;
- typedef map_iterator<key_type, value_type>         user_iterator;
+
+class SweepFunctions
+{
+ public:
+  
+  static void NxSweepQueryHitsToBuffer(NxSweepQueryHit*, unsigned int size, SweepQueryHits&);
+  
 };
 
-template<typename key, typename value> struct multimap
-{
- typedef key                                                        key_type;
- typedef value                                                      value_type;
- typedef boost::ptr_multimap<key_type, value_type>                  type;
- typedef typename type::const_iterator                              const_iterator;
- typedef typename type::iterator                                    iterator;
- typedef multimap_iterator<key_type, value_type>    user_iterator;
-};
-
+} // namespace Functions
 
                                                                                        
 

@@ -29,13 +29,8 @@
 #include "NxOgreStable.h"
 #include "NxOgreRaycastHit.h"
 
-#include "NxPhysicsSDK.h"
-
                                                                                        
 
-namespace NxOgre
-{
 
-} // namespace NxOgre
 
                                                                                        

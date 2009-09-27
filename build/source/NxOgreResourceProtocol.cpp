@@ -36,8 +36,62 @@ namespace NxOgre
 
                                                                                        
 
+ResourceProtocol::ResourceProtocol()
+{
+ // virtual function.
+}
+
 ResourceProtocol::~ResourceProtocol(void)
 {
+ // virtual function.
+}
+
+Archive* ResourceProtocol::openArchive(const String& name, const Path&)
+{
+ NxOgre_ThrowVirtualWarning;
+ return 0; // virtual function.
+}
+
+void ResourceProtocol::closeArchive(Archive*)
+{
+ NxOgre_ThrowVirtualWarning;
+ // virtual function.
+}
+
+String  ResourceProtocol::getProtocol(void) const
+{
+ NxOgre_ThrowVirtualWarning;
+ return BLANK_STRING;
+}
+
+StringHash ResourceProtocol::getProtocolHash(void) const
+{
+ NxOgre_ThrowVirtualWarning;
+ return BLANK_HASH;
+}
+
+bool ResourceProtocol::isSingleArchive(void) const
+{
+ NxOgre_ThrowVirtualWarning;
+ return false;
+}
+
+bool ResourceProtocol::usesNamelessResources(void) const
+{
+ NxOgre_ThrowVirtualWarning;
+ return false;
+}
+
+void ResourceProtocol::initialise(void)
+{
+ NxOgre_ThrowVirtualWarning;
+ // virtual function.
+}
+
+String ResourceProtocol::calculateArchiveName(const Path&)
+{
+ NxOgre_ThrowVirtualWarning;
+ return BLANK_STRING;
 }
 
                                                                                        

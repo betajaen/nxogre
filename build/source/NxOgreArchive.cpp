@@ -30,6 +30,9 @@
 #include "NxOgreArchive.h"
 #include "NxOgreFunctions.h"
 
+#ifdef _DEBUG
+# include <iostream>
+#endif
                                                                                        
 
 namespace NxOgre
@@ -37,10 +40,11 @@ namespace NxOgre
 
                                                                                        
 
-Archive::Archive(String name, const UniformResourceIdentifier& uri, ResourceProtocol* protocol)
-: mName(name), mURI(uri), mProtocol(protocol)
+Archive::Archive(const String& archive_name, const Path& path, ResourceProtocol* protocol)
+: mName(archive_name), mPath(path), mProtocol(protocol)
 {
- mNameHash = NxOgre::Functions::generateHash(mName.c_str(), NxOgre::Enums::HashAlgorithm_DJB2);
+ mNameHash = Functions::StringHash(archive_name);
+
 }
 
 Archive::~Archive(void)
@@ -52,7 +56,7 @@ String Archive::getName()
  return mName;
 }
 
-unsigned long Archive::getNameHash()
+StringHash Archive::getNameHash()
 {
  return mNameHash;
 }
@@ -62,9 +66,34 @@ ResourceProtocol* Archive::getProtocol() const
  return mProtocol;
 }
 
-UniformResourceIdentifier Archive::getURI()
+Path Archive::getPath() const
 {
- return mURI;
+ return mPath;
+}
+
+Archive::ResourcesIterator Archive::getOpenResources()
+{
+ return ResourcesIterator(mResources);
+}
+
+Resource* Archive::open(const Path&, NxOgre::Enums::ResourceAccess)
+{
+ return 0;  // virtual function.
+}
+
+void Archive::close(Resource*)
+{
+ // virtual function.
+}
+
+void Archive::_addResource(Resource* resource)
+{
+ mResources.push_back(resource);
+}
+
+void Archive::_removeResource(Resource* resource)
+{
+ mResources.erase(resource);
 }
 
                                                                                        

@@ -87,6 +87,7 @@ namespace PhysXShapeBinder
    gFunctions[NX_SHAPE_CAPSULE]     = &PhysX_NxCapsuleShape_BindFunction;
    gFunctions[NX_SHAPE_WHEEL]       = &PhysX_NxWheelShape_BindFunction;
    gFunctions[NX_SHAPE_CONVEX]      = &PhysX_NxConvexShape_BindFunction;
+   gFunctions[NX_SHAPE_HEIGHTFIELD] = &PhysX_NxHeightFieldShape_BindFunction;
    gFunctions[NX_SHAPE_MESH]        = &PhysX_NxTriangleMeshShape_BindFunction;
    gFunctions[NX_SHAPE_RAW_MESH]    = &PhysX_BindFunction_NULL;
    gFunctions[NX_SHAPE_COMPOUND]    = &PhysX_BindFunction_NULL;
@@ -471,7 +472,7 @@ void RigidBody::createVolume(const Matrix44& pose, Enums::VolumeCollisionType co
   return;
  }
  
-  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
+ for (unsigned int i=0; i < actor_description.shapes.size(); i++)
  {
   NxShapeDesc* description = actor_description.shapes[i];
   NxOgre_Delete(description);
@@ -482,7 +483,6 @@ void RigidBody::createVolume(const Matrix44& pose, Enums::VolumeCollisionType co
 
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
  
-
  
 }
 
@@ -495,7 +495,7 @@ void RigidBody::destroy(void)
  PhysXPointer* ptr = pointer_cast(mActor->userData);
  NxOgre_Delete(ptr);
  
- for (CollisionModel::iterator shape = mShapes.begin(); shape != mShapes.end(); shape++)
+ for (CollisionModel::iterator_t shape = mShapes.iterator(); shape != shape.end(); shape++)
  {
   PhysXPointer* shape_ptr = pointer_cast(shape->getAbstractShape()->userData);
   NxOgre_Delete(shape_ptr);

@@ -143,7 +143,7 @@ class NxOgrePublicClass Vec4
   
   inline const Real& operator[](const size_t i) const;
 
-  Real w, x, y, z;
+  Real x, y, z, w;
 
   static const Vec4 ZERO;
 };

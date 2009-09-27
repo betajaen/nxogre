@@ -31,13 +31,17 @@
 
 #include "NxOgre.h"
 #include "GLUTCommon.h"
-#include "NxOgreArray.h"
+#include "GLUTBody.h"
 
                                                                                        
 
 class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRenderSystem>
 {
   public:
+     
+     typedef NxOgre::ptr_multihashmap<GLUTBody>                GLUTBodies;
+     typedef NxOgre::ptr_multihashmap<GLUTBody>::iterator_t    GLUTBodyIterator;
+
 
      /** \brief
      */
@@ -50,6 +54,10 @@ class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRender
      /** \brief
      */
      GLUTBody*                            createGLUTBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, NxOgre::Scene*, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     
+     /** \brief
+     */
+     GLUTBodyIterator                     getBodies();
 
      /** \brief
      */
@@ -57,7 +65,7 @@ class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRender
      
   protected:
      
-     NxOgre::Array<GLUTBody*> mBodies;
+     GLUTBodies    mBodies;
 };
 
                                                                                        

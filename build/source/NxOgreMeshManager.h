@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreMesh.h"
 
                                                                                        
 
@@ -50,27 +51,31 @@ class NxOgrePublicClass MeshManager: public ::NxOgre::Singleton<MeshManager, ::N
   
   public: // Functions
   
-  /** \brief Load a mesh into the World, that can be used in any Scene.
-      \note  It will take the resource name as it's name.
-  */
-  Mesh*                                       load(const ArchiveResourceIdentifier&);
+  typedef ptr_multihashmap<Mesh>                Meshes;
+  
+  typedef ptr_multihashmap<Mesh>::iterator_t    MeshIterator;
   
   /** \brief Load a mesh into the World, that can be used in any Scene.
+      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
   */
-  Mesh*                                       load(const ArchiveResourceIdentifier&, const String& name);
-    
-  /** \brief Load a mesh into the World, that can be used in any Scene.
-      \note  It will try to take the resource name as it's name, otherwise a random one will be generated.
-  */
-  Mesh*                                       load(Resource*);
+  Mesh*                                       load(const Path&, const String& name = BLANK_STRING);
   
   /** \brief Load a mesh into the World, that can be used in any Scene.
+      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
   */
-  Mesh*                                       load(Resource*, const String& name);
+  Mesh*                                       load(Resource*, const String& name = BLANK_STRING);
   
   /** \brief Text
   */
-  Mesh*                                       getByName(const String& meshIdentifier);
+  Mesh*                                       getByName(const String& name);
+  
+  /** \brief Text
+  */
+  Mesh*                                       getByHash(const StringHash& hashed_name);
+  
+  /** \brief
+  */
+  MeshIterator                                getMeshes();
   
   protected: // Variables
   
@@ -84,7 +89,7 @@ class NxOgrePublicClass MeshManager: public ::NxOgre::Singleton<MeshManager, ::N
   
   /** \brief Known loaded meshes in the World.
   */
-  Array<Mesh*>                                mLoadedMeshes;
+  Meshes                                      mMeshes;
   
 }; // class ClassName
 

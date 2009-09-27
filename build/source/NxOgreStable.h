@@ -31,6 +31,7 @@
 
                                                                                        
 
+#include "NxOgreAutoConfiguration.h"
 #include "NxOgreConfiguration.h"
 
 #ifndef NXOGRE_HAS_CONFIGURATION
@@ -41,12 +42,10 @@
 #include "float.h"
 #include <stdlib.h>
 #include <string>
-#include <boost/functional/hash.hpp>
 #include <sstream>
 #include <vector>
-#include <boost/ptr_container/ptr_vector.hpp>
 #include <map>
-#include <boost/ptr_container/ptr_map.hpp>
+#include <list>
 
                                                                                        
 
@@ -164,6 +163,10 @@
 */
 #define NxOgre_ThrowWarning(MESSAGE)          ::NxOgre::ErrorStream::getSingleton()->throwWarning(MESSAGE, __FILE__, __LINE__)
 
+/** \brief Throw a non-critical error.
+*/
+#define NxOgre_ThrowVirtualWarning            ::NxOgre::ErrorStream::getSingleton()->throwWarning("Virtual function called!", __FILE__, __LINE__)
+
 /** \brief Throw a non-error.
 */
 #define NxOgre_ThrowNotice(MESSAGE)           ::NxOgre::ErrorStream::getSingleton()->throwNotice(MESSAGE, __FILE__, __LINE__)
@@ -174,7 +177,7 @@
 
 /** \brief Compiler macro to cause a compiler error if the expression is false.
 */
-#define NxOgre_CompileAssertion(exp, reason)  extern char __Assertion##reason__[ size_t((exp) ? 1 : -1) ]
+#define NxOgre_CompileAssertion(exp, reason)  extern char NxOgreCompilerAssertion__##reason__[ size_t((exp) ? 1 : -1) ]
 
 #define NxOgre_PreprocessorToStringBase(x) #x
 #define NxOgre_Stringify(x) NxOgre_PreprocessorToStringBase(x)

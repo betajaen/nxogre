@@ -83,11 +83,9 @@ void World::precreateSingletons(void)
  if (TimeController::getSingleton() == 0)
   NxOgre_New(TimeController)();
  
- ResourceSystem::getSingleton()->openArchive("internal-cwd", "file:.");
- 
 #ifdef NXOGRE_OPTIONS_USE_LOG
  {
-  Resource* resource = ResourceSystem::getSingleton()->open("internal-cwd:NxOgre.log", Enums::ResourceAccess_WriteOnly);
+  Resource* resource = ResourceSystem::getSingleton()->open(Path("file://NxOgre.log"), Enums::ResourceAccess_WriteOnly);
   if (resource)
    ErrorStream::getSingleton()->setLogResource(resource);
  }
@@ -254,9 +252,7 @@ void World::destroyScene(Scene* scene)
  if (scene == 0)
   return;
  
- StringHash hash = scene->getNameHash();
- mScenes.release(mScenes.find(hash));
- NxOgre_Delete(scene);
+ mScenes.erase(scene->getNameHash());
  
 }
 

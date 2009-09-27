@@ -59,6 +59,8 @@
 #include "NxOgreSoftBodyDescription.h"
 #include "NxOgreCompartment.h"
 #include "NxOgreCompartmentDescription.h"
+#include "NxOgreSweepQuery.h"
+#include "NxOgreSimple.h"
 
 #include "NxPhysics.h"
 
@@ -567,6 +569,32 @@ Compartment* Scene::getCompartment(NxCompartment* compartment)
   return 0;
  return (*it).second;
 }
+
+unsigned int Scene::linearOBBSweep(const SimpleBox& box, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits& hits, unsigned int activeGroups)
+{
+ 
+ NxSweepQueryHit* query_hits = (NxSweepQueryHit*) malloc(sizeof(NxSweepQueryHit) * maxShapes);
+ NxBox physx_box;
+ Functions::SimpleBoxToNxBox(box, physx_box);
+
+ unsigned int count = mScene->linearOBBSweep(physx_box, motion.as<NxVec3>(), sweep_flags, 0, maxShapes, query_hits, 0, activeGroups, 0);
+ Functions::SweepFunctions::NxSweepQueryHitsToBuffer(query_hits, count, hits);
+ free(query_hits);
+ 
+ return count;
+}
+
+SweepCache* Scene::createSweepCache()
+{
+ return NxOgre_New(SweepCache)(mScene->createSweepCache());
+}
+
+void Scene::destroySweepCache(SweepCache* cache)
+{
+ mScene->releaseSweepCache(cache->getCache());
+ NxOgre_Delete(cache);
+}
+
 
                                                                                        
 

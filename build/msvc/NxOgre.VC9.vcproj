@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="NxOgre"
+	Name="NxOgre.1.6.0.Detritus"
 	ProjectGUID="{A633A666-D959-4D20-B2D4-6C2239FE48EB}"
 	RootNamespace="NxOgre"
 	Keyword="Win32Proj"
@@ -41,10 +41,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="source/;../../source/;&quot;$(BOOST_HOME)/&quot;;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;"
+				AdditionalIncludeDirectories="source/;../../source/;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_DYNAMIC_LIBRARY;NXOGRE_OPTIONS_USE_LOG;NXOGRE_MEMORY_DEBUGGER_USEFILE;NXOGRE_MEMORY_DEBUGGER_FILE=&quot;NxOgreLeaks.txt&quot;"
-				MinimalRebuild="true"
+				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="true"
@@ -96,7 +97,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk Debug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk Debug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -177,7 +178,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk Release NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk Release NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -247,7 +248,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk DebugStatic NO_DLL NxOgre_DebugStatic.lib 0&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk DebugStatic NO_DLL NxOgre_DebugStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -314,7 +315,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk ReleaseStatic NO_DLL NxOgre_ReleaseStatic.lib 0&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk ReleaseStatic NO_DLL NxOgre_ReleaseStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -395,7 +396,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk Minimal NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk Minimal NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -478,7 +479,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk MinimalDebug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk MinimalDebug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -545,7 +546,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;makesdk MinimalStatic NO_DLL NxOgreStatic.lib 0&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk MinimalStatic NO_DLL NxOgreStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -553,11 +554,11 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\source\malloc.c.h"
+			RelativePath="..\source\malloc.c.h"
 			>
 		</File>
 		<File
-			RelativePath=".\source\nedmalloc.cpp"
+			RelativePath="..\source\nedmalloc.cpp"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
@@ -567,57 +568,13 @@
 					UsePrecompiledHeader="0"
 				/>
 			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="DebugStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="ReleaseStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Minimal|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="MinimalDebug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="MinimalStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
-			RelativePath=".\source\nedmalloc.h"
+			RelativePath="..\source\nedmalloc.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgre.h"
 			>
 		</File>
 		<File
@@ -657,15 +614,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreArchiveResourceIdentifier.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreArchiveResourceIdentifier.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreArray.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAutoConfiguration.h"
 			>
 		</File>
 		<File
@@ -749,11 +702,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreCompiler.h"
-			>
-		</File>
-		<File
-			RelativePath=".\source\NxOgreConfiguration.h"
+			RelativePath="..\source\NxOgreConfiguration.h"
 			>
 		</File>
 		<File
@@ -798,6 +747,30 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreErrorStream.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileArchive.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileArchive.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResource.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResource.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResourceProtocol.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResourceProtocol.h"
 			>
 		</File>
 		<File
@@ -882,10 +855,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreIntVectors.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreIterators.h"
 			>
 		</File>
 		<File
@@ -1105,30 +1074,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreMSWindowsFileArchive.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMSWindowsFileArchive.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMSWindowsFileResource.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMSWindowsFileResource.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMSWindowsFileResourceProtocol.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMSWindowsFileResourceProtocol.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreNodeRenderable.cpp"
 			>
 		</File>
@@ -1150,6 +1095,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreParticleData.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePath.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePath.h"
 			>
 		</File>
 		<File
@@ -1229,6 +1182,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgrePointerFunctions.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgrePointRenderable.cpp"
 			>
 		</File>
@@ -1242,6 +1199,18 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgrePrototypeFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePtrHashmap.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePtrMultiHashmap.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePtrVector.h"
 			>
 		</File>
 		<File
@@ -1503,54 +1472,6 @@
 					UsePrecompiledHeader="1"
 				/>
 			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="DebugStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="ReleaseStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Minimal|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="MinimalDebug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="MinimalStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\source\NxOgreStable.h"
@@ -1562,6 +1483,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreString.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSweepQuery.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSweepQuery.h"
 			>
 		</File>
 		<File
@@ -1606,14 +1535,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreTuple.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreUniformResourceIdentifier.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreUniformResourceIdentifier.h"
 			>
 		</File>
 		<File

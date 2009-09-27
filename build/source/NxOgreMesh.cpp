@@ -99,9 +99,9 @@ void Mesh::load(Resource* resource)
  
  if (Functions::NXSFunctions::isNXS(resource) == false) 
  {
-  SharedStringStream stream;
-  stream << "Resource '" << resource->getArchiveResourceIdentifier().getArchive() << ":" << resource->getArchiveResourceIdentifier().getResourceName() << " is not a PhysX NXS mesh file.";
-  NxOgre_ThrowError(stream.get());
+  StringStream stream;
+  stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
+  NxOgre_ThrowError(stream.str());
   return;
  }
  
@@ -109,10 +109,10 @@ void Mesh::load(Resource* resource)
 
  if (mType == Enums::MeshType_Unknown)
  {
-  SharedStringStream stream;
-  stream << "Resource '" << resource->getArchiveResourceIdentifier().getArchive() << ":" << resource->getArchiveResourceIdentifier().getResourceName() << " is not a valid PhysX NXS Mesh file.\n"
+  StringStream stream;
+  stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Mesh file.\n"
          << "Reason: Un-recongised mesh header";
-  NxOgre_ThrowError(stream.get());
+  NxOgre_ThrowError(stream.str());
   return;
  }
  
@@ -156,17 +156,23 @@ NxSoftBodyMesh* Mesh::getAsSoftBody()
 
 void Mesh::setName(const char* name)
 {
- mName = name;
+ setName(String(name));
 }
 
 void Mesh::setName(const String& name)
 {
  mName = name;
+ mNameHash = Functions::StringHash(name);
 }
 
 String Mesh::getName() const
 {
  return mName;
+}
+
+StringHash Mesh::getNameHash() const
+{
+ return mNameHash;
 }
 
 MeshStats Mesh::getStats()

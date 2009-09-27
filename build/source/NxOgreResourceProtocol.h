@@ -47,9 +47,13 @@ class NxOgrePublicClass ResourceProtocol
 {
   public: // Functions
   
-  /** \brief Text
+  /** \brief Constructor
   */
-  virtual                                    ~ResourceProtocol(void);
+  ResourceProtocol();
+  
+  /** \brief Virtual Destructor.
+  */
+  virtual ~ResourceProtocol(void);
   
   /** \brief Open an archive based on a uniform resource identifier.
       \example
@@ -57,32 +61,36 @@ class NxOgrePublicClass ResourceProtocol
         ResourceSystem::getSingleton->openArchive("media1", "zip://media1.zip");
        </code>
   */
-  virtual              Archive*               openArchive(const String& name, const UniformResourceIdentifier&) = 0;
+  virtual  Archive*  openArchive(const String& name, const Path&);
   
   /** \brief Close an archive, and close any resources in that archive.
   */
-  virtual              void                   closeArchive(Archive*) = 0;
+  virtual  void      closeArchive(Archive*);
   
-  /** \brief Text
+  /** \brief Calculate the archive name of a path.
   */
-  virtual              String           getProtocol(void) = 0;
+  virtual String     calculateArchiveName(const Path&);
+
+  /** \brief Get the name of the protocol; i.e. file, memory, etc.
+  */
+  virtual String     getProtocol(void) const;
   
-  /** \brief Text
+  /** \brief Get the hash of the protocol name
   */
-  virtual              unsigned long          getProtocolHash(void) const = 0;
+  virtual StringHash getProtocolHash(void) const;
   
   /** \brief Is there only one archive by default?
   */
-  virtual              bool                   isSingleArchive(void) const = 0;
+  virtual bool isSingleArchive(void) const;
   
   /** \brief Does the resources use filenames?
   */
-  virtual              bool                   usesNamelessResources(void) const = 0;
+  virtual bool usesNamelessResources(void) const;
   
   /** \brief Initialise the resource system; create any default archives, etc.
-      \note  This is called when the protocol is added to the ResourceSystem
+      \note  This is called when the protocol is opened by the ResourceSystem
   */
-  virtual              void                   initialise(void) = 0;
+  virtual void initialise(void);
   
 }; // class ResourceProtocol
 

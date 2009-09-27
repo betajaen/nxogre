@@ -47,39 +47,14 @@ MeshManager::MeshManager(void)
 
 MeshManager::~MeshManager(void)
 {
- mLoadedMeshes.destroyAll();
+ mMeshes.clear();
 }
 
-Mesh* MeshManager::load(const ArchiveResourceIdentifier& ari)
+Mesh* MeshManager::load(const Path& path, const String& name)
 {
- Resource* resource = ResourceSystem::getSingleton()->open(ari, NxOgre::Enums::ResourceAccess_ReadOnly);
- if (resource == 0)
-  return 0;
- Mesh* mesh = new Mesh(resource);
- mesh->setName(ari.getResourceName());
- mLoadedMeshes.insert(mesh);
- return mesh;
-}
-
-
-Mesh* MeshManager::load(const ArchiveResourceIdentifier& ari, const String& name)
-{
- Resource* resource = ResourceSystem::getSingleton()->open(ari, NxOgre::Enums::ResourceAccess_ReadOnly);
- if (resource == 0)
-  return 0;
- Mesh* mesh = new Mesh(resource);
- mesh->setName(name);
- mLoadedMeshes.insert(mesh);
- return mesh;
-}
-
-Mesh* MeshManager::load(Resource* resource)
-{
- if (resource == 0)
-  return 0;
- Mesh* mesh = new Mesh(resource);
- mesh->setName(resource->getArchiveResourceIdentifier().getResourceName());
- mLoadedMeshes.insert(mesh);
+ Resource* resource = ResourceSystem::getSingleton()->open(path, NxOgre::Enums::ResourceAccess_ReadOnly);
+ Mesh* mesh = load(resource, name);
+ ResourceSystem::getSingleton()->close(resource);
  return mesh;
 }
 
@@ -87,21 +62,38 @@ Mesh* MeshManager::load(Resource* resource, const String& name)
 {
  if (resource == 0)
   return 0;
+ 
  Mesh* mesh = new Mesh(resource);
- mesh->setName(name);
- mLoadedMeshes.insert(mesh);
+ 
+ if (name == BLANK_STRING)
+ {
+  String mesh_name = resource->getPath().getFilenameOnly();
+  if (mesh_name.length() != 0)
+   mesh->setName(mesh_name);
+ }
+ else
+ {
+  mesh->setName(name);
+ }
+ 
+ StringHash meshHash = mesh->getNameHash();
+ mMeshes.insert(meshHash, mesh);
  return mesh;
 }
 
 Mesh* MeshManager::getByName(const String& meshIdentifier)
 {
- ArrayIterator<Mesh*> iterator = mLoadedMeshes.getIterator();
- for (Mesh* mesh = iterator.begin(); mesh = iterator.next(); )
- {
-  if (mesh->getName() == meshIdentifier)
-   return mesh;
- }
- return 0;
+ return getByHash(Functions::StringHash(meshIdentifier));
+}
+
+Mesh* MeshManager::getByHash(const StringHash& hashed_name)
+{
+ return mMeshes.at(hashed_name);
+}
+
+MeshManager::MeshIterator MeshManager::getMeshes()
+{
+ return MeshIterator(mMeshes);
 }
 
                                                                                        

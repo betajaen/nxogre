@@ -27,11 +27,16 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreMSWindowsFileResourceProtocol.h"
+#include "NxOgreFileResourceProtocol.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreArchive.h"
 #include "NxOgreResource.h"
-#include "NxOgreMSWindowsFileArchive.h"
+#include "NxOgreFileArchive.h"
+
+#include "time.h"
+#ifdef _DEBUG
+#include <iostream>
+#endif
 
                                                                                        
 
@@ -40,48 +45,81 @@ namespace NxOgre
 
                                                                                        
 
-MSWindowsFileResourceProtocol::MSWindowsFileResourceProtocol(void)
+FileResourceProtocol::FileResourceProtocol(void)
+{
+ mProtocolName = "file";
+ mProtocolHash = Functions::StringHash(mProtocolName);
+}
+
+FileResourceProtocol::~FileResourceProtocol(void)
 {
 }
 
-MSWindowsFileResourceProtocol::~MSWindowsFileResourceProtocol(void)
+Archive* FileResourceProtocol::openArchive(const String& name, const Path& path)
+{
+#ifdef _DEBUG
+ std::cout << "Opening file archive as '" << name << "' from '" << path.getString() << std::endl;
+#endif
+ return new FileArchive(name, path, this);
+}
+
+void FileResourceProtocol::closeArchive(Archive* archive)
 {
 }
 
-
-Archive* MSWindowsFileResourceProtocol::openArchive(const String& name, const UniformResourceIdentifier& uri)
+String FileResourceProtocol::getProtocol(void) const
 {
- return new MSWindowsFileArchive(name, uri, this);
+ return mProtocolName;
 }
 
-void MSWindowsFileResourceProtocol::closeArchive(Archive* archive)
+StringHash FileResourceProtocol::getProtocolHash(void) const
 {
+ return mProtocolHash;
 }
 
-String MSWindowsFileResourceProtocol::getProtocol(void)
-{
- return "file";
-}
-
-unsigned long MSWindowsFileResourceProtocol::getProtocolHash(void) const
-{
- return Functions::generateHash("file", Enums::HashAlgorithm_DJB2);
-}
-
-bool MSWindowsFileResourceProtocol::isSingleArchive(void) const
+bool FileResourceProtocol::isSingleArchive(void) const
 {
  return false;
 }
 
-bool MSWindowsFileResourceProtocol::usesNamelessResources(void) const
+bool FileResourceProtocol::usesNamelessResources(void) const
 {
  return false;
 }
 
-void MSWindowsFileResourceProtocol::initialise(void)
+void FileResourceProtocol::initialise(void)
 {
  // No default archives, so nothing to do.
 }
+
+String FileResourceProtocol::calculateArchiveName(const Path& path)
+{
+ 
+ // Working Directory.
+ if (path.isAbsolute() == false && path.getNbDirectories() == 0)
+ {
+  return String("working_directory");
+ }
+ 
+ if (path.getNbDirectories() == 0) // Root.
+ {
+
+  if (path.hasDrive() == false)
+  {
+   srand ( time(NULL) );
+   std::stringstream ss;
+   ss << "file_archive_" << std::hex << rand() % 10000000;
+   return ss.str();
+  }
+  else
+  {
+   return path.getDrive();
+  }
+ }
+ 
+ return path.getDirectory();
+}
+
 
                                                                                        
 

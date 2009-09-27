@@ -64,7 +64,7 @@ class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_Kinematic
   friend class Scene;
   friend class Functions::ArrayFunctions<KinematicActor*>::Write;
   
-  template<class T> friend inline void boost::checked_delete(T*);
+  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
   
   public:
   

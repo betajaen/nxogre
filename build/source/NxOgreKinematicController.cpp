@@ -71,7 +71,7 @@ KinematicController::KinematicController(const NxOgre::Vec3 &size, const NxOgre:
  mVolume = NxOgre_New(SimpleBox)();
  mVolume->mCenter = globalPosition;
  mVolume->mExtents = size;
- mVolume->mRotation = Matrix33_Identity;
+ mVolume->mRotation = NxOgre::Matrix33::IDENTITY;
  mVolume->mUser = this;
  mVolume->mType = Enums::SimpleShape_Box;
 

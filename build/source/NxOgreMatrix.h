@@ -95,6 +95,10 @@ class NxOgrePublicClass Matrix33
  
  inline const Real* ptr() const;
  
+ static const Matrix33 ZERO;
+ 
+ static const Matrix33 IDENTITY;
+ 
  protected:
  
   union
@@ -181,6 +185,10 @@ class NxOgrePublicClass Matrix44
  void columnMajor(Real* f_16);
  
  Vec3 operator*(const Vec3& other) const;
+ 
+ static const Matrix44 ZERO;
+ 
+ static const Matrix44 IDENTITY;
  
  protected:
  

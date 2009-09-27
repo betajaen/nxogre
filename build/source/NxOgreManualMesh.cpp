@@ -222,7 +222,7 @@ bool ManualMesh::isValid(void) const
  return true;
 }
 
-Mesh* ManualMesh::end(bool cleanUp, const ArchiveResourceIdentifier& cookingTarget)
+Mesh* ManualMesh::end(bool cleanUp, const Path& cookingTarget)
 {
  
  Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_ReadAndWrite);
@@ -247,7 +247,7 @@ Mesh* ManualMesh::end(bool cleanUp, const ArchiveResourceIdentifier& cookingTarg
  return mesh;
 }
 
-void ManualMesh::endCookOnly(bool cleanUp, ArchiveResourceIdentifier& cookingTarget)
+void ManualMesh::endCookOnly(bool cleanUp, const Path& cookingTarget)
 {
  
  Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_WriteOnly);

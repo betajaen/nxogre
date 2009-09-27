@@ -37,6 +37,10 @@ namespace NxOgre
 
                                                                                        
 
+const Quat Quat::IDENTITY = Quat(1,0,0,0);
+
+                                                                                       
+
 Quat::Quat(void)
 {
  identity();

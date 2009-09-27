@@ -78,10 +78,11 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::
   */
                        void                   throwAssertion(const char* message, const char* file, unsigned int line);
   
-  /** \brief Record an error. But use NxOgre_ThrowError or NxOgreThrowCaseError macro
-             to use this function properly.
-  */
+  // TEMP
                        void                   throwError(const char* message, const char* file, unsigned int line);
+  
+  
+                       void                   throwError(const String&, const char* file, unsigned int line);
   
   /** \brief Record a warning. But use NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro
              to use this function properly.

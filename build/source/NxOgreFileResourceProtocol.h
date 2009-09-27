@@ -35,7 +35,6 @@
 #include "NxOgreCommon.h"
 #include "NxOgreResourceProtocol.h"
 #include "NxOgrePointerClass.h"
-#include "NxOgreArchiveResourceIdentifier.h"
 
                                                                                        
 
@@ -53,26 +52,26 @@ namespace NxOgre
      ResourceSystem::getSingleton()->open("media/mesh.nxs");
     </code>
 */
-class NxOgrePublicClass MSWindowsFileResourceProtocol : public PointerClass<Classes::_MSWindowsFileResourceProtocol>, public ResourceProtocol
+class NxOgrePublicClass FileResourceProtocol : public PointerClass<Classes::_FileResourceProtocol>, public ResourceProtocol
 {
   
   public: // Functions
   
   /** \brief Text
   */
-                                              MSWindowsFileResourceProtocol(void);
+                                              FileResourceProtocol(void);
   
   /** \brief Text
   */
-                                             ~MSWindowsFileResourceProtocol(void);
+                                             ~FileResourceProtocol(void);
 
   /** \brief Text
   */
-                       String           getProtocol(void);
+                       String                 getProtocol(void) const;
   
   /** \brief Text
   */
-                       unsigned long          getProtocolHash(void) const;
+                       StringHash             getProtocolHash(void) const;
   
   /** \brief Is there only one archive by default?
   */
@@ -82,6 +81,16 @@ class NxOgrePublicClass MSWindowsFileResourceProtocol : public PointerClass<Clas
   */
                        bool                   usesNamelessResources(void) const;
   
+  /** \brief Calculates the archive name given by a path
+      \note
+            This is the order it follows to get the name
+             - Relative Path? No Directories?  => "current_directory"
+             - Has Directories? => path.directory(0)
+             - Has No Directories? Has Drive => path.drive()
+             Else:  => file_archive_<random_hex_string>
+  */
+                       String                 calculateArchiveName(const Path&);
+  
   protected: // Functions
   
   /** \brief Open an archive, and parse the contents. An archive being a single folder.
@@ -90,7 +99,7 @@ class NxOgrePublicClass MSWindowsFileResourceProtocol : public PointerClass<Clas
         ResourceSystem::getSingleton()->openArchive("media", "file://C:\Program Files\myGame\media/");
        </code>
   */
-                       Archive*             openArchive(const String&, const UniformResourceIdentifier&);
+                       Archive*               openArchive(const String&, const Path&);
   
   /** \brief Close an archive.
   */
@@ -102,7 +111,9 @@ class NxOgrePublicClass MSWindowsFileResourceProtocol : public PointerClass<Clas
   
   protected: // Variables
   
+                       String                 mProtocolName;
   
+                       StringHash             mProtocolHash;
   
 }; // class ClassName
 

@@ -52,7 +52,7 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
   
   friend class Scene;
   friend class Functions::ArrayFunctions<Volume*>::Write;
-  template<class T> friend inline void boost::checked_delete(T*);
+  template<class T> friend inline void Functions::safe_delete(T*);
   
   public:
   

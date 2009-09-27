@@ -27,8 +27,12 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreMSWindowsFileArchive.h"
-#include "NxOgreMSWindowsFileResource.h"
+#include "NxOgreFileArchive.h"
+#include "NxOgreFileResource.h"
+
+#ifdef _DEBUG
+#include <iostream>
+#endif
 
                                                                                        
 
@@ -37,31 +41,40 @@ namespace NxOgre
 
                                                                                        
 
-MSWindowsFileArchive::MSWindowsFileArchive(const String& name, const UniformResourceIdentifier& uri, ResourceProtocol* protocol)
-: Archive(name, uri, protocol)
+FileArchive::FileArchive(const String& name, const Path& path, ResourceProtocol* protocol)
+: Archive(name, path, protocol)
 {
+#ifdef _DEBUG
+ std::cout << "[+] Opening File Archive '" << mName << "' from " << mPath.getString() << std::endl;
+#endif
 }
 
-MSWindowsFileArchive::~MSWindowsFileArchive(void)
+FileArchive::~FileArchive(void)
 {
- mResources.destroyAll();
+#ifdef _DEBUG
+ std::cout << "[-] Closing File Archive '" << mName << "' from " << mPath.getString() << std::endl;
+#endif
+ mResources.clear();
 }
 
-Resource* MSWindowsFileArchive::open(const ArchiveResourceIdentifier& ari, NxOgre::Enums::ResourceAccess access)
+Resource* FileArchive::open(const Path& path, NxOgre::Enums::ResourceAccess access)
 {
- MSWindowsFileResource* resource = new MSWindowsFileResource(ari, this, access);
+ FileResource* resource = new FileResource(path, this, access);
+ _addResource(resource);
  resource->open();
- mResources.insert(resource);
  return resource;
 }
 
-void MSWindowsFileArchive::close(Resource* resource)
+void FileArchive::close(Resource* resource)
 {
- MSWindowsFileResource* msfile_resource = static_cast<MSWindowsFileResource*>(resource);
- mResources.remove(msfile_resource);
- msfile_resource->close();
- NxOgre_Delete(msfile_resource);
+ if (resource == 0)
+  return;
+ 
+ FileResource* file_resource = static_cast<FileResource*>(resource);
+ file_resource->close();
 
+ _removeResource(resource);
+ 
 }
 
                                                                                        

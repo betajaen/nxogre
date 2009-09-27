@@ -233,7 +233,7 @@ typedef std::vector<Shape*> Shapes;
 
 /** \brief A collection of shapes that belong to a RigidBody (long term storage).
 */
-typedef vector<Shape>::type CollisionModel;
+typedef ptr_vector<Shape> CollisionModel;
 
                                                                                        
 

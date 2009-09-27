@@ -180,13 +180,13 @@ class NxOgrePublicClass ManualMesh
       \param cleanUp  Clear the buffers after cooking.
       \param cookingTarget  Tell PhysX to save to a target, in other words. Save the mesh to a file, save in memory, or to something else.
   */
-  Mesh*                                       end(bool cleanUp = true, const ArchiveResourceIdentifier& cookingTarget = ArchiveResourceIdentifier("memory:"));
+  Mesh*                                       end(bool cleanUp = true, const Path& cookingPath = MEMORY_PATH);
   
   /** \brief Cook the mesh to a ResourceIdentifier target (default is memory).
       \param cleanUp  Clear the buffers after cooking.
       \param cookingTarget  Tell PhysX to save to a target, in other words. Save the mesh to a file, save in memory, or to something else.
   */
-  void                                        endCookOnly(bool cleanUp = true, ArchiveResourceIdentifier& cookingTarget = ArchiveResourceIdentifier("memory:"));
+  void                                        endCookOnly(bool cleanUp = true, const Path& cookingPath = MEMORY_PATH);
   
   protected: // Variables
   
