@@ -31,7 +31,7 @@
 #include "NxOgre.h"
 #include "OGRE3DBody.h"
 #include "OGRE3DKinematicBody.h"
-#include "OGRE3DRigidBodyPrototype.h"
+#include "OGRE3DRigidBodyDescription.h"
 #include "OGRE3DRenderable.h"
 #include "OGRE3DPointRenderable.h"
 #include "Ogre.h"
@@ -60,7 +60,7 @@ OGRE3DRenderSystem::~OGRE3DRenderSystem(void)
   destroyRenderable(mVisualDebuggerRenderable);
  }
  
- mBodies.destroyAll();
+ mBodies.clear();
  mRenderables.destroyAll();
  mPointRenderables.destroyAll();
 }
@@ -70,82 +70,49 @@ NxOgre::Scene* OGRE3DRenderSystem::getScene(void)
  return mScene;
 }
 
-OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shape* shape, NxOgre::Vec3 position, const Ogre::String& meshName,  const NxOgre::RigidBodyDescription& description)
+OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
 {
- // Create a OGRE3DPrototype using the NxOgre_New macro, all NxOgre classes and classes that
- // use PointerClass should use NxOgre_New and NxOgre_Delete.
- OGRE3DRigidBodyPrototype* prototype = NxOgre_New(OGRE3DRigidBodyPrototype)();
+ description.mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(NxOgre::Vec3(pose).as<Ogre::Vector3>(), NxOgre::Quat(pose).as<Ogre::Quaternion>());
+ if (meshName.length())
+  description.mNode->attachObject(mSceneManager->createEntity(getUniqueName("entity"), meshName));
  
- if (prototype->mSceneManager == 0)
-  prototype->mSceneManager = mSceneManager;
+ OGRE3DBody* body = NxOgre_New(OGRE3DBody)(shape, pose, description, this);
  
- // Send the physics stuff from the description into the prototype. This is quite important.
- NxOgre::Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- 
- // We want a dynamic rigid body, that jumps around in the fjords with other dynamic rigid bodies.
- prototype->mType = NxOgre::Enums::RigidBodyType_Dynamic;
+ mBodies.insert(body->getNameHash(), body);
 
- // Copy the position over to the prototype.
- prototype->mGlobalPose.identity();
- prototype->mGlobalPose.set(position);
-
- // Add the shape to the list of shapes in the prototype.
- prototype->mShapes.insert(shape);
-
- // And our bits.
- prototype->mMeshName = meshName;
-
- // Create the body using again the NxOgre_New macro. Passing on the prototype we just created and a copy
- // of the scene pointer. we are using.
- OGRE3DBody* body = NxOgre_New(OGRE3DBody)(prototype, this);
-
- // Since the OGRE3DBody and NxOgre no longer needs the prototype, and we don't either. It's time to clean up.
- NxOgre_Delete(prototype);
-
- // Make a local copy.
- mBodies.insert(body);
-
- // And we are done.
  return body;
 }
 
 
-OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shapes shapes, NxOgre::Vec3 position, const Ogre::String& meshName,  const NxOgre::RigidBodyDescription& description)
+OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shapes& shapes, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
 {
- // Create a OGRE3DPrototype using the NxOgre_New macro, all NxOgre classes and classes that
- // use PointerClass should use NxOgre_New and NxOgre_Delete.
- OGRE3DRigidBodyPrototype* prototype = NxOgre_New(OGRE3DRigidBodyPrototype)();
+ description.mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(NxOgre::Vec3(pose).as<Ogre::Vector3>(), NxOgre::Quat(pose).as<Ogre::Quaternion>());
+ if (meshName.length())
+  description.mNode->attachObject(mSceneManager->createEntity(getUniqueName("entity"), meshName));
  
- if (prototype->mSceneManager == 0)
-  prototype->mSceneManager = mSceneManager;
+ OGRE3DBody* body = NxOgre_New(OGRE3DBody)(shapes, pose, description, this);
  
- // Send the physics stuff from the description into the prototype. This is quite important.
- NxOgre::Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- 
- // We want a dynamic rigid body, that jumps around in the fjords with other dynamic rigid bodies.
- prototype->mType = NxOgre::Enums::RigidBodyType_Dynamic;
+ mBodies.insert(body->getNameHash(), body);
 
- // Copy the position over to the prototype.
- prototype->mGlobalPose.identity();
- prototype->mGlobalPose.set(position);
+ return body;
+}
 
- // Copy the shapes in the prototype.
- prototype->mShapes = shapes;
+OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description)
+{
 
- // And our bits.
- prototype->mMeshName = meshName;
+ OGRE3DBody* body = NxOgre_New(OGRE3DBody)(shape, pose, description, this);
+ mBodies.insert(body->getNameHash(), body);
 
- // Create the body using again the NxOgre_New macro. Passing on the prototype we just created and a copy
- // of the scene pointer. we are using.
- OGRE3DBody* body = NxOgre_New(OGRE3DBody)(prototype, this);
+ return body;
+}
 
- // Since the OGRE3DBody and NxOgre no longer needs the prototype, and we don't either. It's time to clean up.
- NxOgre_Delete(prototype);
 
- // Make a local copy.
- mBodies.insert(body);
+OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shapes& shapes, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description)
+{
 
- // And we are done.
+ OGRE3DBody* body = NxOgre_New(OGRE3DBody)(shapes, pose, description, this);
+ mBodies.insert(body->getNameHash(), body);
+
  return body;
 }
 
@@ -154,9 +121,7 @@ void OGRE3DRenderSystem::destroyBody(OGRE3DBody* body)
  if (body == 0 || body->getClassType() != _OGRE3DBody)
   return;
  
- mBodies.remove(body);
- 
- NxOgre_Delete(body);
+ mBodies.erase(body->getNameHash());
 }
 
 OGRE3DRenderable* OGRE3DRenderSystem::createRenderable(NxOgre::Enums::RenderableType type, const Ogre::String& materialName)
@@ -175,43 +140,17 @@ void OGRE3DRenderSystem::destroyRenderable(OGRE3DRenderable* renderable)
  NxOgre_Delete(renderable);
 }
 
-OGRE3DKinematicBody* OGRE3DRenderSystem::createKinematicBody(NxOgre::Shape* shape, NxOgre::Vec3 position, const Ogre::String& meshName, const NxOgre::RigidBodyDescription& description)
+OGRE3DKinematicBody* OGRE3DRenderSystem::createKinematicBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
 {
- // Create a OGRE3DPrototype using the NxOgre_New macro, all NxOgre classes and classes that
- // use PointerClass should use NxOgre_New and NxOgre_Delete.
- OGRE3DRigidBodyPrototype* prototype = NxOgre_New(OGRE3DRigidBodyPrototype)();
+ description.mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(NxOgre::Vec3(pose).as<Ogre::Vector3>(), NxOgre::Quat(pose).as<Ogre::Quaternion>());
+ if (meshName.length())
+  description.mNode->attachObject(mSceneManager->createEntity(getUniqueName("entity"), meshName));
  
- if (prototype->mSceneManager == 0)
-  prototype->mSceneManager = mSceneManager;
+ OGRE3DKinematicBody* kb = NxOgre_New(OGRE3DKinematicBody)(shape, pose, description, this);
  
- // Send the physics stuff from the description into the prototype. This is quite important.
- NxOgre::Functions::PrototypeFunctions::RigidBodyDescriptionToRigidBodyPrototype(description, prototype);
- 
- // We want a kinematic rigid body, so it can laugh at the other bodies as it defies gravity and ignores conventional forces.
- prototype->mType = NxOgre::Enums::RigidBodyType_Kinematic;
+ mKinematicBodies.insert(kb->getNameHash(), kb);
 
- // Copy the position over to the prototype.
- prototype->mGlobalPose.identity();
- prototype->mGlobalPose.set(position);
-
- // Add the shape to the list of shapes in the prototype.
- prototype->mShapes.insert(shape);
-
- // And our bits.
- prototype->mMeshName = meshName;
-
- // Create the body using again the NxOgre_New macro. Passing on the prototype we just created and a copy
- // of the scene pointer. we are using.
- OGRE3DKinematicBody* kinematicBody = NxOgre_New(OGRE3DKinematicBody)(prototype, this);
-
- // Since the OGRE3DBody and NxOgre no longer needs the prototype, and we don't either. It's time to clean up.
- NxOgre_Delete(prototype);
-
- // Make a local copy.
- mKinematicBodies.insert(kinematicBody);
-
- // And we are done.
- return kinematicBody;
+ return kb;
 }
 
 void  OGRE3DRenderSystem::destroyKinematicBody(OGRE3DKinematicBody* kinematicBody)
@@ -219,9 +158,8 @@ void  OGRE3DRenderSystem::destroyKinematicBody(OGRE3DKinematicBody* kinematicBod
  if (kinematicBody == 0 || kinematicBody->getClassType() != _OGRE3DKinematicBody)
   return;
  
- mKinematicBodies.remove(kinematicBody);
+ mKinematicBodies.erase(kinematicBody->getNameHash());
  
- NxOgre_Delete(kinematicBody);
 }
 
 bool OGRE3DRenderSystem::advance(float, const NxOgre::Enums::Priority&)

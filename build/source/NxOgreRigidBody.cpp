@@ -309,9 +309,9 @@ void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescri
 
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = &body_description;
- body_description.flags |= NX_BF_KINEMATIC;
- 
+
  Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+  body_description.flags |= NX_BF_KINEMATIC;
  
  NxShapeDesc* shape_description = shape->create();
  if (shape_description)
@@ -351,10 +351,12 @@ void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescri
 
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = &body_description;
- body_description.flags |= NX_BF_KINEMATIC;
 
  Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
-  for (unsigned int i=0;i < shapes.size(); i++)
+
+ body_description.flags |= NX_BF_KINEMATIC;
+
+ for (unsigned int i=0;i < shapes.size(); i++)
  {
   NxShapeDesc* shape_description = shapes[i]->create();
   if (shape_description)

@@ -62,6 +62,7 @@ void AccumulativeSceneTimer::simulate(float user_deltaTime)
  TimeStep& ts = mParent->getTimeStep();
  ts.mActual = user_deltaTime;
  ts.mSubSteps = 0;
+ 
  while (mAccumulator >= mExpectedTime)
  {
   ts.mSubSteps++;

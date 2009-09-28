@@ -30,6 +30,8 @@
                                                                                        
 
 #include "OGRE3DCommon.h"
+#include "OGRE3DRigidBodyDescription.h"
+
 #include "NxOgre.h"
 #include "NxOgreArray.h"
 #include "Ogre.h"
@@ -39,14 +41,22 @@
 class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3DRenderSystem>, public NxOgre::TimeListener
 {
   public:
-
+     
+     typedef NxOgre::ptr_multihashmap<OGRE3DBody>                       Bodies;
+     
+     typedef NxOgre::ptr_multihashmap<OGRE3DBody>::iterator_t           BodyIterator;
+     
+     typedef NxOgre::ptr_multihashmap<OGRE3DKinematicBody>              KinematicBodies;
+     
+     typedef NxOgre::ptr_multihashmap<OGRE3DKinematicBody>::iterator_t  KinematicBodyIterator;
+     
      /** \brief OGRE3DRenderSystem constructor.
          \param Scene* Scene to work with
          \param SceneManager SceneManager, or 0 to use the first available.
          
      */
      OGRE3DRenderSystem(NxOgre::Scene*, Ogre::SceneManager* = ::Ogre::Root::getSingletonPtr()->getSceneManagerIterator().getNext());
-
+     
      /** \brief
      */
     ~OGRE3DRenderSystem(void);
@@ -57,11 +67,19 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      
      /** \brief Create a Body.
      */
-     OGRE3DBody*                          createBody(NxOgre::Shape*, NxOgre::Vec3 position, const Ogre::String& meshName, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     OGRE3DBody*                          createBody(NxOgre::Shape*, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Create a Body.
      */
-     OGRE3DBody*                          createBody(NxOgre::Shapes, NxOgre::Vec3 position, const Ogre::String& meshName, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     OGRE3DBody*                          createBody(NxOgre::Shapes&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
+     
+     /** \brief Create a Body; alternate helper function, Which creates the SceneNode and Entity "meshName" for you.
+     */
+     OGRE3DBody*                          createBody(NxOgre::Shape*, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, const Ogre::String& meshName = Ogre::StringUtil::BLANK, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
+     
+     /** \brief Create a Body; alternate helper function, Which creates the SceneNode and Entity "meshName" for you.
+     */
+     OGRE3DBody*                          createBody(NxOgre::Shapes&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, const Ogre::String& meshName = Ogre::StringUtil::BLANK, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Destroy a Body.
      */
@@ -89,11 +107,27 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      
      /** \brief Create a KinematicBody, a KinematicActor as a Body.
      */
-     OGRE3DKinematicBody*                 createKinematicBody(NxOgre::Shape*, NxOgre::Vec3 position, const Ogre::String& meshName, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     OGRE3DKinematicBody*                 createKinematicBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Destroy a KinematicBody.
      */
      void                                 destroyKinematicBody(OGRE3DKinematicBody*);
+     
+     /** \brief Helper function to create a cloth using the OGRE3DRenderable
+     */
+     NxOgre::Cloth*                       createCloth(const NxOgre::ClothDescription&, const Ogre::String& material = "BaseWhiteNoLighting");
+     
+     /** \brief Helper function to destroya cloth with a OGRE3DRenderable
+     */
+     void                                 destroyCloth(NxOgre::Cloth*);
+     
+     /** \brief Helper function to create a soft body using the OGRE3DRenderable
+     */
+     NxOgre::SoftBody*                    createSoftBody(const NxOgre::SoftBodyDescription&, const Ogre::String& material = "BaseWhiteNoLighting");
+     
+     /** \brief Helper function to destroya soft body with a OGRE3DRenderable
+     */
+     void                                 destroySoftBody(NxOgre::SoftBody*);
      
      /** \brief Helper function for Debug Visualisation.
      */
@@ -102,7 +136,7 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      /** \brief Is the Visual Debuggger active?
      */
      bool                                 hasDebugVisualisation(void) const;
-
+     
      /** \internal Do not call.
      */
      bool                                 advance(float user_deltaTime, const NxOgre::Enums::Priority&);
@@ -110,48 +144,32 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      /** \brief
      */
      Ogre::SceneManager*                  getSceneManager();
-
+     
      /** \brief Create an unique name
      */
      Ogre::String                         getUniqueName(const Ogre::String& prefix) const;
-
-     /** \brief Helper function to create a cloth using the OGRE3DRenderable
-     */
-     NxOgre::Cloth*                       createCloth(const NxOgre::ClothDescription&, const Ogre::String& material = "BaseWhiteNoLighting");
-
-     /** \brief Helper function to destroya cloth with a OGRE3DRenderable
-     */
-     void                                 destroyCloth(NxOgre::Cloth*);
-
-     /** \brief Helper function to create a soft body using the OGRE3DRenderable
-     */
-     NxOgre::SoftBody*                    createSoftBody(const NxOgre::SoftBodyDescription&, const Ogre::String& material = "BaseWhiteNoLighting");
-
-     /** \brief Helper function to destroya soft body with a OGRE3DRenderable
-     */
-     void                                 destroySoftBody(NxOgre::SoftBody*);
-
+     
   protected:
      
-     NxOgre::Scene*                       mScene;
+     NxOgre::Scene*                        mScene;
      
-     Ogre::SceneManager*                  mSceneManager;
+     Ogre::SceneManager*                   mSceneManager;
+     
+     Bodies                                mBodies;
 
-     NxOgre::Array<OGRE3DBody*>           mBodies;
+     KinematicBodies                       mKinematicBodies;
 
-     NxOgre::Array<OGRE3DKinematicBody*>  mKinematicBodies;
-
-     NxOgre::Array<OGRE3DRenderable*>     mRenderables;
+     NxOgre::Array<OGRE3DRenderable*>      mRenderables;
 
      NxOgre::Array<OGRE3DPointRenderable*> mPointRenderables;
      
-     OGRE3DRenderable*                    mVisualDebuggerRenderable;
+     OGRE3DRenderable*                     mVisualDebuggerRenderable;
      
-     Ogre::SceneNode*                     mVisualDebuggerNode;
+     Ogre::SceneNode*                      mVisualDebuggerNode;
 
-     bool                                 mVisualDebuggerShown;
+     bool                                  mVisualDebuggerShown;
      
-     static unsigned int                  mUniqueIdentifier;
+     static unsigned int                   mUniqueIdentifier;
 };
 
                                                                                        

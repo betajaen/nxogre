@@ -49,6 +49,7 @@ class NxOgrePublicClass KinematicController : public PointerClass<Classes::_Kine
   
   friend class Scene;
   friend class Functions::ArrayFunctions<KinematicController*>::Write;
+  template<class T> friend inline void Functions::safe_delete(T*);
   
   public: // Functions
   
@@ -64,7 +65,7 @@ class NxOgrePublicClass KinematicController : public PointerClass<Classes::_Kine
   
   /** \brief
   */
-  Vec3                                       getPosition(void) const;
+  Vec3                                        getPosition(void) const;
   
   protected: // Functions
   

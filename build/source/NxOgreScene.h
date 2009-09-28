@@ -38,6 +38,7 @@
 #include "NxOgreSceneGeometry.h"
 #include "NxOgreKinematicActor.h"
 #include "NxOgreVolume.h"
+#include "NxOgreKinematicController.h"
 #include "NxOgreShape.h"
 
 #include "NxOgrePointerClass.h"
@@ -70,17 +71,20 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   public: // Functions
   
-  typedef  ptr_multihashmap<Actor>                          Actors;
-  typedef  ptr_multihashmap<Actor>::iterator_t           ActorIterator;
+  typedef  ptr_multihashmap<Actor>                            Actors;
+  typedef  ptr_multihashmap<Actor>::iterator_t                ActorIterator;
 
-  typedef  ptr_multihashmap<SceneGeometry>                  SceneGeometries;
-  typedef  ptr_multihashmap<SceneGeometry>::iterator_t   SceneGeometryIterator;
+  typedef  ptr_multihashmap<SceneGeometry>                    SceneGeometries;
+  typedef  ptr_multihashmap<SceneGeometry>::iterator_t        SceneGeometryIterator;
 
-  typedef  ptr_multihashmap<KinematicActor>                 KinematicActors;
-  typedef  ptr_multihashmap<KinematicActor>::iterator_t  KinematicActorIterator;
+  typedef  ptr_multihashmap<KinematicActor>                   KinematicActors;
+  typedef  ptr_multihashmap<KinematicActor>::iterator_t       KinematicActorIterator;
 
-  typedef  ptr_multihashmap<Volume>                         Volumes;
-  typedef  ptr_multihashmap<Volume>::iterator_t          VolumeIterator;
+  typedef  ptr_multihashmap<KinematicController>              KinematicControllers;
+  typedef  ptr_multihashmap<KinematicController>::iterator_t  KinematicControllerIterator;
+
+  typedef  ptr_multihashmap<Volume>                           Volumes;
+  typedef  ptr_multihashmap<Volume>::iterator_t               VolumeIterator;
 
   
   /** \brief Get the name of the Scene if it has one; otherwise NULL is returned.
@@ -353,7 +357,7 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   
   /** \internal Master kinematic controllers array
   */
-                       Array<KinematicController*>      mKinematicControllers;
+                       KinematicControllers             mKinematicControllers;
   
   /** \internal Master volumes array
   */

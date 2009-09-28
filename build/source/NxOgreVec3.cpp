@@ -28,6 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreVec3.h"
+#include "NxOgreMath.h"
 
                                                                                        
 
@@ -36,7 +37,20 @@ namespace NxOgre
 
                                                                                        
 
-const NxOgre::Vec3        NxOgre::Vec3::ZERO(0,0,0);
+const Vec3        Vec3::ZERO(0, 0, 0);
+
+const Vec3        Vec3::UNIT_X(1, 0, 0);
+
+const Vec3        Vec3::UNIT_Y(0, 1, 0);
+
+const Vec3        Vec3::UNIT_Z(0, 0, 1);
+
+const Vec3        Vec3::NEGATIVE_UNIT_X(-1, 0, 0);
+
+const Vec3        Vec3::NEGATIVE_UNIT_Y( 0,-1, 0);
+
+const Vec3        Vec3::NEGATIVE_UNIT_Z( 0, 0,-1);
+
 
 Vec3::Vec3()
 {
@@ -265,6 +279,11 @@ void Vec3::operator*=(const Real& s)
  x *= s;
  y *= s;
  z *= s;
+}
+
+Vec3 Vec3::operator*=(const Quat& other)
+{
+ return Vec3(*this) * other;
 }
 
 // This function was adopted from the OGRE3D Library, Quaternion class from http://www.ogre3d.org

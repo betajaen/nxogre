@@ -1,4 +1,4 @@
-/** File: OGRE3DRigidBodyPrototype.cpp
+/** File: OGRE3DRigidBodyDescription.cpp
     Created on: 9-Nov-08
     Author: Robin Southern "betajaen"
     
@@ -27,51 +27,47 @@
 
                                                                                        
 
-#include "OGRE3DRigidBodyPrototype.h"
+#include "OGRE3DRigidBodyDescription.h"
 
                                                                                        
 
-OGRE3DRigidBodyPrototype::OGRE3DRigidBodyPrototype(void)
+OGRE3DRigidBodyDescription::OGRE3DRigidBodyDescription(void)
 {
  reset();
 }
 
-OGRE3DRigidBodyPrototype::~OGRE3DRigidBodyPrototype(void)
+OGRE3DRigidBodyDescription::~OGRE3DRigidBodyDescription(void)
 {
  // Nothing to do in here.
 }
 
-void OGRE3DRigidBodyPrototype::reset(void)
+void OGRE3DRigidBodyDescription::reset(void)
 {
+ 
  // Reset the physics bits.
- RigidBodyPrototype::reset();
-
+ RigidBodyDescription::reset();
+ 
  // Reset the visual bits.
- mSceneManager   = NULL;
- mNode           = NULL;
- mEntity         = NULL;
- mRenderPriority = NxOgre::Enums::Priority_Medium;
-
+ mNode                         = 0;
+ mSceneNodeDestructorBehaviour = OGRE3DSceneNodeDestructorBehaviour_Destroy;
+ mRenderPriority               = NxOgre::Enums::Priority_Medium;
+ 
 }
 
-bool OGRE3DRigidBodyPrototype::valid(void)
+bool OGRE3DRigidBodyDescription::valid(void)
 {
- // Check to see if the physics bits are valid.
- if (!RigidBodyPrototype::valid())
+ // Check to see if the physics bits are valid or not.
+ if (!RigidBodyDescription::valid())
   return false;
 
  // If there is an entity; there must be a node.
- if (mEntity && mNode == 0)
+ if (mNode == 0)
   return false;
-
- // Can't have an entity and a meshname.
- if (mEntity && mMeshName.size())
+ 
+ // SceneNodeDestructorBehaviour can't be inherit.
+ if (mSceneNodeDestructorBehaviour == OGRE3DSceneNodeDestructorBehaviour_Inherit)
   return false;
-
- // Must have a scene manager.
- if (mSceneManager == NULL)
-  return false;
-
+ 
  // If we reached here then everything is okay.
  return true;
 }

@@ -28,7 +28,7 @@
                                                                                        
 
 #include "OGRE3DKinematicBody.h"
-#include "OGRE3DRigidBodyPrototype.h"
+#include "OGRE3DRigidBodyDescription.h"
 #include "OGRE3DRenderSystem.h"
 #include "Ogre.h"
 #include "NxOgreFunctions.h"
@@ -38,41 +38,26 @@ unsigned int OGRE3DKinematicBody::mNextBodyID = 0;
 
                                                                                        
 
-OGRE3DKinematicBody::OGRE3DKinematicBody(OGRE3DRigidBodyPrototype* prototype, OGRE3DRenderSystem* rendersystem)
+OGRE3DKinematicBody::OGRE3DKinematicBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, const OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
 : KinematicActor(rendersystem->getScene()),
                                    // Take notice of the constructor we are using, it's designed for
                                    // classes that inherit from Actor. 
- mNode(0), mEntity(0), mSceneManager(0), mRenderPriority(prototype->mRenderPriority)
+ mNode(0),
+ mSceneManager(0),
+ mRenderPriority(description.mRenderPriority), 
+ mSceneNodeDestructorBehaviour(description.mSceneNodeDestructorBehaviour)
 {
  // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated
  // as a normal RigidBody. 
  
- create(prototype, rendersystem->getScene(), &mShapes);
+ createDynamic(pose, description, rendersystem->getScene(), shape);
  
  // Since NxOgre doesn't know or care about our Ogre stuff, we copy it over. This is the correct time to create
  // or turn on things related to the OGRE3DKinematicBody.
  
- mSceneManager = prototype->mSceneManager;
+ mSceneManager = rendersystem->getSceneManager();
  
-
- if (prototype->mNode != NULL)
- {
-  mNode = prototype->mNode;
-  mSelfCreated = false;
- }
- else
- {
-  // Matrix's are faster than vectors and quaternions.
-  Ogre::Matrix4 m4 = toMatrix44(getGlobalPose());
-  mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(m4.getTrans(), m4.extractQuaternion());
-  mSelfCreated = true;
-
-  if (mEntity == NULL)
-  {
-   mEntity = mSceneManager->createEntity(mNode->getName() + "-Entity", prototype->mMeshName);
-   mNode->attachObject(mEntity);
-  }
- }
+ mNode = description.mNode;
  
  // And let the time controller, that this is a timelistener that needs to be listened.
  NxOgre::TimeController::getSingleton()->addTimeListener(this, mRenderPriority);
@@ -84,20 +69,38 @@ OGRE3DKinematicBody::~OGRE3DKinematicBody()
  NxOgre::TimeController::getSingleton()->removeTimeListener(this, mRenderPriority);
  
  // In here, we would clean up any rendering stuff.
- 
- // Remove all attachments.
- if (mNode->numAttachedObjects())
-  mNode->detachAllObjects();
- 
- // Destroy all child scenenodes.
- if (mNode->numChildren())
-  mNode->removeAndDestroyAllChildren();
- 
- // Destroy this Scene node.
- mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
- mNode = 0;
+ _destructNode(mSceneNodeDestructorBehaviour);
  
  // We leave the physics stuff to the Actors destructor, including freeing the shapes.
+}
+
+void OGRE3DKinematicBody::_destructNode(OGRE3DSceneNodeDestructorBehaviour behaviour)
+{
+ 
+ if (behaviour == OGRE3DSceneNodeDestructorBehaviour_Inherit)
+  behaviour = mSceneNodeDestructorBehaviour;
+ 
+ if (behaviour == OGRE3DSceneNodeDestructorBehaviour_Destroy)
+ {
+  // Remove all attachments.
+  if (mNode->numAttachedObjects())
+   mNode->detachAllObjects();
+  
+  // Destroy all child scenenodes.
+  if (mNode->numChildren())
+   mNode->removeAndDestroyAllChildren();
+  
+  // Destroy this Scene node.
+  mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+  mNode = 0;
+ }
+ else
+ {
+  mNode->getParentSceneNode()->removeChild(mNode);
+  mNode = 0;
+ }
+ 
+ 
 }
 
 unsigned int OGRE3DKinematicBody::getClassType() const
@@ -115,10 +118,6 @@ Ogre::SceneNode* OGRE3DKinematicBody::getSceneNode()
  return mNode;
 }
 
-Ogre::Entity* OGRE3DKinematicBody::getEntity()
-{
- return mEntity;
-}
 
 bool OGRE3DKinematicBody::advance(float, const NxOgre::Enums::Priority&)
 {

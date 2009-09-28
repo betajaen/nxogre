@@ -55,7 +55,12 @@ Quat::Quat(const Real& w_val, const Real& x_val, const Real& y_val, const Real& 
 {
  setWXYZ(w_val, x_val, y_val, z_val);
 }
- 
+
+Quat::Quat(const float& rad, const Vec3& vec)
+{
+ fromAngleAxis(rad, vec);
+}
+
 Quat::Quat(const Matrix33& other)
 {
  set(other);
@@ -244,6 +249,17 @@ Quat Quat::operator=(const Matrix44& other)
   y = -y;
   z = -z;
  }
+
+ void Quat::fromAngleAxis(const float& rad, const Vec3& axis)
+ {
+  float half_rad = rad * 0.5f;
+  float s = Math::sin(half_rad);
+  w = Math::cos(s);
+  x = axis.x;
+  y = axis.y;
+  z = axis.z;
+ }
+ 
 
  void Quat::invert()
  {
@@ -496,6 +512,11 @@ Quat Quat::operator=(const Matrix44& other)
   Quat r;
   divide(r, *this, scalar);
   set(r);
+ }
+
+ Quat Quat::operator-() const
+ {
+  return Quat(-w, -x, -y, -z);
  }
 
                                                                                        

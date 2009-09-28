@@ -139,7 +139,7 @@ Scene::~Scene(void)
   mActors.clear();
   mSceneGeometries.clear();
   mKinematicActors.clear();
-  mKinematicControllers.destroyAll();
+  mKinematicControllers.clear();
   mVolumes.clear();
   mMaterials.destroyAll();
   mCloths.destroyAll();
@@ -294,7 +294,8 @@ KinematicActor* Scene::createKinematicActor(Shapes& shapes, const Matrix44& pose
 KinematicController* Scene::createKinematicController(const Vec3& size, const Vec3& globalPosition)
 {
  KinematicController* controller = NxOgre_New(KinematicController)(size, globalPosition, this);
- mKinematicControllers.insert(controller);
+ StringHash hash = controller->getNameHash();
+ mKinematicControllers.insert(hash, controller);
  return controller;
 }
 

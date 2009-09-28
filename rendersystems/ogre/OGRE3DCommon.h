@@ -48,10 +48,16 @@ enum
 {
   _OGRE3DRenderSystem  = ::NxOgre::Classes::RENDERSYSTEMS_CLASSES_BEGIN + 100,
   _OGRE3DBody,
-  _OGRE3DBodyPrototype,
   _OGRE3DRenderable,
   _OGRE3DPointRenderable,
   _OGRE3DKinematicBody,
+};
+
+enum OGRE3DSceneNodeDestructorBehaviour
+{
+ OGRE3DSceneNodeDestructorBehaviour_Destroy,  //< \brief Destroy the SceneNode, it's children, and it's movable objects.
+ OGRE3DSceneNodeDestructorBehaviour_Remove,   //< \brief Remove itself from the Root SceneNode.
+ OGRE3DSceneNodeDestructorBehaviour_Inherit   //< \brief Use the behaviour as given by the class.
 };
 
                                                                                        
@@ -59,7 +65,7 @@ enum
 class OGRE3DRenderSystem;
 class OGRE3DBody;
 class OGRE3DKinematicBody;
-class OGRE3DRigidBodyPrototype;
+class OGRE3DRigidBodyDescription;
 class OGRE3DRenderable;
 class OGRE3DPointRenderable;
 

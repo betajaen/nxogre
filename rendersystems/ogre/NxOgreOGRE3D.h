@@ -31,7 +31,7 @@
 
 #include "OGRE3DBody.h"
 #include "OGRE3DKinematicBody.h"
-#include "OGRE3DRigidBodyPrototype.h"
+#include "OGRE3DRigidBodyDescription.h"
 #include "OGRE3DRenderSystem.h"
 #include "OGRE3DRenderable.h"
 #include "OGRE3DPointRenderable.h"

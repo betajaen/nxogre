@@ -78,7 +78,7 @@ GLUTBody* GLUTRenderSystem::createGLUTBody(NxOgre::Shape* shape, const NxOgre::M
 
 void GLUTRenderSystem::drawBodies()
 {
- for (GLUTBodies::iterator_t body = mBodies.iterator(); body != body.end(); body++)
+ for (GLUTBodies::iterator_t body = mBodies.iterator(); body != body.end(); ++body)
   body->render();
 }
 

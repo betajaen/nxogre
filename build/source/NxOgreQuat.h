@@ -42,7 +42,7 @@ namespace NxOgre
 
 class Matrix33;
 class Matrix44;
-
+class Vec3;
 
 class NxOgrePublicClass Quat
 {
@@ -55,6 +55,8 @@ class NxOgrePublicClass Quat
 
  Quat(const Real& w_val, const Real& x_val, const Real& y_val, const Real& z_val);
   
+ Quat(const float& rad, const Vec3&);
+
  Quat(const Matrix33& other);
   
  Quat(const Matrix44& other);
@@ -103,7 +105,9 @@ class NxOgrePublicClass Quat
  void conj();
 
  void invert();
-
+ 
+ void fromAngleAxis(const float& rad, const Vec3& axis);
+ 
  static Quat invert(const Quat& original);
 
  bool nearly(const Quat& a, const Quat& b, const Real& tolerance = 1E-4);
@@ -155,6 +159,8 @@ class NxOgrePublicClass Quat
  inline Quat operator / ( const Real& scalar);
 
  inline void operator /=( const Real& scalar);
+
+ inline Quat operator-() const;
 
  template<class user_wxyz_vector_type>
  inline user_wxyz_vector_type as() const

@@ -1,4 +1,4 @@
-/** File: OGRE3DBody.h
+/** File: OGRE3DRigidBodyDescription.h
     Created on: 25-Nov-08
     Author: Robin Southern "betajaen"
     
@@ -24,44 +24,44 @@
     THE SOFTWARE.
 */
 
-#ifndef OGRE3D_BODYPROTOTYPE_H
-#define OGRE3D_BODYPROTOTYPE_H
+#ifndef OGRE3D_BODYDESCRIPTION_H
+#define OGRE3D_BODYDESCRIPTION_H
 
                                                                                        
 
 #include "NxOgre.h"
-#include "NxOgreRigidBodyPrototype.h"
+#include "NxOgreRigidBodyDescription.h"
 #include "OGRE3DCommon.h"
 
                                                                                        
 
 
-/** \brief A OGRE3DPrototype is basically a RigidBodyPrototype containg all the physics data
-           collision model and global pose of an RigidBody; but now with some data that describes
-           how the rigid body looks on the screen. Using a extension of a RigidBody is one way
-           of doing this, in some cases your implementation of NxOgre may require something more
-           specific or different in either way - you will need a RigidBodyPrototype. It's just
-           how much you use it is important.
+/** \brief A OGRE3DBodyDescription is basically a RigidBodyDescription containg all the
+           physics data collision model and global pose of an RigidBody; but now with some data
+           that describes how the rigid body looks on the screen. Using a extension of a RigidBody
+           is one way of doing this, in some cases your implementation of NxOgre may require
+           something more specific or different, either way - you will need a RigidBodyDescription.
+           It's just how much you use it is important.
+    \example
+      <code>
+        OGRE3DRigidBodyDescription description;
+        description.mMass = 100.0f; 
+        description.mMeshName = "ogrehead.mesh";
+        
+        OGRE3DBody* body = mOgreRenderSystem->createBody(..., description);
+      </code>
 */
-class OGRE3DExportClass OGRE3DRigidBodyPrototype : public NxOgre::PointerClass<_OGRE3DBodyPrototype>, public NxOgre::RigidBodyPrototype
+class OGRE3DExportClass OGRE3DRigidBodyDescription : public NxOgre::RigidBodyDescription
 {
   public:
-
-  /** \brief Required since RigidBodyPrototype is also a "PointerClass".
-  */
- using ::NxOgre::PointerClass<_OGRE3DBodyPrototype>::operator new;
-
-  /** \brief Required since RigidBodyPrototype is also a "PointerClass".
-  */
- using ::NxOgre::PointerClass<_OGRE3DBodyPrototype>::operator delete;
-
+  
   /** \brief OGRE3DPrototype constructor
   */
-                                              OGRE3DRigidBodyPrototype(void);
+                                              OGRE3DRigidBodyDescription(void);
   
   /** \brief OGRE3DPrototype destructor
   */
-                                             ~OGRE3DRigidBodyPrototype(void);
+                                             ~OGRE3DRigidBodyDescription(void);
   
   /** \brief Reset the RigidBodyPrototype and OGRE3D bits to it's default state.
   */
@@ -70,26 +70,19 @@ class OGRE3DExportClass OGRE3DRigidBodyPrototype : public NxOgre::PointerClass<_
   /** \brief Does the prototype's variables are in the range of acceptable values?
   */
                         bool                  valid(void);
-
-  /** \brief SceneManager to use, or NULL to use the RenderSystems
-  */
-  Ogre::SceneManager*  mSceneManager;
-
+  
   /** \brief SceneNode to use, or NULL to create.
   */
-  Ogre::SceneNode*     mNode;
+  Ogre::SceneNode*                            mNode;
   
-  /** \brief Entity to attach to SceneNode or NULL for none.
+  /** \brief What to do the Node when the Body is destroyed.
+      \default OGRE3DSceneNodeDestructorBehaviour_Destroy
   */
-  Ogre::Entity*        mEntity;
-  
-  /** \brief Mesh name otherwise use mEntity.
-  */
-  Ogre::String         mMeshName;
+  OGRE3DSceneNodeDestructorBehaviour          mSceneNodeDestructorBehaviour;
 
   /** \brief Drawing priority
   */
-  NxOgre::Enums::Priority  mRenderPriority;
+  NxOgre::Enums::Priority                     mRenderPriority;
 };
 
                                                                                        

@@ -32,7 +32,6 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreMath.h"
 #include "NxOgreMatrix.h"
 
                                                                                        
@@ -147,6 +146,8 @@ class NxOgrePublicClass Vec3
 
   inline void operator*=(const Vec3& other);
 
+  inline Vec3 operator*=(const Quat& other);
+
   inline Vec3 operator*(const Real& s);
 
   inline void operator*=(const Real& s);
@@ -200,6 +201,19 @@ class NxOgrePublicClass Vec3
   static Vec3 random(float x0, float x1, float y0, float y1, float z0, float z1);
 
   static const Vec3 ZERO;
+
+  static const Vec3 UNIT_X;
+
+  static const Vec3 UNIT_Y;
+
+  static const Vec3 UNIT_Z;
+
+  static const Vec3 NEGATIVE_UNIT_X;
+
+  static const Vec3 NEGATIVE_UNIT_Y;
+
+  static const Vec3 NEGATIVE_UNIT_Z;
+
 
   Real x, y, z;
   

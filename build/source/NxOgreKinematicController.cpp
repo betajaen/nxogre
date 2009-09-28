@@ -83,20 +83,16 @@ KinematicController::KinematicController(const NxOgre::Vec3 &size, const NxOgre:
  mShape = NxOgre_New(Box)(boxSize);
 
  RigidBodyDescription description;
+ description.mMass = 10.0f;
  
  createKinematicActor(globalPosition, description, mScene, mShape);
-
- //Enums::RigidBodyType, const RigidBodyDescription&, Scene* scene, Shapes& shape
- //create(Enums::RigidBodyType_Kinematic, description, mScene, globalPosition);
- //create();
- //create(prototype, mScene, &mShapes);
+ 
 
 }
 
 KinematicController::~KinematicController(void)
 {
  destroy();
- NxOgre_Delete(mShape);
 
  mScene->getScene()->releaseSweepCache(mCache);
  mCache = 0;
