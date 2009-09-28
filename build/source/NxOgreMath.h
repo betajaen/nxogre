@@ -34,6 +34,10 @@
 #include "NxOgreStable.h"
 #include "math.h"
 #include "NxOgreVec2.h"
+#include "NxOgreVec3.h"
+#include "NxOgreQuat.h"
+#include "NxOgreMatrix.h"
+
 
                                                                                        
 
@@ -304,6 +308,43 @@ inline float random(float x1, float x2)
  float r = random();
  float s = x2 - x1;
  return float(r * s + x1);
+}
+
+inline Quat nlerp(float alpha, Quat& a, Quat& b, bool shortest)
+{
+ Quat out, t;
+ float cosine = a.dot(b);
+ out = a;
+ 
+ if (cosine < 0.0f && shortest)
+  t = -b;
+ else
+  t = b;
+ 
+ t -= a;
+ t *= alpha;
+ out += t;
+
+ out.normalise();
+
+ return out;
+}
+
+inline void interpolate(Matrix44& a, Matrix44& b, Matrix44& out, float alpha)
+{
+ out.scaleIdentity();
+ 
+ // Interpolate translation.
+ Vec3 trans_a = a;
+ Vec3 trans_b = b;
+ out.set( alpha * (trans_b - trans_a) + trans_a);
+
+ // Interpolate orientation.
+ 
+ Quat orient_a = a;
+ Quat orient_b = b;
+ out.set( nlerp(alpha, orient_a, orient_b, true));
+
 }
 
                                                                                        

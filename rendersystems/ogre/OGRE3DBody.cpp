@@ -28,7 +28,7 @@
                                                                                        
 
 #include "OGRE3DBody.h"
-#include "OGRE3DRigidBodyPrototype.h"
+#include "OGRE3DRigidBodyDescription.h"
 #include "OGRE3DRenderSystem.h"
 #include "Ogre.h"
 #include "NxOgreFunctions.h"
@@ -38,64 +38,89 @@ unsigned int OGRE3DBody::mNextBodyID = 0;
 
                                                                                        
 
-OGRE3DBody::OGRE3DBody(OGRE3DRigidBodyPrototype* prototype, OGRE3DRenderSystem* rendersystem)
-: Actor(rendersystem->getScene()),
-                                   // Take notice of the constructor we are using, it's designed for
+OGRE3DBody::OGRE3DBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
+: Actor(rendersystem->getScene()), // Take notice of the constructor we are using, it's designed for
                                    // classes that inherit from Actor. 
- mNode(0), mEntity(0), mSceneManager(0), mRenderPriority(prototype->mRenderPriority)
+ mSceneNodeDestructorBehaviour(description.mSceneNodeDestructorBehaviour),
+ mRenderPriority(description.mRenderPriority),
+ mRenderSystem(rendersystem)
 {
- // Implement the prototype (it's being casted back into a RigidBodyPrototype) so it's treated
- // as a normal RigidBody. 
- create(prototype, rendersystem->getScene(), &mShapes);
-
- // Since NxOgre doesn't know or care about our Ogre stuff, we copy it over. This is the correct time to create
- // or turn on things related to the OGRE3DBody.
- mSceneManager = prototype->mSceneManager;
  
+ // Create a dynamic RigidBody with the pose, scene and shape.
+ // We can pass on the OGRE3DRigidBodyDescription as a RigidBodyDescription because it inherits from it,
+ createDynamic(pose, description, rendersystem->getScene(), shape);
 
- if (prototype->mNode != NULL)
- {
-  mNode = prototype->mNode;
-  mSelfCreated = false;
- }
- else
- {
-  // Matrix's are faster than vectors and quaternions. 
-  Ogre::Matrix4 m4 = toMatrix44(getGlobalPose());
-  mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(m4.getTrans(), m4.extractQuaternion());
-  mSelfCreated = true;
+ // Obviously NxOgre won't know about the Ogre bits, so this is what the next lines are for:
+ mSceneManager = rendersystem->getSceneManager();
+ mNode = description.mNode;
 
-  if (mEntity == NULL)
-  {
-   mEntity = mSceneManager->createEntity(mNode->getName() + "-Entity", prototype->mMeshName);
-   mNode->attachObject(mEntity);
-  }
- }
+ // And let the time controller know about it. So it will call the advance function every frame.
+ NxOgre::TimeController::getSingleton()->addTimeListener(this, mRenderPriority);
+}
+
+OGRE3DBody::OGRE3DBody(NxOgre::Shapes& shapes, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
+: Actor(rendersystem->getScene()), // Take notice of the constructor we are using, it's designed for
+                                   // classes that inherit from Actor. 
+ mSceneNodeDestructorBehaviour(description.mSceneNodeDestructorBehaviour),
+ mRenderPriority(description.mRenderPriority),
+ mRenderSystem(rendersystem)
+{
  
- // And let the time controller, that this is a timelistener that needs to be listened.
+ // Create a dynamic RigidBody with the pose, scene and shape.
+ // We can pass on the OGRE3DRigidBodyDescription as a RigidBodyDescription because it inherits from it,
+ createDynamic(pose, description, rendersystem->getScene(), shapes);
+ mAlphaPose = pose;
+ 
+ // Obviously NxOgre won't know about the Ogre bits, so this is what the next lines are for:
+ mSceneManager = rendersystem->getSceneManager();
+ mNode = description.mNode;
+
+ // And let the time controller know about it. So it will call the advance function every frame.
  NxOgre::TimeController::getSingleton()->addTimeListener(this, mRenderPriority);
 }
 
 OGRE3DBody::~OGRE3DBody()
 {
  
+ // Stop NxOgre calling the advance function in the future, otherwise bad things would happen.
  NxOgre::TimeController::getSingleton()->removeTimeListener(this, mRenderPriority);
  
- // In here, we would clean up any rendering stuff.
+ // In here, we would clean up any rendering stuff, and things that Actor couldn't possiblty know about.
+ _destructNode(mSceneNodeDestructorBehaviour);
  
- // Remove all attachments.
- if (mNode->numAttachedObjects())
-  mNode->detachAllObjects();
+ // As we inherit from Actor, it's destructor will be called now. Including the "destroy()" function which
+ // cleans up the Physics.
+}
+
+void OGRE3DBody::_destructNode(OGRE3DSceneNodeDestructorBehaviour behaviour)
+{
  
- // Destroy all child scenenodes.
- if (mNode->numChildren())
-  mNode->removeAndDestroyAllChildren();
+ if (mNode == 0)
+  return;
  
- // Destroy this Scene node.
- mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
- mNode = 0;
+ if (behaviour == OGRE3DSceneNodeDestructorBehaviour_Inherit)
+  behaviour = mSceneNodeDestructorBehaviour;
  
- // We leave the physics stuff to the Actors destructor, including freeing the shapes.
+ if (behaviour == OGRE3DSceneNodeDestructorBehaviour_Destroy)
+ {
+  // Remove all attachments.
+  if (mNode->numAttachedObjects())
+   mNode->detachAllObjects();
+  
+  // Destroy all child scenenodes.
+  if (mNode->numChildren())
+   mNode->removeAndDestroyAllChildren();
+  
+  // Destroy this Scene node.
+  mNode->getParentSceneNode()->removeAndDestroyChild(mNode->getName());
+  mNode = 0;
+ }
+ else
+ {
+  mNode->getParentSceneNode()->removeChild(mNode);
+  mNode;
+ }
+ 
 }
 
 unsigned int OGRE3DBody::getClassType() const 
@@ -113,28 +138,41 @@ Ogre::SceneNode* OGRE3DBody::getSceneNode()
  return mNode;
 }
 
-Ogre::Entity* OGRE3DBody::getEntity()
+void OGRE3DBody::setSceneNode(Ogre::SceneNode* node, OGRE3DSceneNodeDestructorBehaviour behaviour)
 {
- return mEntity;
+ _destructNode(behaviour);
+ mNode = node;
 }
 
-bool OGRE3DBody::advance(float, const NxOgre::Enums::Priority&)
+OGRE3DSceneNodeDestructorBehaviour OGRE3DBody::getSceneNodeDestructorBehaviour() const
+{
+ return mSceneNodeDestructorBehaviour;
+}
+
+void OGRE3DBody::setSceneNodeDestructorBehaviour(OGRE3DSceneNodeDestructorBehaviour behaviour)
+{
+ mSceneNodeDestructorBehaviour = behaviour;
+}
+
+bool OGRE3DBody::advance(float step, const NxOgre::Enums::Priority&)
 {
 #if 1
- NxOgre::Matrix44 m = getGlobalPose();
- NxOgre::Vec3 pos = m;
- NxOgre::Quat quat = m;
- mNode->setPosition(pos.x, pos.y, pos.z);
- mNode->setOrientation(quat.w, quat.x, quat.y, quat.z);
-#else
- Ogre::Matrix4 om = toMatrix44(getGlobalPose());
- mNode->setPosition(om.getTrans());
- mNode->setOrientation(om.extractQuaternion());
-#endif
+ 
+ NxOgre::TimeStep& ts = mScene->getTimeStep();
+ NxOgre::Matrix44 current_pose(getGlobalPose());
+ 
+ if (mScene->getTimeStep().mSubSteps) // Did simulate this frame?
+  mAlphaPose = current_pose;
+ 
+ NxOgre::Matrix44 render_pose;
+ NxOgre::Math::interpolate(mAlphaPose, current_pose, render_pose, ts.mAlpha);
 
-#if 0
- mNode->setPosition(NxOgre::Functions::XYZ<NxOgre::Vec3, Ogre::Vector3>(getGlobalPosition()));
- mNode->setOrientation(NxOgre::Functions::WXYZ<NxOgre::Vec4, Ogre::Quaternion>(getGlobalOrientationQuat()));
+ mNode->setPosition(NxOgre::Vec3(render_pose).as<Ogre::Vector3>());
+ mNode->setOrientation(NxOgre::Quat(render_pose).as<Ogre::Quaternion>());
+
+#else
+ mNode->setPosition(NxOgre::Vec3(getGlobalPose()).as<Ogre::Vector3>());
+ mNode->setOrientation(NxOgre::Quat(getGlobalPose()).as<Ogre::Quaternion>());
 #endif
  return true;
 }

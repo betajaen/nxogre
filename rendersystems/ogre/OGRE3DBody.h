@@ -49,21 +49,21 @@
 class OGRE3DExportClass OGRE3DBody : public NxOgre::PointerClass<_OGRE3DBody>, public NxOgre::Actor, public NxOgre::TimeListener
 {
   friend class OGRE3DRenderSystem;
-  friend class ::NxOgre::Functions::ArrayFunctions<OGRE3DBody*>::Write;
+  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
 
   public:
   
-   /** \brief Required since Actor is also a "PointerClass".
-   */
-   using ::NxOgre::PointerClass<_OGRE3DBody>::operator new;
+    /** \brief Required since Actor is also a "PointerClass".
+    */
+    using ::NxOgre::PointerClass<_OGRE3DBody>::operator new;
 
-    /** \brief Required since Actor is also a "PointerClass".
-    */
-   using ::NxOgre::PointerClass<_OGRE3DBody>::operator delete;
-  
-    /** \brief Required since Actor is also a "PointerClass".
-    */
-   using ::NxOgre::PointerClass<_OGRE3DBody>::getClassType;
+     /** \brief Required since Actor is also a "PointerClass".
+     */
+    using ::NxOgre::PointerClass<_OGRE3DBody>::operator delete;
+   
+     /** \brief Required since Actor is also a "PointerClass".
+     */
+    using ::NxOgre::PointerClass<_OGRE3DBody>::getClassType;
   
     /** \brief
     */
@@ -76,36 +76,48 @@ class OGRE3DExportClass OGRE3DBody : public NxOgre::PointerClass<_OGRE3DBody>, p
     /** \brief Get the SceneNode is in, or NULL if there isn't one.
     */
    Ogre::SceneNode*    getSceneNode();
-  
-    /** \brief Get the SceneNode is in, or NULL if there isn't one.
-    */
-   Ogre::Entity*       getEntity();
-  
-    /** \brief "Drawing" function, called by the TimeListener.
-    */
-   bool                advance(float, const NxOgre::Enums::Priority&);
-
+    
+   /** \brief Set the SceneNode to a new one
+   */
+   void                setSceneNode(Ogre::SceneNode*, OGRE3DSceneNodeDestructorBehaviour = OGRE3DSceneNodeDestructorBehaviour_Inherit);
+   
+   /** \brief Get the behaviour of the Scenenode when calling setSceneNode or the destructor.
+   */
+   OGRE3DSceneNodeDestructorBehaviour getSceneNodeDestructorBehaviour() const;
+   
+   /** \brief Get the behaviour of the Scenenode when calling setSceneNode or the destructor.
+   */
+   void setSceneNodeDestructorBehaviour(OGRE3DSceneNodeDestructorBehaviour);
+   
+   /** \brief "Drawing" function, called by the TimeListener - Changes the SceneNode pose to the same one as the NxActor's.
+   */
+   bool advance(float, const NxOgre::Enums::Priority&);
+     
   protected:
-  
+     
      /** \internal. Use OGRE3DRenderSystem::createBody
      */
-     OGRE3DBody(OGRE3DRigidBodyPrototype*, OGRE3DRenderSystem*);
+     OGRE3DBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
+  
+     OGRE3DBody(NxOgre::Shapes&, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
   
      /** \internal. Use OGRE3DRenderSystem::destroyBody
      */
     ~OGRE3DBody(void);
-  
+     
+     void _destructNode(OGRE3DSceneNodeDestructorBehaviour);
+     
   protected:
-  
-     OGRE3DRenderSystem*     mRenderSystem;   //< \brief Body's Rendersystem
-     Ogre::SceneManager*     mSceneManager;   //< \brief Node's parent.
-     Ogre::SceneNode*        mNode;           //< \brief Bleh.
-     Ogre::Entity*           mEntity;         //< \brief Attached Entity or NULL.
-     NxOgre::Enums::Priority mRenderPriority; //< \brief Render priority.
-     bool                    mSelfCreated;    //< \brief Was the node created by the Body, or was it passed on?
-     static unsigned int     mNextBodyID;     //< \brief Not all actors have names. So when it comes to naming
-                                              //<        nodes and entities. It will use nextBodyID as an unique
-                                              //<        name; "ogre3d-entity-1", "ogre3d-node-1".
+     
+     OGRE3DRenderSystem*                 mRenderSystem;   //< \brief Body's Rendersystem
+     Ogre::SceneManager*                 mSceneManager;   //< \brief Scenenode's SceneManager.
+     Ogre::SceneNode*                    mNode;           //< \brief Scenenode itself..
+     NxOgre::Enums::Priority             mRenderPriority; //< \brief Render priority.
+     OGRE3DSceneNodeDestructorBehaviour  mSceneNodeDestructorBehaviour; //< \brief Behaviour when deleting the SceneNode.
+     NxOgre::Matrix44                    mAlphaPose;      //< \brief Interpolation pose.
+     static unsigned int                 mNextBodyID;     //< \brief Not all actors have names. So when it comes to naming
+                                                          //<        nodes and entities. It will use nextBodyID as an unique
+                                                          //<        name; "ogre3d-entity-1", "ogre3d-node-1".
 
 };
 
