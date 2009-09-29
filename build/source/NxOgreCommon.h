@@ -83,6 +83,14 @@ enum Axis
  NoAxis = (1<<3)
 };
 
+
+enum TimerMode
+{
+ TimerMode_Simulating,
+ TimerMode_FetchedResults,
+ TimerMode_Miss
+};
+
 /** \brief Combine mode when two integrals meet.
     \note Compatible with NxCombineMode
 */

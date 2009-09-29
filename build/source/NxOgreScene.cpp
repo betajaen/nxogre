@@ -51,6 +51,7 @@
 #include "NxOgreFunctions.h"
 #include "NxOgreRaycastHit.h"
 #include "NxOgreAccumulativeSceneTimer.h"
+#include "NxOgreFixedSceneTimer.h"
 #include "NxOgreMachine.h"
 #include "NxOgreMachinePart.h"
 #include "NxOgreCloth.h"
@@ -92,7 +93,8 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
  scene_description.userTriggerReport = mPhysXCallback;
  scene_description.userContactReport = mPhysXCallback;
  
- scene_description.timeStepMethod = NX_TIMESTEP_VARIABLE; // temp.
+ scene_description.timeStepMethod = NX_TIMESTEP_FIXED; // temp.
+ scene_description.maxTimestep = 1.0f/60.0f;
  
  mScene = mSDK->createScene(scene_description);
  
@@ -120,12 +122,10 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
   mMaterials.insert(material);
   
   TimeController::getSingleton()->mListeners[mProcessingPriority].insert(this);
-  
-  if (mFetchingPriority != mProcessingPriority)
-   TimeController::getSingleton()->mListeners[mFetchingPriority].insert(this);
+  TimeController::getSingleton()->mListeners[mFetchingPriority].insert(this);
   
   
-  mSceneTimer = new AccumulativeSceneTimer(this); // temp.
+  mSceneTimer = new FixedSceneTimer(this); // temp.
   
   mMachineIterator = mMachines.getIterator();
   
@@ -212,23 +212,26 @@ SceneGeometry* Scene::createSceneGeometry(Shape* shape, const Matrix44& pose, co
 bool Scene::advance(float user_deltaTime, const Enums::Priority& p)
 {
  
- if (p == mProcessingPriority)
+ if (p == mProcessingPriority && mSceneTimer->getTimerMode() > 0 )
  {
-  
   for (Machine* machine = mMachineIterator.begin();machine = mMachineIterator.next();)
    machine->simulate(user_deltaTime);
   
   mCanRender = false;
+  
   mSceneTimer->simulate(user_deltaTime);
   
+  return true;
  }
  
- if (p == mFetchingPriority)
+ if (p == mFetchingPriority && mSceneTimer->getTimerMode() == Enums::TimerMode_Simulating)
  {
-  while(!mSceneTimer->hasResults())
-   mSceneTimer->fetchResults();
+  
+  mSceneTimer->fetchResults();
   
   mCanRender = true;
+  
+  return true;
  }
  
  return true;

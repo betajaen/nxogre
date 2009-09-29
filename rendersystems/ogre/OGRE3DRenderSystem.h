@@ -85,6 +85,10 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      */
      void                                 destroyBody(OGRE3DBody*);
      
+     /** \brief Get body iterator
+     */
+     BodyIterator                         getBodies();
+
      /** \brief Create and manage a Renderable.
      */
      OGRE3DRenderable*                    createRenderable(NxOgre::Enums::RenderableType, const Ogre::String& materialName = "BaseWhiteNoLighting");

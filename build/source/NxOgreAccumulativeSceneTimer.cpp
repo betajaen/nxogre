@@ -28,6 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreAccumulativeSceneTimer.h"
+#include "NxOgreTime.h"
 #include "NxOgreScene.h"
 
 #include "NxPhysics.h"
@@ -40,7 +41,7 @@ namespace NxOgre
                                                                                        
 
 AccumulativeSceneTimer::AccumulativeSceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: SceneTimer(scene, maxTime, expectedTime), mAccumulator(0)
+: SceneTimer(scene, maxTime, expectedTime), mOldTime(0.0f), mAccumulator(0.0f)
 {
 }
 
@@ -48,12 +49,50 @@ AccumulativeSceneTimer::~AccumulativeSceneTimer(void)
 {
 }
 
-void AccumulativeSceneTimer::simulate(float user_deltaTime)
+void AccumulativeSceneTimer::simulate(float userDeltaTime)
 {
  
  if (mScene->isWritable() == false)
   return;
  
+ const float now = Functions::time();
+ float deltaTime = now - mOldTime;
+ mOldTime = now;
+ 
+ if (deltaTime > mMaxTime)
+  deltaTime = mMaxTime;
+ 
+ mAccumulator += deltaTime;
+
+ TimeStep& ts = mParent->getTimeStep();
+ ts.mSubSteps = 0;
+ ts.mActual = userDeltaTime;
+ 
+ float sim_time = 0.0f;
+ while (mAccumulator >= mExpectedTime)
+ {
+  ts.mSubSteps++;
+  mScene->simulate(mExpectedTime);
+  mScene->flushStream();
+  mScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+  mAccumulator -= mExpectedTime;
+ }
+ 
+ ts.mAlpha = mAccumulator / mExpectedTime;
+ ts.mModified = mExpectedTime;
+
+ if (ts.mSubSteps)
+ {
+  mTimerMode = Enums::TimerMode_Simulating;
+ }
+ else
+ {
+  mTimerMode = Enums::TimerMode_Miss;
+ }
+
+}
+
+#if 0
  if (user_deltaTime > mMaxTime)
   user_deltaTime = mMaxTime;
  
@@ -74,16 +113,20 @@ void AccumulativeSceneTimer::simulate(float user_deltaTime)
  
  ts.mAlpha = mAccumulator / mExpectedTime;
  ts.mModified = mExpectedTime;
- 
-}
+#endif
 
 bool AccumulativeSceneTimer::hasResults(void) const
 {
- return true;// mScene->checkResults(NX_RIGID_BODY_FINISHED);
+ return mScene->checkResults(NX_RIGID_BODY_FINISHED);
 }
 
-void AccumulativeSceneTimer::fetchResults(void) const
+void AccumulativeSceneTimer::fetchResults(void)
 {
+/*
+ mScene->flushStream();
+ mScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+*/
+ mTimerMode = Enums::TimerMode_FetchedResults;
 }
 
 

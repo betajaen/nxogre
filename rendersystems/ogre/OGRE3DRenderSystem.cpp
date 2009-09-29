@@ -124,6 +124,11 @@ void OGRE3DRenderSystem::destroyBody(OGRE3DBody* body)
  mBodies.erase(body->getNameHash());
 }
 
+OGRE3DRenderSystem::BodyIterator OGRE3DRenderSystem::getBodies()
+{
+ return BodyIterator(mBodies);
+}
+
 OGRE3DRenderable* OGRE3DRenderSystem::createRenderable(NxOgre::Enums::RenderableType type, const Ogre::String& materialName)
 {
  OGRE3DRenderable* renderable = new OGRE3DRenderable(type);

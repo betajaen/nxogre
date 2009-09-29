@@ -39,7 +39,7 @@ namespace NxOgre
                                                                                        
 
 SceneTimer::SceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: mParent(scene), mMaxTime(maxTime), mExpectedTime(expectedTime)
+: mParent(scene), mMaxTime(maxTime), mExpectedTime(expectedTime), mTimerMode(Enums::TimerMode_Miss)
 {
  mScene = mParent->getScene();
 }
@@ -57,8 +57,13 @@ bool SceneTimer::hasResults(void) const
  return true;
 }
 
-void SceneTimer::fetchResults(void) const
+void SceneTimer::fetchResults(void)
 {
+}
+
+Enums::TimerMode SceneTimer::getTimerMode() const
+{
+ return mTimerMode;
 }
 
                                                                                        

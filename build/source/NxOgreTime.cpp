@@ -27,11 +27,12 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreScene.h"
-#include "NxOgreFixedSceneTimer.h"
 #include "NxOgreTime.h"
 
-#include "NxPhysics.h"
+#if NxOgrePlatform == NxOgrePlatformWindows
+#define WIN32_LEAN_AND_MEAN 
+#include <windows.h>
+#endif
 
                                                                                        
 
@@ -40,66 +41,31 @@ namespace NxOgre
 
                                                                                        
 
-FixedSceneTimer::FixedSceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: SceneTimer(scene, maxTime, expectedTime),
-  mMaxTimeStep(1.0f / 60.0f),
-  mOldTime(0.0f),
-  mAccumulator(0.0f)
+namespace Functions
 {
- mScene->setTiming(mMaxTimeStep / 8.0f, 8, NX_TIMESTEP_FIXED);
- TimeStep& ts = mParent->getTimeStep();
- ts.mAlpha = 1.0f;
- ts.mModified = mMaxTimeStep;
- ts.mSubSteps = 8;
-}
 
-FixedSceneTimer::~FixedSceneTimer(void)
-{
-}
+                                                                                       
 
-void FixedSceneTimer::simulate(float user_deltaTimer)
+float time()
 {
+ static __int64 s = 0;
+ static __int64 f = 0;
  
- float now = Functions::time();
- float deltaTime = now - mOldTime;
- mOldTime = now;
+ if (s == 0)
+ {
+  QueryPerformanceCounter( (LARGE_INTEGER*) &s);
+  QueryPerformanceFrequency( (LARGE_INTEGER*) &f);
+  return 0.0f;
+ }
  
- // Go ahead PhysX.
- mScene->simulate(deltaTime);
- mScene->flushStream();
-
- // Calculate how much time PhysX did process.
- mAccumulator += deltaTime;
-
- TimeStep& ts = mParent->getTimeStep();
-
- for (unsigned int i=0; i < ts.mSubSteps;i++)
-  if (mAccumulator <= mMaxTimeStep)
-   break;
-  else
-   mAccumulator -= mExpectedTime;
-
- ts.mAlpha = mAccumulator / mMaxTimeStep;
- ts.mModified = mExpectedTime;
-
- // We probably simulated so in goes.
- mTimerMode = Enums::TimerMode_Simulating;
- ts.mActual = deltaTime;
- 
+ __int64 c = 0;
+ QueryPerformanceCounter( (LARGE_INTEGER*) &c);
+ return (float) ( (c - s) / double(f) );
 }
 
-bool FixedSceneTimer::hasResults(void) const
-{
- return mScene->checkResults(NX_RIGID_BODY_FINISHED, false);
-}
+                                                                                       
 
-void FixedSceneTimer::fetchResults(void)
-{
- mScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
- mTimerMode = Enums::TimerMode_FetchedResults;
-}
-
-
+} // namespace Functions
 
                                                                                        
 

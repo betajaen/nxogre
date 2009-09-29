@@ -74,13 +74,11 @@ class NxOgrePublicClass AccumulativeSceneTimer : public PointerClass<Classes::_A
   
   /** \brief
   */
-  void                                       fetchResults(void) const;
+  void                                       fetchResults(void);
   
   protected:
   
-  /** \brief
-  */
-              float                           mAccumulator;
+  float                                      mOldTime, mAccumulator;
   
 }; // class AccumulativeSceneTimer
 

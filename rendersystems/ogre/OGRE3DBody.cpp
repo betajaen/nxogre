@@ -156,7 +156,7 @@ void OGRE3DBody::setSceneNodeDestructorBehaviour(OGRE3DSceneNodeDestructorBehavi
 
 bool OGRE3DBody::advance(float step, const NxOgre::Enums::Priority&)
 {
-#if 1
+#if 0
  
  NxOgre::TimeStep& ts = mScene->getTimeStep();
  NxOgre::Matrix44 current_pose(getGlobalPose());
@@ -166,14 +166,15 @@ bool OGRE3DBody::advance(float step, const NxOgre::Enums::Priority&)
  
  NxOgre::Matrix44 render_pose;
  NxOgre::Math::interpolate(mAlphaPose, current_pose, render_pose, ts.mAlpha);
-
+ 
  mNode->setPosition(NxOgre::Vec3(render_pose).as<Ogre::Vector3>());
  mNode->setOrientation(NxOgre::Quat(render_pose).as<Ogre::Quaternion>());
-
+ 
 #else
  mNode->setPosition(NxOgre::Vec3(getGlobalPose()).as<Ogre::Vector3>());
  mNode->setOrientation(NxOgre::Quat(getGlobalPose()).as<Ogre::Quaternion>());
 #endif
+ 
  return true;
 }
 

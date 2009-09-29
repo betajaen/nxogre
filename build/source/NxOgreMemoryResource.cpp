@@ -183,7 +183,7 @@ bool MemoryResource::write(const void* src, size_t src_size)
   mStatus = Enums::ResourceStatus_Maintenance;
   
   size_t new_buffer_size = (current_size * 2) + 1;
-  std::cout << "New buffer size = " << new_buffer_size << std::endl;
+
   char* new_buffer = (char*) NxOgre_Allocate(new_buffer_size, Classes::_char);
   if (mStart)
    Memory::copy(new_buffer, mStart, current_size);
