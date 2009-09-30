@@ -49,6 +49,7 @@ class NxOgrePublicClass SceneTimer
    Real mMaxTime;
   };
   
+  
   /** \brief Text
   */
                                               SceneTimer(Scene*, Real maxTime, Real expectedTime);
@@ -72,8 +73,12 @@ class NxOgrePublicClass SceneTimer
   
   /** \brief
   */
-  virtual void                                fetchResults(void) const;
+  virtual void                                fetchResults(void);
   
+  
+  
+  virtual Enums::TimerMode                    getTimerMode() const;
+
   protected:
   
   /** \brief Maximum time that can be injected.
@@ -92,6 +97,9 @@ class NxOgrePublicClass SceneTimer
   */
   NxScene* mScene;
   
+  
+  Enums::TimerMode mTimerMode;
+
 }; // class ClassName
 
                                                                                        

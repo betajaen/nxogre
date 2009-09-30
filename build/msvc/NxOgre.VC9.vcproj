@@ -1593,6 +1593,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreTime.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTime.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreTimeController.cpp"
 			>
 		</File>

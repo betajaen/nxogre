@@ -120,22 +120,10 @@ Ogre::Entity* OGRE3DBody::getEntity()
 
 bool OGRE3DBody::advance(float, const NxOgre::Enums::Priority&)
 {
-#if 1
- NxOgre::Matrix44 m = getGlobalPose();
- NxOgre::Vec3 pos = m;
- NxOgre::Quat quat = m;
- mNode->setPosition(pos.x, pos.y, pos.z);
- mNode->setOrientation(quat.w, quat.x, quat.y, quat.z);
-#else
- Ogre::Matrix4 om = toMatrix44(getGlobalPose());
- mNode->setPosition(om.getTrans());
- mNode->setOrientation(om.extractQuaternion());
-#endif
-
-#if 0
- mNode->setPosition(NxOgre::Functions::XYZ<NxOgre::Vec3, Ogre::Vector3>(getGlobalPosition()));
- mNode->setOrientation(NxOgre::Functions::WXYZ<NxOgre::Vec4, Ogre::Quaternion>(getGlobalOrientationQuat()));
-#endif
+ 
+ mNode->setPosition(NxOgre::Vec3(getGlobalPose()).as<Ogre::Vector3>());
+ mNode->setOrientation(NxOgre::Quat(getGlobalPose()).as<Ogre::Quaternion>());
+ 
  return true;
 }
 

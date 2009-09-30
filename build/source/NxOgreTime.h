@@ -1,5 +1,5 @@
-/** File: NxOgreSceneTimer.cpp
-    Created on: 8-May-09
+/** File: NxOgreTime.h
+    Created on: 30-Sep-09
     Author: Robin Southern "betajaen"
     
 
@@ -21,12 +21,12 @@
     along with NxOgre.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef NXOGRE_TIME_H
+#define NXOGRE_TIME_H
+
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreSceneTimer.h"
-
-#include "NxOgreScene.h"
 
                                                                                        
 
@@ -35,36 +35,17 @@ namespace NxOgre
 
                                                                                        
 
-SceneTimer::SceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: mParent(scene), mMaxTime(maxTime), mExpectedTime(expectedTime), mTimerMode(Enums::TimerMode_Miss)
+namespace Functions
 {
- mScene = mParent->getScene();
-}
 
-SceneTimer::~SceneTimer(void)
-{
-}
+float time();
 
-void SceneTimer::simulate(float user_deltaTime)
-{
-}
-
-bool SceneTimer::hasResults(void) const
-{
- return true;
-}
-
-void SceneTimer::fetchResults(void)
-{
-}
-
-Enums::TimerMode SceneTimer::getTimerMode() const
-{
- return mTimerMode;
-}
+} // namespace Functions
 
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
+
+#endif

@@ -1,5 +1,5 @@
-/** File: NxOgreSceneTimer.cpp
-    Created on: 8-May-09
+/** File: NxOgreTime.cpp
+    Created on: 30-Sep-09
     Author: Robin Southern "betajaen"
     
 
@@ -24,9 +24,12 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreSceneTimer.h"
+#include "NxOgreTime.h"
 
-#include "NxOgreScene.h"
+#if NxOgrePlatform == NxOgrePlatformWindows
+#define WIN32_LEAN_AND_MEAN 
+#include <windows.h>
+#endif
 
                                                                                        
 
@@ -35,33 +38,29 @@ namespace NxOgre
 
                                                                                        
 
-SceneTimer::SceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: mParent(scene), mMaxTime(maxTime), mExpectedTime(expectedTime), mTimerMode(Enums::TimerMode_Miss)
+namespace Functions
 {
- mScene = mParent->getScene();
+
+float time()
+{
+ static __int64 s = 0;
+ static __int64 f = 0;
+ 
+ if (s == 0)
+ {
+  QueryPerformanceCounter( (LARGE_INTEGER*) &s);
+  QueryPerformanceFrequency( (LARGE_INTEGER*) &f);
+  return 0.0f;
+ }
+ 
+ __int64 c = 0;
+ QueryPerformanceCounter( (LARGE_INTEGER*) &c);
+ return (float) ( (c - s) / double(f) );
 }
 
-SceneTimer::~SceneTimer(void)
-{
-}
+                                                                                       
 
-void SceneTimer::simulate(float user_deltaTime)
-{
-}
-
-bool SceneTimer::hasResults(void) const
-{
- return true;
-}
-
-void SceneTimer::fetchResults(void)
-{
-}
-
-Enums::TimerMode SceneTimer::getTimerMode() const
-{
- return mTimerMode;
-}
+} // namespace Functions
 
                                                                                        
 

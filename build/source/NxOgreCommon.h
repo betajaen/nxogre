@@ -76,6 +76,13 @@ enum Axis
  NoAxis = (1<<3)
 };
 
+enum TimerMode
+{
+ TimerMode_Simulating,
+ TimerMode_FetchedResults,
+ TimerMode_Miss
+};
+
 /** \brief Matrix translation
 */
 enum Translation
