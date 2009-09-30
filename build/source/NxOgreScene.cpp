@@ -381,10 +381,9 @@ void Scene::setGravity(const Vec3& vec)
 
 Vec3 Scene::getGravity(void) const
 {
- Vec3 out;
- NxVec3 vec;
- Functions::XYZ<NxVec3, Vec3>(vec, out);
- return out;
+ NxVec3 g;
+ mScene->getGravity(g);
+ return Vec3(g);
 }
 
 void Scene::lockQueries()
