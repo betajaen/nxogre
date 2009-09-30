@@ -149,6 +149,7 @@
 #include "NxOgreSpringDescription.h"
 #include "NxOgreStable.h"
 #include "NxOgreString.h"
+#include "NxOgreTime.h"
 #include "NxOgreTimeController.h"
 #include "NxOgreTimeListener.h"
 #include "NxOgreTimeStep.h"

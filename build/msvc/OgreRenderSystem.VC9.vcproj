@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetDir)NxOgreOGRE3D.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot; /Q /R /Y&#x0D;&#x0A;copy &quot;$(SolutionDir)..\..\rendersystems\ogre\*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot; /Q /R /Y&#x0D;&#x0A;&#x0D;&#x0A;"
+				CommandLine="xcopy &quot;$(TargetDir)NxOgreOGRE3D.lib&quot; &quot;$(SolutionDir)..\..\sdk\&quot;  /Q /R /Y&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\..\rendersystems\ogre\*.h&quot; &quot;$(SolutionDir)..\..\sdk\&quot; /Q /R /Y&#x0D;&#x0A;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

@@ -207,7 +207,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="source/;../../source/;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;;../../dependencies"
-				PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_STATIC_LIBRARY"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_LIB;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_STATIC_LIBRARY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -1590,6 +1590,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreString.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTime.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTime.h"
 			>
 		</File>
 		<File
