@@ -26,7 +26,6 @@
 
                                                                                        
 
-#ifndef NXOGRE_OPTIONS_MINIMAL
 #ifndef NXOGRE_MESHDATA_H
 #define NXOGRE_MESHDATA_H
 
@@ -130,5 +129,4 @@ class NxOgrePublicClass MeshData : public PointerClass<Classes::_MeshData>
 
                                                                                        
 
-#endif
 #endif

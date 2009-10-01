@@ -223,7 +223,7 @@ typedef double DoubleReal;
 
 /** \brief References type for Containers.
 */
-typedef unsigned short RefT;
+typedef unsigned int RefT;
 
 } // namespace NxOgre
 

@@ -122,13 +122,9 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   */
                        NxPhysicsSDK*          getPhysXSDK(void);
   
-#ifndef NXOGRE_OPTIONS_MINIMAL
-  
   /** \brief
   */
                        NxCookingInterface*    getPhysXCookingInterface(void);
-  
-#endif
   
   protected: // Functions
   

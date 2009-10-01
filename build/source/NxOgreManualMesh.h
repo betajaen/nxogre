@@ -26,7 +26,6 @@
 
                                                                                        
 
-#ifndef NXOGRE_OPTIONS_MINIMAL
 #ifndef NXOGRE_MANUAL_MESH_H
 #define NXOGRE_MANUAL_MESH_H
 
@@ -202,5 +201,4 @@ class NxOgrePublicClass ManualMesh
 
                                                                                        
 
-#endif
 #endif

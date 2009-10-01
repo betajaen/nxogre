@@ -67,10 +67,8 @@ NxCookingInterface* World::mCookingInterface = 0;
 void World::precreateSingletons(void)
 {
  
-#ifndef NXOGRE_OPTIONS_MINIMAL
  mCookingInterface = NxGetCookingLib(NX_PHYSICS_SDK_VERSION);
  mCookingInterface->NxInitCooking();
-#endif
  
  if (ErrorStream::getSingleton() == 0)
   NxOgre_New(ErrorStream)();
@@ -131,9 +129,7 @@ void World::destroySingletons(void)
   HeightFieldManager::sSingleton = 0;
  }
  
-#ifndef NXOGRE_OPTIONS_MINIMAL
  mCookingInterface->NxCloseCooking();
-#endif
  
 }
 
