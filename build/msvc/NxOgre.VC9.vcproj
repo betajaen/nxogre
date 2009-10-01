@@ -634,10 +634,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreActiveParticle.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreActor.cpp"
 			>
 		</File>
@@ -1090,11 +1086,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreMeshFunctions.cpp"
+			RelativePath="..\source\NxOgreMeshGenerator.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreMeshFunctions.h"
+			RelativePath="..\source\NxOgreMeshGenerator.h"
 			>
 		</File>
 		<File
@@ -1103,6 +1099,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreMeshManager.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshSerialiser.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshSerialiser.h"
 			>
 		</File>
 		<File
@@ -1127,14 +1131,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreNodeRenderable.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreNXSFunctions.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreNXSFunctions.h"
 			>
 		</File>
 		<File
@@ -1590,14 +1586,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreTime.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreTime.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreTimeController.cpp"
 			>
 		</File>
@@ -1607,6 +1595,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreTimeListener.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimer.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimer.h"
 			>
 		</File>
 		<File

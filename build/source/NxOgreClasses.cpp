@@ -41,7 +41,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[622] = {
+static const char*  sClasses[626] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -527,6 +527,7 @@ static const char*  sClasses[622] = {
   "BufferUnknown",
   "Callback",
   "Capsule",
+  "CCDSkeletonMeshData",
   "CircularBufferReferenceCounter",
   "Cloth",
   "ClothDescription",
@@ -584,6 +585,7 @@ static const char*  sClasses[622] = {
   "Mesh",
   "MeshData",
   "MeshManager",
+  "MeshSerialiser",
   "MeshStats",
   "MotorDescription",
   "NxShapeFunctions",
@@ -650,6 +652,8 @@ static const char*  sClasses[622] = {
   "TBuffer",
   "TimeController",
   "TimeListener",
+  "Timer",
+  "TimerStep",
   "TireFunction",
   "TriangleGeometry",
   "URIHash",

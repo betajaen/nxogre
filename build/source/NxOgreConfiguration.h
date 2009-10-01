@@ -24,8 +24,7 @@
 /** \brief What memory allocator to use.
     \default NxOgreMemoryAllocatorNedmalloc (Nedmalloc)
 */
-#define NxOgreMemoryAllocator NxOgreMemoryAllocatorMalloc
-
+#define NxOgreMemoryAllocator NxOgreMemoryAllocatorNedmalloc
 
 /** \brief Precision of a real number, much match PhysX's NxReal
     \default NxOgreMemoryAllocatorFloat (float)

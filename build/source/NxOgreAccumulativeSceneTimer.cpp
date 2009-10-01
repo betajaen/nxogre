@@ -28,7 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreAccumulativeSceneTimer.h"
-#include "NxOgreTime.h"
+#include "NxOgreTimer.h"
 #include "NxOgreScene.h"
 
 #include "NxPhysics.h"
@@ -41,7 +41,7 @@ namespace NxOgre
                                                                                        
 
 AccumulativeSceneTimer::AccumulativeSceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: SceneTimer(scene, maxTime, expectedTime), mOldTime(0.0f), mAccumulator(0.0f)
+: SceneTimer(scene, maxTime, expectedTime), mOldTime(0.0f), mAccumulator(0.0f), mTimer()
 {
 }
 
@@ -55,7 +55,7 @@ void AccumulativeSceneTimer::simulate(float userDeltaTime)
  if (mScene->isWritable() == false)
   return;
  
- const float now = Functions::time();
+ const float now = mTimer.now();
  float deltaTime = now - mOldTime;
  mOldTime = now;
  

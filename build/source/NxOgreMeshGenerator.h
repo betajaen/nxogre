@@ -26,8 +26,8 @@
 
                                                                                        
 
-#ifndef NXOGRE_NXSFUNCTIONS_H
-#define NXOGRE_NXSFUNCTIONS_H
+#ifndef NXOGRE_MESHGENERATOR_H
+#define NXOGRE_MESHGENERATOR_H
 
                                                                                        
 
@@ -41,43 +41,42 @@ namespace NxOgre
 
                                                                                        
 
-namespace Functions
+/** \brief  
+*/ 
+class NxOgrePublicClass MeshGenerator
 {
-
-                                                                                       
-
-namespace NXSFunctions
-{
-
-                                                                                       
-
-/** \brief Is the resource a PhysX NXS file.
-    \note Resource cannot be sucessional.
-*/
-inline bool isNXS(Resource*);
-
-/** \brief Get the type of resource or Enums::MeshType_Unknown of a PhysX NXS file.
-    \note Resource cannot be sucessional, it is assumed that the mesh has been run through the isNXS function.
-*/
-inline Enums::MeshType getMeshType(Resource*);
-
-/// /** \brief Does the PhysX NXS file have NxOgre extended data attached to it?
-///     \note Resource cannot be sucessional.
-/// */
-/// inline bool hasExtendedMeshData(Resource*);
-/// 
-/// /** \brief Get the extended data from a NXS file.
-///     \note Resource cannot be sucessional.
-/// */
-/// inline void* getExtendedMeshData(Resource*, size_t& dataLength);
-
-                                                                                       
-
-}
-
-                                                                                       
-
-}
+  
+ public:
+  
+  
+  /** \brief Create a plane mesh based on size as load it into the ResourceSysetm as mesh_name
+      \param size      Size of the plane
+      \param type      Type of mesh
+      \param saveTo    Path to save to, default: MEMORY_PATH
+      \param mesh_name mesh_name, default: BLANK_STRING (No mesh name)
+  */
+  bool  makePlane(const Vec2& size, float density, Enums::MeshType, const Path& saveTo = MEMORY_PATH, const String& mesh_name = BLANK_STRING);
+  
+  
+  /** \brief Create box mesh based on size as load it into the ResourceSystem as mesh_name
+      \param size      Size of the box
+      \param type      Type of mesh
+      \param saveTo    Path to save to, default: MEMORY_PATH
+      \param mesh_name mesh_name, default: BLANK_STRING (No mesh name)
+  */
+  Mesh*  makeBox(const Vec3& size, Enums::MeshType type, const Path& saveTo = MEMORY_PATH, const String& mesh_name = BLANK_STRING);
+  
+ private:
+  
+  /** \internal DO NOT USE
+  */
+  MeshGenerator();
+  
+  /** \internal DO NOT USE
+  */
+ ~MeshGenerator();
+  
+}; // class MeshGenerator
 
                                                                                        
 

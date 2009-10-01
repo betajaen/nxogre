@@ -30,10 +30,9 @@
 #include "NxOgreMesh.h"
 #include "NxOgreResourceSystem.h"
 #include "NxOgrePhysXStream.h"
-#include "NxOgreNXSFunctions.h"
-#include "NxOgreMeshFunctions.h"
 #include "NxOgreManualMesh.h"
 #include "NxOgreMeshData.h"
+#include "NxOgreMeshSerialiser.h"
 
 #include "NxPhysics.h"
 
@@ -41,6 +40,65 @@
 
 namespace NxOgre
 {
+
+                                                                                       
+
+
+inline MeshStats _calculateNxTriangleMeshStats(::NxOgre::Mesh* mesh)
+{
+ NxTriangleMesh* tri_mesh = mesh->getAsTriangleMesh();
+ return MeshStats(tri_mesh->getCount(0, NX_ARRAY_VERTICES), tri_mesh->getCount(0, NX_ARRAY_TRIANGLES) * 3);
+}
+
+inline MeshStats _calculateNxConvexMeshStats(::NxOgre::Mesh* mesh)
+{
+ NxConvexMesh* convex_mesh = mesh->getAsConvex();
+ return MeshStats(convex_mesh->getCount(0, NX_ARRAY_VERTICES), convex_mesh->getCount(0, NX_ARRAY_TRIANGLES) * 3);
+}
+
+inline MeshStats _calculateNxClothStats(::NxOgre::Mesh* mesh)
+{
+ NxClothMesh* cloth_mesh = mesh->getAsCloth();
+
+ NxClothMeshDesc desc;
+ if (cloth_mesh->saveToDesc(desc) == false)
+  return MeshStats();
+
+ return MeshStats(desc.numVertices, desc.numTriangles * 3, 0, mesh->getTextureCoords().size(), 0);
+}
+
+inline MeshStats _calculateNxSoftBodyStats(::NxOgre::Mesh* mesh)
+{
+ NxSoftBodyMesh* softbody_mesh = mesh->getAsSoftBody();
+
+ NxSoftBodyMeshDesc desc;
+ if (softbody_mesh->saveToDesc(desc) == false)
+  return MeshStats();
+
+ return MeshStats(desc.numVertices,desc.numTetrahedra * 4,0,0,desc.numTetrahedra);
+}
+
+inline MeshStats calculateStats(::NxOgre::Mesh* mesh)
+{
+ 
+ MeshStats stats;
+ if (mesh == 0)
+  return stats;
+
+ if (mesh->getType() == NxOgre::Enums::MeshType_Triangle)
+  stats = _calculateNxTriangleMeshStats(mesh);
+
+ else if (mesh->getType() == NxOgre::Enums::MeshType_Convex)
+  stats = _calculateNxConvexMeshStats(mesh);
+ 
+ else if (mesh->getType() == NxOgre::Enums::MeshType_Cloth)
+  stats = _calculateNxClothStats(mesh);
+
+ else if (mesh->getType() == NxOgre::Enums::MeshType_SoftBody)
+  stats = _calculateNxSoftBodyStats(mesh);
+
+ return stats;
+}
 
                                                                                        
 
@@ -57,6 +115,7 @@ Mesh::Mesh(Resource* resource) : mType(Enums::MeshType_Unknown)
 
 Mesh::~Mesh(void)
 {
+ unload();
 }
 
 Enums::MeshType Mesh::getType(void) const
@@ -89,6 +148,9 @@ bool Mesh::isUsed(void) const
   case Enums::MeshType_SoftBody:
    return (mMesh.mSoftBody->getReferenceCount() != 0);
   break;
+  case Enums::MeshType_Skeleton:
+   return (mMesh.mSkeleton->getReferenceCount() != 0);
+  break;
  }
  
  return false;
@@ -97,7 +159,9 @@ bool Mesh::isUsed(void) const
 void Mesh::load(Resource* resource)
 {
  
- if (Functions::NXSFunctions::isNXS(resource) == false) 
+ unload();
+ 
+ if (Serialisation::MeshSerialiser::isNXSFile(resource) == false) 
  {
   StringStream stream;
   stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
@@ -105,7 +169,7 @@ void Mesh::load(Resource* resource)
   return;
  }
  
- mType = Functions::NXSFunctions::getMeshType(resource);
+ mType = Serialisation::MeshSerialiser::getMeshType(resource);
 
  if (mType == Enums::MeshType_Unknown)
  {
@@ -120,18 +184,47 @@ void Mesh::load(Resource* resource)
  NxPhysicsSDK* sdk = NxGetPhysicsSDK();
  
  if (mType == Enums::MeshType_Convex)
-  mMesh.mConvex = sdk->createConvexMesh(PhysXStream(resource));
+  mMesh.mConvex = Serialisation::MeshSerialiser::loadConvexMesh(resource);
  else if (mType == Enums::MeshType_Triangle)
-  mMesh.mTriangle = sdk->createTriangleMesh(PhysXStream(resource));
+  mMesh.mTriangle = Serialisation::MeshSerialiser::loadTriangleMesh(resource);
  else if (mType == Enums::MeshType_Cloth)
-  mMesh.mCloth = sdk->createClothMesh(PhysXStream(resource));
- else if (mType == Enums::MeshType_SoftBody)
-  mMesh.mSoftBody = sdk->createSoftBodyMesh(PhysXStream(resource));
+  mMesh.mCloth = Serialisation::MeshSerialiser::loadExtendedClothMesh(resource, mTextureCoords);
+// else if (mType == Enums::MeshType_SoftBody)
+//  mMesh.mSoftBody = Serialisation::MeshSerialiser::loadSoftBodyMesh(resource);
+ else if (mType == Enums::MeshType_Skeleton)
+  mMesh.mSkeleton = Serialisation::MeshSerialiser::loadSkeletonMesh(resource);
  
- // Check for extended NxOgre data.
- if (mType == Enums::MeshType_Cloth)
-  NxOgre::Functions::Mesh::loadExtendedCloth(resource, mTextureCoords);
+}
 
+void Mesh::unload()
+{
+ 
+ NxPhysicsSDK* sdk = NxGetPhysicsSDK();
+ 
+ // If there is a sdk, then release the mesh, if there is no sdk, then mesh would of been automatically released.
+ if (sdk)
+ {
+  if (mType == Enums::MeshType_Convex)
+   sdk->releaseConvexMesh( *mMesh.mConvex );
+  else if (mType == Enums::MeshType_Triangle)
+   sdk->releaseTriangleMesh( *mMesh.mTriangle );
+  else if (mType == Enums::MeshType_Cloth)
+   sdk->releaseClothMesh( *mMesh.mCloth );
+  else if (mType == Enums::MeshType_SoftBody)
+   sdk->releaseSoftBodyMesh( *mMesh.mSoftBody );
+  else if (mType == Enums::MeshType_Skeleton)
+   sdk->releaseCCDSkeleton( *mMesh.mSkeleton );
+ }
+ 
+ mMesh.mCloth = 0;
+ mTextureCoords.clear();
+ mVertices.clear();
+ mIndices.clear();
+ mNormals.clear();
+ mType = Enums::MeshType_Unknown;
+ mName = BLANK_STRING;
+ mNameHash = BLANK_HASH;
+ mMeshStats.clear();
 }
 
 NxConvexMesh* Mesh::getAsConvex()
@@ -152,6 +245,11 @@ NxClothMesh* Mesh::getAsCloth()
 NxSoftBodyMesh* Mesh::getAsSoftBody()
 {
  return mType == Enums::MeshType_SoftBody ? mMesh.mSoftBody : 0;
+}
+
+NxCCDSkeleton* Mesh::getAsSkeleton()
+{
+ return mType == Enums::MeshType_Skeleton ? mMesh.mSkeleton : 0;
 }
 
 void Mesh::setName(const char* name)
@@ -180,7 +278,7 @@ MeshStats Mesh::getStats()
  if (mMeshStats.getNbVertices() != 0)
   return mMeshStats;
  
- mMeshStats = ::NxOgre::Functions::Mesh::calculateStats(this);
+ mMeshStats = calculateStats(this);
 
  return mMeshStats;
 }
@@ -195,14 +293,16 @@ MeshData* Mesh::getMeshData()
  MeshData* data = NxOgre_New(MeshData)();
  data->mType = getType();
  if (mType == NxOgre::Enums::MeshType_Triangle)
-  NxOgre::Functions::Mesh::saveTriangleMesh(mMesh.mTriangle, data);
+  Serialisation::MeshSerialiser::saveTriangleMesh(mMesh.mTriangle, data);
  else if (mType == NxOgre::Enums::MeshType_Convex)
-  NxOgre::Functions::Mesh::saveConvexMesh(mMesh.mConvex, data);
+  Serialisation::MeshSerialiser::saveConvexMesh(mMesh.mConvex, data);
  else if (mType == NxOgre::Enums::MeshType_Cloth)
-  NxOgre::Functions::Mesh::saveClothMesh(mMesh.mCloth, data);
+  Serialisation::MeshSerialiser::saveClothMesh(mMesh.mCloth, data);
 // else if (mType == NxOgre::Enums::MeshType_SoftBody)
 //  NxOgre::Functions::Mesh::saveSoftBodyMesh(mMesh.mSoftBody, data);
- 
+ else if (mType == NxOgre::Enums::MeshType_Skeleton)
+  Serialisation::MeshSerialiser::saveSkeletonMesh(mMesh.mSkeleton, data);
+
  return data;
 }
 

@@ -80,10 +80,14 @@ class NxOgrePublicClass Mesh
   */
   bool                                        isUsed(void) const;
   
-  /** \brief Load a mesh.
+  /** \brief Load a mesh from a resource, and take on that mesh.
   */
   void                                        load(Resource*);
   
+  /** \brief Unload the mesh.
+  */
+  void                                        unload();
+
   /** \brief Get's the convex mesh, or null
   */
   NxConvexMesh*                               getAsConvex();
@@ -104,6 +108,10 @@ class NxOgrePublicClass Mesh
   */
   SoftBodyMesh*                               getAsSoftBodyMesh();
 
+  /** \brief Get's the convex mesh, or null
+  */
+  NxCCDSkeleton*                              getAsSkeleton();
+
   /** \brief Get and/or calculate the statistics of the mesh
   */
   MeshStats                                   getStats();
@@ -119,7 +127,6 @@ class NxOgrePublicClass Mesh
   
   protected: // Variables
   
- 
   Enums::MeshType                             mType;
  
   union
@@ -128,6 +135,7 @@ class NxOgrePublicClass Mesh
    NxTriangleMesh*                            mTriangle;
    NxClothMesh*                               mCloth;
    NxSoftBodyMesh*                            mSoftBody;
+   NxCCDSkeleton*                             mSkeleton;
   } mMesh;
   
   /** \brief Render vertices

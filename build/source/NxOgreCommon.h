@@ -62,6 +62,7 @@
 #include "NxOgreTriangle.h"
 #include "NxOgreEntityReport.h"
 #include "NxOgreTimeStep.h"
+#include "NxOgreTimer.h"
 
                                                                                        
 
@@ -82,7 +83,6 @@ enum Axis
  Z      = (1<<2),
  NoAxis = (1<<3)
 };
-
 
 enum TimerMode
 {
@@ -359,7 +359,8 @@ enum MeshType
  MeshType_Convex   = 1, //!< A point cloud used in a Convex shape.
  MeshType_Triangle = 2, //!< A triangle "soup" used in TriangleGeometry shape.
  MeshType_Cloth    = 3, //!< A cloth used with the Cloth class.
- MeshType_SoftBody = 4  //!< A soft body used with the SoftBody class.
+ MeshType_SoftBody = 4, //!< A soft body used with the SoftBody class.
+ MeshType_Skeleton = 5, //!< A CCD Skeleton.
 };
 
 enum XType
@@ -836,6 +837,7 @@ enum SweepFlags
 //::             struct                     BufferUnknown;                 //!< \internal Do Not Use.
                  class                      Capsule;                       //!<
                  class                      Callback;                      //!<
+//::             struct                     CCDSkeletonMeshData;           //!<
 //::             struct                     CircularBufferReferenceCounter; //!<
                  class                      Cloth;                         //!<
                  class                      ClothDescription;              //!<
@@ -960,6 +962,8 @@ enum SweepFlags
 //::             struct                     TBuffer;                       //!< \brief Part of NxOgreArray.h
                  class                      TimeController;                //!<
                  class                      TimeListener;                  //!<
+                 class                      TimerStep;                     //!<
+                 class                      Timer;                         //!<
                  class                      TireFunction;                  //!<
                  class                      TriangleGeometry;              //!<
 //::             struct                     URIHash;                       //!< \brief Part of UniformResourceIdentifer
@@ -984,8 +988,13 @@ namespace Functions
                  class                      NxShapeFunctions;              //!<
 }
 
-                                                                                       
 
+namespace Serialisation
+{
+                 class                      MeshSerialiser;          //!<
+}
+
+                                                                                       
 
 /** \brief 1/30th of a second, to 8 sig. figs.
 */

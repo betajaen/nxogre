@@ -46,10 +46,6 @@ namespace Functions
 
                                                                                        
 
-/** \brief Just like strlen
-*/
-unsigned int getCStringLength(const char*);
-
 /** \brief Convert any vector3 class to another, assuming both classes have public member variables x y z
 */
 template<typename from, typename to>
@@ -96,16 +92,13 @@ void  NxOgreForceInline WXYZ(const from& _from, to& _to)
  _to.z = _from.z;
 }
 
-/** \brief Turn a const char* into a hash
+/** \brief Fill a chunk of memory with a value
 */
-unsigned long generateHash(const char*, Enums::HashAlgorithm);
-
-
 template<typename T> void fill(T* start, T* end, T value)
 {
  for (;start != end; ++start)
   (*start) = value;
-}
+} 
 
                                                                                        
 

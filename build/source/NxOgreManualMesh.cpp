@@ -31,7 +31,6 @@
 #include "NxOgreMesh.h"
 #include "NxOgreMeshData.h"
 #include "NxOgreResourceSystem.h"
-#include "NxOgreMeshFunctions.h"
 #include "NxOgreMeshManager.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreResource.h"

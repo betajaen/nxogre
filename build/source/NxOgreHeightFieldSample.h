@@ -71,8 +71,6 @@ struct NxOgrePublicClass HeightFieldSample
   
 }; // class HeightFieldSample
 
-NxOgre_CompileAssertion(sizeof(HeightFieldSample) == 4, HeightFieldSampleMustBe4Bytes);
-
                                                                                        
 
 } // namespace NXOGRE_NAMESPACE

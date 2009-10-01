@@ -82,8 +82,10 @@ class NxOgrePublicClass FixedSceneTimer : public PointerClass<Classes::_FixedSce
   
   protected:
   
+  Timer mTimer;
+  
   float mMaxTimeStep, mOldTime, mAccumulator;
- 
+  
 }; // class ClassName
 
                                                                                        

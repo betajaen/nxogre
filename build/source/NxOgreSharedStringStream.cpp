@@ -203,7 +203,7 @@ const char* SharedStringStream::get(void) const
 
 void SharedStringStream::add(const char* str)
 {
- unsigned int str_length = Functions::getCStringLength(str);
+ unsigned int str_length = strlen(str);
 
 
  if (_Buffer == 0)

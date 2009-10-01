@@ -144,11 +144,9 @@ template<class VecT> class BoundsT
    max.x = -FLT_MAX;
    max.y = -FLT_MAX;
    max.z = -FLT_MAX;
-   
   }
   
-  template <typename BoundsType>
-  static BoundsT from(const BoundsType& other)
+  template <typename BoundsType> static BoundsT from(const BoundsType& other)
   {
    return BoundsT(other.min, other.max);
   }

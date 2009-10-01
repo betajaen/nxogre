@@ -26,13 +26,12 @@
 
                                                                                        
 
-#ifndef NXOGRE_ACTIVEPARTICLE_H
-#define NXOGRE_ACTIVEPARTICLE_H
+#ifndef NXOGRE_TIMER_H
+#define NXOGRE_TIMER_H
 
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreCommon.h"
 
                                                                                        
 
@@ -41,34 +40,37 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief An Active particle, is a particle that is not resting in the scene.
+/** \brief Accurate timer class
 */
-struct NxOgrePublicClass ActiveParticle
+class NxOgrePublicClass Timer
 {
   
-  /** \brief Default and only constructor. Sets the particle to null and to an inactive state.
-  */
-  ActiveParticle() : mParticle(0), mStatus(NxOgre::Enums::ParticleStatus_Inactive)
-  {
-  }
+ public:
   
-  /** \brief Current particle/rigid body assigned to this activeparticle, or NULL.
-  */
-           Particle*                          mParticle;
+  Timer();
   
-  /** \brief Current status of this particle
-  */
-           NxOgre::Enums::ParticleStatus      mStatus;
+ ~Timer();
   
-  /** \brief Age in seconds.
-  */
-           Real                               mAge;
+  void    reset();
   
-  /** \brief Entropy
-  */
-           Real                               mEntropy;
+  float   now();
   
-}; // class ActiveParticle
+  double  nowDouble();
+  
+  float   nowReset();
+  
+  double  nowResetDouble();
+
+ private:
+  
+#if NxOgrePlatform == NxOgrePlatformWindows
+  
+  __int64  mStart;
+  __int64  mFrequency;
+  
+#endif
+  
+};
 
                                                                                        
 
@@ -77,6 +79,3 @@ struct NxOgrePublicClass ActiveParticle
                                                                                        
 
 #endif
-
-
-

@@ -60,7 +60,9 @@ class NxOgrePublicClass MeshStats
    unsigned int getNbTextureCoords(void) const;
    
    unsigned int getNbTetrahedra(void) const;
-
+   
+   void clear();
+   
   protected:
    
    unsigned int mNbVertices;

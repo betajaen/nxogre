@@ -29,7 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreScene.h"
 #include "NxOgreFixedSceneTimer.h"
-#include "NxOgreTime.h"
+#include "NxOgreTimer.h"
 
 #include "NxPhysics.h"
 
@@ -44,7 +44,8 @@ FixedSceneTimer::FixedSceneTimer(Scene* scene, Real maxTime, Real expectedTime)
 : SceneTimer(scene, maxTime, expectedTime),
   mMaxTimeStep(1.0f / 60.0f),
   mOldTime(0.0f),
-  mAccumulator(0.0f)
+  mAccumulator(0.0f),
+  mTimer()
 {
  mScene->setTiming(mMaxTimeStep / 8.0f, 8, NX_TIMESTEP_FIXED);
  TimeStep& ts = mParent->getTimeStep();
@@ -60,7 +61,7 @@ FixedSceneTimer::~FixedSceneTimer(void)
 void FixedSceneTimer::simulate(float user_deltaTimer)
 {
  
- float now = Functions::time();
+ float now = mTimer.now();
  float deltaTime = now - mOldTime;
  mOldTime = now;
  

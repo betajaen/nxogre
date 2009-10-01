@@ -89,7 +89,7 @@
       Actor* a = NxOgre_New(Actor)(arg0, arg1, ...);
      </code>
 */
-#define  NxOgre_New(NXOGRE_CLASS)  new NXOGRE_CLASS
+#define  NxOgre_New(NXOGRE_CLASS) new NXOGRE_CLASS
 
 /** \brief Global new operator/function for every user class (and classes that do not inherit PointerClass) which
            wishes to be tracked and allocated by the NxOgre Memory class.

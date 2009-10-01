@@ -79,6 +79,14 @@ unsigned int MeshStats::getNbTetrahedra(void) const
  return mNbTetrahedra;
 }
 
+void MeshStats::clear()
+{
+ mNbVertices = 0;
+ mNbIndices = 0;
+ mNbParentIndices = 0;
+ mNbTextureCoords = 0;
+ mNbTetrahedra = 0;
+}
 
                                                                                        
 

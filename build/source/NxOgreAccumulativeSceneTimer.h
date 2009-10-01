@@ -78,6 +78,8 @@ class NxOgrePublicClass AccumulativeSceneTimer : public PointerClass<Classes::_A
   
   protected:
   
+  Timer mTimer;
+  
   float                                      mOldTime, mAccumulator;
   
 }; // class AccumulativeSceneTimer

@@ -26,12 +26,13 @@
 
                                                                                        
 
-#ifndef NXOGRE_TIME_H
-#define NXOGRE_TIME_H
-
-                                                                                       
-
 #include "NxOgreStable.h"
+#include "NxOgreTimer.h"
+
+#if NxOgrePlatform == NxOgrePlatformWindows
+#define WIN32_LEAN_AND_MEAN 
+#include <windows.h>
+#endif
 
                                                                                        
 
@@ -40,21 +41,57 @@ namespace NxOgre
 
                                                                                        
 
-namespace Functions
+Timer::Timer()
+: mStart(0.0f),
+  mFrequency(0.0f)
 {
+ reset();
+}
 
-                                                                                       
+Timer::~Timer()
+{
+}
 
-float time();
+float Timer::now()
+{
+ __int64 now = 0;
+ QueryPerformanceCounter( (LARGE_INTEGER*) &now);
+ return (float) ( float(now - mStart) / float(mFrequency));
+}
 
-                                                                                       
+double Timer::nowDouble()
+{
+ __int64 now = 0;
+ QueryPerformanceCounter( (LARGE_INTEGER*) &now);
+ return (double) ( double(now - mStart) / double(mFrequency));
+}
 
-} // namespace Functions
+float Timer::nowReset()
+{
+ __int64 now = 0;
+ QueryPerformanceCounter( (LARGE_INTEGER*) &now);
+ float t = (float) ( float(now - mStart) / float(mFrequency));
+ reset();
+ return t;
+}
+
+double Timer::nowResetDouble()
+{
+ __int64 now = 0;
+ QueryPerformanceCounter( (LARGE_INTEGER*) &now);
+ float t = (double) ( double(now - mStart) / double(mFrequency));
+ reset();
+ return t;
+}
+
+void Timer::reset()
+{
+ QueryPerformanceCounter( (LARGE_INTEGER*) &mStart);
+ QueryPerformanceFrequency( (LARGE_INTEGER*) &mFrequency);
+}
 
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
-
-#endif
