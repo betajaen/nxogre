@@ -1,0 +1,115 @@
+h1. NxOgreWorld.h
+
+
+h2. World
+
+
+p. World is the main singleton class of NxOgre. Always created first and destoyed last.
+
+h3. createWorld (Alternate)
+
+p. Create the World instance, and Singletons (if they aren't created).
+
+h4. Arguments
+
+- *WorldPrototype** prototype := Prototype to create from.
+
+h4. Note
+
+If null is returned then you should check the log for the reason why it wasn't created.
+
+
+h4. Returns
+
+**World* -- The World instance, or NULL if created.
+
+
+h3. destroySingletons
+
+p. Destroy singletons. This should be called AFTER destroyWorld.
+
+h3. hasHardware
+
+p. Does the current computer have a PhysX accelerator, or a GPU capable of PhysX acceleration?
+
+h4. Returns
+
+bool -- If the hardware has a PhysX accelerator or capable GPU.
+
+
+h3. createScene
+
+p. Create a single scene with a SceneDescription as it's initial properties.
+
+h4. Arguments
+
+- *const SceneDescription&* := SceneDescription to create the Scene with.
+
+h4. Returns
+
+*Scene** -- The Scene, or NULL if the Scene was not created properly.
+
+
+h3. getWorld
+
+p. Get a copy of the World pointer.
+
+h4. Returns
+
+The World instance, or NULL if the World has not been created yet.
+
+
+h3. destroyScene
+
+p. Destroys a single scene and the contents within.
+
+h4. Arguments
+
+- *Scene* := The Scene to destroy
+
+h3. isDead
+
+p. Is the associated NxPhysicsSDK not created, or a serious error has happened that has made it unusable.
+
+h4. Returns
+
+*bool* -- If the NxPhysicsSDK is not created or a critical error has happened.
+
+
+h3. precreateSingletons
+
+p. Pre-create singletons of NxOgre (ResourceSystem, MeshManager, HeightFieldManager, ErrorStream, etc.)
+
+h3. createWorld
+
+p. Create the World instance, and Singletons (if they aren't created).
+
+h4. Arguments
+
+- const WorldDescription& := Description of the World to use.
+
+h4. Note
+
+If null is returned then you should check the log for the reason why it wasn't created.
+
+
+h4. Returns
+
+*World** -- The World instance, or NULL if created.
+
+
+h3. destroyWorld
+
+p. Destroyer of World, Scenes and everything within.
+
+h4. Arguments
+
+- *bool* also_destroy_singletons := Destroy the Singletons along with the world.
+
+h4. Note
+
+If you destroy the singletons, then World::destroySingletons does not need to be called.
+
+
+
+
