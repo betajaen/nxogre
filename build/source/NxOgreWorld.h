@@ -62,21 +62,21 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   */
   static               void                   precreateSingletons(void);
 
-  /*! function. createWorld
+  /*! function. createWorld.WorldDescription
       Create the World instance, and Singletons (if they aren't created).
       args.
        - const WorldDescription& := Description of the World to use.
       note. If null is returned then you should check the log for the reason why it wasn't created.
-      return. *World** -- The World instance, or NULL if created.
+      return. *World** * -- The World instance, or NULL if created.
   */
   static               World*                 createWorld(const WorldDescription& = WorldDescription());
   
-  /*! function. createWorld (Alternate)
+  /*! function. createWorld.WorldPrototype
       Create the World instance, and Singletons (if they aren't created).
       args.
        - *WorldPrototype** prototype := Prototype to create from.
       note. If null is returned then you should check the log for the reason why it wasn't created.
-      return. **World* -- The World instance, or NULL if created.
+      return. **World* * -- The World instance, or NULL if created.
   */
   static               World*                 createWorld(WorldPrototype* prototype);
   
@@ -84,7 +84,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   /*! function. destroyWorld
       Destroyer of World, Scenes and everything within.
       args.
-       - *bool* also_destroy_singletons := Destroy the Singletons along with the world.
+       - **bool** also_destroy_singletons := Destroy the Singletons along with the world.
       note. If you destroy the singletons, then World::destroySingletons does not need to be called.
   */
   static               void                   destroyWorld(bool also_destroy_singletons = true);
@@ -96,13 +96,13 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
 
   /*! function. getWorld
       Get a copy of the World pointer.
-      return. The World instance, or NULL if the World has not been created yet.
+      return. **World** * -- The World instance, or NULL if the World has not been created yet.
   */
   static               World*                 getWorld();
 
   /*! function. isDead
       Is the associated NxPhysicsSDK not created, or a serious error has happened that has made it unusable.
-      return. *bool* -- If the NxPhysicsSDK is not created or a critical error has happened.
+      return. **bool** -- If the NxPhysicsSDK is not created or a critical error has happened.
   */
                        bool                   isDead(void) const;
 
@@ -110,63 +110,63 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
       Create a single scene with a SceneDescription as it's initial properties.
       args.
        - *const SceneDescription&* := SceneDescription to create the Scene with.
-      return. **Scene*** -- The Scene, or NULL if the Scene was not created properly.
+      return. **Scene** * -- The Scene, or NULL if the Scene was not created properly.
   */
                        Scene*                 createScene(const SceneDescription& = SceneDescription());
 
   /*! function. destroyScene
       Destroys a single scene and the contents within.
       args.
-       - **Scene*** := The Scene to destroy
+       - **Scene** * := The Scene to destroy
   */
                        void                   destroyScene(Scene*);
 
   /*! function. hasHardware
       Does the current computer have a PhysX accelerator, or a GPU capable of PhysX acceleration?
-      return. bool -- If the hardware has a PhysX accelerator or capable GPU.
+      return. **bool** -- If the hardware has a PhysX accelerator or capable GPU.
   */
                        bool                   hasHardware() const;
 
   /*! function. getNullCallback
       Get a copy of the Null Callback. Used for parts of NxOgre that don't have a user callback but still recieve events.
       note. This OWNED by NxOgre. Do not delete it.
-      return. **Callback*** -- The callback
+      return. **Callback** * -- The callback
   */
                        Callback*              getNullCallback(void);
   
   /*! function. getVisualDebugger
       Get a copy of the VisualDebugger pointer.
       note. This OWNED by NxOgre. Do not delete it.
-      return. *V*isualDebugger*** -- The VisualDebugger
+      return. **VisualDebugger** * -- The VisualDebugger
   */
                        VisualDebugger*        getVisualDebugger(void);
   
   /*! function. getRemoteDebugger
       Get a copy of the RemoteDebugger pointer.
       note. This OWNED by NxOgre. Do not delete it.
-      return. **RemoteDebugger*** -- The RemoteDebugger
+      return. **RemoteDebugger** * -- The RemoteDebugger
   */
                        RemoteDebugger*        getRemoteDebugger(void);
   
   /*! function. getScenes
       Get an iterator to the current Scenes in World.
-      return. **SceneIterator*** -- A iterator to the Scenes.
+      return. **SceneIterator** * -- A iterator to the Scenes.
   */
                        SceneIterator          getScenes(void);
   
-  /*! function. getRemoteDebugger
+  /*! function. getPhysXSDK
       Get a copy of the NxPhysicsSDK pointer.
       !physx
       note. This OWNED by NxOgre. Do not delete it.
-      return. **NxPhysicsSDK*** -- The NxPhysicsSDK pointer
+      return. **NxPhysicsSDK** * -- The NxPhysicsSDK pointer
   */
                        NxPhysicsSDK*          getPhysXSDK(void);
   
-  /*! function. getRemoteDebugger
+  /*! function. getPhysXCookingInterface
       Get a copy of the NxCookingInterface pointer.
       !physx
       note. This OWNED by NxOgre. Do not delete it.
-      return. **NxCookingInterface*** -- The NxCookingInterface pointer
+      return. **NxCookingInterface** * -- The NxCookingInterface pointer
   */
                        NxCookingInterface*    getPhysXCookingInterface(void);
   
