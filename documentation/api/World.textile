@@ -16,7 +16,6 @@ h3. Example
 bc.. Scene* scene = World::getWorld()->createScene();
 
 
-p.
 
 h3. Arguments
 
@@ -37,7 +36,6 @@ h3. Example
 bc.. World* world = World::createWorld();
 
 
-p.
 
 h3. Arguments
 
@@ -59,7 +57,6 @@ h3. Example
 bc.. World* world = World::createWorld(prototype);
 
 
-p.
 
 h3. Arguments
 
