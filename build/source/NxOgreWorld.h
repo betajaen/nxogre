@@ -46,8 +46,7 @@ namespace NxOgre
                                                                                        
 
 /*! class. World
-    
-    World is the main singleton class of NxOgre. Always created first and destoyed last.
+    World is the main singleton class of NxOgre. Always created first and destroyed last.
     
 */
 class NxOgrePublicClass World : public PointerClass<Classes::_World>
@@ -55,7 +54,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   
   public: // Functions
   
-  typedef ptr_multihashmap<Scene>                Scenes;
+  typedef ptr_multihashmap<Scene>             Scenes;
   typedef ptr_multihashmap<Scene>::iterator_t SceneIterator;
   
   /*! function. precreateSingletons
@@ -111,14 +110,14 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
       Create a single scene with a SceneDescription as it's initial properties.
       args.
        - *const SceneDescription&* := SceneDescription to create the Scene with.
-      return. *Scene** -- The Scene, or NULL if the Scene was not created properly.
+      return. **Scene*** -- The Scene, or NULL if the Scene was not created properly.
   */
                        Scene*                 createScene(const SceneDescription& = SceneDescription());
 
   /*! function. destroyScene
       Destroys a single scene and the contents within.
       args.
-       - *Scene* := The Scene to destroy
+       - **Scene*** := The Scene to destroy
   */
                        void                   destroyScene(Scene*);
 
@@ -128,46 +127,46 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   */
                        bool                   hasHardware() const;
 
-  /** function. getNullCallback
+  /*! function. getNullCallback
       Get a copy of the Null Callback. Used for parts of NxOgre that don't have a user callback but still recieve events.
       note. This OWNED by NxOgre. Do not delete it.
-      return. *Callback** -- The callback
+      return. **Callback*** -- The callback
   */
                        Callback*              getNullCallback(void);
   
-  /** function. getVisualDebugger
+  /*! function. getVisualDebugger
       Get a copy of the VisualDebugger pointer.
       note. This OWNED by NxOgre. Do not delete it.
-      return. *VisualDebugger** -- The VisualDebugger
+      return. *V*isualDebugger*** -- The VisualDebugger
   */
                        VisualDebugger*        getVisualDebugger(void);
   
-  /** function. getRemoteDebugger
+  /*! function. getRemoteDebugger
       Get a copy of the RemoteDebugger pointer.
       note. This OWNED by NxOgre. Do not delete it.
-      return. *RemoteDebugger** -- The RemoteDebugger
+      return. **RemoteDebugger*** -- The RemoteDebugger
   */
                        RemoteDebugger*        getRemoteDebugger(void);
   
-  /** function. getScenes
+  /*! function. getScenes
       Get an iterator to the current Scenes in World.
-      return. *SceneIterator* -- A iterator to the Scenes.
+      return. **SceneIterator*** -- A iterator to the Scenes.
   */
                        SceneIterator          getScenes(void);
   
-  /** function. getRemoteDebugger
+  /*! function. getRemoteDebugger
       Get a copy of the NxPhysicsSDK pointer.
       !physx
       note. This OWNED by NxOgre. Do not delete it.
-      return. *NxPhysicsSDK** -- The NxPhysicsSDK pointer
+      return. **NxPhysicsSDK*** -- The NxPhysicsSDK pointer
   */
                        NxPhysicsSDK*          getPhysXSDK(void);
   
-  /** function. getRemoteDebugger
+  /*! function. getRemoteDebugger
       Get a copy of the NxCookingInterface pointer.
       !physx
       note. This OWNED by NxOgre. Do not delete it.
-      return. *NxCookingInterface** -- The NxCookingInterface pointer
+      return. **NxCookingInterface*** -- The NxCookingInterface pointer
   */
                        NxCookingInterface*    getPhysXCookingInterface(void);
   
@@ -180,7 +179,6 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   /* Internal. Use World::destroyWorld();
   */
                                              ~World(void);
-  
   
   
   protected: // Variables
