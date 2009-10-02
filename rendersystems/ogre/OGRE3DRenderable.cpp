@@ -94,7 +94,7 @@ void OGRE3DRenderable::drawSoftBodySimple(NxOgre::PhysXMeshData* data, const NxO
  _resize(data->getNbVertices(), data->getNbIndices());
  
  // Write the vertices.
- mVertexBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(Ogre::Real), data->getVertices() );
+ mVertexBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(float), data->getVertices() );
  
  // Write the indices.
  mRenderOp.indexData->indexBuffer->writeData(0, data->getNbIndices() * sizeof(unsigned int), data->getIndices() );
@@ -118,10 +118,10 @@ void OGRE3DRenderable::drawCloth(NxOgre::PhysXMeshData* data, NxOgre::Buffer<flo
  _resize(data->getNbVertices(), data->getNbIndices());
  
  // Write the vertices.
- mVertexBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(Ogre::Real), data->getVertices() );
+ mVertexBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(float), data->getVertices() );
  
  // Write the normals.
- mNormalBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(Ogre::Real), data->getNormals() );
+ mNormalBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(float), data->getNormals() );
 
  // Write the texture coords.
  mTextureCoordsBuffer->writeData(0, textureCoords.size() * sizeof(float), textureCoords.first() );
@@ -142,10 +142,10 @@ void OGRE3DRenderable::drawClothFast(NxOgre::PhysXMeshData* data, const NxOgre::
  _resize(data->getNbVertices(), data->getNbIndices());
 
  // Write the vertices.
- mVertexBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(Ogre::Real), data->getVertices() );
+ mVertexBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(float), data->getVertices() );
  
  // Write the normals.
- mNormalBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(Ogre::Real), data->getNormals() );
+ mNormalBuffer->writeData(0, 3 * data->getNbVertices() * sizeof(float), data->getNormals() );
 
  // Set the extents.
  mBox.setExtents(bounds.min.as<Ogre::Vector3>(), bounds.max.as<Ogre::Vector3>());
@@ -157,8 +157,8 @@ void OGRE3DRenderable::drawVisualDebugger(NxOgre::VisualDebuggerMeshData* data)
  _resize(data->getNbLines(), 0);
 
  // Write the vertices.
- mVertexBuffer->writeData(0, 3 * data->getNbLines() * sizeof(Ogre::Real), data->getLines() );
- 
+ mVertexBuffer->writeData(0, 3 * data->getNbLines() * sizeof(float), data->getLines() );
+
  mVertexColourBuffer->writeData(0, data->getNbLines() * sizeof(unsigned int), data->getColours() );
 
  mBox.setInfinite();
@@ -343,12 +343,12 @@ void OGRE3DRenderable::_resize(size_t vertexCount, size_t indexCount)
   }
 }
 
-Ogre::Real OGRE3DRenderable::getBoundingRadius(void) const
+float OGRE3DRenderable::getBoundingRadius(void) const
 {
  return Ogre::Math::Sqrt(std::max(mBox.getMaximum().squaredLength(), mBox.getMinimum().squaredLength()));
 }
 
-Ogre::Real OGRE3DRenderable::getSquaredViewDepth(const Ogre::Camera* cam) const
+float OGRE3DRenderable::getSquaredViewDepth(const Ogre::Camera* cam) const
 {
  Ogre::Vector3 vMin, vMax, vMid, vDist;
  vMin = mBox.getMinimum();
