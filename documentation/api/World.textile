@@ -11,6 +11,13 @@ h2. createScene
 p. Create a single scene with a SceneDescription as it's initial properties.
 
 
+h3. Example
+
+bc.. Scene* scene = World::getWorld()->createScene();
+
+
+p.
+
 h3. Arguments
 
 - *const SceneDescription&* := SceneDescription to create the Scene with.
@@ -25,6 +32,13 @@ h2. createWorld.WorldDescription
 p. Create the World instance, and Singletons (if they aren't created).
 
 
+h3. Example
+
+bc.. World* world = World::createWorld();
+
+
+p.
+
 h3. Arguments
 
 - const WorldDescription& := Description of the World to use.
@@ -32,13 +46,20 @@ h3. Arguments
 
 h3. Traits
 
-- return := *World** * -- The World instance, or NULL if created.
+- return := **World** * -- The World instance, or NULL if created.
 - note := If null is returned then you should check the log for the reason why it wasn't created.
 
 h2. createWorld.WorldPrototype
 
 p. Create the World instance, and Singletons (if they aren't created).
 
+
+h3. Example
+
+bc.. World* world = World::createWorld(prototype);
+
+
+p.
 
 h3. Arguments
 
@@ -100,7 +121,7 @@ h3. Traits
 
 - return := **NxCookingInterface** * -- The NxCookingInterface pointer
 - note := This OWNED by NxOgre. Do not delete it.
-- Private function := Yes
+- Returns PhysX classes or uses them as arguments := Yes
 
 h2. getPhysXSDK
 
@@ -111,7 +132,7 @@ h3. Traits
 
 - return := **NxPhysicsSDK** * -- The NxPhysicsSDK pointer
 - note := This OWNED by NxOgre. Do not delete it.
-- Private function := Yes
+- Returns PhysX classes or uses them as arguments := Yes
 
 h2. getRemoteDebugger
 

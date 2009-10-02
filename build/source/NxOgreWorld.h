@@ -64,17 +64,21 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
 
   /*! function. createWorld.WorldDescription
       Create the World instance, and Singletons (if they aren't created).
+      example.
+      World* world = World::createWorld();
       args.
-       - const WorldDescription& := Description of the World to use.
+      - const WorldDescription& := Description of the World to use.
       note. If null is returned then you should check the log for the reason why it wasn't created.
-      return. *World** * -- The World instance, or NULL if created.
+      return. **World** * -- The World instance, or NULL if created.
   */
   static               World*                 createWorld(const WorldDescription& = WorldDescription());
   
   /*! function. createWorld.WorldPrototype
       Create the World instance, and Singletons (if they aren't created).
+      example.
+      World* world = World::createWorld(prototype);
       args.
-       - *WorldPrototype** prototype := Prototype to create from.
+      - *WorldPrototype** prototype := Prototype to create from.
       note. If null is returned then you should check the log for the reason why it wasn't created.
       return. **World* * -- The World instance, or NULL if created.
   */
@@ -84,7 +88,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   /*! function. destroyWorld
       Destroyer of World, Scenes and everything within.
       args.
-       - **bool** also_destroy_singletons := Destroy the Singletons along with the world.
+      - **bool** also_destroy_singletons := Destroy the Singletons along with the world.
       note. If you destroy the singletons, then World::destroySingletons does not need to be called.
   */
   static               void                   destroyWorld(bool also_destroy_singletons = true);
@@ -108,8 +112,10 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
 
   /*! function. createScene
       Create a single scene with a SceneDescription as it's initial properties.
+      example.
+      Scene* scene = World::getWorld()->createScene();
       args.
-       - *const SceneDescription&* := SceneDescription to create the Scene with.
+      - *const SceneDescription&* := SceneDescription to create the Scene with.
       return. **Scene** * -- The Scene, or NULL if the Scene was not created properly.
   */
                        Scene*                 createScene(const SceneDescription& = SceneDescription());
@@ -117,7 +123,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   /*! function. destroyScene
       Destroys a single scene and the contents within.
       args.
-       - **Scene** * := The Scene to destroy
+      - **Scene** * := The Scene to destroy
   */
                        void                   destroyScene(Scene*);
 
