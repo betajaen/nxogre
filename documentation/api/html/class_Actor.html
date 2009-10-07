@@ -1,0 +1,949 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - Actor</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3{margin:0;padding:0;color:#ccc;}
+  #N{color:white;}
+  #N h1{background-color:#333;}
+  #N h2{background-color:#222;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover{background-color:#ccc;color:#181818}
+  #N ul li.this, div#nav ul li.this:hover{padding:0.25em 0 0.25em 0.5em;background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;background-color:yellow;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li class="this">Actor</li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>Actor</h1><h2 class="source">NxOgreActor.h</h2>
+<div class="method">	<p class="c"><a href="class_Actor.html">Actor</a> is a dynamic (moving) RigidBody, that can collide with SceneGeometries and KinematicActors.</p>
+
+	<p class="c">It is normal to inherit from the <a href="class_Actor.html">Actor</a> to support visualisation in a RenderSystem, broadly<br />speaking any class that inherits the <a href="class_Actor.html">Actor</a> class is called a <strong>Body</strong>.</p>
+
+	<p class="c"><a href="class_Actor.html">Actor</a>s uses RigidBodyDescriptions to create it&#8217;s properities as well as a Matrix44 pose, a <strong>Shape</strong><br />or group of <strong>Shapes</strong>. The RigidBodyDescription is required to have a mass is at least zero, or otherwise<br />a density of at least zero &#8211; but not both.</p>
+
+
+<h3 class="e">Example</h3>
+<pre><code>RigidBodyDescription description;
+description.mMass = 15.0f; // 15 kg
+
+<b>Actor</b>* actor = mScene->createActor(shape, pose, description);
+
+</code></pre>
+	<h3 class="s">See</h3>
+
+	<p class="s">RigidBody</p>
+
+</div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#computeKineticEnergy" class="m">computeKineticEnergy</a></li>
+<li><a href="#getAngularDamping" class="m">getAngularDamping</a></li>
+<li><a href="#getAngularMomentum" class="m">getAngularMomentum</a></li>
+<li><a href="#getAngularVelocity" class="m">getAngularVelocity</a></li>
+<li><a href="#getCCDMotionThreshold" class="m">getCCDMotionThreshold</a></li>
+<li><a href="#getCMassLocalPose" class="m">getCMassLocalPose</a></li>
+<li><a href="#getClassType" class="m">getClassType</a></li>
+<li><a href="#getCompartment" class="m">getCompartment</a></li>
+<li><a href="#getContactReportFlags" class="m">getContactReportFlags</a></li>
+<li><a href="#getContactReportThreshold" class="m">getContactReportThreshold</a></li>
+<li><a href="#getDominanceGroup" class="m">getDominanceGroup</a></li>
+<li><a href="#getForceFieldMaterial" class="m">getForceFieldMaterial</a></li>
+<li><a href="#getGlobalInertiaTensor" class="m">getGlobalInertiaTensor</a></li>
+<li><a href="#getGlobalInertiaTensorInverse" class="m">getGlobalInertiaTensorInverse</a></li>
+<li><a href="#getGlobalOrientation" class="m">getGlobalOrientation</a></li>
+<li><a href="#getGlobalPose" class="m">getGlobalPose</a></li>
+<li><a href="#getGlobalPosition" class="m">getGlobalPosition</a></li>
+<li><a href="#getGroup" class="m">getGroup</a></li>
+<li><a href="#getLinearDamping" class="m">getLinearDamping</a></li>
+<li><a href="#getLinearMomentum" class="m">getLinearMomentum</a></li>
+<li><a href="#getLinearVelocity" class="m">getLinearVelocity</a></li>
+<li><a href="#getMass" class="m">getMass</a></li>
+<li><a href="#getMassSpaceInertiaTensor" class="m">getMassSpaceInertiaTensor</a></li>
+<li><a href="#getMaxAngularVelocity" class="m">getMaxAngularVelocity</a></li>
+<li><a href="#getName" class="m">getName</a></li>
+<li><a href="#getNbShapes" class="m">getNbShapes</a></li>
+<li><a href="#getSolverIterationCount" class="m">getSolverIterationCount</a></li>
+<li><a href="#linearSweep" class="m">linearSweep</a></li>
+<li><a href="#resetPairFiltering" class="m">resetPairFiltering</a></li>
+<li><a href="#setAngularDamping" class="m">setAngularDamping</a></li>
+<li><a href="#setAngularMomentum" class="m">setAngularMomentum</a></li>
+<li><a href="#setAngularVelocity" class="m">setAngularVelocity</a></li>
+<li><a href="#setCCDMotionThreshold" class="m">setCCDMotionThreshold</a></li>
+<li><a href="#setCMassGlobalOrientation" class="m">setCMassGlobalOrientation</a></li>
+<li><a href="#setCMassGlobalPose" class="m">setCMassGlobalPose</a></li>
+<li><a href="#setCMassGlobalPosition" class="m">setCMassGlobalPosition</a></li>
+<li><a href="#setCMassOffsetGlobalOrientation" class="m">setCMassOffsetGlobalOrientation</a></li>
+<li><a href="#setCMassOffsetGlobalPose" class="m">setCMassOffsetGlobalPose</a></li>
+<li><a href="#setCMassOffsetGlobalPosition" class="m">setCMassOffsetGlobalPosition</a></li>
+<li><a href="#setCMassOffsetLocalOrientation" class="m">setCMassOffsetLocalOrientation</a></li>
+<li><a href="#setCMassOffsetLocalPose" class="m">setCMassOffsetLocalPose</a></li>
+<li><a href="#setCMassOffsetLocalPosition" class="m">setCMassOffsetLocalPosition</a></li>
+<li><a href="#setContactReportFlags" class="m">setContactReportFlags</a></li>
+<li><a href="#setContactReportThreshold" class="m">setContactReportThreshold</a></li>
+<li><a href="#setDominanceGroup" class="m">setDominanceGroup</a></li>
+<li><a href="#setForceFieldMaterial" class="m">setForceFieldMaterial</a></li>
+<li><a href="#setGlobalOrientation" class="m">setGlobalOrientation</a></li>
+<li><a href="#setGlobalOrientationQuat" class="m">setGlobalOrientationQuat</a></li>
+<li><a href="#setGlobalPose" class="m">setGlobalPose</a></li>
+<li><a href="#setGlobalPosition" class="m">setGlobalPosition</a></li>
+<li><a href="#setGroup" class="m">setGroup</a></li>
+<li><a href="#setLinearDamping" class="m">setLinearDamping</a></li>
+<li><a href="#setLinearMomentum" class="m">setLinearMomentum</a></li>
+<li><a href="#setLinearVelocity" class="m">setLinearVelocity</a></li>
+<li><a href="#setMass" class="m">setMass</a></li>
+<li><a href="#setMassSpaceInertiaTensor" class="m">setMassSpaceInertiaTensor</a></li>
+<li><a href="#setMaxAngularVelocity" class="m">setMaxAngularVelocity</a></li>
+<li><a href="#setSolverIterationCount" class="m">setSolverIterationCount</a></li>
+<li><a href="#updateMassFromShapes" class="m">updateMassFromShapes</a></li>
+</ul><h2 class="method function"><a name='computeKineticEnergy'></a>computeKineticEnergy</h2>
+<div class="method">	<p class="c">Computes the total kinetic (rotational and translational) energy of the actor.</p>
+
+
+	<h3>Return</h3>
+
+	<p class="r">Real &#8212; The total kinetic energy of the actor.</p>
+
+</div><h2 class="method function"><a name='getAngularDamping'></a>getAngularDamping</h2>
+<div class="method">	<p class="c">Retrieves the angular damping coefficient.</p>
+	<h3>Return</h3>
+
+	<p class="r">Real &#8212; Current angular damping</p>
+
+</div><h2 class="method function"><a name='getAngularMomentum'></a>getAngularMomentum</h2>
+<div class="method">	<p class="c">Retrieves the angular momentum (angular velocity * global space inertia) of an actor.</p>
+
+
+	<h3>Return</h3>
+
+	<p class="r">Vec3 &#8211; angular momentum of the <a href="class_Actor.html">Actor</a>.</p>
+
+</div><h2 class="method function"><a name='getAngularVelocity'></a>getAngularVelocity</h2>
+<div class="method">	<p class="c">Retrieves the angular velocity of an actor.</p>
+	<h3>Return</h3>
+
+	<p class="r">Vec3 &#8212; Current angular velocity</p>
+
+</div><h2 class="method function"><a name='getCCDMotionThreshold'></a>getCCDMotionThreshold</h2>
+<div class="method">	<p class="c">Retrieves the <span class="caps">CCD</span> Motion threshold for this actor.</p>
+	<h3>Return</h3>
+
+	<p class="r">Real &#8211; Motion threshold</p>
+
+</div><h2 class="method function"><a name='getCMassLocalPose'></a>getCMassLocalPose</h2>
+<div class="method">	<p class="c">Get the center of mass as a global orientation</p>
+	<h3>Return</h3>
+
+	<p class="r">Matrix33 &#8212; Global <span class="caps">COM</span> orientation</p>
+
+</div><h2 class="method function"><a name='getClassType'></a>getClassType</h2>
+<div class="method">	<p class="c">Get a class type identifier of this class</p>
+	<h3>Return</h3>
+
+	<p class="r">unsigned int &#8211; The class type</p>
+
+</div><h2 class="method function"><a name='getCompartment'></a>getCompartment</h2>
+<div class="method">	<p class="c">Retrieves the actor&#8217;s simulation compartment, if any.</p>
+	<h3>Return</h3>
+
+	<p class="r">Compartment* &#8212; The <a href="class_Actor.html">Actor</a>s compartment, or <strong>NULL</strong>.</p>
+
+</div><h2 class="method function"><a name='getContactReportFlags'></a>getContactReportFlags</h2>
+<div class="method">	<p class="c">Retrieves the actor&#8217;s contact report flags.</p>
+	<h3>Return</h3>
+
+	<p class="r"><a href="class_Actor.html">Actor</a> contact report flags</p>
+
+</div><h2 class="method function"><a name='getContactReportThreshold'></a>getContactReportThreshold</h2>
+<div class="method">	<p class="c">Retrieves the force threshold for contact reports.</p>
+	<h3>Return</h3>
+
+	<p class="r">Real &#8212; The force threshold</p>
+
+</div><h2 class="method function"><a name='getDominanceGroup'></a>getDominanceGroup</h2>
+<div class="method">	<p class="c">Retrieves the value set with setDominanceGroup().</p>
+
+
+	<h3>Return</h3>
+
+	<p class="r">GroupIdentifier &#8212; The dominance actorGroup the <a href="class_Actor.html">Actor</a> belongs too.</p>
+
+</div><h2 class="method function"><a name='getForceFieldMaterial'></a>getForceFieldMaterial</h2>
+<div class="method">	<p class="c">Retrieves the actor&#8217;s force field material index.</p>
+	<h3>Return</h3>
+
+	<p class="r">unsigned short &#8212; Force field material index.</p>
+
+</div><h2 class="method function"><a name='getGlobalInertiaTensor'></a>getGlobalInertiaTensor</h2>
+<div class="method">	<p class="c">Retrieves the inertia tensor of the actor relative to the world coordinate frame.</p>
+	<h3>Return</h3>
+
+	<p class="r">Matrix33 &#8212; Inertia Tensor</p>
+
+</div><h2 class="method function"><a name='getGlobalInertiaTensorInverse'></a>getGlobalInertiaTensorInverse</h2>
+<div class="method">	<p class="c">Retrieves the inverse of the inertia tensor of the actor relative to the world coordinate frame.</p>
+	<h3>Return</h3>
+
+	<p class="r">Matrix33 &#8212; Inverse Inertia Tensor</p>
+
+</div><h2 class="method function"><a name='getGlobalOrientation'></a>getGlobalOrientation</h2>
+<div class="method">	<p class="c">Get the global orientation of the <a href="class_Actor.html">Actor</a>.</p>
+	<h3>Return</h3>
+
+	<p class="r">Quat &#8212; The global pose of the <a href="class_Actor.html">Actor</a>.</p>
+
+</div><h2 class="method function"><a name='getGlobalPose'></a>getGlobalPose</h2>
+<div class="method">	<p class="c">Get the global pose of the <a href="class_Actor.html">Actor</a>.</p>
+	<h3>Return</h3>
+
+	<p class="r">Matrix44 &#8212; The global pose of the <a href="class_Actor.html">Actor</a>.</p>
+
+</div><h2 class="method function"><a name='getGlobalPosition'></a>getGlobalPosition</h2>
+<div class="method">	<p class="c">Get the global position of the <a href="class_Actor.html">Actor</a>.</p>
+	<h3>Return</h3>
+
+	<p class="r">Matrix44 &#8212; The global pose of the <a href="class_Actor.html">Actor</a>.</p>
+
+</div><h2 class="method function"><a name='getGroup'></a>getGroup</h2>
+<div class="method">	<p class="c">Retrieves the value set with setGroup()</p>
+	<h3>Return</h3>
+
+	<p class="r">GroupIdentifier &#8212; The actorGroup the <a href="class_Actor.html">Actor</a> belongs too.</p>
+
+</div><h2 class="method function"><a name='getLinearDamping'></a>getLinearDamping</h2>
+<div class="method">	<p class="c">Retrieves the linear damping coefficient.</p>
+	<h3>Return</h3>
+
+	<p class="r">Real &#8212; Current linear damping</p>
+
+</div><h2 class="method function"><a name='getLinearMomentum'></a>getLinearMomentum</h2>
+<div class="method">	<p class="c">Retrieves the linear momentum (velocity * mass) of an actor.</p>
+
+
+	<h3>Return</h3>
+
+	<p class="r">Vec3 &#8211; Linear momentum of the <a href="class_Actor.html">Actor</a>.</p>
+
+</div><h2 class="method function"><a name='getLinearVelocity'></a>getLinearVelocity</h2>
+<div class="method">	<p class="c">Retrieves the linear velocity of an actor.</p>
+	<h3>Return</h3>
+
+	<p class="r">Vec3 &#8212; Current linear velocity</p>
+
+</div><h2 class="method function"><a name='getMass'></a>getMass</h2>
+<div class="method">	<p class="c">Retrieves the mass of the actor.<br />return Real &#8212; Mass of the actor.</p>
+</div><h2 class="method function"><a name='getMassSpaceInertiaTensor'></a>getMassSpaceInertiaTensor</h2>
+<div class="method">	<p class="c">Retrieves the diagonal inertia tensor of the actor relative to the mass coordinate frame.</p>
+	<h3>Return</h3>
+
+	<p class="r">Vec3 &#8212; Mass Space Inertia tensor</p>
+
+</div><h2 class="method function"><a name='getMaxAngularVelocity'></a>getMaxAngularVelocity</h2>
+<div class="method">	<p class="c">Retrieves the maximum angular velocity permitted for this actor.</p>
+	<h3>Return</h3>
+
+	<p class="r">Real &#8212; The maximum allowed angular velocity for this actor.</p>
+
+</div><h2 class="method function"><a name='getName'></a>getName</h2>
+<div class="method">	<p class="c">Get the name of the <a href="class_Actor.html">Actor</a> or <strong>BLANK_STRING</strong></p>
+	<h3>Return</h3>
+
+	<p class="r">String &#8212; The name of the <a href="class_Actor.html">Actor</a></p>
+
+</div><h2 class="method function"><a name='getNbShapes'></a>getNbShapes</h2>
+<div class="method">	<p class="c">Returns the number of *Shape*s assigned to the actor.</p>
+	<h3>Return</h3>
+
+	<p class="r">unsigned int &#8212; Number of shapes assigned to the actor.</p>
+
+</div><h2 class="method function"><a name='getSolverIterationCount'></a>getSolverIterationCount</h2>
+<div class="method">	<p class="c">Retrieves the solver iteration count.</p>
+	<h3>Return</h3>
+
+	<p class="r">unsigned int &#8212; Solver iteration count for the actor.</p>
+
+</div><h2 class="method function"><a name='linearSweep'></a>linearSweep</h2>
+<div class="method">	<p class="c">Performs a linear sweep through space with the actor&#8217;s shape(s).</p>
+
+
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>motion</i> </td>
+			<td> Motion to sweep</td>
+		</tr>
+		<tr>
+			<td>unsigned int <i>sweep</i> _ <i>flags</i> </td>
+			<td> Sweep Flags, see <strong>Enums::SweepFlags</strong></td>
+		</tr>
+		<tr>
+			<td>unsigned int <i>size</i> </td>
+			<td> Maximum shapes to sweep through</td>
+		</tr>
+		<tr>
+			<td>SweepQueryHits& </td>
+			<td> Hits found once swept.</td>
+		</tr>
+		<tr>
+			<td>SweepCache* </td>
+			<td> Sweeping Cache to perform any future linearSweeps with this actor.</td>
+		</tr>
+		<tr>
+
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r">unsigned int &#8212; Number of SweepHits</p>
+
+</div><h2 class="method function"><a name='resetPairFiltering'></a>resetPairFiltering</h2>
+<div class="method">	<p class="c">Reset the user actor pair filtering state for this actor. This will cause filtering callbacks<br />to be called again for any pairs involving this actor. Use this method when you wish to change<br />the filtering policy of an actor that may already be in contact with other actors.</p>
+</div><h2 class="method function"><a name='setAngularDamping'></a>setAngularDamping</h2>
+<div class="method">	<p class="c">Sets the angular (angular movement) damping coefficient.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Real <i>angDamp</i> </td>
+			<td> New angular damping</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setAngularMomentum'></a>setAngularMomentum</h2>
+<div class="method">	<p class="c">Sets the angular momentum of the actor.</p>
+
+
+	<p class="n"><b>Note</b> &#8212; That if you continuously set the angular momentum of an actor yourself,forces such as gravity or friction will not be able to manifest themselves, because forces directly<br />influence only the velocity/momentum of a actor.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>angMoment</i> </td>
+			<td> New angular momentum</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setAngularVelocity'></a>setAngularVelocity</h2>
+<div class="method">	<p class="c">Sets the angular velocity of the actor.</p>
+	<p class="n"><b>Note</b> &#8212; That if you continuously set the velocity of an actor yourself, forces such<br />as gravity or friction will not be able to manifest themselves, because forces<br />directly influence only the velocity/momentum of an actor.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>angVel</i> </td>
+			<td> New angular velocity of the actor.</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCCDMotionThreshold'></a>setCCDMotionThreshold</h2>
+<div class="method">	<p class="c">Sets the <span class="caps">CCD</span> Motion Threshold.</p>
+
+	<p class="c">If <span class="caps">CCD</span> is globally enabled, it is still skipped for bodies<br />which have no point on any of their shapes moving more than CCDMotionThreshold distance in<br />one time step.</p>
+
+	<p class="c">Hence, <span class="caps">CCD</span> is always performed if the threshold is 0.</p>
+
+	<p class="c">The actor must be dynamic and the <span class="caps">CCD</span> motion threshold must be non-negative.</p>
+
+
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Real <i>thresh</i> </td>
+			<td> <span class="caps">CCD</span> Motion threshold</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setCMassGlobalOrientation'></a>setCMassGlobalOrientation</h2>
+<div class="method">	<p class="c">Set the center of mass</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix33& <i>orientation</i> </td>
+			<td> New <span class="caps">COM</span> orientation</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassGlobalPose'></a>setCMassGlobalPose</h2>
+<div class="method">	<p class="c">Set the center of mass</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix44& <i>pose</i> </td>
+			<td> New <span class="caps">COM</span> pose</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassGlobalPosition'></a>setCMassGlobalPosition</h2>
+<div class="method">	<p class="c">Set the center of mass</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>position</i> </td>
+			<td> New <span class="caps">COM</span> position</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassOffsetGlobalOrientation'></a>setCMassOffsetGlobalOrientation</h2>
+<div class="method">	<p class="c">Set the center of mass offset</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix33& <i>orientation</i> </td>
+			<td> New <span class="caps">COM</span> orientation</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassOffsetGlobalPose'></a>setCMassOffsetGlobalPose</h2>
+<div class="method">	<p class="c">Set the center of mass offset</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix44& <i>pose</i> </td>
+			<td> New <span class="caps">COM</span> pose</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassOffsetGlobalPosition'></a>setCMassOffsetGlobalPosition</h2>
+<div class="method">	<p class="c">Set the center of mass offset</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>position</i> </td>
+			<td> New <span class="caps">COM</span> position</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassOffsetLocalOrientation'></a>setCMassOffsetLocalOrientation</h2>
+<div class="method">	<p class="c">Set the center of mass offset</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix33& <i>orientation</i> </td>
+			<td> New <span class="caps">COM</span> orientation</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassOffsetLocalPose'></a>setCMassOffsetLocalPose</h2>
+<div class="method">	<p class="c">Set the center of mass offset</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix44& <i>pose</i> </td>
+			<td> New <span class="caps">COM</span> pose</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setCMassOffsetLocalPosition'></a>setCMassOffsetLocalPosition</h2>
+<div class="method">	<p class="c">Set the center of mass offset</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>position</i> </td>
+			<td> New <span class="caps">COM</span> position</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setContactReportFlags'></a>setContactReportFlags</h2>
+<div class="method">	<p class="c">Sets the actor&#8217;s contact report flags.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned int <i>flags</i> </td>
+			<td> New contact report flags.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setContactReportThreshold'></a>setContactReportThreshold</h2>
+<div class="method">	<p class="c">Sets the force threshold for contact reports.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Real <i>threshold</i> </td>
+			<td> New force threshold</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setDominanceGroup'></a>setDominanceGroup</h2>
+<div class="method">	<p class="c">Assigns dynamic actors a dominance group identifier.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>GroupIdentifier <i>dominanceGroup</i> </td>
+			<td> The domninance actorGroup for the <a href="class_Actor.html">Actor</a> to be assigned to.</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setForceFieldMaterial'></a>setForceFieldMaterial</h2>
+<div class="method">	<p class="c">Sets the actor&#8217;s force field material index</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned short <i>material</i> </td>
+			<td> New forcefield material to use.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setGlobalOrientation'></a>setGlobalOrientation</h2>
+<div class="method">	<p class="c">Set&#8217;s the global orientation of the <a href="class_Actor.html">Actor</a>.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix33& <i>orientation</i> </td>
+			<td> New <a href="class_Actor.html">Actor</a> orientation.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setGlobalOrientationQuat'></a>setGlobalOrientationQuat</h2>
+<div class="method">	<p class="c">Set&#8217;s the global orientation of the <a href="class_Actor.html">Actor</a>.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Quat& <i>orientation</i> </td>
+			<td> New <a href="class_Actor.html">Actor</a> orientation.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setGlobalPose'></a>setGlobalPose</h2>
+<div class="method">	<p class="c">Set the global pose of the <a href="class_Actor.html">Actor</a></p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Matrix44& <i>globalPose</i> </td>
+			<td> New <a href="class_Actor.html">Actor</a> pose.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setGlobalPosition'></a>setGlobalPosition</h2>
+<div class="method">	<p class="c">Set&#8217;s the global position of the <a href="class_Actor.html">Actor</a>.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>position</i> </td>
+			<td> New <a href="class_Actor.html">Actor</a> position.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setGroup'></a>setGroup</h2>
+<div class="method">	<p class="c">Assigns the actor to a user defined group of rigid bodies.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>GroupIdentifier <em>actorGroup</em> </td>
+			<td> The actorGroup for the <a href="class_Actor.html">Actor</a> to be assigned to.</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setLinearDamping'></a>setLinearDamping</h2>
+<div class="method">	<p class="c">Sets the linear (translational movement) damping coefficient.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Real <i>linDamp</i> </td>
+			<td> New linear damping</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setLinearMomentum'></a>setLinearMomentum</h2>
+<div class="method">	<p class="c">Sets the linear momentum of the actor.</p>
+
+
+	<p class="n"><b>Note</b> &#8212; That if you continuously set the linear momentum of an actor yourself,forces such as gravity or friction will not be able to manifest themselves, because forces directly<br />influence only the velocity/momentum of a actor.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>linMoment</i> </td>
+			<td> New linear momentum</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setLinearVelocity'></a>setLinearVelocity</h2>
+<div class="method">	<p class="c">Sets the linear velocity of the actor.</p>
+	<p class="n"><b>Note</b> &#8212; That if you continuously set the velocity of an actor yourself, forces such<br />as gravity or friction will not be able to manifest themselves, because forces<br />directly influence only the velocity/momentum of an actor.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>linVel</i> </td>
+			<td> New linear velocity of the actor.</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Wakes the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setMass'></a>setMass</h2>
+<div class="method">	<p class="c">Set the mass of the <a href="class_Actor.html">Actor</a></p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Real <i>mass</i> </td>
+			<td> New mass of the <a href="class_Actor.html">Actor</a></td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Does <b>not</b> wake the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setMassSpaceInertiaTensor'></a>setMassSpaceInertiaTensor</h2>
+<div class="method">	<p class="c">Sets the inertia tensor, using a parameter specified in mass space coordinates.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Vec3& <i>tensor</i> </td>
+			<td> New Mass Space Inertia Tensor</td>
+		</tr>
+	</table>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li><b>Sleeping</b> Does <b>not</b> wake the actor up automatically.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='setMaxAngularVelocity'></a>setMaxAngularVelocity</h2>
+<div class="method">	<p class="c">Lets you set the maximum angular velocity permitted for this actor.</p>
+
+	<p class="c">Because for various internal computations, very quickly rotating actors introduce error<br />into the simulation, which leads to undesired results.</p>
+
+	<p class="c">However, because some actors, such as car wheels, should be able to rotate quickly, you can override the default setting<br />on a per-actor basis with the below call. Note that objects such as wheels which are approximated with spherical or<br />other smooth collision primitives can be simulated with stability at a much higher angular velocity than, say, a box that<br />has corners.</p>
+
+
+	<p class="n"><b>Note</b> &#8212; The angular velocity is clamped to the set value <em>before</em> the solver, which means that<br />the limit may still be momentarily exceeded.</p>
+
+
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Real <i>maxAngVel</i> </td>
+			<td> Max allowable angular velocity for actor</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setSolverIterationCount'></a>setSolverIterationCount</h2>
+<div class="method">	<p class="c">Sets the solver iteration count for the actor.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned int <em>iterCount</em> </td>
+			<td> New Solver iteration count.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='updateMassFromShapes'></a>updateMassFromShapes</h2>
+<div class="method">	<p class="c">Recomputes a dynamic actor&#8217;s mass properties from its shapes</p>
+
+	<p class="c">Given a constant density or total mass, the actors mass properties can be recomputed<br />using the shapes attached to the actor.</p>
+
+	<p class="c">The mass of each shape is either the shape&#8217;s local density (default 1.0)  multiplied by the shape&#8217;s volume<br />or a directly specified shape mass.</p>
+
+	<p class="c">The inertia tensor, mass frame and center of mass will always be recomputed. If there are no<br />shapes in the actor, the mass will be totalMass, and the mass frame will be set to the center<br />of the actor.</p>
+
+	<p class="c">If you supply a non-zero total mass, the actor&#8217;s mass and inertia will first be computed as<br />above and then scaled to fit this total mass.</p>
+
+	<p class="c">If you supply a non-zero density, the actor&#8217;s mass and inertia will first be computed as above<br />and then scaled by this factor.</p>
+
+
+	<p class="n"><b>Note</b> &#8212; Either totalMass or density must be non-zero.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>float <i>density</i> </td>
+			<td> Density scale factor of the shapes belonging to the actor</td>
+		</tr>
+		<tr>
+			<td>float <i>totalMass</i> </td>
+			<td> Total mass of the actor(or zero)</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r">bool &#8212; True if succesful</p>
+
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

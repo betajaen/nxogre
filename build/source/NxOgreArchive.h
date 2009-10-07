@@ -42,8 +42,11 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief An archive is a collection of resources in one place. It may be implemented as a directory, zip
-           file or even a website.
+/*! class. Archive
+   
+        An archive is a collection of resources in one place.
+
+        p. It may be implemented as a directory, zip file or even a website.
 */
 class NxOgrePublicClass Archive
 {
@@ -53,40 +56,78 @@ class NxOgrePublicClass Archive
   typedef ptr_vector<Resource>                Resources;
   typedef ptr_vector<Resource>::iterator_t ResourcesIterator;
 
-  /** \brief Archive Constructor which used by inherited classes of Archive. Use ResourceSystem::openArchive.
+  /*! constructor. Archive
+      desc.
+           Archive Constructor which used by inherited classes of Archive.
+      note.
+           Use *ResourceSystem::openArchive*.
+      
   */
   Archive(const String& name, const Path&, ResourceProtocol*);
   
-  /** \brief Required virtual constructor.
+  /*! destructor. Archive
+      desc. Required virtual constructor.
+      !virtual
   */
   virtual ~Archive(void);
   
-  /** \brief Open a new Resource based on an ArchiveResourceIdentifier, and Resource access permissions.
-      \note  Archive* should be the original SharedPointer to this archive.
+  /*! function. open
+      desc.
+          Open a new Resource based on an ArchiveResourceIdentifier, and Resource access permissions.
+      args.
+       const Path& __relativePath__ -- Relative Path to the Resource, Relative to the Archive.
+       NxOgre::Enums::ResourceAccess __access__ -- Access permissions
+      return.
+       **Resource** * -- Resource if opened sucessfully, or *NULL* on failure
+      !virtual
   */
-  virtual Resource* open(const Path& relative_path, NxOgre::Enums::ResourceAccess);
+  virtual Resource* open(const Path& relativePath, NxOgre::Enums::ResourceAccess access);
   
-  /** \brief Close a Resource
+  /*! function. close
+      desc.
+           Close a Resource from this Archive.
+      args.
+        Resource* __resource__ -- Resource to close
   */
-  virtual void  close(Resource*);
+  virtual void  close(Resource* resource);
   
-  /** \brief Get open resources
+  /*! function. getOpenResources
+      desc.
+           Get open resources
+      return.
+           **ResourcesIterator** -- Iterator to the current resources of the archive.
   */
   ResourcesIterator getOpenResources();
   
-  /** \brief Get the name of the Archive.
+  /*! function. getName
+      desc.
+           Get the name of the Archive.
+      return.
+           **String** -- Name of the Archive
   */
   String getName();
   
-  /** \brief Get the hash of the name of the Archive.
+  /*! function. getNameHash
+      desc.
+           Get the hash of the name of the Archive.
+      return.
+           **StringHash** -- Hash of the name of the Archive
   */
   StringHash getNameHash();
   
-  /** \brief Get the ResourceProtocol associated with the Archive.
+  /*! function. getProtocol
+      desc.
+           Get the **ResourceProtocol** of this Archive
+      return.
+           **ResourceProtocol** -- The ResourceProtocol pointer
   */
   ResourceProtocol* getProtocol() const;
   
-  /** \brief Get the path of this archive
+  /*! function. getPath
+      desc.
+           Get the path of the Archive.
+      return.
+           **Path** -- Pat of the Archive
   */
   Path getPath() const;
   

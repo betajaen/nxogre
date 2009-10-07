@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - Callback</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3{margin:0;padding:0;color:#ccc;}
+  #N{color:white;}
+  #N h1{background-color:#333;}
+  #N h2{background-color:#222;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover{background-color:#ccc;color:#181818}
+  #N ul li.this, div#nav ul li.this:hover{padding:0.25em 0 0.25em 0.5em;background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;background-color:yellow;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li class="this">Callback</li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>Callback</h1><h2 class="source">NxOgreCallback.h</h2>
+<div class="method">	<p class="c">A callback handles physics events i.e. collision and contact, by the user app inheriting<br />the callback and using the virtual functions to handle response.</p>
+<h3 class="e">Example</h3>
+<pre><code> <span class="cppblock">class</span> myCallback : public <b>Callback</b>
+ {
+  <span class="cpppreprocessor">public:</span>
+  	myCallback : <b>Callback</b>()
+  	{
+  		// my set up code.
+  	}
+  	
+  	<span class="cpptype">void</span> onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, <span class="cpptype">unsigned</span> <span class="cpptype">int</span> collisionEvent)
+  	{
+  		<span class="cpptype">std</span>::cout << "Volume Event!" << <span class="cpptype">std</span>::endl;
+  	}
+ };
+</code></pre>
+</div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#decreaseReference" class="m">decreaseReference</a></li>
+<li><a href="#getNbReferences" class="m">getNbReferences</a></li>
+<li><a href="#increaseReference" class="m">increaseReference</a></li>
+<li><a href="#onContact" class="m">onContact</a></li>
+<li><a href="#onHitEvent" class="m">onHitEvent</a></li>
+<li><a href="#onVolumeEvent" class="m">onVolumeEvent</a></li>
+</ul><h2 class="method constructor"><a name='Callback'></a>Callback</h2>
+<div class="method">	<p class="c">Required constructor for inherited classes.</p>
+	<p class="n"><b>Note</b> &#8212; Reference count is set to 1.</p>
+</div><h2 class="method function"><a name='decreaseReference'></a>decreaseReference</h2>
+<div class="method">	<p class="c">Decrease the reference count of the callback</p>
+</div><h2 class="method function"><a name='getNbReferences'></a>getNbReferences</h2>
+<div class="method">	<p class="c">Get the number of references to this callback.</p>
+	<p class="n"><b>Note</b> &#8212; Although not exactly essential, reference counting the callback is useful<br />for you to decide when the callback should be deleted. If you use the callback<br />multiple times.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>unsigned int</b> &#8212; Number of references.</p>
+
+</div><h2 class="method function"><a name='increaseReference'></a>increaseReference</h2>
+<div class="method">	<p class="c">Increase the reference count of the callback</p>
+</div><h2 class="method function"><a name='onContact'></a>onContact</h2>
+<div class="method">	<p class="c">When a contact even happens, between two RigidBodies</p>
+	<p class="n"><b>Note</b> &#8212; Do not modify the Scene whilst in the onContact function; i.e. destroyActor, or createActor</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const ContactPair& <i>pair</i> </td>
+			<td> Contact pair when hit.</td>
+		</tr>
+	</table>
+
+<h3 class="e">Example</h3>
+<pre><code>  	<span class="cpptype">void</span> onContact(<span class="cpptype">const</span> ContactPair& pair)
+  	{
+  		// Things to do.
+  	}
+</code></pre>
+	<h3 class="s">See</h3>
+
+	<p class="s">RigidBody::setContactCallback, Scene::setActorFlags</p>
+
+</div><h2 class="method function"><a name='onHitEvent'></a>onHitEvent</h2>
+<div class="method">	<p class="c">When a callback is used with a Raycast hit.</p>
+	<p class="n"><b>Note</b> &#8212; Do not modify the Scene whilst in the onRaycastHit function; i.e. destroyActor, or createActor</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const RaycastHit& <i>hit</i> </td>
+			<td> Raycast hit to parse</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; True if the ray should continue, or false to abort.</p>
+
+<h3 class="e">Example</h3>
+<pre><code>  	<span class="cpptype">void</span> onHitEvent(<span class="cpptype">const</span> RaycastHit& hit)
+  	{
+  		return (hit.mDistance < 20) // Return true if less than 20m.
+  	}
+</code></pre>
+	<h3 class="s">See</h3>
+
+	<p class="s">Scene::raycastAllBounds</p>
+
+</div><h2 class="method function"><a name='onVolumeEvent'></a>onVolumeEvent</h2>
+<div class="method">	<p class="c">A RigidBody has entered, exited or otherwise is existing inside the Volume.</p>
+	<p class="n"><b>Note</b> &#8212; Depending on the RigidBody the collision_shape may be zero, you should always check<br />to see if the pointer exists before using it!</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Volume* <i>volume</i> </td>
+			<td> Volume of the collisionBody has an event with.</td>
+		</tr>
+		<tr>
+			<td>Shape*  <i>volumeShape</i> </td>
+			<td> the specific shape of the volume.</td>
+		</tr>
+		<tr>
+			<td>RigidBody* <i>collisionBody</i> </td>
+			<td> The collisionBody in question.</td>
+		</tr>
+		<tr>
+			<td>Shape* <i>collisionShape</i> </td>
+			<td> The shape in contact with the volumeShape.</td>
+		</tr>
+		<tr>
+			<td>unsigned int <i>collisionEvent</i> </td>
+			<td> The type of collision, used with Enums::VolumeCollisionType</td>
+		</tr>
+	</table>
+
+<h3 class="e">Example</h3>
+<pre><code>  	<span class="cpptype">void</span> onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, <span class="cpptype">unsigned</span> <span class="cpptype">int</span> collisionEvent)
+  	{
+  		if (collisionEvent & Enums::VolumeCollisionType_OnEnter)
+  		{
+  		 <span class="cpptype">std</span>::cout << "RigidBody has entered the Volume for the first time!" << <span class="cpptype">std</span>::endl;
+  		}
+  	}
+</code></pre>
+</div><h2 class="method destructor"><a name='~Callback'></a>~Callback</h2>
+<div class="method">	<p class="c">Required destructor</p>
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li>Virtual Function</li>
+	</ul>
+
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

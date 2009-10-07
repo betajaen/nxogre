@@ -371,14 +371,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreAccumulativeSceneTimer.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreAccumulativeSceneTimer.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreActor.cpp"
 			>
 		</File>

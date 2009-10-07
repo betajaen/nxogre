@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - BoundsT<class VecType></title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3{margin:0;padding:0;color:#ccc;}
+  #N{color:white;}
+  #N h1{background-color:#333;}
+  #N h2{background-color:#222;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover{background-color:#ccc;color:#181818}
+  #N ul li.this, div#nav ul li.this:hover{padding:0.25em 0 0.25em 0.5em;background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;background-color:yellow;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li class="this">BoundsT<class VecType></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>BoundsT<class VecType></h1><h2 class="source">NxOgreBounds.h</h2>
+<div class="method">	<p class="c">A class containing the minimum and maximum bounds using a NxOgre Vector class.</p>
+
+
+	<p class="n"><b>Note</b> &#8212; There are already <strong>Bounds2</strong>, <strong>Bounds3</strong>, <strong>Bounds4</strong> typedefs already created for the<br /><strong>Vector2</strong>, <strong>Vector3</strong> and <strong>Vector4</strong> classes.</p>
+
+
+<h3 class="e">Example</h3>
+<pre><code> Bounds3 bounds;
+ b.merge(pos1);
+ b.merge(pos2);
+ b.merge(pos3);
+ b.merge(pos4);
+ Vec3 center = b.center();
+</code></pre>
+</div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#center" class="m">center</a></li>
+<li><a href="#dimensions" class="m">dimensions</a></li>
+<li><a href="#empty" class="m">empty</a></li>
+<li><a href="#extents" class="m">extents</a></li>
+<li><a href="#from" class="m">from</a></li>
+<li><a href="#inside" class="m">inside</a></li>
+<li><a href="#intersects" class="m">intersects</a></li>
+<li><a href="#merge" class="m">merge</a></li>
+<li><a href="#min" class="v">min</a></li>
+<li><a href="#scale" class="m">scale</a></li>
+<li><a href="#set" class="m">set</a></li>
+<li><a href="#setCenterExtents" class="m">setCenterExtents</a></li>
+</ul><h2 class="method copy_constructor"><a name='BoundsT'></a>BoundsT</h2>
+<div class="method">	<p class="c">Copy constructor</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const BoundsType& <i>other</i> </td>
+			<td> Other BoundsT</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='center'></a>center</h2>
+<div class="method">	<p class="c">Get the center coordinates of the bounds</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>VecType</b> &#8212; The center of the bounds.</p>
+
+</div><h2 class="method function"><a name='dimensions'></a>dimensions</h2>
+<div class="method">	<p class="c">Get the size of the bounds</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>VecType</b> &#8212; The size of the bounds.</p>
+
+</div><h2 class="method function"><a name='empty'></a>empty</h2>
+<div class="method">	<p class="c">Sets the min to infinity and max to negative infinity.</p>
+</div><h2 class="method function"><a name='extents'></a>extents</h2>
+<div class="method">	<p class="c">Get the extents of the bounds</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>VecType</b> &#8212; The extents of the bounds.</p>
+
+</div><h2 class="method function"><a name='from'></a>from</h2>
+<div class="method">	<p class="c">Copy&#8217;s the bounds from another Bounds class from a different <span class="caps">API</span>.</p>
+	<p class="n"><b>Note</b> &#8212; The other bounds type must have accessible &#8220;min&#8221; and &#8220;max&#8221; vector class<br />variables and those vector classes must have accessible &#8220;x&#8221;, &#8220;y&#8221;, &#8220; &#8220; member variables.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const BoundsType& <i>other</i> </td>
+			<td> Other <span class="caps">API</span> bounds to copy from.</td>
+		</tr>
+	</table>
+
+<h3 class="e">Example</h3>
+<pre><code>   NxBounds3 other_bounds = ...;
+   Bounds3 bounds =  Bounds3::from<NxBounds3>(other_bounds);
+</code></pre>
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li>Static function.</li>
+	</ul>
+
+</div><h2 class="method function"><a name='inside'></a>inside</h2>
+<div class="method">	<p class="c">Is a Vector inside the bounds?</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const VecType& <i>other</i> </td>
+			<td> Vector to test</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the vector is inside or not.</p>
+
+</div><h2 class="method function"><a name='intersects'></a>intersects</h2>
+<div class="method">	<p class="c">Is a Bounds inside the bounds?</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const BoundsType& <i>other</i> </td>
+			<td> Bounds to test</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the bounds is inside or not.</p>
+
+</div><h2 class="method function"><a name='merge'></a>merge</h2>
+<div class="method">	<p class="c">Merge a VectorT to change the min/max.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const VecType& <i>other</i> </td>
+			<td> Merging Vector</td>
+		</tr>
+	</table>
+
+</div><h2 class="method variable"><a name='min'></a>min</h2>
+<div class="method">	<p class="c">Maximum bounds.</p>
+</div><h2 class="method operator"><a name='operator*='></a>operator*=</h2>
+<div class="method">	<p class="c">Scale the bounds by a scalar</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Real& <i>scalar</i> </td>
+			<td> Scalar</td>
+		</tr>
+	</table>
+
+</div><h2 class="method operator"><a name='operator='></a>operator=</h2>
+<div class="method">	<p class="c">Assignment operator</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const BoundsType& <i>other</i> </td>
+			<td> Other BoundsT</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>BoundsType</b> &#8212; This bounds type</p>
+
+</div><h2 class="method operator"><a name='operator=='></a>operator==</h2>
+<div class="method">	<p class="c">Comparision operator</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const BoundsType& <i>other</i> </td>
+			<td> Other BoundsT</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; Is the other BoundsT equal to this?</p>
+
+</div><h2 class="method function"><a name='scale'></a>scale</h2>
+<div class="method">	<p class="c">Scale the bounds by a scalar</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Real& <i>scalar</i> </td>
+			<td> Scalar</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='set'></a>set</h2>
+<div class="method">	<p class="c">Sets the min/max to new ones from another BoundsT</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const BoundsType& <i>other</i> </td>
+			<td> Other BoundsT</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='setCenterExtents'></a>setCenterExtents</h2>
+<div class="method">	<p class="c">Set min/max from extents and center coordinates.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const VecType& <i>center</i> </td>
+			<td> The center of the extents.</td>
+		</tr>
+		<tr>
+			<td>const VecType& <i>extents</i> </td>
+			<td> The extents themselves.</td>
+		</tr>
+	</table>
+
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

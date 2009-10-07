@@ -300,9 +300,9 @@ void   Cloth::attachToCore(RigidBody* rigidbody, Real impulseThreshold, Real pen
  return mCloth->attachToCore(rigidbody->getNxActor(), impulseThreshold, penetrationDepth);
 }
 
-void   Cloth::tearVertex(const unsigned int vertexId, const Vec3& normal)
+bool   Cloth::tearVertex(const unsigned int vertexId, const Vec3& normal)
 {
- mCloth->tearVertex(vertexId, normal.as<NxVec3>());
+ return mCloth->tearVertex(vertexId, normal.as<NxVec3>());
 }
 
 ClothRaycastHit Cloth::raycast(const Ray& ray)

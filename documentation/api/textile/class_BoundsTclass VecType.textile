@@ -1,0 +1,220 @@
+p(d). A class containing the minimum and maximum bounds using a NxOgre Vector class.
+
+
+
+p(n). **Note** -- There are already *Bounds2*, *Bounds3*, *Bounds4* typedefs already created for the
+*Vector2*, *Vector3* and *Vector4* classes.
+
+
+
+h3(e). Example
+
+bc..  Bounds3 bounds;
+ b.merge(pos1);
+ b.merge(pos2);
+ b.merge(pos3);
+ b.merge(pos4);
+ Vec3 center = b.center();
+
+
+p. &nbsp;
+
+h2(fn copy_constructor). <a name='BoundsT'></a>BoundsT
+
+p(d). Copy constructor
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const BoundsType& __other__ | Other BoundsT|
+
+
+h2(fn function). <a name='center'></a>center
+
+p(d). Get the center coordinates of the bounds
+
+
+h3. Return
+
+p(r). **VecType** -- The center of the bounds.
+
+
+h2(fn function). <a name='dimensions'></a>dimensions
+
+p(d). Get the size of the bounds
+
+
+h3. Return
+
+p(r). **VecType** -- The size of the bounds.
+
+
+h2(fn function). <a name='empty'></a>empty
+
+p(d). Sets the min to infinity and max to negative infinity.
+
+
+h2(fn function). <a name='extents'></a>extents
+
+p(d). Get the extents of the bounds
+
+
+h3. Return
+
+p(r). **VecType** -- The extents of the bounds.
+
+
+h2(fn function). <a name='from'></a>from
+
+p(d). Copy's the bounds from another Bounds class from a different API.
+
+
+p(n). **Note** -- The other bounds type must have accessible "min" and "max" vector class
+variables and those vector classes must have accessible "x", "y", "z" member variables.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const BoundsType& __other__ | Other API bounds to copy from.|
+
+
+h3(e). Example
+
+bc..    NxBounds3 other_bounds = ...;
+   Bounds3 bounds =  Bounds3::from<NxBounds3>(other_bounds);
+
+
+p. &nbsp;
+
+h3(t). Traits
+
+* Static function.
+
+
+h2(fn function). <a name='inside'></a>inside
+
+p(d). Is a Vector inside the bounds?
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const VecType& __other__ | Vector to test|
+
+
+h3. Return
+
+p(r). **bool** -- If the vector is inside or not.
+
+
+h2(fn function). <a name='intersects'></a>intersects
+
+p(d). Is a Bounds inside the bounds?
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const BoundsType& __other__ | Bounds to test|
+
+
+h3. Return
+
+p(r). **bool** -- If the bounds is inside or not.
+
+
+h2(fn function). <a name='merge'></a>merge
+
+p(d). Merge a VectorT to change the min/max.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const VecType& __other__ | Merging Vector|
+
+
+h2(fn variable). <a name='min'></a>min
+
+p(d). Maximum bounds.
+
+
+h2(fn operator). <a name='operator*='></a>operator*=
+
+p(d). Scale the bounds by a scalar
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Real& __scalar__ | Scalar|
+
+
+h2(fn operator). <a name='operator='></a>operator=
+
+p(d). Assignment operator
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const BoundsType& __other__ | Other BoundsT|
+
+
+h3. Return
+
+p(r). **BoundsType** -- This bounds type
+
+
+h2(fn operator). <a name='operator=='></a>operator==
+
+p(d). Comparision operator
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const BoundsType& __other__ | Other BoundsT|
+
+
+h3. Return
+
+p(r). **bool** -- Is the other BoundsT equal to this?
+
+
+h2(fn function). <a name='scale'></a>scale
+
+p(d). Scale the bounds by a scalar
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Real& __scalar__ | Scalar|
+
+
+h2(fn function). <a name='set'></a>set
+
+p(d). Sets the min/max to new ones from another BoundsT
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const BoundsType& __other__ | Other BoundsT|
+
+
+h2(fn function). <a name='setCenterExtents'></a>setCenterExtents
+
+p(d). Set min/max from extents and center coordinates.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const VecType& __center__ | The center of the extents.|
+|const VecType& __extents__ | The extents themselves.|
+
+

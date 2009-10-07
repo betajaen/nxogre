@@ -45,7 +45,12 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief  
+/*! class. Capsule
+    desc.
+        A Capsule is a capsule shape that can be used in Actors, KinematicActors, StaticGeometries and Volumes for
+        collisions and testing against them.
+        
+    see. Shape
 */ 
 class NxOgrePublicClass Capsule : public PointerClass<Classes::_Capsule>, public Shape
 {
@@ -60,49 +65,91 @@ class NxOgrePublicClass Capsule : public PointerClass<Classes::_Capsule>, public
 
   using ::NxOgre::PointerClass<Classes::_Capsule>::getClassType;
 
-  /** \brief Capsule
+  /*! constructor. Capsule
+      desc.
+           Capsule constructor with radius and height.
+      note.
+           The absolute height of the capsule is; @height + 2(radius)@.
+      args.
+           Real __radius__ -- Radius of the capsule
+           Real __height__ -- Distance between the top and bottom hemispheres of the capsule.
+           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
   */
-                                              Capsule(Real radius, Real height, ShapeBlueprint* box_blueprint = new ShapeBlueprint());
+  Capsule(Real radius, Real height, ShapeBlueprint* box_blueprint = new ShapeBlueprint());
   
-  /** \brief Capsule
+  /*! destructor. Capsule
+      desc.
+           As with all Shapes, deleting the Capsule should be left to the class that is responsible for it.
+      note.
+           Deleting the Box whilst it is attached to a shape will probably cause a nasty crash.
   */
-                                             ~Capsule(void);
-
-  /** \brief Get the shape type based upon the Classes::xxxx enum.
-  */
-                   Enums::ShapeFunctionType   getShapeFunctionType() const;
+  ~Capsule(void);
   
-  /** \brief Set Dimensions
+  /*! function. getShapeFunctionType
+      desc.
+           Get the shape type based upon the Classes::ShapeFunctionType enum.
+      return.
+           **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
   */
-                      void                    setDimensions(Real radius, Real height);
+  Enums::ShapeFunctionType            getShapeFunctionType() const;
   
-  /** \brief Set radius
+  /*! function. setDimensions
+      desc.
+           Set the radius and height of the capsule.
+      args.
+           Real __radius__ -- Radius of the capsule
+           Real __height__ -- Distance between the top and bottom hemispheres of the capsule.
   */
-                      void                    setRadius(Real radius);
+  void                    setDimensions(Real radius, Real height);
   
-  /** \brief Set radius
+  /*! function. setRadius
+      desc.
+           Set the radius of the capsule.
+      args.
+           Real __radius__ -- Radius of the capsule
   */
-                      void                    setHeight(Real height);
+  void                    setRadius(Real radius);
   
-  /** \brief Get radius
+  /*! function. setHeight
+      desc.
+           Set the height of the capsule.
+      args.
+           Real __height__ -- Distance between the top and bottom hemispheres of the capsule.
   */
-                      Real                    getRadius(void) const;
+  void                    setHeight(Real height);
   
-  /** \brief Get height
+  /*! function. getRadius
+      desc.
+           Get the radius of the capsule
+      return.
+           **Real** -- The radius of the capsule.
   */
-                      Real                    getHeight(void) const;
+  Real                    getRadius(void) const;
   
-  /** \brief Retrives the capsule parameters in world space.
+  /*! function. getHeight
+      desc.
+           Get the height of the capsule
+      return.
+           **Real** -- Distance between the top and bottom hemispheres of the capsule.
   */
-                      SimpleCapsule           getWorldCapsule(void);
+  Real                    getHeight(void) const;
+  
+  /*! function. getWorldCapsule
+      desc.
+           Get the box represented as world space capsule.
+      note.
+           This function only works when the capsule is attached.
+      return. **SimpleCapsule** -- World space capsule when attached or SimpleCapsule with default values.
+  */
+  SimpleCapsule           getWorldCapsule(void);
 
   protected:
   
-  /** \internal DO NOT USE.
+  /* Create a NxShapeDesc (NxCapsuleDesc) of the current Capsule's configuration.
   */
                       NxShapeDesc*            create();
 
-  /** \internal DO NOT USE.
+  /* Set the capsule to a NxShape
   */
                       void                    assign(NxShape*);
 

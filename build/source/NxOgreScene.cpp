@@ -50,7 +50,6 @@
 #include "NxOgrePhysXRaycastReport.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreRaycastHit.h"
-#include "NxOgreAccumulativeSceneTimer.h"
 #include "NxOgreFixedSceneTimer.h"
 #include "NxOgreMachine.h"
 #include "NxOgreMachinePart.h"

@@ -108,7 +108,7 @@ void Box::setSize(const Vec3& vec)
  }
 }
 
-void Box::setSize(float w, float h, float d)
+void Box::setSize(Real w, Real h, Real d)
 {
  if (mBoxShape)
   mBoxShape->setDimensions(NxVec3(w * 0.5, h * 0.5, d * 0.5));

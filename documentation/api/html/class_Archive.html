@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - Archive</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3{margin:0;padding:0;color:#ccc;}
+  #N{color:white;}
+  #N h1{background-color:#333;}
+  #N h2{background-color:#222;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover{background-color:#ccc;color:#181818}
+  #N ul li.this, div#nav ul li.this:hover{padding:0.25em 0 0.25em 0.5em;background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;background-color:yellow;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li class="this">Archive</li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>Archive</h1><h2 class="source">NxOgreArchive.h</h2>
+<div class="method">
+An archive is a collection of resources in one place.
+
+	<p class="c">It may be implemented as a directory, zip file or even a website.</p>
+</div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#close" class="m">close</a></li>
+<li><a href="#getName" class="m">getName</a></li>
+<li><a href="#getNameHash" class="m">getNameHash</a></li>
+<li><a href="#getOpenResources" class="m">getOpenResources</a></li>
+<li><a href="#getPath" class="m">getPath</a></li>
+<li><a href="#getProtocol" class="m">getProtocol</a></li>
+<li><a href="#open" class="m">open</a></li>
+</ul><h2 class="method destructor"><a name='Archive'></a>Archive</h2>
+<div class="method">	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li>Virtual Function</li>
+	</ul>
+
+</div><h2 class="method function"><a name='close'></a>close</h2>
+<div class="method">	<p class="c">Close a Resource from this <a href="class_Archive.html">Archive</a>.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Resource* <i>resource</i> </td>
+			<td> Resource to close</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='getName'></a>getName</h2>
+<div class="method">	<p class="c">Get the name of the <a href="class_Archive.html">Archive</a>.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>String</b> &#8212; Name of the <a href="class_Archive.html">Archive</a></p>
+
+</div><h2 class="method function"><a name='getNameHash'></a>getNameHash</h2>
+<div class="method">	<p class="c">Get the hash of the name of the <a href="class_Archive.html">Archive</a>.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>StringHash</b> &#8212; Hash of the name of the <a href="class_Archive.html">Archive</a></p>
+
+</div><h2 class="method function"><a name='getOpenResources'></a>getOpenResources</h2>
+<div class="method">	<p class="c">Get open resources</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>ResourcesIterator</b> &#8212; Iterator to the current resources of the archive.</p>
+
+</div><h2 class="method function"><a name='getPath'></a>getPath</h2>
+<div class="method">	<p class="c">Get the path of the <a href="class_Archive.html">Archive</a>.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>Path</b> &#8212; Pat of the <a href="class_Archive.html">Archive</a></p>
+
+</div><h2 class="method function"><a name='getProtocol'></a>getProtocol</h2>
+<div class="method">	<p class="c">Get the <b>ResourceProtocol</b> of this <a href="class_Archive.html">Archive</a></p>
+	<h3>Return</h3>
+
+	<p class="r"><b>ResourceProtocol</b> &#8212; The ResourceProtocol pointer</p>
+
+</div><h2 class="method function"><a name='open'></a>open</h2>
+<div class="method">	<p class="c">Open a new Resource based on an <a href="class_Archive.html">Archive</a>ResourceIdentifier, and Resource access permissions.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const Path& <i>relativePath</i> </td>
+			<td> Relative Path to the Resource, Relative to the <a href="class_Archive.html">Archive</a>.</td>
+		</tr>
+		<tr>
+			<td>NxOgre::Enums::ResourceAccess <i>access</i> </td>
+			<td> Access permissions</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>Resource</b> * &#8212; Resource if opened sucessfully, or <strong>NULL</strong> on failure</p>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li>Virtual Function</li>
+	</ul>
+
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

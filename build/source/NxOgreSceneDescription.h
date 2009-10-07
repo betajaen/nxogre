@@ -88,12 +88,12 @@ class NxOgrePublicClass SceneDescription
 
   /** \brief Maximum substep size.
       \range (0, inf)
-      \default 8
+      \default 4
   */
                         unsigned int          mMaxSubSteps;
 
   /** \brief Integration method.
-      \default TimeStepMethod_FixedAccumulator
+      \default TimeStepMethod_Fixed
   */
                  Enums::TimeStepMethod        mTimeStepMethod;
 

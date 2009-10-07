@@ -31,7 +31,6 @@
 
                                                                                        
 
-#include "NxOgreAccumulativeSceneTimer.h"
 #include "NxOgreActor.h"
 #include "NxOgreActorMachinePart.h"
 #include "NxOgreArchive.h"

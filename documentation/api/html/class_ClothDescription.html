@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - ClothDescription</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3{margin:0;padding:0;color:#ccc;}
+  #N{color:white;}
+  #N h1{background-color:#333;}
+  #N h2{background-color:#222;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover{background-color:#ccc;color:#181818}
+  #N ul li.this, div#nav ul li.this:hover{padding:0.25em 0 0.25em 0.5em;background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;background-color:yellow;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li class="this">ClothDescription</li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>ClothDescription</h1><h2 class="source">NxOgreClothDescription.h</h2>
+<div class="method"></div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#mAttachmentResponseCoefficient" class="v">mAttachmentResponseCoefficient</a></li>
+<li><a href="#mAttachmentTearFactor" class="v">mAttachmentTearFactor</a></li>
+<li><a href="#mBendingStiffness" class="v">mBendingStiffness</a></li>
+<li><a href="#mCollisionGroup" class="v">mCollisionGroup</a></li>
+<li><a href="#mCollisionResponseCoefficient" class="v">mCollisionResponseCoefficient</a></li>
+<li><a href="#mDampingCoefficient" class="v">mDampingCoefficient</a></li>
+<li><a href="#mDensity" class="v">mDensity</a></li>
+<li><a href="#mExternalAcceleration" class="v">mExternalAcceleration</a></li>
+<li><a href="#mFlags" class="v">mFlags</a></li>
+<li><a href="#mForceFieldMaterial" class="v">mForceFieldMaterial</a></li>
+<li><a href="#mFriction" class="v">mFriction</a></li>
+<li><a href="#mFromFluidResponseCoefficient" class="v">mFromFluidResponseCoefficient</a></li>
+<li><a href="#mGlobalPose" class="v">mGlobalPose</a></li>
+<li><a href="#mGroupsMask" class="v">mGroupsMask</a></li>
+<li><a href="#mMesh" class="v">mMesh</a></li>
+<li><a href="#mMinAdhereVelocity" class="v">mMinAdhereVelocity</a></li>
+<li><a href="#mName" class="v">mName</a></li>
+<li><a href="#mRelativeGridSpacing" class="v">mRelativeGridSpacing</a></li>
+<li><a href="#mSolverIterations" class="v">mSolverIterations</a></li>
+<li><a href="#mTearFactor" class="v">mTearFactor</a></li>
+<li><a href="#mThickness" class="v">mThickness</a></li>
+<li><a href="#mToFluidResponseCoefficient" class="v">mToFluidResponseCoefficient</a></li>
+<li><a href="#mValidBounds" class="v">mValidBounds</a></li>
+<li><a href="#mWakeUpCounter" class="v">mWakeUpCounter</a></li>
+<li><a href="#mWindAcceleration" class="v">mWindAcceleration</a></li>
+<li><a href="#reset" class="m">reset</a></li>
+<li><a href="#valid" class="m">valid</a></li>
+</ul><h2 class="method constructor"><a name='ClothDescription constructor'></a>ClothDescription constructor</h2>
+<div class="method">	<p class="c">Calls <a href="class_ClothDescription.html"><a href="class_Cloth.html">Cloth</a>Description</a>::reset.</p>
+</div><h2 class="method variable"><a name='mAttachmentResponseCoefficient'></a>mAttachmentResponseCoefficient</h2>
+<div class="method">	<p class="c">Defines a factor for the impulse transfer from cloth to attached rigid bodies.<br />default.<br />0.2<br />range.<br />[0,1]<br />type.<br />Real</p>
+</div><h2 class="method variable"><a name='mAttachmentTearFactor'></a>mAttachmentTearFactor</h2>
+<div class="method">	<p class="c">If the flag Enums::<a href="class_Cloth.html">Cloth</a>AttachmentTearable is set in the attachment method of NxCloth,<br />this variable defines the elongation factor that causes the attachment to tear.<br />default.<br />1.5<br />range.<br />(1,inf)<br />type.<br />Real</p>
+</div><h2 class="method variable"><a name='mBendingStiffness'></a>mBendingStiffness</h2>
+<div class="method">	<p class="c">Stretching stiffness of the cloth<br />default.<br />1.0<br />type.<br />Real<br />range.<br />(0,1)</p>
+</div><h2 class="method variable"><a name='mCollisionGroup'></a>mCollisionGroup</h2>
+<div class="method">	<p class="c">Which collision group this cloth is part of.<br />range.<br />[0, 31]<br />default.<br />0<br />type.<br />GroupIdentifier</p>
+</div><h2 class="method variable"><a name='mCollisionResponseCoefficient'></a>mCollisionResponseCoefficient</h2>
+<div class="method">	<p class="c">Defines a factor for the impulse transfer from cloth to colliding rigid bodies.<br />default.<br />0.2<br />range.<br />[0,inf)<br />type.<br />Real</p>
+</div><h2 class="method variable"><a name='mDampingCoefficient'></a>mDampingCoefficient</h2>
+<div class="method">	<p class="c">Damping coefficent<br />default.<br />0.5<br />type.<br />Real<br />range.<br />(0,1)</p>
+</div><h2 class="method variable"><a name='mDensity'></a>mDensity</h2>
+<div class="method">	<p class="c">Density of the cloth<br />default.<br />1.0<br />type.<br />Real</p>
+</div><h2 class="method variable"><a name='mExternalAcceleration'></a>mExternalAcceleration</h2>
+<div class="method">	<p class="c">External acceleration which affects all non attached particles of the cloth.</p>
+
+	<p class="c">default.<br />Vec3::<span class="caps">ZERO</span><br />type.<br />Vec3</p>
+</div><h2 class="method variable"><a name='mFlags'></a>mFlags</h2>
+<div class="method">	<p class="c">Flag bits.<br />default.<br /><a href="class_Cloth.html">Cloth</a>Flags_Gravity<br />type.<br />unsigned int<br />// or<br /><a href="class_ClothDescription.html"><a href="class_Cloth.html">Cloth</a>Description</a> desc;</p>
+<h3 class="e">Example</h3>
+<pre><code><b><b>Cloth</b>Description</b> desc;
+</code></pre>
+</div><h2 class="method variable"><a name='mForceFieldMaterial'></a>mForceFieldMaterial</h2>
+<div class="method">	<p class="c">Force Field Material Index.<br />default.<br />0<br />type.<br />GroupIdentifier</p>
+</div><h2 class="method variable"><a name='mFriction'></a>mFriction</h2>
+<div class="method">	<p class="c">Friction<br />default.<br />0.5<br />type.<br />Real<br />range.<br />(0,1)</p>
+</div><h2 class="method variable"><a name='mFromFluidResponseCoefficient'></a>mFromFluidResponseCoefficient</h2>
+<div class="method">	<p class="c">Defines a factor for the impulse transfer from colliding fluids to this cloth.<br />default.<br />1.0<br />range.<br />[0,inf)<br />type.<br />Real</p>
+	<p class="n"><b>Note</b> &#8212; Large values can cause instabilities</p>
+</div><h2 class="method variable"><a name='mGlobalPose'></a>mGlobalPose</h2>
+<div class="method">	<p class="c">Global pose of the cloth<br />default.<br />Matrix44::<span class="caps">IDENTITY</span><br />type.<br />Matrix44</p>
+</div><h2 class="method variable"><a name='mGroupsMask'></a>mGroupsMask</h2>
+<div class="method">	<p class="c">Which collision group this cloth is part of.<br />range.<br />[0, 31]<br />default.<br />0<br />type.<br />GroupIdentifier</p>
+</div><h2 class="method variable"><a name='mMesh'></a>mMesh</h2>
+<div class="method">	<p class="c">Mesh to be used by the cloth.<br />type.<br />Mesh*</p>
+</div><h2 class="method variable"><a name='mMinAdhereVelocity'></a>mMinAdhereVelocity</h2>
+<div class="method">	<p class="c">If the  Enums::<a href="class_Cloth.html">Cloth</a>AttachmentAdhere flag is set the cloth moves partially in the frame of the attached actor.</p>
+
+	<p class="c">This feature is useful when the cloth is attached to a fast moving character.<br />In that case the cloth adheres to the shape it is attached to while only<br />velocities below the parameter minAdhereVelocity are used for secondary effects.</p>
+
+	<p class="c">default.<br />1.0<br />range.<br />[0,inf)<br />type.<br />Real</p>
+</div><h2 class="method variable"><a name='mName'></a>mName</h2>
+<div class="method">	<p class="c">Optional name of the <a href="class_Cloth.html">Cloth</a><br />default.<br />BLANK_STRING<br />type.<br />String</p>
+</div><h2 class="method variable"><a name='mRelativeGridSpacing'></a>mRelativeGridSpacing</h2>
+<div class="method">	<p class="c">This parameter defines the size of grid cells for collision detection.</p>
+
+	<p class="c">The cloth is represented by a set of world aligned cubical cells in broad phase.<br />The size of these cells is determined by multiplying the length of the diagonal<br />of the <span class="caps">AABB</span> of the initial cloth size with this constant.</p>
+
+	<p class="c">default.<br />0.25<br />type.<br />[0.01, inf)</p>
+</div><h2 class="method variable"><a name='mSolverIterations'></a>mSolverIterations</h2>
+<div class="method">	<p class="c">Number of solver iterations.</p>
+
+	<p class="c">default.<br />5<br />range.<br />[1,inf)<br />type.<br />unsigned int</p>
+	<p class="n"><b>Note</b> &#8212; Small numbers make the simulation faster while the cloth gets less stiff.</p>
+</div><h2 class="method variable"><a name='mTearFactor'></a>mTearFactor</h2>
+<div class="method">	<p class="c">Tear Factor<br />default.<br />1.0<br />range.<br />[0,inf)<br />type.<br />Real</p>
+</div><h2 class="method variable"><a name='mThickness'></a>mThickness</h2>
+<div class="method">	<p class="c">Thickness of the cloth<br />default.<br />0.01<br />type.<br />Real</p>
+</div><h2 class="method variable"><a name='mToFluidResponseCoefficient'></a>mToFluidResponseCoefficient</h2>
+<div class="method">	<p class="c">Defines a factor for the impulse transfer from this cloth to colliding fluids.<br />default.<br />1.0<br />range.<br />[0,inf)<br />type.<br />Real</p>
+	<p class="n"><b>Note</b> &#8212; Large values can cause instabilities</p>
+</div><h2 class="method variable"><a name='mValidBounds'></a>mValidBounds</h2>
+<div class="method">	<p class="c">If the flag flag Enums::<a href="class_Cloth.html">Cloth</a>Flags_HasBounds is set, this variable defines the volume<br />outside of which cloth particle are automatically removed from the simulation.<br />default.<br />Bounds3()<br />type.<br />Bounds3</p>
+</div><h2 class="method variable"><a name='mWakeUpCounter'></a>mWakeUpCounter</h2>
+<div class="method">	<p class="c">Maximum linear velocity at which cloth can go to sleep.<br />range.<br />[0, inf)<br />default.<br />0.4<br />type.<br />Vec3</p>
+</div><h2 class="method variable"><a name='mWindAcceleration'></a>mWindAcceleration</h2>
+<div class="method">	<p class="c">Acceleration which acts normal to the cloth surface at each vertex.</p>
+
+	<p class="c">default.<br />Vec3::<span class="caps">ZERO</span><br />type.<br />Vec3</p>
+</div><h2 class="method function"><a name='reset'></a>reset</h2>
+<div class="method">	<p class="c">Resets everything to their default values, and pointers are set to <span class="caps">NULL</span>.</p>
+</div><h2 class="method function"><a name='valid'></a>valid</h2>
+<div class="method">	<p class="c">Returns if the variables are in a valid range or not</p>
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

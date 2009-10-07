@@ -1,0 +1,158 @@
+p(d). A callback handles physics events i.e. collision and contact, by the user app inheriting
+the callback and using the virtual functions to handle response.
+
+
+h3(e). Example
+
+bc..  class myCallback : public Callback
+ {
+  public:
+  	myCallback : Callback()
+  	{
+  		// my set up code.
+  	}
+  	
+  	void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
+  	{
+  		std::cout << "Volume Event!" << std::endl;
+  	}
+ };
+
+
+p. &nbsp;
+
+h2(fn constructor). <a name='Callback'></a>Callback
+
+p(d). Required constructor for inherited classes.
+
+
+p(n). **Note** -- Reference count is set to 1.
+
+
+h2(fn function). <a name='decreaseReference'></a>decreaseReference
+
+p(d). Decrease the reference count of the callback
+
+
+h2(fn function). <a name='getNbReferences'></a>getNbReferences
+
+p(d). Get the number of references to this callback.
+
+
+p(n). **Note** -- Although not exactly essential, reference counting the callback is useful
+for you to decide when the callback should be deleted. If you use the callback
+multiple times.
+
+
+h3. Return
+
+p(r). **unsigned int** -- Number of references.
+
+
+h2(fn function). <a name='increaseReference'></a>increaseReference
+
+p(d). Increase the reference count of the callback
+
+
+h2(fn function). <a name='onContact'></a>onContact
+
+p(d). When a contact even happens, between two RigidBodies
+
+
+p(n). **Note** -- Do not modify the Scene whilst in the onContact function; i.e. destroyActor, or createActor
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const ContactPair& __pair__ | Contact pair when hit.|
+
+
+h3(e). Example
+
+bc..   	void onContact(const ContactPair& pair)
+  	{
+  		// Things to do.
+  	}
+
+
+p. &nbsp;
+
+h3(s). See
+
+p(s). RigidBody::setContactCallback, Scene::setActorFlags
+
+h2(fn function). <a name='onHitEvent'></a>onHitEvent
+
+p(d). When a callback is used with a Raycast hit.
+
+
+p(n). **Note** -- Do not modify the Scene whilst in the onRaycastHit function; i.e. destroyActor, or createActor
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const RaycastHit& __hit__ | Raycast hit to parse|
+
+
+h3. Return
+
+p(r). **bool** -- True if the ray should continue, or false to abort.
+
+h3(e). Example
+
+bc..   	void onHitEvent(const RaycastHit& hit)
+  	{
+  		return (hit.mDistance < 20) // Return true if less than 20m.
+  	}
+
+
+p. &nbsp;
+
+h3(s). See
+
+p(s). Scene::raycastAllBounds
+
+h2(fn function). <a name='onVolumeEvent'></a>onVolumeEvent
+
+p(d). A RigidBody has entered, exited or otherwise is existing inside the Volume.
+
+
+p(n). **Note** -- Depending on the RigidBody the collision_shape may be zero, you should always check
+to see if the pointer exists before using it!
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Volume* __volume__ | Volume of the collisionBody has an event with.|
+|Shape*  __volumeShape__ | the specific shape of the volume.|
+|RigidBody* __collisionBody__ | The collisionBody in question.|
+|Shape* __collisionShape__ | The shape in contact with the volumeShape.|
+|unsigned int __collisionEvent__ | The type of collision, used with Enums::VolumeCollisionType|
+
+
+h3(e). Example
+
+bc..   	void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
+  	{
+  		if (collisionEvent & Enums::VolumeCollisionType_OnEnter)
+  		{
+  		 std::cout << "RigidBody has entered the Volume for the first time!" << std::endl;
+  		}
+  	}
+
+
+p. &nbsp;
+
+h2(fn destructor). <a name='~Callback'></a>~Callback
+
+p(d). Required destructor
+
+
+h3(t). Traits
+
+* Virtual Function
+
+

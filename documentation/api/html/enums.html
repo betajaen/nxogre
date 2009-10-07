@@ -1,0 +1,2310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - Enums</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3{margin:0;padding:0;color:#ccc;}
+  #N{color:white;}
+  #N h1{background-color:#333;}
+  #N h2{background-color:#222;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover{background-color:#ccc;color:#181818}
+  #N ul li.this, div#nav ul li.this:hover{padding:0.25em 0 0.25em 0.5em;background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;background-color:yellow;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enumsactive">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>Enums</h1><h2 class="enum"><a name='Axis'></a>Axis</h2>
+<div class="method">	<p class="c">Axis as an integer, semi-compatible with NxHeightFieldAxis and other classes.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>X </td>
+			<td> X Axis.</td>
+		</tr>
+		<tr>
+			<td>Y </td>
+			<td> Y Axis.</td>
+		</tr>
+		<tr>
+			<td>Z </td>
+			<td> Z Axis.</td>
+		</tr>
+		<tr>
+			<td>NoAxis </td>
+			<td> No Axis.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='TimerMode'></a>TimerMode</h2>
+<div class="method">	<p class="c">Current state of the SceneTimer.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>TimerMode_Simulating </td>
+			<td> Timer is simulating.</td>
+		</tr>
+		<tr>
+			<td>TimerMode_FetchedResults </td>
+			<td> Timer has results that have been fetched.</td>
+		</tr>
+		<tr>
+			<td>TimerMode_Miss </td>
+			<td> Timer did not simulate this frame.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='CombineMode'></a>CombineMode</h2>
+<div class="method">	<p class="c">Combine mode when two integrals meet.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxCombineMode</b></p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>CombineMode_Average </td>
+			<td> <code>(A + B) / 2)</code></td>
+		</tr>
+		<tr>
+			<td>CombineMode_Min </td>
+			<td> <code>a &#60; b ? a : b</code></td>
+		</tr>
+		<tr>
+			<td>CombineMode_Multiply </td>
+			<td> <code>A * B</code></td>
+		</tr>
+		<tr>
+			<td>CombineMode_Max </td>
+			<td> <code>a &#62; b ? a : b</code></td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ActorFlags'></a>ActorFlags</h2>
+<div class="method">	<p class="c"><a href="class_Actor.html">Actor</a> flags to use with all types of RigidBodies.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxActorFlag</b></p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ActorFlags_DisableCollision       </td>
+			<td> Do not collide with other RigidBodies. Note this excludes from overlap tests.</td>
+		</tr>
+		<tr>
+			<td>ActorFlags_DisableResponse        </td>
+			<td> Disable collision response</td>
+		</tr>
+		<tr>
+			<td>ActorFlags_LockCOM                </td>
+			<td> Disable <span class="caps">COM</span> (Center of Mass) update when computing inertial properties at creation.</td>
+		</tr>
+		<tr>
+			<td>ActorFlags_DisableFluidCollision  </td>
+			<td> Disable Collision with fluids.</td>
+		</tr>
+		<tr>
+			<td>ActorFlags_ContactModification    </td>
+			<td> Turn on contact modification for the RigidBody.</td>
+		</tr>
+		<tr>
+			<td>ActorFlags_ForceConeFriction      </td>
+			<td> Force cone friction to be used with this RigidBody.</td>
+		</tr>
+		<tr>
+			<td>ActorFlags_UserActorPairFiltering </td>
+			<td> Enable custom contact filering.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='BodyFlags'></a>BodyFlags</h2>
+<div class="method">	<p class="c">Body flags to use with <a href="class_Actor.html">Actor</a> (and inherited) and KinematicActor types of RigidBodies <span class="caps">ONLY</span>.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxBodyFlag</b></p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>BodyFlags_DisableGravity       </td>
+			<td> Gravity should not be applied to this RigidBody.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezePositionX      </td>
+			<td> Freeze movement in the X axis.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezePositionY      </td>
+			<td> Freeze movement in the Y axis.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezePositionZ      </td>
+			<td> Freeze movement in the Z axis.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezePosition       </td>
+			<td> Freeze position in all axes.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezeRotationX      </td>
+			<td> Freeze rotation in the X axis.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezeRotationY      </td>
+			<td> Freeze rotation in the Y axis.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezeRotationZ      </td>
+			<td> Freeze rotation in the Z axis.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FreezeRotation       </td>
+			<td> Freeze rotation in all axis.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_Frozen               </td>
+			<td> Freeze position and rotation, in a sense pretend to be like a KinematicActor or StaticGeometry for a period of time.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_Visualisation        </td>
+			<td> Visualise the body component in the VisualDebugger.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_FilterSleepVelocity  </td>
+			<td> Filter sleep velocity.</td>
+		</tr>
+		<tr>
+			<td>BodyFlags_EnergySleepTest      </td>
+			<td> Enable energy-based sleepig algorithm.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ForceMode'></a>ForceMode</h2>
+<div class="method">	<p class="c">Force mode for when using addForce in a RigidBody.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxForceMode</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ForceMode_Force                </td>
+			<td> Parameter has unit of <code>mass * distance/time^2</code>, i.e. a force</td>
+		</tr>
+		<tr>
+			<td>ForceMode_Impulse              </td>
+			<td> Parameter has unit of <code>mass * distance/time</code></td>
+		</tr>
+		<tr>
+			<td>ForceMode_VelocityChange       </td>
+			<td> Parameter has unit of <code>distance/time</code>, i.e. the effect is mass independent: a velocity change.</td>
+		</tr>
+		<tr>
+			<td>ForceMode_SmoothImpulse        </td>
+			<td> Same as Impulse but the effect is applied over all substeps. Use this for motion controllers that repeatedly apply an impulse.</td>
+		</tr>
+		<tr>
+			<td>ForceMode_SmoothVelocityChange </td>
+			<td> Same as VelocityChange but the effect is applied over all substeps. Use this for motion controllers that repeatedly apply an impulse.</td>
+		</tr>
+		<tr>
+			<td>ForceMode_Acceleration         </td>
+			<td> Parameter has unit of <code>distance/time^2</code>, i.e. an acceleration. It gets treated just like a force except the mass is not divided out before integration.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='Priority'></a>Priority</h2>
+<div class="method">	<p class="c">Priorities are an order of importantance. Which is executed first.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Priority_High       </td>
+			<td> Highest priority.</td>
+		</tr>
+		<tr>
+			<td>Priority_MediumHigh </td>
+			<td> High but not the highest</td>
+		</tr>
+		<tr>
+			<td>Priority_Medium     </td>
+			<td> Medium or normal priority</td>
+		</tr>
+		<tr>
+			<td>Priority_MediumLow  </td>
+			<td> Not as much as medium.</td>
+		</tr>
+		<tr>
+			<td>Priority_Low        </td>
+			<td> Lowest priority, always last.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='RigidBodyType'></a>RigidBodyType</h2>
+<div class="method">	<p class="c">What the RigidBody type is.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>RigidBodyType_Dynamic   </td>
+			<td> RigidBody is likely to move.</td>
+		</tr>
+		<tr>
+			<td>RigidBodyType_Kinematic </td>
+			<td> RigidBody is likely to move, but it should not conserve momentum.</td>
+		</tr>
+		<tr>
+			<td>RigidBodyType_Geometry  </td>
+			<td> RigidBody will never move.</td>
+		</tr>
+		<tr>
+			<td>RigidBodyType_Volume    </td>
+			<td> RigidBody will never move, and others can pass through it.</td>
+		</tr>
+		<tr>
+			<td>RigidBodyType_Unknown   </td>
+			<td> Unknown Type.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='PhysXAssertionResponse'></a>PhysXAssertionResponse</h2>
+<div class="method">	<p class="c">What do when there is an assertion from PhysX</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>PhysXAssertion_Continue </td>
+			<td> Continue</td>
+		</tr>
+		<tr>
+			<td>PhysXAssertion_Ignore </td>
+			<td> Ignore</td>
+		</tr>
+		<tr>
+			<td>PhysXAssertion_Breakpoint </td>
+			<td> Breakpoint</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='PhysXAssertionResponse'></a>PhysXAssertionResponse</h2>
+<div class="method">	<p class="c">Time stepping method.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>TimeStepMethod_Fixed    </td>
+			<td> Uses a fixed time-step, but divides &#Delta;Time equally and carries any remaing time to the next frame.</td>
+		</tr>
+		<tr>
+			<td>TimeStepMethod_Variable </td>
+			<td> Uses the &#Delta;time as is.</td>
+		</tr>
+		<tr>
+			<td>TimeStepMethod_Inherit  </td>
+			<td> Inherit from the main scene, Used with compartments.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='PruningStructure'></a>PruningStructure</h2>
+<div class="method">	<p class="c">Time stepping method.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxPruningStructure</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>PruningStructure_None </td>
+			<td> No structure, using a linear list of objects.</td>
+		</tr>
+		<tr>
+			<td>PruningStructure_Octree </td>
+			<td> Using a preallocated loose octree.</td>
+		</tr>
+		<tr>
+			<td>PruningStructure_Quadtree </td>
+			<td> Using a preallocated loose quadtree.</td>
+		</tr>
+		<tr>
+			<td>PruningStructure_DynamicAABBTree </td>
+			<td> Using a dynamic <span class="caps">AABB</span> tree.</td>
+		</tr>
+		<tr>
+			<td>PruningStructure_StaticAABBTree </td>
+			<td> Using a static <span class="caps">AABB</span> tree.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='BroadPhase'></a>BroadPhase</h2>
+<div class="method">	<p class="c">Broadphase type for Scenes.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with NxBroadPhaseType</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>BroadPhase_SAPSingle </td>
+			<td> A sweep-and-prune (<span class="caps">SAP</span>) algorithm to find pairs of potentially colliding shapes</td>
+		</tr>
+		<tr>
+			<td>BroadPhase_SAPMulti </td>
+			<td> A multi sweep-and-prune algorithm to find pairs of potentially colliding shapes.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ResourceDirectionality'></a>ResourceDirectionality</h2>
+<div class="method">	<p class="c">The directions that a Resource can be read or written to. Omidrectional like a file, or sucessional like a stream.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ResourceDirectionality_Unknown        </td>
+			<td> Unknown directionaility probably due to the resource not being opened yet.</td>
+		</tr>
+		<tr>
+			<td>ResourceDirectionality_Omidirectional </td>
+			<td> Data can be read or written backwards and forwards. This is for most part true with saved files.</td>
+		</tr>
+		<tr>
+			<td>ResourceDirectionality_Sucessional    </td>
+			<td> Data can be read or written in succession. This is for most part true with streams.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ResourceStatus'></a>ResourceStatus</h2>
+<div class="method">	<p class="c">Status of a resource</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ResourceStatus_NotFound    </td>
+			<td> The resource cannot be written or read to. The file or stream cannot be found.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_Opening     </td>
+			<td> The resource is in the process of being opened. It cannot be read or written to.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_Opened      </td>
+			<td> The resource is opened. It can be read or written to, depending on the ResourceAccess.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_Closing     </td>
+			<td> The resource is closing.  It cannot be read or written to.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_Closed      </td>
+			<td> The resource is closed.  It cannot be read or written to.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_Maintenance </td>
+			<td> The resource is under maintance. e.x. A memory buffer may be resized, or the file is the middle of being created.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_Waiting     </td>
+			<td> The resource has been created, but the open() function has not been called yet. It cannot be read or written to.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_HasError    </td>
+			<td> There has been an error. The resource may be closed. It cannot be read or written to.</td>
+		</tr>
+		<tr>
+			<td>ResourceStatus_Unknown     </td>
+			<td> Status is unknown. This happens when the Resource class does not fully inherit all of it&#8217;s functions.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ResourceAccess'></a>ResourceAccess</h2>
+<div class="method">	<p class="c">Type of access to a resource</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ResourceAccess_ReadOnly     </td>
+			<td> Read but do not write</td>
+		</tr>
+		<tr>
+			<td>ResourceAccess_ReadAndWrite </td>
+			<td> Read and write.</td>
+		</tr>
+		<tr>
+			<td>ResourceAccess_WriteOnly    </td>
+			<td> Write but do not read</td>
+		</tr>
+		<tr>
+			<td>ResourceAccess_AppendOnly   </td>
+			<td> Write to the end of the file only.</td>
+		</tr>
+		<tr>
+			<td>ResourceAccess_NoAccess     </td>
+			<td> Resource access is unknown. Probably due to the file hasn&#8217;t been opened yet.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='KinematicInteractionFlag'></a>KinematicInteractionFlag</h2>
+<div class="method">	<p class="c">Kinematic controller interaction flags.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>KinematicInteractionFlag_Include   </td>
+			<td> Include</td>
+		</tr>
+		<tr>
+			<td>KinematicInteractionFlag_Exclude   </td>
+			<td> Exclude</td>
+		</tr>
+		<tr>
+			<td>KinematicInteractionFlag_UseFilter </td>
+			<td> Use filter</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='KinematicCollisionFlag'></a>KinematicCollisionFlag</h2>
+<div class="method">	<p class="c">Kinematic controller collision flags.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>KinematicCollisionFlag_NoNone </td>
+			<td> KinematicController hasn&#8217;t collided with anything.</td>
+		</tr>
+		<tr>
+			<td>KinematicCollisionFlag_Sides  </td>
+			<td> KinematicController has collided with something to the side.</td>
+		</tr>
+		<tr>
+			<td>KinematicCollisionFlag_Up     </td>
+			<td> KinematicController has collided with something above.</td>
+		</tr>
+		<tr>
+			<td>KinematicCollisionFlag_Down   </td>
+			<td> KinematicController has collided with something below.</td>
+		</tr>
+		<tr>
+			<td>KinematicCollisionFlag_NoMove </td>
+			<td> KinematicController was not moved. Probably due to the direction being zero.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='KinematicContactAction'></a>KinematicContactAction</h2>
+<div class="method">	<p class="c">Kinematic controller contact action flags.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>KinematicContactAction_None     </td>
+			<td> Do nothing (pass through)</td>
+		</tr>
+		<tr>
+			<td>KinematicContactAction_AutoPush </td>
+			<td> Apply a pushing force against the RigidBody</td>
+		</tr>
+		<tr>
+			<td>KinematicContactAction_Callback </td>
+			<td> Use a callback to handle action.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ShapesType'></a>ShapesType</h2>
+<div class="method">	<p class="c">Type of shape filted by restriced movement of parent RigidBody, used with scene queries, and test methods in the Scene</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxShapesType</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ShapesType_Static  </td>
+			<td> Static shapes (SceneGeometries and Volumes)</td>
+		</tr>
+		<tr>
+			<td>ShapesType_Dynamic </td>
+			<td> Dynamic shapes (Actors and KinematicActors)</td>
+		</tr>
+		<tr>
+			<td>ShapesType_All     </td>
+			<td> Both types of shapes.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='SimpleShapeType'></a>SimpleShapeType</h2>
+<div class="method">	<p class="c">Type of SimpleShape.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>SimpleShape_Box          </td>
+			<td> Cuboid</td>
+		</tr>
+		<tr>
+			<td>SimpleShape_Sphere       </td>
+			<td> Sphere</td>
+		</tr>
+		<tr>
+			<td>SimpleShape_Capsule      </td>
+			<td> Capsule</td>
+		</tr>
+		<tr>
+			<td>SimpleShape_PointCloud   </td>
+			<td> Convex point cloud</td>
+		</tr>
+		<tr>
+			<td>SimpleShape_TriangleMesh </td>
+			<td> Triangle mesh.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ShapeFunctionType'></a>ShapeFunctionType</h2>
+<div class="method">	<p class="c">A list of the possible functions of shapes in NxOgre.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxShapeType</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Plane </td>
+			<td> PlaneGeometry,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Sphere </td>
+			<td> Sphere,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Box </td>
+			<td> Box,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Capsule </td>
+			<td> Capsule,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Wheel </td>
+			<td> Wheel,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Convex </td>
+			<td> Convex,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Mesh </td>
+			<td> TriangleMeshGeometry,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_HeightField </td>
+			<td> HeightFieldGeometry,</td>
+		</tr>
+		<tr>
+			<td>ShapeFunctionType_Unknown </td>
+			<td> Not used.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ShapeFunctionType'></a>ShapeFunctionType</h2>
+<div class="method">	<p class="c">Describes the compartment types a rigid body shape might interact with.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxShapeCompartmentType</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_RigidBody_Software </td>
+			<td> RigidBody Software</td>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_RigidBody_Hardware </td>
+			<td> RigidBody Hardware</td>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_Fluid_Software     </td>
+			<td> Fluid Software</td>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_Fluid_Hardware     </td>
+			<td> Fluid Hardware</td>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_Cloth_Software     </td>
+			<td> Cloth Software</td>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_Cloth_Hardware     </td>
+			<td> Cloth Hardware</td>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_SoftBody_Software  </td>
+			<td> SoftBody Software</td>
+		</tr>
+		<tr>
+			<td>ShapeCompartmentType_SoftBody_Hardware  </td>
+			<td> SoftBody Hardware</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ShapeFlags'></a>ShapeFlags</h2>
+<div class="method">	<p class="c">Flags used when building a shape.</p>
+	<p class="n"><b>Note</b> &#8212; Mostly Compatible with the <b>NxShapeFlag</b> enum.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ShapeFlags_Visualisation       </td>
+			<td> Allow a visualation of this shape in the VisualDebugger.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_NoCollision         </td>
+			<td> Used only with Compound Shapes, otherwise raise ActorFlags_DisableCollision.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_FeatureIndices      </td>
+			<td> Enable feature indices in the contact stream.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_DisableRaycasting   </td>
+			<td> Disable raycasting for this shape.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_PointContactForce   </td>
+			<td> Enable contact force reporting per contact point in contact stream.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_IsFluidDrain        </td>
+			<td> Sets the shape to be a fluid drain.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_NoFluids            </td>
+			<td> Disable collision with fluids.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_TwoWayFluid         </td>
+			<td> Enables the reaction of the shapes rigidbody on fluid collision.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_DiableResponse      </td>
+			<td> Disbale collision response for this shape.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_DynamicDynamicCCD   </td>
+			<td> Enable dynamic-dynamic <span class="caps">CCD</span> for this shape.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_DisableSceneQueries </td>
+			<td> Diable participation in raycasts, overlap tests and sweeps.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_IsClothDrain        </td>
+			<td> Sets the shape to be a cloth drain.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_NoCloth             </td>
+			<td> Disable Collision with Cloth.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_TwoWayCloth         </td>
+			<td> Enables the reaction of the shapes rigidbody on cloth collision.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_IsSoftBodyDrain     </td>
+			<td> Sets the shape to be a SoftBody drain.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_NoSoftBody          </td>
+			<td> Disable Collision with SoftBody.</td>
+		</tr>
+		<tr>
+			<td>ShapeFlags_TwoWaySoftBody      </td>
+			<td> Enables the reaction of the shapes rigidbody on SoftBody collision.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='MeshType'></a>MeshType</h2>
+<div class="method">	<p class="c">Type of NxOgre and PhysX Meshes.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>MeshType_Unknown  </td>
+			<td> Mesh has a malformed header, or has not been loaded.</td>
+		</tr>
+		<tr>
+			<td>MeshType_Convex   </td>
+			<td> A point cloud used in a Convex shape.</td>
+		</tr>
+		<tr>
+			<td>MeshType_Triangle </td>
+			<td> A triangle &#8220;soup&#8221; used in TriangleGeometry shape.</td>
+		</tr>
+		<tr>
+			<td>MeshType_Cloth    </td>
+			<td> A cloth used with the Cloth class.</td>
+		</tr>
+		<tr>
+			<td>MeshType_SoftBody </td>
+			<td> A soft body used with the SoftBody class.</td>
+		</tr>
+		<tr>
+			<td>MeshType_Skeleton </td>
+			<td> A <span class="caps">CCD</span> Skeleton.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='XType'></a>XType</h2>
+<div class="method">	<p class="c">Type of NxOgre file; xhf or xcl.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>XType_Unknown     </td>
+			<td> Unknown file type.</td>
+		</tr>
+		<tr>
+			<td>XType_HeightField </td>
+			<td> Is a heightfield file.</td>
+		</tr>
+		<tr>
+			<td>XType_Skeleton    </td>
+			<td> Is a skeleton file.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='VolumeCollisionType'></a>VolumeCollisionType</h2>
+<div class="method">	<p class="c">Type of collisions to look for in a Volume.</p>
+	<p class="n"><b>Note</b> &#8212; VolumeCollisionTypes are combined together with the <code>|</code> (or) operator.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>VolumeCollisionType_None        </td>
+			<td> No Collision.</td>
+		</tr>
+		<tr>
+			<td>VolumeCollisionType_OnEnter     </td>
+			<td> When a RigidBody enters the volume</td>
+		</tr>
+		<tr>
+			<td>VolumeCollisionType_OnExit      </td>
+			<td> When a RigidBody exits the volume.</td>
+		</tr>
+		<tr>
+			<td>VolumeCollisionType_OnPresence  </td>
+			<td> When a RigidBody is inside the volume (called per timestep).</td>
+		</tr>
+		<tr>
+			<td>VolumeCollisionType_All         </td>
+			<td> When a RigidBody enters, exits or inside a Volume</td>
+		</tr>
+		<tr>
+			<td>VolumeCollisionType_EnterOrExit </td>
+			<td> When a RigidBody enters or exits</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='VolumeCollisionType'></a>VolumeCollisionType</h2>
+<div class="method">	<p class="c">Type of collisions to look for in a Volume.</p>
+	<p class="n"><b>Note</b> &#8212; VisualDebugger are combined together with the <code>|</code> (or) operator.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>VisualDebugger_ShowNone </td>
+			<td> Don&#8217;t show anything.</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_ShowAll  </td>
+			<td> Show all configurations of the debugger (Cannot be used with the <code>|</code> (or) operator)</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_World_Axes                  </td>
+			<td> World Axes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Body_Axes                   </td>
+			<td> Body Axes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Body_Mass_Axes              </td>
+			<td> Body Mass Axes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Body_Lin_Velocity           </td>
+			<td> Body Lin Velocity</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Body_Ang_Velocity           </td>
+			<td> Body Ang Velocity</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Body_Joint_Groups           </td>
+			<td> Body Joint Groups</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Joint_Local_Axes            </td>
+			<td> Joint Local Axes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Joint_World_Axes            </td>
+			<td> Joint World Axes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Joint_Limits                </td>
+			<td> Joint Limits</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Contact_Point               </td>
+			<td> Contact Point</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Contact_Normal              </td>
+			<td> Contact Normal</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Contact_Error               </td>
+			<td> Contact Error</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Contact_Force               </td>
+			<td> Contact Force</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Actor_Axes                  </td>
+			<td> Actor Axes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Aabbs             </td>
+			<td> Collision Aabbs</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Shapes            </td>
+			<td> Collision Shapes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Axes              </td>
+			<td> Collision Axes</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Compounds         </td>
+			<td> Collision Compounds</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Vnormals          </td>
+			<td> Collision Vnormals</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Fnormals          </td>
+			<td> Collision Fnormals</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Edges             </td>
+			<td> Collision Edges</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Spheres           </td>
+			<td> Collision Spheres</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Static            </td>
+			<td> Collision Static</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Dynamic           </td>
+			<td> Collision Dynamic</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Free              </td>
+			<td> Collision Free</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_CCD               </td>
+			<td> Collision <span class="caps">CCD</span></td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Collision_Skeletons         </td>
+			<td> Collision Skeletons</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Emitters              </td>
+			<td> Fluid Emitters</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Position              </td>
+			<td> Fluid Position</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Velocity              </td>
+			<td> Fluid Velocity</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Kernel_Radius         </td>
+			<td> Fluid Kernel Radius</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Bounds                </td>
+			<td> Fluid Bounds</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Packets               </td>
+			<td> Fluid Packets</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Motion_Limit          </td>
+			<td> Fluid Motion Limit</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Dyn_Collision         </td>
+			<td> Fluid Dyn Collision</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Stc_Collision         </td>
+			<td> Fluid Stc Collision</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Mesh_Packets          </td>
+			<td> Fluid Mesh Packets</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Drains                </td>
+			<td> Fluid Drains</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Fluid_Packet_Data           </td>
+			<td> Fluid Packet Data</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Mesh                  </td>
+			<td> Cloth Mesh</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Collisions            </td>
+			<td> Cloth Collisions</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Selfcollisions        </td>
+			<td> Cloth Selfcollisions</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Workpackets           </td>
+			<td> Cloth Workpackets</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Sleep                 </td>
+			<td> Cloth Sleep</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Sleep_Vertex          </td>
+			<td> Cloth Sleep Vertex</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Tearable_Vertices     </td>
+			<td> Cloth Tearable Vertices</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Tearing               </td>
+			<td> Cloth Tearing</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Attachment            </td>
+			<td> Cloth Attachment</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Cloth_Validbounds           </td>
+			<td> Cloth Validbounds</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Mesh               </td>
+			<td> Softbody Mesh</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Collisions         </td>
+			<td> Softbody Collisions</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Workpackets        </td>
+			<td> Softbody Workpackets</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Sleep              </td>
+			<td> Softbody Sleep</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Sleep_Vertex       </td>
+			<td> Softbody Sleep Vertex</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Tearable_Vertices  </td>
+			<td> Softbody Tearable Vertices</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Tearing            </td>
+			<td> Softbody Tearing</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Attachment         </td>
+			<td> Softbody Attachment</td>
+		</tr>
+		<tr>
+			<td>VisualDebugger_Softbody_Validbounds        </td>
+			<td> Softbody Validbounds</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='RenderableType'></a>RenderableType</h2>
+<div class="method">	<p class="c">Type of Renderables</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>RenderableType_VisualDebugger </td>
+			<td> PhysX Visual Debugger.</td>
+		</tr>
+		<tr>
+			<td>RenderableType_PhysXMesh      </td>
+			<td> Any class (i.e. cloth) that PhysX determines the visual mesh.</td>
+		</tr>
+		<tr>
+			<td>RenderableType_ParticlePoints </td>
+			<td> Particles represented as seperate vertex points.</td>
+		</tr>
+		<tr>
+			<td>RenderableType_SoftBody       </td>
+			<td> A SoftBody.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='MeshShapeFlag'></a>MeshShapeFlag</h2>
+<div class="method">	<p class="c">Type of Renderables</p>
+
+	<h4>Smooth Sphere Collisions</h4>
+
+	<p class="c">Select between &#8220;normal&#8221; or &#8220;smooth&#8221; sphere-mesh/raycastcapsule-mesh contact generation routines.</p>
+
+	<p class="c">The 'normal&#8217; algorithm assumes that the mesh is composed from flat triangles. When a ball rolls<br />or a raycast capsule slides along the mesh surface, it will experience small, sudden changes in<br />velocity as it rolls from one triangle to the next. The smooth algorithm, on the other hand, assumes<br />that the triangles are just an approximation of a surface that is smooth. It uses the Gouraud algorithm<br />to smooth the triangles&#8217; vertex normals (which in this case are particularly important).<br />This way the rolling sphere&#8217;s/capsule&#8217;s velocity will change smoothly over time, instead of suddenly.<br />We recommend this algorithm for simulating car wheels on a terrain.</p>
+
+
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>MeshShapeFlag_SmoothSphereCollisions </td>
+			<td> Apply a Gouaud algorithm to smooth the triangles out.</td>
+		</tr>
+		<tr>
+			<td>MeshShapeFlag_DoubleSided            </td>
+			<td> Mesh is double sided, but only used with Raycasting.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='HeightFieldTesselation'></a>HeightFieldTesselation</h2>
+<div class="method">	<p class="c">Tesselation mode for Quads in HeightFields</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>HeightFieldTesselation_NE_SW </td>
+			<td> NorthEast (TopRight) to SouthWest (BottomLeft).</td>
+		</tr>
+		<tr>
+			<td>HeightFieldTesselation_NW_SE </td>
+			<td> NorthWest (TopLeft) to SouthEast (BottomRight).</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='TerrainCentering'></a>TerrainCentering</h2>
+<div class="method">	<p class="c">Terrain local pose adjustment &#8211; or not.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>TerrainCentering_LocalPose   </td>
+			<td> Don&#8217;t center, use the local pose.</td>
+		</tr>
+		<tr>
+			<td>TerrainCentering_CenterXZ    </td>
+			<td> Center the heightfield to <code>scale.x / 2</code> and <code>scale.z / 2</code></td>
+		</tr>
+		<tr>
+			<td>TerrainCentering_CenterAbove </td>
+			<td> Center and move upwards, so any negative height is above the global pose of the actor.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='RemoteDebuggerEventGroup'></a>RemoteDebuggerEventGroup</h2>
+<div class="method">	<p class="c">Used with RemoteDebuggerObjects</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_BasicObjects             </td>
+			<td> Basic Objects</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_BasicObjectsDynamicData  </td>
+			<td> Basic Objects Dynamic Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_BasicObjectsStaticData   </td>
+			<td> Basic Objects Static Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_Joints                   </td>
+			<td> Joints</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_JointsData               </td>
+			<td> Joints Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_Contacts                 </td>
+			<td> Contacts</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_ContactsData             </td>
+			<td> Contacts Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_Triggers                 </td>
+			<td> Triggers</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_Profiling                </td>
+			<td> Profiling</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_Cloth                    </td>
+			<td> Cloth</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_ClothDynamicData         </td>
+			<td> Cloth Dynamic Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_ClothStaticData          </td>
+			<td> Cloth Static Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_SoftBody                 </td>
+			<td> SoftBody</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_SoftBodyDynamicData      </td>
+			<td> SoftBody Dynamic Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_SoftBodyStaticData       </td>
+			<td> SoftBody Static Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_Fluid                    </td>
+			<td> Fluid</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_FluidDynamicData         </td>
+			<td> Fluid Dynamic Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerGroup_FluidStaticData          </td>
+			<td> Fluid Static Data</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='RemoteDebuggerMask'></a>RemoteDebuggerMask</h2>
+<div class="method">	<p class="c">Used to filter out events in the Remote Debugger.</p>
+	<p class="n"><b>Note</b> &#8212; RemoteDebuggerMasks are combined together with the <code>|</code> (or) operator.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_Everything                </td>
+			<td> Everything.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_BasicObjects              </td>
+			<td> Basic Objects.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_BasicObjectsDynamicData   </td>
+			<td> Dynamic data for Basic Objects.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_BasicObjectsStaticData    </td>
+			<td> Static data for Basic Objects.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_BasicObjectsAll           </td>
+			<td> Dynamic and Static data for Basic Objects.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_Joints                    </td>
+			<td> Joints.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_JointsData                </td>
+			<td> Joints data.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_Contacts                  </td>
+			<td> Contacts</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_ContactsData              </td>
+			<td> Contacts data,</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_Triggers                  </td>
+			<td> Volumes/Triggers</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_Profiling                 </td>
+			<td> Profiling data.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_Cloth                     </td>
+			<td> Cloth</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_ClothDynamicData          </td>
+			<td> Cloth Dynamic Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_ClothStaticData           </td>
+			<td> Cloth Static Data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_ClothAllData              </td>
+			<td> Cloth Dynamic and Static data.</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_Fluid                     </td>
+			<td> Fluid</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_FluidDynamicData          </td>
+			<td> Fluid Dynamic data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_FluidStaticData           </td>
+			<td> Fluid Static data</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerMask_FluidAllData              </td>
+			<td> Fluid Dynamic and Static data.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='RemoteDebuggerObjectType'></a>RemoteDebuggerObjectType</h2>
+<div class="method">	<p class="c">Type of Remote Debugger Object</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Generic     </td>
+			<td> Generic Object</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Actor       </td>
+			<td> RigidBody (NxActor)</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Plane       </td>
+			<td> PlaneGeometry</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Box         </td>
+			<td> Box</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Sphere      </td>
+			<td> Sphere</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Capsule     </td>
+			<td> Capsule</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Cylinder    </td>
+			<td> Cylinder</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Convex      </td>
+			<td> Convex</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Mesh        </td>
+			<td> TriangleMeshGeometry</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Wheel       </td>
+			<td> Wheel</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Joint       </td>
+			<td> Joint</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Contact     </td>
+			<td> Contacts</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_BoundingBox </td>
+			<td> Bounding Box</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Vector      </td>
+			<td> Vector (NxVec3)</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Camera      </td>
+			<td> RemoteDebugger Camera</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Cloth       </td>
+			<td> Cloth</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_SoftBody    </td>
+			<td> SoftBody</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Fluid       </td>
+			<td> Fluid</td>
+		</tr>
+		<tr>
+			<td>RemoteDebuggerObjectType_Forcefield  </td>
+			<td> Forcefield</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='JointFunctionType'></a>JointFunctionType</h2>
+<div class="method">	<p class="c">Type of Joint</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxJointType</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>JointFunctionType_Prismatic     </td>
+			<td> Prismatic joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_Revolute      </td>
+			<td> Revolute joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_Cylindrical   </td>
+			<td> Cylindrical joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_Spherical     </td>
+			<td> Spherical joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_PointOnLine   </td>
+			<td> PointOnLine joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_PointInPlane  </td>
+			<td> PointInPlane joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_Distance      </td>
+			<td> Distance joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_Pulley        </td>
+			<td> Pulley joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_Fixed         </td>
+			<td> Fixed joint</td>
+		</tr>
+		<tr>
+			<td>JointFunctionType_D6            </td>
+			<td> D6 Joint</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='JointState'></a>JointState</h2>
+<div class="method">	<p class="c">Type of Joint</p>
+	<p class="n"><b>Note</b> &#8212; Mostly compatible with <b>NxJointState</b>. apart from JointState_Dead</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>JointState_Unbound </td>
+			<td> Not used.</td>
+		</tr>
+		<tr>
+			<td>JointState_Simulating </td>
+			<td> The joint is being simulated under normal conditions. I.e. it is not broken or deleted.</td>
+		</tr>
+		<tr>
+			<td>JointState_Broken </td>
+			<td> Set when the joint has been broken or one of the actors connected to the joint has been remove.</td>
+		</tr>
+		<tr>
+			<td>JointState_Dead </td>
+			<td> Joint has not been created yet or has been deleted.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='JointFlag'></a>JointFlag</h2>
+<div class="method">	<p class="c">Flags for Joints</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxJointFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>JointFlag_CollisionEnabled </td>
+			<td>  Raised if collision detection should be enabled between the bodies attached to the joint.</td>
+		</tr>
+		<tr>
+			<td>JointFlag_Visualisation </td>
+			<td> Visualised in the debug renderer.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='JointProjectionMode'></a>JointProjectionMode</h2>
+<div class="method">	<p class="c">Joint projection is a method for correcting large joint errors.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with **NxJointProjectionMode **.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>JointProjectionMode_None </td>
+			<td> Don&#8217;t project this joint</td>
+		</tr>
+		<tr>
+			<td>JointProjectionMode_Point_MiniumDistance </td>
+			<td> Linear and angular minimum distance projection</td>
+		</tr>
+		<tr>
+			<td>JointProjectionMode_Linear_MiniumDistance </td>
+			<td> Linear only minimum distance projection</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='RevoluteJointFlags'></a>RevoluteJointFlags</h2>
+<div class="method">	<p class="c">Control the behavior of revolute joints.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxRevoluteJointFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>RevoluteJointFlags_LimitEnabled  </td>
+			<td> Are limits enabled</td>
+		</tr>
+		<tr>
+			<td>RevoluteJointFlags_MotorEnabled  </td>
+			<td> Is the motor enabled</td>
+		</tr>
+		<tr>
+			<td>RevoluteJointFlags_SpringEnabled </td>
+			<td> Is the spring enabled, but will only take effect if the motor is <em>disabled</em>.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='PulleyJointFlags'></a>PulleyJointFlags</h2>
+<div class="method">	<p class="c">Control the behavior of pulley joints.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxPulleyJointFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>PulleyJointFlags_IsRigid  </td>
+			<td> The joint also maintains a minimum distance, not just a maximum</td>
+		</tr>
+		<tr>
+			<td>PulleyJointFlags_MotorEnabled  </td>
+			<td> Is the motor enabled</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='DistanceJointFlags'></a>DistanceJointFlags</h2>
+<div class="method">	<p class="c">Control the behavior of distance joints.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxDistanceJointFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>DistanceJointFlags_MaxDistanceEnabled </td>
+			<td> The joint enforces the maximum separate distance.</td>
+		</tr>
+		<tr>
+			<td>DistanceJointFlags_MinDistanceEnabled </td>
+			<td> The joint enforces the minimum separate distance.</td>
+		</tr>
+		<tr>
+			<td>DistanceJointFlags_SpringEnabled      </td>
+			<td> The spring is enabled</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='D6JointMotion'></a>D6JointMotion</h2>
+<div class="method">	<p class="c">Used to specifiy the range of motions allowed for a <span class="caps">DOF</span> in a D6 joint.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxD6JointMotion</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>D6JointMotion_Locked  </td>
+			<td> The <span class="caps">DOF</span> is locked, it does not allow relative motion.</td>
+		</tr>
+		<tr>
+			<td>D6JointMotion_Limited </td>
+			<td> The <span class="caps">DOF</span> is limited, it only allows motion within a specific range.</td>
+		</tr>
+		<tr>
+			<td>D6JointMotion_Free    </td>
+			<td> The <span class="caps">DOF</span> is free and has its full range of motions.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='D6JointMotion'></a>D6JointMotion</h2>
+<div class="method">	<p class="c">Used to specify a particular drive method. i.e. Having a position based goal or a velocity based goal.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxD6JointDriveType</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>D6JointDriveType_Position  </td>
+			<td> Used to set a position goal when driving.</td>
+		</tr>
+		<tr>
+			<td>D6JointMotion_Limited </td>
+			<td> Used to set a velocity goal when driving.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='D6JointFlag'></a>D6JointFlag</h2>
+<div class="method">	<p class="c">Control the general behavior of D6 joints.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxD6JointFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>D6JointFlag_SlerpDrive  </td>
+			<td> Drive along the shortest spherical arc</td>
+		</tr>
+		<tr>
+			<td>D6JointFlag_GearEnabled </td>
+			<td> Apply gearing to the angular motion, e.g. body 2s angular motion is twice body 1s etc.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='JointSpringType'></a>JointSpringType</h2>
+<div class="method">	<p class="c">Joint spring type</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>JointSpringType_Force  </td>
+			<td> Force</td>
+		</tr>
+		<tr>
+			<td>JointSpringType_Acceleration </td>
+			<td> Acceleration</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='SphericalJointFlags'></a>SphericalJointFlags</h2>
+<div class="method">	<p class="c">Spherical joint spring type</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxSphericalJointFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>SphericalJointFlags_TwistLimitEnabled &#8211; Enable twist limits.</td>
+		</tr>
+		<tr>
+			<td>SphericalJointFlags_SwingLimitEnabled &#8211; Enable swing limits.</td>
+		</tr>
+		<tr>
+			<td>SphericalJointFlags_TwistSpringEnabled &#8211; Enable twist spring.</td>
+		</tr>
+		<tr>
+			<td>SphericalJointFlags_SwingSpringEnabled &#8211; Enable swing spring.</td>
+		</tr>
+		<tr>
+			<td>SphericalJointFlags_JointSpringEnabled &#8211; Enable joint spring.</td>
+		</tr>
+		<tr>
+			<td>SphericalJointFlags_PerpendicularDirectionConstraints &#8211; Enable perpendicular direction constraints.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='WheelFlags'></a>WheelFlags</h2>
+<div class="method">	<p class="c">Flags to use with Wheels</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxWheelFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>WheelFlags_AxisContactNormal       </td>
+			<td> Determines whether the suspension axis or ground contact normal is used for the suspension constraint.</td>
+		</tr>
+		<tr>
+			<td>WheelFlags_InputLatSlipVelocity    </td>
+			<td> The laterial slip veloicty is used as the input to the tire function, rather than the slip angle.</td>
+		</tr>
+		<tr>
+			<td>WheelFlags_InputLongSlipVelocity   </td>
+			<td> The longutudal slip veloicty is used as the input to the tire function, rather than the slip angle.</td>
+		</tr>
+		<tr>
+			<td>WheelFlags_UnscaledSpringBehaviour </td>
+			<td> Does not factor out the suspension travel and wheel radius from the spring force computation. This is the legacy behaviour from the raycast capsule approach.</td>
+		</tr>
+		<tr>
+			<td>WheelFlags_AxleSpeedOverride       </td>
+			<td> The axle speed is not computed by the simulation but is rather expected to be provided by the user every simulation step via Wheel::setAxleSpeed()</td>
+		</tr>
+		<tr>
+			<td>WheelFlags_EmulateLegacyWheel      </td>
+			<td> The Wheel will emulate the PhysX legacy raycast capsule based wheel.</td>
+		</tr>
+		<tr>
+			<td>WheelFlags_ClampedFriction         </td>
+			<td> The Wheel will clamp the force in the friction constraints.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ClothFlags'></a>ClothFlags</h2>
+<div class="method">	<p class="c">Flags to use with <a href="class_Cloth.html">Cloth</a></p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxClothFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ClothFlags_Pressure                    </td>
+			<td> Enable pressure simulation for closed cloth meshes.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_Static                      </td>
+			<td> Make the cloth static.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_DisableRigidBodyCollision   </td>
+			<td> Disable collision with RigidBodies.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_DisableSelfCollision        </td>
+			<td> Disable collision with itself.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_DebugVisualisation          </td>
+			<td> Enable to be visualised when the visual debugger is on.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_Gravity                     </td>
+			<td> Respond to scene gravity.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_BendingResistance           </td>
+			<td> Enable bending resistance.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_OrthogonalBendingResistance </td>
+			<td> Enable orthogonal bending resistance.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_Damping                     </td>
+			<td> Enable damping of internal velocities.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_TwoWayCollisions            </td>
+			<td> Enable two way collisions with rigid bodies.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_Tearable                    </td>
+			<td> Enables tearing of the cloth.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_Hardware                    </td>
+			<td> Enables simulating the cloth on a <span class="caps">PPU</span> or <span class="caps">GPU</span>.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_COMDamping                  </td>
+			<td> Enable center of mass damping of internal velocities.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_ValidBounds                 </td>
+			<td> If set particles outside the bounds will be removed.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_FluidCollision              </td>
+			<td> Enable collisions with fluids.</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_DisableDynamicCCD           </td>
+			<td> Disable continuous collision detection with dynamic actor</td>
+		</tr>
+		<tr>
+			<td>ClothFlags_Adhere                      </td>
+			<td> Moves cloth partially in the frame of the attached actor.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ClothAttachmentFlags'></a>ClothAttachmentFlags</h2>
+<div class="method">	<p class="c">Flags to use with <a href="class_Cloth.html">Cloth</a> when attaching vertices.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxClothAttachmentFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ClothAttachmentFlags_Twoway            </td>
+			<td> Allow cloth &rArr; object interaction.</td>
+		</tr>
+		<tr>
+			<td>ClothAttachmentFlags_Tearable          </td>
+			<td> Vertex is tearable.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ClothVertexAttachmentStatus'></a>ClothVertexAttachmentStatus</h2>
+<div class="method">	<p class="c">Set of attachment states a vertex can be in.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxClothVertexAttachmentStatus</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ClothVertexAttachmentStatus_None   </td>
+			<td> Vertex is not attached.</td>
+		</tr>
+		<tr>
+			<td>ClothVertexAttachmentStatus_Global </td>
+			<td> Vertex is attached to the global frame.</td>
+		</tr>
+		<tr>
+			<td>ClothVertexAttachmentStatus_Shape  </td>
+			<td> Vertex is attached to a shape.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='MeshConstructionFlags'></a>MeshConstructionFlags</h2>
+<div class="method">	<p class="c">Set of flags used when constructing meshes.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>MeshConstructionsFlags_FlipNormals   </td>
+			<td> Flip the normals</td>
+		</tr>
+		<tr>
+			<td>MeshConstructionsFlags_16bitIndices  </td>
+			<td> Use smaller 16-bit vertices</td>
+		</tr>
+		<tr>
+			<td>MeshConstructionsFlags_HardwareMesh  </td>
+			<td> Mesh will be used in hardware scenes.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='SoftBodyFlags'></a>SoftBodyFlags</h2>
+<div class="method">	<p class="c">Set of flags used when constructing softbodies.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_Static                     </td>
+			<td> Make the Soft Body static.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_DisableRigidBodyCollision  </td>
+			<td> Disable collision with RigidBodies.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_DisableSelfCollision       </td>
+			<td> Disable collision with itself.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_DebugVisualisation         </td>
+			<td> Enable to be visualised when the visual debugger is on.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_Gravity                    </td>
+			<td> Respond to scene gravity.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_VolumeConservation         </td>
+			<td> Enable volume conservation.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_Damping                    </td>
+			<td> Enable of internal velocities.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_TwoWayCollisions           </td>
+			<td> Enable two way collisions with rigid bodies.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_Tearable                   </td>
+			<td> Enables tearing of the Soft Body.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_Hardware                   </td>
+			<td> Enables simulating the Soft Body on a <span class="caps">PPU</span> or <span class="caps">GPU</span>.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_COMDamping                 </td>
+			<td> Enable center of mass damping of internal velocities.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_ValidBounds                </td>
+			<td> If set particles outside the bounds will be removed.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_FluidCollision             </td>
+			<td> Enable collisions with fluids.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_DisableDynamicCCD          </td>
+			<td> Disable continuous collision detection with dynamic actors.</td>
+		</tr>
+		<tr>
+			<td>SoftBodyFlags_Adhere                     </td>
+			<td> Moves Soft Body partially in the frame of the attached actor.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='SoftBodyAttachmentFlags'></a>SoftBodyAttachmentFlags</h2>
+<div class="method">	<p class="c">Set of flags used when attach softbody vertices.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>SoftBodyAttachmentFlags_Twoway    </td>
+			<td> The default is only object->Soft Body interaction (one way).</td>
+		</tr>
+		<tr>
+			<td>SoftBodyAttachmentFlags_Tearable  </td>
+			<td> When this flag is set, the attachment is tearable.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='DeviceCode'></a>DeviceCode</h2>
+<div class="method">	<p class="c">DeviceCode are used with compartments</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxDeviceCode</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU0       </td>
+			<td> Explicit <span class="caps">PPU</span> index corresponds to index numeric value (reserved for future use, currently only <span class="caps">PPU</span> 0 is valid).</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU1       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU2       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU3       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU4       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU5       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU6       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU7       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_PPU8       </td>
+			<td> Not Used.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_CPU        </td>
+			<td> Compartment is to be simulated on <span class="caps">CPU</span>.</td>
+		</tr>
+		<tr>
+			<td>DeviceCode_AutoAssign </td>
+			<td> Compartment is to be simulated on a processor (<span class="caps">PPU</span> or <span class="caps">CPU</span>) chosen by the <span class="caps">HSM</span> for best performance (<span class="caps">CPU</span> is only used in the absence of a <span class="caps">PPU</span>). .</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='CompartmentType'></a>CompartmentType</h2>
+<div class="method">	<p class="c">DeviceCode are used with compartments</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxCompartmentType</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>CompartmentType_RigidBody </td>
+			<td> RigidBody Compartment.</td>
+		</tr>
+		<tr>
+			<td>CompartmentType_Fluid     </td>
+			<td> Fluid Compartment.</td>
+		</tr>
+		<tr>
+			<td>CompartmentType_Cloth     </td>
+			<td> Cloth Compartment.</td>
+		</tr>
+		<tr>
+			<td>CompartmentType_SoftBody  </td>
+			<td> SoftBody Compartment.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='CompartmentFlags'></a>CompartmentFlags</h2>
+<div class="method">	<p class="c">DeviceCode are used with compartments</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxCompartmentType</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>CompartmentFlags_SleepNotification </td>
+			<td> Enable/disable sleep event reporting</td>
+		</tr>
+		<tr>
+			<td>CompartmentFlags_ContinuousCD      </td>
+			<td> Enable/disable continuous collision detection</td>
+		</tr>
+		<tr>
+			<td>CompartmentFlags_RestrictedScene   </td>
+			<td> Enable Restricted Scene on the compartment. (Hardware only) (Immutable)</td>
+		</tr>
+		<tr>
+			<td>CompartmentFlags_InheritSettings   </td>
+			<td> Inherit <span class="caps">CCD</span> and Restricted Scene.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ParticleFlags'></a>ParticleFlags</h2>
+<div class="method">	<p class="c">Particle flags are used to give some additional information about the particles.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxParticleFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ParticleFlags_CollisionWithStatic  </td>
+			<td> Collision with Static</td>
+		</tr>
+		<tr>
+			<td>ParticleFlags_CollisionWithDynamic </td>
+			<td> Collision with Dynamic</td>
+		</tr>
+		<tr>
+			<td>ParticleFlags_Seperated            </td>
+			<td> Seperated</td>
+		</tr>
+		<tr>
+			<td>ParticleFlags_MotionLimitReached   </td>
+			<td> ParticleFlags_MotionLimitReached</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='FluidSimulationMethod'></a>FluidSimulationMethod</h2>
+<div class="method">	<p class="c">Describes the particle simulation method</p>
+
+	<p class="c">Particles can be treated in two ways: either they are simulated considering<br />interparticular forces (<span class="caps">SPH</span>), or they are simulated independently.<br />In the latter case (with the simulation method set to FluidSimulationMethod_NoParticleInteraction),<br />you still get collision between particles and static/dynamic shapes, damping,<br />acceleration due to gravity, and the user force.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxFluidSimulationMethod</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>FluidSimulationMethod_SPH                   </td>
+			<td> Enable simulation of inter particle forces.</td>
+		</tr>
+		<tr>
+			<td>FluidSimulationMethod_NoParticleInteraction </td>
+			<td> Do not simulate inter particle forces.</td>
+		</tr>
+		<tr>
+			<td>FluidSimulationMethod_MixedMode             </td>
+			<td> Alternate between <span class="caps">SPH</span> and simple particles</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='FluidCollisionMethod'></a>FluidCollisionMethod</h2>
+<div class="method">	<p class="c">The NxFluid instance can be selected for collision with both static and dynamic shapes.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxFluidCollisionMethod</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>FluidCollisionMethod_Static         </td>
+			<td> Collide with static shapes.</td>
+		</tr>
+		<tr>
+			<td>FluidCollisionMethod_Dynamic        </td>
+			<td> Coolide with dynamic shapes.</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='FluidFlags'></a>FluidFlags</h2>
+<div class="method">	<p class="c">Flags used with fluids.</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxFluidFlag</b>.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>FluidFlags_Visualisation               </td>
+			<td> Enables debug visualization for the Fluid.</td>
+		</tr>
+		<tr>
+			<td>FluidFlags_DisableGravity              </td>
+			<td> Disables scene gravity for the Fluid.</td>
+		</tr>
+		<tr>
+			<td>FluidFlags_CollisionTwoWay             </td>
+			<td> Enable/disable two way collision of fluid with the rigid body scene.</td>
+		</tr>
+		<tr>
+			<td>FluidFlags_Enabled                     </td>
+			<td> Enable/disable execution of fluid simulation.</td>
+		</tr>
+		<tr>
+			<td>FluidFlags_Hardware                    </td>
+			<td> Defines whether this fluid is simulated on the <span class="caps">PPU</span>.</td>
+		</tr>
+		<tr>
+			<td>FluidFlags_PriorityMode                </td>
+			<td> Enable/disable particle priority mode.</td>
+		</tr>
+		<tr>
+			<td>FluidFlags_ProjectToPlane              </td>
+			<td> Defines whether the particles of this fluid should be projected to a plane.</td>
+		</tr>
+		<tr>
+			<td>FluidFlags_ForceStrictCookingFormat    </td>
+			<td> Currently not implemented</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='ContactPairFlags'></a>ContactPairFlags</h2>
+<div class="method">	<p class="c">Flags used for contacts</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxContactPairFlag</b>.<br />ContactPairFlags are combined together with the <code>|</code> (or) operator.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_Ignore                     </td>
+			<td> Disable contact generation</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_StartTouch                 </td>
+			<td> Pair callback will be called when the pair starts to be in contact.</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_StopTouch                  </td>
+			<td> Pair callback will be called when the pair stops to be in contact.</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_Touch                      </td>
+			<td> Pair callback will be called whilst the pair is in contact.</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_Forces                     </td>
+			<td> The (summed total) frictional force and normal force will be given in the ContactPair struct</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_StartTouchThreshold        </td>
+			<td> Pair callback will be called when the contact force between two RigidBodies exceeds one of the actor-defined force thresholds.</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_StopTouchThreshold         </td>
+			<td> Pair callback will be called when the contact force between two RigidBodies falls below one of the actor-defined force thresholds.</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_TouchThreshold             </td>
+			<td> Pair callback will keep getting called when the contact force between two RigidBodies falls below one of the actor-defined force thresholds.</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_ContactModifcation         </td>
+			<td> Generate a callback for all associated contact constraints, making it possible to edit the constraint.</td>
+		</tr>
+		<tr>
+			<td>ContactPairFlags_All                        </td>
+			<td> Generate all contacts</td>
+		</tr>
+	</table>
+
+</div<h2 class="enum"><a name='SweepFlags'></a>SweepFlags</h2>
+<div class="method">	<p class="c">Flags used for sweep testings</p>
+	<p class="n"><b>Note</b> &#8212; Compatible with <b>NxSweepFlags</b>.<br />ContactPairFlags are combined together with the <code>|</code> (or) operator.</p>
+	<table>
+		<tr>
+			<th>Enum</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>SweepFlags_Statics             </td>
+			<td> Sweep vs static objects (SceneGeometries)</td>
+		</tr>
+		<tr>
+			<td>SweepFlags_Dynamics            </td>
+			<td> Sweep vs dynamic objects (Not SceneGeometries)</td>
+		</tr>
+		<tr>
+			<td>SweepFlags_AllHits             </td>
+			<td> Reports all hits rather than the closest ones.</td>
+		</tr>
+	</table>
+
+</div
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

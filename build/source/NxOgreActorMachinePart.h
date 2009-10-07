@@ -42,34 +42,48 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. ActorMachinePart
+    desc.
+         ActorMachinePart is a MachinePart that is an Actor.
+    
 */
 class NxOgrePublicClass ActorMachinePart : public MachinePart
 {
   
   public: // Functions
   
-  /** \brief Text
+  /*! constructor. ActorMachinePart
+      desc.
+        Empty constructor.
   */
   ActorMachinePart();
 
-  /** \brief Text
+  /*! constructor. ActorMachinePart
+      args.
+       Actor* __actor__ -- Existing actor to work with.
+       PointRenderable* __pointrenderable__ -- Point renderable to render to.
   */
   ActorMachinePart(Actor* actor, PointRenderable* = 0);
   
-  /** \brief Text
+  /*! destructor. ActorMachinePart
+      desc.
+       Destructor
   */
   ~ActorMachinePart();
   
-  /** \brief Text
+  /*! function. simulate
+      args.
+       float __deltaTime__ -- Delta time
+      !time_listener
+      !virtual
   */
   virtual void                                simulate(float user_deltaTime);
   
-  /** \brief
+  /* Assigned Actor
   */
   Actor*                                      mActor;
   
-  /** \brief
+  /* Assigned PointRenderable
   */
   PointRenderable*                            mPointRenderable;
   

@@ -1,0 +1,809 @@
+p(d). Actor is a dynamic (moving) RigidBody, that can collide with SceneGeometries and KinematicActors.
+
+p. It is normal to inherit from the Actor to support visualisation in a RenderSystem, broadly
+speaking any class that inherits the Actor class is called a *Body*.
+
+p. Actors uses RigidBodyDescriptions to create it's properities as well as a Matrix44 pose, a *Shape*
+or group of *Shapes*. The RigidBodyDescription is required to have a mass is at least zero, or otherwise
+a density of at least zero - but not both.
+
+
+
+h3(e). Example
+
+bc.. RigidBodyDescription description;
+description.mMass = 15.0f; // 15 kg
+
+Actor* actor = mScene->createActor(shape, pose, description);
+
+
+
+p. &nbsp;
+
+h3(s). See
+
+p(s). RigidBody
+
+h2(fn function). <a name='computeKineticEnergy'></a>computeKineticEnergy
+
+p(d). Computes the total kinetic (rotational and translational) energy of the actor.
+
+
+
+h3. Return
+
+p(r). Real -- The total kinetic energy of the actor.
+
+
+h2(fn function). <a name='getAngularDamping'></a>getAngularDamping
+
+p(d). Retrieves the angular damping coefficient.
+
+
+h3. Return
+
+p(r). Real -- Current angular damping
+
+
+h2(fn function). <a name='getAngularMomentum'></a>getAngularMomentum
+
+p(d). Retrieves the angular momentum (angular velocity * global space inertia) of an actor.
+
+
+
+h3. Return
+
+p(r). Vec3 - angular momentum of the Actor.
+
+
+h2(fn function). <a name='getAngularVelocity'></a>getAngularVelocity
+
+p(d). Retrieves the angular velocity of an actor.
+
+
+h3. Return
+
+p(r). Vec3 -- Current angular velocity
+
+
+h2(fn function). <a name='getCCDMotionThreshold'></a>getCCDMotionThreshold
+
+p(d). Retrieves the CCD Motion threshold for this actor.
+
+
+h3. Return
+
+p(r). Real - Motion threshold
+
+
+h2(fn function). <a name='getCMassLocalPose'></a>getCMassLocalPose
+
+p(d). Get the center of mass as a global orientation
+
+
+h3. Return
+
+p(r). Matrix33 -- Global COM orientation
+
+
+h2(fn function). <a name='getClassType'></a>getClassType
+
+p(d). Get a class type identifier of this class
+
+
+h3. Return
+
+p(r). unsigned int - The class type
+
+
+h2(fn function). <a name='getCompartment'></a>getCompartment
+
+p(d). Retrieves the actor's simulation compartment, if any.
+
+
+h3. Return
+
+p(r). Compartment* -- The Actors compartment, or *NULL*.
+
+
+h2(fn function). <a name='getContactReportFlags'></a>getContactReportFlags
+
+p(d). Retrieves the actor's contact report flags.
+
+
+h3. Return
+
+p(r). Actor contact report flags
+
+
+h2(fn function). <a name='getContactReportThreshold'></a>getContactReportThreshold
+
+p(d). Retrieves the force threshold for contact reports.
+
+
+h3. Return
+
+p(r). Real -- The force threshold
+
+
+h2(fn function). <a name='getDominanceGroup'></a>getDominanceGroup
+
+p(d). Retrieves the value set with setDominanceGroup().
+
+
+
+h3. Return
+
+p(r). GroupIdentifier -- The dominance actorGroup the Actor belongs too.
+
+
+h2(fn function). <a name='getForceFieldMaterial'></a>getForceFieldMaterial
+
+p(d). Retrieves the actor's force field material index.
+
+
+h3. Return
+
+p(r). unsigned short -- Force field material index.
+
+
+h2(fn function). <a name='getGlobalInertiaTensor'></a>getGlobalInertiaTensor
+
+p(d). Retrieves the inertia tensor of the actor relative to the world coordinate frame.
+
+
+h3. Return
+
+p(r). Matrix33 -- Inertia Tensor
+
+
+h2(fn function). <a name='getGlobalInertiaTensorInverse'></a>getGlobalInertiaTensorInverse
+
+p(d). Retrieves the inverse of the inertia tensor of the actor relative to the world coordinate frame.
+
+
+h3. Return
+
+p(r). Matrix33 -- Inverse Inertia Tensor
+
+
+h2(fn function). <a name='getGlobalOrientation'></a>getGlobalOrientation
+
+p(d). Get the global orientation of the Actor.
+
+
+h3. Return
+
+p(r). Quat -- The global pose of the Actor.
+
+
+h2(fn function). <a name='getGlobalPose'></a>getGlobalPose
+
+p(d). Get the global pose of the Actor.
+
+
+h3. Return
+
+p(r). Matrix44 -- The global pose of the Actor.
+
+
+h2(fn function). <a name='getGlobalPosition'></a>getGlobalPosition
+
+p(d). Get the global position of the Actor.
+
+
+h3. Return
+
+p(r). Matrix44 -- The global pose of the Actor.
+
+
+h2(fn function). <a name='getGroup'></a>getGroup
+
+p(d). Retrieves the value set with setGroup()
+
+
+h3. Return
+
+p(r). GroupIdentifier -- The actorGroup the Actor belongs too.
+
+
+h2(fn function). <a name='getLinearDamping'></a>getLinearDamping
+
+p(d). Retrieves the linear damping coefficient.
+
+
+h3. Return
+
+p(r). Real -- Current linear damping
+
+
+h2(fn function). <a name='getLinearMomentum'></a>getLinearMomentum
+
+p(d). Retrieves the linear momentum (velocity * mass) of an actor.
+
+
+
+h3. Return
+
+p(r). Vec3 - Linear momentum of the Actor.
+
+
+h2(fn function). <a name='getLinearVelocity'></a>getLinearVelocity
+
+p(d). Retrieves the linear velocity of an actor.
+
+
+h3. Return
+
+p(r). Vec3 -- Current linear velocity
+
+
+h2(fn function). <a name='getMass'></a>getMass
+
+p(d). Retrieves the mass of the actor.
+return Real -- Mass of the actor.
+
+
+h2(fn function). <a name='getMassSpaceInertiaTensor'></a>getMassSpaceInertiaTensor
+
+p(d). Retrieves the diagonal inertia tensor of the actor relative to the mass coordinate frame.
+
+
+h3. Return
+
+p(r). Vec3 -- Mass Space Inertia tensor
+
+
+h2(fn function). <a name='getMaxAngularVelocity'></a>getMaxAngularVelocity
+
+p(d). Retrieves the maximum angular velocity permitted for this actor.
+
+
+h3. Return
+
+p(r). Real -- The maximum allowed angular velocity for this actor.
+
+
+h2(fn function). <a name='getName'></a>getName
+
+p(d). Get the name of the Actor or *BLANK_STRING*
+
+
+h3. Return
+
+p(r). String -- The name of the Actor
+
+
+h2(fn function). <a name='getNbShapes'></a>getNbShapes
+
+p(d). Returns the number of *Shape*s assigned to the actor.
+
+
+h3. Return
+
+p(r). unsigned int -- Number of shapes assigned to the actor.
+
+
+h2(fn function). <a name='getSolverIterationCount'></a>getSolverIterationCount
+
+p(d). Retrieves the solver iteration count.
+
+
+h3. Return
+
+p(r). unsigned int -- Solver iteration count for the actor.
+
+
+h2(fn function). <a name='linearSweep'></a>linearSweep
+
+p(d). Performs a linear sweep through space with the actor's shape(s).
+
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __motion__ | Motion to sweep|
+|unsigned int __sweep__ _ __flags__ | Sweep Flags, see *Enums::SweepFlags*|
+|unsigned int __size__ | Maximum shapes to sweep through|
+|SweepQueryHits& | Hits found once swept.|
+|SweepCache* | Sweeping Cache to perform any future linearSweeps with this actor.|
+||
+
+
+h3. Return
+
+p(r). unsigned int -- Number of SweepHits
+
+
+h2(fn function). <a name='resetPairFiltering'></a>resetPairFiltering
+
+p(d). Reset the user actor pair filtering state for this actor. This will cause filtering callbacks
+to be called again for any pairs involving this actor. Use this method when you wish to change
+the filtering policy of an actor that may already be in contact with other actors.
+
+
+h2(fn function). <a name='setAngularDamping'></a>setAngularDamping
+
+p(d). Sets the angular (angular movement) damping coefficient.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __angDamp__ | New angular damping|
+
+
+h2(fn function). <a name='setAngularMomentum'></a>setAngularMomentum
+
+p(d). Sets the angular momentum of the actor.
+
+
+
+p(n). **Note** -- That if you continuously set the angular momentum of an actor yourself,forces such as gravity or friction will not be able to manifest themselves, because forces directly
+influence only the velocity/momentum of a actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __angMoment__ | New angular momentum|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setAngularVelocity'></a>setAngularVelocity
+
+p(d). Sets the angular velocity of the actor.
+
+
+p(n). **Note** -- That if you continuously set the velocity of an actor yourself, forces such
+as gravity or friction will not be able to manifest themselves, because forces
+directly influence only the velocity/momentum of an actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __angVel__ | New angular velocity of the actor.|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCCDMotionThreshold'></a>setCCDMotionThreshold
+
+p(d). Sets the CCD Motion Threshold.
+
+p. If CCD is globally enabled, it is still skipped for bodies
+which have no point on any of their shapes moving more than CCDMotionThreshold distance in
+one time step.
+
+p. Hence, CCD is always performed if the threshold is 0.
+
+p. The actor must be dynamic and the CCD motion threshold must be non-negative.
+
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __thresh__ | CCD Motion threshold|
+
+
+h2(fn function). <a name='setCMassGlobalOrientation'></a>setCMassGlobalOrientation
+
+p(d). Set the center of mass
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix33& __orientation__ | New COM orientation|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassGlobalPose'></a>setCMassGlobalPose
+
+p(d). Set the center of mass
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix44& __pose__ | New COM pose|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassGlobalPosition'></a>setCMassGlobalPosition
+
+p(d). Set the center of mass
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __position__ | New COM position|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassOffsetGlobalOrientation'></a>setCMassOffsetGlobalOrientation
+
+p(d). Set the center of mass offset
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix33& __orientation__ | New COM orientation|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassOffsetGlobalPose'></a>setCMassOffsetGlobalPose
+
+p(d). Set the center of mass offset
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix44& __pose__ | New COM pose|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassOffsetGlobalPosition'></a>setCMassOffsetGlobalPosition
+
+p(d). Set the center of mass offset
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __position__ | New COM position|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassOffsetLocalOrientation'></a>setCMassOffsetLocalOrientation
+
+p(d). Set the center of mass offset
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix33& __orientation__ | New COM orientation|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassOffsetLocalPose'></a>setCMassOffsetLocalPose
+
+p(d). Set the center of mass offset
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix44& __pose__ | New COM pose|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setCMassOffsetLocalPosition'></a>setCMassOffsetLocalPosition
+
+p(d). Set the center of mass offset
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __position__ | New COM position|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setContactReportFlags'></a>setContactReportFlags
+
+p(d). Sets the actor's contact report flags.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|unsigned int __flags__ | New contact report flags.|
+
+
+h2(fn function). <a name='setContactReportThreshold'></a>setContactReportThreshold
+
+p(d). Sets the force threshold for contact reports.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __threshold__ | New force threshold|
+
+
+h2(fn function). <a name='setDominanceGroup'></a>setDominanceGroup
+
+p(d). Assigns dynamic actors a dominance group identifier.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|GroupIdentifier __dominanceGroup__ | The domninance actorGroup for the Actor to be assigned to.|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setForceFieldMaterial'></a>setForceFieldMaterial
+
+p(d). Sets the actor's force field material index
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|unsigned short __material__ | New forcefield material to use.|
+
+
+h2(fn function). <a name='setGlobalOrientation'></a>setGlobalOrientation
+
+p(d). Set's the global orientation of the Actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix33& __orientation__ | New Actor orientation.|
+
+
+h2(fn function). <a name='setGlobalOrientationQuat'></a>setGlobalOrientationQuat
+
+p(d). Set's the global orientation of the Actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Quat& __orientation__ | New Actor orientation.|
+
+
+h2(fn function). <a name='setGlobalPose'></a>setGlobalPose
+
+p(d). Set the global pose of the Actor
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Matrix44& __globalPose__ | New Actor pose.|
+
+
+h2(fn function). <a name='setGlobalPosition'></a>setGlobalPosition
+
+p(d). Set's the global position of the Actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __position__ | New Actor position.|
+
+
+h2(fn function). <a name='setGroup'></a>setGroup
+
+p(d). Assigns the actor to a user defined group of rigid bodies.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|GroupIdentifier _actorGroup_ | The actorGroup for the Actor to be assigned to.|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setLinearDamping'></a>setLinearDamping
+
+p(d). Sets the linear (translational movement) damping coefficient.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __linDamp__ | New linear damping|
+
+
+h2(fn function). <a name='setLinearMomentum'></a>setLinearMomentum
+
+p(d). Sets the linear momentum of the actor.
+
+
+
+p(n). **Note** -- That if you continuously set the linear momentum of an actor yourself,forces such as gravity or friction will not be able to manifest themselves, because forces directly
+influence only the velocity/momentum of a actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __linMoment__ | New linear momentum|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setLinearVelocity'></a>setLinearVelocity
+
+p(d). Sets the linear velocity of the actor.
+
+
+p(n). **Note** -- That if you continuously set the velocity of an actor yourself, forces such
+as gravity or friction will not be able to manifest themselves, because forces
+directly influence only the velocity/momentum of an actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __linVel__ | New linear velocity of the actor.|
+
+
+h3(t). Traits
+
+* **Sleeping** Wakes the actor up automatically.
+
+
+h2(fn function). <a name='setMass'></a>setMass
+
+p(d). Set the mass of the Actor
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __mass__ | New mass of the Actor|
+
+
+h3(t). Traits
+
+* **Sleeping** Does **not** wake the actor up automatically.
+
+
+h2(fn function). <a name='setMassSpaceInertiaTensor'></a>setMassSpaceInertiaTensor
+
+p(d). Sets the inertia tensor, using a parameter specified in mass space coordinates.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __tensor__ | New Mass Space Inertia Tensor|
+
+
+h3(t). Traits
+
+* **Sleeping** Does **not** wake the actor up automatically.
+
+
+h2(fn function). <a name='setMaxAngularVelocity'></a>setMaxAngularVelocity
+
+p(d). Lets you set the maximum angular velocity permitted for this actor.
+
+p. Because for various internal computations, very quickly rotating actors introduce error
+into the simulation, which leads to undesired results.
+
+p. However, because some actors, such as car wheels, should be able to rotate quickly, you can override the default setting
+on a per-actor basis with the below call. Note that objects such as wheels which are approximated with spherical or
+other smooth collision primitives can be simulated with stability at a much higher angular velocity than, say, a box that
+has corners.
+
+
+
+p(n). **Note** -- The angular velocity is clamped to the set value _before_ the solver, which means that
+the limit may still be momentarily exceeded.
+
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __maxAngVel__ | Max allowable angular velocity for actor|
+
+
+h2(fn function). <a name='setSolverIterationCount'></a>setSolverIterationCount
+
+p(d). Sets the solver iteration count for the actor.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|unsigned int _iterCount_ | New Solver iteration count.|
+
+
+h2(fn function). <a name='updateMassFromShapes'></a>updateMassFromShapes
+
+p(d). Recomputes a dynamic actor's mass properties from its shapes
+
+p. Given a constant density or total mass, the actors mass properties can be recomputed
+using the shapes attached to the actor.
+
+p. The mass of each shape is either the shape's local density (default 1.0)  multiplied by the shape's volume
+or a directly specified shape mass.
+
+p. The inertia tensor, mass frame and center of mass will always be recomputed. If there are no
+shapes in the actor, the mass will be totalMass, and the mass frame will be set to the center
+of the actor.
+
+p. If you supply a non-zero total mass, the actor's mass and inertia will first be computed as
+above and then scaled to fit this total mass.
+
+p. If you supply a non-zero density, the actor's mass and inertia will first be computed as above
+and then scaled by this factor.
+
+
+
+p(n). **Note** -- Either totalMass or density must be non-zero.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|float __density__ | Density scale factor of the shapes belonging to the actor|
+|float __totalMass__ | Total mass of the actor(or zero)|
+
+
+h3. Return
+
+p(r). bool -- True if succesful
+
+

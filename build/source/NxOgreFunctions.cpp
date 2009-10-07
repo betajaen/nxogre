@@ -51,28 +51,20 @@ unsigned int getCStringLength(const char* str)
  return unsigned int(c - str);
 }
 
-unsigned long generateHash(const char* str, Enums::HashAlgorithm ha)
+unsigned long generateHash(const char* str)
 {
- switch (ha)
- {
-  
-  case  Enums::HashAlgorithm_DJB2:
-  {
-   if (str == 0)
-    return 0;
-  
-   unsigned long hash = 5381;
-   int c;
-  
-   while (c = *str++)
-    hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-  
-   return hash;
-  }
-  
- };
-  
- return 0;
+
+  if (str == 0)
+   return 0;
+ 
+  unsigned long hash = 5381;
+  int c;
+ 
+  while (c = *str++)
+   hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+ 
+  return hash;
+
 }
 
                                                                                        

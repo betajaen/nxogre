@@ -1,0 +1,22 @@
+p(d). ActorMachinePart is a MachinePart that is an Actor.
+
+
+h2(fn destructor). <a name='ActorMachinePart'></a>ActorMachinePart
+
+p(d). Destructor
+
+
+h2(fn function). <a name='simulate'></a>simulate
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|float __deltaTime__ | Delta time|
+
+
+h3(t). Traits
+
+* **TimeListener Function** Do not call manually.
+* Virtual Function
+
+

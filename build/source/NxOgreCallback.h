@@ -41,48 +41,122 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. Callback
+    desc.
+         A callback handles physics events i.e. collision and contact, by the user app inheriting
+         the callback and using the virtual functions to handle response.
+    example.
+         class myCallback : public Callback
+         {
+          public:
+          	myCallback : Callback()
+          	{
+          		// my set up code.
+          	}
+          	
+          	void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
+          	{
+          		std::cout << "Volume Event!" << std::endl;
+          	}
+         };
 */
 class NxOgrePublicClass Callback
 {
   
   public: // Functions
    
+   /*! constructor. Callback
+       desc.
+            Required constructor for inherited classes.
+       note.
+            Reference count is set to 1.
+   */
    Callback();
    
+   /*! destructor. ~Callback
+       desc.
+            Required destructor
+       !virtual
+   */
    virtual ~Callback();
 
-   /* \brief A Volume has had an event. Use collisionEvent with Enums::VolumeCollisionType for filtering.
-      \param Volume of the collision_body has an event with.
-      \param volumeShape the specific shape of the volume.
-      \param collision_body The collision_body in question.
-      \param collision_shape The shape in contact with the volumeShape.
-      \param collisionEvent The type of collision.
-      \note Depending on the RigidBody the collision_shape may be zero, you should always check
+   /*! function. onVolumeEvent
+       desc.
+          A RigidBody has entered, exited or otherwise is existing inside the Volume.
+       note.
+          Depending on the RigidBody the collision_shape may be zero, you should always check
             to see if the pointer exists before using it!
+       args.
+          Volume* __volume__ -- Volume of the collisionBody has an event with.
+          Shape*  __volumeShape__ -- the specific shape of the volume.
+          RigidBody* __collisionBody__ -- The collisionBody in question.
+          Shape* __collisionShape__ -- The shape in contact with the volumeShape.
+          unsigned int __collisionEvent__ -- The type of collision, used with Enums::VolumeCollisionType
+       example.
+          	void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
+          	{
+          		if (collisionEvent & Enums::VolumeCollisionType_OnEnter)
+          		{
+          		 std::cout << "RigidBody has entered the Volume for the first time!" << std::endl;
+          		}
+          	}
    */
-   virtual void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent);
+   virtual void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collisionBody, Shape* rigidBodyShape, unsigned int collisionEvent);
    
-   /** \brief Is called every time a rayquery gets a hit.
-       \return True if the ray should continue, or false to abort.
-       \warning Do not modify the Scene whilst in the onRaycastHit function; i.e. destroyActor, or createActor. 
-       \see NxUserRaycastReport::onHit
+   /*! function. onHitEvent
+       desc.
+           When a callback is used with a Raycast hit.
+       note.
+           Do not modify the Scene whilst in the onRaycastHit function; i.e. destroyActor, or createActor
+       args.
+           const RaycastHit& __hit__ -- Raycast hit to parse
+       return. **bool** -- True if the ray should continue, or false to abort.
+       example.
+          	void onHitEvent(const RaycastHit& hit)
+          	{
+          		return (hit.mDistance < 20) // Return true if less than 20m.
+          	}
+       see. Scene::raycastAllBounds
    */
-   virtual bool onHitEvent(const RaycastHit&);
+   virtual bool onHitEvent(const RaycastHit& hit);
    
-   /** \brief
+   /*! function. onContact
+       desc.
+            When a contact even happens, between two RigidBodies
+       args.
+            const ContactPair& __pair__ -- Contact pair when hit.
+       note.
+           Do not modify the Scene whilst in the onContact function; i.e. destroyActor, or createActor
+       example.
+          	void onContact(const ContactPair& pair)
+          	{
+          		// Things to do.
+          	}
+       see. RigidBody::setContactCallback, Scene::setActorFlags
    */
-   virtual void onContact(const ContactPair&);
+   virtual void onContact(const ContactPair& pair);
    
-   /** \brief A class is using the callback.
+   /*! function. increaseReference
+       desc.
+            Increase the reference count of the callback
    */
    void increaseReference();
    
-   /** \brief A class is no longer using the callback.
+   /*! function. decreaseReference
+       desc.
+            Decrease the reference count of the callback
    */
    void decreaseReference();
    
-   /** \brief Get the number of references to this callback. Useful for you to decide when the callback should be deleted.
+   /*! function. getNbReferences
+       desc.
+            Get the number of references to this callback. 
+       note.
+            Although not exactly essential, reference counting the callback is useful
+            for you to decide when the callback should be deleted. If you use the callback
+            multiple times.
+       return.
+            **unsigned int** -- Number of references.
    */
    unsigned int getNbReferences() const;
    

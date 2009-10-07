@@ -335,7 +335,7 @@ template<typename T> class  Buffer
 
   protected:
 
-    TPayload*       _T;
+    TPayload*      _T;
     RefT*          _Usage;
 
 }; // class Buffer

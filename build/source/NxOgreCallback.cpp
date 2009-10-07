@@ -36,7 +36,7 @@ namespace NxOgre
 
                                                                                        
 
-Callback::Callback() : mNbReferences(0)
+Callback::Callback() : mNbReferences(1)
 {
 }
 

@@ -229,4 +229,11 @@ typedef unsigned int RefT;
 
                                                                                        
 
+/*! page. README
+  h1. NxOgre
+  
+  NxOgre likes cake.
+  
+*/
+
 #endif

@@ -45,7 +45,12 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief  
+/*! class. Box
+    desc.
+        A Box is a cubiod shape that can be used in Actors, KinematicActors, StaticGeometries and Volumes for
+        collisions and testing against them.
+        
+    see. Shape
 */ 
 class NxOgrePublicClass Box : public PointerClass<Classes::_Box>, public Shape
 {
@@ -60,58 +65,101 @@ class NxOgrePublicClass Box : public PointerClass<Classes::_Box>, public Shape
 
   using ::NxOgre::PointerClass<Classes::_Box>::getClassType;
 
-  /** \brief Box constructor with width, height, depth size argument as a Vec3.
-      \note  The Box class's dimensions are full diameter of the box, and not the radius
-             as it is in PhysX.
+  /*! constructor. Box
+      desc.
+           Box constructor with width, height, depth size argument as a Vec3.
+      note.
+           The Box class's dimensions are full diameter of the box, and not the radius as it is in PhysX.
+      args.
+           const Vec3& __dimensions__ -- Dimensions of the Box.
+           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
   */
-                                              Box(const Vec3& dimensions, ShapeBlueprint* box_blueprint = new ShapeBlueprint());
+  Box(const Vec3& dimensions, ShapeBlueprint* blueprint = new ShapeBlueprint());
   
-  /** \brief Box constructor with width, height, depth size argument as seperate float components..
-      \note  The Box class's dimensions are full diameter of the box, and not the radius
-             as it is in PhysX.
+  /*! constructor. Box
+      desc.
+           Box constructor with width, height, depth size argument as seperate Real components
+      note.
+           The Box class's dimensions are full diameter of the box, and not the radius as it is in PhysX.
+      args.
+           Real __x__ -- X/Width dimension of the Box.
+           Real __y__ -- Y/Height dimension of the Box.
+           Real __z__ -- Z/Depth dimension of the Box.
+           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
   */
-                                              Box(Real w, Real h, Real d, ShapeBlueprint* blueprint = new ShapeBlueprint());
+  Box(Real w, Real h, Real d, ShapeBlueprint* blueprint = new ShapeBlueprint());
   
-  /** \brief Box constructor with width, height, depth size argument as a single float component.
-      \note  The Box class's dimensions are full diameter of the box, and not the radius
-             as it is in PhysX.
+  /*! constructor. Box
+      desc.
+           Box constructor with width, height, depth size argument as a single Real component.
+      note.
+           The Box class's dimensions are full diameter of the box, and not the radius as it is in PhysX.
+      args.
+           Real __whd__ -- Width, Height and Depth size of the Box.
+           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
   */
-                                              Box(Real whd_dimensions, ShapeBlueprint* box_blueprint = new ShapeBlueprint());
+  Box(Real whd, ShapeBlueprint* blueprint = new ShapeBlueprint());
   
-  /** \brief Box destructor. 
-      \warning Deleting the Box whilst it is attached to a shape will probably cause a nasty crash.
+  
+  /*! destructor. Box
+      desc.
+           As with all Shapes, deleting the Box should be left to the class that is responsible for it.
+      note.
+           Deleting the Box whilst it is attached to a shape will probably cause a nasty crash.
   */
-                                             ~Box(void);
+ ~Box(void);
 
-  /** \brief Get the shape type based upon the Classes::xxxx enum.
+  /*! function. getShapeFunctionType
+      desc.
+           Get the shape type based upon the Classes::ShapeFunctionType enum.
+      return.
+           **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
   */
-          Enums::ShapeFunctionType            getShapeFunctionType() const;
+  Enums::ShapeFunctionType            getShapeFunctionType() const;
   
-  /** \brief Get the size of the shape
+  /*! function. getSize
+      desc.
+           Get the size of the box
+      return.
+           **Vec3** -- The size of the box.
   */
-                      Vec3                    getSize() const;
+  Vec3                    getSize() const;
   
-  /** \brief Set the size of the shape
+  /*! function. setSize
+      desc.
+           Set the size of the shape
+      args.
+           const Vec3& __size__ -- New size of the box.
   */
-                      void                    setSize(const Vec3&);
+  void                    setSize(const Vec3& size);
   
 
-  /** \brief Set the size of the shape
+  /*! function. setSize
+      desc.
+           Set the size of the shape from seperate Real components.
+      args.
+           Real __w__ -- New width of the box.
+           Real __h__ -- New height of the box.
+           Real __d__ -- New depth of the box.
   */
-                      void                    setSize(float w, float h, float d);
+  void                    setSize(Real w, Real h, Real d);
 
-  /** \brief Get the box represented as world space OBB.
-      \note This function only works when the box is attached.
+  /*! function. getWorldOBB
+      desc.
+           Get the box represented as world space OBB.
+      note.
+           This function only works when the box is attached.
+      return. **SimpleBox** -- World space OBB when attached or SimpleBox with default values.
   */
                       SimpleBox               getWorldOBB(void);
   
   protected:
   
-  /** \internal DO NOT USE.
+  /* Create a NxShapeDesc (NxBoxDesc) of the current Box's configuration.
   */
                       NxShapeDesc*            create();
   
-  /** \internal DO NOT USE.
+  /* Set the box to a NxShape
   */
                       void                    assign(NxShape*);
   

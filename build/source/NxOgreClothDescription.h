@@ -24,170 +24,394 @@
     
 */
 
-                                                                                       
+                     
 
 #ifndef NXOGRE_CLOTHDESCRIPTION_H
 #define NXOGRE_CLOTHDESCRIPTION_H
 
-                                                                                       
+                     
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
-                                                                                       
+                     
 
 namespace NxOgre
 {
 
-                                                                                       
+                     
 
-/** \brief
+/*! class. ClothDescription
 */
 class NxOgrePublicClass ClothDescription
 {
   
   public: // Functions
   
-  /** \brief ClothDescription constructor, all it does is call RigidBodyDescription::reset.
+  /*! constructor. ClothDescription constructor
+      desc.
+          Calls ClothDescription::reset.
   */
-                                               ClothDescription(void);
+                         ClothDescription(void);
   
-  /** \brief Resets everything to their default values, and pointers are set to NULL.
+  /*! function. reset
+      desc.
+           Resets everything to their default values, and pointers are set to NULL.
   */
-  void                                         reset(void);
+  void                   reset(void);
   
-  /** \brief Returns if the variables are in a valid range or not
+  /*! function. valid
+      desc.
+           Returns if the variables are in a valid range or not
   */
-                        bool                   valid(void);
+  bool                   valid(void);
   
-  /** \brief Optional name of the Cloth
-      \note  Apart from Actors (and probably derivations of), names are ignored.
+  /*! variable. mName
+      desc.
+           Optional name of the Cloth
+      default.
+           BLANK_STRING
+      type.
+           String
   */
-                        String                 mName;
+  String                 mName;
   
-  /** \brief Mesh to be used by the cloth.
+  /*! variable. mMesh
+      desc.
+           Mesh to be used by the cloth.
+      type.
+           Mesh*
   */
-                        Mesh*                  mMesh;
+  Mesh*                  mMesh;
   
-  /** \brief Global pose of the cloth
+  /*! variable. mGlobalPose
+      desc.
+           Global pose of the cloth
+      default.
+           Matrix44::IDENTITY
+      type.
+           Matrix44
   */
-                        Matrix44               mGlobalPose;
+  Matrix44               mGlobalPose;
   
-  /** \brief Thickness
+  /*! variable. mThickness
+      desc.
+           Thickness of the cloth
+      default.
+           0.01
+      type.
+           Real
   */
-                        Real                   mThickness;
+  Real                   mThickness;
   
-  /** \brief Density
+  /*! variable. mDensity
+      desc.
+           Density of the cloth
+      default.
+           1.0
+      type.
+           Real
   */
-                        Real                   mDensity;
+  Real                   mDensity;
   
-  /** \brief Bending stiffness of the cloth
-      \range (0,1)
+  /*! variable. mBendingStiffness
+      desc.
+           Bending stiffness of the cloth
+      default.
+           1.0
+      type.
+           Real
+      range.
+           (0,1)
   */
-                        Real                   mBendingStiffness;
+  Real                   mBendingStiffness;
   
-  /** \brief Bending stiffness of the cloth
-      \range (0,1)
+  /*! variable. mBendingStiffness
+      desc.
+           Stretching stiffness of the cloth
+      default.
+           1.0
+      type.
+           Real
+      range.
+           (0,1)
   */
-                        Real                   mStretchingStiffness;
-    
-  /** \brief Damping coefficent
-      \range (0,1)
-  */
-                        Real                   mDampingCoefficient;
-    
-  /** \brief Friction
-      \range (0,1)
-  */
-                        Real                   mFriction;
-    
-  /** \brief Pressure
-  */
-                        Real                   mPressure;
-      
-  /** \brief Tear Factor
-  */
-                        Real                   mTearFactor;
+  Real                   mStretchingStiffness;
   
-  /** \brief Defines a factor for the impulse transfer from cloth to colliding rigid bodies. 
+  /*! variable. mDampingCoefficient
+      desc.
+           Damping coefficent
+      default.
+           0.5
+      type.
+           Real
+      range.
+           (0,1)
   */
-                        Real                   mCollisionResponseCoefficient;
+  Real                   mDampingCoefficient;
   
-  /** \brief Defines a factor for the impulse transfer from cloth to attached rigid bodies. 
+  /*! variable. mFriction
+      desc.
+           Friction
+      default.
+           0.5
+      type.
+           Real
+      range.
+           (0,1)
   */
-                        Real                   mAttachmentResponseCoefficient;
+  Real                   mFriction;
   
-  /** \brief If the flag Enums::ClothAttachmentTearable is set in the attachment method of NxCloth,
+  /** variable. mPressure
+      desc.
+           Pressure
+      default.
+           1.0
+      type.
+           Real
+      range.
+           (0,1)
+  */
+  Real                   mPressure;
+  
+  /*! variable. mTearFactor
+      desc.
+           Tear Factor
+      default.
+           1.0
+      range.
+           [0,inf)
+      type.
+           Real
+  */
+  Real                   mTearFactor;
+  
+  /*! variable. mCollisionResponseCoefficient
+      desc.
+           Defines a factor for the impulse transfer from cloth to colliding rigid bodies. 
+      default.
+           0.2
+      range.
+           [0,inf)
+      type.
+           Real
+  */
+  Real                   mCollisionResponseCoefficient;
+  
+  /*! variable. mAttachmentResponseCoefficient
+      desc.
+           Defines a factor for the impulse transfer from cloth to attached rigid bodies.
+      default.
+           0.2
+      range.
+           [0,1]
+      type.
+           Real
+  */
+  Real                   mAttachmentResponseCoefficient;
+  
+  /*! variable. mAttachmentTearFactor
+      desc.
+           If the flag Enums::ClothAttachmentTearable is set in the attachment method of NxCloth,
              this variable defines the elongation factor that causes the attachment to tear. 
+      default.
+           1.5
+      range.
+           (1,inf)
+      type.
+           Real
   */
-                        Real                   mAttachmentTearFactor;
+  Real                   mAttachmentTearFactor;
   
-  /** \brief Defines a factor for the impulse transfer from this cloth to colliding fluids. 
+  /*! variable. mToFluidResponseCoefficient
+      desc.
+           Defines a factor for the impulse transfer from this cloth to colliding fluids. 
+      default.
+           1.0
+      range.
+           [0,inf)
+      type.
+           Real
+      note.
+           Large values can cause instabilities
   */
-                        Real                   mToFluidResponseCoefficient;
+  Real                   mToFluidResponseCoefficient;
   
-  /** \brief Defines a factor for the impulse transfer from colliding fluids to this cloth.
+  /*! variable. mFromFluidResponseCoefficient
+      desc.
+           Defines a factor for the impulse transfer from colliding fluids to this cloth.
+      default.
+           1.0
+      range.
+           [0,inf)
+      type.
+           Real
+      note.
+           Large values can cause instabilities
   */
-                        Real                   mFromFluidResponseCoefficient;
+  Real                   mFromFluidResponseCoefficient;
   
-  /** \brief If the  Enums::ClothAttachmentAdhere flag is set the cloth moves partially in the frame of the attached actor. 
+  /*! variable. mMinAdhereVelocity
+      desc.
+           If the  Enums::ClothAttachmentAdhere flag is set the cloth moves partially in the frame of the attached actor. 
+           
+           p. This feature is useful when the cloth is attached to a fast moving character.
+           In that case the cloth adheres to the shape it is attached to while only 
+           velocities below the parameter minAdhereVelocity are used for secondary effects.
+           
+      default.
+           1.0
+      range.
+           [0,inf)
+      type.
+           Real
   */
-                        Real                   mMinAdhereVelocity;
+  Real                   mMinAdhereVelocity;
   
-  /** \brief Number of solver iterations.  
+  /*! variable. mSolverIterations
+      desc.
+           Number of solver iterations. 
+           
+      default.
+           5
+      range.
+           [1,inf)
+      type.
+           unsigned int
+      note.
+           Small numbers make the simulation faster while the cloth gets less stiff.
   */
-                        unsigned int           mSolverIterations;
+  unsigned int           mSolverIterations;
   
-  /** \brief External acceleration which affects all non attached particles of the cloth. 
+  /*! variable. mExternalAcceleration
+      desc.
+           External acceleration which affects all non attached particles of the cloth.
+           
+      default.
+           Vec3::ZERO
+      type.
+           Vec3
   */
-                        Vec3                   mExternalAcceleration;
-    
-  /** \brief Acceleration which acts normal to the cloth surface at each vertex. 
-  */
-                        Vec3                   mWindAcceleration;
-    
-  /** \brief The cloth wake up counter.
-  */
-                        Real                   mWakeUpCounter;
-    
-  /** \brief Maximum linear velocity at which cloth can go to sleep.
-  */
-                        Real                   mSleepLinearVelocity;
+  Vec3                   mExternalAcceleration;
   
-  /** \brief Sets which collision group this cloth is part of. 
-      \range (0,32)
+  /*! variable. mWindAcceleration
+      desc.
+           Acceleration which acts normal to the cloth surface at each vertex.
+           
+      default.
+           Vec3::ZERO
+      type.
+           Vec3
   */
-                        GroupIdentifier        mCollisionGroup;
-
-  /** \brief Sets which collision group this cloth is part of. 
-      \range (0,32)
-  */
-                        int4                   mGroupsMask;
-
-  /** \brief Force Field Material Index, index != 0 has to be created.
-  */
-                        MaterialIdentifier     mForceFieldMaterial;
-
-  /** \brief If the flag Enums::ClothFlags_HasBounds is set, this variable defines the volume outside of which cloth particle are automatically removed from the simulation. 
-      \range (0,32)
-  */
-                        Bounds3                mValidBounds;
-    
-  /** \brief This parameter defines the size of grid cells for collision detection. 
-  */
-                        Real                   mRelativeGridSpacing;
+  Vec3                   mWindAcceleration;
   
-  /** \brief Cloth flags.
-      \see NxOgre::Enums::ClothFlags
+  /*! variable. mWakeUpCounter
+      desc.
+           The cloth wake up counter.
+      range.
+           [0, inf)
+      default.
+           0.4
+      type.
+           Vec3
   */
-                        unsigned int           mFlags;
+  Real                   mWakeUpCounter;
+  
+  /*! variable. mWakeUpCounter
+      desc.
+           Maximum linear velocity at which cloth can go to sleep.
+      range.
+           [0, inf)
+      default.
+           0.4
+      type.
+           Vec3
+  */
+  Real                   mSleepLinearVelocity;
+  
+  /*! variable. mCollisionGroup
+      desc.
+           Which collision group this cloth is part of. 
+      range.
+           [0, 31]
+      default.
+           0
+      type.
+           GroupIdentifier
+  */
+  GroupIdentifier        mCollisionGroup;
+  
+  /*! variable. mGroupsMask
+      desc.
+           Which collision group this cloth is part of. 
+      range.
+           [0, 31]
+      default.
+           0
+      type.
+           GroupIdentifier
+  */
+  int4                   mGroupsMask;
+  
+  /*! variable. mForceFieldMaterial
+      desc.
+           Force Field Material Index.
+      default.
+           0
+      type.
+           GroupIdentifier
+  */
+  MaterialIdentifier     mForceFieldMaterial;
+  
+  /*! variable. mValidBounds
+      desc.
+           If the flag flag Enums::ClothFlags_HasBounds is set, this variable defines the volume
+           outside of which cloth particle are automatically removed from the simulation. 
+      default.
+           Bounds3()
+      type.
+           Bounds3
+  */
+  Bounds3                mValidBounds;
+  
+  /*! variable. mRelativeGridSpacing
+      desc.
+           This parameter defines the size of grid cells for collision detection.
+           
+           The cloth is represented by a set of world aligned cubical cells in broad phase.
+           The size of these cells is determined by multiplying the length of the diagonal
+           of the AABB of the initial cloth size with this constant.
+           
+      default.
+           0.25
+      type.
+           [0.01, inf)
+  */
+  Real                   mRelativeGridSpacing;
+  
+  /*! variable. mFlags
+      desc.
+           Flag bits.
+      default.
+           ClothFlags_Gravity
+      type.
+           unsigned int
+      example.
+        ClothDescription desc;
+        desc.mFlags |= ClothFlags_Gravity;
+        desc.mFlags |= ClothFlags_Tearable;
+        // or
+        ClothDescription desc;
+        desc.mFlags = ClothFlags_Gravity | ClothFlags_Tearable;
+  */
+  unsigned int           mFlags;
   
 }; // class ClothDescription
 
-                                                                                       
+                     
 
 } // namespace NxOgre
 
-                                                                                       
+                     
 
 #endif

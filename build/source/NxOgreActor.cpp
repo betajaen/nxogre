@@ -48,7 +48,6 @@ Actor::Actor(Scene* scene)
 {
 }
 
-
 Actor::Actor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(), mScene(scene)
 {

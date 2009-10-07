@@ -1,4 +1,4 @@
-/ 
+/*
     
     This file is part of NxOgre.
     
@@ -46,19 +46,24 @@ namespace NxOgre
                                                                                        
 
 /*! class. World
+    
     World is the main singleton class of NxOgre. Always created first and destroyed last.
+    
     example.
-     #include "NxOgre.h"
-     class myApp
-     {
-      public:
-       myApp()
-       {
-        mWorld = NxOgre::World::createWorld();
-       }
-      protected:
-        NxOgre::World* mWorld;
-     };
+    #include "NxOgre.h"
+    
+    class myApp
+    {
+     public:
+     
+    	myApp()
+    	{
+    	 mWorld = NxOgre::World::createWorld();
+    	}
+    
+     protected:
+    	NxOgre::World* mWorld;
+    };
 */
 class NxOgrePublicClass World : public PointerClass<Classes::_World>
 {
@@ -234,51 +239,51 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   
   protected: // Variables
   
-  /*\internal Internal Singleton
+  /* Singleton
   */
   static              World*                  sWorldInstance;
 
-  /*\internal
+  /* PhysX SDK instance
   */
                       NxPhysicsSDK*           mSDK;
 
-  /*\internal
+  /* Cooking instance
   */
   static              NxCookingInterface*     mCookingInterface;
 
-  /*\brief If the SDK is dead or not
+  /* If the SDK is dead or not
   */
                       bool                    mDeadSDK;
 
-  /*\brief World's PhysX output stream instance
+  /* World's PhysX output stream instance
   */
                       PhysXOutputStream*      mPhysXOutputStream;
 
-  /*\brief World's PhysX user allocator instance
+  /* World's PhysX user allocator instance
   */
                       PhysXUserAllocator*     mPhysXUserAllocator;
 
-  /*\brief Master copy of all the Scenes in the World.
+  /* Master copy of all the Scenes in the World.
   */
                       Scenes                  mScenes;
 
-  /*\brief World's time controller instance
+  /* World's time controller instance
   */
                       TimeController*         mTimeController;
 
-  /*\brief Shared callback between classes that don't have a user callback.
+  /* Shared callback between classes that don't have a user callback.
   */
                       Callback*               mNullCallback;
   
-  /*\brief Global VisualDebugger.
+  /* Global VisualDebugger.
   */
                       VisualDebugger*         mVisualDebugger;
   
-  /*\brief Global RemoteDebugger.
+  /* Global RemoteDebugger.
   */
                       RemoteDebugger*         mRemoteDebugger;
   
-}; // class ClassName
+}; // class World
 
                                                                                        
 
