@@ -105,7 +105,7 @@ class NxOgrePublicClass Box : public PointerClass<Classes::_Box>, public Shape
       desc.
            As with all Shapes, deleting the Box should be left to the class that is responsible for it.
       note.
-           Deleting the Box whilst it is attached to a shape will probably cause a nasty crash.
+           Deleting the Box whilst it is attached to a RigidBody will probably cause a nasty crash.
   */
  ~Box(void);
 

@@ -43,273 +43,582 @@ namespace NxOgre
 
                                                                                        
 
-/** \internal Do not use directly. Use Resource* and ResourceSystem::open
+/*! class. FileResource
+    desc.
+        File version of a Resource, created via FileArchive.
 */
 class NxOgrePublicClass FileResource : public PointerClass<Classes::_FileResource>, public Resource
 {
   
  public:
   
-  /** \brief
+  /*! constructor. FileResource
+      desc.
+          Resource to access a single file on a disk, created via a FileArchive of the FileProtocol.
+      args.
+          const Path& __path__ -- Relative path of the file from the Archive's path.
+          Archive* __archive__ -- Archive that the Resource must belong to. Archive must be a FileArchive.
+          Enums::ResourceAccess __access__ -- Access restrictions.
   */
-                                             FileResource(const Path&, Archive*, Enums::ResourceAccess);
+  FileResource(const Path& path, Archive* archive, Enums::ResourceAccess access);
   
-  /** \brief
+  /*! destructor. FileResource
   */
-                                            ~FileResource(void);
+  ~FileResource();
   
-  /** \brief Get the type of access of the resource
+  /*! function. getAccess
+      desc.
+          Get the type of access of the resource
+      return.
+          **Enums::ResourceAccess** -- Type of access.
   */
-                       Enums::ResourceAccess         getAccess(void) const;
+  Enums::ResourceAccess  getAccess() const;
   
-  /** \brief What is the resources status?
+  /*! function. getStatus
+      desc.
+          What is the resources status?
+      return.
+          **Enums::ResourceStatus** -- Current status.
   */
-                       Enums::ResourceStatus         getStatus(void) const;
+  Enums::ResourceStatus  getStatus() const;
   
-  /** \brief Get the directionality of the resource
+  /*! function. getDirectionality
+      desc.
+          Get the directionality of the resource
   */
-                       Enums::ResourceDirectionality getDirectionality(void) const;
+  Enums::ResourceDirectionality  getDirectionality() const;
   
-  /** \brief Open the resource.
+  /*! function. open
+      desc.
+          Open the resource.
   */
-                       void                  open(void);
+  void  open();
   
-  /** \brief Close the resource.
+  /*! function. close
+      desc.
+          Close the resource.
   */
-                       void                  close(void);
+  void  close();
   
-  /** \brief Get the size (in bytes) of the resource, or Constants::ResourceSizeUnknown.
-      \note  If the Directionality is sucessional or the status is anything but open then
-             the file size will be Constants::ResourceSizeUnknown.
+  /*! function. getSize
+      desc.
+           Get the size (in bytes) of the resource, or Constants::ResourceSizeUnknown.
+      note.
+           If the Directionality is sucessional or the status is anything but open then
+           the file size will be Constants::ResourceSizeUnknown.
+      return.
+           **size_t** -- Size of the resource in bytes, or Constants::ResourceSizeUnknown.
   */
-                       size_t                getSize(void) const;
+  size_t  getSize() const;
   
-  /** \brief Go somewhere into the resource from, this is relative to the ReadWrite pointer and not an absolute.
-      \note Depending on status, or directionality this will not be possible.
-      \return True if the seek did happen, or false if it did not.
+  /*! function. seek
+      desc.
+           Go somewhere into the resource from, this is relative to the ReadWrite pointer and not an absolute.
+      note.
+           Depending on status, or directionality this will not be possible.
+      return.
+           **bool** -- True if the seek did happen, or false if it did not.
   */
-                       bool                  seek(size_t);
+  bool  seek(size_t);
   
-  /** \brief Go to the beginning of the resource.
-      \note Depending on status, or directionality this will not be possible.
-      \return True if the seek did happen, or false if it did not.
+  /*! function. seekBeginning
+      desc.
+           Go to the beginning of the resource.
+      note.
+           Depending on status, or directionality this will not be possible.
+      return.
+           **bool* -- True if the seek did happen, or false if it did not.
   */
-                       bool                  seekBeginning(void);
+  bool  seekBeginning(void);
   
-  /** \brief Go to the end of the resource.
-      \note Depending on status, or directionality this will not be possible.
-      \return True if the seek did happen, or false if it did not.
+  /*! function. seekEnd
+      desc.
+           Go to the end of the resource.
+      note.
+           Depending on status, or directionality this will not be possible.
+      return.
+           **bool** -- True if the seek did happen, or false if it did not.
   */
-                       bool                  seekEnd(void);
+  bool  seekEnd(void);
   
-  /** \brief Is the ReadWrite pointer at the end of Resource?
+  /*! function. atBeginning
+      desc.
+           Is the ReadWrite pointer at the beginning of Resource?
+      return.
+           **bool** -- If the ReadWrite pointer is at the beginning of the resource.
   */
-                       bool                  atBeginning(void) const;
+  bool  atBeginning(void) const;
   
-  /** \brief Is the ReadWrite pointer at the end of Resource, just like a standard "EOF" function.
+  /*! function. atEnd
+      desc.
+           Is the ReadWrite pointer at the end of Resource, just like a standard "EOF" function.
+      return.
+           **bool** -- If the ReadWrite pointer is at the end of the resource.
   */
-                       bool                  atEnd(void) const;
+  bool  atEnd(void) const;
   
-  /** \brief Where the ReadWrite is from the beginning of the resource.
-      \note  Constants::ResourceSizeUnknown will be returned if it is an unknown.
+  /*! function. at
+      desc.
+           Where the ReadWrite pointer is.
+      note.
+           Constants::ResourceSizeUnknown will be returned if it is an unknown. This is a likely value with Streams.
+      return.
+           **size_t** -- Where the ReadWrite pointer is, in bytes, in relation to the beginning of the resource.
   */
-                       size_t                at(void) const;
+  size_t  at(void) const;
   
-  /** \brief Write something to the buffer, with a size otherwise fail.
+  /*! function. write
+      desc.
+          Write a chunk of memory to the Resource with a size.
+      args.
+          const void* __src__ -- The data to write.
+          size_t src_size __srcSize__ -- The size of data in _bytes_.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  write(const void* src, size_t src_size);
+  bool  write(const void* src, size_t src_size);
   
-  /** \brief Write a single null (0x00) to the resource otherwise fail.
+  /*! function. writeNull
+      desc.
+           Write a single null (0x00) byteto the resource.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeNull(void);
+  bool  writeNull(void);
   
-  /** \brief Write a bool otherwise fail.
+  /*! function. writeBool.0
+      desc.
+          Write a bool.
+      args.
+          bool __value__ -- Boolean value to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeBool(bool);
+  bool  writeBool(bool value);
   
-  /** \brief Write a bool* array otherwise fail.
+  /*! function. writeBool.1
+      desc.
+          Write a boolean array.
+      args.
+          bool __values__ -- Boolean values to write.
+          size_t __length__ -- Number of boolean values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeBool(bool*, size_t length);
+  bool  writeBool(bool* values, size_t length);
   
-  /** \brief Write a single unsigned char otherwise fail.
+  /*! function. writeUChar.0
+      desc.
+          Write a single unsigned char otherwise fail.
+      args.
+          unsigned char __value__ -- Unsigned char to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeUChar(unsigned char);
+  bool  writeUChar(unsigned char value);
   
-  /** \brief Write a unsigned char* array otherwise fail.
+  /*! function. writeUChar.1
+      desc.
+          Write a unsigned char array.
+      args.
+          unsigned char* __value__ -- Unsigned char to write.
+          size_t __length__ -- Number of unsigned char values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeUChar(unsigned char*, size_t length);
+  bool  writeUChar(unsigned char* value, size_t length);
   
-  /** \brief Write a single char otherwise fail.
+  /*! function. writeChar.0
+      desc.
+          Write a single char.
+      args.
+          char __value__ -- char to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeChar(char);
+  bool  writeChar(char value);
   
-  /** \brief Write a char* array otherwise fail.
+  /*! function. writeChar.1
+      desc.
+          Write a char array.
+      args.
+          char* __value__ -- Char to write.
+          size_t __length__ -- Number of char values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeChar(char*, size_t length);
+  bool  writeChar(char*, size_t length);
   
-  /** \brief Write a single unsigned short otherwise fail.
+  /*! function. writeUShort.0
+      desc.
+          Write a single unsigned short otherwise fail.
+      args.
+          char __value__ -- Unsigned short to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeUShort(unsigned short);
+  bool  writeUShort(unsigned short value);
   
-  /** \brief Write a unsigned short* array otherwise fail.
+  /*! function. writeUShort.1
+      desc.
+          Write a single unsigned short..
+      args.
+          unsigned short* __values__ -- unsigned shorts to write.
+          size_t __length__ -- Number of unsigned short values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeUShort(unsigned short*, size_t length);
+  bool  writeUShort(unsigned short* values, size_t length);
   
-  /** \brief Write a single short otherwise fail.
+  /*! function. writeShort.0
+      desc.
+           Write a single short.
+      args.
+          short __value__ -- Short to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeShort(short);
+  bool  writeShort(short);
   
-  /** \brief Write a short* array otherwise fail.
+  /*! function. writeShort.1
+      desc.
+          Write a short* array.
+      args.
+          short* __values__ -- Shorts to write.
+          size_t __length__ -- Number of short values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeShort(short*, size_t length);
+  bool  writeShort(short*, size_t length);
   
-  /** \brief Write a single unsigned int otherwise fail.
+  /*! function. writeUInt.0
+      desc.
+          Write a single unsigned int.
+      args.
+          unsigned int __value__ -- Unsigned int to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeUInt(unsigned int);
+  bool  writeUInt(unsigned int value);
   
-  /** \brief Write a unsigned int* array otherwise fail.
+  /*! function. writeShort.1
+      desc.
+          Write a unsigned int* array.
+      args.
+          short* __values__ -- Shorts to write.
+          size_t __length__ -- Number of short values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeUInt(unsigned int*, size_t length);
+  bool  writeUInt(unsigned int*, size_t length);
   
-  /** \brief Write a single int otherwise fail.
+  /*! function. writeInt.0
+      desc.
+          Write a single int.
+      args.
+          unsigned int __value__ -- Int to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeInt(int);
+  bool  writeInt(int value);
   
-  /** \brief Write a int* array otherwise fail.
+  /*! function. writeInt.1
+      desc.
+          Write a int* array otherwise fail.
+      args.
+          short* __values__ -- Ints to write.
+          size_t __length__ -- Number of int values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeInt(int*, size_t length);
+  bool writeInt(int*, size_t length);
   
-  /** \brief Write a single float otherwise fail.
+  /*! function. writeFloat.0
+      desc.
+          Write a single float otherwise fail.
+      args.
+          float __value__ -- float to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeFloat(float);
+  bool  writeFloat(float);
   
-  /** \brief Write a float* array otherwise fail.
+  /*! function. writeFloat.1
+      desc.
+          Write a float* array otherwise fail.
+      args.
+          float* __values__ -- Floats to write.
+          size_t __length__ -- Number of float values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeFloat(float*, size_t length);
+  bool  writeFloat(float*, size_t length);
   
-  /** \brief Write a single double otherwise fail.
+  /*! function. writeDouble.0
+      desc.
+          Write a single double otherwise fail.
+      args.
+          double __value__ -- Double to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeDouble(double);
+  bool  writeDouble(double);
   
-  /** \brief Write a double* array otherwise fail.
+  /*! function. writeDouble.1
+      desc.
+          Write a double* array otherwise fail.
+      args.
+          double* __values__ -- Double to write.
+          size_t __length__ -- Number of double values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeDouble(double*, size_t length);
+  bool  writeDouble(double*, size_t length);
   
-  /** \brief Write a float or double otherwise fail
+  /*! function. writeReal.0
+      desc.
+          Write a single Real otherwise fail.
+      args.
+          double __value__ -- Double to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeReal(NxOgreRealType);
+  bool  writeReal(NxOgreRealType value);
   
-  /** \brief Write a float or double array otherwise fail
+  /*! function. writeReal.1
+      desc.
+          Write a Real* array otherwise fail.
+      args.
+          Real* __values__ -- Real to write.
+          size_t __length__ -- Number of Real values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeReal(NxOgreRealType*, size_t length);
+  bool  writeReal(NxOgreRealType* values, size_t length);
   
-  /** \brief Write a single long otherwise fail.
+  /*! function. writeLong.0
+      desc.
+          Write a single long otherwise fail.
+      args.
+          long __value__ -- Long to write.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeLong(long);
+  bool  writeLong(long value);
   
-  /** \brief Write a long* array otherwise fail.
+  /*! function. writeLong.1
+      desc.
+          Write a long* array otherwise fail.
+      args.
+          long* __values__ -- long to write.
+          size_t __length__ -- Number of long values.
+      return.
+          **bool** -- If the write was sucessful or not.
   */
-                       bool                  writeLong(long*, size_t length);
+  bool  writeLong(long* values, size_t length);
   
-  /** \brief Read a bool otherwise fail.
+  /*! function. readBool
+      desc.
+          Read a single bool otherwise fail.
+      return.
+          **bool** -- The read boolean value.
   */
-                       bool                  readBool(void);
+  bool  readBool(void);
   
-  /** \brief Read a bool* array otherwise fail.
+  /*! function. readBoolArray
+      desc.
+          Write a bool* array otherwise fail.
+      args.
+          bool* __values__ -- bools to write.
+          size_t __length__ -- Number of bool values.
   */
-                       void                  readBoolArray(bool*, size_t length);
+  void  readBoolArray(bool*, size_t length);
   
-  /** \brief Read a single unsigned char otherwise fail.
+  /*! function. readUChar
+      desc.
+          Read a single unsigned char.
+      return.
+          **bool** -- The read unsigned char value.
   */
-                       unsigned char         readUChar(void);
+  unsigned char  readUChar(void);
   
-  /** \brief Read a unsigned char* array otherwise fail.
+  /*! function. readUCharArray
+      desc.
+          Write a unsigned char* array otherwise fail.
+      args.
+          unsigned char* __values__ -- unsigned chars to write.
+          size_t __length__ -- Number of unsigned char values.
   */
-                       void                  readUCharArray(unsigned char*, size_t length);
+  void  readUCharArray(unsigned char* values, size_t length);
   
-  /** \brief Read a single char otherwise fail.
+  /*! function. readChar
+      desc.
+          Read a single char.
+      return.
+          **char** -- The read char value.
   */
-                       char                  readChar(void);
+  char  readChar(void);
   
-  /** \brief Read a char* array otherwise fail.
+  /*! function. readCharArray
+      desc.
+          Read a char* array otherwise fail.
+      args.
+          char* __values__ -- Char to write.
+          size_t __length__ -- Number of long values.
   */
-                       void                  readCharArray(char*, size_t length);
+  void  readCharArray(char* values, size_t length);
   
-  /** \brief Read a single unsigned short otherwise fail.
+  /*! function. readUShort
+      desc.
+          Read a single unsigned short.
+      return.
+          **unsigned short** -- The read unsigned short value.
   */
-                       unsigned short        readUShort(void);
+  unsigned short  readUShort(void);
   
-  /** \brief Read a unsigned short* array otherwise fail.
+  /*! function. readUShortArray
+      desc.
+          Read a unsigned short* array otherwise fail.
+      args.
+          unsigned short* __values__ --  Read unsigned shorts.
+          size_t __length__ -- Number of unsigned short values.
   */
-                       void                  readUShortArray(unsigned short*, size_t length);
+  void  readUShortArray(unsigned short* values, size_t length);
   
-  /** \brief Read a single short otherwise fail.
+  /*! function. readShort
+      desc.
+          Read a single short otherwise fail.
+      return.
+          **Short** -- The read short value.
   */
-                       short                 readShort(void);
+  short  readShort(void);
   
-  /** \brief Read a short* array otherwise fail.
+  /*! function. readShortArray
+      desc.
+          Read a short* array otherwise fail.
+      args.
+          short* __values__ -- Read shorts.
+          size_t __length__ -- Number of short values.
   */
-                       void                  readShortArray(short*, size_t length);
+  void  readShortArray(short* values, size_t length);
   
-  /** \brief Read a single unsigned int otherwise fail.
+  /*! function. readUInt
+      desc.
+          Read a single unsigned int.
+      return.
+          **unsigned int** -- The read unsigned int value.
   */
-                       unsigned int          readUInt(void);
+  unsigned int  readUInt(void);
   
-  /** \brief Read a unsigned int* array otherwise fail.
+  /*! function. readUIntArray
+      desc.
+          Read a unsigned int* array otherwise fail.
+      args.
+          unsigned int* __values__ -- unsigned ints to write.
+          size_t __length__ -- Number of unsigned ints values.
   */
-                       void                  readUIntArray(unsigned int*, size_t length);
+  void  readUIntArray(unsigned int* value, size_t length);
   
-  /** \brief Read a single int otherwise fail.
+  /*! function. readInt
+      desc.
+          Read a single int.
+      return.
+          **int** -- The read int value.
   */
-                       int                   readInt(void);
+  int  readInt();
   
-  /** \brief Read a int* array otherwise fail.
+  /*! function. readIntArray
+      desc.
+          Read a int* array otherwise fail.
+      args.
+          unsigned int* __values__ -- Read ints.
+          size_t __length__ -- Number of int values.
   */
-                       void                  readIntArray(int*, size_t length);
+  void  readIntArray(int* values, size_t length);
   
-  /** \brief Read a single float otherwise fail.
+  /*! function. readFloat
+      desc.
+          Read a single float.
+      return.
+          **int** -- The read float value.
   */
-                       float                 readFloat(void);
+  float  readFloat(void);
   
-  /** \brief Read a float* array otherwise fail.
+  /*! function. readFloatArray
+      desc.
+          Read a float* array otherwise fail.
+      args.
+          unsigned float* __values__ -- Read float values.
+          size_t __length__ -- Number of float values.
   */
-                       void                  readFloatArray(float*, size_t length);
+  void  readFloatArray(float*, size_t length);
   
-  /** \brief Read a single double otherwise fail.
+  /*! function. readDouble
+      desc.
+          Read a single double.
+      return.
+          **double** -- The read double value.
   */
-                       double                readDouble(void);
+  double  readDouble(void);
   
-  /** \brief Read a double* array otherwise fail.
+  /*! function. readDoubleArray
+      desc.
+          Read a double* array otherwise fail.
+      args.
+          double* __values__ -- Read double values.
+          size_t __length__ -- Number of double values.
   */
-                       void                  readDouble(double*, size_t length);
+  void  readDoubleArray(double* values, size_t length);
   
-  /** \brief Read a float or double otherwise fail
+  /*! function. readReal
+      desc.
+          Read a single Real.
+      return.
+          **Real** -- The read Real value.
   */
-                       Real                  readReal(void);
+  Real  readReal(void);
   
-  /** \brief Read a float or double array otherwise fail
+  /*! function. readDoubleArray
+      desc.
+          Read a Real* array otherwise fail.
+      args.
+          Real* __values__ -- Read Real values.
+          size_t __length__ -- Number of double values.
   */
-                       void                  readRealArray(NxOgreRealType*, size_t length);
-  
-  /** \brief Read a single long otherwise fail.
+  void  readRealArray(NxOgreRealType* values, size_t length);
+    
+  /*! function. readLong
+      desc.
+          Read a single long.
+      return.
+          **long** -- The read long value.
   */
-                       long                  readLong(void);
-  
-  /** \brief Read a long* array otherwise fail.
-  */
-                       void                  readLongArray(long*, size_t length);
-  
-  /** \brief Flush any write operations now.
-  */
-                       void                  flush();
+  long  readLong(void);
 
+  
+  /*! function. readDoubleArray
+      desc.
+          Read a long* array otherwise fail.
+      args.
+          long* __values__ -- Read long values.
+          size_t __length__ -- Number of long values.
+  */
+  void  readLongArray(long*, size_t length);
+  
+  /*! function. flush
+      desc.
+          Flush any write operations now.
+  */
+  void  flush();
+  
   protected: // Variables
   
-                       FILE*                 mFile;
+  FILE*         mFile;
   
-                       unsigned int          mWroteNbBytes;
+  unsigned int  mWroteNbBytes;
   
-                       Path                mFilePath;
+  Path          mFilePath;
+  
 }; // class FileResource
 
                                                                                        

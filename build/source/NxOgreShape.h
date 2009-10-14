@@ -235,6 +235,10 @@ typedef std::vector<Shape*> Shapes;
 */
 typedef ptr_vector<Shape> CollisionModel;
 
+/** \brief
+*/
+typedef ptr_vector<Shape>::const_iterator_t CollisionModelIterator;
+
                                                                                        
 
 } // namespace NxOgre

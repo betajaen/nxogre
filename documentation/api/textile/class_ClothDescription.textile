@@ -1,3 +1,7 @@
+p(d). 
+Cloth description is a set of properties for a cloth to be like when created.
+
+
 h2(fn constructor). <a name='ClothDescription constructor'></a>ClothDescription constructor
 
 p(d). Calls ClothDescription::reset.

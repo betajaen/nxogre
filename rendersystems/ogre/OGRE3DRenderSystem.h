@@ -133,6 +133,15 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      */
      void                                 destroySoftBody(NxOgre::SoftBody*);
      
+     /** \brief Create a fluid
+     */
+     NxOgre::Fluid*                       createFluid(const NxOgre::FluidDescription&, const Ogre::String& material = "BaseWhiteNoLighting");
+     
+     /** \brief Destroy a fluid that has been created with the createFluid. Cleans up the Renderable, which Scene::createFluid would not.
+     */
+     void                                 destroyFluid(NxOgre::Fluid*);
+
+
      /** \brief Helper function for Debug Visualisation.
      */
      void                                 setVisualisationMode(NxOgre::Enums::VisualDebugger);

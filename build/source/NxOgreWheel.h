@@ -67,7 +67,7 @@ class NxOgrePublicClass Wheel : public PointerClass<Classes::_Wheel>, public Sha
                                               Wheel(WheelBlueprint*);
   
   /** \brief Wheel destructor. 
-      \warning Deleting the Wheel whilst it is attached to a shape will probably cause a nasty crash.
+      \warning Deleting the Wheel whilst it is attached to a RigidBody will probably cause a nasty crash.
   */
                                              ~Wheel(void);
 

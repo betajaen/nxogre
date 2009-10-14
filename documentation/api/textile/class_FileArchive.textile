@@ -1,0 +1,28 @@
+p(d). A FileArchive represents a directory or drive as an Archive.
+
+
+h2(fn destructor). <a name='FileArchive'></a>FileArchive
+
+h2(fn function). <a name='close'></a>close
+
+p(d). Close a resource.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Resource* __resource__ | Resource to close. Resource must be created by this archive.|
+
+
+h2(fn function). <a name='open'></a>open
+
+p(d). Open a resource. Similar function to ResourceSystem::open.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Path& __path__ | Relative path to the file to open, Protocol must be the same protocol as this Archive is.|
+|Enums::ResourceAccess __access__ | Resource access.|
+
+

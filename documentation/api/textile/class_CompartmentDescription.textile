@@ -1,0 +1,74 @@
+p(d). Description class for when creating Compartments.
+
+
+h2(fn constructor). <a name='CompartmentDescription'></a>CompartmentDescription
+
+p(d). CompartmentDescription constructor, all it does is call RigidBodyDescription::reset.
+
+
+h2(fn variable). <a name='mDeviceCode'></a>mDeviceCode
+
+p(d). Assigned device to simulate the compartment on.
+
+
+p(n). **Note** -- Cloth compartments must use a non-CPU processor.
+default.
+Enums::DeviceCode_AutoAssign
+
+
+h2(fn variable). <a name='mFlags'></a>mFlags
+
+p(d). Compartment Flags combination, use with @|@ (or) operator.
+default.
+Enums::CompartmentFlags_InheritSettings
+
+
+h2(fn variable). <a name='mGridHashCellSize'></a>mGridHashCellSize
+
+p(d). Size in distance units of a single cell in the paging grid.
+Should be set to the size of the largest common dynamic object in this compartment.
+default.
+100.0
+
+
+h2(fn variable). <a name='mGridHashTablePower'></a>mGridHashTablePower
+
+p(d). Hash table size is (1 << gridHashTablePower).
+default.
+8
+
+
+h2(fn variable). <a name='mThreadMask'></a>mThreadMask
+
+p(d). Defaults to 0 which means the SDK determines the affinity.
+default.
+0
+
+
+h2(fn variable). <a name='mTimeScale'></a>mTimeScale
+
+p(d). Timescale modifier
+default.
+1.0
+
+
+p(n). **Note** -- Must be non-negative.
+
+
+h2(fn variable). <a name='mType'></a>mType
+
+p(d). Compartment meant for this type of simulation.
+default.
+Enums::CompartmentType_RigidBody
+
+
+h2(fn function). <a name='reset'></a>reset
+
+p(d). Resets everything to their default values, and pointers are set to NULL.
+
+
+h2(fn function). <a name='valid'></a>valid
+
+p(d). Returns if the variables are in a valid range or not
+
+

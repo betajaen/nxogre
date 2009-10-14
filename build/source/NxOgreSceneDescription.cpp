@@ -53,7 +53,7 @@ void SceneDescription::reset(void)
  mFetchingPriority             = Enums::Priority_MediumHigh;
  mGravity                      = Vec3::ZERO;
  mMaxTimeStep                  = _1_60;
- mMaxSubSteps                  = 4;
+ mMaxSubSteps                  = 8;
  mTimeStepMethod               = Enums::TimeStepMethod_Fixed;
  mBounds.min                   = Vec3::ZERO;
  mBounds.max                   = Vec3::ZERO;

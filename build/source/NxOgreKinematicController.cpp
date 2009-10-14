@@ -85,7 +85,7 @@ KinematicController::KinematicController(const NxOgre::Vec3 &size, const NxOgre:
  RigidBodyDescription description;
  description.mMass = 10.0f;
  
- createKinematicActor(globalPosition, description, mScene, mShape);
+ createKinematic(globalPosition, description, mScene, mShape);
  
 
 }

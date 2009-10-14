@@ -41,27 +41,50 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. ContactPair
+    desc.
+        Information about a contact event between two RigidBodies
 */
 class ContactPair
 {
+  
  public:
   
-  /** \brief The two RigidBodies that are in contact
+  /*! variable. mFirst
+      desc.
+          The first RigidBody in contact.
+      type.
+          RigidBody*
   */
-  RigidBody* mFirst, *mSecond;
+  RigidBody* mFirst;
   
-  /** \brief The total contact normal force that was applied for this pair, to maintain nonpenetration constraints.
-             You should set Enums::ContactPairFlags_Forces in order to receive this value. 
+  /*! variable. mSecond
+      desc.
+          The second RigidBody in contact.
+      type.
+          RigidBody*
   */
-  Vec3       mSumNormalForce;
+  RigidBody* mSecond;
   
-  /** \brief The total tangential force that was applied for this pair.
-             You should set Enums::ContactPairFlags_Forces in order to receive this value. 
+  /*! variable. mSumNormalForce
+      desc.
+          The total contact normal force that was applied for this pair, to maintain nonpenetration constraints.
+          You should set Enums::ContactPairFlags_Forces in order to receive this value.
+      type.
+          Vec3
   */
-  Vec3       mSumFrictionForce;
+  Vec3 mSumNormalForce;
   
-};
+  /*! variable. mSumFrictionForce
+      desc.
+           The total tangential force that was applied for this pair.
+           You should set Enums::ContactPairFlags_Forces in order to receive this value. 
+      type.
+           Vec3
+  */
+  Vec3 mSumFrictionForce;
+  
+}; // class ContactPair
 
                                                                                        
 

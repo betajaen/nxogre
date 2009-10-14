@@ -1,0 +1,905 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - FileResource</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3, #N .enums{margin:0;padding:0;color:#ccc;text-decoration:none;}
+  #N{color:white;}
+  #N h1{background-color:#333;font-size:18pt;}
+  #N h2, #N .enums{background-color:#222;display:block;font-size:16pt;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover, #N .enums:hover{background-color:#ccc;color:#181818}
+  #N ul li.this {padding:0.25em 0 0.25em 0.5em;}
+  #N .this {background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+  .t table {border:1px solid #999;}
+  .t table tr th {text-align:left;border-bottom:1px solid #999}
+  .t table tr th:first-child{border-right:1px solid #999;}
+  .t table tr td:first-child{font-family:monospace;border-right:1px solid #999;font-weight:bolder;}
+  .t table tr td:first-child i{font-style:normal;font-weight:normal;color:#333;}
+  span.math{letter-spacing:-1px;font-size:larger;font-weight:bolder;word-spacing:-0.1em;padding:0 0.1em 0 0.1em;}
+  .t p.sm {font-size:smaller;}
+  
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_Compartment.html">Compartment</a></li><li><a href="class_CompartmentDescription.html">CompartmentDescription</a></li><li><a href="class_ContactPair.html">ContactPair</a></li><li><a href="class_Convex.html">Convex</a></li><li><a href="class_D6Joint.html">D6Joint</a></li><li><a href="class_D6JointDescription.html">D6JointDescription</a></li><li><a href="class_EntityReport.html">EntityReport</a></li><li><a href="class_Error.html">Error</a></li><li><a href="class_ErrorStream.html">ErrorStream</a></li><li><a href="class_FileArchive.html">FileArchive</a></li><li class="this">FileResource</li><li><a href="class_FileResourceProtocol.html">FileResourceProtocol</a></li><li><a href="class_FixedJoint.html">FixedJoint</a></li><li><a href="class_FixedSceneTimer.html">FixedSceneTimer</a></li><li><a href="class_Fluid.html">Fluid</a></li><li><a href="class_RigidBody.html">RigidBody</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>FileResource</h1><h2 class="source">NxOgreFileResource.h</h2>
+<div class="method">	<p class="c">File version of a Resource, created via <a href="class_FileArchive.html">FileArchive</a>.</p>
+</div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#at" class="m">at</a></li>
+<li><a href="#atBeginning" class="m">atBeginning</a></li>
+<li><a href="#atEnd" class="m">atEnd</a></li>
+<li><a href="#close" class="m">close</a></li>
+<li><a href="#flush" class="m">flush</a></li>
+<li><a href="#getAccess" class="m">getAccess</a></li>
+<li><a href="#getDirectionality" class="m">getDirectionality</a></li>
+<li><a href="#getSize" class="m">getSize</a></li>
+<li><a href="#getStatus" class="m">getStatus</a></li>
+<li><a href="#open" class="m">open</a></li>
+<li><a href="#readBool" class="m">readBool</a></li>
+<li><a href="#readBoolArray" class="m">readBoolArray</a></li>
+<li><a href="#readChar" class="m">readChar</a></li>
+<li><a href="#readCharArray" class="m">readCharArray</a></li>
+<li><a href="#readDouble" class="m">readDouble</a></li>
+<li><a href="#readDoubleArray" class="m">readDoubleArray</a></li>
+<li><a href="#readFloat" class="m">readFloat</a></li>
+<li><a href="#readFloatArray" class="m">readFloatArray</a></li>
+<li><a href="#readInt" class="m">readInt</a></li>
+<li><a href="#readIntArray" class="m">readIntArray</a></li>
+<li><a href="#readLong" class="m">readLong</a></li>
+<li><a href="#readReal" class="m">readReal</a></li>
+<li><a href="#readShort" class="m">readShort</a></li>
+<li><a href="#readShortArray" class="m">readShortArray</a></li>
+<li><a href="#readUChar" class="m">readUChar</a></li>
+<li><a href="#readUCharArray" class="m">readUCharArray</a></li>
+<li><a href="#readUInt" class="m">readUInt</a></li>
+<li><a href="#readUIntArray" class="m">readUIntArray</a></li>
+<li><a href="#readUShort" class="m">readUShort</a></li>
+<li><a href="#readUShortArray" class="m">readUShortArray</a></li>
+<li><a href="#seek" class="m">seek</a></li>
+<li><a href="#seekBeginning" class="m">seekBeginning</a></li>
+<li><a href="#seekEnd" class="m">seekEnd</a></li>
+<li><a href="#write" class="m">write</a></li>
+<li><a href="#writeBool.0" class="m">writeBool.0</a></li>
+<li><a href="#writeBool.1" class="m">writeBool.1</a></li>
+<li><a href="#writeChar.0" class="m">writeChar.0</a></li>
+<li><a href="#writeChar.1" class="m">writeChar.1</a></li>
+<li><a href="#writeDouble.0" class="m">writeDouble.0</a></li>
+<li><a href="#writeDouble.1" class="m">writeDouble.1</a></li>
+<li><a href="#writeFloat.0" class="m">writeFloat.0</a></li>
+<li><a href="#writeFloat.1" class="m">writeFloat.1</a></li>
+<li><a href="#writeInt.0" class="m">writeInt.0</a></li>
+<li><a href="#writeInt.1" class="m">writeInt.1</a></li>
+<li><a href="#writeLong.0" class="m">writeLong.0</a></li>
+<li><a href="#writeLong.1" class="m">writeLong.1</a></li>
+<li><a href="#writeNull" class="m">writeNull</a></li>
+<li><a href="#writeReal.0" class="m">writeReal.0</a></li>
+<li><a href="#writeReal.1" class="m">writeReal.1</a></li>
+<li><a href="#writeShort.0" class="m">writeShort.0</a></li>
+<li><a href="#writeShort.1" class="m">writeShort.1</a></li>
+<li><a href="#writeUChar.0" class="m">writeUChar.0</a></li>
+<li><a href="#writeUChar.1" class="m">writeUChar.1</a></li>
+<li><a href="#writeUInt.0" class="m">writeUInt.0</a></li>
+<li><a href="#writeUShort.0" class="m">writeUShort.0</a></li>
+<li><a href="#writeUShort.1" class="m">writeUShort.1</a></li>
+</ul><h2 class="method destructor"><a name='FileResource'></a>FileResource</h2>
+<div class="method"></div><h2 class="method function"><a name='at'></a>at</h2>
+<div class="method">	<p class="c">Where the ReadWrite pointer is.</p>
+	<p class="n"><b>Note</b> &#8212; Constants::ResourceSizeUnknown will be returned if it is an unknown. This is a likely value with Streams.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>size_t</b> &#8212; Where the ReadWrite pointer is, in bytes, in relation to the beginning of the resource.</p>
+
+</div><h2 class="method function"><a name='atBeginning'></a>atBeginning</h2>
+<div class="method">	<p class="c">Is the ReadWrite pointer at the beginning of Resource?</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the ReadWrite pointer is at the beginning of the resource.</p>
+
+</div><h2 class="method function"><a name='atEnd'></a>atEnd</h2>
+<div class="method">	<p class="c">Is the ReadWrite pointer at the end of Resource, just like a standard &#8220;EOF&#8221; function.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the ReadWrite pointer is at the end of the resource.</p>
+
+</div><h2 class="method function"><a name='close'></a>close</h2>
+<div class="method">	<p class="c">Close the resource.</p>
+</div><h2 class="method function"><a name='flush'></a>flush</h2>
+<div class="method">	<p class="c">Flush any write operations now.</p>
+</div><h2 class="method function"><a name='getAccess'></a>getAccess</h2>
+<div class="method">	<p class="c">Get the type of access of the resource</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>Enums::ResourceAccess</b> &#8212; Type of access.</p>
+
+</div><h2 class="method function"><a name='getDirectionality'></a>getDirectionality</h2>
+<div class="method">	<p class="c">Get the directionality of the resource</p>
+</div><h2 class="method function"><a name='getSize'></a>getSize</h2>
+<div class="method">	<p class="c">Get the size (in bytes) of the resource, or Constants::ResourceSizeUnknown.</p>
+	<p class="n"><b>Note</b> &#8212; If the Directionality is sucessional or the status is anything but open then<br />the file size will be Constants::ResourceSizeUnknown.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>size_t</b> &#8212; Size of the resource in bytes, or Constants::ResourceSizeUnknown.</p>
+
+</div><h2 class="method function"><a name='getStatus'></a>getStatus</h2>
+<div class="method">	<p class="c">What is the resources status?</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>Enums::ResourceStatus</b> &#8212; Current status.</p>
+
+</div><h2 class="method function"><a name='open'></a>open</h2>
+<div class="method">	<p class="c">Open the resource.</p>
+</div><h2 class="method function"><a name='readBool'></a>readBool</h2>
+<div class="method">	<p class="c">Read a single bool otherwise fail.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; The read boolean value.</p>
+
+</div><h2 class="method function"><a name='readBoolArray'></a>readBoolArray</h2>
+<div class="method">	<p class="c">Write a bool* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>bool* <i>values</i> </td>
+			<td> bools to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of bool values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readChar'></a>readChar</h2>
+<div class="method">	<p class="c">Read a single char.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>char</b> &#8212; The read char value.</p>
+
+</div><h2 class="method function"><a name='readCharArray'></a>readCharArray</h2>
+<div class="method">	<p class="c">Read a char* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>char* <i>values</i> </td>
+			<td> Char to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of long values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readDouble'></a>readDouble</h2>
+<div class="method">	<p class="c">Read a single double.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>double</b> &#8212; The read double value.</p>
+
+</div><h2 class="method function"><a name='readDoubleArray'></a>readDoubleArray</h2>
+<div class="method">	<p class="c">Read a long* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>long* <i>values</i> </td>
+			<td> Read long values.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of long values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readFloat'></a>readFloat</h2>
+<div class="method">	<p class="c">Read a single float.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>int</b> &#8212; The read float value.</p>
+
+</div><h2 class="method function"><a name='readFloatArray'></a>readFloatArray</h2>
+<div class="method">	<p class="c">Read a float* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned float* <i>values</i> </td>
+			<td> Read float values.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of float values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readInt'></a>readInt</h2>
+<div class="method">	<p class="c">Read a single int.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>int</b> &#8212; The read int value.</p>
+
+</div><h2 class="method function"><a name='readIntArray'></a>readIntArray</h2>
+<div class="method">	<p class="c">Read a int* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned int* <i>values</i> </td>
+			<td> Read ints.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of int values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readLong'></a>readLong</h2>
+<div class="method">	<p class="c">Read a single long.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>long</b> &#8212; The read long value.</p>
+
+</div><h2 class="method function"><a name='readReal'></a>readReal</h2>
+<div class="method">	<p class="c">Read a single Real.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>Real</b> &#8212; The read Real value.</p>
+
+</div><h2 class="method function"><a name='readShort'></a>readShort</h2>
+<div class="method">	<p class="c">Read a single short otherwise fail.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>Short</b> &#8212; The read short value.</p>
+
+</div><h2 class="method function"><a name='readShortArray'></a>readShortArray</h2>
+<div class="method">	<p class="c">Read a short* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>short* <i>values</i> </td>
+			<td> Read shorts.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of short values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readUChar'></a>readUChar</h2>
+<div class="method">	<p class="c">Read a single unsigned char.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; The read unsigned char value.</p>
+
+</div><h2 class="method function"><a name='readUCharArray'></a>readUCharArray</h2>
+<div class="method">	<p class="c">Write a unsigned char* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned char* <i>values</i> </td>
+			<td> unsigned chars to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of unsigned char values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readUInt'></a>readUInt</h2>
+<div class="method">	<p class="c">Read a single unsigned int.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>unsigned int</b> &#8212; The read unsigned int value.</p>
+
+</div><h2 class="method function"><a name='readUIntArray'></a>readUIntArray</h2>
+<div class="method">	<p class="c">Read a unsigned int* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned int* <i>values</i> </td>
+			<td> unsigned ints to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of unsigned ints values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='readUShort'></a>readUShort</h2>
+<div class="method">	<p class="c">Read a single unsigned short.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>unsigned short</b> &#8212; The read unsigned short value.</p>
+
+</div><h2 class="method function"><a name='readUShortArray'></a>readUShortArray</h2>
+<div class="method">	<p class="c">Read a unsigned short* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned short* <i>values</i> </td>
+			<td>  Read unsigned shorts.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of unsigned short values.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='seek'></a>seek</h2>
+<div class="method">	<p class="c">Go somewhere into the resource from, this is relative to the ReadWrite pointer and not an absolute.</p>
+	<p class="n"><b>Note</b> &#8212; Depending on status, or directionality this will not be possible.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; True if the seek did happen, or false if it did not.</p>
+
+</div><h2 class="method function"><a name='seekBeginning'></a>seekBeginning</h2>
+<div class="method">	<p class="c">Go to the beginning of the resource.</p>
+	<p class="n"><b>Note</b> &#8212; Depending on status, or directionality this will not be possible.</p>
+	<h3>Return</h3>
+
+	<p class="r">**bool* &#8212; True if the seek did happen, or false if it did not.</p>
+
+</div><h2 class="method function"><a name='seekEnd'></a>seekEnd</h2>
+<div class="method">	<p class="c">Go to the end of the resource.</p>
+	<p class="n"><b>Note</b> &#8212; Depending on status, or directionality this will not be possible.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; True if the seek did happen, or false if it did not.</p>
+
+</div><h2 class="method function"><a name='write'></a>write</h2>
+<div class="method">	<p class="c">Write a chunk of memory to the Resource with a size.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>const void* <i>src</i> </td>
+			<td> The data to write.</td>
+		</tr>
+		<tr>
+			<td>size_t src_size <i>srcSize</i> </td>
+			<td> The size of data in <em>bytes</em>.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeBool.0'></a>writeBool.0</h2>
+<div class="method">	<p class="c">Write a bool.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>bool <i>value</i> </td>
+			<td> Boolean value to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeBool.1'></a>writeBool.1</h2>
+<div class="method">	<p class="c">Write a boolean array.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>bool <i>values</i> </td>
+			<td> Boolean values to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of boolean values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeChar.0'></a>writeChar.0</h2>
+<div class="method">	<p class="c">Write a single char.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>char <i>value</i> </td>
+			<td> char to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeChar.1'></a>writeChar.1</h2>
+<div class="method">	<p class="c">Write a char array.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>char* <i>value</i> </td>
+			<td> Char to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of char values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeDouble.0'></a>writeDouble.0</h2>
+<div class="method">	<p class="c">Write a single double otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>double <i>value</i> </td>
+			<td> Double to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeDouble.1'></a>writeDouble.1</h2>
+<div class="method">	<p class="c">Write a double* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>double* <i>values</i> </td>
+			<td> Double to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of double values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeFloat.0'></a>writeFloat.0</h2>
+<div class="method">	<p class="c">Write a single float otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>float <i>value</i> </td>
+			<td> float to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeFloat.1'></a>writeFloat.1</h2>
+<div class="method">	<p class="c">Write a float* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>float* <i>values</i> </td>
+			<td> Floats to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of float values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeInt.0'></a>writeInt.0</h2>
+<div class="method">	<p class="c">Write a single int.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned int <i>value</i> </td>
+			<td> Int to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeInt.1'></a>writeInt.1</h2>
+<div class="method">	<p class="c">Write a int* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>short* <i>values</i> </td>
+			<td> Ints to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of int values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeLong.0'></a>writeLong.0</h2>
+<div class="method">	<p class="c">Write a single long otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>long <i>value</i> </td>
+			<td> Long to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeLong.1'></a>writeLong.1</h2>
+<div class="method">	<p class="c">Write a long* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>long* <i>values</i> </td>
+			<td> long to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of long values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeNull'></a>writeNull</h2>
+<div class="method">	<p class="c">Write a single null (0&#215;00) byteto the resource.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeReal.0'></a>writeReal.0</h2>
+<div class="method">	<p class="c">Write a single Real otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>double <i>value</i> </td>
+			<td> Double to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeReal.1'></a>writeReal.1</h2>
+<div class="method">	<p class="c">Write a Real* array otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Real* <i>values</i> </td>
+			<td> Real to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of Real values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeShort.0'></a>writeShort.0</h2>
+<div class="method">	<p class="c">Write a single short.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>short <i>value</i> </td>
+			<td> Short to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeShort.1'></a>writeShort.1</h2>
+<div class="method">	<p class="c">Write a unsigned int* array.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>short* <i>values</i> </td>
+			<td> Shorts to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of short values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeUChar.0'></a>writeUChar.0</h2>
+<div class="method">	<p class="c">Write a single unsigned char otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned char <i>value</i> </td>
+			<td> Unsigned char to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeUChar.1'></a>writeUChar.1</h2>
+<div class="method">	<p class="c">Write a unsigned char array.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned char* <i>value</i> </td>
+			<td> Unsigned char to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of unsigned char values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeUInt.0'></a>writeUInt.0</h2>
+<div class="method">	<p class="c">Write a single unsigned int.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned int <i>value</i> </td>
+			<td> Unsigned int to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeUShort.0'></a>writeUShort.0</h2>
+<div class="method">	<p class="c">Write a single unsigned short otherwise fail.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>char <i>value</i> </td>
+			<td> Unsigned short to write.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div><h2 class="method function"><a name='writeUShort.1'></a>writeUShort.1</h2>
+<div class="method">	<p class="c">Write a single unsigned short..</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>unsigned short* <i>values</i> </td>
+			<td> unsigned shorts to write.</td>
+		</tr>
+		<tr>
+			<td>size_t <i>length</i> </td>
+			<td> Number of unsigned short values.</td>
+		</tr>
+	</table>
+
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the write was sucessful or not.</p>
+
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

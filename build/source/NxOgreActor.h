@@ -29,7 +29,6 @@
 #ifndef NXOGRE_ACTOR_H
 #define NXOGRE_ACTOR_H
 
-                                                                                       
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
@@ -202,7 +201,7 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
            
       args.
            const Vec3& __motion__ -- Motion to sweep
-           unsigned int __sweep__ _ __flags__ -- Sweep Flags, see *Enums::SweepFlags*
+           unsigned int __sweepFlags__  -- Sweep Flags, see *Enums::SweepFlags*
            unsigned int __size__ -- Maximum shapes to sweep through
            SweepQueryHits& -- Hits found once swept.
            SweepCache* -- Sweeping Cache to perform any future linearSweeps with this actor.
@@ -210,7 +209,7 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
       return.
            unsigned int -- Number of SweepHits
   */
-  unsigned int           linearSweep(const Vec3& motion, unsigned int sweep_flags, unsigned int size, SweepQueryHits&, SweepCache* = 0); 
+  unsigned int           linearSweep(const Vec3& motion, unsigned int sweepFlags, unsigned int size, SweepQueryHits&, SweepCache* = 0); 
 
   /*! function. getCompartment
       desc.
@@ -773,19 +772,19 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   
   /** \internal Classes that inherit from Actor should use this constructor.
   */
-                                              Actor(Scene*);
+  Actor(Scene*);
   
   /** \internal Use Scene::createActor
   */
-                                              Actor(Shape*, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  Actor(Shape*, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::createActor
   */
-                                              Actor(Shapes&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  Actor(Shapes&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::destroyActor
   */
-  virtual                                    ~Actor(void);
+  virtual ~Actor(void);
   
   protected: // Variables
   

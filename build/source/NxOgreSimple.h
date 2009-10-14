@@ -88,8 +88,8 @@ struct SimpleCapsule : public SimpleSegment
 
 struct SimplePointCloud : public SimpleShape
 {
- unsigned int    mNbVertices;
- Vec3*    mVertices;
+ unsigned int   mNbVertices;
+ Vec3*          mVertices;
 };
 
 struct SimpleTriangleMesh : public SimpleShape

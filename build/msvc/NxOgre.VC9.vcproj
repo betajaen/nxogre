@@ -491,10 +491,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreContainers.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreConvex.cpp"
 			>
 		</File>
@@ -584,6 +580,22 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreFluidDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitter.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitter.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitterDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitterDescription.h"
 			>
 		</File>
 		<File
@@ -1340,6 +1352,10 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreTimer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimeStep.cpp"
 			>
 		</File>
 		<File

@@ -81,7 +81,7 @@ class NxOgrePublicClass Capsule : public PointerClass<Classes::_Capsule>, public
       desc.
            As with all Shapes, deleting the Capsule should be left to the class that is responsible for it.
       note.
-           Deleting the Box whilst it is attached to a shape will probably cause a nasty crash.
+           Deleting the Box whilst it is attached to a RigidBody will probably cause a nasty crash.
   */
   ~Capsule(void);
   

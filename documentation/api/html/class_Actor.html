@@ -13,16 +13,17 @@
   * html #F {height:1px;}
   h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
   #N {font-family:sans-serif;font-size:0.9em;}
-  #N h1, #N h2, #N h3{margin:0;padding:0;color:#ccc;}
+  #N h1, #N h2, #N h3, #N .enums{margin:0;padding:0;color:#ccc;text-decoration:none;}
   #N{color:white;}
-  #N h1{background-color:#333;}
-  #N h2{background-color:#222;}
+  #N h1{background-color:#333;font-size:18pt;}
+  #N h2, #N .enums{background-color:#222;display:block;font-size:16pt;}
   #N h3{padding-left:0.5em}
   #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
   #N ul li{margin:0;}
   #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
-  #N ul li a:hover{background-color:#ccc;color:#181818}
-  #N ul li.this, div#nav ul li.this:hover{padding:0.25em 0 0.25em 0.5em;background-color:white;color:black;}
+  #N ul li a:hover, #N .enums:hover{background-color:#ccc;color:#181818}
+  #N ul li.this {padding:0.25em 0 0.25em 0.5em;}
+  #N .this {background-color:white;color:black;}
   #C div{padding:1em;color:black;}
   .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
   .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
@@ -42,28 +43,36 @@
   .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
   .t pre code b {color:green;}
   .t h2.method {margin:0;padding:0;color:red;}
-  .t div.method {padding:0 0 0 2em;margin:0;background-color:yellow;}
+  .t div.method {padding:0 0 0 2em;margin:0;}
   .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+  .t table {border:1px solid #999;}
+  .t table tr th {text-align:left;border-bottom:1px solid #999}
+  .t table tr th:first-child{border-right:1px solid #999;}
+  .t table tr td:first-child{font-family:monospace;border-right:1px solid #999;font-weight:bolder;}
+  .t table tr td:first-child i{font-style:normal;font-weight:normal;color:#333;}
+  span.math{letter-spacing:-1px;font-size:larger;font-weight:bolder;word-spacing:-0.1em;padding:0 0.1em 0 0.1em;}
+  .t p.sm {font-size:smaller;}
+  
 </style>
 </head>
 <body>
   <div id="W">
     <div id="N">
       <h1>NxOgre API</h1>
-      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li class="this">Actor</li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li class="this">Actor</li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_Compartment.html">Compartment</a></li><li><a href="class_CompartmentDescription.html">CompartmentDescription</a></li><li><a href="class_ContactPair.html">ContactPair</a></li><li><a href="class_Convex.html">Convex</a></li><li><a href="class_D6Joint.html">D6Joint</a></li><li><a href="class_D6JointDescription.html">D6JointDescription</a></li><li><a href="class_EntityReport.html">EntityReport</a></li><li><a href="class_Error.html">Error</a></li><li><a href="class_ErrorStream.html">ErrorStream</a></li><li><a href="class_FileArchive.html">FileArchive</a></li><li><a href="class_FileResource.html">FileResource</a></li><li><a href="class_FileResourceProtocol.html">FileResourceProtocol</a></li><li><a href="class_FixedJoint.html">FixedJoint</a></li><li><a href="class_FixedSceneTimer.html">FixedSceneTimer</a></li><li><a href="class_Fluid.html">Fluid</a></li><li><a href="class_RigidBody.html">RigidBody</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
     </div>
     <div id="C">
   		<div class="t">
 <h1>Actor</h1><h2 class="source">NxOgreActor.h</h2>
-<div class="method">	<p class="c"><a href="class_Actor.html">Actor</a> is a dynamic (moving) RigidBody, that can collide with SceneGeometries and KinematicActors.</p>
+<div class="method">	<p class="c"><a href="class_Actor.html">Actor</a> is a dynamic (moving) <a href="class_RigidBody.html">RigidBody</a>, that can collide with SceneGeometries and KinematicActors.</p>
 
 	<p class="c">It is normal to inherit from the <a href="class_Actor.html">Actor</a> to support visualisation in a RenderSystem, broadly<br />speaking any class that inherits the <a href="class_Actor.html">Actor</a> class is called a <strong>Body</strong>.</p>
 
-	<p class="c"><a href="class_Actor.html">Actor</a>s uses RigidBodyDescriptions to create it&#8217;s properities as well as a Matrix44 pose, a <strong>Shape</strong><br />or group of <strong>Shapes</strong>. The RigidBodyDescription is required to have a mass is at least zero, or otherwise<br />a density of at least zero &#8211; but not both.</p>
+	<p class="c"><a href="class_Actor.html">Actor</a>s uses <a href="class_RigidBody.html">RigidBody</a>Descriptions to create it&#8217;s properities as well as a Matrix44 pose, a <strong>Shape</strong><br />or group of <strong>Shapes</strong>. The <a href="class_RigidBody.html">RigidBody</a>Description is required to have a mass is at least zero, or otherwise<br />a density of at least zero &#8211; but not both.</p>
 
 
 <h3 class="e">Example</h3>
-<pre><code>RigidBodyDescription description;
+<pre><code><b>RigidBody</b>Description description;
 description.mMass = 15.0f; // 15 kg
 
 <b>Actor</b>* actor = mScene->createActor(shape, pose, description);
@@ -71,7 +80,7 @@ description.mMass = 15.0f; // 15 kg
 </code></pre>
 	<h3 class="s">See</h3>
 
-	<p class="s">RigidBody</p>
+	<p class="s"><a href="class_RigidBody.html">RigidBody</a></p>
 
 </div><h3>Methods and Variables</h3>
 <ul class="short">
@@ -184,7 +193,7 @@ description.mMass = 15.0f; // 15 kg
 <div class="method">	<p class="c">Retrieves the actor&#8217;s simulation compartment, if any.</p>
 	<h3>Return</h3>
 
-	<p class="r">Compartment* &#8212; The <a href="class_Actor.html">Actor</a>s compartment, or <strong>NULL</strong>.</p>
+	<p class="r"><a href="class_Compartment.html">Compartment</a>* &#8212; The <a href="class_Actor.html">Actor</a>s compartment, or <strong>NULL</strong>.</p>
 
 </div><h2 class="method function"><a name='getContactReportFlags'></a>getContactReportFlags</h2>
 <div class="method">	<p class="c">Retrieves the actor&#8217;s contact report flags.</p>
@@ -316,7 +325,7 @@ description.mMass = 15.0f; // 15 kg
 			<td> Motion to sweep</td>
 		</tr>
 		<tr>
-			<td>unsigned int <i>sweep</i> _ <i>flags</i> </td>
+			<td>unsigned int <i>sweepFlags</i>  </td>
 			<td> Sweep Flags, see <strong>Enums::SweepFlags</strong></td>
 		</tr>
 		<tr>
@@ -656,7 +665,7 @@ description.mMass = 15.0f; // 15 kg
 		</tr>
 		<tr>
 			<td>GroupIdentifier <i>dominanceGroup</i> </td>
-			<td> The domninance actorGroup for the <a href="class_Actor.html">Actor</a> to be assigned to.</td>
+			<td> The domninance actorGroup for the Actor to be assigned to.</td>
 		</tr>
 	</table>
 
@@ -692,7 +701,7 @@ description.mMass = 15.0f; // 15 kg
 		</tr>
 		<tr>
 			<td>const Matrix33& <i>orientation</i> </td>
-			<td> New <a href="class_Actor.html">Actor</a> orientation.</td>
+			<td> New Actor orientation.</td>
 		</tr>
 	</table>
 
@@ -707,7 +716,7 @@ description.mMass = 15.0f; // 15 kg
 		</tr>
 		<tr>
 			<td>const Quat& <i>orientation</i> </td>
-			<td> New <a href="class_Actor.html">Actor</a> orientation.</td>
+			<td> New Actor orientation.</td>
 		</tr>
 	</table>
 
@@ -722,7 +731,7 @@ description.mMass = 15.0f; // 15 kg
 		</tr>
 		<tr>
 			<td>const Matrix44& <i>globalPose</i> </td>
-			<td> New <a href="class_Actor.html">Actor</a> pose.</td>
+			<td> New Actor pose.</td>
 		</tr>
 	</table>
 
@@ -737,7 +746,7 @@ description.mMass = 15.0f; // 15 kg
 		</tr>
 		<tr>
 			<td>const Vec3& <i>position</i> </td>
-			<td> New <a href="class_Actor.html">Actor</a> position.</td>
+			<td> New Actor position.</td>
 		</tr>
 	</table>
 
@@ -752,7 +761,7 @@ description.mMass = 15.0f; // 15 kg
 		</tr>
 		<tr>
 			<td>GroupIdentifier <em>actorGroup</em> </td>
-			<td> The actorGroup for the <a href="class_Actor.html">Actor</a> to be assigned to.</td>
+			<td> The actorGroup for the Actor to be assigned to.</td>
 		</tr>
 	</table>
 
@@ -834,7 +843,7 @@ description.mMass = 15.0f; // 15 kg
 		</tr>
 		<tr>
 			<td>Real <i>mass</i> </td>
-			<td> New mass of the <a href="class_Actor.html">Actor</a></td>
+			<td> New mass of the Actor</td>
 		</tr>
 	</table>
 

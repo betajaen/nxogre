@@ -59,6 +59,8 @@
 #include "NxOgreSoftBodyDescription.h"
 #include "NxOgreCompartment.h"
 #include "NxOgreCompartmentDescription.h"
+#include "NxOgreFluid.h"
+#include "NxOgreFluidDescription.h"
 #include "NxOgreSweepQuery.h"
 #include "NxOgreSimple.h"
 
@@ -92,9 +94,6 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
  scene_description.userTriggerReport = mPhysXCallback;
  scene_description.userContactReport = mPhysXCallback;
  
- scene_description.timeStepMethod = NX_TIMESTEP_FIXED; // temp.
- scene_description.maxTimestep = 1.0f/60.0f;
- 
  mScene = mSDK->createScene(scene_description);
  
  if (mScene == 0)
@@ -124,7 +123,7 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
   TimeController::getSingleton()->mListeners[mFetchingPriority].insert(this);
   
   
-  mSceneTimer = new FixedSceneTimer(this); // temp.
+  mSceneTimer = new FixedSceneTimer(this, description.mMaxTimeStep); // temp.
   
   mMachineIterator = mMachines.getIterator();
   
@@ -141,6 +140,7 @@ Scene::~Scene(void)
   mKinematicControllers.clear();
   mVolumes.clear();
   mMaterials.destroyAll();
+  mFluids.clear();
   mCloths.destroyAll();
   mSoftBodies.destroyAll();
   NxOgre_Delete(mSceneTimer);
@@ -518,9 +518,9 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
  return out;
 }
 
-TimeStep& Scene::getTimeStep(void)
+const TimeStep& Scene::getTimeStep(void)
 {
- return mTimeStep;
+ return mSceneTimer->getTimeStep();
 }
 
 void Scene::registerMachine(Machine* machine)
@@ -557,6 +557,25 @@ void Scene::destroySoftBody(SoftBody* cloth)
 {
  mSoftBodies.remove(cloth);
  NxOgre_Delete(cloth);
+}
+
+Fluid* Scene::createFluid(const FluidDescription& description, Renderable* renderable, Enums::Priority rp)
+{
+ Fluid* fluid = NxOgre_New(Fluid)(description, renderable, rp, this);
+ StringHash hash = fluid->getNameHash();
+ mFluids.insert(hash, fluid);
+ return fluid;
+}
+
+void Scene::destroyFluid(NxOgre::Fluid* fluid)
+{
+ if (fluid)
+ {
+  if (fluid->getNameHash() == BLANK_HASH)
+   mFluids.erase(fluid);
+  else
+   mFluids.erase(fluid->getNameHash());
+ }
 }
 
 void Scene::setActorFlags(RigidBody* a, RigidBody* b, unsigned int contact_flags)
@@ -596,7 +615,6 @@ void Scene::destroySweepCache(SweepCache* cache)
  mScene->releaseSweepCache(cache->getCache());
  NxOgre_Delete(cache);
 }
-
 
                                                                                        
 

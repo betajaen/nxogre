@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - Fluid</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3, #N .enums{margin:0;padding:0;color:#ccc;text-decoration:none;}
+  #N{color:white;}
+  #N h1{background-color:#333;font-size:18pt;}
+  #N h2, #N .enums{background-color:#222;display:block;font-size:16pt;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover, #N .enums:hover{background-color:#ccc;color:#181818}
+  #N ul li.this {padding:0.25em 0 0.25em 0.5em;}
+  #N .this {background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+  .t table {border:1px solid #999;}
+  .t table tr th {text-align:left;border-bottom:1px solid #999}
+  .t table tr th:first-child{border-right:1px solid #999;}
+  .t table tr td:first-child{font-family:monospace;border-right:1px solid #999;font-weight:bolder;}
+  .t table tr td:first-child i{font-style:normal;font-weight:normal;color:#333;}
+  span.math{letter-spacing:-1px;font-size:larger;font-weight:bolder;word-spacing:-0.1em;padding:0 0.1em 0 0.1em;}
+  .t p.sm {font-size:smaller;}
+  
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_Compartment.html">Compartment</a></li><li><a href="class_CompartmentDescription.html">CompartmentDescription</a></li><li><a href="class_ContactPair.html">ContactPair</a></li><li><a href="class_Convex.html">Convex</a></li><li><a href="class_D6Joint.html">D6Joint</a></li><li><a href="class_D6JointDescription.html">D6JointDescription</a></li><li><a href="class_EntityReport.html">EntityReport</a></li><li><a href="class_Error.html">Error</a></li><li><a href="class_ErrorStream.html">ErrorStream</a></li><li><a href="class_FileArchive.html">FileArchive</a></li><li><a href="class_FileResource.html">FileResource</a></li><li><a href="class_FileResourceProtocol.html">FileResourceProtocol</a></li><li><a href="class_FixedJoint.html">FixedJoint</a></li><li><a href="class_FixedSceneTimer.html">FixedSceneTimer</a></li><li class="this">Fluid</li><li><a href="class_RigidBody.html">RigidBody</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>Fluid</h1><h2 class="source">NxOgreFluid.h</h2>
+<div class="method">	<p class="c">The fluid class represents the main module for the particle based fluid simulation.<br /><span class="caps">SPH</span> (Smoothed Particle Hydrodynamics) is used to animate the particles.</p>
+
+	<p class="c">There are two kinds of particle interaction forces which govern the behaviour of the fluid:</p>
+
+	<p class="c"><strong>Pressure</strong><br />These forces result from particle densities higher than the &#8220;rest density&#8221; of the fluid.<br />The rest density is given by specifying the inter-particle distance at which the fluid is in its relaxed state.<br />Particles which are closer than the rest spacing are pushed away from each other. =:<br /><strong>Viscosity</strong><br />These forces act on neighboring particles depending on the difference of their velocities.<br />Particles drag other particles with them which is used to simulate the viscous behaviour of the fluid. =:</p>
+
+	<p class="c">The fluid class manages a set of particles. Particles can be created in two ways:</p>
+
+	<ul>
+		<li>Particles can be added by the user directly.</li>
+		<li>The user can add emitters to the fluid and configure the parameters of the emission. (See <a href="class_Fluid.html">Fluid</a>Emitter)</li>
+	</ul>
+
+	<p class="c">Particles can be removed in two ways as well:
+	<ul>
+		<li>The user can specify a lifetime for the particles.  When its lifetime expires, a particle is deleted.</li>
+		<li>Shapes can be configured to act as drains.  When a particle intersects with a drain, the particle is deleted. (See Enums::ShapeFlags)</li>
+	</ul></p>
+
+	<p class="c">Particles collide with static and dynamic shapes. Particles are also affected by the scene gravity and a user force,<br />as well as global velocity damping.  In order to render a fluid, the user can supply the fluid instance with a<br />user buffer into which the particle state is written after each simuation step.</p>
+
+	<p class="c">For a good introduction to <span class="caps">SPH</span> fluid simulation,<br />see http://graphics.ethz.ch/~mattmuel/publications/sca03.pdf</p>
+</div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#advance" class="m">advance</a></li>
+<li><a href="#getPhysXFluid" class="m">getPhysXFluid</a></li>
+<li><a href="#getRenderable" class="m">getRenderable</a></li>
+</ul><h2 class="method function"><a name='advance'></a>advance</h2>
+<div class="method">	<p class="c">Causes the <a href="class_Fluid.html">Fluid</a> to call the renderable to redraw.</p>
+	<p class="n"><b>Note</b> &#8212; This method is called by the TimeController and never should be called by the user &#8211; without a good reason.</p>
+	<h3>Arguments</h3>
+
+	<table>
+		<tr>
+			<th>Argument</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>float <i>deltaTime</i> </td>
+			<td> Time passed.</td>
+		</tr>
+		<tr>
+			<td>const Enums::Priority <i>priority</i> </td>
+			<td> Time priority of the fluid.</td>
+		</tr>
+	</table>
+
+</div><h2 class="method function"><a name='getPhysXFluid'></a>getPhysXFluid</h2>
+<div class="method">	<p class="c">Get the pointer to the NxFluid instance.</p>
+	<p class="n"><b>Note</b> &#8212; This NxFluid is owned by the <a href="class_Fluid.html">Fluid</a> class, do not delete or destroy the pointer.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>NxFluid</b> * &#8212; the NxFluid instance</p>
+
+	<h3 class="t">Traits</h3>
+
+	<ul>
+		<li>Use PhysX classes as arguments or as a return value</li>
+	</ul>
+
+</div><h2 class="method function"><a name='getRenderable'></a>getRenderable</h2>
+<div class="method">	<p class="c">Get the renderable of the <a href="class_Fluid.html">Fluid</a>.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>Renderable</b> * &#8212; The renderable pointer.</p>
+
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

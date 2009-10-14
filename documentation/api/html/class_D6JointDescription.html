@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>NxOgre API - D6JointDescription</title>
+  <style type="text/css" media="screen">
+  body,	html, #W, #N {margin:0;padding:0;height:100%;background-color:#181818;}
+  #W {background-color:black;height:100%;background-color:#181818;}
+  #C {float:right;width:80%;background-color:white;}
+  #N {float:left;width:20%;background-color:#181818;}
+  #F {clear:both;}
+  * html #F {height:1px;}
+  h1,h2,h3,h4,h5,h6{font-family:sans-serif;font-weight:normal;color:#333;letter-spacing:-0.05em}
+  #N {font-family:sans-serif;font-size:0.9em;}
+  #N h1, #N h2, #N h3, #N .enums{margin:0;padding:0;color:#ccc;text-decoration:none;}
+  #N{color:white;}
+  #N h1{background-color:#333;font-size:18pt;}
+  #N h2, #N .enums{background-color:#222;display:block;font-size:16pt;}
+  #N h3{padding-left:0.5em}
+  #N ul{list-style:none;margin:0;padding:0 0 0 0.1em;}
+  #N ul li{margin:0;}
+  #N ul li a{color:#ccc;text-decoration:none;display:block;padding:0.25em 0 0.25em 0.5em;}
+  #N ul li a:hover, #N .enums:hover{background-color:#ccc;color:#181818}
+  #N ul li.this {padding:0.25em 0 0.25em 0.5em;}
+  #N .this {background-color:white;color:black;}
+  #C div{padding:1em;color:black;}
+  .t h1 {margin:0 0 0.1em 0;padding:0;color:#555;font-size:36pt;border-bottom:2px dashed #ccc;}
+  .t h2.source{font-size: smaller;position:absolute;top:0;right:0;text-align:right;padding:1em;}
+  .t h3{}
+  .t p.d{color:#333;line-height:1.5;margin:0;padding:0.35em 0 0.35em 0.5em;border-left:4px solid #ddd;}
+  .t pre{padding-left:1em;}
+  .t ul.short {list-style:none;padding:0;margin:0;padding-bottom:1em;border-bottom:2px dashed #aaa;}
+  .t ul.short li {padding-right:0.5em;margin-bottom:1em;display:inline;list-style:none;list-style-type:none;}
+  .t ul.short li a {text-decoration:none;}
+  .t ul.short li a:hover {text-decoration:underline;}
+  .t ul.short li a.m {color:Brown;font-weight:bolder;}
+  .t ul.short li a.v {color:ForestGreen;}
+  .t pre {overflow:auto;width:95%;}
+  .t pre code {color:#444;}
+  .t pre code span.cpptype {color:blue;}
+  .t pre code span.cppblock {color:black;font-weight:bolder;}
+  .t pre code span.cpppreprocessor {color:purple;font-weight:bolder;}
+  .t pre code b {color:green;}
+  .t h2.method {margin:0;padding:0;color:red;}
+  .t div.method {padding:0 0 0 2em;margin:0;}
+  .t div.method p{padding:0 0 1em 0;margin:0;font-family:Georgia;font-size:11.5pt;line-height:1.3;}
+  .t table {border:1px solid #999;}
+  .t table tr th {text-align:left;border-bottom:1px solid #999}
+  .t table tr th:first-child{border-right:1px solid #999;}
+  .t table tr td:first-child{font-family:monospace;border-right:1px solid #999;font-weight:bolder;}
+  .t table tr td:first-child i{font-style:normal;font-weight:normal;color:#333;}
+  span.math{letter-spacing:-1px;font-size:larger;font-weight:bolder;word-spacing:-0.1em;padding:0 0.1em 0 0.1em;}
+  .t p.sm {font-size:smaller;}
+  
+</style>
+</head>
+<body>
+  <div id="W">
+    <div id="N">
+      <h1>NxOgre API</h1>
+      <a href="enums.html" class="enums">Enums</a><h2>Classes</h2><ul><li><a href="class_Actor.html">Actor</a></li><li><a href="class_ActorMachinePart.html">ActorMachinePart</a></li><li><a href="class_Archive.html">Archive</a></li><li><a href="class_BoundsTclass VecType.html">BoundsT<class VecType></a></li><li><a href="class_Box.html">Box</a></li><li><a href="class_Callback.html">Callback</a></li><li><a href="class_Capsule.html">Capsule</a></li><li><a href="class_Cloth.html">Cloth</a></li><li><a href="class_ClothDescription.html">ClothDescription</a></li><li><a href="class_Compartment.html">Compartment</a></li><li><a href="class_CompartmentDescription.html">CompartmentDescription</a></li><li><a href="class_ContactPair.html">ContactPair</a></li><li><a href="class_Convex.html">Convex</a></li><li><a href="class_D6Joint.html">D6Joint</a></li><li class="this">D6JointDescription</li><li><a href="class_EntityReport.html">EntityReport</a></li><li><a href="class_Error.html">Error</a></li><li><a href="class_ErrorStream.html">ErrorStream</a></li><li><a href="class_FileArchive.html">FileArchive</a></li><li><a href="class_FileResource.html">FileResource</a></li><li><a href="class_FileResourceProtocol.html">FileResourceProtocol</a></li><li><a href="class_FixedJoint.html">FixedJoint</a></li><li><a href="class_FixedSceneTimer.html">FixedSceneTimer</a></li><li><a href="class_Fluid.html">Fluid</a></li><li><a href="class_RigidBody.html">RigidBody</a></li><li><a href="class_World.html">World</a></li></ul><h2>Pages</h2><ul><li><a href="README.html">README</a></li></ul>
+    </div>
+    <div id="C">
+  		<div class="t">
+<h1>D6JointDescription</h1><h2 class="source">NxOgreD6JointDescription.h</h2>
+<div class="method">	<p class="c">Initial properties for a <a href="class_D6Joint.html">D6Joint</a>.</p>
+</div><h3>Methods and Variables</h3>
+<ul class="short">
+<li><a href="#isValid" class="m">isValid</a></li>
+<li><a href="#mD6Flags" class="v">mD6Flags</a></li>
+<li><a href="#mDriveAngularVelocity" class="v">mDriveAngularVelocity</a></li>
+<li><a href="#mDriveLinearVelocity" class="v">mDriveLinearVelocity</a></li>
+<li><a href="#mDriveOrientation" class="v">mDriveOrientation</a></li>
+<li><a href="#mDrivePosition" class="v">mDrivePosition</a></li>
+<li><a href="#mGearRatio" class="v">mGearRatio</a></li>
+<li><a href="#mLinearLimit" class="v">mLinearLimit</a></li>
+<li><a href="#mProjectionAngle" class="v">mProjectionAngle</a></li>
+<li><a href="#mProjectionDistance" class="v">mProjectionDistance</a></li>
+<li><a href="#mProjectionMode" class="v">mProjectionMode</a></li>
+<li><a href="#mSlerpDrive" class="v">mSlerpDrive</a></li>
+<li><a href="#mSwing1Limit" class="v">mSwing1Limit</a></li>
+<li><a href="#mSwing1Motion" class="v">mSwing1Motion</a></li>
+<li><a href="#mSwing2Limit" class="v">mSwing2Limit</a></li>
+<li><a href="#mSwing2Motion" class="v">mSwing2Motion</a></li>
+<li><a href="#mSwingDrive" class="v">mSwingDrive</a></li>
+<li><a href="#mTwistDrive" class="v">mTwistDrive</a></li>
+<li><a href="#mTwistLimit" class="v">mTwistLimit</a></li>
+<li><a href="#mTwistMotion" class="v">mTwistMotion</a></li>
+<li><a href="#mXDrive" class="v">mXDrive</a></li>
+<li><a href="#mXMotion" class="v">mXMotion</a></li>
+<li><a href="#mYDrive" class="v">mYDrive</a></li>
+<li><a href="#mYMotion" class="v">mYMotion</a></li>
+<li><a href="#mZDrive" class="v">mZDrive</a></li>
+<li><a href="#mZMotion" class="v">mZMotion</a></li>
+<li><a href="#reset" class="m">reset</a></li>
+</ul><h2 class="method destructor"><a name='D6JointDescription'></a>D6JointDescription</h2>
+<div class="method"></div><h2 class="method function"><a name='isValid'></a>isValid</h2>
+<div class="method">	<p class="c">Is the description properties in within range of allowed values.</p>
+	<h3>Return</h3>
+
+	<p class="r"><b>bool</b> &#8212; If the properties are within valid range of allowed values.</p>
+
+</div><h2 class="method variable"><a name='mD6Flags'></a>mD6Flags</h2>
+<div class="method">	<p class="c">Combination using the <code>|</code> (or) operator of the Enums::<a href="class_D6Joint.html">D6Joint</a>Flag<br />default.<br />0</p>
+</div><h2 class="method variable"><a name='mDriveAngularVelocity'></a>mDriveAngularVelocity</h2>
+<div class="method">	<p class="c">If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::<a href="class_D6Joint.html">D6Joint</a>DriveType_Velocity, this defines the goal linear velocity.</p>
+
+	<p class="c">The Angular velocities are;</p>
+
+	<table>
+		<tr>
+			<th>Velocity Axis </th>
+			<th>Drive Axis </th>
+		</tr>
+		<tr>
+			<td>x</td>
+			<td>mTwistAxis</td>
+		</tr>
+		<tr>
+			<td>y</td>
+			<td>mSwing1Axis</td>
+		</tr>
+		<tr>
+			<td>z</td>
+			<td>mSwing2Axis</td>
+		</tr>
+	</table>
+
+	<p class="c">default.<br />Vec3::<span class="caps">ZERO</span></p>
+</div><h2 class="method variable"><a name='mDriveLinearVelocity'></a>mDriveLinearVelocity</h2>
+<div class="method">	<p class="c">If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::<a href="class_D6Joint.html">D6Joint</a>DriveType_Velocity, this defines the goal linear velocity.<br />default.<br />Vec3::<span class="caps">ZERO</span></p>
+</div><h2 class="method variable"><a name='mDriveOrientation'></a>mDriveOrientation</h2>
+<div class="method">	<p class="c">If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::<a href="class_D6Joint.html">D6Joint</a>DriveType_Position, this defines the goal orientation.<br />default.<br />Quat::<span class="caps">IDENTITY</span></p>
+</div><h2 class="method variable"><a name='mDrivePosition'></a>mDrivePosition</h2>
+<div class="method">	<p class="c">If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::<a href="class_D6Joint.html">D6Joint</a>DriveType_Position, this defines the goal position.<br />default.<br />Vec3::<span class="caps">ZERO</span></p>
+</div><h2 class="method variable"><a name='mGearRatio'></a>mGearRatio</h2>
+<div class="method">	<p class="c">when the flag NX_D6JOINT_GEAR_ENABLED is set, the angular velocity<br />of the second actor is driven towards the angular velocity of the<br />first actor times gearRatio (both w.r.t. their primary axis)<br />\default 1.0</p>
+</div><h2 class="method variable"><a name='mLinearLimit'></a>mLinearLimit</h2>
+<div class="method">	<p class="c">If some linear <span class="caps">DOF</span> are limited, this defines the characteristics of these limits.<br />default.<br />JointLimitSoftDescription()</p>
+</div><h2 class="method variable"><a name='mProjectionAngle'></a>mProjectionAngle</h2>
+<div class="method">	<p class="c">Angle (in  radians) that is beyond the joint is projected.<br />default.<br />0.0872 (~5 degrees)</p>
+</div><h2 class="method variable"><a name='mProjectionDistance'></a>mProjectionDistance</h2>
+<div class="method">	<p class="c">Distance above which to project joint.<br />default.<br />0.1</p>
+</div><h2 class="method variable"><a name='mProjectionMode'></a>mProjectionMode</h2>
+<div class="method">	<p class="c">Enable joint projection.<br />default.<br />JointProjectionMode_None</p>
+</div><h2 class="method variable"><a name='mSlerpDrive'></a>mSlerpDrive</h2>
+<div class="method">	<p class="c">These drives are used if the flag Enums::<a href="class_D6Joint.html">D6Joint</a>_SlerpDrive is not set.<br />default.<br />JointDriveDescription()</p>
+</div><h2 class="method variable"><a name='mSwing1Limit'></a>mSwing1Limit</h2>
+<div class="method">	<p class="c">If mSwing1Motion is Enums::<a href="class_D6Joint.html">D6Joint</a>Motion_Limited, this defines the characteristics of these limits.<br />default.<br />JointLimitSoftDescription()</p>
+</div><h2 class="method variable"><a name='mSwing1Motion'></a>mSwing1Motion</h2>
+<div class="method">	<p class="c">Defines the angular degrees of freedom<br />default.<br />D6Motion_Free</p>
+</div><h2 class="method variable"><a name='mSwing2Limit'></a>mSwing2Limit</h2>
+<div class="method">	<p class="c">If mSwing2Motion is Enums::<a href="class_D6Joint.html">D6Joint</a>Motion_Limited, this defines the characteristics of these limits.<br />default.<br />JointLimitSoftDescription()</p>
+</div><h2 class="method variable"><a name='mSwing2Motion'></a>mSwing2Motion</h2>
+<div class="method">	<p class="c">Defines the angular degrees of freedom<br />default.<br />D6Motion_Free</p>
+</div><h2 class="method variable"><a name='mSwingDrive'></a>mSwingDrive</h2>
+<div class="method">	<p class="c">These drives are used if the flag Enums::<a href="class_D6Joint.html">D6Joint</a>_SlerpDrive is not set.<br />default.<br />JointDriveDescription()</p>
+</div><h2 class="method variable"><a name='mTwistDrive'></a>mTwistDrive</h2>
+<div class="method">	<p class="c">These drives are used if the flag Enums::<a href="class_D6Joint.html">D6Joint</a>_SlerpDrive is not set.<br />default.<br />JointDriveDescription()</p>
+</div><h2 class="method variable"><a name='mTwistLimit'></a>mTwistLimit</h2>
+<div class="method">	<p class="c">If mTwistLimit is Enums::<a href="class_D6Joint.html">D6Joint</a>Motion_Limited, this defines the characteristics of these limits.<br />default.<br />JointLimitSoftDescription()</p>
+</div><h2 class="method variable"><a name='mTwistMotion'></a>mTwistMotion</h2>
+<div class="method">	<p class="c">Defines the angular degrees of freedom<br />default.<br />D6Motion_Free</p>
+</div><h2 class="method variable"><a name='mXDrive'></a>mXDrive</h2>
+<div class="method">	<p class="c">Drive the X linear <span class="caps">DOF</span>.<br />default.<br />JointDriveDescription()</p>
+</div><h2 class="method variable"><a name='mXMotion'></a>mXMotion</h2>
+<div class="method">	<p class="c">The linear degrees of freedom for the X axis.<br />default.<br />D6Motion_Free</p>
+</div><h2 class="method variable"><a name='mYDrive'></a>mYDrive</h2>
+<div class="method">	<p class="c">Drive the Y linear <span class="caps">DOF</span>.<br />default.<br />JointDriveDescription()</p>
+</div><h2 class="method variable"><a name='mYMotion'></a>mYMotion</h2>
+<div class="method">	<p class="c">The linear degrees of freedom for the Y axis.<br />default.<br />D6Motion_Free</p>
+</div><h2 class="method variable"><a name='mZDrive'></a>mZDrive</h2>
+<div class="method">	<p class="c">Drive the Z linear <span class="caps">DOF</span>.<br />default.<br />JointDriveDescription()</p>
+</div><h2 class="method variable"><a name='mZMotion'></a>mZMotion</h2>
+<div class="method">	<p class="c">The linear degrees of freedom for the Z axis.<br />default.<br />D6Motion_Free</p>
+</div><h2 class="method function"><a name='reset'></a>reset</h2>
+<div class="method">	<p class="c">Sets the properties of the description to their default values.</p>
+</div>
+      </div>
+  	</div>
+	<div id="F"></div>
+</div>
+</body>
+</html>

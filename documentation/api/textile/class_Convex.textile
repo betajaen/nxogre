@@ -1,0 +1,41 @@
+p(d). A convex is a convex point cloud (with optional triangles) that is used from a Mesh file.
+
+Convex shapes can be used in Actors, KinematicActors, StaticGeometries and Volumes for
+collisions and testing against them.
+
+
+h3(s). See
+
+p(s). Shape
+
+h2(fn destructor). <a name='Convex'></a>Convex
+
+p(d). As with all Shapes, deleting the Convex should be left to the class that is responsible for it.
+
+
+p(n). **Note** -- Deleting the Convex whilst it is attached to a RigidBody will probably cause a nasty crash.
+
+
+h2(fn function). <a name='getMesh'></a>getMesh
+
+p(d). Get the mesh
+
+
+p(n). **Note** -- MeshManager owns this pointer. Do not delete it.
+
+
+h3. Return
+
+p(r). **Mesh** * -- The mesh shared by the Convex.
+
+
+h2(fn function). <a name='getShapeFunctionType'></a>getShapeFunctionType
+
+p(d). Get the shape type based upon the Classes::ShapeFunctionType enum.
+
+
+h3. Return
+
+p(r). **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
+
+

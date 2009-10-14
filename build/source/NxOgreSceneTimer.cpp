@@ -38,8 +38,8 @@ namespace NxOgre
 
                                                                                        
 
-SceneTimer::SceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: mParent(scene), mMaxTime(maxTime), mExpectedTime(expectedTime), mTimerMode(Enums::TimerMode_Miss)
+SceneTimer::SceneTimer(Scene* scene, Real maxTime)
+: mParent(scene), mMaxTime(maxTime), mTimerMode(Enums::TimerMode_Miss)
 {
  mScene = mParent->getScene();
 }

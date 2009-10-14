@@ -43,14 +43,10 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A Fixed SceneTimer is based upon a fixed timestep injected every second; due to the inaccuracies of
-           the computer and a multi-tasking operating system. Each timestep will be off; to prevent this an
-           accumulator will be used to "store" up time and correctly give the right time value for each frame.
-           This method of timing is provided by the PhysX SDK, however the interpolation feature provided by
-           NxOgre is not compatible with the FixedSceneTimer, instead you should use the AccumaltiveSceneTimer.
-
-           The accumulator should be used with the SceneInterpolatorRenderer so each physics object is correctly
-           rendered.
+/*! class. FixedSceneTimer
+    desc.
+         A fixed SceneTimer is used to divide the current timestep into neat smaller equal time values, any remaining
+         time is carried on into the next timestep.
 
 */
 class NxOgrePublicClass FixedSceneTimer : public PointerClass<Classes::_FixedSceneTimer>, public SceneTimer
@@ -58,33 +54,59 @@ class NxOgrePublicClass FixedSceneTimer : public PointerClass<Classes::_FixedSce
   
   public: // Functions
   
-  /** \brief Text
+  /*! constructor. FixedSceneTimer
+      desc.
+           Constructor.
+      args.
+           Scene* __scene__ -- Scene to with with.
+           Real __maxTime__ -- Maximum timestep.
+           unsigned int __subSteps__ -- Number of substeps
   */
-                                              FixedSceneTimer(Scene*, Real maxTime = _1_60, Real expectedTime = _1_60);
+                                              FixedSceneTimer(Scene*, Real maxTime = _1_60);
   
-  /** \brief Text
+  /*! destructor. FixedSceneTimer
+      desc.
+           Destructor.
   */
                                              ~FixedSceneTimer(void);
   
-  /** \brief Text
-      \return True if HasResults/FetchResults should be called later, later.
+  /*! function. simulate
+      desc.
+           Simulate the PhysX scene.
+      note.
+           Do not call this function by hand. Scene will call this at the appropriate time.
+      args.
+           float __deltaTime__ -- Amount of time passed, this shouldn't be the maximum timeseep.
+      
   */
-  void                                        simulate(float user_deltaTime);
+  void                                        simulate(float deltaTime);
   
-  /** \brief
+  /*! function. hasResults
+      desc.
+          Has PhysX finished simulating the timestep yet?
+      return.
+          **bool** -- If PhysX has finished simulating or not.
   */
-  bool                                        hasResults(void) const;
+  bool                                        hasResults() const;
   
-  /** \brief
+  /*! function. fetchResults
+      desc.
+          Fetch the results and make changes to the scene to reflect them.
+      note.
+           Do not call this function by hand. Scene will call this at the appropriate time.
+      
   */
-  void                                        fetchResults(void);
+  void                                        fetchResults();
   
+  /*! function. getTimeStep
+      desc.
+          Get the current TimeStep.
+  */
+  const TimeStep&                             getTimeStep() const;
   
   protected:
   
-  Timer mTimer;
-  
-  float mMaxTimeStep, mOldTime, mAccumulator;
+  FixedTimeStep                               mTimeStep;
   
 }; // class ClassName
 

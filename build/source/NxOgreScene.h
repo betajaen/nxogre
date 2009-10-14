@@ -40,6 +40,7 @@
 #include "NxOgreVolume.h"
 #include "NxOgreKinematicController.h"
 #include "NxOgreShape.h"
+#include "NxOgreFluid.h"
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreRigidBodyDescription.h"
@@ -50,6 +51,7 @@
 #include "NxOgreClothDescription.h"
 #include "NxOgreCompartmentDescription.h"
 #include "NxOgreCompartment.h"
+#include "NxOgreFluidDescription.h"
 
 #include "NxOgreTimeListener.h"
 
@@ -86,6 +88,9 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   typedef  ptr_multihashmap<Volume>                           Volumes;
   typedef  ptr_multihashmap<Volume>::iterator_t               VolumeIterator;
 
+  typedef  ptr_multihashmap<Fluid>                            Fluids;
+  typedef  ptr_multihashmap<Fluid>::iterator_t                FluidIterator;
+
   
   /** \brief Get the name of the Scene if it has one; otherwise NULL is returned.
   */
@@ -114,6 +119,10 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   /** \brief Create an actor somewhere in the scene
   */
                        Actor*                 createActor(Shapes&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
+  
+  /** \brief
+  */
+                       void                   destroyActor(Actor*);
   
   /** \brief
   */
@@ -212,6 +221,14 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   /** \brief
   */
                        void                   destroySoftBody(SoftBody*);
+  
+  /** \brief
+  */
+                       Fluid*                 createFluid(const FluidDescription&, Renderable*, Enums::Priority render_priority = Enums::Priority_MediumLow);
+  
+  /** \brief
+  */
+                       void                   destroyFluid(Fluid*);
 
   /** \brief
   */
@@ -292,11 +309,6 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        PhysXCallback*         getPhysXCallback(void);
   
-  /** \brief Get the current timestep in the Scene.
-  */
-  
-                       TimeStep&              getTimeStep(void);
-  
   /** \brief
   */
                        void                   setActorFlags(RigidBody*, RigidBody*, unsigned int contact_flags);
@@ -315,6 +327,12 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        unsigned int           linearOBBSweep(const SimpleBox&, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits&, unsigned int activeGroups=0xffffffff);
 
+  /*! function. getTimeStep
+      desc.
+           Get the timestep class for this timestep.
+  */
+  const                TimeStep&               getTimeStep();
+  
   protected: // Functions
   
   /** \internal Use World::createScene()
@@ -391,6 +409,10 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        Array<Compartment*>              mCompartments;
 
+  /** \brief
+  */
+                       Fluids                           mFluids;
+
   /** \internal
   */
                 std::map<NxCompartment*, Compartment*>  mCompartmentPairs;
@@ -419,9 +441,6 @@ class NxOgrePublicClass Scene : public PointerClass<Classes::_Scene>, public Tim
   */
                        bool                             mCanRender;
   
-  /** \internal
-  */
-                       TimeStep                         mTimeStep;
 }; // class Scene
 
                                                                                        

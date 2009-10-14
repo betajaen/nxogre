@@ -50,14 +50,12 @@ class NxOgrePublicClass SceneTimer
   
   struct TimerSettings
   {
-   bool mFixedTiming;
    Real mMaxTime;
   };
   
-  
   /** \brief Text
   */
-                                              SceneTimer(Scene*, Real maxTime, Real expectedTime);
+                                              SceneTimer(Scene*, Real maxTime);
   
   /** \brief Text
   */
@@ -80,8 +78,16 @@ class NxOgrePublicClass SceneTimer
   */
   virtual void                                fetchResults(void);
   
+  /*! function. getTimeStep
+      desc.
+          Get a reference to the Timestep.
+  */
+  virtual const TimeStep&                     getTimeStep() const = 0;
   
-  
+  /*! function. getTimerMode
+      desc.
+          Get the current TimerMode.
+  */
   virtual Enums::TimerMode                    getTimerMode() const;
 
   protected:
@@ -89,10 +95,6 @@ class NxOgrePublicClass SceneTimer
   /** \brief Maximum time that can be injected.
   */
   Real mMaxTime;
-  
-  /** \brief Expected time to inject.
-  */
-  Real mExpectedTime;
   
   /** \brief
   */

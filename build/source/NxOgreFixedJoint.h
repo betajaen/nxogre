@@ -42,7 +42,9 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. FixedJoint
+    desc.
+        A FixedJoint is a constraint between two actors with no angular or linear degrees of freedom.
 */
 class NxOgrePublicClass FixedJoint : public Joint
 {
@@ -51,24 +53,40 @@ class NxOgrePublicClass FixedJoint : public Joint
   
   public: // Functions
   
-  /** \brief Get the type of joint
+  /*! function. getJointType
+      desc.
+          Get the type of joint.
+      return.
+          **Enums::JointFunctionType** -- Always returns Enums::JointFunctionType_Fixed
   */
   Enums::JointFunctionType                    getJointType();
-
   
   protected: // Functions
   
-  /** \internal Private Constructor. Use Scene::createFixedJoint.
+  /*! constructor. FixedJoint
+      desc.
+           Fixed Joint constructor.
+      note.
+          Use Scene::createFixedJoint.
+      args.
+          RigidBody* __first__ -- First RigidBody
+          RigidBody* __second__ -- First RigidBody
+          const FixedJointDescription& __description__ -- Initial joint properties
+      !protected
   */
                                               FixedJoint(RigidBody* first, RigidBody* second, const FixedJointDescription&);
   
-  /** \internal Private Destructor. Use Scene::destroyJoint.
+  /*! destructor. FixedJoint
+      desc.
+           Fixed Joint destructor.
+      note.
+           Use Scene::destroyJoint.
   */
                                              ~FixedJoint(void);
   
   protected: // Fixed
   
-                         NxFixedJoint*    mFixedJoint;
+  NxFixedJoint*  mFixedJoint;
   
 }; // class ClassName
 

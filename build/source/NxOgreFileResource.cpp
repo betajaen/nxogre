@@ -535,7 +535,7 @@ double FileResource::readDouble(void)
  return t;
 }
 
-void FileResource::readDouble(double* t, size_t length)
+void FileResource::readDoubleArray(double* t, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbReadOperations++;

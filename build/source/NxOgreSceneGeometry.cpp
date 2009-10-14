@@ -52,14 +52,14 @@ SceneGeometry::SceneGeometry(Shape* shape, const Matrix44& pose, const RigidBody
 : RigidBody(),
   mScene(scene)
 {
- createSceneGeometry(pose, description, scene, shape);
+ createStatic(pose, description, scene, shape);
 }
 
 SceneGeometry::SceneGeometry(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(),
   mScene(scene)
 {
- createSceneGeometry(pose, description, scene, shapes);
+ createStatic(pose, description, scene, shapes);
 }
 
 SceneGeometry::~SceneGeometry(void)

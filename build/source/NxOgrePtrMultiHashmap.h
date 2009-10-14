@@ -223,6 +223,17 @@ template<typename type> class ptr_multihashmap
    multimap.erase(it);
    Functions::safe_delete<type>(ptr);
   }
+  
+  // Erase a pointer from the multimap then delete it.
+  void erase(type* ptr)
+  {
+   for (multimap_type::iterator it = multimap.begin(); it != multimap.end(); ++it)
+    if ((*it).second == ptr)
+    {
+     multimap.erase(it);
+     Functions::safe_delete<type>(ptr);
+    }
+  }
 
   // delete all pointers and clear the multimap.
   void clear()

@@ -42,7 +42,13 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. D6Joint
+    desc.
+        A D6 joint is a general constraint between two actors.
+         
+        It allows the user to individually define the linear and rotational degrees of freedom. 
+        It also allows the user to configure the joint with limits and driven degrees of freedom as they wish.
+        
 */
 class NxOgrePublicClass D6Joint : public Joint
 {
@@ -51,46 +57,65 @@ class NxOgrePublicClass D6Joint : public Joint
   
   public: // Functions
   
-  /** \brief Set the drive position goal position when it is being driven.
-      \see NxD6Joint::setDrivePosition
+  /*! function. setDrivePosition
+      desc.
+          Set the drive position goal position when it is being driven.
+      args.
+          const Vec3& __position__ -- New drive position.
   */
   void                                        setDrivePosition(const Vec3& position);
 
   
-  /** \brief Set the drive goal orientation when it is being driven.
-      \see NxD6Joint::setDriveOrientation
-      \note Parameter must be a quaternion.
+  /*! function. setDriveOrientation
+      desc.
+          Set the drive goal orientation when it is being driven.
+      args.
+          const Quat& __orientation__ -- New drive orientation.
   */
-  void                                        setDriveOrientation(const Vec4& orientation);
+  void                                        setDriveOrientation(const Quat& orientation);
 
-  /** \brief Set the drive goal linear velocity when it is being driven.
-      \see NxD6Joint::setDriveLinearVelocity
+  /*! function. setDriveLinearVelocity
+      desc.
+          Set the drive goal linear velocity when it is being driven.
+      args.
+          const Vec3& __linearVelocity__ -- New drive linear velocity.
   */
   void                                        setDriveLinearVelocity(const Vec3& linearVelocity);
 
 
-  /** \brief Set the drive angular velocity goal when it is being driven.
-      \see NxD6Joint::setDriveAngularVelocity
+  /*! function. setDriveAngularVelocity
+      desc.
+          Set the drive angular velocity goal when it is being driven.
+      args.
+          const Vec3& __angularVelocity__ -- New drive angular velocity.
   */
   void                                        setDriveAngularVelocity(const Vec3& angularVelocity);
 
-  /** \brief Get the type of joint
+  /*! function. getJointType
+      desc.
+          Get the type of joint as JointFunctionType
+      return.
+          **Enums::JointFunctionType** -- Joint type as a JointFunctionType.
   */
   Enums::JointFunctionType                    getJointType();
 
   protected: // Functions
   
-  /** \internal Private Constructor. Use Scene::createD6Joint.
+  /*! constructor. D6Joint
+      see. Scene::createD6Joint
+      !protected
   */
-                                              D6Joint(RigidBody* first, RigidBody* second, const D6JointDescription&);
+  D6Joint(RigidBody* first, RigidBody* second, const D6JointDescription&);
   
-  /** \internal Private Destructor. Use Scene::destroyJoint.
+  /*! destructor. D6Joint
+      see. Scene::destroyJoint
+      !protected
   */
-                                             ~D6Joint(void);
+  ~D6Joint(void);
   
-  protected: // D6
+  protected: // Variables
   
-                         NxD6Joint*    mD6Joint;
+  NxD6Joint*    mD6Joint;
   
 }; // class ClassName
 

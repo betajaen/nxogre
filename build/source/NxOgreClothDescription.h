@@ -42,6 +42,9 @@ namespace NxOgre
                      
 
 /*! class. ClothDescription
+    
+    Cloth description is a set of properties for a cloth to be like when created.
+    
 */
 class NxOgrePublicClass ClothDescription
 {

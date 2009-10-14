@@ -286,4 +286,26 @@ void OGRE3DRenderSystem::destroySoftBody(NxOgre::SoftBody* cloth)
  mScene->destroySoftBody(cloth);
 }
 
+
+NxOgre::Fluid* OGRE3DRenderSystem::createFluid(const NxOgre::FluidDescription& description, const Ogre::String& materialName)
+{
+ OGRE3DRenderable* renderable = createRenderable(NxOgre::Enums::RenderableType_ParticlePoints);
+ mSceneManager->getRootSceneNode()->attachObject(renderable);
+ renderable->setMaterial(materialName);
+ return mScene->createFluid(description, renderable);
+}
+
+void OGRE3DRenderSystem::destroyFluid(NxOgre::Fluid* fluid)
+{
+ if (fluid == 0)
+  return;
+
+ OGRE3DRenderable* renderable = static_cast<OGRE3DRenderable*>(fluid->getRenderable());
+
+ mSceneManager->getRootSceneNode()->detachObject(renderable);
+ destroyRenderable(renderable);
+ mScene->destroyFluid(fluid);
+}
+
+
                                                                                        

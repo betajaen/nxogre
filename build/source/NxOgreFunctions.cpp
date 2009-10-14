@@ -41,31 +41,31 @@ namespace Functions
 
                                                                                        
 
-unsigned int getCStringLength(const char* str)
+CalculatedTimeStep calculateTimestep(float timestep, Enums::TimeStepMethod method, float maxTime, unsigned int nbSubSteps)
 {
- if (str == 0)
-  return 0;
- const char* c = str;
- while((*c) != 0)
-  c++;
- return unsigned int(c - str);
+ 
+ CalculatedTimeStep cts;
+ 
+ cts.mAccumulator = 0.0f;
+ cts.mActual = timestep;
+ 
+ if (method == Enums::TimeStepMethod_Variable || method == Enums::TimeStepMethod_Inherit)
+ {
+  cts.mModified = timestep;
+  return cts;
+ }
+ 
+ for (unsigned int i=0; i < nbSubSteps;i++)
+  if (cts.mAccumulator <= maxTime)
+   break;
+  else
+   cts.mAccumulator -= maxTime;
+ 
+ cts.mModified = maxTime;
+ 
+ return cts;
 }
 
-unsigned long generateHash(const char* str)
-{
-
-  if (str == 0)
-   return 0;
- 
-  unsigned long hash = 5381;
-  int c;
- 
-  while (c = *str++)
-   hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
- 
-  return hash;
-
-}
 
                                                                                        
 

@@ -12,7 +12,7 @@ h2(fn destructor). <a name='Box'></a>Box
 p(d). As with all Shapes, deleting the Box should be left to the class that is responsible for it.
 
 
-p(n). **Note** -- Deleting the Box whilst it is attached to a shape will probably cause a nasty crash.
+p(n). **Note** -- Deleting the Box whilst it is attached to a RigidBody will probably cause a nasty crash.
 
 
 h2(fn function). <a name='getShapeFunctionType'></a>getShapeFunctionType

@@ -126,7 +126,7 @@ bool RigidBodyDescription::valid(void)
   if (mContactReportThreshold < Real(0)) //must be nonnegative
    return false;
 
-  if (!(mType < Enums::RigidBodyType_Geometry) && mDominanceGroup) //only dynamic actors may have a nonzero dominance group.
+  if (!(mType < Enums::RigidBodyType_SceneGeometry) && mDominanceGroup) //only dynamic actors may have a nonzero dominance group.
    return false;
 
  return true;

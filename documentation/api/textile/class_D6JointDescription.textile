@@ -1,0 +1,204 @@
+p(d). Initial properties for a D6Joint.
+
+
+h2(fn destructor). <a name='D6JointDescription'></a>D6JointDescription
+
+h2(fn function). <a name='isValid'></a>isValid
+
+p(d). Is the description properties in within range of allowed values.
+
+
+h3. Return
+
+p(r). **bool** -- If the properties are within valid range of allowed values.
+
+
+h2(fn variable). <a name='mD6Flags'></a>mD6Flags
+
+p(d). Combination using the @|@ (or) operator of the Enums::D6JointFlag
+default.
+0
+
+
+h2(fn variable). <a name='mDriveAngularVelocity'></a>mDriveAngularVelocity
+
+p(d). If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Velocity, this defines the goal linear velocity.
+
+The Angular velocities are;
+
+|_. Velocity Axis |_. Drive Axis |
+|x|mTwistAxis|
+|y|mSwing1Axis|
+|z|mSwing2Axis|
+
+default.
+Vec3::ZERO
+
+
+h2(fn variable). <a name='mDriveLinearVelocity'></a>mDriveLinearVelocity
+
+p(d). If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Velocity, this defines the goal linear velocity.
+default.
+Vec3::ZERO
+
+
+h2(fn variable). <a name='mDriveOrientation'></a>mDriveOrientation
+
+p(d). If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Position, this defines the goal orientation.
+default.
+Quat::IDENTITY
+
+
+h2(fn variable). <a name='mDrivePosition'></a>mDrivePosition
+
+p(d). If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Position, this defines the goal position.
+default.
+Vec3::ZERO
+
+
+h2(fn variable). <a name='mGearRatio'></a>mGearRatio
+
+p(d). when the flag NX_D6JOINT_GEAR_ENABLED is set, the angular velocity
+of the second actor is driven towards the angular velocity of the
+first actor times gearRatio (both w.r.t. their primary axis)
+\default 1.0
+
+
+h2(fn variable). <a name='mLinearLimit'></a>mLinearLimit
+
+p(d). If some linear DOF are limited, this defines the characteristics of these limits.
+default.
+JointLimitSoftDescription()
+
+
+h2(fn variable). <a name='mProjectionAngle'></a>mProjectionAngle
+
+p(d). Angle (in  radians) that is beyond the joint is projected.
+default.
+0.0872 (~5 degrees)
+
+
+h2(fn variable). <a name='mProjectionDistance'></a>mProjectionDistance
+
+p(d). Distance above which to project joint.
+default.
+0.1
+
+
+h2(fn variable). <a name='mProjectionMode'></a>mProjectionMode
+
+p(d). Enable joint projection.
+default.
+JointProjectionMode_None
+
+
+h2(fn variable). <a name='mSlerpDrive'></a>mSlerpDrive
+
+p(d). These drives are used if the flag Enums::D6Joint_SlerpDrive is not set.
+default.
+JointDriveDescription()
+
+
+h2(fn variable). <a name='mSwing1Limit'></a>mSwing1Limit
+
+p(d). If mSwing1Motion is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+default.
+JointLimitSoftDescription()
+
+
+h2(fn variable). <a name='mSwing1Motion'></a>mSwing1Motion
+
+p(d). Defines the angular degrees of freedom
+default.
+D6Motion_Free
+
+
+h2(fn variable). <a name='mSwing2Limit'></a>mSwing2Limit
+
+p(d). If mSwing2Motion is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+default.
+JointLimitSoftDescription()
+
+
+h2(fn variable). <a name='mSwing2Motion'></a>mSwing2Motion
+
+p(d). Defines the angular degrees of freedom
+default.
+D6Motion_Free
+
+
+h2(fn variable). <a name='mSwingDrive'></a>mSwingDrive
+
+p(d). These drives are used if the flag Enums::D6Joint_SlerpDrive is not set.
+default.
+JointDriveDescription()
+
+
+h2(fn variable). <a name='mTwistDrive'></a>mTwistDrive
+
+p(d). These drives are used if the flag Enums::D6Joint_SlerpDrive is not set.
+default.
+JointDriveDescription()
+
+
+h2(fn variable). <a name='mTwistLimit'></a>mTwistLimit
+
+p(d). If mTwistLimit is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+default.
+JointLimitSoftDescription()
+
+
+h2(fn variable). <a name='mTwistMotion'></a>mTwistMotion
+
+p(d). Defines the angular degrees of freedom
+default.
+D6Motion_Free
+
+
+h2(fn variable). <a name='mXDrive'></a>mXDrive
+
+p(d). Drive the X linear DOF.
+default.
+JointDriveDescription()
+
+
+h2(fn variable). <a name='mXMotion'></a>mXMotion
+
+p(d). The linear degrees of freedom for the X axis.
+default.
+D6Motion_Free
+
+
+h2(fn variable). <a name='mYDrive'></a>mYDrive
+
+p(d). Drive the Y linear DOF.
+default.
+JointDriveDescription()
+
+
+h2(fn variable). <a name='mYMotion'></a>mYMotion
+
+p(d). The linear degrees of freedom for the Y axis.
+default.
+D6Motion_Free
+
+
+h2(fn variable). <a name='mZDrive'></a>mZDrive
+
+p(d). Drive the Z linear DOF.
+default.
+JointDriveDescription()
+
+
+h2(fn variable). <a name='mZMotion'></a>mZMotion
+
+p(d). The linear degrees of freedom for the Z axis.
+default.
+D6Motion_Free
+
+
+h2(fn function). <a name='reset'></a>reset
+
+p(d). Sets the properties of the description to their default values.
+
+

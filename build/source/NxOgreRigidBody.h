@@ -42,85 +42,240 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A rigid body
-    \important Use an inherited class such as Actor, SceneGeometry, KinematicActor or Trigger.
+/*! class. RigidBody
+    Represents a abstract NxActor class; Actors, SceneGeometries, KinematicActors, Volumes and classes that inherit from
+    these are all RigidBodies. All raycasting, sweeping, and other testing functions refer to NxActors as RigidBodies.
+    
+    To differentiate between RigidBodies (to re-cast them), use the RigidBody::getType() function, which returns a specific
+    class code. User classes may also use this coding system to help differentiating between their classes and NxOgre's.
+    
 */
 class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
 {
-  public: // Functions
   
-  /** \brief Get the hashed name of the RigidBody, otherwise BLANK_HASH.
-  */
-                        StringHash            getNameHash() const;
+ public: // Functions
   
-  /** \brief Retrieves the scene which this rigid body belongs to. 
+  /*! function. getNameHash
+      desc.
+           Get the hashed name of the RigidBody.
+      return.
+           **StringHash** -- The hash of the name, or *BLANK_HASH* if there is no name.
   */
-                        Scene*                getScene(void); 
+  StringHash  getNameHash() const;
   
-  /** \brief Returns true if the RigidBody is dynamic.
+  /*! function. getScene
+      desc.
+           Retrieves the scene which this rigid body belongs to. 
+      return
+           **Scene** * -- Scene that this RigidBody belongs to.
   */
-                        bool                  isDynamic(void) const;
+  Scene*  getScene(void); 
   
-  /** \internal
+  /*! function. isDynamic
+      desc.
+           Returns true if the RigidBody is dynamic, i.e. Had a NxBodyDesc when creating; such as a KinematicActor, Actor or Actor based class.
+      return.
+           **bool** -- If the Actor is dynamic or not.
   */
-                        NxActor*              getNxActor(void);
+  bool  isDynamic(void) const;
   
-  /** \brief Get the type of RigidBody
+  /*! function. getNxActor
+      desc.
+           Get the PhysX *NxActor* that this RigidBody represents.
+      note.
+           Do not delete, or otherwise modify the pointer.
+      return.
+           **NxActor** * -- NxActor instance.
+      !physx
   */
-  virtual               unsigned int          getType() const;
+  NxActor*  getNxActor(void);
   
-  /** \brief Set a callback for contact reporting.
-      \note  As this contact can be shared between RigidBodies it is upto YOU to delete the callback at the appropriate time.
+  /*! function. getType
+      desc.
+           Get the numerical type (see Enums::RigidBodyType) of this RigidBody; for casting purposes. 
+      note.
+           This function is not to be confused with getClassType - which although similar in function is different.
+      return.
+           **unsigned int** -- The class type either from Enums::RigidBodyType, or one from the users app.
   */
-                        void                  setContactCallback(Callback*);
+  virtual unsigned int getType() const;
   
-  /** \brief Get the assigned callback for contact reporting.
+  /*! function. setContactCallback
+      desc.
+          Set a callback for contact reporting. If there is a previous callback, it won't be deleted.
+      note.
+          As this contact can be shared between RigidBodies it is upto YOU to delete the callback at the appropriate time.
+          See the reference functions in callback for more information.
+      args.
+          Callback* __callback__ -- New callback to set, or NULL to clear.
   */
-                        Callback*             getContactCallback();
+  void  setContactCallback(Callback* callback);
+  
+  /*! function. getContactCallback
+      desc.
+           Get the assigned callback for contact reporting.
+      note.
+          As this contact can be shared between RigidBodies it is upto YOU to delete the callback at the appropriate time.
+          See the reference functions in callback for more information.
+      return.
+          **Callback** * -- Callback, or NULL if there is none.
+  */
+  Callback* getContactCallback();
+  
+  /*! function. GetShapes
+      desc.
+           Get a iterator to the current shapes in this RigidBody.
+      return.
+           **CollisionModelIterator** -- Iterator to the shapes.
+  */
+  CollisionModelIterator getShapes() const;
   
   protected: // Function
   
-  /** \brief Text
+  /*! constructor. RigidBody
+      desc.
+           RigidBody constructor
   */
-                                              RigidBody(void);
+  RigidBody(void);
   
-  /** \brief Text
+  /*! destructor. RigidBody
+      desc.
+           RigidBody destructor
+      !virtual
   */
-  virtual                                    ~RigidBody(void);
+  virtual  ~RigidBody(void);
   
-               void                  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
-  
-               void                  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
-  
-               void                  createSceneGeometry(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
-  
-               void                  createSceneGeometry(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
-
-               void                  createKinematicActor(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
-  
-               void                  createKinematicActor(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
-  
-               void                  createVolume(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shape*);
-               
-               void                  createVolume(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shapes&);
-
-
-
-  /** \brief Destroy NxActor.
+  /*! function. createDynamic.0
+      desc.
+          Become a Dynamic RigidBody (Actors) based on the arguments.
+      note.
+          User classes that inherit from Actor do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape* __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+      !protected
   */
-                void                  destroy(void);
+  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription& description, Scene* scene, Shape* shape);
+  
+  /*! function. createDynamic.1
+      desc.
+          Become a Dynamic RigidBody (Actor) based on the arguments.
+      note.
+          User classes that inherit from Actor do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void                  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+  
+  /*! function. createStatic.0
+      desc.
+          Become a Static RigidBody (StaticGeometry) based on the arguments.
+      note.
+          User classes that inherit from StaticGeometry do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape* __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+      !protected
+  */
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
+  
+  /*! function. createStatic.1
+      desc.
+          Become a Static RigidBody (StaticGeometry) based on the arguments.
+      note.
+          User classes that inherit from StaticGeometry do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+
+  /*! function. createKinematic.0
+      desc.
+          Become a Kinematic RigidBody (KinematicActor, KinematicController) based on the arguments.
+      note.
+          User classes that inherit from KinematicActor do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape* __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+      !protected
+  */
+  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
+  
+  /*! function. createKinematic.1
+      desc.
+          Become a Kinematic RigidBody (KinematicActor, KinematicController) based on the arguments.
+      note.
+          User classes that inherit from KinematicActor do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+  
+  /*! function. createTrigger.0
+      desc.
+          Become a Trigger RigidBody (Volume) based on the arguments.
+      note.
+          User classes that inherit from Volume do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           Enums::VolumeCollisionType _colType__ -- Collision types (composed with the @|@ (or) operator) of the types of Collisions to report.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shape*);
+  
+  /*! function. createTrigger.1
+      desc.
+          Become a Trigger RigidBody (Volume) based on the arguments.
+      note.
+          User classes that inherit from Volume do not need to call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           Enums::VolumeCollisionType _colType__ -- Collision types (composed with the @|@ (or) operator) of the types of Collisions to report.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shapes&);
+  
+  /*! function. destroy
+      desc.
+          Destroy the NxActor safely and delete all shapes from mShapes.
+      note.
+          User classes that inherit from Actor, StaticGeometry, KinematicActor, KinematicController or Volume do not need to call this.
+  */
+  void  destroy();
   
   protected: // Variables
   
-                        NxActor*              mActor;
+  NxActor*              mActor;
   
-                        Scene*                mScene;
+  Scene*                mScene;
   
-                        Callback*             mContactCallback;
+  Callback*             mContactCallback;
   
-                        StringHash            mNameHash;
+  StringHash            mNameHash;
   
-                        CollisionModel        mShapes;
+  CollisionModel        mShapes;
   
 }; // class RigidBody
 

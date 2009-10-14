@@ -43,32 +43,48 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief An archive is a collection of resources in one place. It may be implemented as a directory, zip
-           file or even a website.
+/*! class. FileArchive
+    desc.
+        A FileArchive represents a directory or drive as an Archive.
 */
 class NxOgrePublicClass FileArchive : public PointerClass<Classes::_FileArchive>, public Archive
 {
   
   public: // Functions
   
-  /** \brief
+  /*! constructor. FileArchive
+      desc.
+          Do not create manually. Use ResourceSystem::openArchive instead.
+      args.
+          const String& __name__ -- Archive name.
+          const Path& __path__ -- Path to the Archive.
+          ResourceProtocol* __protocol__ -- ResourceProtocol, must be a FileResourceProtocol.
   */
-                                              FileArchive(const String& name, const Path&, ResourceProtocol*);
-
-  /** \brief Required virtual constructor.
+                                              FileArchive(const String& name, const Path& path, ResourceProtocol* protocol);
+  
+  /*! destructor. FileArchive
   */
                                              ~FileArchive(void);
   
-  /** \brief
+  /*! function. open
+      desc.
+           Open a resource. Similar function to ResourceSystem::open.
+      args.
+          const Path& __path__ -- Relative path to the file to open, Protocol must be the same protocol as this Archive is.
+          Enums::ResourceAccess __access__ -- Resource access.
   */
-                 Resource*                    open(const Path&, NxOgre::Enums::ResourceAccess access);
+                 Resource*                    open(const Path&, Enums::ResourceAccess access);
   
-  /** \brief
+  /*! function. close
+      desc.
+           Close a resource.
+      args.
+           Resource* __resource__ -- Resource to close. Resource must be created by this archive.
   */
-                 void                         close(Resource*);
+                 void                         close(Resource* resource);
   
   
-}; // class Archive
+}; // class FileArchive
 
                                                                                        
 

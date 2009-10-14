@@ -209,7 +209,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  
 }
 
-void RigidBody::createSceneGeometry(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shape* shape)
+void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shape* shape)
 {
 
  NxOgre_ThrowIf(mActor, "createSceneGeometry tried to create an actor, but this RigidBody already has an actor.");
@@ -248,7 +248,7 @@ void RigidBody::createSceneGeometry(const Matrix44& pose, const RigidBodyDescrip
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
 }
 
-void RigidBody::createSceneGeometry(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shapes& shapes)
+void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shapes& shapes)
 {
 
  NxOgre_ThrowIf(mActor, "createSceneGeometry tried to create an actor, but this RigidBody already has an actor.");
@@ -295,7 +295,7 @@ void RigidBody::createSceneGeometry(const Matrix44& pose, const RigidBodyDescrip
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
 }
 
-void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shape* shape)
+void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shape* shape)
 {
 
  NxOgre_ThrowIf(mActor, "createKinematicActor tried to create an actor, but this RigidBody already has an actor.");
@@ -337,7 +337,7 @@ void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescri
  mActor->userData = (void*) NxOgre_New(PhysXPointer)(this, getClassType());
 }
 
-void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shapes& shapes)
+void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, Shapes& shapes)
 {
 
  NxOgre_ThrowIf(mActor, "createKinematicActor tried to create an actor, but this RigidBody already has an actor.");
@@ -391,7 +391,7 @@ void RigidBody::createKinematicActor(const Matrix44& pose, const RigidBodyDescri
  
 }
 
-void RigidBody::createVolume(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, Shape* shape)
+void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, Shape* shape)
 {
  mScene = scene;
  
@@ -440,7 +440,7 @@ void RigidBody::createVolume(const Matrix44& pose, Enums::VolumeCollisionType co
  
 }
 
-void RigidBody::createVolume(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, Shapes& shapes)
+void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, Shapes& shapes)
 {
  mScene = scene;
  

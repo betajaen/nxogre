@@ -68,6 +68,10 @@ class OGRE3DExportClass OGRE3DBody : public NxOgre::PointerClass<_OGRE3DBody>, p
     /** \brief
     */
     unsigned int getClassType() const;
+    
+    /** \brief Returns "RigidBodyType_OGRE3DBody" as the type of RigidBody.
+    */
+    unsigned int          getType() const;
 
     /** \brief Get the SceneManager that the SceneNode is in.
     */

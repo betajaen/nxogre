@@ -193,12 +193,12 @@ enum BodyFlags
     note.
          Compatible with **NxForceMode**.
     enums.
-         ForceMode_Force                -- Parameter has unit of @mass * distance/time^2@, i.e. a force
-         ForceMode_Impulse              -- Parameter has unit of @mass * distance/time@
-         ForceMode_VelocityChange       -- Parameter has unit of @distance/time@, i.e. the effect is mass independent: a velocity change.
+         ForceMode_Force                -- Parameter has unit of <span class="math">m &times; s / t ^2^</span>, i.e. a force
+         ForceMode_Impulse              -- Parameter has unit of <span class="math">m &times; s / t</span>
+         ForceMode_VelocityChange       -- Parameter has unit of distance/time, i.e. the effect is mass independent: a velocity change.
          ForceMode_SmoothImpulse        -- Same as Impulse but the effect is applied over all substeps. Use this for motion controllers that repeatedly apply an impulse.
          ForceMode_SmoothVelocityChange -- Same as VelocityChange but the effect is applied over all substeps. Use this for motion controllers that repeatedly apply an impulse.
-         ForceMode_Acceleration         -- Parameter has unit of @distance/time^2@, i.e. an acceleration. It gets treated just like a force except the mass is not divided out before integration.
+         ForceMode_Acceleration         -- Parameter has unit of <span class="math">d / t ^2^</span>, i.e. an acceleration. It gets treated just like a force except the mass is not divided out before integration.
 */
 enum ForceMode
 {
@@ -241,11 +241,13 @@ enum Priority
 */
 enum RigidBodyType
 {
- RigidBodyType_Dynamic   = 1,
- RigidBodyType_Kinematic = 2,
- RigidBodyType_Geometry  = 3,
- RigidBodyType_Volume    = 4,
- RigidBodyType_Unknown   = 0,
+ RigidBodyType_Actor               = -1,
+ RigidBodyType_KinematicActor      = -2,
+ RigidBodyType_SceneGeometry       = -3,
+ RigidBodyType_Volume              = -4,
+ RigidBodyType_KinematicController = -5,
+ RigidBodyType_Unknown             = 0,
+ RigidBodyType_USER_BEGIN          = 0
 };
 
 /*! enum. PhysXAssertionResponse
@@ -1034,7 +1036,7 @@ enum JointFlag
     desc.
          Joint projection is a method for correcting large joint errors.
     note.
-         Compatible with **NxJointProjectionMode **.
+         Compatible with **NxJointProjectionMode**.
     enums.
          JointProjectionMode_None -- Don't project this joint 
          JointProjectionMode_Point_MiniumDistance -- Linear and angular minimum distance projection 
@@ -1470,7 +1472,7 @@ enum FluidSimulationMethod
          Compatible with **NxFluidCollisionMethod**.
     enums.
          FluidCollisionMethod_Static         -- Collide with static shapes.
-         FluidCollisionMethod_Dynamic        -- Coolide with dynamic shapes.
+         FluidCollisionMethod_Dynamic        -- Collide with dynamic shapes.
 */
 enum FluidCollisionMethod
 {
@@ -1564,6 +1566,58 @@ enum SweepFlags
  SweepFlags_Dynamics                         = (1 << 1),
  SweepFlags_AllHits                          = (1 << 3)
 };
+
+
+/*! enum. FluidEmitterFlags
+    desc.
+        Flags that control the behaviour of fluid emitters.
+    note.
+        Compatible with **NxFluidEmitterFlag**
+    enums.
+         FluidEmitterFlags_Visualisation   -- Should the emitters be shown in the VisualDebugger.
+         FluidEmitterFlags_ForceOnBody     -- Should the emission cause a force on the attached Shape's RigidBody.
+         FluidEmitterFlags_AddBodyVelocity -- If set, then the attached RigidBody's velocity should be added to the particles velocity.
+         FluidEmitterFlags_Enabled         -- Enable/Disable the FluidEmitter.
+*/
+enum FluidEmitterFlags
+{
+ FluidEmitterFlags_Visualisation   = (1<<0),
+ FluidEmitterFlags_ForceOnBody     = (1<<2),
+ FluidEmitterFlags_AddBodyVelocity = (1<<3),
+ FluidEmitterFlags_Enabled         = (1<<4)
+};
+
+
+/*! enum. FluidEmitterShape
+    desc.
+         The shape of the area of the emission.
+    note.
+         Compatible with **NxEmitterShape**
+    enums.
+         FluidEmitterShape_Rectangular -- A Rectangle
+         FluidEmitterShape_Ellipse     -- An Ellipse
+*/
+enum FluidEmitterShape
+{
+ FluidEmitterShape_Rectangular = (1<<0),
+ FluidEmitterShape_Ellipse     = (1<<1)
+};
+
+/*! enum. FluidEmitterType
+    desc.
+         Type of Fluid Emitter
+    note.
+         Compatible with **NxEmitterType**
+    enums.
+         FluidEmitterType_Pressure -- Pressure
+         FluidEmitterType_FlowRate -- Flow rate
+*/
+enum FluidEmitterType
+{
+ FluidEmitterType_Pressure = (1<<0),
+ FluidEmitterType_FlowRate = (1<<1)
+};
+
 
 } // namespace Enums
 
@@ -1732,7 +1786,7 @@ enum SweepFlags
                  typedef                    BoundsT<Vec2>           Bounds2;
                  typedef                    BoundsT<Vec3>           Bounds3;
                  typedef                    BoundsT<Vec4>           Bounds4;
-
+                 typedef                    Real                    Radian;
                                                                                        
 
 namespace Functions

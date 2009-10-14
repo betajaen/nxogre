@@ -43,77 +43,109 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief MSWindows version of the FileResourceProtocol. Uses directories as archives.
-    \example
-    <code>
-     // Create an archive using a folder and giving it a name "media".
-     ResourceSystem::getSingleton()->openArchive("media", "file://c:/Program Files/myGame/media/");
-     // Open an resource in the archive "media".
-     ResourceSystem::getSingleton()->open("media/mesh.nxs");
-    </code>
+/*! class. FileResourceProtocol
+    desc.
+         Uses Files as Resources and Directories as Archives. Platform independent.
+    example.
+         // Open or create an archive (which will be named media) from the following path, then open the file named "mesh.nxs"
+         // and represent it as a Resource.
+         Resource* resource = ResourceSystem::getSingleton()->open("file://c:/Program Files/myGame/media/mesh.nxs");
 */
 class NxOgrePublicClass FileResourceProtocol : public PointerClass<Classes::_FileResourceProtocol>, public ResourceProtocol
 {
   
   public: // Functions
   
-  /** \brief Text
+  /*! constructor. FileResourceProtocol
   */
-                                              FileResourceProtocol(void);
+  FileResourceProtocol();
   
-  /** \brief Text
+  /*! destructor. FileResourceProtocol
   */
-                                             ~FileResourceProtocol(void);
-
-  /** \brief Text
-  */
-                       String                 getProtocol(void) const;
+ ~FileResourceProtocol();
   
-  /** \brief Text
+  /*! function. getProtocol
+      desc.
+          Get the protocol "file"
+      return.
+          **String** -- The protocol, which will be "file".
   */
-                       StringHash             getProtocolHash(void) const;
+  String  getProtocol() const;
   
-  /** \brief Is there only one archive by default?
+  /*! function. getProtocolHash
+      desc.
+          Get the protocol hash of "file"
+      return.
+          **String** -- Always "file" run through a hash function.
   */
-                       bool                   isSingleArchive(void) const;
+  StringHash  getProtocolHash() const;
   
-  /** \brief Does the resources use filenames?
+  /*! function. isSingleArchive
+      desc.
+          Is there only one archive by default?
+      return.
+          **bool** -- Always returns false.
   */
-                       bool                   usesNamelessResources(void) const;
+  bool  isSingleArchive() const;
   
-  /** \brief Calculates the archive name given by a path
-      \note
-            This is the order it follows to get the name
-             - Relative Path? No Directories?  => "current_directory"
-             - Has Directories? => path.directory(0)
-             - Has No Directories? Has Drive => path.drive()
-             Else:  => file_archive_<random_hex_string>
+  /*! function. usesNamelessResource
+      desc.
+          Does the resources use filenames?
+      return
+          **bool** -- Always returns true.
   */
-                       String                 calculateArchiveName(const Path&);
+  bool usesNamelessResources() const;
+  
+  /*! function. calculateArchiveName
+      desc.
+           Calculates the archive name given by a path
+            
+           The process of getting the name is;
+           # Is Relative Path? Has No Directories?  => @current_directory@
+           # Has Directories? => @path.directory(0)@
+           # Has No Directories? Has Drive => @path.drive()@
+           # Otherwise => @file_archive_<random_hex_string>@
+      args.
+       const Path& __path__ -- Path to calculate the archive name from
+      return.
+       **String** -- The archive name.
+  */
+  String  calculateArchiveName(const Path&);
   
   protected: // Functions
   
-  /** \brief Open an archive, and parse the contents. An archive being a single folder.
-      \example
-       <code>
-        ResourceSystem::getSingleton()->openArchive("media", "file://C:\Program Files\myGame\media/");
-       </code>
+  /*! function. openArchive
+      desc.
+          Open an archive, and parse the contents. An archive being a single folder.
+      example.
+        ResourceSystem::getSingleton()->openArchive("media", "file://C:/Program Files/myGame/media/");
+      args.
+       const String& archive_name -- Name of the archive; usually given by FileResourceProtocol::calculateArchiveName
+       const Path& path -- Directory path of the archive to represent.
+      return.
+        **Archive** * -- The opened archive.
   */
-                       Archive*               openArchive(const String&, const Path&);
+  Archive*  openArchive(const String& archive_name, const Path& path);
   
-  /** \brief Close an archive.
+  /*! function. closeArchive
+      desc.
+          Close an archive.
+      args.
+          Archive* __archive__ -- Archive to close.
   */
-                       void                   closeArchive(Archive*);
+  void  closeArchive(Archive*);
 
-  /** \brief Required initialise function
+  /*! function. initialise
+      desc.
+          Required initialise function
   */
-                       void                   initialise(void);
+  void  initialise(void);
   
   protected: // Variables
   
-                       String                 mProtocolName;
+  String                 mProtocolName;
   
-                       StringHash             mProtocolHash;
+  StringHash             mProtocolHash;
   
 }; // class ClassName
 

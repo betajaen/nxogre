@@ -98,7 +98,21 @@ template<typename T> void fill(T* start, T* end, T value)
 {
  for (;start != end; ++start)
   (*start) = value;
-} 
+}
+
+
+struct CalculatedTimeStep
+{
+ float mActual;
+ float mModified;
+ float mAccumulator;
+};
+
+/*! bigfunction. Calculate Timesep.
+    desc.
+        Calculate a timestep from a given time value.
+*/
+NxOgrePublicFunction CalculatedTimeStep calculateTimestep(float timestep, Enums::TimeStepMethod method = Enums::TimeStepMethod_Fixed, float maxTime = _1_60, unsigned int nbSubSteps = 8);
 
                                                                                        
 

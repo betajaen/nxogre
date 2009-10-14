@@ -46,121 +46,248 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. D6JointDescription
+    desc.
+        Initial properties for a D6Joint.
 */
 class NxOgrePublicClass D6JointDescription : public JointDescription
 {
  
   public: // Functions
   
-  /** \brief Text
+  /*! constructor. D6JointDescription
+      desc.
+           Calls reset.
   */
-                                              D6JointDescription(void);
+  D6JointDescription(void);
   
-  /** \brief Text
+  /*! destructor. D6JointDescription
   */
-                                             ~D6JointDescription(void);
+  ~D6JointDescription(void);
   
-  /** \brief Text
+  /*! function. reset
+      desc.
+           Sets the properties of the description to their default values.
   */
-  void                                        reset(void);
+  void  reset(void);
   
-  /** \brief
+  /*! function. isValid
+      desc.
+          Is the description properties in within range of allowed values.
+      return.
+          **bool** -- If the properties are within valid range of allowed values.
   */
-  bool                                        isValid(void) const;
-
-
-  /** \brief The linear degrees of freedom per axis.
-      \default D6Motion_Free
-      \see NxD6JointDesc::xMotion, NxD6JointDesc::yMotion, NxD6JointDesc::zMotion
-  */
-                Enums::D6JointMotion          mXMotion, mYMotion, mZMotion;
+  bool  isValid(void) const;
   
-  /** \brief Defines the angular degrees of freedom
-      \default D6Motion_Free
-      \see NxD6JointDesc::swingMotion, NxD6JointDesc::swing2Motion, NxD6JointDesc::twistMotion
+  /*! variable. mXMotion
+      desc.
+          The linear degrees of freedom for the X axis.
+      default.
+          D6Motion_Free
   */
-                Enums::D6JointMotion          mSwing1Motion, mSwing2Motion, mTwistMotion;
+  Enums::D6JointMotion          mXMotion;
   
-  /** \brief If some linear DOF are limited, this defines the characteristics of these limits.
+  /*! variable. mYMotion
+      desc.
+          The linear degrees of freedom for the Y axis.
+      default.
+          D6Motion_Free
   */
-                JointLimitSoftDescription     mLinearLimit;
+  Enums::D6JointMotion          mYMotion;
   
-  /** \brief If mSwing1Motion is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+  /*! variable. mZMotion
+      desc.
+          The linear degrees of freedom for the Z axis.
+      default.
+          D6Motion_Free
   */
-                JointLimitSoftDescription     mSwing1Limit;
-
-  /** \brief If mSwing2Motion is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+  Enums::D6JointMotion          mZMotion;
+  
+  /*! variable. mSwing1Motion
+      desc.
+          Defines the angular degrees of freedom
+      default.
+          D6Motion_Free
   */
-                JointLimitSoftDescription     mSwing2Limit;
-
-  /** \brief If mTwistLimit is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+  Enums::D6JointMotion          mSwing1Motion;
+  
+  /*! variable. mSwing2Motion
+      desc.
+          Defines the angular degrees of freedom
+      default.
+          D6Motion_Free
   */
-                JointLimitPairSoftDescription mTwistLimit;
-
-  /** \brief Drive the three linear DOF.
+  Enums::D6JointMotion          mSwing2Motion;
+  
+  /*! variable. mTwistMotion
+      desc.
+          Defines the angular degrees of freedom
+      default.
+          D6Motion_Free
   */
-                JointDriveDescription         mXDrive, mYDrive, mZDrive;
-
-  /** \brief These drives are used if the flag Enums::D6Joint_SlerpDrive is not set.
+  Enums::D6JointMotion          mTwistMotion;
+  
+  /*! variable. mLinearLimit
+      desc.
+          If some linear DOF are limited, this defines the characteristics of these limits.
+      default.
+          JointLimitSoftDescription()
   */
-                JointDriveDescription         mSwingDrive, mTwistDrive;
-
-  /** \brief These drives are used if the flag Enums::D6Joint_SlerpDrive is set.
+  JointLimitSoftDescription     mLinearLimit;
+  
+  /*! variable. mSwing1Limit
+      desc.
+          If mSwing1Motion is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+      default.
+          JointLimitSoftDescription()
   */
-                JointDriveDescription         mSlerpDrive;
-
-  /** \brief If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Position, this defines the goal position.
+  JointLimitSoftDescription     mSwing1Limit;
+  
+  /*! variable. mSwing2Limit
+      desc.
+          If mSwing2Motion is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+      default.
+          JointLimitSoftDescription()
   */
-                Vec3                         mDrivePosition;
-
-  /** \brief If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Position, this defines the goal orientation.
-      \note  Vec4 represents a Quaternion.
+  JointLimitSoftDescription     mSwing2Limit;
+  
+  /*! variable. mTwistLimit
+      desc.
+          If mTwistLimit is Enums::D6JointMotion_Limited, this defines the characteristics of these limits.
+      default.
+          JointLimitSoftDescription()
   */
-                Vec4                         mDriveOrientation;
-
-  /** \brief If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Velocity, this defines the goal linear velocity.
-
+  JointLimitPairSoftDescription  mTwistLimit;
+  
+  /*! variable. mXDrive
+      desc.
+          Drive the X linear DOF.
+      default.
+          JointDriveDescription()
   */
-                Vec3                         mDriveLinearVelocity;
-
-  /** \brief If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Velocity, this defines the goal linear velocity.
-      \note  mDriveAngularVelocity.x = mTwistAxis
-             mDriveAngularVelocity.y = mSwing1Axis
-             mDriveAngularVelocity.z = mSwing2Axis
+  JointDriveDescription  mXDrive;
+  
+  /*! variable. mYDrive
+      desc.
+          Drive the Y linear DOF.
+      default.
+          JointDriveDescription()
   */
-                Vec3                         mDriveAngularVelocity;
-
-  /** \brief Enable joint projection.
-      \default JointProjectionMode_None
-      \see NxSphericalJointDesc::projectionMode
+  JointDriveDescription  mYDrive;
+  
+  /*! variable. mZDrive
+      desc.
+          Drive the Z linear DOF.
+      default.
+          JointDriveDescription()
   */
-             Enums::JointProjectionMode   mProjectionMode;
+  JointDriveDescription  mZDrive;
 
-  /** \brief Distance above which to project joint.
-      \default 0.1
-      \see NxSphericalJointDesc::projectionDistance
+  /*! variable. mSwingDrive
+      desc.
+          These drives are used if the flag Enums::D6Joint_SlerpDrive is not set.
+      default.
+          JointDriveDescription()
   */
-                Real                      mProjectionDistance;
+  JointDriveDescription  mSwingDrive;
 
-  /** \brief Angle (in  radians) that is beyond the joint is projected.
-      \default 0.0872 (~5 degrees)
-      \see NxRevoluteJointDesc::projectionDistance
+  /*! variable. mTwistDrive
+      desc.
+          These drives are used if the flag Enums::D6Joint_SlerpDrive is not set.
+      default.
+          JointDriveDescription()
   */
-                Real                      mProjectionAngle;
+  JointDriveDescription  mTwistDrive;
+  
+  /*! variable. mSlerpDrive
+      desc.
+          These drives are used if the flag Enums::D6Joint_SlerpDrive is not set.
+      default.
+          JointDriveDescription()
+  */
+  JointDriveDescription  mSlerpDrive;
+  
+  /*! variable. mDrivePosition
+      desc.
+          If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Position, this defines the goal position.
+      default.
+          Vec3::ZERO
+  */
+  Vec3  mDrivePosition;
 
-  /** \see NxD6JointDesc::gearRatio
+  /*! variable. mDriveOrientation
+      desc.
+          If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Position, this defines the goal orientation.
+      default.
+          Quat::IDENTITY
+  */
+  Quat  mDriveOrientation;
+
+  /*! variable. mDriveLinearVelocity
+      desc.
+           If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Velocity, this defines the goal linear velocity.
+      default.
+          Vec3::ZERO
+  */
+  Vec3  mDriveLinearVelocity;
+
+  /*! variable. mDriveAngularVelocity
+      desc.
+            If the type of drive (mXDrive, mYDrive or mZDrive) is Enums::D6JointDriveType_Velocity, this defines the goal linear velocity.
+            
+            The Angular velocities are;
+            
+            |_. Velocity Axis |_. Drive Axis |
+            |x|mTwistAxis|
+            |y|mSwing1Axis|
+            |z|mSwing2Axis|
+             
+      default.
+        Vec3::ZERO
+  */
+  Vec3                         mDriveAngularVelocity;
+
+  /*! variable. mProjectionMode
+      desc.
+          Enable joint projection.
+      default.
+          JointProjectionMode_None
+  */
+  Enums::JointProjectionMode   mProjectionMode;
+
+  /*! variable. mProjectionDistance
+      desc.
+          Distance above which to project joint.
+      default.
+          0.1
+  */
+  Real  mProjectionDistance;
+  
+  /*! variable. mProjectionAngle
+      desc.
+          Angle (in  radians) that is beyond the joint is projected.
+      default.
+          0.0872 (~5 degrees)
+  */
+  Real  mProjectionAngle;
+  
+  /*! variable. mGearRatio
+      desc.
+          when the flag NX_D6JOINT_GEAR_ENABLED is set, the angular velocity
+          of the second actor is driven towards the angular velocity of the
+          first actor times gearRatio (both w.r.t. their primary axis)
       \default 1.0
   */
-                Real                      mGearRatio;
-
-  /** \sbrief Combination using the OR operator | of the Enums::D6JointFlag
-      \default 0
-      \see Enums::D6JointFlag
+  Real  mGearRatio;
+  
+  /*! variable. mD6Flags
+      desc.
+          Combination using the @|@ (or) operator of the Enums::D6JointFlag
+      default.
+          0
   */
-                unsigned int              mD6Flags;
-
-
+  unsigned int  mD6Flags;
+  
 }; // class D6JointDescription
 
                                                                                        

@@ -83,6 +83,7 @@ Quat Quat::operator=(const Matrix44& other)
  return *this;
 }
  
+ 
  // This function was adopted from the OGRE3D Library,Quat class from http://www.ogre3d.org
  void Quat::set(const Matrix33& kRot)
  {

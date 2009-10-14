@@ -53,7 +53,7 @@ KinematicActor::KinematicActor(Shape* shape, const Matrix44& pose, const RigidBo
  mNameHash = Functions::StringHash(mName);
  mShapes.push_back(shape);
  
- createKinematicActor(pose, description, scene, shape);
+ createKinematic(pose, description, scene, shape);
 }
 
 KinematicActor::KinematicActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
@@ -62,7 +62,7 @@ KinematicActor::KinematicActor(Shapes& shapes, const Matrix44& pose, const Rigid
  mName = description.mName;
  mNameHash = Functions::StringHash(mName);
  
- createKinematicActor(pose, description, scene, shapes);
+ createKinematic(pose, description, scene, shapes);
 }
 
 KinematicActor::~KinematicActor(void)

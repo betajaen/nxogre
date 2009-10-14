@@ -1,0 +1,1 @@
+c:\windows\Microsoft.NET\Framework\v3.5\msbuild NxOgre.Detritus.VC9.sln /p:Configuration=Release

@@ -45,8 +45,14 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief  
-*/ 
+/*! class. Convex
+    desc.
+         A convex is a convex point cloud (with optional triangles) that is used from a Mesh file. 
+         
+         Convex shapes can be used in Actors, KinematicActors, StaticGeometries and Volumes for
+         collisions and testing against them.
+    see. Shape
+*/
 class NxOgrePublicClass Convex : public PointerClass<Classes::_Convex>, public Shape
 {
   
@@ -55,41 +61,60 @@ class NxOgrePublicClass Convex : public PointerClass<Classes::_Convex>, public S
   public: // Functions
   
   using ::NxOgre::PointerClass<Classes::_Convex>::operator new;
-
+  
   using ::NxOgre::PointerClass<Classes::_Convex>::operator delete;
-
+  
   using ::NxOgre::PointerClass<Classes::_Convex>::getClassType;
-
-  /** \brief Convex
+  
+  /*! constructor. Convex
+      desc.
+           Box constructor with a Mesh*
+      args.
+           Mesh* __mesh__ -- Convex Mesh to use.
+           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
   */
                                               Convex(Mesh*, ShapeBlueprint* box_blueprint = new ShapeBlueprint());
   
-  /** \brief Convex
+  /*! destructor. Convex
+      desc.
+           As with all Shapes, deleting the Convex should be left to the class that is responsible for it.
+      note.
+           Deleting the Convex whilst it is attached to a RigidBody will probably cause a nasty crash.
   */
                                              ~Convex(void);
 
-  /** \brief Get the shape type based upon the Classes::xxxx enum.
+  /*! function. getShapeFunctionType
+      desc.
+           Get the shape type based upon the Classes::ShapeFunctionType enum.
+      return.
+           **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
   */
                    Enums::ShapeFunctionType   getShapeFunctionType() const;
   
-  /** \brief Get the mesh currently used by this Convex shape
-  */ 
+  /*! function. getMesh
+      desc.
+           Get the mesh
+      note.
+           MeshManager owns this pointer. Do not delete it.
+      return.
+           **Mesh** * -- The mesh shared by the Convex.
+  */
                       Mesh*                   getMesh(void);
   
   protected:
   
-  /** \internal DO NOT USE.
+  /* Create a NxShapeDesc (NxConvexDesc) of the current Box's configuration.
   */
                       NxShapeDesc*            create();
-
-  /** \internal DO NOT USE.
+  
+  /* Set the convex to a NxShape
   */
                       void                    assign(NxShape*);
-
+  
   protected:
-
+  
                       NxConvexShape*          mConvexShape;
-
+  
                       Mesh*                   mMesh;
   
 }; // class Convex

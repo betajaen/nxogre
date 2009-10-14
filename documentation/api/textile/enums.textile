@@ -249,7 +249,7 @@ h2(enum). <a name='JointProjectionMode'></a>JointProjectionMode
 p(d). Joint projection is a method for correcting large joint errors.
 
 
-p(n). **Note** -- Compatible with **NxJointProjectionMode **.
+p(n). **Note** -- Compatible with **NxJointProjectionMode**.
 
 
 h2(enum). <a name='RevoluteJointFlags'></a>RevoluteJointFlags

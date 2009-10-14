@@ -60,6 +60,12 @@ enum OGRE3DSceneNodeDestructorBehaviour
  OGRE3DSceneNodeDestructorBehaviour_Inherit   //< \brief Use the behaviour as given by the class.
 };
 
+
+enum OGRE3DRigidBodyTypes
+{
+ RigidBodyType_OGRE3DBody = NxOgre::Enums::RigidBodyType_USER_BEGIN + 8371,
+};
+
                                                                                        
 
 class OGRE3DRenderSystem;

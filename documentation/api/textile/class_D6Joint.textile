@@ -1,0 +1,71 @@
+p(d). A D6 joint is a general constraint between two actors.
+
+It allows the user to individually define the linear and rotational degrees of freedom.
+It also allows the user to configure the joint with limits and driven degrees of freedom as they wish.
+
+
+h2(fn destructor). <a name='D6Joint'></a>D6Joint
+
+h3(t). Traits
+
+* Protected function.
+
+
+h3(s). See
+
+p(s). Scene::destroyJoint
+
+h2(fn function). <a name='getJointType'></a>getJointType
+
+p(d). Get the type of joint as JointFunctionType
+
+
+h3. Return
+
+p(r). **Enums::JointFunctionType** -- Joint type as a JointFunctionType.
+
+
+h2(fn function). <a name='setDriveAngularVelocity'></a>setDriveAngularVelocity
+
+p(d). Set the drive angular velocity goal when it is being driven.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __angularVelocity__ | New drive angular velocity.|
+
+
+h2(fn function). <a name='setDriveLinearVelocity'></a>setDriveLinearVelocity
+
+p(d). Set the drive goal linear velocity when it is being driven.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __linearVelocity__ | New drive linear velocity.|
+
+
+h2(fn function). <a name='setDriveOrientation'></a>setDriveOrientation
+
+p(d). Set the drive goal orientation when it is being driven.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Quat& __orientation__ | New drive orientation.|
+
+
+h2(fn function). <a name='setDrivePosition'></a>setDrivePosition
+
+p(d). Set the drive position goal position when it is being driven.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const Vec3& __position__ | New drive position.|
+
+

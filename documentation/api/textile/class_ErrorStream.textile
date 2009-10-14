@@ -1,0 +1,93 @@
+p(d). ErrorStream handles all NxOgre and PhysX errors. It is also the source of all assertions caused by NxOgre and PhysX.
+
+ErrorStream is a Singleton class, and is created/destroyed via World::createSingletons, World::createWorld or World::destroySingletons.
+
+
+h2(fn destructor). <a name='ErrorStream'></a>ErrorStream
+
+h2(fn function). <a name='print'></a>print
+
+p(d). Writes an Error to a Resource.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Error* error | Error to write.|
+
+
+h2(fn function). <a name='setLogResource'></a>setLogResource
+
+p(d). Set the resource to write log messages to.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Resource* __resource__ | New resource to write to.|
+
+
+h2(fn function). <a name='throwAssertion'></a>throwAssertion
+
+p(d). Record an very serious error.
+
+
+p(n). **Note** -- Use the  NxOgre_ThrowAssertion or NxOgreThrowCaseAssertion macro to use this function properly.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const char* __message__ | Error message.|
+|const char* __file__ | Source file of the error.|
+|unsigned int __line__ | Line throwing the error.|
+
+
+h2(fn function). <a name='throwError'></a>throwError
+
+p(d). Record an serious error.
+
+
+p(n). **Note** -- Use the NxOgre_ThrowError macro to use this function properly.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|String& __message__ | Error message.|
+|const char* __file__ | Source file of the error.|
+|unsigned int __line__ | Line throwing the error.|
+
+
+h2(fn function). <a name='throwNotice'></a>throwNotice
+
+p(d). Record notice
+
+
+p(n). **Note** -- Use the NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro to use this function properly.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const char* __message__ | Error message.|
+|const char* __file__ | Source file of the error.|
+|unsigned int __line__ | Line throwing the error.|
+
+
+h2(fn function). <a name='throwWarning'></a>throwWarning
+
+p(d). Record less serious but recoverable error.
+
+
+p(n). **Note** -- Use the NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro to use this function properly.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|const char* __message__ | Error message.|
+|const char* __file__ | Source file of the error.|
+|unsigned int __line__ | Line throwing the error.|
+
+

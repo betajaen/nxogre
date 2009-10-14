@@ -1,0 +1,182 @@
+p(d). A compartment represents a sub-instance of one type of physics simulation,
+for example hardware fluid, hardware rigid body, or software rigid body.
+
+
+h2(fn destructor). <a name='Compartment'></a>Compartment
+
+h2(fn constructor). <a name='CompartmentArrayPair'></a>CompartmentArrayPair
+
+p(d). Internal do not use.
+
+
+h2(fn function). <a name='checkResults'></a>checkResults
+
+p(d). This checks to see if the simulation of the objects in this compartment has completed.
+
+This does not cause the data available for reading to be updated with the results of the simulation, it is simply a status check.
+The bool will allow it to either return immediately or block waiting for the condition to be met so that it can return true
+
+bool __block__ -- When set to true will block until the condition is met.
+
+
+h3. Return
+
+p(r). **bool** -- True if the results are available.
+
+
+h2(fn function). <a name='fetchResults'></a>fetchResults
+
+p(d). This is the big brother to checkResults() it basically makes the results of the compartment's simulation readable.
+
+The entire scene including the compartments will still be locked for writing until you call fetchResults(NX_RIGID_BODY_FINISHED).
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|bool __block__ | When set to true will block until the condition is met.|
+
+
+h3. Return
+
+p(r). **bool** -- True if the results have been fetched.
+
+
+h2(fn function). <a name='getCompartment'></a>getCompartment
+
+p(d). Get's the NxCompartment
+
+
+h3. Return
+
+p(r). **NxCompartment** * -- The NxCompartment.
+
+
+h3(t). Traits
+
+* Use PhysX classes as arguments or as a return value
+
+
+h2(fn function). <a name='getDeviceCode'></a>getDeviceCode
+
+p(d). Get the device code of the compartment.
+
+
+h3. Return
+
+p(r). **unsigned int** -- Device code.
+
+
+h2(fn function). <a name='getFlags'></a>getFlags
+
+p(d). Get the compartment flags
+return
+**unsigned int** -- Comparment flags.
+
+
+h2(fn function). <a name='getGridHashCellSize'></a>getGridHashCellSize
+
+p(d). Get the paging grid cell size
+
+
+h3. Return
+
+p(r). **Real** -- Paging grid cell size.
+
+
+h2(fn function). <a name='getHashTablePower'></a>getHashTablePower
+
+p(d). Get the paging grid power.
+
+
+h3. Return
+
+p(r). **unsigned int** -- paging grid power
+
+
+h2(fn function). <a name='getTimeScale'></a>getTimeScale
+
+p(d). Get the time scale of the compartment.
+
+
+h3. Return
+
+p(r). **Real** - Time scale of the compartment.
+Compartment::setTimeScale
+
+
+h2(fn function). <a name='getTiming'></a>getTiming
+
+p(d). Gets the simulation timing parameters.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __maxTimestep__ | Maximum size of a substep. <b>Range:</b> (0,inf)|
+|unsigned int __maxIter__ | Maximum number of iterations to divide a timestep into.|
+|Enums::TimeStepMethod __method__ | Method to use for timestep (either variable time step or fixed). See #NxTimeStepMethod.|
+|unsigned int& __numTimeSteps__|
+
+
+h2(fn function). <a name='getType'></a>getType
+
+p(d). Get the compartment type.
+
+
+h3. Return
+
+p(r). **Enums::CompartmentType** -- The type of compartment
+
+
+h2(fn function). <a name='setFlags'></a>setFlags
+
+p(d). Set the compartment flags
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|unsigned int __flags__ | Compartment flags.|
+
+
+h2(fn function). <a name='setTimeScale'></a>setTimeScale
+
+p(d). Set the times scale for the compartment
+
+
+h3. Return
+
+p(r). **Real** -- Time scale of the compartment
+Compartment::setTimeScale
+
+
+h2(fn function). <a name='setTiming'></a>setTiming
+
+p(d). Sets simulation timing parameters used to simulate the compartment.
+
+The initial default settings are inherited from the primary scene.
+
+If method is TimeStepMethod_Fixed, elapsedTime(simulate() parameter) is internally subdivided into up to
+maxIter substeps no larger than maxTimestep.
+
+If elapsedTime is not a multiple of maxTimestep then any remaining time is accumulated
+to be added onto the elapsedTime for the next time step.
+
+If more sub steps than maxIter are needed to advance the simulation by elapsed time, then
+the remaining time is also accumulated for the next call to simulate().
+
+The timestep method of TimeStepMethod_Fixed is strongly preferred for stable, reproducible simulation.
+
+Alternatively TimeStepMethod_Variable can be used, in this case the first two parameters
+are not used.	See also Enums::TimeStepMethod.
+
+
+h3. Arguments
+
+|_. Argument|_. Description|
+|Real __maxTimestep__ | Maximum size of a substep; (0, inf)|
+|unsigned int __maxIter__ | Maximum number of iterations to divide a timestep into.|
+|Enums::TimeStepMethod __method__ | Method to use for timestep (either variable time step or fixed). See Enums::TimeStepMethod.|
+
+

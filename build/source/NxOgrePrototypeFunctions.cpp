@@ -266,10 +266,11 @@ void PrototypeFunctions::MotorDescriptionToNxMotorDesc(const MotorDescription& s
 void PrototypeFunctions::D6JointDescriptionToNxD6JointDescription(const D6JointDescription& source, NxD6JointDesc& desc)
 {
 
- Functions::XYZ<Vec3, NxVec3>(source.mDriveAngularVelocity, desc.driveAngularVelocity);
- Functions::XYZ<Vec3, NxVec3>(source.mDriveLinearVelocity, desc.driveLinearVelocity);
- Functions::WXYZ<Vec4, NxQuat>(source.mDriveOrientation, desc.driveOrientation);
- Functions::XYZ<Vec3, NxVec3>(source.mDrivePosition, desc.drivePosition);
+ desc.driveAngularVelocity = source.mDriveAngularVelocity.as<NxVec3>();
+ desc.driveLinearVelocity = source.mDriveLinearVelocity.as<NxVec3>();
+ desc.driveOrientation = source.mDriveOrientation.as<NxQuat>();
+ desc.drivePosition = source.mDrivePosition.as<NxVec3>();
+
  desc.flags = source.mD6Flags;
  desc.gearRatio = source.mGearRatio;
  desc.jointFlags = source.mJointFlags;

@@ -29,6 +29,8 @@
 #include "NxOgreStable.h"
 #include "NxOgreFluid.h"
 #include "NxOgreFluidDescription.h"
+#include "NxOgreCompartment.h"
+#include "NxOgreScene.h"
 
 #include "NxPhysics.h"
 
@@ -45,10 +47,70 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
   mRenderable(renderable),
   mPriority(priority)
 {
+ mNameHash = Functions::StringHash(mName);
+ NxFluidDesc fd;
+ fd.attractionForDynamicShapes = description.mAttractionForDynamicShapes;
+ fd.attractionForStaticShapes  = description.mAttractionForStaticShapes;
+ fd.collisionDistanceMultiplier = description.mCollisionDistanceMultiplier;
+ fd.collisionGroup = description.mCollisionGroup;
+ fd.collisionMethod = description.mCollisionMethod;
+ fd.collisionResponseCoefficient = description.mCollisionResponseCoefficient;
+ if (description.mCompartment)
+  fd.compartment = description.mCompartment->getCompartment();
+ fd.damping = description.mDamping;
+ fd.dynamicFrictionForDynamicShapes = description.mDynamicFrictionForDynamicShapes;
+ fd.dynamicFrictionForStaticShapes = description.mDynamicFrictionForStaticShapes;
+ fd.externalAcceleration = description.mExternalAcceleration.as<NxVec3>();
+ fd.fadeInTime = description.mFadeInTime;
+ fd.flags = description.mFlags; 
+ // fd.fluidPacketData = ...
+ fd.forceFieldMaterial = description.mForceFieldMaterial;
+ fd.groupsMask.bits0 = description.mGroupsMask.w;
+ fd.groupsMask.bits1 = description.mGroupsMask.x;
+ fd.groupsMask.bits2 = description.mGroupsMask.y;
+ fd.groupsMask.bits3 = description.mGroupsMask.z;
+ // fd.initialParticleData = ...
+ fd.kernelRadiusMultiplier = description.mKernelRadiusMultiplier;
+ fd.maxParticles = description.mMaxParticles;
+ fd.motionLimitMultiplier = description.mMotionLimitMultiplier;
+ fd.name = mName.c_str();
+ fd.numReserveParticles = description.mNbReserveParticles;
+ fd.packetSizeMultiplier = description.mPacketSizeMultiplier;
+ //fd.particleCreationIdWriteData = ...
+ //fd.particleDeletionIdWriteData = ...
+ fd.particlesWriteData = mWriteData;
+ //fd.projectionPlane = ...
+ fd.restDensity = description.mRestDensity;
+ fd.restitutionForDynamicShapes = description.mRestitutionForDynamicShapes;
+ fd.restitutionForStaticShapes = description.mRestitutionForStaticShapes;
+ fd.restParticlesPerMeter = description.mRestParticlesPerMetre;
+ fd.simulationMethod = description.mSimulationMethod;
+ fd.staticFrictionForDynamicShapes = description.mStaticFrictionForDynamicShapes;
+ fd.staticFrictionForStaticShapes = description.mStaticFrictionForStaticShapes;
+ fd.stiffness = description.mStiffness;
+ fd.surfaceTension = description.mSurfaceTension;
+ fd.viscosity = description.mViscosity;
+ 
+ mFluid = mScene->getScene()->createFluid(fd);
+ if (mFluid == 0)
+ { 
+  StringStream ss;
+  ss << "Fluid was not created! \n";
+//     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
+  NxOgre_ThrowError(ss.str());
+  return;
+ }
+ 
 }
 
 Fluid::~Fluid()
 {
+ if (mFluid)
+ {
+  mFluidEmitters.clear();
+  mScene->getScene()->releaseFluid(*mFluid);
+  mFluid = 0;
+ }
 }
 
 Renderable* Fluid::getRenderable()
@@ -56,7 +118,7 @@ Renderable* Fluid::getRenderable()
  return mRenderable;
 }
 
-NxFluid* Fluid::getPhysXFluid()
+NxFluid* Fluid::getFluid()
 {
  return mFluid;
 }
@@ -67,9 +129,11 @@ bool Fluid::advance(float deltaTime, const Enums::Priority&)
  return true;
 }
 
-FluidEmitter* Fluid::createEmitter(const FluidEmitterDescription& desc)
+FluidEmitter* Fluid::createEmitter(const FluidEmitterDescription& description)
 {
- return 0; // temp.
+ FluidEmitter* emitter = new FluidEmitter(description, this);
+ mFluidEmitters.insert(emitter->getNameHash(), emitter);
+ return emitter;
 }
 
 void Fluid::destroyEmitter(FluidEmitter*)
@@ -81,9 +145,9 @@ unsigned int Fluid::getNbEmitters() const
  return mFluidEmitters.size();
 }
 
-ArrayIterator<FluidEmitter*> Fluid::getEmitters()
+Fluid::FluidEmitterIterator Fluid::getEmitters()
 {
- return ArrayIterator<FluidEmitter*>(mFluidEmitters);
+ return FluidEmitterIterator(mFluidEmitters);
 }
 
 unsigned int Fluid::addParticles(ParticleData&, bool appendIds)
@@ -421,6 +485,11 @@ void Fluid::setName(const String& name)
 String Fluid::getName() const
 {
  return mName;
+}
+
+StringHash Fluid::getNameHash() const
+{
+ return mNameHash;
 }
 
 Compartment* Fluid::getCompartment()

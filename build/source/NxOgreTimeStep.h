@@ -40,31 +40,109 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+class Scene;
+class FixedSceneTimer;
+
+/*! class TimeStep.
+    desc.
+        Abstract/User class for handling Time Stepping.
 */
-struct NxOgrePublicClass TimeStep
+class NxOgrePublicClass TimeStep
 {
   
   public: // Variables
   
-  /** \brief Actual timestep given to the TimeController
+  /*! constructor. TimeStep
   */
-                        Real                  mActual;
+  TimeStep(Scene*);
   
-  /** \brief Modified timestep by the TimeController; unless your doing anything special. You
-             should always use the modified version.
+  /*! destructor. TimeStep
   */
-                        Real                  mModified;
-  
-  /** \brief Interpolation alpha.
+  virtual ~TimeStep();
+
+  /*! function. calculate
+      desc.
+          Calculate the true timestep based of the actual seconds passed.
   */
-                        Real                  mAlpha;
+  void         calculate(float deltaTime);
   
-  /** \brief Number of times the scene was simulated during a given timestep.
+  /*! function. getMaxTimeStep
+      desc.
+          Get the maximum amount of time possible that can be simulated in a single timestep.
   */
-                        unsigned int          mSubSteps;
+  float        getMaxTimeStep() const;
+
+  /*! function. getSubSteps
+      desc.
+          Get the number of sub-steps
+  */
+  unsigned int getSubSteps() const;
   
+  /*! function. getMaxIterator
+      desc.
+          Get the maximum iterator per timestep.
+  */
+  unsigned int getMaxIterator() const;
+  
+  /*! function. getAlpha
+      desc.
+          Get alpha interpolation value
+  */
+  float        getAlpha() const;
+  
+  /*! function. getModified
+      desc.
+          Get the actual deltaTime used by PhysX
+  */
+  float        getModified() const;
+  
+  /*! function. getAccumulator
+      desc.
+          Get the time carried over from the previous timestep.
+  */
+  float        getAccumulator() const;
+  
+  /*! function. getActual
+      desc.
+          Get the time given by the user from TimeStep::calculate.
+  */
+  float        getAccurate() const;
+  
+  /*! function. isFixed
+      desc.
+          Is the time controller fixed?
+  */
+  bool         isFixed() const;
+
+  protected:
+  
+  float        mActual;
+  float        mMaxTimeStep;
+  unsigned int mSubSteps;
+  unsigned int mMaxIterator;
+  float        mAlpha;
+  float        mModified;
+  float        mAccumulator;
+  int          mMethod;
+
 }; // class TimeStep
+
+/*! class. FixedTimeStep
+    desc.
+        TimeStep for the FixedTimeController
+*/
+class NxOgrePublicClass FixedTimeStep : public TimeStep
+{
+ 
+ public:
+  
+  FixedTimeStep(Scene*);
+  
+  void         calculate(float deltaTime);
+  
+ protected:
+  
+};
 
                                                                                        
 

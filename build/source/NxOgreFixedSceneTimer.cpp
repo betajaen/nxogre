@@ -40,52 +40,29 @@ namespace NxOgre
 
                                                                                        
 
-FixedSceneTimer::FixedSceneTimer(Scene* scene, Real maxTime, Real expectedTime)
-: SceneTimer(scene, maxTime, expectedTime),
-  mMaxTimeStep(1.0f / 60.0f),
-  mOldTime(0.0f),
-  mAccumulator(0.0f),
-  mTimer()
+FixedSceneTimer::FixedSceneTimer(Scene* scene, Real maxTime)
+: SceneTimer(scene, maxTime),
+  mTimeStep(scene)
 {
- mScene->setTiming(mMaxTimeStep / 8.0f, 8, NX_TIMESTEP_FIXED);
- TimeStep& ts = mParent->getTimeStep();
- ts.mAlpha = 1.0f;
- ts.mModified = mMaxTimeStep;
- ts.mSubSteps = 8;
 }
 
 FixedSceneTimer::~FixedSceneTimer(void)
 {
 }
 
-void FixedSceneTimer::simulate(float user_deltaTimer)
+void FixedSceneTimer::simulate(float dt)
 {
  
- float now = mTimer.now();
- float deltaTime = now - mOldTime;
- mOldTime = now;
+ float deltaTime = dt; //mTimer.nowReset();
  
  // Go ahead PhysX.
  mScene->simulate(deltaTime);
  mScene->flushStream();
-
- // Calculate how much time PhysX did process.
- mAccumulator += deltaTime;
-
- TimeStep& ts = mParent->getTimeStep();
-
- for (unsigned int i=0; i < ts.mSubSteps;i++)
-  if (mAccumulator <= mMaxTimeStep)
-   break;
-  else
-   mAccumulator -= mExpectedTime;
-
- ts.mAlpha = mAccumulator / mMaxTimeStep;
- ts.mModified = mExpectedTime;
-
+ 
+ mTimeStep.calculate(deltaTime);
+ 
  // We probably simulated so in goes.
  mTimerMode = Enums::TimerMode_Simulating;
- ts.mActual = deltaTime;
  
 }
 
@@ -100,7 +77,10 @@ void FixedSceneTimer::fetchResults(void)
  mTimerMode = Enums::TimerMode_FetchedResults;
 }
 
-
+const TimeStep&  FixedSceneTimer::getTimeStep() const
+{
+ return mTimeStep;
+}
 
                                                                                        
 

@@ -57,7 +57,7 @@ void D6JointDescription::reset(void)
  mSwing2Motion = Enums::D6JointMotion_Free;
 
  mDrivePosition.zero();
- mDriveOrientation.set(1,0,0,0);
+ mDriveOrientation.identity();
 
  mDriveLinearVelocity.set(0,0,0);
  mDriveAngularVelocity.set(0,0,0);

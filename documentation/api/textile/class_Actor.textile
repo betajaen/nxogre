@@ -304,7 +304,7 @@ h3. Arguments
 
 |_. Argument|_. Description|
 |const Vec3& __motion__ | Motion to sweep|
-|unsigned int __sweep__ _ __flags__ | Sweep Flags, see *Enums::SweepFlags*|
+|unsigned int __sweepFlags__  | Sweep Flags, see *Enums::SweepFlags*|
 |unsigned int __size__ | Maximum shapes to sweep through|
 |SweepQueryHits& | Hits found once swept.|
 |SweepCache* | Sweeping Cache to perform any future linearSweeps with this actor.|
