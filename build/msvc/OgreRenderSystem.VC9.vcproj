@@ -176,6 +176,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\rendersystems\ogre\OGRE3DParticleRenderable.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\rendersystems\ogre\OGRE3DParticleRenderable.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\rendersystems\ogre\OGRE3DPointRenderable.cpp"
 			>
 		</File>

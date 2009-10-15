@@ -34,6 +34,7 @@
 #include "OGRE3DRigidBodyDescription.h"
 #include "OGRE3DRenderable.h"
 #include "OGRE3DPointRenderable.h"
+#include "OGRE3DParticleRenderable.h"
 #include "Ogre.h"
 
                                                                                        
@@ -289,21 +290,45 @@ void OGRE3DRenderSystem::destroySoftBody(NxOgre::SoftBody* cloth)
 
 NxOgre::Fluid* OGRE3DRenderSystem::createFluid(const NxOgre::FluidDescription& description, const Ogre::String& materialName, OGRE3DFluidRenderableType renderable_type)
 {
- OGRE3DRenderable* renderable = createRenderable(renderable_type);
- mSceneManager->getRootSceneNode()->attachObject(renderable);
- renderable->setMaterial(materialName);
- return mScene->createFluid(description, renderable);
+
+ NxOgre::Fluid* fluid;
+
+ if (renderable_type == OGRE3DFluidType_OgreParticle)
+ {
+  OGRE3DParticleRenderable* renderable = new OGRE3DParticleRenderable(materialName, this);
+  fluid = mScene->createFluid(description, renderable);
+  renderable->initialise(fluid);
+ }
+ else
+ {
+  OGRE3DRenderable* renderable = createRenderable(renderable_type);
+  mSceneManager->getRootSceneNode()->attachObject(renderable);
+  renderable->setMaterial(materialName);
+  fluid = mScene->createFluid(description, renderable);
+ }
+ 
+ return fluid;
 }
 
 void OGRE3DRenderSystem::destroyFluid(NxOgre::Fluid* fluid)
 {
+ 
  if (fluid == 0)
   return;
-
- OGRE3DRenderable* renderable = static_cast<OGRE3DRenderable*>(fluid->getRenderable());
-
- mSceneManager->getRootSceneNode()->detachObject(renderable);
- destroyRenderable(renderable);
+ 
+ NxOgre::Renderable* renderable = fluid->getRenderable();
+ 
+ if (renderable->getType() == OGRE3DFluidType_OgreParticle)
+ {
+  delete renderable;
+ }
+ else
+ {
+  OGRE3DRenderable* ogre_renderable = static_cast<OGRE3DRenderable*>(renderable);
+  mSceneManager->getRootSceneNode()->detachObject(ogre_renderable);
+  destroyRenderable(ogre_renderable);
+ }
+ 
  mScene->destroyFluid(fluid);
 }
 

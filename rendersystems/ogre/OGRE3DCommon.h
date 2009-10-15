@@ -51,6 +51,7 @@ enum
   _OGRE3DRenderable,
   _OGRE3DPointRenderable,
   _OGRE3DKinematicBody,
+  _OGRE3DParticleRenderable
 };
 
 enum OGRE3DSceneNodeDestructorBehaviour
@@ -68,8 +69,9 @@ enum OGRE3DRigidBodyTypes
 
 enum OGRE3DFluidRenderableType
 {
- OGRE3DFluidType_Position = NxOgre::Enums::RenderableType_ParticlePoints,
- OGRE3DFluidType_Velocity = OGRE3DFluidType_Position + 100,
+ OGRE3DFluidType_Position     = NxOgre::Enums::RenderableType_ParticlePoints,
+ OGRE3DFluidType_Velocity     = OGRE3DFluidType_Position + 100,
+ OGRE3DFluidType_OgreParticle = OGRE3DFluidType_Position + 101,
 };
 
                                                                                        
