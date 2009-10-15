@@ -66,6 +66,12 @@ enum OGRE3DRigidBodyTypes
  RigidBodyType_OGRE3DBody = NxOgre::Enums::RigidBodyType_USER_BEGIN + 8371,
 };
 
+enum OGRE3DFluidRenderableType
+{
+ OGRE3DFluidType_Position = NxOgre::Enums::RenderableType_ParticlePoints,
+ OGRE3DFluidType_Velocity = OGRE3DFluidType_Position + 100,
+};
+
                                                                                        
 
 class OGRE3DRenderSystem;

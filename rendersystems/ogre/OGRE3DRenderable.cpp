@@ -40,8 +40,11 @@ OGRE3DRenderable::RenderProfile OGRE3DRenderable::NXOGRE_VISUALDEBUGGER =
 OGRE3DRenderable::RenderProfile OGRE3DRenderable::NXOGRE_PHYSXMESH =
                   OGRE3DRenderable::RenderProfile (Ogre::RenderOperation::OT_TRIANGLE_LIST, true, false, true, true, false);
 
-OGRE3DRenderable::RenderProfile OGRE3DRenderable::NXOGRE_PARTICLEPOINTS =
+OGRE3DRenderable::RenderProfile OGRE3DRenderable::NXOGRE_PARTICLE_POINTS =
                   OGRE3DRenderable::RenderProfile (Ogre::RenderOperation::OT_POINT_LIST, false, false, false, false, false);
+
+OGRE3DRenderable::RenderProfile OGRE3DRenderable::NXOGRE_PARTICLE_VELOCITIES =
+                  OGRE3DRenderable::RenderProfile (Ogre::RenderOperation::OT_LINE_LIST, false, false, false, false, false);
 
 OGRE3DRenderable::RenderProfile OGRE3DRenderable::NXOGRE_SOFTBODY =
                   OGRE3DRenderable::RenderProfile (Ogre::RenderOperation::OT_TRIANGLE_LIST, false, false, true, false, false);
@@ -68,7 +71,7 @@ OGRE3DRenderable::RenderProfile::RenderProfile(Ogre::RenderOperation::OperationT
 {
 }
 
-OGRE3DRenderable::OGRE3DRenderable(NxOgre::Enums::RenderableType type)
+OGRE3DRenderable::OGRE3DRenderable(int type)
 : NxOgre::Renderable(type)
 {
  _createProfile(mType);
@@ -154,12 +157,12 @@ void OGRE3DRenderable::drawClothFast(NxOgre::PhysXMeshData* data, const NxOgre::
 }
 void OGRE3DRenderable::drawVisualDebugger(NxOgre::VisualDebuggerMeshData* data)
 {
- _resize(data->getNbLines(), 0);
+ _resize(data->getNbLines() * 2, 0);
 
  // Write the vertices.
- mVertexBuffer->writeData(0, 3 * data->getNbLines() * sizeof(float), data->getLines() );
+ mVertexBuffer->writeData(0, 3 * data->getNbLines() * 2 * sizeof(float), data->getLines() );
 
- mVertexColourBuffer->writeData(0, data->getNbLines() * sizeof(unsigned int), data->getColours() );
+ mVertexColourBuffer->writeData(0, data->getNbLines() * 2 * sizeof(unsigned int), data->getColours() );
 
  mBox.setInfinite();
  
@@ -167,21 +170,63 @@ void OGRE3DRenderable::drawVisualDebugger(NxOgre::VisualDebuggerMeshData* data)
 
 void OGRE3DRenderable::drawFluid(NxOgre::PhysXParticleData* data, const NxOgre::Bounds3& bounds)
 {
- 
- // Resize buffers if necessary.
- _resize( data->getNbParticles(), 0);
- 
- // Write the particle positions.
- mVertexBuffer->writeData(0, 3 * data->getNbParticles() * sizeof(float), data->getPositions());
- 
- // Set the extents.
- //mBox.setExtents(bounds.min.as<Ogre::Vector3>(), bounds.max.as<Ogre::Vector3>());
+ if (mType == OGRE3DFluidType_Position)
+ {
+  
+  // Resize buffers if necessary.
+  _resize( data->getNbParticles(), 0);
+  
+  // Write the particle positions.
+  mVertexBuffer->writeData(0, 3 * data->getNbParticles() * sizeof(float), data->getPositions());
+  
+ }
+ else if (mType == OGRE3DFluidType_Velocity)
+ {
+  
+  // Resize buffers if necessary.
+  _resize(data->getNbParticles() * 2, 0);
+  
+  NxOgre::Vec3 a, b, v, p;
+  float d = 0.016f;
+  
+  float *prPos = static_cast<float*>(mVertexBuffer->lock(Ogre::HardwareBuffer::HBL_DISCARD));
+  
+  float* positions = data->getPositions();
+  float* velocities = data->getVelocities();
+  
+  for (unsigned int i=0; i < data->getNbParticles() * 3; i+=3)
+  {
+   p.x = positions[i];
+   p.y = positions[i+1];
+   p.z = positions[i+2];
 
+   v.x = velocities[i];
+   v.y = velocities[i+1];
+   v.z = velocities[i+2];
+   v.normalise();
+   
+   a = p + (-v * d);
+   b = p + (v * d);
+   
+   *prPos++ = a.x;
+   *prPos++ = a.y;
+   *prPos++ = a.z;
+   *prPos++ = b.x;
+   *prPos++ = b.y;
+   *prPos++ = b.z;
+  }
+  
+  mVertexBuffer->unlock();
+  
+ }
+ 
+ 
  mBox.setInfinite();
+ 
 }
 
 
-void OGRE3DRenderable::_createProfile(NxOgre::Enums::RenderableType type)
+void OGRE3DRenderable::_createProfile(int type)
 {
  switch(type)
  {
@@ -194,13 +239,16 @@ void OGRE3DRenderable::_createProfile(NxOgre::Enums::RenderableType type)
   break;
   
   case NxOgre::Enums::RenderableType_ParticlePoints:
-   mProfile = OGRE3DRenderable::NXOGRE_PARTICLEPOINTS;
+   mProfile = OGRE3DRenderable::NXOGRE_PARTICLE_POINTS;
+  break;
+
+  case OGRE3DFluidType_Velocity:
+   mProfile = OGRE3DRenderable::NXOGRE_PARTICLE_VELOCITIES;
   break;
   
   case NxOgre::Enums::RenderableType_SoftBody:
    mProfile = OGRE3DRenderable::NXOGRE_SOFTBODY;
   break;
-  
  }
 }
 
@@ -318,7 +366,6 @@ void OGRE3DRenderable::_resize(size_t vertexCount, size_t indexCount)
   }
   // Update vertex count in the render operation
   mRenderOp.vertexData->vertexCount = vertexCount;
-  printf("BC: %i\tVC:%i\n", mVertexBufferCapacity, vertexCount);
   
   if (mProfile.usesIndexes)
   {

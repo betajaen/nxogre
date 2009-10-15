@@ -90,12 +90,13 @@ class OGRE3DExportClass OGRE3DRenderable : public NxOgre::PointerClass<_OGRE3DRe
      
      static RenderProfile NXOGRE_VISUALDEBUGGER;
      static RenderProfile NXOGRE_PHYSXMESH;
-     static RenderProfile NXOGRE_PARTICLEPOINTS;
+     static RenderProfile NXOGRE_PARTICLE_POINTS;
+     static RenderProfile NXOGRE_PARTICLE_VELOCITIES;
      static RenderProfile NXOGRE_SOFTBODY;
      
      /** \brief
      */
-     OGRE3DRenderable(NxOgre::Enums::RenderableType);
+     OGRE3DRenderable(int);
      
      /** \brief
      */
@@ -131,7 +132,7 @@ class OGRE3DExportClass OGRE3DRenderable : public NxOgre::PointerClass<_OGRE3DRe
      
   protected: // functions
      
-     inline void _createProfile(NxOgre::Enums::RenderableType);
+     inline void _createProfile(int);
      inline void _initialise();
      inline void _resize(size_t vertexCount = 0, size_t indexCount = 0);
      
@@ -161,8 +162,7 @@ class OGRE3DExportClass OGRE3DRenderable : public NxOgre::PointerClass<_OGRE3DRe
      
      //
      Ogre::HardwareIndexBufferSharedPtr   mIndexBuffer;
-
-
+     
 };
 
                                                                                        

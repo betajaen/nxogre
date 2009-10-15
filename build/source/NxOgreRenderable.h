@@ -52,7 +52,7 @@ class NxOgrePublicClass Renderable
   
   /**
   */
-  Renderable(Enums::RenderableType);
+  Renderable(int);
   
   /**
   */
@@ -80,11 +80,11 @@ class NxOgrePublicClass Renderable
 
   /** \brief Get the RenderableType.
   */
-  NxOgre::Enums::RenderableType             getType(void) const;
+  int             getType(void) const;
   
   protected:
   
-   NxOgre::Enums::RenderableType            mType;
+   int            mType;
   
 }; // class Renderable
 

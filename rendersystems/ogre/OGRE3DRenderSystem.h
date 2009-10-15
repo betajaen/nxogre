@@ -91,7 +91,7 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
 
      /** \brief Create and manage a Renderable.
      */
-     OGRE3DRenderable*                    createRenderable(NxOgre::Enums::RenderableType, const Ogre::String& materialName = "BaseWhiteNoLighting");
+     OGRE3DRenderable*                    createRenderable(int renderableType, const Ogre::String& materialName = "BaseWhiteNoLighting");
      
      /** \brief Destroy a Renderable.
      */
@@ -135,7 +135,7 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      
      /** \brief Create a fluid
      */
-     NxOgre::Fluid*                       createFluid(const NxOgre::FluidDescription&, const Ogre::String& material = "BaseWhiteNoLighting");
+     NxOgre::Fluid*                       createFluid(const NxOgre::FluidDescription&, const Ogre::String& material = "BaseWhiteNoLighting", OGRE3DFluidRenderableType = OGRE3DFluidType_Position);
      
      /** \brief Destroy a fluid that has been created with the createFluid. Cleans up the Renderable, which Scene::createFluid would not.
      */

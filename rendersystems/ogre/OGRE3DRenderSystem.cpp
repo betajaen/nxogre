@@ -129,7 +129,7 @@ OGRE3DRenderSystem::BodyIterator OGRE3DRenderSystem::getBodies()
  return BodyIterator(mBodies);
 }
 
-OGRE3DRenderable* OGRE3DRenderSystem::createRenderable(NxOgre::Enums::RenderableType type, const Ogre::String& materialName)
+OGRE3DRenderable* OGRE3DRenderSystem::createRenderable(int type, const Ogre::String& materialName)
 {
  OGRE3DRenderable* renderable = new OGRE3DRenderable(type);
  renderable->setMaterial(materialName);
@@ -287,9 +287,9 @@ void OGRE3DRenderSystem::destroySoftBody(NxOgre::SoftBody* cloth)
 }
 
 
-NxOgre::Fluid* OGRE3DRenderSystem::createFluid(const NxOgre::FluidDescription& description, const Ogre::String& materialName)
+NxOgre::Fluid* OGRE3DRenderSystem::createFluid(const NxOgre::FluidDescription& description, const Ogre::String& materialName, OGRE3DFluidRenderableType renderable_type)
 {
- OGRE3DRenderable* renderable = createRenderable(NxOgre::Enums::RenderableType_ParticlePoints);
+ OGRE3DRenderable* renderable = createRenderable(renderable_type);
  mSceneManager->getRootSceneNode()->attachObject(renderable);
  renderable->setMaterial(materialName);
  return mScene->createFluid(description, renderable);

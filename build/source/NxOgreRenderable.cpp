@@ -37,7 +37,7 @@ namespace NxOgre
 
                                                                                        
 
-Renderable::Renderable(Enums::RenderableType type) : mType(type)
+Renderable::Renderable(int type) : mType(type)
 {
 }
 
@@ -45,7 +45,7 @@ Renderable::~Renderable(void)
 {
 }
 
-NxOgre::Enums::RenderableType Renderable::getType(void) const
+int Renderable::getType(void) const
 {
  return mType;
 }

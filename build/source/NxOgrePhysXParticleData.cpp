@@ -81,7 +81,7 @@ NxParticleData PhysXParticleData::getParticleData()
  if (data.isValid() == false)
  { 
   StringStream ss;
-  ss << "PhysX ParticleData ( Max " << mPositions.capacity() / 3 << " Particles ) will be not created! \n";
+  ss << "PhysX ParticleData ( Max " << mPositions.capacity() / 3 << " Particles ) will be not created!\n";
   
   ss << "Reason is:\n";
   
@@ -141,7 +141,6 @@ void PhysXParticleData::configure(size_t maxParticles, size_t modifier)
 
 float* PhysXParticleData::getPositions()
 {
- printf("Positions Cap: %i\n", mPositions.capacity() / 3);
  return mPositions.first();
 }
 
