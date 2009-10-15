@@ -34,7 +34,7 @@
 
 /*
     
-          This isn't PhysX. This is just a copy of the PhysX classes and structs, so they can be used in NxOgre, without
+          This isn't PhysX. This is just a copy of the PhysX classes and structs so they can be used in NxOgre without
           the user's application requiring the PhysX headers. You can't actually do anything with them unless you import
           the headers and libraries from the PhysX SDK into your application; otherwise it's just an unknown class that
           your application cannot use.
@@ -140,6 +140,7 @@ class NxMaterial;                     //< \internal Prototyped class. DO NOT USE
 class NxMaterialDesc;                 //< \internal Prototyped class. DO NOT USE.
 class NxMeshData;                     //< \internal Prototyped class. DO NOT USE.
 class NxMotorDesc;                    //< \internal Prototyped class. DO NOT USE.
+class NxParticleData;                 //< \internal Prototyped class. DO NOT USE.
 class NxPhysicsSDK;                   //< \internal Prototyped class. DO NOT USE.
 class NxPlane;                        //< \internal Prototyped class. DO NOT USE.
 class NxPlaneShape;                   //< \internal Prototyped class. DO NOT USE.

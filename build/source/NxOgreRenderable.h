@@ -74,6 +74,10 @@ class NxOgrePublicClass Renderable
   */
   virtual void                              drawVisualDebugger(VisualDebuggerMeshData*) = 0;
 
+  /** \brief Draw a Fluid
+  */
+  virtual void                              drawFluid(PhysXParticleData*, const Bounds3&) = 0;
+
   /** \brief Get the RenderableType.
   */
   NxOgre::Enums::RenderableType             getType(void) const;

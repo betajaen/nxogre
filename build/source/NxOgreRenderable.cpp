@@ -50,6 +50,7 @@ NxOgre::Enums::RenderableType Renderable::getType(void) const
  return mType;
 }
 
+
                                                                                        
 
 } // namespace NxOgre

@@ -31,6 +31,8 @@
 #include "NxOgreFluidDescription.h"
 #include "NxOgreCompartment.h"
 #include "NxOgreScene.h"
+#include "NxOgreRenderable.h"
+#include "NxOgreTimeController.h"
 
 #include "NxPhysics.h"
 
@@ -48,6 +50,10 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
   mPriority(priority)
 {
  mNameHash = Functions::StringHash(mName);
+ 
+ mParticleData = NxOgre_New(PhysXParticleData)();
+ mParticleData->configure(description.mMaxParticles, 2);
+ 
  NxFluidDesc fd;
  fd.attractionForDynamicShapes = description.mAttractionForDynamicShapes;
  fd.attractionForStaticShapes  = description.mAttractionForStaticShapes;
@@ -78,7 +84,7 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
  fd.packetSizeMultiplier = description.mPacketSizeMultiplier;
  //fd.particleCreationIdWriteData = ...
  //fd.particleDeletionIdWriteData = ...
- fd.particlesWriteData = mWriteData;
+ fd.particlesWriteData = mParticleData->getParticleData();
  //fd.projectionPlane = ...
  fd.restDensity = description.mRestDensity;
  fd.restitutionForDynamicShapes = description.mRestitutionForDynamicShapes;
@@ -101,16 +107,23 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
   return;
  }
  
+ TimeController::getSingleton()->addTimeListener(this, mPriority);
 }
 
 Fluid::~Fluid()
 {
+ 
+ TimeController::getSingleton()->removeTimeListener(this, mPriority);
+ 
  if (mFluid)
  {
   mFluidEmitters.clear();
   mScene->getScene()->releaseFluid(*mFluid);
   mFluid = 0;
  }
+ 
+ NxOgre_Delete(mParticleData);
+ 
 }
 
 Renderable* Fluid::getRenderable()
@@ -125,7 +138,12 @@ NxFluid* Fluid::getFluid()
 
 bool Fluid::advance(float deltaTime, const Enums::Priority&)
 {
- 
+ if (mRenderable && mParticleData)
+ {
+  NxBounds3 bounds;
+  mFluid->getWorldBounds(bounds);
+  mRenderable->drawFluid(mParticleData, Bounds3::from(bounds));
+ }
  return true;
 }
 

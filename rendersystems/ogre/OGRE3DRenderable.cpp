@@ -165,6 +165,22 @@ void OGRE3DRenderable::drawVisualDebugger(NxOgre::VisualDebuggerMeshData* data)
  
 }
 
+void OGRE3DRenderable::drawFluid(NxOgre::PhysXParticleData* data, const NxOgre::Bounds3& bounds)
+{
+ 
+ // Resize buffers if necessary.
+ _resize( data->getNbParticles(), 0);
+ 
+ // Write the particle positions.
+ mVertexBuffer->writeData(0, 3 * data->getNbParticles() * sizeof(float), data->getPositions());
+ 
+ // Set the extents.
+ //mBox.setExtents(bounds.min.as<Ogre::Vector3>(), bounds.max.as<Ogre::Vector3>());
+
+ mBox.setInfinite();
+}
+
+
 void OGRE3DRenderable::_createProfile(NxOgre::Enums::RenderableType type)
 {
  switch(type)
@@ -302,7 +318,8 @@ void OGRE3DRenderable::_resize(size_t vertexCount, size_t indexCount)
   }
   // Update vertex count in the render operation
   mRenderOp.vertexData->vertexCount = vertexCount;
-
+  printf("BC: %i\tVC:%i\n", mVertexBufferCapacity, vertexCount);
+  
   if (mProfile.usesIndexes)
   {
     OgreAssert(indexCount <= std::numeric_limits<unsigned short>::max(), "indexCount exceeds 16 bit");

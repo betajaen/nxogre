@@ -54,7 +54,7 @@ class NxOgrePublicClass MeshData : public PointerClass<Classes::_MeshData>
   */
                                   ~MeshData();
   
-  /** \brief Sett the name to null-string, type to unknown and clean all Buffers.
+  /** \brief Set the name to null-string, type to unknown and clean all Buffers.
   */
   void                             clear();
   

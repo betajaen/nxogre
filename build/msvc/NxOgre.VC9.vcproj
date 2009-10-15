@@ -519,6 +519,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreEnums.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreErrorStream.cpp"
 			>
 		</File>
@@ -920,6 +924,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgrePhysXOutputStream.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXParticleData.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXParticleData.h"
 			>
 		</File>
 		<File

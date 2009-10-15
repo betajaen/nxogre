@@ -41,7 +41,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[626] = {
+static const char*  sClasses[627] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -595,6 +595,7 @@ static const char*  sClasses[626] = {
   "PhysXCallback",
   "PhysXMeshData",
   "PhysXOutputStream",
+  "PhysXParticleData",
   "PhysXPointer",
   "PhysXShapePointer",
   "PhysXUserAllocator",

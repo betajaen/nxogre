@@ -136,6 +136,7 @@ enum
   _PhysXCallback,
   _PhysXMeshData,
   _PhysXOutputStream,
+  _PhysXParticleData,
   _PhysXPointer,
   _PhysXShapePointer,
   _PhysXUserAllocator,

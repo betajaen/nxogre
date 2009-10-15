@@ -51,11 +51,15 @@ class NxOgrePublicClass PhysXParticleData : public NxOgre::PointerClass<Classes:
   
   /** \brief Text
   */
-  PhysXParticleData(Fluid*, size_t modifier = 2);
+  PhysXParticleData();
   
   /** \brief Text
   */
  ~PhysXParticleData(void);
+  
+  /** \internal Do not use in User App.
+  */
+  void  configure(size_t maxParticles, size_t modifier = 1);
   
   /** \internal Do not use in User App.
   */
@@ -89,10 +93,10 @@ class NxOgrePublicClass PhysXParticleData : public NxOgre::PointerClass<Classes:
   */
   float*                   getNormals();
   
-  protected: // Functions
-  
-  void                     _configure(size_t maxParticles);
-  
+  /** \brief
+  */
+  unsigned int             getNbParticles() const;
+
   protected: // Variables
   
   unsigned int*            mNbParticles;

@@ -117,7 +117,11 @@ class OGRE3DExportClass OGRE3DRenderable : public NxOgre::PointerClass<_OGRE3DRe
      */
      void                                      drawVisualDebugger(NxOgre::VisualDebuggerMeshData*);
      
-     /** \brief
+     /** \brief Text
+     */
+     void                                      drawFluid(NxOgre::PhysXParticleData*, const NxOgre::Bounds3&);
+     
+     /** \brief Text
      */
      Ogre::Real                                getBoundingRadius(void) const;
      

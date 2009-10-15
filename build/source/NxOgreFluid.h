@@ -36,6 +36,7 @@
 #include "NxOgreTimeListener.h"
 #include "NxOgreFluidEmitter.h"
 #include "NxOgreFluidEmitterDescription.h"
+#include "NxOgrePhysXParticleData.h"
 
                                                                                        
 
@@ -460,6 +461,10 @@ class NxOgrePublicClass Fluid : public PointerClass<Classes::_Fluid>, public Tim
   /** \brief
   */
   Compartment*  mCompartment;
+  
+  /** \brief
+  */
+  PhysXParticleData* mParticleData;
   
 }; // class Fluid
 
