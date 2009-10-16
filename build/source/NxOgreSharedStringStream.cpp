@@ -251,7 +251,7 @@ void SharedStringStream::_createBuffer(size_t buffer_size)
 
 bool SharedStringStream::endsWith(char c) const
 {
- return (*_Buffer->_End - 1) == c;
+ return (*_Buffer->_Write - 1) == c;
 }
 
 void SharedStringStream::clear()
