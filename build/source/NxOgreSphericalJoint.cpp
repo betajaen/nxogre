@@ -58,11 +58,7 @@ SphericalJoint::SphericalJoint(RigidBody* first, RigidBody* second, const Spheri
  
  if (description.isValid() == false)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
-  
-  message << "An error occured whilst creating a SphericalJoint.\nThe reason(s) and cause(s) could be:\n\n";
-  message << Reason::whyAsStream(description).get();
-  NxOgre_ThrowError(message.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_SphericalJointDescription);
   return;
  }
 

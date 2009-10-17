@@ -58,11 +58,7 @@ RevoluteJoint::RevoluteJoint(RigidBody* first, RigidBody* second, const Revolute
  
  if (description.isValid() == false)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
-  
-  message << "An error occured whilst creating a RevoluteJoint.\nThe reason(s) and cause(s) could be:\n\n";
-  message << Reason::whyAsStream(description).get();
-  NxOgre_ThrowError(message.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_RevoluteJoint);
   return;
  }
 

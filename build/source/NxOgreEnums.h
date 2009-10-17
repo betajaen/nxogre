@@ -39,6 +39,23 @@ namespace NxOgre
 namespace Enums
 {
 
+/*! enum. ExceptionType
+*/
+enum
+{
+ ExceptionType_UnknownError,
+ ExceptionType_InternalError,
+ ExceptionType_IOException,
+ ExceptionType_NoPhysXSDKError,
+ ExceptionType_PhysXInternalError,
+ ExceptionType_NullPointerException,
+ 
+ ExceptionType_PhysXSDKCreationFailed,
+ ExceptionType_DescriptionInvalid,
+ ExceptionType_PathInvalidException
+ 
+};
+
 /*! enum. Axis
     desc.
          Axis as an integer, semi-compatible with NxHeightFieldAxis and other classes.

@@ -69,15 +69,13 @@ Cloth::Cloth(const ClothDescription& description, Renderable* renderable, Enums:
  
  if (desc.isValid() == false)
  {
-  SharedStringStream ss;
-  ss << "Cloth description is invalid. Reasons are:" << Reason::whyAsStream(desc);
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(desc), Classes::_Cloth);
   return;
  }
+ 
  mCloth = mScene->getScene()->createCloth(desc);
-
  TimeController::getSingleton()->addTimeListener(this, mPriority);
-
+ 
 }
 
 Cloth::~Cloth()

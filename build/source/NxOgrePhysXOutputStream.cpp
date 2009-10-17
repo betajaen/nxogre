@@ -53,10 +53,10 @@ void PhysXOutputStream::setAssertionResponse(Enums::PhysXAssertionResponse respo
 }
 
 
-void PhysXOutputStream::reportError(NxErrorCode code, const char * message, const char *file, int line)
+void PhysXOutputStream::reportError(NxErrorCode code, const char* message, const char *file, int line)
 {
 
- SharedStringStream stream;
+ StringStream stream;
 
  if (code == NXE_DB_WARNING)
  {
@@ -70,20 +70,20 @@ void PhysXOutputStream::reportError(NxErrorCode code, const char * message, cons
  stream << message << "\nNxErroCode:" << Reason::toCStr(code);
 
  if (code == NXE_DB_WARNING)
-  ::NxOgre::ErrorStream::getSingleton()->throwWarning(stream.get(), file, line);
+  ::NxOgre::ErrorStream::getSingleton()->throwWarning(stream.str(), file, line);
  else
-  ::NxOgre::ErrorStream::getSingleton()->throwError(stream.get(), file, line);
+  ::NxOgre::ErrorStream::getSingleton()->throwError(stream.str(), file, line);
 
 
 }
 
-NxAssertResponse PhysXOutputStream::reportAssertViolation(const char * message, const char *file, int line)
+NxAssertResponse PhysXOutputStream::reportAssertViolation(const char* message, const char *file, int line)
 {
  
- SharedStringStream stream;
+ StringStream stream;
  stream << "PhysX assertion:\n" << message;
  
- ::NxOgre::ErrorStream::getSingleton()->throwAssertion(stream.get(), file, line);
+ ::NxOgre::ErrorStream::getSingleton()->throwAssertion(stream.str(), file, line);
  
  return mAssertionResponse;
 }

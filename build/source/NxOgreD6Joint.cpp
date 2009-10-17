@@ -58,11 +58,7 @@ D6Joint::D6Joint(RigidBody* first, RigidBody* second, const D6JointDescription& 
  
  if (description.isValid() == false)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
-  
-  message << "An error occured whilst creating a D6Joint.\nThe reason(s) and cause(s) could be:\n\n";
-  message << Reason::whyAsStream(description).get();
-  NxOgre_ThrowError(message.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_D6Joint);
   return;
  }
 

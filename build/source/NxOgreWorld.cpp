@@ -68,6 +68,13 @@ void World::precreateSingletons(void)
 {
  
  mCookingInterface = NxGetCookingLib(NX_PHYSICS_SDK_VERSION);
+
+ if (mCookingInterface == 0)
+ {
+  throw PhysXSystemSoftwareException(__FILE__, __LINE__, Classes::_World); 
+  return;
+ }
+ 
  mCookingInterface->NxInitCooking();
  
  if (ErrorStream::getSingleton() == 0)
@@ -183,21 +190,20 @@ World::World(NxOgre::WorldPrototype* prototype)
   
  NxSDKCreateError errorCode = NXCE_NO_ERROR;
  mSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, mPhysXUserAllocator, mPhysXOutputStream, sdk_description, &errorCode); 
-  
+ 
+ 
  if (errorCode != NXCE_NO_ERROR || mSDK == 0)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
- 
-  message << "An error occured creating the PhysicSDK.\nThe reason(s) and cause(s) could be:\n\n" << Reason::why(errorCode);
   
-  if (mSDK == 0)
-   message << "- NxPhysicsSDK pointer is null\n";
+  if (errorCode == NXCE_PHYSX_NOT_FOUND)
+  {
+    throw PhysXSystemSoftwareException(__FILE__, __LINE__, Classes::_World);
+  }
+  else
+  {
+    NxOgre_ThrowException(PhysXSDKCreationFailedException, Reason::Exceptionise(sdk_description, mSDK == 0, errorCode), Classes::_World);
+  }
   
-  if (errorCode == NXCE_DESCRIPTOR_INVALID)
-   message << Reason::whyAsStream(sdk_description).get();
-  
-  
-  NxOgre_ThrowError(message.get());
   mDeadSDK = true;
   return;
  }

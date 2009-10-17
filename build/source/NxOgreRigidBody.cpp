@@ -27,6 +27,8 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreCommon.h"
+
 #include "NxOgreRigidBody.h"
 
 #include "NxOgreScene.h"
@@ -43,6 +45,8 @@
 #include "NxOgreCompartment.h"
 
 #include "NxActor.h"
+
+#include "NxPhysics.h"
 
                                                                                        
 
@@ -144,6 +148,12 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
   
  mActor = mScene->getScene()->createActor(actor_description);
  
+ if (mActor == 0)
+ {
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(actor_description), Classes::_RigidBody);
+  return;
+ }
+
  NxOgre_Delete(shape_description);
  
  NxShape* const* physx_shapes = mActor->getShapes();
@@ -189,10 +199,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  
  if (mActor == 0)
  {
-  SharedStringStream ss;
-  ss << "RigidBody actor was not created! \n"
-     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(actor_description), Classes::_RigidBody);
   return;
  }
  
@@ -276,10 +283,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  
  if (mActor == 0)
  {
-  SharedStringStream ss;
-  ss << "RigidBody actor was not created! \n"
-     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(actor_description), Classes::_RigidBody);
   return;
  }
  
@@ -370,10 +374,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  
  if (mActor == 0)
  {
-  SharedStringStream ss;
-  ss << "RigidBody actor was not created! \n"
-     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(actor_description), Classes::_RigidBody);
   return;
  }
  
@@ -416,10 +417,7 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  
  if (mActor == 0)
  {
-  SharedStringStream ss;
-  ss << "RigidBody actor was not created! \n"
-     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(actor_description), Classes::_RigidBody);
   return;
  }
  
@@ -467,10 +465,7 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  
  if (mActor == 0)
  {
-  SharedStringStream ss;
-  ss << "RigidBody actor was not created! \n"
-     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(actor_description), Classes::_RigidBody);
   return;
  }
  

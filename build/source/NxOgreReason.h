@@ -32,11 +32,8 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreCommon.h"
-
-#ifdef NXOGRE_SDK
-# include "NxPhysics.h"
-#endif
+#include "NxOgreString.h"
+#include "NxOgrePhysXPrototypes.h"
 
                                                                                        
 
@@ -45,66 +42,46 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief Reason is a collection of static functions that turns descriptions and error codes
-           into why they could be invalid.
+/*! class. Reason
+    desc.
+         Reason is a collection of static functions that turns descriptions and error codes into why they could be invalid.
 */
 class NxOgrePublicClass Reason
 {
-public:
-
-#if NXOGRE_SDK
-  static const char* why(NxSDKCreateError);
-#endif
-
-#if NXOGRE_SDK
-  static const char* toCStr(NxErrorCode);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxPhysicsSDKDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxSceneDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxActorDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxMaterialDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxHeightFieldDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxJointLimitDesc&, const char* sourceName);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxSpringDesc&, const char* sourceName);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxJointDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxSphericalJointDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxClothDesc&);
-#endif
-
-#if NXOGRE_SDK
-  static SharedStringStream whyAsStream(const NxSoftBodyDesc&);
-#endif
-
-}; // class ClassName
+  
+ public:
+  
+  static const char* Exceptionise(int PhysXSDKCreateError);
+  
+  static const char* toCStr(int PhysXErrorEcode);
+  
+  static String Exceptionise(const NxPhysicsSDKDesc&, bool isSdkNull, int errorCode);
+  
+  static String Exceptionise(const NxSceneDesc&, bool isSDKNull, const String& sceneName);
+  
+  static String Exceptionise(const NxActorDesc&);
+  
+  static String Exceptionise(const NxMaterialDesc&);
+  
+  static String Exceptionise(const NxHeightFieldDesc&);
+  
+  static String Exceptionise(const NxJointLimitDesc&, const char* sourceName);
+  
+  static String Exceptionise(const NxSpringDesc&, const char* sourceName);
+  
+  static String Exceptionise(const NxJointDesc&);
+  
+  static String Exceptionise(const NxSphericalJointDesc&);
+  
+  static String Exceptionise(const NxRevoluteJointDesc&);
+  
+  static String Exceptionise(const NxClothDesc&);
+  
+  static String Exceptionise(const NxSoftBodyDesc&);
+  
+  static String Exceptionise(const Path& path, Enums::ResourceStatus status);
+  
+}; // class Reason
 
                                                                                        
 

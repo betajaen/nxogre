@@ -33,6 +33,7 @@
 
 #include "NxOgrePhysXPrototypes.h"
 #include "NxOgreEnums.h"
+#include "NxOgreException.h"
 #include "NxOgrePointerFunctions.h"
 #include "NxOgreMemory.h"
 #include "NxOgreClasses.h"
@@ -57,7 +58,6 @@
 #include "NxOgreMatrix.h"
 #include "NxOgreString.h"
 #include "NxOgreIntVectors.h"
-#include "NxOgreSharedStringStream.h"
 #include "NxOgrePath.h"
 #include "NxOgreVertex.h"
 #include "NxOgreTriangle.h"
@@ -206,9 +206,6 @@ namespace NxOgre
                  class                      SoftBody;                      //!<
                  class                      SoftBodyDescription;           //!<
                  class                      SoftBodyMesh;                  //!<
-                 class                      SharedStringStream;            //!<
-//::             class                      SharedStringStream_Buffer;     //!<
-//::             struct                 SharedStringStreamReferenceCounter //!<
                  class                      Shape;                         //!<
                  class                      ShapeBlueprint;                //!<
                  class                      SpringDescription;             //!<

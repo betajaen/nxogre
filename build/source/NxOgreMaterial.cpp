@@ -71,16 +71,7 @@ void Material::create(MaterialPrototype* prototype)
 
  if (description.isValid() == false)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
-  
-  message << "An error occured whilst creating a Material.\nThe reason(s) and cause(s) could be:\n\n";
-   
-  if (mScene == 0)
-   message << " - Scene is not created.\n";
-
-  message << Reason::whyAsStream(description).get();
-  
-  NxOgre_ThrowError(message.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_Material);
   return;
  }
 

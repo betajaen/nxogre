@@ -94,25 +94,16 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
  scene_description.userTriggerReport = mPhysXCallback;
  scene_description.userContactReport = mPhysXCallback;
  
+ 
+ NxOgre_ThrowExceptionIfNull(mSDK, NX_MEMORY_PhysicsSDK);
+ 
  mScene = mSDK->createScene(scene_description);
  
  if (mScene == 0)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
- 
-  if (mName.length())
-   message << "An error occured whilst creating the Scene named '" << mName << "'\nThe reason(s) and cause(s) could be:\n\n";
-  else
-   message << "An error occured whilst creating a Scene.\nThe reason(s) and cause(s) could be:\n\n";
-   
-  if (mSDK == 0)
-   message << " - NxPhysicsSDK is not created.\n";
-  
-  message << Reason::whyAsStream(scene_description).get();
-  
-  // Hey there! Got an assertion that points to here?
-  // Check your SceneDescription/SceneProtoype properties to see if they are valid or not.
-  NxOgre_ThrowAssertion(0, message.get());
+  // Hey there! Got an exception that points to here?
+  // Check your log or read the exception. It tell you what is wrong with your SceneDescription
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(scene_description, mSDK == 0, mName), Classes::_World);
   return;
  }
   

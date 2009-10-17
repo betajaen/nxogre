@@ -89,17 +89,34 @@ void OGRE3DParticleRenderable::drawFluid(NxOgre::PhysXParticleData* data, const 
  }
  
  float* positions = data->getPositions();
+ float* velocities = data->getVelocities();
+
  unsigned int i = 0;
  Ogre::ParticleIterator it = mParticleSystem->_getIterator();
+ unsigned int m = data->getNbParticles() * 3;
  while(!it.end())
  {
+  
   Ogre::Particle* particle = it.getNext();
-  particle->position.x = positions[i];
-  particle->position.y = positions[i+1];
-  particle->position.z = positions[i+2];
-  particle->colour.a = 0.2;
+  if (i < m)
+  {
+   particle->position.x = positions[i];
+   particle->position.y = positions[i+1];
+   particle->position.z = positions[i+2];
+   particle->direction.x = velocities[i];
+   particle->direction.y = velocities[i+1];
+   particle->direction.z = velocities[i+2];
+  }
+  else
+  {
+   particle->timeToLive = 0;
+  }
+  
   i+=3;
+  
  }
+ 
+ mParticleSystem->setBounds(Ogre::AxisAlignedBox(bounds.min.as<Ogre::Vector3>(), bounds.max.as<Ogre::Vector3>()));
  
 }
 

@@ -142,6 +142,7 @@ class NxMeshData;                     //< \internal Prototyped class. DO NOT USE
 class NxMotorDesc;                    //< \internal Prototyped class. DO NOT USE.
 class NxParticleData;                 //< \internal Prototyped class. DO NOT USE.
 class NxPhysicsSDK;                   //< \internal Prototyped class. DO NOT USE.
+class NxPhysicsSDKDesc;               //< \internal Prototyped class. DO NOT USE.
 class NxPlane;                        //< \internal Prototyped class. DO NOT USE.
 class NxPlaneShape;                   //< \internal Prototyped class. DO NOT USE.
 class NxPlaneShapeDesc;               //< \internal Prototyped class. DO NOT USE.

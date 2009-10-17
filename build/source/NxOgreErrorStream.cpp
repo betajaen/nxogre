@@ -31,7 +31,8 @@
 #include "NxOgreSingleton.h"
 #include "NxOgreResourceSystem.h"
 #include "NxOgreResource.h"
-#include "NxOgreSharedStringStream.h"
+
+#include <iostream>
 
                                                                                        
 
@@ -70,18 +71,11 @@ ErrorStream::~ErrorStream(void)
  //mErrors.
 }
 
-void ErrorStream::throwAssertion(const char* message, const char* file, unsigned int line)
+void ErrorStream::throwAssertion(const String& message, const char* file, unsigned int line)
 {
- Error* error = NxOgre_New(Error)(String(message), String(file), line, 3);
+ Error* error = NxOgre_New(Error)(message, String(file), line, 3);
  print(error);
  mErrors.insert(error);
-}
-
-void ErrorStream::throwError(const char* message, const char* file, unsigned int line)
-{
- Error* error = NxOgre_New(Error)(String(message), String(file), line, 2);
- print(error);
- delete error; // temp
 }
 
 void ErrorStream::throwError(const String& message, const char* file, unsigned int line)
@@ -91,47 +85,60 @@ void ErrorStream::throwError(const String& message, const char* file, unsigned i
  delete error; // temp
 }
 
-void ErrorStream::throwWarning(const char* message, const char* file, unsigned int line)
+void ErrorStream::throwWarning(const String& message, const char* file, unsigned int line)
 {
- Error* error = NxOgre_New(Error)(String(message), String(file), line, 1);
+ Error* error = NxOgre_New(Error)(message, String(file), line, 1);
  print(error);
  delete error; // temp
 }
 
-void ErrorStream::throwNotice(const char* message, const char* file, unsigned int line)
+void ErrorStream::throwNotice(const String& message, const char* file, unsigned int line)
 {
- Error* error = NxOgre_New(Error)(String(message), String(file), line, 0);
+ Error* error = NxOgre_New(Error)(message, String(file), line, 0);
  print(error);
  delete error; // temp
+}
+
+void ErrorStream::throwException(const Exception& exception)
+{
+ 
+ 
+ if (mLogResource)
+ {
+  std::string str = exception.str();
+  mLogResource->write(str.c_str(), str.length());
+  mLogResource->flush();
+ }
+ 
 }
 
 void ErrorStream::print(Error* error)
 {
  
- mStringStream.clear();
- 
- 
+ std::stringstream stream;
+  
  if (error->mType == 0)
-  mStringStream << "-Notice ----------------------------------------------------------\n";
+  stream << "-Notice ----------------------------------------------------------\n";
  else if (error->mType == 1)
-  mStringStream << "-Warning ---------------------------------------------------------\n";
+  stream << "-Warning ---------------------------------------------------------\n";
  else if (error->mType == 2)
-  mStringStream << "-Error -----------------------------------------------------------\n";
+  stream << "-Error -----------------------------------------------------------\n";
  else if (error->mType == 3)
-  mStringStream << "-Assertion -------------------------------------------------------\n";
+  stream << "-Assertion -------------------------------------------------------\n";
  else
-  mStringStream << "-Banana not found! -----------------------------------------------\n";
+  stream << "-Banana not found! -----------------------------------------------\n";
  
  if (error->mFile.length())
-  mStringStream << "From: " << error->mFile.c_str() << "(" << error->mLine << ")\n";
+  stream << "From: " << error->mFile.c_str() << "(" << error->mLine << ")\n";
  
- mStringStream << error->mMessage << "\n------------------------------------------------------------------\n";
+ stream << error->mMessage << "\n------------------------------------------------------------------\n";
  
- printf(mStringStream.get());
+ std::cout << stream << std::endl;
  
  if (mLogResource)
  {
-  mLogResource->write(mStringStream.get(), mStringStream.length());
+  std::string str = stream.str();
+  mLogResource->write(str.c_str(), str.length());
   mLogResource->flush();
  }
  

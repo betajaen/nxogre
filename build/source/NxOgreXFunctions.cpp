@@ -97,10 +97,11 @@ extern inline bool isX(Resource* resource)
  return false;
 }
 
-extern inline SharedStringStream whyIsNotX(Resource* resource)
+extern inline String whyIsNotX(Resource* resource)
 {
- SharedStringStream stream;
-
+ 
+ StringStream stream;
+ 
  // False on a resource that isn't opened.
  if (resource->getStatus() != ::NxOgre::Enums::ResourceStatus_Opened)
   stream << " - Resource is not opened.\n";
@@ -148,7 +149,7 @@ extern inline SharedStringStream whyIsNotX(Resource* resource)
  if (b == false)
   stream << " - Resource file does not have a correct file-type header.\n";
  
- return stream;
+ return stream.str();
 }
 
 extern inline Enums::XType getXType(Resource* resource)

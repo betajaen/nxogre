@@ -36,7 +36,6 @@
 #include "NxOgrePointerClass.h"
 #include "NxOgreArray.h"
 #include "NxOgreString.h"
-#include "NxOgreSharedStringStream.h"
 
                                                                                        
 
@@ -44,7 +43,6 @@ namespace NxOgre
 {
 
 class Resource;
-class SharedStringStream;
 
                                                                                        
 
@@ -55,6 +53,7 @@ class SharedStringStream;
 */
 class NxOgrePublicClass Error : public PointerClass<Classes::_ErrorStream>
 {
+   
  public:
    
    /*! constructor. Error
@@ -113,6 +112,7 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::
 {
   
   friend class World;
+  friend class Exception;
   
   public: // Functions
   
@@ -122,31 +122,19 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::
       note.
            Use the  NxOgre_ThrowAssertion or NxOgreThrowCaseAssertion macro to use this function properly.
       args.
-           const char* __message__ -- Error message.
+           const String& __message__ -- Error message.
            const char* __file__ -- Source file of the error.
            unsigned int __line__ -- Line throwing the error.
   */
-  void  throwAssertion(const char* message, const char* file, unsigned int line);
-  
+  void  throwAssertion(const String& message, const char* file, unsigned int line);
+
   /*! function. throwError
       desc.
           Record an serious error.
       note.
           Use the NxOgre_ThrowError macro to use this function properly.
       args.
-           const char* __message__ -- Error message.
-           const char* __file__ -- Source file of the error.
-           unsigned int __line__ -- Line throwing the error.
-  */
-  void  throwError(const char* message, const char* file, unsigned int line);
-  
-  /*! function. throwError
-      desc.
-          Record an serious error.
-      note.
-          Use the NxOgre_ThrowError macro to use this function properly.
-      args.
-           String& __message__ -- Error message.
+           const String& __message__ -- Error message.
            const char* __file__ -- Source file of the error.
            unsigned int __line__ -- Line throwing the error.
   */
@@ -158,11 +146,11 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::
       note.
           Use the NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro to use this function properly.
       args.
-           const char* __message__ -- Error message.
+           const String& __message__ -- Error message.
            const char* __file__ -- Source file of the error.
            unsigned int __line__ -- Line throwing the error.
   */
-  void  throwWarning(const char* message, const char* file, unsigned int line);
+  void  throwWarning(const String& message, const char* file, unsigned int line);
   
   /*! function. throwNotice
       desc.
@@ -170,21 +158,15 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::
       note.
           Use the NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro to use this function properly.
       args.
-           const char* __message__ -- Error message.
+           const String& __message__ -- Error message.
            const char* __file__ -- Source file of the error.
            unsigned int __line__ -- Line throwing the error.
   */
-  void  throwNotice(const char* message, const char* file, unsigned int line);
+  void  throwNotice(const String& message, const char* file, unsigned int line);
   
-  /*! function. throwNotice
+  /*! function. getSingleton
       desc.
-          Record notice
-      note.
-          Use the NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro to use this function properly.
-      args.
-           const char* __message__ -- Error message.
-           const char* __file__ -- Source file of the error.
-           unsigned int __line__ -- Line throwing the error.
+          Gets the singleton pointer to the ErrorStream.
   */
   static  ErrorStream*  getSingleton(void);
 
@@ -197,6 +179,8 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::
   void  setLogResource(Resource* resource);
   
   protected: // Functions
+  
+  void throwException(const Exception&);
   
   /*! constructor. ErrorStream
       desc.
@@ -222,7 +206,6 @@ class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::
   
   Resource*           mLogResource;
   
-  SharedStringStream  mStringStream;
   
 }; // class ErrorStream
 

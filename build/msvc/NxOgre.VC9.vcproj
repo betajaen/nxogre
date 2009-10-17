@@ -531,6 +531,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreException.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreException.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreFileArchive.cpp"
 			>
 		</File>
@@ -1192,14 +1200,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreSharedPointer.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSharedStringStream.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSharedStringStream.h"
 			>
 		</File>
 		<File

@@ -40,20 +40,20 @@ class PathHelper
   
  public:
 
-   static bool is_directory(char c)      { return c == '\\' || c == '/'; }
-   static bool is_drive(char c)          { return c == ':'; }
-   static bool is_protocol(char c)       { return c == ':'; }
-   static bool is_portion(char c)        { return c == '#'; }
-   static bool is_extension(char c)      { return c == '.'; }
-   static bool is_relative_path(char c)  { return c == '.'; }
+   static bool is_directory(char c)         { return c == '\\' || c == '/'; }
+   static bool is_drive(char c)             { return c == ':'; }
+   static bool is_protocol(char c)          { return c == ':'; }
+   static bool is_portion(char c)           { return c == '#'; }
+   static bool is_extension(char c)         { return c == '.'; }
+   static bool is_relative_path(char c)     { return c == '.'; }
    
-   static char protocol()             { return ':'; }
-   static char drive()                { return ':'; }
-   static char directory()            { return '/'; }
-   static char extension()            { return '.'; }
-   static char portion()              { return '#'; }
-   static char relative_path()        { return '.'; }
-   static String parent_marker() { return String(".."); }
+   static char protocol()                   { return ':'; }
+   static char drive()                      { return ':'; }
+   static char directory()                  { return '/'; }
+   static char extension()                  { return '.'; }
+   static char portion()                    { return '#'; }
+   static char relative_path()              { return '.'; }
+   static String parent_marker()            { return String(".."); }
    
    static String working_directory_marker() { return String("."); }
    

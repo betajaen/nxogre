@@ -30,6 +30,7 @@
 #include "NxOgreFileResource.h"
 #include "NxOgreFileArchive.h"
 #include "NxOgreErrorStream.h"
+#include "NxOgreReason.h"
 
 #ifdef _DEBUG
 #include <iostream>
@@ -116,10 +117,7 @@ void FileResource::open()
  
  if (mFile == 0)
  {
-  mStatus = Enums::ResourceStatus_HasError;
-  SharedStringStream ss;
-  ss << "File '" << os_path << "' could not be opened. -> ";
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(PathInvalidException, Reason::Exceptionise(os_path, mStatus), Classes::_FileResource);
   return;
  }
  

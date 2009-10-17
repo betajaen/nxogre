@@ -58,11 +58,7 @@ FixedJoint::FixedJoint(RigidBody* first, RigidBody* second, const FixedJointDesc
  
  if (description.isValid() == false)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
-  
-  message << "An error occured whilst creating a FixedJoint.\nThe reason(s) and cause(s) could be:\n\n";
-  message << Reason::whyAsStream(description).get();
-  NxOgre_ThrowError(message.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_FixedJoint);
   return;
  }
 

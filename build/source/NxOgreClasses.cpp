@@ -41,7 +41,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[627] = {
+static const char*  sClasses[624] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -630,9 +630,6 @@ static const char*  sClasses[627] = {
   "SharedBuffer",
   "SharedCircularBuffer",
   "SharedKinematicFunctions",
-  "SharedStringStream",
-  "SharedStringStream_Buffer",
-  "SharedStringStreamReferenceCounter",
   "SimpleBox",
   "SimpleCapsule",
   "SimplePlane",

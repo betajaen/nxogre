@@ -42,7 +42,7 @@ namespace NxOgre
 
                                                                                        
 
-template<class T> class             Buffer;
+template<class T> class  Buffer;
 
                                                                                        
 

@@ -151,6 +151,12 @@
 */
 #define NxOgre_Reallocate(PTR, NEW_SIZE)      ::NxOgre::Memory::reallocate(PTR, NEW_SIZE)
 
+#define NxOgre_ExceptionNoClassType 0
+
+#define NxOgre_ThrowException(EXCEPTION, DESCRIPTION, CLASS_TYPE) throw EXCEPTION(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE);
+
+#define NxOgre_ThrowExceptionIfNull(PTR, CLASS_TYPE) if(PTR == 0){throw NxOgre::NullPointerException(__FILE__, __LINE__, CLASS_TYPE);}
+
 /** \brief Throw a very critical error and assert.
 */
 #define NxOgre_ThrowAssertion(COND, MESSAGE)  {if(COND){::NxOgre::ErrorStream::getSingleton()->throwAssertion(MESSAGE, __FILE__, __LINE__);}assert(COND);}

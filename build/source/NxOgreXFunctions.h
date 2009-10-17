@@ -60,7 +60,7 @@ inline bool isX(Resource*);
 /** \brief Is the resource a NxOgre X-file.
     \note Resource cannot be sucessional.
 */
-inline SharedStringStream whyIsNotX(Resource*);
+inline String whyIsNotX(Resource*);
 
 
 /** \brief Get the type of resource or Enums::MeshType_Unknown of a NxOgre X-file.

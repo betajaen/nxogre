@@ -61,15 +61,14 @@ SoftBody::SoftBody(const SoftBodyDescription& description, Renderable* renderabl
  
  if (desc.isValid() == false)
  {
-  SharedStringStream ss;
-  ss << "SoftBody description is invalid. Reasons are:" << Reason::whyAsStream(desc);
-  NxOgre_ThrowError(ss.get());
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(desc), Classes::_SoftBodyDescription);
   return;
  }
+ 
  mSoftBody = mScene->getScene()->createSoftBody(desc);
-
+ 
  TimeController::getSingleton()->addTimeListener(this, mPriority);
-
+ 
 }
 
 SoftBody::~SoftBody()

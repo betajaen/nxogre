@@ -145,10 +145,7 @@ NxHeightField* ManualHeightField::cook(void)
  
  if (description.isValid() == false)
  {
-  SharedStringStream message(SharedStringStream::_LARGE); 
-  message << "An error occured creating the NxHeightFieldDesc.\nThe reason(s) and cause(s) could be:\n\n" << Reason::whyAsStream(description);
-  NxOgre_ThrowError(message.get());
-  
+  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_ManualHeightField);
   return 0;
  }
  
