@@ -224,6 +224,12 @@ class NxOgrePublicClass Path
    */
    String getOSString();
    
+   /*! function. dump
+       desc.
+           Developer/Testing function.
+   */
+   std::string dump();
+
  protected:
    
    /** \internal Turns path into drive, filename, directories, etc.

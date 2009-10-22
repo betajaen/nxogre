@@ -29,6 +29,8 @@
 #include "NxOgreStable.h"
 #include "NxOgrePath.h"
 
+#include <iostream>
+
                                                                                        
 
 namespace NxOgre
@@ -241,7 +243,7 @@ Path Path::getParent() const
 String Path::getDirectory(unsigned int parent_level) const
 {
  if (parent_level == 0)
-  return (*mDirectories.end());
+  return (*mDirectories.rbegin());
  else
  {
   std::list<String>::const_reverse_iterator it = mDirectories.rbegin();
@@ -267,7 +269,7 @@ String Path::getFilename() const
 
 bool Path::hasFilename() const
 {
- return mFilename.length();
+ return mFilename.length() > 0;
 }
 
 String Path::getFilenameOnly() const
@@ -282,7 +284,7 @@ String Path::getExtension() const
 
 bool Path::hasExtension() const
 {
- return mExtension.length();
+ return mExtension.length() > 0;
 }
 
 String Path::getPortion() const
@@ -292,7 +294,7 @@ String Path::getPortion() const
 
 bool Path::hasPortion() const
 {
- return mPortion.length();
+ return mPortion.length() > 0;
 }
 
 String Path::getProtocol() const
@@ -315,7 +317,7 @@ String Path::getDrive() const
 #if NxOgrePlatform == NxOgrePlatformWindows
 bool Path::hasDrive() const
 {
- return mDrive.length();
+ return mDrive.length() > 0;
 }
 #endif
 
@@ -439,7 +441,7 @@ void Path::set(const String& string)
   if (PathHelper::is_protocol(path[pos]) || PathHelper::is_drive(path[pos]))
   {
    t = path.substr(begin, pos - begin);
-
+   
    if (PathHelper::next_is(path, pos, PathHelper::directory()) && PathHelper::next_is(path, pos + 1, PathHelper::directory()))
    {
     mProtocol = t;
@@ -522,9 +524,10 @@ void Path::set(const String& string)
     continue;
    }
 
-   if (t == PathHelper::parent_marker() && mDirectories.size() && mAbsolute)
+   if (t == PathHelper::parent_marker() && mAbsolute)
    {
-    mDirectories.pop_back();
+    if (mDirectories.size() )
+     mDirectories.pop_back();
     begin = pos + 1;
     continue;
    }
@@ -585,6 +588,37 @@ void Path::set(const String& string)
   mExtension = String();
 }
 
+std::string Path::dump()
+{
+ std::stringstream s;
+ 
+ s << "Path\n----\nFull: " << getString() << "\nIs Relative: " << (mAbsolute == false ? "Yes" : "No") << "\n";
+ 
+ if (mProtocol.length())
+  s << "Protocol: " << mProtocol << "\n";
+ 
+#if NxOgrePlatform == NxOgrePlatformWindows
+ if (mDrive.length())
+  s << "Drive: " << mDrive << "\n";
+#endif
+ 
+ if (mDirectories.size())
+ {
+  s << "Directories" << (mDirectories.size() - 1) << ":\n";
+  unsigned int i=mDirectories.size() - 1;
+  for (std::list<String>::const_reverse_iterator d = mDirectories.rbegin(); d != mDirectories.rend(); d++)
+   s << " " << i-- << " : " << (*d)  << "\n";
+ }
+ 
+ if (mFilename.length())
+  s << "File: " <<  mFilename << "\n";
+ if (mExtension.length())
+  s << "Extension: " << mExtension << "\n";
+ if (mPortion.length())
+  s << "Portion: " <<  mPortion << "\n";
+
+ return s.str();
+}
 
                                                                                        
 
