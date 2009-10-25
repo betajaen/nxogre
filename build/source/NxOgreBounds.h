@@ -264,7 +264,7 @@ template<class VecType> class BoundsT
    scale(scalar);
   }
   
-  inline bool isEmpty()
+  inline bool isEmpty() const
   {
    return (min.x > max.x &&
            min.y > max.y &&
