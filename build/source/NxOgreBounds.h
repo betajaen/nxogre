@@ -264,6 +264,13 @@ template<class VecType> class BoundsT
    scale(scalar);
   }
   
+  inline bool isEmpty()
+  {
+   return (min.x > max.x &&
+           min.y > max.y &&
+           min.z > max.z);
+  }
+
   /*! function. empty
       desc.
            Sets the min to infinity and max to negative infinity.

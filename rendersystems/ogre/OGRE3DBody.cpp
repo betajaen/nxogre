@@ -123,12 +123,7 @@ void OGRE3DBody::_destructNode(OGRE3DSceneNodeDestructorBehaviour behaviour)
  
 }
 
-unsigned int OGRE3DBody::getType() const
-{
- return RigidBodyType_OGRE3DBody;
-}
-
-unsigned int OGRE3DBody::getClassType() const 
+unsigned int OGRE3DBody::getRigidBodyType() const
 {
  return _OGRE3DBody;
 }

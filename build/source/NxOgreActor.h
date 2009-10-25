@@ -64,20 +64,13 @@ namespace NxOgre
     
     see. RigidBody
 */
-class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public RigidBody
+class NxOgrePublicClass Actor : public RigidBody
 {
   
   friend class Scene;
-  friend class Functions::ArrayFunctions<Actor*>::Write;
   template<class T> friend inline void Functions::safe_delete(T*);
-
-  public:
   
-  using ::NxOgre::PointerClass<Classes::_Actor>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_Actor>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_Actor>::getClassType;
+  public:
   
   /*! function. getName
       desc.
@@ -87,13 +80,15 @@ class NxOgrePublicClass Actor : public PointerClass<Classes::_Actor>, public Rig
   */
   String  getName() const;
   
-  /*! function. getClassType
+  /*! function. getRigidBodyType
       desc.
-           Get a class type identifier of this class
+          Get the cpp type (see Classes namespace) as a unsigned integer.
+      note.
+          All classes that inherit from RigidBody, and classes that inherit from them, and them must implement getRigidBodyType
       return.
-           unsigned int - The class type
+          **unsigned int** -- The class type, Classes::_Actor in this case.
   */
-  virtual unsigned int           getClassType() const;
+  virtual unsigned int  getRigidBodyType() const;
 
   /*! function. setGroup
       desc.

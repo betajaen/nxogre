@@ -52,7 +52,7 @@ Exception::Exception(const std::string& file, unsigned int line, const std::stri
  std::cout << str() << std::endl;
  
  if (NxOgre::ErrorStream::getSingleton())
-  NxOgre::ErrorStream::getSingleton()->throwException(*this);
+  NxOgre::ErrorStream::getSingleton()->addException(*this);
  
 }
 

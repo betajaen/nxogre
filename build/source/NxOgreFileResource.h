@@ -47,7 +47,7 @@ namespace NxOgre
     desc.
         File version of a Resource, created via FileArchive.
 */
-class NxOgrePublicClass FileResource : public PointerClass<Classes::_FileResource>, public Resource
+class NxOgrePublicClass FileResource : public Resource
 {
   
  public:

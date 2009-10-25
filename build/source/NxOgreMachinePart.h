@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass MachinePart
+class NxOgrePublicClass MachinePart : public GenericBasedAllocatable
 {
   
   public: // Functions

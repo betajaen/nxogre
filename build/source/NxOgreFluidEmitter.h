@@ -68,19 +68,13 @@ namespace NxOgre
         The impulse generated is dependent on the rate, density, 
         and velocity of the emitted particles.
 */
-class NxOgrePublicClass FluidEmitter : public PointerClass<Classes::_FluidEmitter>
+class NxOgrePublicClass FluidEmitter : public NonRigidBodyBasedAllocatable
 {
   
   public: // Functions
   
   friend class Fluid;
   template<class T> friend inline void Functions::safe_delete(T*);
-  
-  using ::NxOgre::PointerClass<Classes::_FluidEmitter>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_FluidEmitter>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_FluidEmitter>::getClassType;
   
   /*! function. getName
       desc.
@@ -384,16 +378,6 @@ class NxOgrePublicClass FluidEmitter : public PointerClass<Classes::_FluidEmitte
           **bool** -- True if it is that type of shape.
   */
   bool  isShape(Enums::FluidEmitterShape shape) const;
-  
-  /*! function. getType
-      desc.
-          Get the emitter shape.
-      args.
-          Enums::FluidEmitterShape __shape__ -- Shape emitter type
-      return.
-          **bool** -- True if it is that type of shape.
-  */
-  bool  isType(Enums::FluidEmitterShape type) const;
   
  protected:
   

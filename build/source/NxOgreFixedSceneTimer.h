@@ -49,7 +49,7 @@ namespace NxOgre
          time is carried on into the next timestep.
 
 */
-class NxOgrePublicClass FixedSceneTimer : public PointerClass<Classes::_FixedSceneTimer>, public SceneTimer
+class NxOgrePublicClass FixedSceneTimer : public SceneTimer
 {
   
   public: // Functions

@@ -51,7 +51,7 @@ namespace NxOgre
          // and represent it as a Resource.
          Resource* resource = ResourceSystem::getSingleton()->open("file://c:/Program Files/myGame/media/mesh.nxs");
 */
-class NxOgrePublicClass FileResourceProtocol : public PointerClass<Classes::_FileResourceProtocol>, public ResourceProtocol
+class NxOgrePublicClass FileResourceProtocol : public ResourceProtocol
 {
   
   public: // Functions

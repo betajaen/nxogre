@@ -67,7 +67,7 @@ SceneGeometry::~SceneGeometry(void)
  destroy();
 }
 
-unsigned int SceneGeometry::getClassType() const
+unsigned int SceneGeometry::getRigidBodyType() const
 {
  return Classes::_SceneGeometry;
 }

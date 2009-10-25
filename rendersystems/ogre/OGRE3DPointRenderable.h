@@ -38,17 +38,13 @@
 
 /** \brief A OGRE3D RenderSystem implementation of the PointRenderable class.
 */
-class OGRE3DExportClass OGRE3DPointRenderable : NxOgre::PointerClass<_OGRE3DPointRenderable>, public NxOgre::PointRenderable
+class OGRE3DExportClass OGRE3DPointRenderable : NxOgre::UserExtendedClassAllocatable, public NxOgre::PointRenderable
 {
-  
-  friend class OGRE3DRenderSystem;
-  
-  public:
-  
-   using ::NxOgre::PointerClass<_OGRE3DPointRenderable>::operator new;
    
-   using ::NxOgre::PointerClass<_OGRE3DPointRenderable>::operator delete;
-    
+  friend class OGRE3DRenderSystem;
+   
+  public:
+     
      
   public:
      

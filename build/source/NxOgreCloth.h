@@ -50,7 +50,7 @@ namespace NxOgre
             may or may not have a specific function for creating and setting up
             the cloth for you -- You should refer to that.
 */
-class NxOgrePublicClass Cloth : public PointerClass<Classes::_Cloth>, public TimeListener
+class NxOgrePublicClass Cloth : public NonRigidBodyBasedAllocatable, public TimeListener
 {
   
   friend class Scene;

@@ -46,32 +46,16 @@
            on a scenegraph, as well as reference to the mesh it is using.
 
 */
-class OGRE3DExportClass OGRE3DBody : public NxOgre::PointerClass<_OGRE3DBody>, public NxOgre::Actor, public NxOgre::TimeListener
+class OGRE3DExportClass OGRE3DBody : public NxOgre::Actor, public NxOgre::TimeListener
 {
   friend class OGRE3DRenderSystem;
   template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
-
-  public:
-  
-    /** \brief Required since Actor is also a "PointerClass".
-    */
-    using ::NxOgre::PointerClass<_OGRE3DBody>::operator new;
-
-     /** \brief Required since Actor is also a "PointerClass".
-     */
-    using ::NxOgre::PointerClass<_OGRE3DBody>::operator delete;
-   
-     /** \brief Required since Actor is also a "PointerClass".
-     */
-    using ::NxOgre::PointerClass<_OGRE3DBody>::getClassType;
-  
-    /** \brief
-    */
-    unsigned int getClassType() const;
     
-    /** \brief Returns "RigidBodyType_OGRE3DBody" as the type of RigidBody.
-    */
-    unsigned int          getType() const;
+  public:
+    
+   /** \brief Returns "RigidBodyType_OGRE3DBody" as the type of RigidBody.
+   */
+   virtual unsigned int       getRigidBodyType() const;
 
     /** \brief Get the SceneManager that the SceneNode is in.
     */
@@ -96,15 +80,17 @@ class OGRE3DExportClass OGRE3DBody : public NxOgre::PointerClass<_OGRE3DBody>, p
    /** \brief "Drawing" function, called by the TimeListener - Changes the SceneNode pose to the same one as the NxActor's.
    */
    bool advance(float, const NxOgre::Enums::Priority&);
-     
+   
   protected:
      
      /** \internal. Use OGRE3DRenderSystem::createBody
      */
      OGRE3DBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
-  
+     
+     /** \internal. Use OGRE3DRenderSystem::createBody
+     */
      OGRE3DBody(NxOgre::Shapes&, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
-  
+     
      /** \internal. Use OGRE3DRenderSystem::destroyBody
      */
     ~OGRE3DBody(void);

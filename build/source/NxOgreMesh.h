@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass Mesh
+class NxOgrePublicClass Mesh : public ResourceAllocatable
 {
   
   public: // Functions

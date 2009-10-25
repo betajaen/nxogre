@@ -41,7 +41,7 @@ namespace NxOgre
 
                                                                                        
 
-class NxOgrePublicClass HeightFieldData : public PointerClass<Classes::_HeightFieldData>
+class NxOgrePublicClass HeightFieldData : public ResourceAllocatable
 {
  
  public:

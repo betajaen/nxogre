@@ -47,19 +47,13 @@ namespace NxOgre
 
 /** \brief  
 */ 
-class NxOgrePublicClass Sphere : public PointerClass<Classes::_Sphere>, public Shape
+class NxOgrePublicClass Sphere : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_Sphere>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_Sphere>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_Sphere>::getClassType;
-
   /** \brief Sphere
   */
                                               Sphere(Real radius, ShapeBlueprint* blueprint = new ShapeBlueprint());
@@ -71,6 +65,8 @@ class NxOgrePublicClass Sphere : public PointerClass<Classes::_Sphere>, public S
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */
                   Enums::ShapeFunctionType    getShapeFunctionType() const;
+  
+  unsigned int getShapeType() const;
   
   protected:
   

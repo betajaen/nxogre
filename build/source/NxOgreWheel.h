@@ -46,19 +46,13 @@ namespace NxOgre
 
 /** \brief  
 */ 
-class NxOgrePublicClass Wheel : public PointerClass<Classes::_Wheel>, public Shape
+class NxOgrePublicClass Wheel : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_Wheel>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_Wheel>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_Wheel>::getClassType;
-
   
   /** \brief Wheel constructor with width, height, depth size argument as a Vec3.
       \note  The Wheel class's dimensions are full diameter of the box, and not the radius
@@ -66,6 +60,7 @@ class NxOgrePublicClass Wheel : public PointerClass<Classes::_Wheel>, public Sha
   */
                                               Wheel(WheelBlueprint*);
   
+  unsigned int getShapeType() const;
   /** \brief Wheel destructor. 
       \warning Deleting the Wheel whilst it is attached to a RigidBody will probably cause a nasty crash.
   */

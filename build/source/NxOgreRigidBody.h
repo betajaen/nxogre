@@ -50,7 +50,7 @@ namespace NxOgre
     class code. User classes may also use this coding system to help differentiating between their classes and NxOgre's.
     
 */
-class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
+class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
 {
   
  public: // Functions
@@ -90,15 +90,15 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
   */
   NxActor*  getNxActor(void);
   
-  /*! function. getType
+  /*! function. getRigidBodyType
       desc.
-           Get the numerical type (see Enums::RigidBodyType) of this RigidBody; for casting purposes. 
+          Get the cpp type (see Classes namespace) as a unsigned integer.
       note.
-           This function is not to be confused with getClassType - which although similar in function is different.
+          All classes that inherit from RigidBody, and classes that inherit from them, and them must implement getRigidBodyType.
       return.
-           **unsigned int** -- The class type either from Enums::RigidBodyType, or one from the users app.
+          **unsigned int** -- The class type.
   */
-  virtual unsigned int getType() const;
+  virtual unsigned int getRigidBodyType() const;
   
   /*! function. setContactCallback
       desc.
@@ -171,7 +171,7 @@ class NxOgrePublicClass RigidBody : public PointerClass<Classes::_RigidBody>
            Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
       !protected
   */
-  void                  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
   
   /*! function. createStatic.0
       desc.

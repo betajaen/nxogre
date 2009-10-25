@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass VisualDebuggerMeshData
+class NxOgrePublicClass VisualDebuggerMeshData : public GenericBasedAllocatable
 {
   
   friend class VisualDebugger;

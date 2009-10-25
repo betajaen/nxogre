@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass SceneTimer
+class NxOgrePublicClass SceneTimer : public GenericBasedAllocatable
 {
   
   public: // Functions

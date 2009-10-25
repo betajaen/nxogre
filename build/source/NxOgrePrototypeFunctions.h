@@ -56,12 +56,6 @@ class NxOgrePublicClass PrototypeFunctions
  public:
 
 #ifdef NXOGRE_SDK
-  /** \brief Copies all relevant WorldPrototype properties to a NxPhysicsSDKDesc
-  */
-  static void WorldPrototypeToNxPhysicsSDKDesc(WorldPrototype*, NxPhysicsSDKDesc&);
-#endif
-
-#ifdef NXOGRE_SDK
   /** \brief Copies all relevant ScenePrototype properties to a NxSceneDesc
   */
   static void SceneDescriptionToNxSceneDesc(const SceneDescription&, NxSceneDesc&);
@@ -78,16 +72,6 @@ class NxOgrePublicClass PrototypeFunctions
   /** \brief Copies all relevant RigidBodyPrototype properties to a NxActorDesc and NxBodyDesc.
   */
   static void RigidBodyDescriptionToNxActorDesc(const RigidBodyDescription&, NxActorDesc&);
-#endif
-
-  /** \brief Copies all relevant MaterialDescription properties to a MaterialPrototype.
-  */
-  static void MaterialDescriptionToMaterialPrototype(const MaterialDescription&, MaterialPrototype*);
-
-#ifdef NXOGRE_SDK
-  /** \brief Copies all relevant MaterialPrototype properties to a NxMaterialDesc.
-  */
-  static void MaterialPrototypeToNxMaterialDesc(MaterialPrototype*, NxMaterialDesc&);
 #endif
 
 #ifdef NXOGRE_SDK
@@ -146,9 +130,11 @@ class NxOgrePublicClass PrototypeFunctions
   */
   static void SoftBodyDescriptionToNxSoftBodyDesc(const SoftBodyDescription& source, NxSoftBodyDesc& desc);
 #endif
-
-
-
+  
+ private:
+  
+  PrototypeFunctions();
+  
 }; // class ClassName
 
 

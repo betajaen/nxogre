@@ -67,7 +67,7 @@ NxTriangleMesh* MeshSerialiser::loadTriangleMesh(Resource* resource, bool perfor
   {
    StringStream stream;
    stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
-   NxOgre_ThrowError(stream.str());
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
   
@@ -78,7 +78,7 @@ NxTriangleMesh* MeshSerialiser::loadTriangleMesh(Resource* resource, bool perfor
    StringStream stream;
    stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Triangle Mesh file.\n"
           << "Reason: It is a " << getMeshTypeAsString(type);
-   NxOgre_ThrowError(stream.str());
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
  }
@@ -91,7 +91,7 @@ NxTriangleMesh* MeshSerialiser::loadTriangleMesh(Resource* resource, bool perfor
 
 bool MeshSerialiser::saveTriangleMesh(Resource* resource, MeshData* mesh_data)
 {
-
+ 
  NxTriangleMeshDesc description;
  
  description.points               = mesh_data->mVertices.first();
@@ -174,7 +174,7 @@ NxConvexMesh* MeshSerialiser::loadConvexMesh(Resource* resource, bool perform_ch
   {
    StringStream stream;
    stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
-   NxOgre_ThrowError(stream.str());
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
   
@@ -185,7 +185,7 @@ NxConvexMesh* MeshSerialiser::loadConvexMesh(Resource* resource, bool perform_ch
    StringStream stream;
    stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Convex Mesh file.\n"
           << "Reason: It is a " << getMeshTypeAsString(type);
-   NxOgre_ThrowError(stream.str());
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
  }
@@ -292,7 +292,7 @@ NxClothMesh* MeshSerialiser::loadClothMesh(Resource* resource, bool perform_chec
   {
    StringStream stream;
    stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
-   NxOgre_ThrowError(stream.str());
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
   
@@ -303,7 +303,7 @@ NxClothMesh* MeshSerialiser::loadClothMesh(Resource* resource, bool perform_chec
    StringStream stream;
    stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Cloth Mesh file.\n"
           << "Reason: It is a " << getMeshTypeAsString(type);
-   NxOgre_ThrowError(stream.str());
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
  }
@@ -419,8 +419,8 @@ NxClothMesh* MeshSerialiser::loadExtendedClothMesh(Resource* resource, Buffer<fl
   if (isNXSFile(resource) == false) 
   {
    StringStream stream;
-   stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
-   NxOgre_ThrowError(stream.str());
+   stream << "Resource '" << resource->getPath().getString() << "' is not a PhysX NXS mesh file.";
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
   
@@ -429,9 +429,9 @@ NxClothMesh* MeshSerialiser::loadExtendedClothMesh(Resource* resource, Buffer<fl
   if (type != Enums::MeshType_Cloth)
   {
    StringStream stream;
-   stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Cloth Mesh file.\n"
+   stream << "Resource '" << resource->getPath().getString() << "' is not a valid PhysX NXS Cloth Mesh file.\n"
           << "Reason: It is a " << getMeshTypeAsString(type);
-   NxOgre_ThrowError(stream.str());
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
    return 0;
   }
  }
@@ -510,7 +510,7 @@ void MeshSerialiser::loadClothTextureCoords(Resource* resource, Buffer<float>& t
  //
  size_t fileSize = resource->getSize();
  
- // False on the resource not having 'NxOgre<42>' at the end of the file.
+ // False on the resource not having 'ExTXC' at the end of the file.
  {
   char header[5] = {0, 0, 0, 0, 0};
   resource->seekBeginning();

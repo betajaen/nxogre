@@ -47,7 +47,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public RigidBody
+class NxOgrePublicClass Volume : public RigidBody
 {
   
   friend class Scene;
@@ -56,9 +56,9 @@ class NxOgrePublicClass Volume : public PointerClass<Classes::_Volume>, public R
   
   public:
   
-   using ::NxOgre::PointerClass<Classes::_Volume>::operator new;
-   using ::NxOgre::PointerClass<Classes::_Volume>::operator delete;
-   using ::NxOgre::PointerClass<Classes::_Volume>::getClassType;
+  /** \brief 
+  */
+  virtual                             unsigned int           getRigidBodyType() const;
   
   /** \brief Methods for setting a dynamic Volume's pose in the world. 
   */

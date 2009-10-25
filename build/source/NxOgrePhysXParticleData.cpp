@@ -93,26 +93,27 @@ NxParticleData PhysXParticleData::getParticleData()
   
   if (data.bufferPos && !data.bufferPosByteStride)
    ss << " - Has position buffer but no stride\n";
-
+  
   if (data.bufferVel && !data.bufferVelByteStride)
    ss << " - Has velocities buffer but no stride\n";
-
+  
   if (data.bufferLife && !data.bufferLifeByteStride)
    ss << " - Has lives buffer but no stride\n";
-
+  
   if (data.bufferDensity && !data.bufferDensityByteStride)
    ss << " - Has density buffer but no stride\n";
-
+  
   if (data.bufferId && !data.bufferIdByteStride)
    ss << " - Has ids buffer but no stride\n";
-
+  
   if (data.bufferFlag && !data.bufferFlagByteStride)
    ss << " - Has flags buffer but no stride\n";
-
+  
   if (data.bufferCollisionNormal && !data.bufferCollisionNormalByteStride)
    ss << " - Has normals buffer but no stride\n";
-
-  NxOgre_ThrowError(ss.str());
+  
+  NxOgre_ThrowException(DescriptionInvalidException, ss.str(), Classes::_PhysXParticleData);
+  
   return data;
  }
 

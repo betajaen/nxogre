@@ -119,7 +119,7 @@ OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shapes& shapes, const NxOgre:
 
 void OGRE3DRenderSystem::destroyBody(OGRE3DBody* body)
 {
- if (body == 0 || body->getClassType() != _OGRE3DBody)
+ if (body == 0 || body->getRigidBodyType() != _OGRE3DBody)
   return;
  
  mBodies.erase(body->getNameHash());
@@ -161,7 +161,7 @@ OGRE3DKinematicBody* OGRE3DRenderSystem::createKinematicBody(NxOgre::Shape* shap
 
 void  OGRE3DRenderSystem::destroyKinematicBody(OGRE3DKinematicBody* kinematicBody)
 {
- if (kinematicBody == 0 || kinematicBody->getClassType() != _OGRE3DKinematicBody)
+ if (kinematicBody == 0 || kinematicBody->getRigidBodyType() != _OGRE3DKinematicBody)
   return;
  
  mKinematicBodies.erase(kinematicBody->getNameHash());

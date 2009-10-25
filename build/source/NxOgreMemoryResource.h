@@ -45,7 +45,7 @@ namespace NxOgre
 
 /** \internal Do not use directly. Use Resource* and ResourceSystem::open
 */
-class NxOgrePublicClass MemoryResource : public PointerClass<Classes::_MemoryResource>, public Resource
+class NxOgrePublicClass MemoryResource : public Resource
 {
  
  friend class MemoryArchive;

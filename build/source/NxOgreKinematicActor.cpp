@@ -70,7 +70,7 @@ KinematicActor::~KinematicActor(void)
  destroy();
 }
 
-unsigned int KinematicActor::getClassType() const
+unsigned int KinematicActor::getRigidBodyType() const
 {
  return Classes::_KinematicActor;
 }

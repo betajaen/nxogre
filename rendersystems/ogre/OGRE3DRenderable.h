@@ -49,21 +49,11 @@
            different types of RenderSystems available; the render information would be different.
            Ogre's for example wouldn't be as low-level, and would only contain a pointer to a node
            on a scenegraph, as well as reference to the mesh it is using.
-
+    \note
+         This class uses the new/delete override operators in Ogre via the inheritance of Ogre::SimpleRenderable.
 */
-class OGRE3DExportClass OGRE3DRenderable : public NxOgre::PointerClass<_OGRE3DRenderable>, public NxOgre::Renderable, public Ogre::SimpleRenderable
+class OGRE3DExportClass OGRE3DRenderable : public NxOgre::Renderable, public Ogre::SimpleRenderable
 {
-  
-  public:
-  
-   /** \brief Required since Actor is also a "PointerClass".
-   */
-   using ::NxOgre::PointerClass<_OGRE3DRenderable>::operator new;
-   
-    /** \brief Required since Actor is also a "PointerClass".
-    */
-   using ::NxOgre::PointerClass<_OGRE3DRenderable>::operator delete;
-   
     
   public:
      

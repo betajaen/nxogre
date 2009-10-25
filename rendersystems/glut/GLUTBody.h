@@ -45,7 +45,7 @@
            on a scenegraph, as well as reference to the mesh it is using.
 
 */
-class GLUTExportClass GLUTBody : public NxOgre::PointerClass<_GLUTBody>, public NxOgre::Actor
+class GLUTExportClass GLUTBody : public NxOgre::Actor
 {
   
   friend class GLUTRenderSystem;
@@ -55,14 +55,6 @@ class GLUTExportClass GLUTBody : public NxOgre::PointerClass<_GLUTBody>, public 
   
   public:
   
-   /** \brief Required since Actor is also a "PointerClass".
-   */
-   using ::NxOgre::PointerClass<_GLUTBody>::operator new;
-
-    /** \brief Required since Actor is also a "PointerClass".
-    */
-   using ::NxOgre::PointerClass<_GLUTBody>::operator delete;
-
     /** \brief Draw the actor on the screen.
     */
     void           render(void);

@@ -81,6 +81,10 @@ class NxOgrePublicClass Reason
   
   static String Exceptionise(const Path& path, Enums::ResourceStatus status);
   
+ private:
+  
+  Reason();
+  
 }; // class Reason
 
                                                                                        

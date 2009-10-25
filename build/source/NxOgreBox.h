@@ -52,19 +52,13 @@ namespace NxOgre
         
     see. Shape
 */ 
-class NxOgrePublicClass Box : public PointerClass<Classes::_Box>, public Shape
+class NxOgrePublicClass Box : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_Box>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_Box>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_Box>::getClassType;
-
   /*! constructor. Box
       desc.
            Box constructor with width, height, depth size argument as a Vec3.
@@ -108,6 +102,8 @@ class NxOgrePublicClass Box : public PointerClass<Classes::_Box>, public Shape
            Deleting the Box whilst it is attached to a RigidBody will probably cause a nasty crash.
   */
  ~Box(void);
+
+  unsigned int getShapeType() const;
 
   /*! function. getShapeFunctionType
       desc.

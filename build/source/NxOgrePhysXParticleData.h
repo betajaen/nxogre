@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass PhysXParticleData : public NxOgre::PointerClass<Classes::_PhysXParticleData>
+class NxOgrePublicClass PhysXParticleData : public ResourceAllocatable
 {
   
   public: // Functions

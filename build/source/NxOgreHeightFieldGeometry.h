@@ -47,20 +47,13 @@ namespace NxOgre
 
 /** \brief  
 */ 
-class NxOgrePublicClass HeightFieldGeometry : public PointerClass<Classes::_HeightFieldGeometry>, public Shape
+class NxOgrePublicClass HeightFieldGeometry : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_HeightFieldGeometry>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_HeightFieldGeometry>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_HeightFieldGeometry>::getClassType;
-
-
   /** \brief HeightFieldGeometry
   */
                                               HeightFieldGeometry(HeightField*, const Vec3& size, HeightFieldGeometryBlueprint* blue = new HeightFieldGeometryBlueprint());
@@ -72,6 +65,8 @@ class NxOgrePublicClass HeightFieldGeometry : public PointerClass<Classes::_Heig
   /** \brief HeightFieldGeometry
   */
                                              ~HeightFieldGeometry(void);
+
+  unsigned int getShapeType() const;
 
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */

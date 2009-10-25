@@ -38,18 +38,13 @@
 
 /** \brief A OGRE3D RenderSystem implementation of the PointRenderable class.
 */
-class OGRE3DExportClass OGRE3DParticleRenderable : public NxOgre::PointerClass<_OGRE3DParticleRenderable>, public NxOgre::Renderable
+class OGRE3DExportClass OGRE3DParticleRenderable : public NxOgre::UserExtendedClassAllocatable, public NxOgre::Renderable
 {
   
   friend class OGRE3DRenderSystem;
-  
-  public:
-  
-   using ::NxOgre::PointerClass<_OGRE3DParticleRenderable>::operator new;
-   
-   using ::NxOgre::PointerClass<_OGRE3DParticleRenderable>::operator delete;
     
-     
+  public:
+    
   public:
      
      void  drawSoftBodySimple(NxOgre::PhysXMeshData*, const NxOgre::Bounds3&) {}

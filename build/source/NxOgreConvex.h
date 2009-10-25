@@ -53,19 +53,13 @@ namespace NxOgre
          collisions and testing against them.
     see. Shape
 */
-class NxOgrePublicClass Convex : public PointerClass<Classes::_Convex>, public Shape
+class NxOgrePublicClass Convex : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
-  
-  using ::NxOgre::PointerClass<Classes::_Convex>::operator new;
-  
-  using ::NxOgre::PointerClass<Classes::_Convex>::operator delete;
-  
-  using ::NxOgre::PointerClass<Classes::_Convex>::getClassType;
-  
+
   /*! constructor. Convex
       desc.
            Box constructor with a Mesh*
@@ -82,6 +76,8 @@ class NxOgrePublicClass Convex : public PointerClass<Classes::_Convex>, public S
            Deleting the Convex whilst it is attached to a RigidBody will probably cause a nasty crash.
   */
                                              ~Convex(void);
+
+  unsigned int getShapeType() const;
 
   /*! function. getShapeFunctionType
       desc.

@@ -46,19 +46,13 @@ namespace NxOgre
 
 /** \brief  
 */ 
-class NxOgrePublicClass PlaneGeometry : public PointerClass<Classes::_PlaneGeometry>, public Shape
+class NxOgrePublicClass PlaneGeometry : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_PlaneGeometry>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_PlaneGeometry>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_PlaneGeometry>::getClassType;
-
   /** \brief PlaneGeometry
   */
                                               PlaneGeometry(Real distance, Vec3 normal);
@@ -71,6 +65,7 @@ class NxOgrePublicClass PlaneGeometry : public PointerClass<Classes::_PlaneGeome
   */
                Enums::ShapeFunctionType       getShapeFunctionType() const;
   
+  unsigned int getShapeType() const;
   
   protected:
   

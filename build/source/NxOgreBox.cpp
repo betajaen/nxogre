@@ -63,6 +63,11 @@ Box::~Box(void)
 {
 }
 
+unsigned int Box::getShapeType() const
+{
+ return Classes::_Box;
+}
+
 NxShapeDesc* Box::create()
 {
  NxBoxShapeDesc* box = NxOgre_New(NxBoxShapeDesc)();

@@ -35,7 +35,7 @@
 
                                                                                        
 
-class GLUTExportClass GLUTRenderSystem : public NxOgre::PointerClass<_GLUTRenderSystem>
+class GLUTExportClass GLUTRenderSystem : public NxOgre::UserBigClassAllocator
 {
   public:
      

@@ -45,7 +45,7 @@ namespace NxOgre
           create a complete "collision model" for itself to physically collide and take
           actions against that collision.
 */
-class NxOgrePublicClass Shape : public PointerClass<Classes::_Shape>
+class NxOgrePublicClass Shape : public ShapeAllocatable
 {
   friend class RigidBody;
   friend class ::NxOgre::Functions::NxShapeFunctions;
@@ -189,11 +189,14 @@ class NxOgrePublicClass Shape : public PointerClass<Classes::_Shape>
   /** \brief Get the NxShape (abstract)
   */
                       NxShape*                getAbstractShape();
-
   /** \internal
   */
   virtual               void                  assign(NxShape*) {}
   
+  /** \brief Get the c++ type of shape (as Classes::_ShapeName)
+  */
+  virtual             unsigned int            getShapeType() const = 0;
+
   protected:
   
   /** \brief Optional name of the Shape

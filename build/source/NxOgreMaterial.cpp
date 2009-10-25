@@ -30,7 +30,6 @@
 #include "NxOgreMaterial.h"
 #include "NxOgreErrorStream.h"
 #include "NxOgreScene.h"
-#include "NxOgreMaterialPrototype.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreReason.h"
 
@@ -44,31 +43,48 @@ namespace NxOgre
                                                                                        
 
 Material::Material(NxMaterial* material, Scene* scene)
-: mMaterial(material), mScene(scene)
+: mMaterial(material), mScene(scene), mName(BLANK_STRING), mNameHash(BLANK_HASH)
 {
 }
 
-Material::Material(MaterialPrototype* prototype, Scene* scene)
-: mMaterial(0), mScene(scene)
+Material::Material(const MaterialDescription& description, Scene* scene)
+: mMaterial(0), mScene(scene), mName(description.mName)
 {
- create(prototype);
+ mNameHash = Functions::StringHash(mName);
+ create(description);
 }
 
 Material::~Material(void)
 {
 }
 
-void Material::create(MaterialPrototype* prototype)
+String Material::getName() const
 {
- if (mScene == 0)
- {
-  NxOgre_ThrowError("Tried to create a Material without a valid Scene");
-  return;
- }
+ return mName;
+}
 
+StringHash Material::getNameHash() const
+{
+ return mNameHash;
+}
+
+void Material::create(const MaterialDescription& desc)
+{
+ 
+ NxOgre_ThrowExceptionIfNull(mScene, Classes::_Scene);
+ 
  NxMaterialDesc description;
- Functions::PrototypeFunctions::MaterialPrototypeToNxMaterialDesc(prototype, description);
-
+ 
+ description.dirOfAnisotropy = desc.mDirectionOfAnisotropy.as<NxVec3>();
+ description.dynamicFriction = desc.mDynamicFriction;
+ description.dynamicFrictionV = desc.mVDynamicFriction;
+ description.flags = desc.mFlags;
+ description.frictionCombineMode = NxCombineMode(int(desc.mFrictionCombineMode));
+ description.restitution = desc.mRestitution;
+ description.restitutionCombineMode = NxCombineMode(int(desc.mResitutionCombineMode));
+ description.staticFriction = desc.mStaticFriction;
+ description.staticFrictionV = desc.mVStaticFriction;
+ 
  if (description.isValid() == false)
  {
   NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_Material);

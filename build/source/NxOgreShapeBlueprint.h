@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief A ShapeBlueprint is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
 */
-class NxOgrePublicClass ShapeBlueprint : public PointerClass<Classes::_ShapeBlueprint>
+class NxOgrePublicClass ShapeBlueprint : public GenericBasedAllocatable
 {
   
   public:

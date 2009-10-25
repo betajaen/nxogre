@@ -47,7 +47,7 @@ namespace NxOgre
 #ifdef NXOGRE_SDK
 /** \internal
 */
-class NxOgrePublicClass PhysXUserAllocator : public PointerClass<Classes::_PhysXUserAllocator>, public NxUserAllocator
+class NxOgrePublicClass PhysXUserAllocator : public GenericBasedAllocatable, public NxUserAllocator
 {
   
   friend class World;

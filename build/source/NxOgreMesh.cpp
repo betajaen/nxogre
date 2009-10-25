@@ -165,7 +165,7 @@ void Mesh::load(Resource* resource)
  {
   StringStream stream;
   stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
-  NxOgre_ThrowError(stream.str());
+  NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
   return;
  }
  
@@ -176,7 +176,7 @@ void Mesh::load(Resource* resource)
   StringStream stream;
   stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Mesh file.\n"
          << "Reason: Un-recongised mesh header";
-  NxOgre_ThrowError(stream.str());
+  NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
   return;
  }
  

@@ -49,6 +49,7 @@ enum
  ExceptionType_NoPhysXSDKError,
  ExceptionType_PhysXInternalError,
  ExceptionType_NullPointerException,
+ ExceptionType_NonNullPointerException,
  
  ExceptionType_PhysXSDKCreationFailed,
  ExceptionType_DescriptionInvalid,

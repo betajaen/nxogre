@@ -77,7 +77,7 @@ namespace NxOgre
         see http://graphics.ethz.ch/~mattmuel/publications/sca03.pdf
 
 */
-class NxOgrePublicClass Fluid : public PointerClass<Classes::_Fluid>, public TimeListener
+class NxOgrePublicClass Fluid : public NonRigidBodyBasedAllocatable, public TimeListener
 {
   
  public:

@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass ResourceProtocol
+class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
 {
   public: // Functions
   

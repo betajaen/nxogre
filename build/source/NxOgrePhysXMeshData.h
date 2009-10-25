@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass PhysXMeshData : public NxOgre::PointerClass<Classes::_PhysXMeshData>
+class NxOgrePublicClass PhysXMeshData : public GenericBasedAllocatable
 {
   
   public: // Functions

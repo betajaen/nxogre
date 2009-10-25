@@ -90,13 +90,13 @@ void ManualHeightField::begin(unsigned int nbColumns, unsigned int nbRows, Enums
  
  if (nbColumns == 0)
  {
-  NxOgre_ThrowError("Column count must be more than 0");
+  NxOgre_ThrowException(DescriptionInvalidException, "Column count must be more than 0", Classes::_ManualHeightField);
   return;
  }
  
  if (nbRows == 0)
  {
-  NxOgre_ThrowError("Row count must be more than 0");
+  NxOgre_ThrowException(DescriptionInvalidException, "Row count must be more than 0", Classes::_ManualHeightField);
   return;
  }
  

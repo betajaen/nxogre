@@ -48,7 +48,7 @@ namespace NxOgre
          A compartment represents a sub-instance of one type of physics simulation,
          for example hardware fluid, hardware rigid body, or software rigid body. 
 */ 
-class NxOgrePublicClass Compartment : public PointerClass<Classes::_Compartment>
+class NxOgrePublicClass Compartment : public GenericBasedAllocatable
 {
   
   public: // Functions

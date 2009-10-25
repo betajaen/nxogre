@@ -47,19 +47,13 @@ namespace NxOgre
 
 /** \brief  
 */ 
-class NxOgrePublicClass TriangleGeometry : public PointerClass<Classes::_TriangleGeometry>, public Shape
+class NxOgrePublicClass TriangleGeometry : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_TriangleGeometry>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_TriangleGeometry>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_TriangleGeometry>::getClassType;
-
   /** \brief TriangleGeometry
   */
                                               TriangleGeometry(Mesh*, ShapeBlueprint* blueprint = new ShapeBlueprint());
@@ -67,6 +61,8 @@ class NxOgrePublicClass TriangleGeometry : public PointerClass<Classes::_Triangl
   /** \brief TriangleGeometry
   */
                                              ~TriangleGeometry(void);
+
+  unsigned int getShapeType() const;
 
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */

@@ -110,10 +110,14 @@ class NxOgrePublicClass MeshSerialiser
   static NxClothMesh* loadExtendedClothMesh(Resource*, Buffer<float>& texture_coords, bool perform_type_check = false);
   
   /** \brief Load cloth texture coordinates from a resource.
+      \note
+           Texture coords are usually written at the end the file, with the header "ExTXC" at the end.
   */
   static void loadClothTextureCoords(Resource* resource, Buffer<float>& texture_coords);
 
-  /** \brief Load cloth texture coordinates from a resource.
+  /** \brief Save cloth texture coordinates from a resource.
+      \note
+           Texture coords are usually written at the end the file, with the header "ExTXC" at the end.
   */
   static void saveClothTextureCoords(Resource* resource, Buffer<float>& texture_coords);
 

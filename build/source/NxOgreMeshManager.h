@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief MeshManager holds all meshes that are currently in the World.
 */
-class NxOgrePublicClass MeshManager: public ::NxOgre::Singleton<MeshManager, ::NxOgre::Classes::_MeshManager>
+class NxOgrePublicClass MeshManager: public ::NxOgre::Singleton<MeshManager>, public BigClassAllocatable
 {
   
   friend class World;

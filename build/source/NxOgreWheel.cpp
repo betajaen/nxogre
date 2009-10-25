@@ -57,6 +57,11 @@ Wheel::~Wheel(void)
 {
 }
 
+unsigned int Wheel::getShapeType() const
+{
+ return Classes::_Wheel;
+}
+
 NxShapeDesc* Wheel::create(void)
 {
  

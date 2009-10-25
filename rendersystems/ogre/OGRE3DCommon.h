@@ -83,6 +83,9 @@ class OGRE3DRigidBodyDescription;
 class OGRE3DRenderable;
 class OGRE3DPointRenderable;
 
+typedef NxOgre::Allocator<NxOgre::MallocAllocator>  OGRE3DAllocator;
+typedef NxOgre::Allocatable<OGRE3DAllocator>        OGRE3DAllocatable;
+
                                                                                        
 
 inline Ogre::Matrix4 toMatrix44(NxOgre::Matrix44 m)

@@ -51,7 +51,7 @@ inline void NxOgrePublicFunction SimpleCapsuleToNxCapsule(const SimpleCapsule&, 
 inline void NxOgrePublicFunction NxCapsuleToSimpleCapsule(const NxCapsule&, SimpleCapsule&);
 };
 
-struct SimpleShape
+struct SimpleShape : public ShapeAllocatable
 {
  Enums::SimpleShapeType  mType;
  Vec3                    mCenter;

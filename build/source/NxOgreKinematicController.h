@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass KinematicController : public PointerClass<Classes::_KinematicController>, public RigidBody
+class NxOgrePublicClass KinematicController : public RigidBody
 {
   
   friend class Scene;
@@ -53,11 +53,9 @@ class NxOgrePublicClass KinematicController : public PointerClass<Classes::_Kine
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_KinematicController>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_KinematicController>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_KinematicController>::getClassType;
+  /** \brief Text
+  */
+  unsigned                                    getRigidBodyType() const;
 
   /** \brief Text
   */

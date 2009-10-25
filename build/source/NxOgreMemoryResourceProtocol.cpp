@@ -56,7 +56,7 @@ Archive* MemoryResourceProtocol::openArchive(const String&, const Path&)
 {
  if (mHasInit)
  {
-  NxOgre_ThrowError("User tried to create an archive in a SingleArchive with MemoryResourceProtocol");
+  NxOgre_ThrowException(IOException, "Archive has already been initialised", Classes::_MemoryResourceProtocol);
   return 0;
  }
  

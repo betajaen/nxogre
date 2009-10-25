@@ -192,7 +192,7 @@ class NxOgrePublicClass DescriptionInvalidException : public Exception
   : Exception(file, line, description, class_type, Enums::ExceptionType_DescriptionInvalid, "Description properties is invalid") {}
 };
 
-/*! exception. DescriptionInvalidException
+/*! exception. NullPointerException
     desc.
         Thrown when the pointer that is to be used is a null pointer.
 */
@@ -200,8 +200,20 @@ class NxOgrePublicClass NullPointerException : public Exception
 {
  public:
   NullPointerException(const std::string& file, unsigned int line, unsigned int class_type)
-  : Exception(file, line, std::string(Classes::TypeToCStr(class_type)) + std::string(" is a Null Pointer"), class_type, Enums::ExceptionType_DescriptionInvalid, "Null Pointer Exception invalid") {}
+  : Exception(file, line, std::string(Classes::TypeToCStr(class_type)) + std::string(" is a null pointer"), class_type, Enums::ExceptionType_NullPointerException, "Null Pointer Exception") {}
 };
+
+/*! exception. NonNullPointerException
+    desc.
+        Thrown when the that a pointer is expected to be null, when it is not.
+*/
+class NxOgrePublicClass NonNullPointerException : public Exception
+{
+ public:
+  NonNullPointerException(const std::string& file, unsigned int line, const std::string& description, unsigned int class_type)
+  : Exception(file, line, description, class_type, Enums::ExceptionType_NonNullPointerException, "Non-Null Pointer Exception") {}
+};
+
 
 /*! exception. DescriptionInvalidException
     desc.
@@ -225,7 +237,6 @@ class NxOgrePublicClass PhysXSystemSoftwareException : public Exception
   : Exception(file, line, "The PhysX System Software has not been installed.", class_type, Enums::ExceptionType_NoPhysXSDKError, "No PhysX System Software") {}
 };
 
- 
 
                                                                                        
 

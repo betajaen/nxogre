@@ -41,52 +41,6 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief PointerClass is inherited by all classes of NxOgre that intend to be used as a pointer,
-           it overrides the new/delete operators allowing them to be allocated using the Memory
-           class.
-    \example
-      "Ti" is an unique identifier. In NxOgre; those are defined in NxOgreClasses.h. If you want to use
-      your own; then an integer over 75000 is considered "User space".
-      <code>
-       class myClass : public PointerClass<_myClass>
-      </code>
-*/
-template<unsigned int Ti> class PointerClass
-{
-   
-  public: // Functions
-   
-   virtual unsigned int getClassType() const
-   {
-    return Ti;
-   }
-   
-   void* operator new(size_t size)
-   {
-    return NxOgre_Allocate(size, Ti);
-   }
-   
-   void* operator new(size_t size, void* ptr)
-   {
-    return ptr;
-   }
-   
-   void* operator new[](size_t size)
-   {
-    return NxOgre_Allocate(size, Ti);
-   }
-   
-   void operator delete(void* mem)
-   {
-    NxOgre_Unallocate(mem);
-   }
-   
-   void operator delete[](void* mem)
-   {
-    NxOgre_Unallocate(mem);
-   }
-   
-}; // class PointerClass
 
                                                                                        
 

@@ -49,15 +49,15 @@ namespace NxOgre
          class myCallback : public Callback
          {
           public:
-          	myCallback : Callback()
-          	{
-          		// my set up code.
-          	}
-          	
-          	void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
-          	{
-          		std::cout << "Volume Event!" << std::endl;
-          	}
+           myCallback : Callback()
+           {
+            // my set up code.
+           }
+           
+           void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
+           {
+            std::cout << "Volume Event!" << std::endl;
+           }
          };
 */
 class NxOgrePublicClass Callback
@@ -93,13 +93,13 @@ class NxOgrePublicClass Callback
           Shape* __collisionShape__ -- The shape in contact with the volumeShape.
           unsigned int __collisionEvent__ -- The type of collision, used with Enums::VolumeCollisionType
        example.
-          	void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
-          	{
-          		if (collisionEvent & Enums::VolumeCollisionType_OnEnter)
-          		{
-          		 std::cout << "RigidBody has entered the Volume for the first time!" << std::endl;
-          		}
-          	}
+          void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collision_body, Shape* rigidBodyShape, unsigned int collisionEvent)
+          {
+           if (collisionEvent & Enums::VolumeCollisionType_OnEnter)
+           {
+            std::cout << "RigidBody has entered the Volume for the first time!" << std::endl;
+           }
+          }
    */
    virtual void onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* collisionBody, Shape* rigidBodyShape, unsigned int collisionEvent);
    
@@ -112,10 +112,10 @@ class NxOgrePublicClass Callback
            const RaycastHit& __hit__ -- Raycast hit to parse
        return. **bool** -- True if the ray should continue, or false to abort.
        example.
-          	void onHitEvent(const RaycastHit& hit)
-          	{
-          		return (hit.mDistance < 20) // Return true if less than 20m.
-          	}
+          void onHitEvent(const RaycastHit& hit)
+          {
+           return (hit.mDistance < 20) // Return true if less than 20m.
+          }
        see. Scene::raycastAllBounds
    */
    virtual bool onHitEvent(const RaycastHit& hit);
@@ -128,10 +128,10 @@ class NxOgrePublicClass Callback
        note.
            Do not modify the Scene whilst in the onContact function; i.e. destroyActor, or createActor
        example.
-          	void onContact(const ContactPair& pair)
-          	{
-          		// Things to do.
-          	}
+          void onContact(const ContactPair& pair)
+          {
+           // Things to do.
+          }
        see. RigidBody::setContactCallback, Scene::setActorFlags
    */
    virtual void onContact(const ContactPair& pair);

@@ -48,7 +48,7 @@ class NxOgrePublicClass SceneDescription
   
   public: // Functions
   
-  static const          Vec3                 MEAN_EARTH_GRAVITY;
+  static const          Vec3                  MEAN_EARTH_GRAVITY;
 
   /** \brief SceneDescription constructor, all it does is call SceneDescription::reset.
   */

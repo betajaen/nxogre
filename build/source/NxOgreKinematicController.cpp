@@ -100,6 +100,11 @@ KinematicController::~KinematicController(void)
  NxOgre_Delete(mVolume);
 }
 
+unsigned int KinematicController::getRigidBodyType() const
+{
+ return Classes::_KinematicController;
+}
+
 Vec3 KinematicController::getPosition(void) const
 {
  return Functions::XYZ<NxVec3, Vec3>(mActor->getGlobalPosition());

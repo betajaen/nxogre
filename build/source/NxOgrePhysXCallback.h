@@ -49,7 +49,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass PhysXCallback : public PointerClass<Classes::_PhysXCallback>,
+class NxOgrePublicClass PhysXCallback : public GenericBasedAllocatable,
                                         public NxUserTriggerReport,
                                         public NxUserContactReport
 {

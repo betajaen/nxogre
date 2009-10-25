@@ -41,7 +41,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[624] = {
+static const char*  sClasses[628] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -540,7 +540,9 @@ static const char*  sClasses[624] = {
   "D6Joint",
   "D6JointDescription",
   "DebugRenderable",
+  "ErrorListener",
   "ErrorStream",
+  "Exception",
   "FileArchive",
   "FileResource",
   "FileResourceProtocol",
@@ -588,6 +590,7 @@ static const char*  sClasses[624] = {
   "MeshSerialiser",
   "MeshStats",
   "MotorDescription",
+  "Notice",
   "NxShapeFunctions",
   "Particle",
   "ParticleData",
@@ -658,6 +661,7 @@ static const char*  sClasses[624] = {
   "VisualDebugger",
   "VisualDebuggerMeshData",
   "Volume",
+  "Warning",
   "Wheel",
   "WheelBlueprint",
   "WheelMachinePart",

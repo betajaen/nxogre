@@ -44,20 +44,23 @@ namespace NxOgre
                                                                                        
 
 HeightField::HeightField()
+: mNameHash(BLANK_HASH)
 {
  mHeightField = 0;
 }
 
 HeightField::HeightField(Resource* resource)
+: mNameHash(BLANK_HASH)
 {
  mHeightField = 0;
  load(resource);
 }
 
 HeightField::HeightField(const String& name, NxHeightField* hf)
- : mName(name),
-   mHeightField(hf)
+: mName(name),
+  mHeightField(hf)
 {
+ mNameHash = Functions::StringHash(mName);
 }
 
 HeightField::~HeightField(void)
@@ -87,7 +90,7 @@ void HeightField::load(Resource* resource)
   StringStream ss;
   ss << "Error: " << resource->getPath().getString() << " is not a NxOgre file. Reasons(s) are:\n"
      << Functions::XFunctions::whyIsNotX(resource);
-  NxOgre_ThrowError(ss.str());
+  NxOgre_ThrowException(IOException, ss.str(), Classes::_HeightField);
   return;
  }
 
@@ -96,7 +99,7 @@ void HeightField::load(Resource* resource)
   StringStream ss;
   ss << "Error: " << resource->getPath().getString() << " is not a NxOgre heightfield file\n"
      << Functions::XFunctions::whyIsNotX(resource);
-  NxOgre_ThrowError(ss.str());
+  NxOgre_ThrowException(IOException, ss.str(), Classes::_HeightField);
   return;
  }
 

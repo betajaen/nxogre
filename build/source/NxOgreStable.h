@@ -86,12 +86,12 @@
 /** \brief Global new operator/function for every NxOgre class that requires to be a pointer.
     \example
      <code>
-      Actor* a = NxOgre_New(Actor)(arg0, arg1, ...);
+      Actor* a = NxOgre_New (arg0, arg1, ...);
      </code>
 */
-#define  NxOgre_New(NXOGRE_CLASS) new NXOGRE_CLASS
+#define  NxOgre_New new
 
-/** \brief Global new operator/function for every user class (and classes that do not inherit PointerClass) which
+/** \brief Global new operator/function for every user class (and classes that do not inherit Allocatable) which
            wishes to be tracked and allocated by the NxOgre Memory class.
     \note  Unless you want to inherit from NxOgre::PointerClass (and use NxOgre_New) the allocator
            will allocate it as "_UserClass".
@@ -155,38 +155,20 @@
 
 #define NxOgre_ThrowException(EXCEPTION, DESCRIPTION, CLASS_TYPE) throw EXCEPTION(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE);
 
-#define NxOgre_ThrowExceptionIfNull(PTR, CLASS_TYPE) if(PTR == 0){throw NxOgre::NullPointerException(__FILE__, __LINE__, CLASS_TYPE);}
+#define NxOgre_ThrowExceptionIfNull(PTR, CLASS_TYPE) if(PTR == 0){throw ::NxOgre::NullPointerException(__FILE__, __LINE__, CLASS_TYPE);}
 
-/** \brief Throw a very critical error and assert.
-*/
-#define NxOgre_ThrowAssertion(COND, MESSAGE)  {if(COND){::NxOgre::ErrorStream::getSingleton()->throwAssertion(MESSAGE, __FILE__, __LINE__);}assert(COND);}
+#define NxOgre_ThrowWarning(DESCRIPTION, CLASS_TYPE) ::NxOgre::ErrorStream::getSingleton()->addWarning(Warning(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE));
 
-/** \brief Throw a critical (but do not assert) error.
-*/
-#define NxOgre_ThrowError(MESSAGE)            ::NxOgre::ErrorStream::getSingleton()->throwError(MESSAGE, __FILE__, __LINE__)
+#define NxOgre_ThrowNotice(DESCRIPTION) ::NxOgre::ErrorStream::getSingleton()->addNotice(Notice(__FILE__, __LINE__, DESCRIPTION));
 
-/** \brief Throw a non-critical error.
-*/
-#define NxOgre_ThrowWarning(MESSAGE)          ::NxOgre::ErrorStream::getSingleton()->throwWarning(MESSAGE, __FILE__, __LINE__)
-
-/** \brief Throw a non-critical error.
-*/
-#define NxOgre_ThrowVirtualWarning            ::NxOgre::ErrorStream::getSingleton()->throwWarning("Virtual function called!", __FILE__, __LINE__)
-
-/** \brief Throw a non-error.
-*/
-#define NxOgre_ThrowNotice(MESSAGE)           ::NxOgre::ErrorStream::getSingleton()->throwNotice(MESSAGE, __FILE__, __LINE__)
-
-/** \brief Throw an error and return, if condition is true.
-*/
-#define NxOgre_ThrowIf(COND, MESSAGE) if(COND){::NxOgre::ErrorStream::getSingleton()->throwError(MESSAGE, __FILE__, __LINE__);return;}
-
-/** \brief Compiler macro to cause a compiler error if the expression is false.
-*/
 #define NxOgre_CompileAssertion(exp, reason)  extern char NxOgreCompilerAssertion__##reason__[ size_t((exp) ? 1 : -1) ]
 
 #define NxOgre_PreprocessorToStringBase(x) #x
+
 #define NxOgre_Stringify(x) NxOgre_PreprocessorToStringBase(x)
+
+// All classes that use the TinyClassAllocatable, must use this macro when the class is defined.
+#define NxOgreTinyClassRestriction(CLASS) extern char NxOgreCompileAssert[size_t(sizeof(CLASS) == 16 ? 1 : -1)];
 
                                                                                        
 

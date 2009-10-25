@@ -72,7 +72,7 @@ OGRE3DRenderable::RenderProfile::RenderProfile(Ogre::RenderOperation::OperationT
 }
 
 OGRE3DRenderable::OGRE3DRenderable(int type)
-: NxOgre::Renderable(type)
+: NxOgre::Renderable(type), Ogre::SimpleRenderable()
 {
  _createProfile(mType);
  _initialise();

@@ -48,7 +48,7 @@ namespace NxOgre
 
         p. It may be implemented as a directory, zip file or even a website.
 */
-class NxOgrePublicClass Archive
+class NxOgrePublicClass Archive : public ResourceAllocatable
 {
   
   public: // Functions

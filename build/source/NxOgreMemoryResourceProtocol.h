@@ -57,7 +57,7 @@ namespace NxOgre
       int n = resource->readInt(); // n = 7737
      </code>
 */
-class NxOgrePublicClass MemoryResourceProtocol : public PointerClass<Classes::_MemoryResourceProtocol>, public ResourceProtocol
+class NxOgrePublicClass MemoryResourceProtocol : public ResourceProtocol
 {
   
   public: // Functions

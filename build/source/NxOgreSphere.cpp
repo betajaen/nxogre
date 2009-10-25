@@ -48,6 +48,11 @@ Sphere::~Sphere(void)
 {
 }
 
+unsigned int Sphere::getShapeType() const
+{
+ return Classes::_Sphere;
+}
+
 NxShapeDesc* Sphere::create(void)
 {
  NxSphereShapeDesc* sphere = new NxSphereShapeDesc();

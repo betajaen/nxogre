@@ -100,10 +100,9 @@ void OGRE3DKinematicBody::_destructNode(OGRE3DSceneNodeDestructorBehaviour behav
   mNode = 0;
  }
  
- 
 }
 
-unsigned int OGRE3DKinematicBody::getClassType() const
+unsigned int OGRE3DKinematicBody::getRigidBodyType() const
 {
  return _OGRE3DKinematicBody;
 }
@@ -117,7 +116,6 @@ Ogre::SceneNode* OGRE3DKinematicBody::getSceneNode()
 {
  return mNode;
 }
-
 
 bool OGRE3DKinematicBody::advance(float, const NxOgre::Enums::Priority&)
 {

@@ -51,6 +51,11 @@ Capsule::~Capsule(void)
 {
 }
 
+unsigned int Capsule::getShapeType() const
+{
+ return Classes::_Capsule;
+}
+
 NxShapeDesc* Capsule::create()
 {
  NxCapsuleShapeDesc* capsule = new NxCapsuleShapeDesc();

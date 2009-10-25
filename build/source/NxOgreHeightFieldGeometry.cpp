@@ -74,6 +74,16 @@ HeightFieldGeometry::~HeightFieldGeometry(void)
 {
 }
 
+unsigned int HeightFieldGeometry::getShapeType() const
+{
+ return Classes::_HeightFieldGeometry;
+}
+
+Enums::ShapeFunctionType HeightFieldGeometry::getShapeFunctionType() const
+{
+ return Enums::ShapeFunctionType_HeightField;
+}
+
 NxShapeDesc* HeightFieldGeometry::create(void)
 {
  NxHeightFieldShapeDesc* heightfield = new NxHeightFieldShapeDesc();
@@ -114,12 +124,6 @@ void HeightFieldGeometry::assign(NxShape* heightfield)
  assignAbstract(heightfield);
  mHeightFieldShape = heightfield->isHeightField();
 }
-
-Enums::ShapeFunctionType HeightFieldGeometry::getShapeFunctionType() const
-{
- return Enums::ShapeFunctionType_HeightField;
-}
-
 
 HeightField* HeightFieldGeometry::getHeightField() const
 {

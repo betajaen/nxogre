@@ -72,6 +72,11 @@ Volume::~Volume(void)
  destroy();
 }
 
+unsigned int Volume::getRigidBodyType() const
+{
+ return Classes::_Volume;
+}
+
 void Volume::setGlobalPose(const Matrix44& matrix)
 {
  ::NxOgre::Functions::RigidBodyFunctions::setGlobalPose(matrix, mActor);

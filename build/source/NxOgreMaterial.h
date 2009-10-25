@@ -41,70 +41,109 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. Material
 */
-class NxOgrePublicClass Material : public PointerClass<Classes::_Material>
+class NxOgrePublicClass Material : public GenericBasedAllocatable
 {
+  
   friend class Scene;
   friend class Functions::ArrayFunctions<Material*>::Write;
-
+  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
+  
   public: // Functions
   
-  /** \brief Text
+  /*! function. getNameHash
+      desc.
+          Get the material's name.
+      note.
+          Don't be confused with the getIdentifier function. MaterialIdentifier's are used internally in PhysX to reference
+          materials. Where as Names are used externally to reference a material; also materials can go without names but
+          not MaterialIdentifiers.
+      return.
+          **String** -- The material's name
   */
-                          MaterialIdentifier  getIdentifier(void) const;
-  /** \brief Text
+  String  getName() const;
+
+  /*! function. getNameHash
+      desc.
+          Get the hash of the material's name.
+      note.
+          Don't be confused with the getIdentifier function. MaterialIdentifier's are used internally in PhysX to reference
+          materials. Where as Names are used externally to reference a material; also materials can go without names but
+          not MaterialIdentifiers.
+      return.
+          **StringHash** -- The material's hashed name
   */
-                          Real                getRestitution(void) const;
+  StringHash getNameHash() const;
+
+  /*! function. getIdentifier
+      desc.
+          Get the internal material identifier (unsigned short) used internally within PhysX to reference a material used
+          in shapes and meshes.
+      return.
+          **MaterialIdentifier** -- The material's identifier.
+  */
+  MaterialIdentifier  getIdentifier(void) const;
+  
+  /*! function. getRestitution
+      desc.
+          Text
+  */
+  Real  getRestitution(void) const;
   
   /** \brief Text
   */
-                          Real                getStaticFriction(void) const;
+  Real  getStaticFriction(void) const;
   
   /** \brief Text
   */
-                          Real                getDynamicFriction(void) const;
+  Real  getDynamicFriction(void) const;
   
   /** \brief Text
   */
-                          void                setRestitution(Real);
+  void  setRestitution(Real);
   
   /** \brief Text
   */
-                          void                setStaticFriction(Real);
+  void  setStaticFriction(Real);
   
   /** \brief Text
   */
-                          void                setDynamicFriction(Real);
+  void  setDynamicFriction(Real);
   
   protected: // Functions
   
   /** \internal
   */
-                                              Material(NxMaterial*, Scene*);
+  Material(NxMaterial*, Scene*);
   
   /** \internal
   */
-                                              Material(MaterialPrototype*, Scene*);
+  Material(const MaterialDescription&, Scene*);
   
   /** \internal
   */
-                                             ~Material(void);
+  ~Material(void);
   
   /** \internal
   */
-                           void               create(MaterialPrototype*);
+  void  create(const MaterialDescription&);
   
   /** \internal
   */
-                           void               destroy(void);
+  void  destroy(void);
   
   protected: // Variables
   
-                           Scene*             mScene;
-                           NxMaterial*        mMaterial;
+  Scene*  mScene;
   
-}; // class ClassName
+  NxMaterial*  mMaterial;
+  
+  String  mName;
+  
+  StringHash mNameHash;
+  
+}; // class Material
 
                                                                                        
 

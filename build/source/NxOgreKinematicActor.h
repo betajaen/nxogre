@@ -58,7 +58,7 @@ namespace NxOgre
       mScene->createKinematicActor(new Box(4,1,4));
      </code>
 */
-class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_KinematicActor>, public RigidBody
+class NxOgrePublicClass KinematicActor : public RigidBody
 {
   
   friend class Scene;
@@ -68,15 +68,9 @@ class NxOgrePublicClass KinematicActor : public PointerClass<Classes::_Kinematic
   
   public:
   
-  using ::NxOgre::PointerClass<Classes::_KinematicActor>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_KinematicActor>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_KinematicActor>::getClassType;
-
   /** \brief
   */
-  virtual                             unsigned int           getClassType() const;
+  virtual                             unsigned int           getRigidBodyType() const;
 
   /** \brief Assigns the actor to a user defined group of rigid bodies. 
   */

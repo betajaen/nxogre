@@ -52,6 +52,10 @@ namespace Functions
  
  unsigned long inline StringHash(const char* str)
  {
+  
+  if (strlen(str) == 0 || str == 0)
+   return 0;
+  
   unsigned long hash = 5381;
   int c = 0;
   while (c = *str++)

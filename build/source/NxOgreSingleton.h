@@ -41,47 +41,45 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! function. Singleton
+    desc.
+         Generic singleton class
 */
-template<class T, unsigned int Ti> class Singleton
+template<class T> class Singleton
 {
   
   public:
   
-  static                 T*                   getSingleton(void)
+  /*! function. getSingleton
+      desc.
+          Get's a copy of the singleton pointer
+  */
+  static T* getSingleton(void)
   {
    return sSingleton;
   }
   
   protected: // Functions
   
-  /** \brief Text
+  /*! constructor. Singleton
+      desc.
+          Constructor for inherited classes.
   */
-                                              Singleton(void)
+  Singleton(void)
   {
    sSingleton = static_cast<T*>(this);
   }
   
-  /** \brief Text
+  /*! destructor. Singleton
   */
-                                             ~Singleton(void)
+ ~Singleton(void)
   {
+   sSingleton = 0;
   }
   
-  void* operator new(size_t size)
-  {
-   return NxOgre_Allocate(size, Ti);
-  }
-
-  void operator delete(void* mem)
-  {
-    NxOgre_Unallocate(mem);
-  }
-
-  protected: // Variables
+  private:
   
-   static T*                                      sSingleton;
-  
+   static T* sSingleton;
   
 }; // class Singleton
 

@@ -49,7 +49,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass PhysXOutputStream : public PointerClass<Classes::_PhysXOutputStream>, public NxUserOutputStream
+class NxOgrePublicClass PhysXOutputStream : public GenericBasedAllocatable, public NxUserOutputStream
 {
   
   friend class World;

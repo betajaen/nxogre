@@ -65,7 +65,7 @@ namespace NxOgre
     	NxOgre::World* mWorld;
     };
 */
-class NxOgrePublicClass World : public PointerClass<Classes::_World>
+class NxOgrePublicClass World : public BigClassAllocatable
 {
   
   public: // Functions
@@ -97,24 +97,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
       return. World* -- The World instance, or NULL if created.
   */
   static               World*                 createWorld(const WorldDescription& = WorldDescription());
-  
-  /*! function. createWorld
-      Create the World instance, and Singletons (if they aren't created).
 
-      note. If null is returned then you should check the log for the reason why it wasn't created.
-
-      example.
-      WorldPrototype* prototype = ...
-      World* world = World::createWorld(prototype);
-
-      args.
-      WorldPrototype* _prototype_ -- Prototype to create from.
-
-      return. World* -- The World instance, or NULL if created.
-  */
-  static               World*                 createWorld(WorldPrototype* prototype);
-  
-  
   /*! function. destroyWorld
       Destroyer of World, Scenes and everything within.
       note. If you destroy the singletons, then World::destroySingletons does not need to be called.#
@@ -228,7 +211,7 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
       !private
       see. World::createWorld
   */
-                                              World(WorldPrototype*);
+                                              World(const WorldDescription&);
   
   /*! function. Destructor
       !private

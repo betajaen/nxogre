@@ -29,7 +29,6 @@
 #include "NxOgreStable.h"
 #include "NxOgreWorld.h"
 #include "NxOgreWorldDescription.h"
-#include "NxOgreWorldPrototype.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreErrorStream.h"
 #include "NxOgreTimeController.h"
@@ -105,77 +104,62 @@ void World::destroySingletons(void)
  {
   ErrorStream* error_stream = ErrorStream::getSingleton();
   NxOgre_Delete(error_stream);
-  ErrorStream::sSingleton = 0;
  }
 
  if (TimeController::getSingleton() != 0)
  {
   TimeController* time_controller = TimeController::getSingleton();
   NxOgre_Delete(time_controller);
-  TimeController::sSingleton = 0;
  }
 
  if (ResourceSystem::getSingleton() != 0)
  {
   ResourceSystem* resource_system = ResourceSystem::getSingleton();
   NxOgre_Delete(resource_system);
-  ResourceSystem::sSingleton = 0;
  }
  
  if (MeshManager::getSingleton() != 0)
  {
   MeshManager* mesh_manager = MeshManager::getSingleton();
   NxOgre_Delete(mesh_manager);
-  MeshManager::sSingleton = 0;
  }
  
  if (HeightFieldManager::getSingleton() != 0)
  {
   HeightFieldManager* hf_manager = HeightFieldManager::getSingleton();
   NxOgre_Delete(hf_manager);
-  HeightFieldManager::sSingleton = 0;
  }
  
  mCookingInterface->NxCloseCooking();
  
 }
 
-World* World::createWorld(const WorldDescription&)
+World* World::createWorld(const WorldDescription& description)
 {
+ 
  if (World::sWorldInstance != 0)
   return 0;
  
  precreateSingletons();
- WorldPrototype* prototype = NxOgre_New(WorldPrototype)();
- World::sWorldInstance = NxOgre_New(World)(prototype);
- NxOgre_Delete(prototype);
+ World::sWorldInstance = NxOgreNew World(description);
  return World::sWorldInstance;
-}
-
-World* World::createWorld(WorldPrototype* prototype)
-{
- if (World::sWorldInstance != 0)
-  return 0;
  
-  precreateSingletons();
-  World::sWorldInstance = NxOgre_New(World)(prototype);
- 
- return World::sWorldInstance;
 }
 
 void World::destroyWorld(bool also_destroy_singletons)
 {
+ 
  if (World::sWorldInstance == 0)
   return;
  
- NxOgre_Delete(World::sWorldInstance);
-
+ NxOgreDelete(World::sWorldInstance);
+ 
  if (also_destroy_singletons)
   destroySingletons();
-
+ 
 }
 
-World::World(NxOgre::WorldPrototype* prototype)
+World::World(const WorldDescription& description)
 : mSDK(0), mDeadSDK(false), mPhysXOutputStream(0), mPhysXUserAllocator(0), mNullCallback(0)
 {
  
@@ -186,7 +170,13 @@ World::World(NxOgre::WorldPrototype* prototype)
  mPhysXUserAllocator = NxOgre_New(PhysXUserAllocator)();
   
  NxPhysicsSDKDesc sdk_description;
- ::NxOgre::Functions::PrototypeFunctions::WorldPrototypeToNxPhysicsSDKDesc(prototype, sdk_description);
+ sdk_description.cookerThreadMask = description.mCookerThreadMask;
+ if (description.mNoHardware)
+  sdk_description.flags |= NX_SDKF_NO_HARDWARE;
+ sdk_description.hwConvexMax = description.mHardwareMaximumConvex;
+ sdk_description.hwPageMax= description.mHardwareMaximumPage;
+ sdk_description.hwPageSize = description.mHardwarePageSize;
+ 
   
  NxSDKCreateError errorCode = NXCE_NO_ERROR;
  mSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, mPhysXUserAllocator, mPhysXOutputStream, sdk_description, &errorCode); 

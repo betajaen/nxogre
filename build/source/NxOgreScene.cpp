@@ -40,11 +40,11 @@
 #include "NxOgreKinematicController.h"
 #include "NxOgreTimeController.h"
 #include "NxOgreMaterial.h"
-#include "NxOgreMaterialPrototype.h"
 #include "NxOgreVolume.h"
 #include "NxOgreSphericalJoint.h"
 #include "NxOgreFixedJoint.h"
 #include "NxOgreRevoluteJoint.h"
+#include "NxOgreD6Joint.h"
 #include "NxOgrePhysXCallback.h"
 #include "NxOgreRay.h"
 #include "NxOgrePhysXRaycastReport.h"
@@ -108,7 +108,8 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
  }
   
   Material* material = NxOgre_New(Material)(mScene->getMaterialFromIndex(0), this);
-  mMaterials.insert(material);
+  mMaterials.insert(material->getNameHash(), material);
+  mIndexedMaterials.insert(0, material);
   
   TimeController::getSingleton()->mListeners[mProcessingPriority].insert(this);
   TimeController::getSingleton()->mListeners[mFetchingPriority].insert(this);
@@ -130,7 +131,7 @@ Scene::~Scene(void)
   mKinematicActors.clear();
   mKinematicControllers.clear();
   mVolumes.clear();
-  mMaterials.destroyAll();
+  mMaterials.clear();
   mFluids.clear();
   mCloths.destroyAll();
   mSoftBodies.destroyAll();
@@ -239,33 +240,22 @@ bool Scene::isProcessing(void) const
 
 Material* Scene::createMaterial(const MaterialDescription& description)
 {
- NxOgre::MaterialPrototype* prototype = NxOgre_New(MaterialPrototype)();
- Functions::PrototypeFunctions::MaterialDescriptionToMaterialPrototype(description, prototype);
- Material* material = createMaterial(prototype);
- NxOgre_Delete(prototype);
+ Material* material = NxOgre_New Material(description, this);
+ mMaterials.insert(material->getNameHash(), material);
+ mIndexedMaterials.insert(material->getIdentifier(), material);
  return material;
 }
 
-Material* Scene::createMaterial(MaterialPrototype* prototype)
-{
- Material* material = NxOgre_New(Material)(prototype, this);
- mMaterials.insert(material);
- return material;
-}
 
 void Scene::destroyMaterial(Material* material)
 {
- mMaterials.remove(material);
- NxOgre_Delete(material);
+ mIndexedMaterials.erase(material->getIdentifier());
+ mMaterials.erase(material->getNameHash());
 }
 
 Material* Scene::getMaterial(const MaterialIdentifier& identifier)
 {
- Array<Material*>::Iterator it = mMaterials.getIterator();
- for (Material* material = it.begin(); material = it.next();)
-  if (material->getIdentifier() == identifier)
-   return material;
- return 0;
+ return mIndexedMaterials.at(identifier);
 }
 
 KinematicActor* Scene::createKinematicActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description)
@@ -352,6 +342,20 @@ RevoluteJoint* Scene::createRevoluteJoint(RigidBody* first, const RevoluteJointD
 RevoluteJoint* Scene::createRevoluteJoint(RigidBody* first, RigidBody* second, const RevoluteJointDescription& desc)
 {
  RevoluteJoint* joint = new RevoluteJoint(first, second, desc);
+ mJoints.insert(joint);
+ return joint;
+}
+
+D6Joint* Scene::createD6Joint(RigidBody* first, const D6JointDescription& desc)
+{
+ D6Joint* joint = new D6Joint(first, 0, desc);
+ mJoints.insert(joint);
+ return joint;
+}
+
+D6Joint* Scene::createD6Joint(RigidBody* first, RigidBody* second, const D6JointDescription& desc)
+{
+ D6Joint* joint = new D6Joint(first, second, desc);
  mJoints.insert(joint);
  return joint;
 }

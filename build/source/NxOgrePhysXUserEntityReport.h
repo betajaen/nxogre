@@ -52,7 +52,7 @@ namespace NxOgre
 /** \brief
 */
 template <typename T>
-class NxOgrePublicClass PhysXUserEntityReport : public NxUserEntityReport<T>
+class NxOgrePublicClass PhysXUserEntityReport : public GenericBasedAllocatable, public NxUserEntityReport<T>
 {
   
   public: // Functions

@@ -46,7 +46,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass SceneGeometry : public PointerClass<Classes::_SceneGeometry>, public RigidBody
+class NxOgrePublicClass SceneGeometry : public RigidBody
 {
   
   friend class Scene;
@@ -54,17 +54,12 @@ class NxOgrePublicClass SceneGeometry : public PointerClass<Classes::_SceneGeome
   
   public:
   
-  using ::NxOgre::PointerClass<Classes::_SceneGeometry>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_SceneGeometry>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_SceneGeometry>::getClassType;
   
   public: // Functions
   
   /** \brief 
   */
-  virtual                             unsigned int           getClassType() const;
+  virtual                             unsigned int           getRigidBodyType() const;
 
   /** \brief Assigns the actor to a user defined group of rigid bodies. 
   */

@@ -54,7 +54,7 @@ namespace NxOgre
     res->readCharArray(c, sizeof(char) * 5);
   </code>
 */
-class NxOgrePublicClass Resource
+class NxOgrePublicClass Resource : public ResourceAllocatable
 {
   
   public: // Functions

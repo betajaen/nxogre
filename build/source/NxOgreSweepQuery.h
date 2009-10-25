@@ -76,7 +76,7 @@ struct NxOgrePublicClass SweepQueryHit
   
 }; // class RaycastHit
 
-class NxOgrePublicClass SweepCache : public PointerClass<Classes::_SweepCache>
+class NxOgrePublicClass SweepCache : public GenericBasedAllocatable
 {
  friend Scene;
  

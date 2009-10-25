@@ -36,6 +36,9 @@
 #include "NxOgrePointerClass.h"
 #include "NxOgreArray.h"
 #include "NxOgreString.h"
+#include "NxogreException.h"
+#include "NxogreWarning.h"
+#include "NxogreNotice.h"
 
                                                                                        
 
@@ -51,51 +54,29 @@ class Resource;
         Error is a single instance of an thrown error by NxOgre, carrying a message, it's type,
         and the file it was raised from.
 */
-class NxOgrePublicClass Error : public PointerClass<Classes::_ErrorStream>
+class NxOgrePublicClass ErrorListener
 {
-   
+  
  public:
-   
-   /*! constructor. Error
-       desc.
-           Constructor for Error.
-       args.
-           const String& __message__ -- Compiled message.
-           const String& __file__ -- Filename of the file raising the error.
-           unsigned int __line__ -- The line of code that raised the error.
-           unsigned int __errorType__ -- The type of error; 
-   */
-   Error(const String& message, const String& file, unsigned int line, unsigned char errorType);
-   
-   /*! destructor. Error
-       desc.
-           Error destructor.
-   */
-  ~Error();
   
-  /*! variable. mMessage
+  /*! class. onException
       desc.
-          The error message.
+           When an exception has been thrown. This will be eventually be called. Depending on the platform and/or
+           IDE, the application may exit before this is actually called.
   */
-  String  mMessage;
+  virtual void onException(const Exception&);
   
-  /*! variable. mFile
+  /*! class. onWarning
       desc.
-          The file of the source raising the error.
+          When a warning is serious enough to make note of.
   */
-  String  mFile;
+  virtual void onWarning(const Warning&);
   
-  /*! variable. mLine
+  /*! class. onNotice
       desc.
-          Line of code that raised the error.
+          When a notice is serious enough to make note of.
   */
-  unsigned int  mLine;
-  
-  /*! variable. mType
-      desc.
-          Type of error.
-  */
-  unsigned char mType;
+  virtual void onNotice(const Notice&);
   
 }; // class Error
 
@@ -103,108 +84,86 @@ class NxOgrePublicClass Error : public PointerClass<Classes::_ErrorStream>
 
 /*! class. ErrorStream
     desc.
-        ErrorStream handles all NxOgre and PhysX errors. It is also the source of all assertions caused by NxOgre and PhysX.
+        ErrorStream records and makes a note of all exceptions, warnings and notices. By default these are written
+        to the console, but may be written to a resource, or a user app class may listen in.
         
         ErrorStream is a Singleton class, and is created/destroyed via World::createSingletons, World::createWorld or World::destroySingletons.
         
 */
-class NxOgrePublicClass ErrorStream : public ::NxOgre::Singleton<ErrorStream, ::NxOgre::Classes::_ErrorStream>
+class NxOgrePublicClass ErrorStream : public Singleton<ErrorStream>, public BigClassAllocatable
 {
   
   friend class World;
-  friend class Exception;
   
-  public: // Functions
+  public:
   
-  /*! function. throwAssertion
+  /*! function. addException
       desc.
-           Record an very serious error.
+          Add an exception.
       note.
-           Use the  NxOgre_ThrowAssertion or NxOgreThrowCaseAssertion macro to use this function properly.
-      args.
-           const String& __message__ -- Error message.
-           const char* __file__ -- Source file of the error.
-           unsigned int __line__ -- Line throwing the error.
+          Do not call manually. The exception class will do this for you.
   */
-  void  throwAssertion(const String& message, const char* file, unsigned int line);
-
-  /*! function. throwError
-      desc.
-          Record an serious error.
-      note.
-          Use the NxOgre_ThrowError macro to use this function properly.
-      args.
-           const String& __message__ -- Error message.
-           const char* __file__ -- Source file of the error.
-           unsigned int __line__ -- Line throwing the error.
-  */
-  void  throwError(const String& message, const char* file, unsigned int line);
+  void addException(const Exception&);
   
-  /*! function. throwWarning
+  /*! function. addWarning
       desc.
-          Record less serious but recoverable error.
+          Add a warning.
       note.
-          Use the NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro to use this function properly.
-      args.
-           const String& __message__ -- Error message.
-           const char* __file__ -- Source file of the error.
-           unsigned int __line__ -- Line throwing the error.
+          Do not call manually. The warning class will do this for you.
   */
-  void  throwWarning(const String& message, const char* file, unsigned int line);
+  void addWarning(const Warning&);
   
-  /*! function. throwNotice
+  /*! function. addNotice
       desc.
-          Record notice
+          Add a notice.
       note.
-          Use the NxOgre_ThrowWarning or NxOgreThrowCaseWarning macro to use this function properly.
-      args.
-           const String& __message__ -- Error message.
-           const char* __file__ -- Source file of the error.
-           unsigned int __line__ -- Line throwing the error.
+          Do not call manually. The notice class will do this for you.
   */
-  void  throwNotice(const String& message, const char* file, unsigned int line);
+  void addNotice(const Notice&);
   
-  /*! function. getSingleton
-      desc.
-          Gets the singleton pointer to the ErrorStream.
-  */
-  static  ErrorStream*  getSingleton(void);
-
   /*! function. setLogResource
       desc.
-          Set the resource to write log messages to.
-      args.
-          Resource* __resource__ -- New resource to write to.
+          Set the Log resource to a new one, or NULL to close.
+      note.
+          Changing resources will not re-print the previous activity into the new one
   */
-  void  setLogResource(Resource* resource);
+  void setLogResource(Resource* resource);
   
-  protected: // Functions
+  /*! function. getLogResource
+      desc. 
+          Get the resource that the ErrorStream is writing to.
+      note.
+          Do not close or delete the Resource.
+  */
+  Resource* getLogResource();
   
-  void throwException(const Exception&);
+  /*! function. addListener
+      desc.
+           Add a listener for exceptions, warnings and notices
+  */
+  void  addListener(ErrorListener*);
+  
+  /*! function. removeListener
+      desc.
+           Remove a listener.
+  */
+  void  removeListener(ErrorListener*);
+
+  protected:
   
   /*! constructor. ErrorStream
-      desc.
-         Use World::precreateSingletons or World::createWorld
   */
   ErrorStream(void);
   
   /*! destructor. ErrorStream
   */
-  ~ErrorStream(void);
-  
-  /*! function. print
-      desc.
-           Writes an Error to a Resource.
-      args.
-           Error* error -- Error to write.
-  */
-  void  print(Error* error);
+ ~ErrorStream(void);
   
   protected: // Variables
   
-  Array<Error*>       mErrors;
+  std::vector<ErrorListener*> mListeners;
   
-  Resource*           mLogResource;
+  Resource*                   mLogResource;
   
   
 }; // class ErrorStream

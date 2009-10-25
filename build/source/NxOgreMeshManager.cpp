@@ -32,7 +32,7 @@
 #include "NxOgreResourceSystem.h"
 #include "NxOgreResource.h"
 
-template<> NxOgre::MeshManager* NxOgre::Singleton<NxOgre::MeshManager, NxOgre::Classes::_MeshManager>::sSingleton = 0;
+template<> NxOgre::MeshManager* NxOgre::Singleton<NxOgre::MeshManager>::sSingleton = 0;
 
                                                                                        
 

@@ -38,7 +38,7 @@
 
                                                                                        
 
-class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3DRenderSystem>, public NxOgre::TimeListener
+class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::UserBigClassAllocatable, public NxOgre::TimeListener
 {
   public:
      
@@ -50,7 +50,6 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::PointerClass<_OGRE3D
      
      typedef NxOgre::ptr_multihashmap<OGRE3DKinematicBody>::iterator_t  KinematicBodyIterator;
      
-
      /** \brief OGRE3DRenderSystem constructor.
          \param Scene* Scene to work with
          \param SceneManager SceneManager, or 0 to use the first available.

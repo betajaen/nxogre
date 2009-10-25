@@ -51,6 +51,11 @@ PlaneGeometry::~PlaneGeometry(void)
 {
 }
 
+unsigned int PlaneGeometry::getShapeType() const
+{
+ return Classes::_PlaneGeometry;
+}
+
 NxShapeDesc* PlaneGeometry::create()
 {
  NxPlaneShapeDesc* plane = new NxPlaneShapeDesc();

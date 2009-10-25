@@ -71,7 +71,7 @@ Actor::~Actor(void)
  destroy();
 }
 
-unsigned int Actor::getClassType() const 
+unsigned int Actor::getRigidBodyType() const 
 {
  return ::NxOgre::Classes::_Actor;
 }

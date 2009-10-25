@@ -36,7 +36,7 @@
 
                                                                                        
 
-template<> ::NxOgre::ErrorStream* ::NxOgre::Singleton<NxOgre::ErrorStream, ::NxOgre::Classes::_ErrorStream>::sSingleton = 0;
+template<> ::NxOgre::ErrorStream* ::NxOgre::Singleton<NxOgre::ErrorStream>::sSingleton = 0;
 
                                                                                        
 
@@ -45,20 +45,15 @@ namespace NxOgre
 
                                                                                        
 
-ErrorStream* ErrorStream::getSingleton(void)
+void ErrorListener::onException(const Exception&)
 {
- return sSingleton;
 }
 
-Error::Error(const String& message, const String& file, unsigned int line, unsigned char error_type)
+void ErrorListener::onWarning(const Warning&)
 {
-  mMessage = message;
-  mFile = file;
-  mLine = line;
-  mType = error_type;
 }
 
-Error::~Error()
+void ErrorListener::onNotice(const Notice&)
 {
 }
 
@@ -71,87 +66,84 @@ ErrorStream::~ErrorStream(void)
  //mErrors.
 }
 
-void ErrorStream::throwAssertion(const String& message, const char* file, unsigned int line)
+void ErrorStream::addException(const Exception& exception)
 {
- Error* error = NxOgre_New(Error)(message, String(file), line, 3);
- print(error);
- mErrors.insert(error);
-}
-
-void ErrorStream::throwError(const String& message, const char* file, unsigned int line)
-{
- Error* error = NxOgre_New(Error)(message, String(file), line, 2);
- print(error);
- delete error; // temp
-}
-
-void ErrorStream::throwWarning(const String& message, const char* file, unsigned int line)
-{
- Error* error = NxOgre_New(Error)(message, String(file), line, 1);
- print(error);
- delete error; // temp
-}
-
-void ErrorStream::throwNotice(const String& message, const char* file, unsigned int line)
-{
- Error* error = NxOgre_New(Error)(message, String(file), line, 0);
- print(error);
- delete error; // temp
-}
-
-void ErrorStream::throwException(const Exception& exception)
-{
- 
- 
  if (mLogResource)
  {
   std::string str = exception.str();
   mLogResource->write(str.c_str(), str.length());
-  mLogResource->flush();
  }
+ 
+ for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)
+  (*it)->onException(exception);
  
 }
 
-void ErrorStream::print(Error* error)
+void ErrorStream::addWarning(const Warning& warning)
 {
- 
- std::stringstream stream;
-  
- if (error->mType == 0)
-  stream << "-Notice ----------------------------------------------------------\n";
- else if (error->mType == 1)
-  stream << "-Warning ---------------------------------------------------------\n";
- else if (error->mType == 2)
-  stream << "-Error -----------------------------------------------------------\n";
- else if (error->mType == 3)
-  stream << "-Assertion -------------------------------------------------------\n";
- else
-  stream << "-Banana not found! -----------------------------------------------\n";
- 
- if (error->mFile.length())
-  stream << "From: " << error->mFile.c_str() << "(" << error->mLine << ")\n";
- 
- stream << error->mMessage << "\n------------------------------------------------------------------\n";
- 
- std::cout << stream << std::endl;
- 
  if (mLogResource)
  {
-  std::string str = stream.str();
+  std::string str = warning.str();
   mLogResource->write(str.c_str(), str.length());
-  mLogResource->flush();
  }
+ 
+ for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)
+  (*it)->onWarning(warning);
  
 }
 
+void ErrorStream::addNotice(const Notice& notice)
+{
+ if (mLogResource)
+ {
+  std::string str = notice.str();
+  mLogResource->write(str.c_str(), str.length());
+ }
+ 
+ for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)
+  (*it)->onNotice(notice);
+ 
+}
 
 void ErrorStream::setLogResource(Resource* resource)
 {
- if (mLogResource)
+ if (mLogResource || (resource == 0 && mLogResource))
   ::NxOgre::ResourceSystem::getSingleton()->close(mLogResource);
  
  mLogResource = resource;
  
+}
+
+Resource* ErrorStream::getLogResource()
+{
+ return mLogResource;
+}
+
+void ErrorStream::addListener(ErrorListener* listener)
+{
+ 
+ NxOgre_ThrowExceptionIfNull(listener, Classes::_ErrorListener);
+ 
+ for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)
+  if ((*it) == listener)
+   return;
+ 
+ mListeners.push_back(listener);
+}
+
+void ErrorStream::removeListener(ErrorListener* listener)
+{
+ 
+ NxOgre_ThrowExceptionIfNull(listener, Classes::_ErrorListener);
+ 
+ for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)
+ {
+  if ((*it) == listener)
+  {
+   mListeners.erase(it);
+   return;
+  }
+ }
 }
 
                                                                                        

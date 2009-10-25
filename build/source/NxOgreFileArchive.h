@@ -47,7 +47,7 @@ namespace NxOgre
     desc.
         A FileArchive represents a directory or drive as an Archive.
 */
-class NxOgrePublicClass FileArchive : public PointerClass<Classes::_FileArchive>, public Archive
+class NxOgrePublicClass FileArchive : public Archive
 {
   
   public: // Functions

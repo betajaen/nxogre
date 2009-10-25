@@ -50,6 +50,11 @@ Convex::~Convex(void)
 {
 }
 
+unsigned int Convex::getShapeType() const
+{
+ return Classes::_Convex;
+}
+
 Mesh* Convex::getMesh(void)
 {
  if (mBlueprint)

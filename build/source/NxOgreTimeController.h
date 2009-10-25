@@ -62,7 +62,7 @@ namespace NxOgre
            into the next one. This can be achived via the ScenePrototype/SceneDescription.
            
 */
-class NxOgrePublicClass TimeController : public ::NxOgre::Singleton<TimeController, ::NxOgre::Classes::_TimeController>
+class NxOgrePublicClass TimeController : public Singleton<TimeController>, public BigClassAllocatable
 {
   
   typedef void (TimeController::*AdvancedFunc)(Real);

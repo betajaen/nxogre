@@ -387,6 +387,18 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreAllocatables.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAllocator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAllocator.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreArchive.cpp"
 			>
 		</File>
@@ -751,6 +763,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreMap.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreMaterial.cpp"
 			>
 		</File>
@@ -764,14 +780,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreMaterialDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMaterialPrototype.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMaterialPrototype.h"
 			>
 		</File>
 		<File
@@ -892,6 +900,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreNodeRenderable.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNotice.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNotice.h"
 			>
 		</File>
 		<File
@@ -1167,14 +1183,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreSceneRenderable.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSceneRenderable.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreSceneTimer.cpp"
 			>
 		</File>
@@ -1228,10 +1236,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreSoftBodyDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreSoftBodyMesh.h"
 			>
 		</File>
 		<File
@@ -1435,10 +1439,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreVertex.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreVisualDebugger.cpp"
 			>
 		</File>
@@ -1460,6 +1460,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreVolume.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWarning.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWarning.h"
 			>
 		</File>
 		<File
@@ -1500,14 +1508,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreWorldDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreWorldPrototype.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreWorldPrototype.h"
 			>
 		</File>
 		<File

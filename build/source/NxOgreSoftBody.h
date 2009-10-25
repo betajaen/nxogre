@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass SoftBody : public PointerClass<Classes::_SoftBody>, public TimeListener
+class NxOgrePublicClass SoftBody : public NonRigidBodyBasedAllocatable, public TimeListener
 {
  
  friend class Scene;

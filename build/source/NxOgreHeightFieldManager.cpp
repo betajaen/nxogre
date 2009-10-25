@@ -32,7 +32,7 @@
 #include "NxOgreResourceSystem.h"
 #include "NxOgreResource.h"
 
-template<> NxOgre::HeightFieldManager* NxOgre::Singleton<NxOgre::HeightFieldManager, NxOgre::Classes::_HeightFieldManager>::sSingleton = 0;
+template<> NxOgre::HeightFieldManager* NxOgre::Singleton<NxOgre::HeightFieldManager>::sSingleton = 0;
 
                                                                                        
 

@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief HeightFieldManager holds all HeightFieldes that are currently in the World.
 */
-class NxOgrePublicClass HeightFieldManager: public ::NxOgre::Singleton<HeightFieldManager, ::NxOgre::Classes::_HeightFieldManager>
+class NxOgrePublicClass HeightFieldManager: public ::NxOgre::Singleton<HeightFieldManager>, public BigClassAllocatable
 {
   
   friend class World;

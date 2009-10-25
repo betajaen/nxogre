@@ -32,7 +32,8 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgrePointerClass.h"
+#include "NxOgreAllocatables.h"
+#include "NxOgreClasses.h"
 
                                                                                        
 
@@ -52,7 +53,7 @@ namespace NxOgre
     \note  Shapes are the exception to this rule, and have 0 or very briefly their representive
            Shape as userData. 
 */
-class PhysXPointer : public PointerClass<Classes::_PhysXPointer>
+class PhysXPointer : public TinyClassAllocatable
 {
  public:
   
@@ -66,12 +67,6 @@ class PhysXPointer : public PointerClass<Classes::_PhysXPointer>
   {
   }
   
-  
-  template<int T>
-  PhysXPointer(PointerClass<T>* pClass, void* pParent = 0)
-  : mType(T), mRepClass(pClass), mParentClass(pParent)
-  {
-  }
   
   template<typename T>  T* get(void)
   {
@@ -93,11 +88,14 @@ class PhysXPointer : public PointerClass<Classes::_PhysXPointer>
   
   const int    mType;
   
-  void*  mRepClass;
+  void*        mRepClass;
 
-  void*  mParentClass;
+  void*        mParentClass;
   
+  int          RESERVED;
 };
+
+NxOgreTinyClassRestriction(PhysXPointer);
 
 
 /** \brief Handy helper macro to get a PhysXPointer instance.

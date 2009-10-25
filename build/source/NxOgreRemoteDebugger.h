@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief Allows a Scene to be debugged via a seperate application on this computer or a networked one.
 */
-class NxOgrePublicClass RemoteDebugger
+class NxOgrePublicClass RemoteDebugger : public GenericBasedAllocatable
 {
   
   

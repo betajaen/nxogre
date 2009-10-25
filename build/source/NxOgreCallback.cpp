@@ -74,8 +74,6 @@ unsigned int Callback::getNbReferences() const
  return mNbReferences;
 }
 
-
-
                                                                                        
 
 } // namespace NxOgre

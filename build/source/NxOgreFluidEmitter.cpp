@@ -69,7 +69,7 @@ FluidEmitter::FluidEmitter(const FluidEmitterDescription& description, Fluid* fl
   StringStream ss;
   ss << "FluidEmitter was not created! \n";
 //     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
-  NxOgre_ThrowError(ss.str());
+  NxOgre_ThrowException(DescriptionInvalidException, ss.str(), Classes::_FluidEmitter);
   return;
  }
 
@@ -113,72 +113,186 @@ void FluidEmitter::setGlobalPosition(const Vec3& position)
 
 void FluidEmitter::setGlobalOrientation(const Quat& orientation)
 {
+ Matrix33 mat(orientation);
+ NxMat33 matrix;
+ matrix.setRowMajor(mat.ptr());
+ mFluidEmitter->setGlobalOrientation(matrix);
 }
-#if 0
-Matrix44 FluidEmitter::getGlobalPose() const;
 
-Vec3 FluidEmitter::getGlobalPosition() const;
+Matrix44 FluidEmitter::getGlobalPose() const
+{
+ Matrix44 matrix;
+ mFluidEmitter->getGlobalPose().getRowMajor44(matrix.ptr());
+ return matrix;
+}
 
-Quat FluidEmitter::getGlobalOrientation() const;
+Vec3 FluidEmitter::getGlobalPosition() const
+{
+ return Vec3(mFluidEmitter->getGlobalPosition());
+}
 
-void FluidEmitter::setLocalPose(const Matrix44& pose);
+Quat FluidEmitter::getGlobalOrientation() const
+{
+ NxMat33 matrix = mFluidEmitter->getGlobalOrientation();
+ Matrix33 m(matrix(0,0),matrix(0,1),matrix(0,2), matrix(1,0),matrix(1,1),matrix(1,2),matrix(2,0),matrix(2,1),matrix(2,2));
+ return Quat(m);
+}
 
-void FluidEmitter::setLocalPosition(const Vec3& position);
+void FluidEmitter::setLocalPose(const Matrix44& pose)
+{
+ NxMat34 global_pose;
+ global_pose.setRowMajor44(pose.ptr());
+ mFluidEmitter->setLocalPose(global_pose);
+}
 
-void FluidEmitter::setLocalOrientation(const Quat& orientation);
+void FluidEmitter::setLocalPosition(const Vec3& position)
+{
+ mFluidEmitter->setLocalPosition(position.as<NxVec3>());
+}
 
-Matrix44 FluidEmitter::getLocalPose() const;
+void FluidEmitter::setLocalOrientation(const Quat& orientation)
+{
+ Matrix33 mat(orientation);
+ NxMat33 matrix;
+ matrix.setRowMajor(mat.ptr());
+ mFluidEmitter->setLocalOrientation(matrix);
+}
 
-Vec3 FluidEmitter::getLocalPosition() const;
+Matrix44 FluidEmitter::getLocalPose() const
+{
+ Matrix44 matrix;
+ mFluidEmitter->getLocalPose().getRowMajor44(matrix.ptr());
+ return matrix;
+}
 
-Quat FluidEmitter::getLocalOrientation() const;
+Vec3 FluidEmitter::getLocalPosition() const
+{
+ return Vec3(mFluidEmitter->getLocalPosition());
+}
 
-void FluidEmitter::setFrameShape(Shape* shape);
+Quat FluidEmitter::getLocalOrientation() const
+{
+ NxMat33 matrix = mFluidEmitter->getLocalOrientation();
+ Matrix33 m(matrix(0,0),matrix(0,1),matrix(0,2), matrix(1,0),matrix(1,1),matrix(1,2),matrix(2,0),matrix(2,1),matrix(2,2));
+ return Quat(m);
+}
 
-Shape* FluidEmitter::getFrameShape();
+void FluidEmitter::setFrameShape(Shape* shape)
+{
+ if (shape == 0)
+  mFluidEmitter->setFrameShape(0);
+ else
+  mFluidEmitter->setFrameShape(shape->getAbstractShape());
+}
 
-Real FluidEmitter::getDimensionX();
+Shape* FluidEmitter::getFrameShape()
+{
+ NxShape* physx_shape = mFluidEmitter->getFrameShape();
+ if (physx_shape == 0)
+  return 0;
+ return pointer_representive_cast<Shape>(physx_shape->userData);
+}
 
-Real FluidEmitter::getDimensionY();
+Real FluidEmitter::getDimensionX()
+{
+ return mFluidEmitter->getDimensionX();
+}
 
-void FluidEmitter::setRandomPosition(Vec3 maxDisplacement);
+Real FluidEmitter::getDimensionY()
+{
+ return mFluidEmitter->getDimensionY();
+}
 
-Vec3 FluidEmitter::getRandomPosition() const;
+void FluidEmitter::setRandomPosition(Vec3 maxDisplacement)
+{
+ mFluidEmitter->setRandomPos(maxDisplacement.as<NxVec3>());
+}
 
-void FluidEmitter::setRandomAngle(Radian maxAngle);
+Vec3 FluidEmitter::getRandomPosition() const
+{
+ return Vec3(mFluidEmitter->getRandomPos());
+}
 
-Radian FluidEmitter::getRandomAngle() const;
+void FluidEmitter::setRandomAngle(Radian maxAngle)
+{
+ mFluidEmitter->setRandomAngle(maxAngle);
+}
 
-void FluidEmitter::setFluidSpeed(Real speed);
+Radian FluidEmitter::getRandomAngle() const
+{
+ return mFluidEmitter->getRandomAngle();
+}
 
-Real FluidEmitter::getFluidSpeed() const;
+void FluidEmitter::setFluidSpeed(Real speed)
+{
+ mFluidEmitter->setFluidVelocityMagnitude(speed);
+}
 
-void FluidEmitter::setRate(Real rate);
+Real FluidEmitter::getFluidSpeed() const
+{
+ return mFluidEmitter->getFluidVelocityMagnitude();
+}
 
-Real FluidEmitter::getRate() const;
+void FluidEmitter::setRate(Real rate)
+{
+ mFluidEmitter->setRate(rate);
+}
 
-void FluidEmitter::setParticleLifetime(Real life);
+Real FluidEmitter::getRate() const
+{
+ return mFluidEmitter->getRate();
+}
 
-Real FluidEmitter::getParticleLifetime() const;
+void FluidEmitter::setParticleLifetime(Real life)
+{
+ mFluidEmitter->setParticleLifetime(life);
+}
 
-void FluidEmitter::setRepulsionCoefficient(Real coefficient);
+Real FluidEmitter::getParticleLifetime() const
+{
+ return mFluidEmitter->getParticleLifetime();
+}
 
-Real FluidEmitter::getRepulsionCoefficient() const;
+void FluidEmitter::setRepulsionCoefficient(Real coefficient)
+{
+ mFluidEmitter->setRepulsionCoefficient(coefficient);
+}
 
-void FluidEmitter::resetEmission(unsigned int maxParticles);
+Real FluidEmitter::getRepulsionCoefficient() const
+{
+ return mFluidEmitter->getRepulsionCoefficient();
+}
 
-unsigned int FluidEmitter::getMaxParticles() const;
+void FluidEmitter::resetEmission(unsigned int maxParticles)
+{
+ mFluidEmitter->resetEmission(maxParticles);
+}
 
-unsigned int FluidEmitter::getNbParticlesEmitted() const;
+unsigned int FluidEmitter::getMaxParticles() const
+{
+ return mFluidEmitter->getMaxParticles();
+}
 
-void FluidEmitter::setFlag(Enums::FluidEmitterFlags flag, bool value);
+unsigned int FluidEmitter::getNbParticlesEmitted() const
+{
+ return mFluidEmitter->getNbParticlesEmitted();
+}
 
-bool FluidEmitter::getFlag(Enums::FluidEmitterFlags) const;
+void FluidEmitter::setFlag(Enums::FluidEmitterFlags flag, bool value)
+{
+ mFluidEmitter->setFlag(NxFluidEmitterFlag(int(flag)), value);
+}
 
-bool FluidEmitter::isShape(Enums::FluidEmitterShape shape) const;
+bool FluidEmitter::getFlag(Enums::FluidEmitterFlags flag) const
+{
+ return mFluidEmitter->getFlag(NxFluidEmitterFlag(int(flag)));
+}
 
-bool FluidEmitter::isType(Enums::FluidEmitterShape type) const;
-#endif
+bool FluidEmitter::isShape(Enums::FluidEmitterShape shape) const
+{
+ return mFluidEmitter->getShape(NxEmitterShape((int) shape));
+}
+
                                                                                        
 
 } // namespace NxOgre

@@ -39,7 +39,7 @@
 #include <iostream>
 #endif
 
-template<> NxOgre::ResourceSystem* NxOgre::Singleton<NxOgre::ResourceSystem, NxOgre::Classes::_ResourceSystem>::sSingleton = 0;
+template<> NxOgre::ResourceSystem* NxOgre::Singleton<NxOgre::ResourceSystem>::sSingleton = 0;
 
                                                                                        
 
@@ -81,7 +81,7 @@ Archive* ResourceSystem::openArchive(const Path& path, const String& name)
   StringStream error_message;
   error_message << "Could not open archive '" << path.getString() << "\n"
                 << "Reason: Protocol '" << path.getProtocol() << "' could not be found.";
-  NxOgre_ThrowError(error_message.str());
+   NxOgre_ThrowException(IOException, error_message.str(), Classes::_MeshSerialiser);
   return 0;
  }
  
@@ -103,7 +103,7 @@ Archive* ResourceSystem::openArchive(const Path& path, const String& name)
   StringStream error_message;
   error_message << "Could not open archive '" << path.getString() << "' as '" << archive_name << "'\n"
                 << "Reason: Location could not be found.";
-  NxOgre_ThrowError(error_message.str());
+   NxOgre_ThrowException(IOException, error_message.str(), Classes::_ResourceSystem);
   return 0;
  }
 
@@ -123,7 +123,7 @@ Resource* ResourceSystem::open(const Path& path, Enums::ResourceAccess resource_
   StringStream error_message;
   error_message << "Could not open resource '" << path.getString() << "\n"
                 << "Reason: Protocol '" << path.getProtocol() << "' could not be found.";
-  NxOgre_ThrowError(error_message.str());
+  NxOgre_ThrowException(IOException, error_message.str(), Classes::_MeshSerialiser);
   return 0;
  }
  
@@ -137,7 +137,7 @@ Resource* ResourceSystem::open(const Path& path, Enums::ResourceAccess resource_
    StringStream error_message;
    error_message << "Could not open resource '" << path.getString() << "\n"
                  << "Reason: Archive could not be found or could be opened.";
-   NxOgre_ThrowError(error_message.str());
+   NxOgre_ThrowException(IOException, error_message.str(), Classes::_ResourceSystem);
    return 0;
   }
  }
@@ -155,7 +155,7 @@ Resource* ResourceSystem::open(Archive* archive, const Path& relative_path, Enum
   StringStream error_message;
   error_message << "Could not open resource '" << relative_path.getString() << " (Relative) \n"
                 << "Reason: Archive pointer is null.";
-  NxOgre_ThrowError(error_message.str());
+  NxOgre_ThrowException(IOException, error_message.str(), Classes::_ResourceSystem);
   return 0;
  }
  

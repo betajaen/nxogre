@@ -52,19 +52,13 @@ namespace NxOgre
         
     see. Shape
 */ 
-class NxOgrePublicClass Capsule : public PointerClass<Classes::_Capsule>, public Shape
+class NxOgrePublicClass Capsule : public Shape
 {
   
   friend class RigidBodyPrototype;
   
   public: // Functions
   
-  using ::NxOgre::PointerClass<Classes::_Capsule>::operator new;
-
-  using ::NxOgre::PointerClass<Classes::_Capsule>::operator delete;
-
-  using ::NxOgre::PointerClass<Classes::_Capsule>::getClassType;
-
   /*! constructor. Capsule
       desc.
            Capsule constructor with radius and height.
@@ -85,6 +79,8 @@ class NxOgrePublicClass Capsule : public PointerClass<Classes::_Capsule>, public
   */
   ~Capsule(void);
   
+  unsigned int getShapeType() const;
+
   /*! function. getShapeFunctionType
       desc.
            Get the shape type based upon the Classes::ShapeFunctionType enum.

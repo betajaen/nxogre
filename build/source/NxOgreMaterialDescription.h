@@ -59,25 +59,29 @@ class NxOgrePublicClass MaterialDescription
   */
                         bool                  valid(void);
 
+  /** \brief Optional Name of the Material
+  */
+  String  mName;
+
   /** \brief Coefficient of dynamic friction
       \range [0, inf].
       \note If set to greater than staticFriction, the effective value of
             staticFriction will be increased to match.
       \default 0
   */
-                        Real                  mDynamicFriction;
+  Real  mDynamicFriction;
   
   /** \brief Coefficient of dynamic friction
       \range [0, inf].
       \default 0
   */
-                        Real                  mStaticFriction;
+  Real  mStaticFriction;
   
   /** \brief Coefficient of restitution (bounce)
       \range [0, 1].
       \default 0
   */
-                        Real                  mRestitution;
+  Real  mRestitution;
 
   
   /** \brief Coefficient of dynamic friction
@@ -86,34 +90,34 @@ class NxOgrePublicClass MaterialDescription
       \note If set to greater than staticFriction, the effective value of
             staticFriction will be increased to match.
   */
-                        Real                  mVDynamicFriction;
+  Real  mVDynamicFriction;
   
   /** \brief Coefficient of dynamic friction
       \range [0, inf].
       \default 0
   */
-                        Real                  mVStaticFriction;
+  Real  mVStaticFriction;
   
   /** \brief Shape space direction (unit vector) of anisotropy.
              This is only used if flags & ANISOTROPIC is set.
       \default 1 0 0
   */
-                        Vec3                 mDirectionOfAnisotropy;
+  Vec3  mDirectionOfAnisotropy;
 
   /** \brief
       \default 0
   */
-                        unsigned int          mFlags;
+  unsigned int  mFlags;
 
   /** \brief
       \default CombineMode_Average
   */
-                        Enums::CombineMode    mFrictionCombineMode;
+  Enums::CombineMode  mFrictionCombineMode;
 
   /** \brief
       \default CombineMode_Average
   */
-                        Enums::CombineMode    mResitutionCombineMode;
+  Enums::CombineMode  mResitutionCombineMode;
 
  
  

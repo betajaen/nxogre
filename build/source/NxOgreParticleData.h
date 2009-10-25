@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass ParticleData
+class NxOgrePublicClass ParticleData : public ResourceAllocatable
 {
   
   public: // Functions

@@ -44,7 +44,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass HeightField
+class NxOgrePublicClass HeightField : public ResourceAllocatable
 {
   
   friend class ManualHeightField;
@@ -73,7 +73,11 @@ class NxOgrePublicClass HeightField
   
   /** \brief Get the name of this heightfield.
   */
-  String                                getName() const;
+  String                                      getName() const;
+  
+  /** \brief Get the name hash of this heightfield.
+  */
+  StringHash                                  getNameHash() const;
   
   /** \brief Is the shape loaded?
   */
@@ -99,7 +103,9 @@ class NxOgrePublicClass HeightField
 
   NxHeightField*                              mHeightField;
   
-  String                                mName;
+  String                                      mName;
+  
+  StringHash                                  mNameHash;
   
 }; // class HeightField
 

@@ -31,11 +31,9 @@
 #include "NxOgreRigidBodyDescription.h"
 #include "NxOgreSceneDescription.h"
 #include "NxOgreFunctions.h"
-#include "NxOgreWorldPrototype.h"
 #include "NxOgreShape.h"
 #include "NxOgreBox.h"
 
-#include "NxOgreMaterialPrototype.h"
 #include "NxOgreMaterialDescription.h"
 #include "NxOgreMesh.h"
 
@@ -62,17 +60,6 @@ namespace Functions
 {
 
                                                                                        
-
-void PrototypeFunctions::WorldPrototypeToNxPhysicsSDKDesc(WorldPrototype* prototype, NxPhysicsSDKDesc& description)
-{
- description.cookerThreadMask = prototype->mCookerThreadMask;
- if (prototype->mNoHardware)
-  description.flags |= NX_SDKF_NO_HARDWARE;
- description.hwConvexMax = prototype->mHardwareMaximumConvex;
- description.hwPageMax= prototype->mHardwareMaximumPage;
- description.hwPageSize = prototype->mHardwarePageSize;
-}
-
 
 void PrototypeFunctions::SceneDescriptionToNxSceneDesc(const NxOgre::SceneDescription& description, NxSceneDesc& physx_description)
 {
@@ -156,32 +143,6 @@ void PrototypeFunctions::RigidBodyDescriptionToNxActorDesc(const RigidBodyDescri
  actor_description.group = description.mGroup;
  actor_description.name = description.mName.c_str();
  
-}
-
-void PrototypeFunctions::MaterialDescriptionToMaterialPrototype(const MaterialDescription& description, MaterialPrototype* prototype)
-{
- prototype->mDirectionOfAnisotropy = description.mDirectionOfAnisotropy;
- prototype->mDynamicFriction = description.mDynamicFriction;
- prototype->mFlags = description.mFlags;
- prototype->mFrictionCombineMode = description.mFrictionCombineMode;
- prototype->mResitutionCombineMode = description.mResitutionCombineMode;
- prototype->mRestitution = description.mRestitution;
- prototype->mStaticFriction = description.mStaticFriction;
- prototype->mVDynamicFriction = description.mVDynamicFriction;
- prototype->mVStaticFriction = description.mVStaticFriction;
-}
-
-void PrototypeFunctions::MaterialPrototypeToNxMaterialDesc(NxOgre::MaterialPrototype* prototype, NxMaterialDesc& description)
-{
- description.dirOfAnisotropy = XYZ<Vec3, NxVec3>(prototype->mDirectionOfAnisotropy);
- description.dynamicFriction = prototype->mDynamicFriction;
- description.dynamicFrictionV = prototype->mVDynamicFriction;
- description.flags = prototype->mFlags;
- description.frictionCombineMode = NxCombineMode(int(prototype->mFrictionCombineMode));
- description.restitution = prototype->mRestitution;
- description.restitutionCombineMode = NxCombineMode(int(prototype->mResitutionCombineMode));
- description.staticFriction = prototype->mStaticFriction;
- description.staticFrictionV = prototype->mVStaticFriction;
 }
 
 void PrototypeFunctions::JointDescriptionToNxJointDescription(const JointDescription& source, NxJointDesc& desc)

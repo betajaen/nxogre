@@ -43,7 +43,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass Joint
+class NxOgrePublicClass Joint : public JointBasedAllocatable
 {
   
   public: // Functions

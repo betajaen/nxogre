@@ -45,7 +45,7 @@ namespace NxOgre
 
 /** \brief
 */
-class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSystem, ::NxOgre::Classes::_ResourceSystem>
+class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSystem>, public BigClassAllocatable
 {
   
   friend class World;

@@ -33,7 +33,7 @@
 
                                                                                        
 
-template<> NxOgre::TimeController* NxOgre::Singleton<NxOgre::TimeController, NxOgre::Classes::_TimeController>::sSingleton = 0;
+template<> NxOgre::TimeController* NxOgre::Singleton<NxOgre::TimeController>::sSingleton = 0;
 
                                                                                        
 

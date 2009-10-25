@@ -52,6 +52,11 @@ TriangleGeometry::~TriangleGeometry(void)
 {
 }
 
+unsigned int TriangleGeometry::getShapeType() const
+{
+ return Classes::_TriangleGeometry;
+}
+
 NxShapeDesc* TriangleGeometry::create()
 {
  NxTriangleMeshShapeDesc* trimesh = new NxTriangleMeshShapeDesc();

@@ -54,7 +54,7 @@ namespace NxOgre
       Mesh* mesh = m.end();
      </code>
 */
-class NxOgrePublicClass ManualMesh
+class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
 {
   
   public: // Functions

@@ -116,7 +116,8 @@ void OGRE3DParticleRenderable::drawFluid(NxOgre::PhysXParticleData* data, const 
   
  }
  
- mParticleSystem->setBounds(Ogre::AxisAlignedBox(bounds.min.as<Ogre::Vector3>(), bounds.max.as<Ogre::Vector3>()));
+ if (!bounds.isEmpty())
+   mParticleSystem->setBounds(Ogre::AxisAlignedBox(bounds.min.as<Ogre::Vector3>(), bounds.max.as<Ogre::Vector3>()));
  
 }
 

@@ -103,7 +103,7 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
   StringStream ss;
   ss << "Fluid was not created! \n";
 //     << "Reason(s) are: \n" <<  Reason::whyAsStream(actor_description);
-  NxOgre_ThrowError(ss.str());
+  NxOgre_ThrowException(IOException, ss.str(), Classes::_Fluid);
   return;
  }
  

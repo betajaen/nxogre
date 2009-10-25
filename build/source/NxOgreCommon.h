@@ -31,9 +31,13 @@
 
                                                                                        
 
+#include "NxOgreAllocator.h"
+#include "NxOgreAllocatables.h"
 #include "NxOgrePhysXPrototypes.h"
 #include "NxOgreEnums.h"
 #include "NxOgreException.h"
+#include "NxOgreWarning.h"
+#include "NxOgreNotice.h"
 #include "NxOgrePointerFunctions.h"
 #include "NxOgreMemory.h"
 #include "NxOgreClasses.h"
@@ -43,6 +47,7 @@
 #include "NxOgreSharedPointer.h"
 #include "NxOgreSingleton.h"
 #include "NxOgreArray.h"
+#include "NxOgreMap.h"
 #include "NxOgrePtrVector.h"
 #include "NxOgrePtrHashmap.h"
 #include "NxOgrePtrMultiHashmap.h"
@@ -59,7 +64,6 @@
 #include "NxOgreString.h"
 #include "NxOgreIntVectors.h"
 #include "NxOgrePath.h"
-#include "NxOgreVertex.h"
 #include "NxOgreTriangle.h"
 #include "NxOgreEntityReport.h"
 #include "NxOgreTimeStep.h"
@@ -105,6 +109,8 @@ namespace NxOgre
                  class                      D6JointDescription;            //!<
                  class                      DebugRenderable;               //!<
                  class                      ErrorStream;                   //!<
+                 class                      ErrorListener;                 //!<
+                 class                      Exception;                     //!<
                  class                      FixedJoint;                    //!<
                  class                      FixedSceneTimer;               //!<
                  class                      Fluid;                         //!<
@@ -129,6 +135,7 @@ namespace NxOgre
                  class                      JointLimitSoftDescription;     //!<
                  class                      KinematicActor;                //!<
                  class                      KinematicController;           //!<
+                 class                      Notice;                        //!<
                  class                      Machine;                       //!<
                  class                      MachinePart;                   //!<
                  class                      Material;                      //!<
@@ -200,7 +207,7 @@ namespace NxOgre
                  struct                     SimplePlane;                   //!<
                  struct                     SimplePointCloud;              //!<
                  struct                     SimpleTriangleMesh;            //!<
- template<class T, unsigned int Ti> class   Singleton;                     //!<
+                 template<class T> class    Singleton;                     //!<
 //::             class                      SharedBuffer;                  //!<
                  class                      SharedKinematicFunctions;      //!<
                  class                      SoftBody;                      //!<
@@ -222,6 +229,7 @@ namespace NxOgre
                  class                      VisualDebugger;                //!<
                  class                      VisualDebuggerMeshData;        //!<
                  class                      Volume;                        //!<
+                 class                      Warning;                       //!<
                  class                      Wheel;                         //!<
                  class                      WheelBlueprint;                //!<
                  class                      WheelMachinePart;              //!<

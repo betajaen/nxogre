@@ -47,29 +47,17 @@
            on a scenegraph, as well as reference to the mesh it is using.
 
 */
-class OGRE3DExportClass OGRE3DKinematicBody : public NxOgre::PointerClass<_OGRE3DKinematicBody>, public NxOgre::KinematicActor, public NxOgre::TimeListener
+class OGRE3DExportClass OGRE3DKinematicBody : public NxOgre::KinematicActor, public NxOgre::TimeListener
 {
   friend class OGRE3DRenderSystem;
   friend class ::NxOgre::Functions::ArrayFunctions<OGRE3DKinematicBody*>::Write;
   template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
-
-  public:
-  
-   /** \brief Required since KinematicActor is also a "PointerClass".
-   */
-   using ::NxOgre::PointerClass<_OGRE3DKinematicBody>::operator new;
-
-    /** \brief Required since KinematicActor is also a "PointerClass".
-    */
-   using ::NxOgre::PointerClass<_OGRE3DKinematicBody>::operator delete;
-  
-    /** \brief Required since KinematicActor is also a "PointerClass".
-    */
-   using ::NxOgre::PointerClass<_OGRE3DKinematicBody>::getClassType;
    
+  public:
+    
    /** \brief
    */
-   virtual                             unsigned int           getClassType() const;
+   virtual  unsigned int  getRigidBodyType() const;
    
     /** \brief Get the SceneManager that the SceneNode is in.
     */

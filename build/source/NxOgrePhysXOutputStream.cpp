@@ -55,9 +55,9 @@ void PhysXOutputStream::setAssertionResponse(Enums::PhysXAssertionResponse respo
 
 void PhysXOutputStream::reportError(NxErrorCode code, const char* message, const char *file, int line)
 {
-
+ 
  StringStream stream;
-
+ 
  if (code == NXE_DB_WARNING)
  {
   stream << "PhysX warning:\n";
@@ -66,15 +66,18 @@ void PhysXOutputStream::reportError(NxErrorCode code, const char* message, const
  {
   stream << "PhysX error:\n";
  }
-
- stream << message << "\nNxErroCode:" << Reason::toCStr(code);
-
+ 
+ stream << message << "\nNxErrorCode:" << Reason::toCStr(code);
+ 
  if (code == NXE_DB_WARNING)
-  ::NxOgre::ErrorStream::getSingleton()->throwWarning(stream.str(), file, line);
+ {
+  NxOgre_ThrowWarning(stream.str(), Classes::_PhysXOutputStream);
+ }
  else
-  ::NxOgre::ErrorStream::getSingleton()->throwError(stream.str(), file, line);
-
-
+ {
+  NxOgre_ThrowException(PhysXInternalErrorException, stream.str(), Classes::_PhysXOutputStream);
+ }
+ 
 }
 
 NxAssertResponse PhysXOutputStream::reportAssertViolation(const char* message, const char *file, int line)
@@ -83,7 +86,7 @@ NxAssertResponse PhysXOutputStream::reportAssertViolation(const char* message, c
  StringStream stream;
  stream << "PhysX assertion:\n" << message;
  
- ::NxOgre::ErrorStream::getSingleton()->throwAssertion(stream.str(), file, line);
+ NxOgre_ThrowException(PhysXInternalErrorException, stream.str(), Classes::_PhysXOutputStream);
  
  return mAssertionResponse;
 }
