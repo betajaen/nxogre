@@ -129,7 +129,10 @@ Scene::Scene(ScenePrototype* prototype, NxPhysicsSDK* sdk)
 
 Scene::~Scene(void)
 {
-/// TimeController::getSingleton()->removeListener(this);
+
+ TimeController::getSingleton()->mListeners[mProcessingPriority].remove(this);
+ TimeController::getSingleton()->mListeners[mFetchingPriority].remove(this);
+
  if (mSDK && mScene)
  {
   mActors.destroyAll();
