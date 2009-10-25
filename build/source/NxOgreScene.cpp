@@ -123,7 +123,12 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 
 Scene::~Scene(void)
 {
-/// TimeController::getSingleton()->removeListener(this);
+ 
+ TimeController::getSingleton()->mListeners[mProcessingPriority].remove(this);
+ TimeController::getSingleton()->mListeners[mFetchingPriority].remove(this);
+ 
+ //TimeController::getSingleton()->removeListener(this);
+ 
  if (mSDK && mScene)
  {
   mActors.clear();
