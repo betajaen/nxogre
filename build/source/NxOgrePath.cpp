@@ -138,18 +138,29 @@ Path Path::operator /(const Path& other)
 #if NxOgrePlatform == NxOgrePlatformWindows
  out.mDrive = mDrive;
 #endif
+ std::cout << "Combining:\n + " << getString() << (isAbsolute() ? "(A)" : "(R)") <<  "\n + " << other.getString() << (other.isAbsolute() ? "(A)" : "(R)") << "\n"; 
+
+ for (std::list<String>::const_iterator d = mDirectories.begin(); d != mDirectories.end(); d++)
+  out.mDirectories.push_back((*d));
+
+ for (std::list<String>::const_iterator d = other.mDirectories.begin(); d != other.mDirectories.end(); d++)
+  out.mDirectories.push_back((*d));
+
+ /*
  out.mDirectories.insert(out.mDirectories.begin(), mDirectories.begin(), mDirectories.end());
  
  for (std::list<String>::const_iterator d = other.mDirectories.begin(); d != other.mDirectories.end(); d++)
  {
-  if ((*d) == PathHelper::parent_marker())
+  /*if ((*d) == PathHelper::parent_marker())
   {
    if (out.mDirectories.size())
     out.mDirectories.pop_back();
   }
   else
+   
    out.mDirectories.push_back((*d));
  }
+ */
  out.mFilename = other.mFilename;
  out.mExtension = other.mExtension;
  out.mProtocol = other.mProtocol;
@@ -189,15 +200,23 @@ Path& Path::operator /=(const Path& other)
  }
 
  for (std::list<String>::const_iterator d = other.mDirectories.begin(); d != other.mDirectories.end(); d++)
+  mDirectories.push_back((*d));
+ 
+ /*
+ out.mDirectories.insert(out.mDirectories.begin(), mDirectories.begin(), mDirectories.end());
+ 
+ for (std::list<String>::const_iterator d = other.mDirectories.begin(); d != other.mDirectories.end(); d++)
  {
-  if ((*d) == PathHelper::parent_marker())
+  /*if ((*d) == PathHelper::parent_marker())
   {
-   if (mDirectories.size())
-    mDirectories.pop_back();
+   if (out.mDirectories.size())
+    out.mDirectories.pop_back();
   }
   else
-   mDirectories.push_back((*d));
+   
+   out.mDirectories.push_back((*d));
  }
+ */
  
  mFilename = other.mFilename;
  mExtension = other.mExtension;
@@ -223,7 +242,9 @@ Path Path::getParent() const
 #if NxOgrePlatform == NxOgrePlatformWindows
  parent.mDrive = mDrive;
 #endif
- parent.mDirectories.insert(parent.mDirectories.begin(), mDirectories.begin(), mDirectories.end());
+ 
+ for (std::list<String>::const_iterator d = mDirectories.begin(); d != mDirectories.end(); d++)
+  parent.mDirectories.push_back((*d));
  
  // If there is a portion, then the file is the "parent".
  if (mPortion.length())
@@ -238,6 +259,16 @@ Path Path::getParent() const
  }
 
  return parent;
+}
+
+Path Path::getRelative() const
+{
+ Path current;
+ current.mProtocol = mProtocol;
+ current.mFilename = mFilename;
+ current.mExtension = mExtension;
+ current.mPortion = mPortion;
+ return current;
 }
 
 String Path::getDirectory(unsigned int parent_level) const
@@ -518,20 +549,23 @@ void Path::set(const String& string)
    
    t = path.substr(begin, pos - begin);
 
-   if (t == PathHelper::working_directory_marker() && mDirectories.size())
+   if (t == PathHelper::working_directory_marker())
    {
+    std::cout << "+ Working Directory marker" << std::endl;
+    mAbsolute = false;
     begin = pos + 1;
     continue;
    }
 
    if (t == PathHelper::parent_marker() && mAbsolute)
    {
+    std::cout << "+ Popping back" << std::endl;
     if (mDirectories.size() )
      mDirectories.pop_back();
     begin = pos + 1;
     continue;
    }
-   
+   std::cout << "+ Pushing => '" << t << "'\n";
    mDirectories.push_back(t);
    begin = pos + 1;
   }
@@ -588,7 +622,7 @@ void Path::set(const String& string)
   mExtension = String();
 }
 
-std::string Path::dump()
+std::string Path::dump() const
 {
  std::stringstream s;
  

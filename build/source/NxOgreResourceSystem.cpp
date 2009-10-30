@@ -73,7 +73,7 @@ void ResourceSystem::openProtocol(ResourceProtocol* protocol)
 
 Archive* ResourceSystem::openArchive(const Path& path, const String& name)
 {
-
+ std::cout << "Opening Archive with path: " << path.getString() << std::endl;
  ResourceProtocol* protocol = mProtocols.at(path.getProtocolHash());
 
  if (protocol == 0)
@@ -144,7 +144,7 @@ Resource* ResourceSystem::open(const Path& path, Enums::ResourceAccess resource_
  
  
  
- return archive->open(path, resource_access);
+ return archive->open(path.getRelative(), resource_access);
 }
 
 Resource* ResourceSystem::open(Archive* archive, const Path& relative_path, Enums::ResourceAccess resource_access)
@@ -159,7 +159,7 @@ Resource* ResourceSystem::open(Archive* archive, const Path& relative_path, Enum
   return 0;
  }
  
- return archive->open(relative_path, resource_access);
+ return archive->open(relative_path.getRelative(), resource_access);
 }
 
 void ResourceSystem::close(Resource* resource)

@@ -215,6 +215,10 @@ class NxOgrePublicClass Path
    /** \brief Get parent path. A directory (if has filename), drive (has one directory and no filename) or file (has portion).
    */
    Path getParent() const;
+
+   /** \brief Get relative path to the file, the path without directories or drives.
+   */
+   Path getRelative() const;
    
    /** \brief Correctly format it.
    */
@@ -228,7 +232,7 @@ class NxOgrePublicClass Path
        desc.
            Developer/Testing function.
    */
-   std::string dump();
+   std::string dump() const;
 
  protected:
    

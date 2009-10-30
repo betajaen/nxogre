@@ -117,7 +117,45 @@ String FileResourceProtocol::calculateArchiveName(const Path& path)
   }
  }
  
- return path.getDirectory();
+ if (path.getNbDirectories() == 1)
+ {
+  return path.getDirectory();
+ }
+ else
+ {
+  
+  std::cout << "+ Calculating archive name from " << path.getString() << std::endl;
+  
+  std::stringstream archive_name;
+  unsigned int relative_path = 0;
+  for (unsigned int i = 0;i < path.getNbDirectories();i++)
+  {
+   std::string dir_name = path.getDirectory(i);
+   if (dir_name == "..")
+   {
+    relative_path++;
+    continue;
+   }
+   
+   if (relative_path)
+   {
+    archive_name << "#." << relative_path;
+    relative_path = 0;
+   }
+   
+   if (i!=0)
+    archive_name << "#" << dir_name;
+   else
+    archive_name << dir_name;
+  }
+  
+  if (relative_path)
+  {
+    archive_name << "#." << relative_path;
+  }
+  
+  return archive_name.str();
+ }
 }
 
 

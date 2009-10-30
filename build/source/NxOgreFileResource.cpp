@@ -89,28 +89,28 @@ void FileResource::open()
  if (mAccess == Enums::ResourceAccess_ReadOnly)
  {
   #ifdef _DEBUG
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read" << std::endl;
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read from " << mArchive->getName() << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "rb");
  }
  else if (mAccess == Enums::ResourceAccess_WriteOnly)
  {
   #ifdef _DEBUG
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as write" << std::endl;
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as write from " << mArchive->getName() << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "wb");
  }
  else if (mAccess == Enums::ResourceAccess_AppendOnly)
  {
   #ifdef _DEBUG
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as append" << std::endl;
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as append from " << mArchive->getName() << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "ab");
  }
  else if (mAccess == Enums::ResourceAccess_ReadAndWrite)
  {
   #ifdef _DEBUG
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read/write" << std::endl;
+   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read/write from " << mArchive->getName() <<  std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "rb+");
  }
