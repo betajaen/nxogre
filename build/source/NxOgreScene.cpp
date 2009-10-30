@@ -375,7 +375,7 @@ Compartment* Scene::createCompartment(const CompartmentDescription& description)
 
 void Scene::setGravity(const Vec3& vec)
 {
- mScene->setGravity(Functions::XYZ<Vec3, NxVec3>(vec));
+ mScene->setGravity(vec.as<NxVec3>());
 }
 
 Vec3 Scene::getGravity(void) const
@@ -398,17 +398,16 @@ void Scene::unlockQueries()
 bool Scene::raycastAnyBounds(const Ray& ray, Enums::ShapesType type, unsigned int groups, Real maxDistance) const
 {
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
-
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
  return mScene->raycastAnyBounds(inRay, NxShapesType(int(type)), groups, maxDistance, 0);
 }
 
 bool Scene::raycastAnyBounds(const Ray& ray, Enums::ShapesType type, int4 groupsMask, Real maxDistance) const
 {
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
  NxGroupsMask mask;
 
  mask.bits0 = groupsMask.w;
@@ -422,8 +421,8 @@ bool Scene::raycastAnyBounds(const Ray& ray, Enums::ShapesType type, int4 groups
 bool Scene::raycastAnyShape(const Ray& ray, Enums::ShapesType type, unsigned int groups, Real maxDistance, RaycastCache cache) const
 {
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
 
  return mScene->raycastAnyShape(inRay, NxShapesType(int(type)), groups, maxDistance, 0, cache);
 }
@@ -431,8 +430,8 @@ bool Scene::raycastAnyShape(const Ray& ray, Enums::ShapesType type, unsigned int
 unsigned int Scene::raycastAllBounds(const Ray& ray, Callback* callback,  Enums::ShapesType type, unsigned int group, Real maxDistance, unsigned int hintFlags) const
 {
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
 
  PhysXRaycastReport report(callback);
  return mScene->raycastAllBounds(inRay, report, NxShapesType(int(type)), group, maxDistance, hintFlags);
@@ -441,8 +440,8 @@ unsigned int Scene::raycastAllBounds(const Ray& ray, Callback* callback,  Enums:
 unsigned int Scene::raycastAllBounds(const Ray& ray, Callback* callback, Enums::ShapesType type, int4 groupsMask, Real maxDistance, unsigned int hintFlags) const
 {
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
  NxGroupsMask mask;
 
  mask.bits0 = groupsMask.w;
@@ -458,8 +457,8 @@ RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, u
 {
 
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
  
  NxRaycastHit hit;
  NxShape* nxShape = mScene->raycastClosestBounds(inRay, NxShapesType(int(type)), hit, group, maxDistance, hintFlags, 0);
@@ -472,8 +471,8 @@ RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, u
  out.mMaterialIndex = hit.materialIndex;
  out.mU = hit.u;
  out.mV = hit.v;
- Functions::XYZ<NxVec3, Vec3>(hit.worldImpact, out.mWorldImpact);
- Functions::XYZ<NxVec3, Vec3>(hit.worldNormal, out.mWorldNormal);
+ out.mWorldImpact.from<NxVec3>(hit.worldImpact); 
+ out.mWorldNormal.from<NxVec3>(hit.worldNormal);
  
  PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
  out.mShape = shapePointer->get<Shape>();
@@ -486,8 +485,8 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
 {
  
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
  
  NxRaycastHit hit;
  NxShape* nxShape = mScene->raycastClosestShape(inRay, NxShapesType(int(type)), hit, group, maxDistance, hintFlags, 0, cache);
@@ -500,8 +499,8 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
  out.mMaterialIndex = hit.materialIndex;
  out.mU = hit.u;
  out.mV = hit.v;
- Functions::XYZ<NxVec3, Vec3>(hit.worldImpact, out.mWorldImpact);
- Functions::XYZ<NxVec3, Vec3>(hit.worldNormal, out.mWorldNormal);
+ out.mWorldImpact.from<NxVec3>(hit.worldImpact); 
+ out.mWorldNormal.from<NxVec3>(hit.worldNormal);
  
  if (nxShape)
  {

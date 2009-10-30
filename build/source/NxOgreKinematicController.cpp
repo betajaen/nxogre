@@ -107,7 +107,7 @@ unsigned int KinematicController::getRigidBodyType() const
 
 Vec3 KinematicController::getPosition(void) const
 {
- return Functions::XYZ<NxVec3, Vec3>(mActor->getGlobalPosition());
+ return Vec3(mActor->getGlobalPosition());
 }
 
 

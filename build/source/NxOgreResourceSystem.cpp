@@ -73,9 +73,9 @@ void ResourceSystem::openProtocol(ResourceProtocol* protocol)
 
 Archive* ResourceSystem::openArchive(const Path& path, const String& name)
 {
- std::cout << "Opening Archive with path: " << path.getString() << std::endl;
+ 
  ResourceProtocol* protocol = mProtocols.at(path.getProtocolHash());
-
+ 
  if (protocol == 0)
  {
   StringStream error_message;
@@ -87,7 +87,7 @@ Archive* ResourceSystem::openArchive(const Path& path, const String& name)
  
  Archive* archive = 0;
  String archive_name = name;
-
+ 
  if (archive_name.length() == 0)
  {
   archive_name = protocol->calculateArchiveName(path);
@@ -106,7 +106,7 @@ Archive* ResourceSystem::openArchive(const Path& path, const String& name)
    NxOgre_ThrowException(IOException, error_message.str(), Classes::_ResourceSystem);
   return 0;
  }
-
+ 
  StringHash hash = archive->getNameHash();
  mArchives.insert(hash, archive);
  return archive;

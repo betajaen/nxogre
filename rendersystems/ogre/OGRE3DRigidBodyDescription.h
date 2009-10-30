@@ -53,36 +53,37 @@
 */
 class OGRE3DExportClass OGRE3DRigidBodyDescription : public NxOgre::RigidBodyDescription
 {
-  public:
+  
+ public:
   
   /** \brief OGRE3DPrototype constructor
   */
-                                              OGRE3DRigidBodyDescription(void);
+  OGRE3DRigidBodyDescription(void);
   
   /** \brief OGRE3DPrototype destructor
   */
-                                             ~OGRE3DRigidBodyDescription(void);
+ ~OGRE3DRigidBodyDescription(void);
   
   /** \brief Reset the RigidBodyPrototype and OGRE3D bits to it's default state.
   */
-                        void                  reset(void);
+  void  reset(void);
   
   /** \brief Does the prototype's variables are in the range of acceptable values?
   */
-                        bool                  valid(void);
+  bool  valid(void);
   
   /** \brief SceneNode to use, or NULL to create.
   */
-  Ogre::SceneNode*                            mNode;
+  Ogre::SceneNode*  mNode;
   
   /** \brief What to do the Node when the Body is destroyed.
       \default OGRE3DSceneNodeDestructorBehaviour_Destroy
   */
-  OGRE3DSceneNodeDestructorBehaviour          mSceneNodeDestructorBehaviour;
+  OGRE3DSceneNodeDestructorBehaviour  mSceneNodeDestructorBehaviour;
 
   /** \brief Drawing priority
   */
-  NxOgre::Enums::Priority                     mRenderPriority;
+  NxOgre::Enums::Priority  mRenderPriority;
 };
 
                                                                                        

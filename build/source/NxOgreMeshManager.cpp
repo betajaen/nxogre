@@ -52,10 +52,6 @@ MeshManager::~MeshManager(void)
 
 Mesh* MeshManager::load(const Path& path, const String& name)
 {
-
-// std::cout << path.dump() << "\n------------------\n";
- std::cout << path.getString() << "\n";
-
  Resource* resource = ResourceSystem::getSingleton()->open(path, NxOgre::Enums::ResourceAccess_ReadOnly);
  Mesh* mesh = load(resource, name);
  ResourceSystem::getSingleton()->close(resource);

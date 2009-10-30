@@ -71,7 +71,7 @@ void PrototypeFunctions::SceneDescriptionToNxSceneDesc(const NxOgre::SceneDescri
  physx_description.dynamicStructure           = NxPruningStructure(int(description.mPruningDynamicStructure));
  physx_description.dynamicTreeRebuildRateHint = description.mDynamicTreeBuildRateHint;
  physx_description.flags                      = description.mFlags;
- Functions::XYZ<Vec3, NxVec3>          ( description.mGravity, physx_description.gravity );
+ physx_description.gravity                    = description.mGravity.as<NxVec3>();
  physx_description.internalThreadCount        = description.mWorkerThreadsCount;
  physx_description.maxIter                    = description.mMaxSubSteps;
  physx_description.maxTimestep                = description.mMaxTimeStep;
@@ -108,15 +108,15 @@ void PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(const RigidB
  actor_description.name = description.mName.c_str();
  
  body_description.angularDamping = description.mAngularDamping;
- Functions::XYZ<Vec3, NxVec3>(description.mAngularVelocity, body_description.angularVelocity);
+ body_description.angularVelocity = description.mAngularVelocity.as<NxVec3>();
  body_description.CCDMotionThreshold = description.mCCDMotionThreshold;
  body_description.contactReportThreshold = description.mContactReportThreshold;
  body_description.flags = description.mBodyFlags;
  body_description.linearDamping = description.mLinearDamping;
- Functions::XYZ<Vec3, NxVec3>(description.mLinearVelocity, body_description.linearVelocity);
+ body_description.linearVelocity = description.mLinearVelocity.as<NxVec3>();
  body_description.mass = description.mMass;
  body_description.massLocalPose.setColumnMajor44(description.mMassLocalPose.ptr());
- Functions::XYZ<Vec3, NxVec3>(description.mMassSpaceInertia, body_description.massSpaceInertia);
+ body_description.massSpaceInertia = description.mMassSpaceInertia.as<NxVec3>();
  body_description.maxAngularVelocity = description.mMaxAngularVelocity;
  body_description.sleepAngularVelocity = description.mSleepAngularVelocity;
  body_description.sleepDamping = description.mSleepDamping;
@@ -148,12 +148,12 @@ void PrototypeFunctions::RigidBodyDescriptionToNxActorDesc(const RigidBodyDescri
 void PrototypeFunctions::JointDescriptionToNxJointDescription(const JointDescription& source, NxJointDesc& desc)
 {
  desc.jointFlags = source.mJointFlags;
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[0], desc.localAnchor[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[1], desc.localAnchor[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[0], desc.localAxis[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[1], desc.localAxis[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[0], desc.localNormal[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[1], desc.localNormal[1]);
+ desc.localAnchor[0] = source.mLocalAnchor[0].as<NxVec3>();
+ desc.localAnchor[1] = source.mLocalAnchor[1].as<NxVec3>();
+ desc.localAxis[0]  = source.mLocalAxis[0].as<NxVec3>();
+ desc.localAxis[1]  = source.mLocalAxis[1].as<NxVec3>();
+ desc.localNormal[0] = source.mLocalNormal[0].as<NxVec3>();
+ desc.localNormal[1] = source.mLocalNormal[1].as<NxVec3>();
 }
 
 
@@ -162,18 +162,18 @@ void PrototypeFunctions::SphericalJointDescriptionToNxSphericalJointDescription(
  desc.flags = source.mSphericalJointFlags;
  desc.jointFlags = source.mJointFlags;
  SpringDescriptionToNxSpringDesc(source.mJointSpring, desc.jointSpring);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[0], desc.localAnchor[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[1], desc.localAnchor[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[0], desc.localAxis[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[1], desc.localAxis[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[0], desc.localNormal[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[1], desc.localNormal[1]);
+ desc.localAnchor[0] = source.mLocalAnchor[0].as<NxVec3>();
+ desc.localAnchor[1] = source.mLocalAnchor[1].as<NxVec3>();
+ desc.localAxis[0]   = source.mLocalAxis[0].as<NxVec3>();
+ desc.localAxis[1]   = source.mLocalAxis[1].as<NxVec3>();
+ desc.localNormal[0] = source.mLocalNormal[0].as<NxVec3>();
+ desc.localNormal[1] = source.mLocalNormal[1].as<NxVec3>();
  desc.maxForce = source.mMaxForce;
  desc.maxTorque = source.mMaxTorque;
  desc.projectionDistance = source.mProjectionDistance;
  desc.projectionMode = NxJointProjectionMode(int(source.mProjectionMode));
  desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor;
- Functions::XYZ<Vec3, NxVec3>(source.mSwingAxis, desc.swingAxis);
+ desc.swingAxis = source.mSwingAxis.as<NxVec3>();
  JointLimitDescriptionToNxJointLimitDesc(source.mSwingLimit, desc.swingLimit);
  SpringDescriptionToNxSpringDesc(source.mSwingSpring, desc.swingSpring);
  JointLimitDescriptionToNxJointLimitDesc(source.mTwistLimit.first, desc.twistLimit.low);
@@ -188,12 +188,12 @@ void PrototypeFunctions::RevoluteJointDescriptionToNxRevoluteJointDescription(co
  desc.jointFlags = source.mJointFlags;
  JointLimitDescriptionToNxJointLimitDesc(source.mLimit.first, desc.limit.low);
  JointLimitDescriptionToNxJointLimitDesc(source.mLimit.second, desc.limit.high);
-  Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[0], desc.localAnchor[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[1], desc.localAnchor[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[0], desc.localAxis[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[1], desc.localAxis[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[0], desc.localNormal[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[1], desc.localNormal[1]);
+ desc.localAnchor[0] = source.mLocalAnchor[0].as<NxVec3>();
+ desc.localAnchor[1] = source.mLocalAnchor[1].as<NxVec3>();
+ desc.localAxis[0]   = source.mLocalAxis[0].as<NxVec3>();
+ desc.localAxis[1]   = source.mLocalAxis[1].as<NxVec3>();
+ desc.localNormal[0] = source.mLocalNormal[0].as<NxVec3>();
+ desc.localNormal[1] = source.mLocalNormal[1].as<NxVec3>();
  desc.maxForce = source.mMaxForce;
  desc.maxTorque = source.mMaxTorque;
  MotorDescriptionToNxMotorDesc(source.mMotor, desc.motor);
@@ -240,12 +240,12 @@ void PrototypeFunctions::D6JointDescriptionToNxD6JointDescription(const D6JointD
  desc.linearLimit.spring = source.mLinearLimit.mSpring;
  desc.linearLimit.value = source.mLinearLimit.mValue;
 
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[0], desc.localAnchor[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAnchor[1], desc.localAnchor[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[0], desc.localAxis[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalAxis[1], desc.localAxis[1]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[0], desc.localNormal[0]);
- Functions::XYZ<Vec3, NxVec3>(source.mLocalNormal[1], desc.localNormal[1]);
+ desc.localAnchor[0] = source.mLocalAnchor[0].as<NxVec3>();
+ desc.localAnchor[1] = source.mLocalAnchor[1].as<NxVec3>();
+ desc.localAxis[0]   = source.mLocalAxis[0].as<NxVec3>();
+ desc.localAxis[1]   = source.mLocalAxis[1].as<NxVec3>();
+ desc.localNormal[0] = source.mLocalNormal[0].as<NxVec3>();
+ desc.localNormal[1] = source.mLocalNormal[1].as<NxVec3>();
 
  desc.maxForce = source.mMaxForce;
  desc.maxTorque = source.mMaxTorque;

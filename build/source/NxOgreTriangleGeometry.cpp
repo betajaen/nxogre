@@ -92,9 +92,9 @@ void TriangleGeometry::getTriangle(Triangle& out, unsigned int* flags, Index tri
 {
  NxTriangle triangle;
  mTriangleMeshShape->getTriangle(triangle, 0, flags, triangleIndex, worldSpaceTranslation, worldSpaceRotation);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[0], out.mVertices[0]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[1], out.mVertices[1]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[2], out.mVertices[2]);
+ out.mVertices[0] = triangle.verts[0];
+ out.mVertices[1] = triangle.verts[1];
+ out.mVertices[2] = triangle.verts[2];
 }
 
 void TriangleGeometry::getTriangle(Triangle& out, Triangle& outEdge, unsigned int* flags, Index triangleIndex, bool worldSpaceTranslation, bool worldSpaceRotation)
@@ -102,14 +102,13 @@ void TriangleGeometry::getTriangle(Triangle& out, Triangle& outEdge, unsigned in
  NxTriangle triangle;
  NxTriangle edge;
  mTriangleMeshShape->getTriangle(triangle, &edge, flags, triangleIndex, worldSpaceTranslation, worldSpaceRotation);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[0], out.mVertices[0]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[1], out.mVertices[1]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[2], out.mVertices[2]);
- Functions::XYZ<NxVec3, Vec3>(edge.verts[0], outEdge.mVertices[0]);
- Functions::XYZ<NxVec3, Vec3>(edge.verts[1], outEdge.mVertices[1]);
- Functions::XYZ<NxVec3, Vec3>(edge.verts[2], outEdge.mVertices[2]);
+ out.mVertices[0] = triangle.verts[0];
+ out.mVertices[1] = triangle.verts[1];
+ out.mVertices[2] = triangle.verts[2];
+ outEdge.mVertices[0] = triangle.verts[0];
+ outEdge.mVertices[1] = triangle.verts[1];
+ outEdge.mVertices[2] = triangle.verts[2];
 }
-
 
 bool TriangleGeometry::overlapAAABTriangles(const Bounds3& bounds, unsigned int queryFlags, EntityReport<Index>* callback) const
 {
@@ -118,8 +117,7 @@ bool TriangleGeometry::overlapAAABTriangles(const Bounds3& bounds, unsigned int 
  
  PhysXUserEntityReport<Index> report(callback);
  NxBounds3 nBounds;
- Functions::XYZ<Vec3, NxVec3>(bounds.max, nBounds.max);
- Functions::XYZ<Vec3, NxVec3>(bounds.min, nBounds.min);
+ bounds.from<NxBounds3>(nBounds);
  
  return mTriangleMeshShape->overlapAABBTriangles(nBounds, queryFlags, &report);
 }
@@ -128,7 +126,7 @@ bool TriangleGeometry::mapPageInstance(unsigned int pageIndex)
 {
  if (mTriangleMeshShape == 0)
   return false;
-
+ 
  return mTriangleMeshShape->mapPageInstance(pageIndex);
 }
 
@@ -136,7 +134,7 @@ void TriangleGeometry::unmapPageInstance(unsigned int pageIndex)
 {
  if (mTriangleMeshShape == 0)
   return;
-
+ 
  mTriangleMeshShape->unmapPageInstance(pageIndex);
 }
 
@@ -144,7 +142,7 @@ bool TriangleGeometry::isPageInstanceMapped(unsigned int pageIndex) const
 {
  if (mTriangleMeshShape == 0)
   return false;
-
+ 
  return mTriangleMeshShape->isPageInstanceMapped(pageIndex);
 }
 

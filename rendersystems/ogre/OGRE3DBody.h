@@ -44,30 +44,30 @@
            different types of RenderSystems available; the render information would be different.
            Ogre's for example wouldn't be as low-level, and would only contain a pointer to a node
            on a scenegraph, as well as reference to the mesh it is using.
-
 */
 class OGRE3DExportClass OGRE3DBody : public NxOgre::Actor, public NxOgre::TimeListener
 {
+   
   friend class OGRE3DRenderSystem;
   template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
-    
-  public:
-    
+   
+ public:
+   
    /** \brief Returns "RigidBodyType_OGRE3DBody" as the type of RigidBody.
    */
-   virtual unsigned int       getRigidBodyType() const;
-
-    /** \brief Get the SceneManager that the SceneNode is in.
-    */
-   Ogre::SceneManager* getSceneManager();
-  
-    /** \brief Get the SceneNode is in, or NULL if there isn't one.
-    */
-   Ogre::SceneNode*    getSceneNode();
+   virtual unsigned int  getRigidBodyType() const;
+   
+   /** \brief Get the SceneManager that the SceneNode is in.
+   */
+   Ogre::SceneManager*  getSceneManager();
+   
+   /** \brief Get the SceneNode is in, or NULL if there isn't one.
+   */
+   Ogre::SceneNode*  getSceneNode();
     
    /** \brief Set the SceneNode to a new one
    */
-   void                setSceneNode(Ogre::SceneNode*, OGRE3DSceneNodeDestructorBehaviour = OGRE3DSceneNodeDestructorBehaviour_Inherit);
+   void  setSceneNode(Ogre::SceneNode*, OGRE3DSceneNodeDestructorBehaviour = OGRE3DSceneNodeDestructorBehaviour_Inherit);
    
    /** \brief Get the behaviour of the Scenenode when calling setSceneNode or the destructor.
    */
@@ -81,23 +81,23 @@ class OGRE3DExportClass OGRE3DBody : public NxOgre::Actor, public NxOgre::TimeLi
    */
    bool advance(float, const NxOgre::Enums::Priority&);
    
-  protected:
+ protected:
+   
+   /** \internal. Use OGRE3DRenderSystem::createBody
+   */
+   OGRE3DBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
      
-     /** \internal. Use OGRE3DRenderSystem::createBody
-     */
-     OGRE3DBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
-     
-     /** \internal. Use OGRE3DRenderSystem::createBody
-     */
-     OGRE3DBody(NxOgre::Shapes&, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
-     
-     /** \internal. Use OGRE3DRenderSystem::destroyBody
-     */
-    ~OGRE3DBody(void);
-     
-     void _destructNode(OGRE3DSceneNodeDestructorBehaviour);
-     
-  protected:
+   /** \internal. Use OGRE3DRenderSystem::createBody
+   */
+   OGRE3DBody(NxOgre::Shapes&, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
+   
+   /** \internal. Use OGRE3DRenderSystem::destroyBody
+   */
+  ~OGRE3DBody(void);
+   
+   void _destructNode(OGRE3DSceneNodeDestructorBehaviour);
+   
+ protected:
      
      OGRE3DRenderSystem*                 mRenderSystem;   //< \brief Body's Rendersystem
      Ogre::SceneManager*                 mSceneManager;   //< \brief Scenenode's SceneManager.

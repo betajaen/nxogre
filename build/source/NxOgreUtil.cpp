@@ -50,8 +50,8 @@ bool SimpleBoxContainsPoint(const SimpleBox& oBox, const Vec3& oP)
 {
  NxBox box;
  Functions::SimpleBoxToNxBox(oBox, box);
- NxVec3 p;
- Functions::XYZ<Vec3, NxVec3>(oP, p);
+ NxVec3 p = oP.as<NxVec3>();
+ 
  return NxGetUtilLib()->NxBoxContainsPoint(box, p);
 }
 
@@ -85,15 +85,15 @@ bool NxOgrePublicFunction RayPlaneIntersect(const Ray& ray, const SimplePlane& s
 {
  NxPlane plane;
  plane.d = simplePlane.mDistance;
- Functions::XYZ<Vec3, NxVec3>(simplePlane.mNormal, plane.normal);
+ plane.normal = simplePlane.mNormal.as<NxVec3>();
 
  NxRay inRay;
- Functions::XYZ<Vec3, NxVec3>(ray.mDirection, inRay.dir);
- Functions::XYZ<Vec3, NxVec3>(ray.mOrigin, inRay.orig);
- 
+ inRay.dir = ray.mDirection.as<NxVec3>();
+ inRay.orig = ray.mOrigin.as<NxVec3>();
+
  NxVec3 physxPointOnPlane;
  bool result = NxGetUtilLib()->NxRayPlaneIntersect(inRay, plane, distance, physxPointOnPlane);
- Functions::XYZ<NxVec3, Vec3>(physxPointOnPlane, pointOnPlane);
+ pointOnPlane.from<NxVec3>(physxPointOnPlane);
  return result;
 }
 

@@ -41,31 +41,6 @@ namespace Functions
 
                                                                                        
 
-CalculatedTimeStep calculateTimestep(float timestep, Enums::TimeStepMethod method, float maxTime, unsigned int nbSubSteps)
-{
- 
- CalculatedTimeStep cts;
- 
- cts.mAccumulator = 0.0f;
- cts.mActual = timestep;
- 
- if (method == Enums::TimeStepMethod_Variable || method == Enums::TimeStepMethod_Inherit)
- {
-  cts.mModified = timestep;
-  return cts;
- }
- 
- for (unsigned int i=0; i < nbSubSteps;i++)
-  if (cts.mAccumulator <= maxTime)
-   break;
-  else
-   cts.mAccumulator -= maxTime;
- 
- cts.mModified = maxTime;
- 
- return cts;
-}
-
 
                                                                                        
 

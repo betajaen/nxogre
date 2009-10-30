@@ -93,7 +93,7 @@ Vec3 Box::getSize() const
 {
  if (mBoxShape)
  {
-  return Functions::XYZ<NxVec3, Vec3>(mBoxShape->getDimensions() * 2);
+  return Vec3(mBoxShape->getDimensions() * 2);
  }
  else
  {
@@ -104,7 +104,7 @@ Vec3 Box::getSize() const
 void Box::setSize(const Vec3& vec)
 {
  if (mBoxShape)
-  mBoxShape->setDimensions(Functions::XYZ<Vec3, NxVec3>(vec * 0.5f));
+  mBoxShape->setDimensions((vec * 0.5f).as<NxVec3>());
  else
  {
   mBlueprint->mSize.x = vec.x;

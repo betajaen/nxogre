@@ -336,8 +336,8 @@ bool  HeightFieldGeometry::overlapAAABTriangles(const Bounds3& bounds, unsigned 
  
  PhysXUserEntityReport<Index> report(callback);
  NxBounds3 nBounds;
- Functions::XYZ<Vec3, NxVec3>(bounds.max, nBounds.max);
- Functions::XYZ<Vec3, NxVec3>(bounds.min, nBounds.min);
+ nBounds.max = bounds.max.as<NxVec3>();
+ nBounds.min = bounds.min.as<NxVec3>();
  
  return mHeightFieldShape->overlapAABBTriangles(nBounds, queryFlags, &report);
 }
@@ -346,9 +346,9 @@ void  HeightFieldGeometry::getTriangle(Triangle& out, unsigned int* flags, Index
 {
  NxTriangle triangle;
  mHeightFieldShape->getTriangle(triangle, 0, flags, index, worldTrans, worldRot);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[0], out.mVertices[0]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[1], out.mVertices[1]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[2], out.mVertices[2]);
+ out.mVertices[0].from<NxVec3>(triangle.verts[0]);
+ out.mVertices[1].from<NxVec3>(triangle.verts[1]);
+ out.mVertices[2].from<NxVec3>(triangle.verts[2]);
 }
 
 void  HeightFieldGeometry::getTriangle(Triangle& out, Triangle& outEdge, unsigned int* flags, Index index, bool worldTrans, bool worldRot )
@@ -356,12 +356,12 @@ void  HeightFieldGeometry::getTriangle(Triangle& out, Triangle& outEdge, unsigne
  NxTriangle triangle;
  NxTriangle edge;
  mHeightFieldShape->getTriangle(triangle, &edge, flags, index, worldTrans, worldRot);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[0], out.mVertices[0]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[1], out.mVertices[1]);
- Functions::XYZ<NxVec3, Vec3>(triangle.verts[2], out.mVertices[2]);
- Functions::XYZ<NxVec3, Vec3>(edge.verts[0], outEdge.mVertices[0]);
- Functions::XYZ<NxVec3, Vec3>(edge.verts[1], outEdge.mVertices[1]);
- Functions::XYZ<NxVec3, Vec3>(edge.verts[2], outEdge.mVertices[2]);
+ out.mVertices[0].from<NxVec3>(triangle.verts[0]);
+ out.mVertices[1].from<NxVec3>(triangle.verts[1]);
+ out.mVertices[2].from<NxVec3>(triangle.verts[2]);
+ outEdge.mVertices[0].from<NxVec3>(edge.verts[0]);
+ outEdge.mVertices[1].from<NxVec3>(edge.verts[1]);
+ outEdge.mVertices[2].from<NxVec3>(edge.verts[2]);
 }
 
 bool HeightFieldGeometry::isPointOnHeightField(const Vec2& vec)
@@ -395,7 +395,7 @@ Vec3 HeightFieldGeometry::getNormalAt(Real x, Real z)
  if (mHeightFieldShape == 0)
   return Vec3::ZERO;
  
- return Functions::XYZ<NxVec3, Vec3>(mHeightFieldShape->getNormalAtShapePoint(x, z));
+ return Vec3(mHeightFieldShape->getNormalAtShapePoint(x, z));
 }
 
 Vec3 HeightFieldGeometry::getNormalAt(const Vec2& vec)
@@ -403,7 +403,7 @@ Vec3 HeightFieldGeometry::getNormalAt(const Vec2& vec)
  if (mHeightFieldShape == 0)
   return Vec3::ZERO;
  
- return Functions::XYZ<NxVec3, Vec3>(mHeightFieldShape->getNormalAtShapePoint(vec.x, vec.y));
+ return Vec3(mHeightFieldShape->getNormalAtShapePoint(vec.x, vec.y));
 }
 
 Vec3 HeightFieldGeometry::getSmoothNormalAt(Real x, Real z)
@@ -411,7 +411,7 @@ Vec3 HeightFieldGeometry::getSmoothNormalAt(Real x, Real z)
  if (mHeightFieldShape == 0)
   return Vec3::ZERO;
  
- return Functions::XYZ<NxVec3, Vec3>(mHeightFieldShape->getSmoothNormalAtShapePoint(x, z));
+ return Vec3(mHeightFieldShape->getSmoothNormalAtShapePoint(x, z));
 }
 
 Vec3 HeightFieldGeometry::getSmoothNormalAt(const Vec2& vec)
@@ -419,7 +419,7 @@ Vec3 HeightFieldGeometry::getSmoothNormalAt(const Vec2& vec)
  if (mHeightFieldShape == 0)
   return Vec3::ZERO;
  
- return Functions::XYZ<NxVec3, Vec3>(mHeightFieldShape->getSmoothNormalAtShapePoint(vec.x, vec.y));
+ return Vec3(mHeightFieldShape->getSmoothNormalAtShapePoint(vec.x, vec.y));
 }
 
 

@@ -32,6 +32,8 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include <map>
+#include <fstream>
 
                                                                                        
 
@@ -75,6 +77,69 @@ class MallocAllocator
   
 };
 
+
+class TrackedMallocAllocator
+{
+ public:
+
+  TrackedMallocAllocator()
+  {
+  }
+
+ ~TrackedMallocAllocator()
+  {
+   #ifdef NXOGRE_MEMORY_DEBUGGER_USEFILE
+    std::ofstream s("NxOgreLeaks.txt");
+    for (std::map<void*, size_t>::iterator i = sMemory.begin(); i != sMemory.end(); i++)
+     s << (*i).first << " => " << (*i).second << " b\n";
+    s.close();
+   #endif
+  }
+
+  static inline void* allocateBytes(size_t length, const char* file, unsigned int line)
+  {
+   void* ptr = malloc(length);
+   pushMem(ptr, length, file, line);
+   return ptr;
+  }
+
+  static inline void* allocateBytes(size_t length)
+  {
+   void* ptr = malloc(length);
+   pushMem(ptr, length,0,0);
+   return ptr;
+  }
+
+  static inline void* reallocateBytes(void* memory, size_t newLength)
+  {
+   void* newPtr = realloc(memory, newLength);
+   popMem(memory);
+   pushMem(newPtr, newLength, 0, 0);
+  }
+
+  static inline void deallocateBytes(void* memory)
+  {
+   free(memory);
+   popMem(memory);
+  }
+
+ protected:
+
+  static void pushMem(void* ptr, size_t length, const char* file, unsigned int line)
+  {
+   sMemory.insert(std::pair<void*, size_t>(ptr, length));
+  }
+
+  static void popMem(void* ptr)
+  {
+   std::map<void*, size_t>::iterator i = sMemory.find(ptr);
+   if (i != sMemory.end())
+    sMemory.erase(i);
+  }
+
+  static std::map<void*, size_t> sMemory;
+
+};
 
 template<class SpecialisedAllocator> class Allocator : public SpecialisedAllocator {};
 

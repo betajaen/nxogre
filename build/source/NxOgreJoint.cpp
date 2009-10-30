@@ -71,22 +71,22 @@ RigidBody* Joint::getSecondRigidBody(void)
 
 void Joint::setGlobalAnchor(const Vec3& vec)
 {
- mJoint->setGlobalAnchor(Functions::XYZ<Vec3, NxVec3>(vec));
+ mJoint->setGlobalAnchor(vec.as<NxVec3>());
 }
 
 void Joint::setGlobalAxis(const Vec3& vec)
 {
- mJoint->setGlobalAxis(Functions::XYZ<Vec3, NxVec3>(vec));
+ mJoint->setGlobalAxis(vec.as<NxVec3>());
 }
 
 Vec3 Joint::getGlobalAnchor(void) const
 {
- return Functions::XYZ<NxVec3, Vec3>(mJoint->getGlobalAnchor());
+ return Vec3(mJoint->getGlobalAnchor());
 }
 
 Vec3 Joint::getGlobalAxis(void) const
 {
- return Functions::XYZ<NxVec3, Vec3>(mJoint->getGlobalAxis());
+ return Vec3(mJoint->getGlobalAxis());
 }
 
 Enums::JointState Joint::getState(void)
@@ -142,17 +142,17 @@ Enums::JointSpringType Joint::getUseAccelerationSpring(void) const
 
 void Joint::setLimitPoint(const Vec3& point, bool pointIsOnRigidBody2)
 {
- mJoint->setLimitPoint(Functions::XYZ<Vec3, NxVec3>(point), pointIsOnRigidBody2);
+ mJoint->setLimitPoint(point.as<NxVec3>(), pointIsOnRigidBody2);
 }
 
 bool Joint::getLimitPoint(const Vec3& worldLimitPoint) const
 {
- return mJoint->getLimitPoint(Functions::XYZ<Vec3, NxVec3>(worldLimitPoint));
+ return mJoint->getLimitPoint(worldLimitPoint.as<NxVec3>());
 }
 
 void Joint::addLimitPoint(const Vec3& normal, const Vec3& pointInPlane, Real restitution)
 {
- mJoint->addLimitPlane(Functions::XYZ<Vec3, NxVec3>(normal), Functions::XYZ<Vec3, NxVec3>(pointInPlane), restitution);
+ mJoint->addLimitPlane(normal.as<NxVec3>(), pointInPlane.as<NxVec3>(), restitution);
 }
 
 void Joint::purgeLimitPlanes(void)

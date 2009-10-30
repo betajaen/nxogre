@@ -124,8 +124,6 @@ String FileResourceProtocol::calculateArchiveName(const Path& path)
  else
  {
   
-  std::cout << "+ Calculating archive name from " << path.getString() << std::endl;
-  
   std::stringstream archive_name;
   unsigned int relative_path = 0;
   for (unsigned int i = 0;i < path.getNbDirectories();i++)
@@ -139,7 +137,7 @@ String FileResourceProtocol::calculateArchiveName(const Path& path)
    
    if (relative_path)
    {
-    archive_name << "#." << relative_path;
+    archive_name << "#.." << relative_path;
     relative_path = 0;
    }
    
@@ -151,7 +149,7 @@ String FileResourceProtocol::calculateArchiveName(const Path& path)
   
   if (relative_path)
   {
-    archive_name << "#." << relative_path;
+    archive_name << "#.." << relative_path;
   }
   
   return archive_name.str();

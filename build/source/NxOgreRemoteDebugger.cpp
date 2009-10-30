@@ -120,22 +120,22 @@ void RemoteDebugger::setParameter(const unsigned int& parameter, void* object, c
 
 void RemoteDebugger::createParameter(const Vec3& parameter, void* object, const char* name, unsigned int mask)
 {
- mRemoteDebugger->writeParameter(Functions::XYZ<Vec3, NxVec3>(parameter), object, true, name, mask);
+ mRemoteDebugger->writeParameter(parameter.as<NxVec3>(), object, true, name, mask);
 }
 
 void RemoteDebugger::setParameter(const Vec3& parameter, void* object, const char* name, unsigned int mask)
 {
- mRemoteDebugger->writeParameter(Functions::XYZ<Vec3, NxVec3>(parameter), object, false, name, mask);
+ mRemoteDebugger->writeParameter(parameter.as<NxVec3>(), object, false, name, mask);
 }
 
 void RemoteDebugger::createParameter(const SimplePlane& parameter, void* object, const char* name, unsigned int mask)
 {
- mRemoteDebugger->writeParameter(NxPlane(Functions::XYZ<Vec3, NxVec3>(parameter.mNormal), parameter.mDistance), object, true, name, mask);
+ mRemoteDebugger->writeParameter(NxPlane(parameter.mNormal.as<NxVec3>(), parameter.mDistance), object, true, name, mask);
 }
 
 void RemoteDebugger::setParameter(const SimplePlane& parameter, void* object, const char* name, unsigned int mask)
 {
- mRemoteDebugger->writeParameter(NxPlane(Functions::XYZ<Vec3, NxVec3>(parameter.mNormal), parameter.mDistance), object, false, name, mask);
+ mRemoteDebugger->writeParameter(NxPlane(parameter.mNormal.as<NxVec3>(), parameter.mDistance), object, false, name, mask);
 }
 #if 0
 void RemoteDebugger::createParameter(const Matrix44& parameter, void* object, const char* name, unsigned int mask)
@@ -215,7 +215,7 @@ void* RemoteDebugger::getPickedObject()
 
 Vec3 RemoteDebugger::getPickedPoint(void)
 {
- return Functions::XYZ<NxVec3, Vec3>(mRemoteDebugger->getPickPoint());
+ return Vec3(mRemoteDebugger->getPickPoint());
 }
 
 #if 0

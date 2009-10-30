@@ -785,11 +785,11 @@ class NxOgrePublicClass Actor : public RigidBody
   
   /** \brief Name of the Actor, otherwise a blank string.
   */
-                       String                 mName;
+  String  mName;
   
   /** \brief Actor's parent Scene
   */
-                       Scene*                 mScene;
+  Scene*  mScene;
   
 }; // class ClassName
 

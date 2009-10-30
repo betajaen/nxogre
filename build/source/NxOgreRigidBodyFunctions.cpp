@@ -166,7 +166,7 @@ extern inline Matrix44 getGlobalPose(NxActor* actor)
 
 extern inline Vec3 getGlobalPosition(NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getGlobalPosition());
+ return Vec3(actor->getGlobalPosition());
 }
 
 extern inline Matrix33 getGlobalOrientation(NxActor* actor)
@@ -178,7 +178,7 @@ extern inline Matrix33 getGlobalOrientation(NxActor* actor)
 
 extern inline Quat getGlobalOrientationQuat(NxActor* actor)
 {
- return WXYZ<NxQuat, Quat>(actor->getGlobalOrientationQuat());
+ return Quat(actor->getGlobalOrientationQuat());
 }
 
 extern inline void moveGlobalPose(const Matrix44& matrix, NxActor* actor)
@@ -229,7 +229,7 @@ extern inline void setCMassOffsetLocalPose(const Matrix44& matrix, NxActor* acto
 
 extern inline void setCMassOffsetLocalPosition(const Vec3& r3, NxActor* actor)
 {
- actor->setCMassOffsetLocalPosition(XYZ<Vec3, NxVec3>(r3));
+ actor->setCMassOffsetLocalPosition(r3.as<NxVec3>());
 }
 
 extern inline void setCMassOffsetLocalOrientation(const Matrix33& r33, NxActor* actor)
@@ -248,7 +248,7 @@ extern inline void setCMassOffsetGlobalPose(const Matrix44& matrix, NxActor* act
 
 extern inline void setCMassOffsetGlobalPosition(const Vec3& r3, NxActor* actor)
 {
- actor->setCMassOffsetGlobalPosition(XYZ<Vec3, NxVec3>(r3));
+ actor->setCMassOffsetGlobalPosition(r3.as<NxVec3>());
 }
 
 extern inline void setCMassOffsetGlobalOrientation(const Matrix33& r33, NxActor* actor)
@@ -267,7 +267,7 @@ extern inline void setCMassGlobalPose(const Matrix44& matrix, NxActor* actor)
 
 extern inline void setCMassGlobalPosition(const Vec3& r3, NxActor* actor)
 {
- actor->setCMassGlobalPosition(XYZ<Vec3, NxVec3>(r3));
+ actor->setCMassGlobalPosition(r3.as<NxVec3>());
 }
 
 extern inline void setCMassGlobalOrientation (const Matrix33& r33, NxActor* actor)
@@ -286,7 +286,7 @@ extern inline Matrix44 getCMassLocalPose(NxActor* actor)
 
 extern inline Vec3 getCMassLocalPosition(NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getCMassLocalPosition());
+ return Vec3(actor->getCMassLocalPosition());
 }
 
 extern inline Matrix33 getCMassLocalOrientation(NxActor* actor)
@@ -305,7 +305,7 @@ extern inline Matrix44 getCMassGlobalPose(NxActor* actor)
 
 extern inline Vec3 getCMassGlobalPosition(NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getCMassGlobalPosition());
+ return Vec3(actor->getCMassGlobalPosition());
 }
 
 extern inline Matrix33 getCMassGlobalOrientation(NxActor* actor)
@@ -327,12 +327,12 @@ extern inline Real getMass(NxActor* actor)
 
 extern inline void setMassSpaceInertiaTensor(const Vec3& r3, NxActor* actor)
 {
- actor->setMassSpaceInertiaTensor(XYZ<Vec3, NxVec3>(r3));
+ actor->setMassSpaceInertiaTensor(r3.as<NxVec3>());
 }
 
 extern inline Vec3 getMassSpaceInertiaTensor(NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getMassSpaceInertiaTensor());
+ return Vec3(actor->getMassSpaceInertiaTensor());
 }
 
 extern inline Matrix33 getGlobalInertiaTensor(NxActor* actor)
@@ -376,22 +376,22 @@ extern inline Real getAngularDamping(NxActor* actor)
 
 extern inline void setLinearVelocity(const Vec3& linVel, NxActor* actor)
 {
- actor->setLinearVelocity(XYZ<Vec3, NxVec3>(linVel));
+ actor->setLinearVelocity(linVel.as<NxVec3>());
 }
 
 extern inline void setAngularVelocity(const Vec3& angVel, NxActor* actor)
 {
- actor->setAngularVelocity(XYZ<Vec3, NxVec3>(angVel));
+ actor->setAngularVelocity(angVel.as<NxVec3>());
 }
 
 extern inline Vec3 getLinearVelocity(NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getLinearVelocity());
+ return Vec3(actor->getLinearVelocity());
 }
 
 extern inline Vec3 getAngularVelocity (NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getAngularVelocity());
+ return Vec3(actor->getAngularVelocity());
 }
 
 extern inline void setMaxAngularVelocity(Real maxAngVel, NxActor* actor)
@@ -416,72 +416,72 @@ extern inline Real getCCDMotionThreshold(NxActor* actor)
 
 extern inline void setLinearMomentum(const Vec3& linMoment, NxActor* actor)
 {
- actor->setLinearMomentum(XYZ<Vec3, NxVec3>(linMoment));
+ actor->setLinearMomentum(linMoment.as<NxVec3>());
 }
 
 extern inline void setAngularMomentum(const Vec3& angMoment, NxActor* actor)
 {
- actor->setAngularMomentum(XYZ<Vec3, NxVec3>(angMoment));
+ actor->setAngularMomentum(angMoment.as<NxVec3>());
 }
 
 extern inline Vec3 getLinearMomentum(NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getLinearMomentum());
+ return Vec3(actor->getLinearMomentum());
 }
 
 extern inline Vec3 getAngularMomentum(NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getAngularMomentum());
+ return Vec3(actor->getAngularMomentum());
 }
 
 extern inline void addForceAtPos(const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addForceAtPos(XYZ<Vec3, NxVec3>(force), XYZ<Vec3, NxVec3>(pos), NxForceMode(int(mode)), wakeup);
+ actor->addForceAtPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline void addForceAtLocalPos(const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addForceAtLocalPos(XYZ<Vec3, NxVec3>(force), XYZ<Vec3, NxVec3>(pos), NxForceMode(int(mode)), wakeup);
+ actor->addForceAtLocalPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline void addLocalForceAtPos (const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addLocalForceAtPos(XYZ<Vec3, NxVec3>(force), XYZ<Vec3, NxVec3>(pos), NxForceMode(int(mode)), wakeup);
+ actor->addLocalForceAtPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline void addLocalForceAtLocalPos (const Vec3& force, const Vec3& pos, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addLocalForceAtLocalPos(XYZ<Vec3, NxVec3>(force), XYZ<Vec3, NxVec3>(pos), NxForceMode(int(mode)), wakeup);
+ actor->addLocalForceAtLocalPos(force.as<NxVec3>(), pos.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline void addForce (const Vec3& force, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addForce(XYZ<Vec3, NxVec3>(force), NxForceMode(int(mode)), wakeup);
+ actor->addForce(force.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline void addLocalForce (const Vec3& force, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addLocalForce(XYZ<Vec3, NxVec3>(force), NxForceMode(int(mode)), wakeup);
+ actor->addLocalForce(force.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline void addTorque (const Vec3& torque, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addTorque(XYZ<Vec3, NxVec3>(torque), NxForceMode(int(mode)), wakeup);
+ actor->addTorque(torque.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline void addLocalTorque (const Vec3& torque, Enums::ForceMode mode, bool wakeup, NxActor* actor)
 {
- actor->addLocalTorque(XYZ<Vec3, NxVec3>(torque), NxForceMode(int(mode)), wakeup);
+ actor->addLocalTorque(torque.as<NxVec3>(), NxForceMode(int(mode)), wakeup);
 }
 
 extern inline Vec3 getPointVelocity (const Vec3& point, NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getPointVelocity(XYZ<Vec3, NxVec3>(point)));
+ return Vec3(actor->getPointVelocity(point.as<NxVec3>()));
 }
 
 extern inline Vec3 getLocalPointVelocity(const Vec3& point, NxActor* actor)
 {
- return XYZ<NxVec3, Vec3>(actor->getLocalPointVelocity(XYZ<Vec3, NxVec3>(point)));
+ return Vec3(actor->getLocalPointVelocity(point.as<NxVec3>()));
 }
 
 extern inline bool isGroupSleeping(NxActor* actor)

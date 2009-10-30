@@ -46,52 +46,6 @@ namespace Functions
 
                                                                                        
 
-/** \brief Convert any vector3 class to another, assuming both classes have public member variables x y z
-*/
-template<typename from, typename to>
-to  NxOgreForceInline XYZ(const from& _from)
-{
- to _to;
- _to.x = _from.x;
- _to.y = _from.y;
- _to.z = _from.z;
- return _to;
-}
-
-/** \brief Convert any vector3 class to another, assuming both classes have public member variables x y z
-*/
-template<typename from, typename to>
-void  NxOgreForceInline XYZ(const from& _from, to& _to)
-{
- _to.x = _from.x;
- _to.y = _from.y;
- _to.z = _from.z;
-}
-
-/** \brief Convert any vector4 class to another, assuming both classes have public member variables w x y z
-*/
-template<typename from, typename to>
-to  NxOgreForceInline WXYZ(const from& _from)
-{
- to _to;
- _to.w = _from.w;
- _to.x = _from.x;
- _to.y = _from.y;
- _to.z = _from.z;
- return _to;
-}
-
-/** \brief Convert any vector4 class to another, assuming both classes have public member variables w x y z
-*/
-template<typename from, typename to>
-void  NxOgreForceInline WXYZ(const from& _from, to& _to)
-{
- _to.w = _from.w;
- _to.x = _from.x;
- _to.y = _from.y;
- _to.z = _from.z;
-}
-
 /** \brief Fill a chunk of memory with a value
 */
 template<typename T> void fill(T* start, T* end, T value)
@@ -100,19 +54,33 @@ template<typename T> void fill(T* start, T* end, T value)
   (*start) = value;
 }
 
-
-struct CalculatedTimeStep
-{
- float mActual;
- float mModified;
- float mAccumulator;
-};
-
-/*! bigfunction. Calculate Timesep.
+/*! function. is_in.ref
     desc.
-        Calculate a timestep from a given time value.
+        Is a value in this vector.
 */
-NxOgrePublicFunction CalculatedTimeStep calculateTimestep(float timestep, Enums::TimeStepMethod method = Enums::TimeStepMethod_Fixed, float maxTime = _1_60, unsigned int nbSubSteps = 8);
+template<typename T > bool is_in(const T& look_up, const std::vector<T>& vec)
+{
+ for (std::vector<T>::iterator it = vec.begin(); it != vec.end(); ++it)
+ {
+  if ((*it) == look_up)
+   return true;
+ }
+ return false;
+}
+ 
+/*! function. is_in
+    desc.
+         Is a value ptr in this vector.
+*/
+template<typename T> bool is_in(T* look_up, const std::vector<T>& vec)
+{
+ for (std::vector<T>::iterator it = vec.begin(); it != vec.end(); ++it)
+ {
+  if ((*it) == look_up)
+   return true;
+ }
+ return false;
+}
 
                                                                                        
 
