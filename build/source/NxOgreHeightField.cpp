@@ -149,6 +149,17 @@ NxHeightField* HeightField::getHeightField(void)
  return mHeightField;
 }
 
+unsigned int HeightField::getNbRows() const
+{
+ return mHeightField->getNbRows();
+}
+
+unsigned int HeightField::getNbColumns() const
+{
+ return mHeightField->getNbColumns();
+}
+
+
 
                                                                                        
 

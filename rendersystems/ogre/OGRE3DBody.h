@@ -85,11 +85,11 @@ class OGRE3DExportClass OGRE3DBody : public NxOgre::Actor, public NxOgre::TimeLi
    
    /** \internal. Use OGRE3DRenderSystem::createBody
    */
-   OGRE3DBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
+   OGRE3DBody(const NxOgre::ShapeDescription&, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
      
    /** \internal. Use OGRE3DRenderSystem::createBody
    */
-   OGRE3DBody(NxOgre::Shapes&, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
+   OGRE3DBody(const NxOgre::ShapeDescriptions&, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
    
    /** \internal. Use OGRE3DRenderSystem::destroyBody
    */

@@ -36,7 +36,8 @@
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreShape.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
+#include "NxOgreShapeFunctions.h"
 
                                                                                        
 
@@ -45,42 +46,60 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief  
+/*! class. Sphere
 */ 
 class NxOgrePublicClass Sphere : public Shape
 {
   
-  friend class RigidBodyPrototype;
+  friend class RigidBody;  // for destroy();
+  friend Shape* Functions::ShapeFunctions::createSphere(NxShape*); // for new
+  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
   
   public: // Functions
-  
-  /** \brief Sphere
-  */
-                                              Sphere(Real radius, ShapeBlueprint* blueprint = new ShapeBlueprint());
-  
-  /** \brief Sphere
-  */
-                                             ~Sphere(void);
 
-  /** \brief Get the shape type based upon the Classes::xxxx enum.
+  /*! function. getShapeFunctionType
+      desc.
+          Get the shape type based upon the Classes::xxxx enum.
   */
-                  Enums::ShapeFunctionType    getShapeFunctionType() const;
+  Enums::ShapeFunctionType  getShapeFunctionType() const;
   
+  /*! function. getShapeType
+      desc.
+          Get the shape type based upon the Classes::xxxx enum.
+  */
   unsigned int getShapeType() const;
   
+  /*! function. getShapeType
+      desc.
+          Get the sphere radius.
+  */
+   void setRadius(Real radius);
+  
+  /*! function. getRadius
+      desc.
+          Get the sphere radius.
+  */
+  Real getRadius() const;
+  
+  ///*! function. getShapeType
+  //    desc.
+  //        Get the shape type based upon the Classes::xxxx enum.
+  //*/
+  //void getWorldSphere(NxSImSphere& worldSphere) const;
+  
   protected:
   
-  /** \internal DO NOT USE.
+  /** \brief Sphere
   */
-                      NxShapeDesc*            create();
-
-  /** \internal DO NOT USE.
+  Sphere(NxSphereShape*);
+  
+  /** \brief Sphere
   */
-                      void                    assign(NxShape*);
-
+ ~Sphere(void);
+  
   protected:
 
-                      NxSphereShape*          mSphereShape;
+  NxSphereShape*          mSphereShape;
 }; // class Sphere
 
                                                                                        

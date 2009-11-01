@@ -59,6 +59,7 @@
 #include "NxOgreVec3.h"
 #include "NxOgreVec4.h"
 #include "NxOgreQuat.h"
+#include "NxOgreGroupsMask.h"
 #include "NxOgreBounds.h"
 #include "NxOgreMatrix.h"
 #include "NxOgreString.h"
@@ -90,10 +91,12 @@ namespace NxOgre
 //::             struct                     ArrayReferenceCounter;         //!< \internal Do Not Use.
 //::             struct                     ArrayUnknown;                  //!< \internal Do Not Use.
                  class                      Box;                           //!<
+                 class                      BoxDescription;                //!<
      template<typename T> class             Buffer;                        //!<
 //::             struct                     BufferReferenceCounter;        //!< \internal Do Not Use.
 //::             struct                     BufferUnknown;                 //!< \internal Do Not Use.
                  class                      Capsule;                       //!<
+                 class                      CapsuleDescription;            //!<
                  class                      Callback;                      //!<
 //::             struct                     CCDSkeletonMeshData;           //!<
 //::             struct                     CircularBufferReferenceCounter; //!<
@@ -103,8 +106,8 @@ namespace NxOgre
                  class                      Compartment;                   //!<
                  class                      CompartmentDescription;        //!<
                  class                      ContactPair;                   //!<
-        template<class T> class             ConstantArray;                 //!<
                  class                      Convex;                        //!<
+                 class                      ConvexDescription;             //!<
                  class                      D6Joint;                       //!<
                  class                      D6JointDescription;            //!<
                  class                      DebugRenderable;               //!<
@@ -122,7 +125,7 @@ namespace NxOgre
                  class                      FluidPacket;                   //!<
                  class                      HeightField;                   //!<
                  class                      HeightFieldGeometry;           //!<
-                 class                      HeightFieldGeometryBlueprint;  //!< 
+                 class                      HeightFieldGeometryDescription;  //!< 
                  struct                     HeightFieldSample;             //!<
                  class                      HeightFieldManager;            //!<
                  class                      Geometry;                      //!<
@@ -140,7 +143,6 @@ namespace NxOgre
                  class                      MachinePart;                   //!<
                  class                      Material;                      //!<
                  class                      MaterialDescription;           //!<
-                 class                      MaterialPrototype;             //!<
                  class                      ManualMesh;                    //!<
 //::             struct                     ManualMeshReferenceCounter;    //!<
                  class                      MeshData;                      //!<
@@ -159,7 +161,7 @@ namespace NxOgre
 //::             class                      FileResource;         //!< \brief Part of NxOgre for Windows
 //::             class                      FileResourceProtocol; //!< \brief Part of NxOgre for Windows
                  class                      PlaneGeometry;                 //!<
-                 class                      PlaneGeometryPrototype;        //!<
+                 class                      PlaneGeometryDescription;      //!<
                  class                      Particle;                      //!<
                  class                      ParticleData;                  //!<
                  class                      PhysXMeshData;                 //!<
@@ -196,6 +198,7 @@ namespace NxOgre
                  class                      SceneTimer;                    //!<
 //::             class                      Shape_Abstract;                //!< \virtual
                  class                      Sphere;                        //!<
+                 class                      SphereDescription;             //!<
                  class                      SphericalJoint;                //!<
                  class                      SphericalJointDescription;     //!<
 //::             class                      SharedArray;                   //!< \brief Part of NxOgreArray.h
@@ -214,7 +217,7 @@ namespace NxOgre
                  class                      SoftBodyDescription;           //!<
                  class                      SoftBodyMesh;                  //!<
                  class                      Shape;                         //!<
-                 class                      ShapeBlueprint;                //!<
+                 class                      ShapeDescription;              //!<
                  class                      SpringDescription;             //!<
                  class                      SweepCache;                    //!<
                  struct                     SweepQueryHit;                 //!<
@@ -231,7 +234,7 @@ namespace NxOgre
                  class                      Volume;                        //!<
                  class                      Warning;                       //!<
                  class                      Wheel;                         //!<
-                 class                      WheelBlueprint;                //!<
+                 class                      WheelDescription;              //!<
                  class                      WheelMachinePart;              //!<
                  class                      World;                         //!<
                  class                      WorldDescription;              //!<
@@ -240,6 +243,7 @@ namespace NxOgre
                  typedef                    BoundsT<Vec3>           Bounds3;
                  typedef                    BoundsT<Vec4>           Bounds4;
                  typedef                    Real                    Radian;
+
                                                                                        
 
 namespace Functions

@@ -48,7 +48,7 @@ Actor::Actor(Scene* scene)
 {
 }
 
-Actor::Actor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+Actor::Actor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;
@@ -57,7 +57,7 @@ Actor::Actor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& des
  createDynamic(pose, description, scene, shape);
 }
 
-Actor::Actor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+Actor::Actor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;

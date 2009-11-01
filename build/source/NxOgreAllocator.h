@@ -199,6 +199,21 @@ template<class Allocator> class Allocatable
 
 #define NxOgreDelete(PTR) if (PTR){delete PTR;PTR=0;}
 
+template<typename T, class Allocator> inline T* NxOgreAllocatedNew()
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T();
+ return ptr;
+}
+
+template<typename T, class Allocator> inline void NxOgreAllocatedDelete(T* ptr)
+{
+ if (ptr == 0)
+  return;
+ ptr->~T();
+ Allocator::deallocateBytes(ptr);
+}
+
                                                                                        
 
 } // namespace NxOgre

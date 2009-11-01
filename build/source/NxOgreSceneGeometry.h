@@ -111,7 +111,7 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
 
   /** \brief Creates a new shape and adds it to the list of shapes of this actor. 
   */
-                                      void                   createShape(Shape*);
+                                      void                   createShape(const ShapeDescription&);
   
   /** \brief Deletes the specified shape.
   */
@@ -127,11 +127,11 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
   
   /** \internal Use Scene::createActor
   */
-                                              SceneGeometry(Shape*, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+                                              SceneGeometry(const ShapeDescription&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::createActor
   */
-                                              SceneGeometry(Shapes&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+                                              SceneGeometry(const ShapeDescriptions&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::destroySceneGeometry
   */
@@ -147,7 +147,7 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
   */
                        Scene*                mScene;
   
-                       Shapes               mShapes;
+                       CollisionModel        mShapes;
 
 }; // class ClassName
 

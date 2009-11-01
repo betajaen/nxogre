@@ -126,13 +126,13 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
       desc.
           Create an actor somewhere in the scene
   */
-  Actor*  createActor(Shape*, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
+  Actor*  createActor(const ShapeDescription&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /*! function. createActor
       desc.
           Create an actor somewhere in the scene
   */
-  Actor*  createActor(Shapes&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
+  Actor*  createActor(const ShapeDescriptions&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /*! function. destroyActor
       desc.
@@ -144,38 +144,38 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
       desc.
           
   */
-  SceneGeometry*  createSceneGeometry(Shapes&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
+  SceneGeometry*  createSceneGeometry(const ShapeDescription&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /*! function. createSceneGeometry
       desc.
           
   */
-  SceneGeometry*  createSceneGeometry(Shape*, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
+  SceneGeometry*  createSceneGeometry(const ShapeDescriptions&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /*! function. createKinematicActor
       desc.
           
   */
-  KinematicActor*  createKinematicActor(Shape*, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
+  KinematicActor*  createKinematicActor(const ShapeDescription&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
   /*! function. createKinematicActor
       desc.
           
   */
-  KinematicActor*  createKinematicActor(Shapes&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
+  KinematicActor*  createKinematicActor(const ShapeDescriptions&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
 
   /*! function. createVolume
       desc.
           Create a volume for collision detection in a shape, based on the PhysX Trigger system.
       \note  Volumes are RigidBodies can be treated as so, but can never be moved via forces.
   */
-  Volume*  createVolume(Shape*, const Matrix44&, Callback*, Enums::VolumeCollisionType = Enums::VolumeCollisionType_All);
+  Volume*  createVolume(const ShapeDescription&, const Matrix44&, Callback*, Enums::VolumeCollisionType = Enums::VolumeCollisionType_All);
   
   /*! function. createVolume
       desc.
           ;
   */
-  Volume*  createVolume(Shapes&, const Matrix44&, Callback*, Enums::VolumeCollisionType = Enums::VolumeCollisionType_All);
+  Volume*  createVolume(const ShapeDescriptions&, const Matrix44&, Callback*, Enums::VolumeCollisionType = Enums::VolumeCollisionType_All);
   
   /*! function. createKinematicController
       desc.
@@ -188,12 +188,6 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
           
   */
   Material*  createMaterial(const MaterialDescription& = MaterialDescription());
-  
-  /*! function. createMaterial
-      desc.
-          
-  */
-  Material*  createMaterial(MaterialPrototype*);
   
   /*! function. registerMachine
       desc.

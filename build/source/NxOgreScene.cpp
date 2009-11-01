@@ -171,7 +171,7 @@ Scene::ActorIterator Scene::getActors(void)
  return Scene::ActorIterator(mActors);
 }
 
-Actor* Scene::createActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description)
+Actor* Scene::createActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
  Actor* actor = NxOgre_New(Actor)(shapes, pose, description, this);
  StringHash hash = actor->getNameHash();
@@ -180,7 +180,7 @@ Actor* Scene::createActor(Shapes& shapes, const Matrix44& pose, const RigidBodyD
 }
 
   
-Actor* Scene::createActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description)
+Actor* Scene::createActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
  Actor* actor = NxOgre_New(Actor)(shape, pose, description, this);
  StringHash hash = actor->getNameHash();
@@ -188,7 +188,7 @@ Actor* Scene::createActor(Shape* shape, const Matrix44& pose, const RigidBodyDes
  return actor;
 }
 
-SceneGeometry* Scene::createSceneGeometry(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description)
+SceneGeometry* Scene::createSceneGeometry(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
  SceneGeometry* sg = NxOgre_New(SceneGeometry)(shapes, pose, description, this);
  StringHash hash = sg->getNameHash();
@@ -196,7 +196,7 @@ SceneGeometry* Scene::createSceneGeometry(Shapes& shapes, const Matrix44& pose, 
  return sg;
 }
 
-SceneGeometry* Scene::createSceneGeometry(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description)
+SceneGeometry* Scene::createSceneGeometry(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
  SceneGeometry* sg = NxOgre_New(SceneGeometry)(shape, pose, description, this);
  StringHash hash = sg->getNameHash();
@@ -263,7 +263,7 @@ Material* Scene::getMaterial(const MaterialIdentifier& identifier)
  return mIndexedMaterials.at(identifier);
 }
 
-KinematicActor* Scene::createKinematicActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description)
+KinematicActor* Scene::createKinematicActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
  KinematicActor* ka = NxOgre_New(KinematicActor)(shape, pose, description, this);
  StringHash hash = ka->getNameHash();
@@ -271,7 +271,7 @@ KinematicActor* Scene::createKinematicActor(Shape* shape, const Matrix44& pose, 
  return ka;
 }
 
-KinematicActor* Scene::createKinematicActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description)
+KinematicActor* Scene::createKinematicActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
  KinematicActor* ka = NxOgre_New(KinematicActor)(shapes, pose, description, this);
  StringHash hash = ka->getNameHash();
@@ -287,7 +287,7 @@ KinematicController* Scene::createKinematicController(const Vec3& size, const Ve
  return controller;
 }
 
-Volume* Scene::createVolume(Shape* shape, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
+Volume* Scene::createVolume(const ShapeDescription& shape, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
  Volume* vol = NxOgre_New(Volume)(shape, pose, vct, this, callback);
  StringHash hash = vol->getNameHash();
@@ -295,7 +295,7 @@ Volume* Scene::createVolume(Shape* shape, const Matrix44& pose, Callback* callba
  return vol;
 }
 
-Volume* Scene::createVolume(Shapes& shapes, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
+Volume* Scene::createVolume(const ShapeDescriptions& shapes, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
  Volume* vol = NxOgre_New(Volume)(shapes, pose, vct, this, callback);
  StringHash hash = vol->getNameHash();

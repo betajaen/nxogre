@@ -33,7 +33,7 @@
 
                                                                                        
 
-GLUTBody::GLUTBody(NxOgre::Shape* shape, const NxOgre::Matrix44& globalPose, const GLUTBodyDescription& description, NxOgre::Scene* scene)
+GLUTBody::GLUTBody(const NxOgre::ShapeDescription& shape, const NxOgre::Matrix44& globalPose, const GLUTBodyDescription& description, NxOgre::Scene* scene)
 : Actor(scene) // Take notice of the constructor we are using, it's designed for classes that inherit from Actor.
 {
  

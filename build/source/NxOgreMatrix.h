@@ -190,6 +190,8 @@ class NxOgrePublicClass Matrix44
  
  static const Matrix44 IDENTITY;
  
+ static const Matrix44 UNINITIALISED;
+ 
  protected:
  
  union

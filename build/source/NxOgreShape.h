@@ -41,198 +41,152 @@ namespace NxOgre
 
                                                                                        
 
-/* \brief A shape is a piece of geometry used by itself or with others in an Actor to
-          create a complete "collision model" for itself to physically collide and take
-          actions against that collision.
+/*! class. Shape
+    desc.
+         A shape is a piece of geometry used by itself or with others in an RigidBody to
+         to physically collide with other RigidBodies and take actions against that collision.
 */
 class NxOgrePublicClass Shape : public ShapeAllocatable
 {
+  
   friend class RigidBody;
-  friend class ::NxOgre::Functions::NxShapeFunctions;
+  template<class T> friend inline void Functions::safe_delete(T*);
 
   public:
   
-  /** \brief DO NOT CREATE MANUALLY.
+  /** \brief Get the c++ type of shape (as Classes::_ShapeName)
   */
-                                              Shape(ShapeBlueprint*);
-  
-  /** \brief Shape destructor.
-  */
-  virtual                                    ~Shape(void);
-  
-  /** \brief Resets everything to their default values, and pointers are set to NULL.
-  */
-  virtual             void                    reset(void);
-  
-  /** \brief Is this shape attached to a RigidBody
-  */
-                      bool                    isAttached() const;
-  
-  /** \brief Returns if the variables are in a valid range or not.
-  */
-                      bool                    valid(void);
+  virtual unsigned int  getShapeType() const = 0;
   
   /** \brief Get the shape type based upon the NxShapeType enum.
   */
-  virtual          Enums::ShapeFunctionType   getShapeFunctionType() const;
+  Enums::ShapeFunctionType   getShapeFunctionType() const;
   
-  /** \brief Get the shape blueprint - if it has one, otherwise NULL.
+  /** \brief Get the NxShape (abstract)
   */
-                      ShapeBlueprint*         getBlueprint();
+  NxShape*  getAbstractShape() const;
   
   /** \brief Get the name of the shape
   */
-  virtual             String                  getName() const;
+  StringHash  getNameHash() const;
+  
+  /** \brief Get the name of the shape
+  */
+  String  getName() const;
   
   /** \brief Set the name of the shape
   */
-  virtual             void                    setName(const String&);
-  
+  void  setName(const String&);
   
   /** \brief Get the local pose of the shape
   */
-  virtual             Matrix44                getLocalPose() const;
+  Matrix44  getLocalPose() const;
   
-  /** \brief Set the local pose of the shape
+  /** \brief Set the local pose of the shape when attached.
   */
-  virtual             void                    setLocalPose(const Matrix44&);
-  
+  void  setLocalPose(const Matrix44&);
   
   /** \brief Get the global pose of the shape
   */
-  virtual             Matrix44                getGlobalPose() const;
+  Matrix44  getGlobalPose() const;
   
-  /** \brief Set the global pose of the shape
+  /** \brief Set the global pose of the shape when attached.
   */
-  virtual             void                    setGlobalPose(const Matrix44&);
-   
-
+  void setGlobalPose(const Matrix44&);
+  
   /** \brief Get the flags of the shape
   */
-  virtual             bool                    getFlag(Enums::ShapeFlags) const;
+  bool  getFlag(Enums::ShapeFlags) const;
   
-  /** \brief Set the flags of the shape
+  /** \brief Set the flags of the shape when attached.
   */
-  virtual             void                    setFlag(Enums::ShapeFlags, bool enabled = true);
-  
+   void  setFlag(Enums::ShapeFlags, bool enabled = true);
   
   /** \brief Get the group of the shape
   */
-  virtual             GroupIdentifier         getGroup() const;
+   GroupIdentifier  getGroup() const;
   
-  /** \brief Set the group of the shape
+  /** \brief Set the group of the shape when attached.
   */
-  virtual             void                    setGroup(const GroupIdentifier&);
-  
+  void  setGroup(const GroupIdentifier&);
   
   /** \brief Get the material of the shape
   */
-  virtual             MaterialIdentifier      getMaterial() const;
+  MaterialIdentifier  getMaterial() const;
   
-  /** \brief Set the material of the shape
+  /** \brief Set the material of the shape when attached.
   */
-  virtual             void                    setMaterial(const MaterialIdentifier&);
+  void  setMaterial(const MaterialIdentifier&);
   
 #if 0
   /** \brief Get the skeleton of the shape
   */
-  virtual             Mesh*                   getSkeleton() const;
+               Mesh*                   getSkeleton() const;
   
-  /** \brief Set the skeleton of the shape
+  /** \brief Set the skeleton of the shape when attached.
   */
-  virtual             void                    setSkeleton(Mesh*);
+               void                    setSkeleton(Mesh*);
 #endif
-  /** \brief Get the density of the shape
-      \note  0 is returned when the shape is attached.
-  */
-  virtual             Real                    getDensity() const;
-  
-  /** \brief Set the density of the shape
-      \note  Nothing happens when the shape is attached.
-  */
-  virtual             void                    setDensity(const float&);
-  
-  /** \brief Get the density of the shape
-      \note  0 is returned when the shape is attached.
-  */
-  virtual             Real                    getMass() const;
-  
-  /** \brief Set the density of the shape
-      \note  Nothing happens when the shape is attached.
-  */
-  virtual             void                    setMass(const float&);
   
   /** \brief Get the density of the shape
   */
-  virtual             float                   getSkinWidth() const;
+  float  getSkinWidth() const;
   
-  /** \brief Set the density of the shape
+  /** \brief Set the density of the shape.
   */
-  virtual             void                    setSkinWidth(const float&);
+  void  setSkinWidth(const float&);
   
   /** \brief Get the density of the shape
   */
-  virtual             int4                    getGroupMask() const;
+  GroupsMask  getGroupMask() const;
   
-  /** \brief Set the density of the shape
+  /** \brief Set the density of the shape.
   */
-  virtual             void                    setGroupMask(const int4&);
+  void  setGroupMask(const int4&);
   
   /** \brief Get the interacting compartment types of the shape
   */
-  virtual             int                     getInteractingCompartmentTypes() const;
+  int  getInteractingCompartmentTypes() const;
   
   /** \brief Set the interacting compartment types of the shape
   */
-  virtual             void                    setInteractingCompartmentTypes(const int&);
+  void  setInteractingCompartmentTypes(const int&);
   
-  /** \brief Get the NxShape (abstract)
-  */
-                      NxShape*                getAbstractShape();
-  /** \internal
-  */
-  virtual               void                  assign(NxShape*) {}
-  
-  /** \brief Get the c++ type of shape (as Classes::_ShapeName)
-  */
-  virtual             unsigned int            getShapeType() const = 0;
-
   protected:
   
-  /** \brief Optional name of the Shape
-      \default "", (No name)
+  /* Optional name of the shape.
   */
-                        String          mName;
+  String mName;
   
-  /** \brief
+  /* Optional hash of the name of the shape.
   */
-                        ShapeBlueprint*       mBlueprint;
+  StringHash  mNameHash;
   
-  /** \brief
+  /* Abstract Shape to be used with the non-specific functions
   */
-                        NxShape*              mShape;
+  NxShape*  mShape;
+  
   protected:
   
-  /** \internal
+  /* Inherited class constructor
   */
-                        void                  createAbstract(NxShapeDesc*);
+  Shape(NxShape*);
   
-  /** \internal
+  /* Inherited class constructor
   */
-  virtual               NxShapeDesc*          create() {return 0;}
-
-  /** \internal
+ ~Shape(void);
+  
+  /* Deattach and destroy the NxShape
+     Note: The destructor does not call this, as the destructor of the NxActor would do it anyway.
   */
-  virtual               void                  assignAbstract(NxShape*);
+  void destroy();
   
 }; // class Shape
 
 
                                                                                        
 
-/** \brief A collection of shapes handed to a RigidBody (short term storage).
-*/
-typedef std::vector<Shape*> Shapes;
+typedef std::vector<ShapeDescription> ShapeDescriptions;
 
 /** \brief A collection of shapes that belong to a RigidBody (long term storage).
 */

@@ -46,17 +46,16 @@ KinematicActor::KinematicActor(Scene* scene)
 {
 }
 
-KinematicActor::KinematicActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+KinematicActor::KinematicActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;
  mNameHash = Functions::StringHash(mName);
- mShapes.push_back(shape);
  
  createKinematic(pose, description, scene, shape);
 }
 
-KinematicActor::KinematicActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+KinematicActor::KinematicActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;

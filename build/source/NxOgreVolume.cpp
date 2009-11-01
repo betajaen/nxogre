@@ -51,7 +51,7 @@ Volume::Volume(Scene* scene, Callback* callback)
 {
 }
 
-Volume::Volume(Shape* shape, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
+Volume::Volume(const ShapeDescription& shape, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
 : RigidBody(),
   mScene(scene),
   mVolumeCallback(callback)
@@ -59,7 +59,7 @@ Volume::Volume(Shape* shape, const Matrix44& pose, Enums::VolumeCollisionType ty
  createTrigger(pose, type, scene, shape);
 }
 
-Volume::Volume(Shapes& shapes, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
+Volume::Volume(const ShapeDescriptions& shapes, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
 : RigidBody(),
   mScene(scene),
   mVolumeCallback(callback)

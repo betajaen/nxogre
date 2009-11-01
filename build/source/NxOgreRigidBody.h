@@ -154,10 +154,10 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
            const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
            Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
-           Shape* __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+           const ShapeDescription& __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
       !protected
   */
-  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription& description, Scene* scene, Shape* shape);
+  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape);
   
   /*! function. createDynamic.1
       desc.
@@ -171,7 +171,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
       !protected
   */
-  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, const ShapeDescriptions& shapes);
   
   /*! function. createStatic.0
       desc.
@@ -182,10 +182,10 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
            const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
            Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
-           Shape* __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+           const ShapeDescription& __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
       !protected
   */
-  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, const ShapeDescription& shape);
   
   /*! function. createStatic.1
       desc.
@@ -199,7 +199,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
       !protected
   */
-  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, const ShapeDescriptions& shapes);
 
   /*! function. createKinematic.0
       desc.
@@ -210,10 +210,10 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
            const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
            Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
-           Shape* __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+           const ShapeDescription& __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
       !protected
   */
-  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shape* shape);
+  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, const ShapeDescription& shape);
   
   /*! function. createKinematic.1
       desc.
@@ -227,7 +227,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
       !protected
   */
-  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, Shapes& shapes);
+  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, const ShapeDescriptions& shapes);
   
   /*! function. createTrigger.0
       desc.
@@ -241,7 +241,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
       !protected
   */
-  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shape*);
+  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, const ShapeDescription&);
   
   /*! function. createTrigger.1
       desc.
@@ -255,7 +255,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
       !protected
   */
-  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, Shapes&);
+  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, Scene*, const ShapeDescriptions&);
   
   /*! function. destroy
       desc.

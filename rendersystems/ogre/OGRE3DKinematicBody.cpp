@@ -38,7 +38,7 @@ unsigned int OGRE3DKinematicBody::mNextBodyID = 0;
 
                                                                                        
 
-OGRE3DKinematicBody::OGRE3DKinematicBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, const OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
+OGRE3DKinematicBody::OGRE3DKinematicBody(const NxOgre::ShapeDescription& shape, const NxOgre::Matrix44& pose, const OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
 : KinematicActor(rendersystem->getScene()),
                                    // Take notice of the constructor we are using, it's designed for
                                    // classes that inherit from Actor. 

@@ -85,7 +85,7 @@ class OGRE3DExportClass OGRE3DKinematicBody : public NxOgre::KinematicActor, pub
   
      /** \internal. Use OGRE3DRenderSystem::createBody
      */
-     OGRE3DKinematicBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, const OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
+     OGRE3DKinematicBody(const NxOgre::ShapeDescription&, const NxOgre::Matrix44& pose, const OGRE3DRigidBodyDescription&, OGRE3DRenderSystem*);
      
      /** \internal. Use OGRE3DRenderSystem::destroyBody
      */

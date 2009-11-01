@@ -95,6 +95,14 @@ class NxOgrePublicClass HeightField : public ResourceAllocatable
   */
   NxHeightField*                              getHeightField(void);
 
+  /** \brief
+  */
+  unsigned int getNbRows() const;
+
+  /** \brief
+  */
+  unsigned int getNbColumns() const;
+
  protected:
   
   /** \brief Protected Constructor, for use with ManualHeightField

@@ -48,14 +48,14 @@ SceneGeometry::SceneGeometry(Scene* scene)
 {
 }
 
-SceneGeometry::SceneGeometry(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+SceneGeometry::SceneGeometry(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(),
   mScene(scene)
 {
  createStatic(pose, description, scene, shape);
 }
 
-SceneGeometry::SceneGeometry(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
+SceneGeometry::SceneGeometry(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
 : RigidBody(),
   mScene(scene)
 {
@@ -113,7 +113,7 @@ Quat SceneGeometry::getGlobalOrientationQuat(void) const
 }
 
 
-void SceneGeometry::createShape(Shape*)
+void SceneGeometry::createShape(const ShapeDescription&)
 {
  //< \argh
 }

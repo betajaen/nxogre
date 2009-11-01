@@ -28,7 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCapsule.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
 #include "NxOgreSimple.h"
 
 #include "NxPhysics.h"
@@ -40,11 +40,9 @@ namespace NxOgre
 
                                                                                        
 
-Capsule::Capsule(Real radius, Real height, ShapeBlueprint* blueprint)
-: Shape(blueprint)
+Capsule::Capsule(NxCapsuleShape* shape)
+: Shape(shape), mCapsuleShape(shape)
 {
- mBlueprint->mSize.x = radius;
- mBlueprint->mSize.y = height;
 }
 
 Capsule::~Capsule(void)
@@ -56,23 +54,6 @@ unsigned int Capsule::getShapeType() const
  return Classes::_Capsule;
 }
 
-NxShapeDesc* Capsule::create()
-{
- NxCapsuleShapeDesc* capsule = new NxCapsuleShapeDesc();
- Shape::createAbstract(capsule);
- 
- capsule->radius = mBlueprint->mSize.x;
- capsule->height = mBlueprint->mSize.y;
- 
- return capsule;
-}
-
-void Capsule::assign(NxShape* capsule)
-{
- assignAbstract(capsule);
- mCapsuleShape = capsule->isCapsule();
-}
-
 Enums::ShapeFunctionType Capsule::getShapeFunctionType() const
 {
  return Enums::ShapeFunctionType_Capsule;
@@ -80,63 +61,27 @@ Enums::ShapeFunctionType Capsule::getShapeFunctionType() const
 
 void Capsule::setDimensions(Real radius, Real height)
 {
- if (mCapsuleShape)
- {
-  mCapsuleShape->setDimensions(radius, height);
- }
- else
- {
-  mBlueprint->mSize.x = radius;
-  mBlueprint->mSize.y = height;
- }
+ mCapsuleShape->setDimensions(radius, height);
 }
 
 void Capsule::setRadius(Real radius)
 {
- if (mCapsuleShape)
- {
-  mCapsuleShape->setRadius(radius);
- }
- else
- {
-  mBlueprint->mSize.x = radius;
- }
+ mCapsuleShape->setRadius(radius);
 }
 
 void Capsule::setHeight(Real height)
 {
- if (mCapsuleShape)
- {
-  mCapsuleShape->setHeight(height);
- }
- else
- {
-  mBlueprint->mSize.y = height;
- }
+ mCapsuleShape->setHeight(height);
 }
 
 Real Capsule::getRadius(void) const
 {
- if (mCapsuleShape)
- {
-  return mCapsuleShape->getRadius();
- }
- else
- {
-  return mBlueprint->mSize.x;
- }
+ return mCapsuleShape->getRadius();
 }
 
 Real Capsule::getHeight(void) const
 {
- if (mCapsuleShape)
- {
-  return mCapsuleShape->getHeight();
- }
- else
- {
-  return mBlueprint->mSize.y;
- }
+ return mCapsuleShape->getHeight();
 }
 
 SimpleCapsule Capsule::getWorldCapsule(void)

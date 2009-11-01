@@ -71,7 +71,7 @@ NxOgre::Scene* OGRE3DRenderSystem::getScene(void)
  return mScene;
 }
 
-OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
+OGRE3DBody* OGRE3DRenderSystem::createBody(const NxOgre::ShapeDescription& shape, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
 {
  description.mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(NxOgre::Vec3(pose).as<Ogre::Vector3>(), NxOgre::Quat(pose).as<Ogre::Quaternion>());
  if (meshName.length())
@@ -85,7 +85,7 @@ OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shape* shape, const NxOgre::M
 }
 
 
-OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shapes& shapes, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
+OGRE3DBody* OGRE3DRenderSystem::createBody(const NxOgre::ShapeDescriptions& shapes, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
 {
  description.mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(NxOgre::Vec3(pose).as<Ogre::Vector3>(), NxOgre::Quat(pose).as<Ogre::Quaternion>());
  if (meshName.length())
@@ -98,7 +98,7 @@ OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shapes& shapes, const NxOgre:
  return body;
 }
 
-OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description)
+OGRE3DBody* OGRE3DRenderSystem::createBody(const NxOgre::ShapeDescription& shape, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description)
 {
 
  OGRE3DBody* body = NxOgre_New(OGRE3DBody)(shape, pose, description, this);
@@ -108,7 +108,7 @@ OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shape* shape, const NxOgre::M
 }
 
 
-OGRE3DBody* OGRE3DRenderSystem::createBody(NxOgre::Shapes& shapes, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description)
+OGRE3DBody* OGRE3DRenderSystem::createBody(const NxOgre::ShapeDescriptions& shapes, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description)
 {
 
  OGRE3DBody* body = NxOgre_New(OGRE3DBody)(shapes, pose, description, this);
@@ -146,7 +146,7 @@ void OGRE3DRenderSystem::destroyRenderable(OGRE3DRenderable* renderable)
  NxOgre_Delete(renderable);
 }
 
-OGRE3DKinematicBody* OGRE3DRenderSystem::createKinematicBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
+OGRE3DKinematicBody* OGRE3DRenderSystem::createKinematicBody(const NxOgre::ShapeDescription& shape, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& description)
 {
  description.mNode = mSceneManager->getRootSceneNode()->createChildSceneNode(NxOgre::Vec3(pose).as<Ogre::Vector3>(), NxOgre::Quat(pose).as<Ogre::Quaternion>());
  if (meshName.length())

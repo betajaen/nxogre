@@ -29,7 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreConvex.h"
 #include "NxOgreMesh.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
 
 #include "NxPhysics.h"
 
@@ -40,10 +40,9 @@ namespace NxOgre
 
                                                                                        
 
-Convex::Convex(Mesh* mesh, ShapeBlueprint* blueprint)
-: Shape(blueprint)
+Convex::Convex(NxConvexShape* shape, Mesh* mesh)
+: Shape(shape), mMesh(mesh)
 {
- mBlueprint->mMesh = mesh;
 }
 
 Convex::~Convex(void)
@@ -55,35 +54,16 @@ unsigned int Convex::getShapeType() const
  return Classes::_Convex;
 }
 
-Mesh* Convex::getMesh(void)
-{
- if (mBlueprint)
-  return mBlueprint->mMesh;
- return mMesh;
-}
-
-NxShapeDesc* Convex::create()
-{
- NxConvexShapeDesc* convex = new NxConvexShapeDesc();
- Shape::createAbstract(convex);
- 
- convex->meshData = mBlueprint->mMesh->getAsConvex();
- convex->meshFlags = mBlueprint->mMeshFlags;
- 
- return convex;
-}
-
-void Convex::assign(NxShape* convex)
-{
- assignAbstract(convex);
- mMesh = mBlueprint->mMesh;
- mConvexShape = convex->isConvexMesh();
-}
-
 Enums::ShapeFunctionType Convex::getShapeFunctionType() const
 {
  return Enums::ShapeFunctionType_Convex;
 }
+
+Mesh* Convex::getMesh(void)
+{
+ return mMesh;
+}
+
 
                                                                                        
 

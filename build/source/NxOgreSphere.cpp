@@ -28,7 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreSphere.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
 #include "NxPhysics.h"
 
                                                                                        
@@ -38,10 +38,9 @@ namespace NxOgre
 
                                                                                        
 
-Sphere::Sphere(Real radius, ShapeBlueprint* blueprint)
-: Shape(blueprint)
+Sphere::Sphere(NxSphereShape* shape)
+: Shape(shape), mSphereShape(shape)
 {
- mBlueprint->mSize.x = radius;
 }
 
 Sphere::~Sphere(void)
@@ -53,24 +52,19 @@ unsigned int Sphere::getShapeType() const
  return Classes::_Sphere;
 }
 
-NxShapeDesc* Sphere::create(void)
-{
- NxSphereShapeDesc* sphere = new NxSphereShapeDesc();
- createAbstract(sphere);
-
- sphere->radius = mBlueprint->mSize.x;
- return sphere;
-}
-
-void Sphere::assign(NxShape* sphere)
-{
- assignAbstract(sphere);
- mSphereShape = sphere->isSphere();
-}
-
 Enums::ShapeFunctionType Sphere::getShapeFunctionType() const
 {
  return Enums::ShapeFunctionType_Sphere;
+}
+
+void Sphere::setRadius(Real radius)
+{
+ mSphereShape->setRadius(radius);
+}
+
+Real Sphere::getRadius() const
+{
+ return mSphereShape->getRadius();
 }
 
                                                                                        

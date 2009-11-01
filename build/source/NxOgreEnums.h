@@ -1602,6 +1602,13 @@ enum FluidEmitterType
 };
 
 
+enum MeshPagingMode
+{
+ MeshPagingMode_Manual,
+ MeshPagingMode_Fallback,
+ MeshPagingMode_Auto,
+};
+
 } // namespace Enums
 
                                                                                        

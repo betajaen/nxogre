@@ -124,11 +124,11 @@ class NxOgrePublicClass Volume : public RigidBody
   
   /** \internal Use Scene::createVolume
   */
-                                                             Volume(Shape*, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
+                                                             Volume(const ShapeDescription&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
   
-  /** \internal Use Scene::createActor
+  /** \internal Use Scene::createVolume
   */
-                                                             Volume(Shapes&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
+                                                             Volume(const ShapeDescriptions&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
   
   /** \internal Use Scene::destroyVolume
   */
@@ -141,7 +141,7 @@ class NxOgrePublicClass Volume : public RigidBody
   */
                        Scene*                mScene;
   
-                       Shapes                mShapes;
+                       CollisionModel        mShapes;
   
                        Callback*             mVolumeCallback;
   

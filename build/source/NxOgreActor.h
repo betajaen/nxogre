@@ -771,11 +771,11 @@ class NxOgrePublicClass Actor : public RigidBody
   
   /** \internal Use Scene::createActor
   */
-  Actor(Shape*, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  Actor(const ShapeDescription&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::createActor
   */
-  Actor(Shapes&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  Actor(const ShapeDescriptions&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
   
   /** \internal Use Scene::destroyActor
   */

@@ -38,7 +38,7 @@ unsigned int OGRE3DBody::mNextBodyID = 0;
 
                                                                                        
 
-OGRE3DBody::OGRE3DBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
+OGRE3DBody::OGRE3DBody(const NxOgre::ShapeDescription& shape, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
 : Actor(rendersystem->getScene()), // Take notice of the constructor we are using, it's designed for
                                    // classes that inherit from Actor. 
  mSceneNodeDestructorBehaviour(description.mSceneNodeDestructorBehaviour),
@@ -58,7 +58,7 @@ OGRE3DBody::OGRE3DBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, OGRE3
  NxOgre::TimeController::getSingleton()->addTimeListener(this, mRenderPriority);
 }
 
-OGRE3DBody::OGRE3DBody(NxOgre::Shapes& shapes, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
+OGRE3DBody::OGRE3DBody(const NxOgre::ShapeDescriptions& shapes, const NxOgre::Matrix44& pose, OGRE3DRigidBodyDescription& description, OGRE3DRenderSystem* rendersystem)
 : Actor(rendersystem->getScene()), // Take notice of the constructor we are using, it's designed for
                                    // classes that inherit from Actor. 
  mSceneNodeDestructorBehaviour(description.mSceneNodeDestructorBehaviour),

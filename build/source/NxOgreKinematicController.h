@@ -100,7 +100,7 @@ class NxOgrePublicClass KinematicController : public RigidBody
   
   /** \brief
   */
-                    Shapes                    mShapes;
+                    CollisionModel            mShapes;
 
   /** \brief Max Iterations per move.
       \default 10

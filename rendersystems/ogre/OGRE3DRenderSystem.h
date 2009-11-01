@@ -67,19 +67,19 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::UserBigClassAllocata
      
      /** \brief Create a Body.
      */
-     OGRE3DBody*                          createBody(NxOgre::Shape*, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
+     OGRE3DBody*                          createBody(const NxOgre::ShapeDescription&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Create a Body.
      */
-     OGRE3DBody*                          createBody(NxOgre::Shapes&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
+     OGRE3DBody*                          createBody(const NxOgre::ShapeDescriptions&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Create a Body; alternate helper function, Which creates the SceneNode and Entity "meshName" for you.
      */
-     OGRE3DBody*                          createBody(NxOgre::Shape*, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, const Ogre::String& meshName = Ogre::StringUtil::BLANK, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
+     OGRE3DBody*                          createBody(const NxOgre::ShapeDescription&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, const Ogre::String& meshName = Ogre::StringUtil::BLANK, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Create a Body; alternate helper function, Which creates the SceneNode and Entity "meshName" for you.
      */
-     OGRE3DBody*                          createBody(NxOgre::Shapes&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, const Ogre::String& meshName = Ogre::StringUtil::BLANK, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
+     OGRE3DBody*                          createBody(const NxOgre::ShapeDescriptions&, const NxOgre::Matrix44& = NxOgre::Matrix44::IDENTITY, const Ogre::String& meshName = Ogre::StringUtil::BLANK, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Destroy a Body.
      */
@@ -111,7 +111,7 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::UserBigClassAllocata
      
      /** \brief Create a KinematicBody, a KinematicActor as a Body.
      */
-     OGRE3DKinematicBody*                 createKinematicBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
+     OGRE3DKinematicBody*                 createKinematicBody(const NxOgre::ShapeDescription&, const NxOgre::Matrix44& pose, const Ogre::String& meshName, OGRE3DRigidBodyDescription& = OGRE3DRigidBodyDescription());
      
      /** \brief Destroy a KinematicBody.
      */

@@ -63,7 +63,7 @@ class GLUTExportClass GLUTBody : public NxOgre::Actor
   
      /** \internal. Use GLUTRenderSystem::createBody
      */
-     GLUTBody(NxOgre::Shape*, const NxOgre::Matrix44& globalPose, const GLUTBodyDescription&, NxOgre::Scene*);
+     GLUTBody(const NxOgre::ShapeDescription&, const NxOgre::Matrix44& globalPose, const GLUTBodyDescription&, NxOgre::Scene*);
   
      /** \internal. Use GLUTRenderSystem::destroyBody
      */

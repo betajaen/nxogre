@@ -427,6 +427,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreBoxDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBoxDescription.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreBuffer.h"
 			>
 		</File>
@@ -444,6 +452,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreCapsule.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCapsuleDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCapsuleDescription.h"
 			>
 		</File>
 		<File
@@ -508,6 +524,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreConvex.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreConvexDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreConvexDescription.h"
 			>
 		</File>
 		<File
@@ -623,11 +647,27 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreForceField.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldDescription.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreFunctions.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\source\NxOgreFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreGroupsMask.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreGroupsMask.h"
 			>
 		</File>
 		<File
@@ -647,11 +687,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreHeightFieldGeometryBlueprint.cpp"
+			RelativePath="..\source\NxOgreHeightFieldGeometryDescription.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreHeightFieldGeometryBlueprint.h"
+			RelativePath="..\source\NxOgreHeightFieldGeometryDescription.h"
 			>
 		</File>
 		<File
@@ -1007,6 +1047,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgrePlaneGeometryDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePlaneGeometryDescription.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgrePointerClass.h"
 			>
 		</File>
@@ -1199,11 +1247,19 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreShapeBlueprint.cpp"
+			RelativePath="..\source\NxOgreShapeDescription.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreShapeBlueprint.h"
+			RelativePath="..\source\NxOgreShapeDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShapeFunctions.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShapeFunctions.h"
 			>
 		</File>
 		<File
@@ -1244,6 +1300,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreSphere.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphereDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphereDescription.h"
 			>
 		</File>
 		<File
@@ -1403,6 +1467,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreTriangleGeometryDescription.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreTuple.h"
 			>
 		</File>
@@ -1479,11 +1547,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreWheelBlueprint.cpp"
+			RelativePath="..\source\NxOgreWheelDescription.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreWheelBlueprint.h"
+			RelativePath="..\source\NxOgreWheelDescription.h"
 			>
 		</File>
 		<File

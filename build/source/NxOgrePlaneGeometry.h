@@ -36,6 +36,7 @@
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreShape.h"
+#include "NxOgreShapeFunctions.h"
 
                                                                                        
 
@@ -49,37 +50,38 @@ namespace NxOgre
 class NxOgrePublicClass PlaneGeometry : public Shape
 {
   
-  friend class RigidBodyPrototype;
+  friend class RigidBody;  // for destroy();
+  friend Shape* Functions::ShapeFunctions::createPlane(NxShape*); // for new
+  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
   
   public: // Functions
   
-  /** \brief PlaneGeometry
+  /*! function. getShapeFunctionType
+      desc.
+           Get the shape type based upon the Classes::ShapeFunctionType enum.
+      return.
+           **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
   */
-                                              PlaneGeometry(Real distance, Vec3 normal);
+  Enums::ShapeFunctionType       getShapeFunctionType() const;
   
-  /** \brief PlaneGeometry
-  */
-                                             ~PlaneGeometry(void);
-
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */
-               Enums::ShapeFunctionType       getShapeFunctionType() const;
-  
   unsigned int getShapeType() const;
   
   protected:
   
-  /** \internal DO NOT USE.
+  /* constructor. PlaneGeometry
   */
-                      NxShapeDesc*            create();
+  PlaneGeometry(NxPlaneShape*);
   
-  /** \internal DO NOT USE.
+  /* destructor. PlaneGeometry
   */
-                      void                    assign(NxShape*);
+ ~PlaneGeometry(void);
   
   /** \internal
   */
-                      NxPlaneShape*           mPlaneShape;
+  NxPlaneShape*           mPlaneShape;
+
 }; // class PlaneGeometry
 
                                                                                        

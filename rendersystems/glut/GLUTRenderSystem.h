@@ -53,7 +53,7 @@ class GLUTExportClass GLUTRenderSystem : public NxOgre::UserBigClassAllocator
 
      /** \brief
      */
-     GLUTBody*                            createGLUTBody(NxOgre::Shape*, const NxOgre::Matrix44& pose, NxOgre::Scene*, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
+     GLUTBody*                            createGLUTBody(const NxOgre::ShapeDescription&, const NxOgre::Matrix44& pose, NxOgre::Scene*, const NxOgre::RigidBodyDescription& = NxOgre::RigidBodyDescription());
      
      /** \brief
      */

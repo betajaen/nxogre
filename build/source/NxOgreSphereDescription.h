@@ -26,13 +26,14 @@
 
                                                                                        
 
-#ifndef NXOGRE_SHAPEBLUEPRINT_H
-#define NXOGRE_SHAPEBLUEPRINT_H
+#ifndef NXOGRE_SPHEREDESCRIPTION_H
+#define NXOGRE_SPHEREDESCRIPTION_H
 
                                                                                        
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreShapeDescription.h"
 
                                                                                        
 
@@ -41,80 +42,47 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A ShapeBlueprint is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+/** \brief A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
 */
-class NxOgrePublicClass ShapeBlueprint : public GenericBasedAllocatable
+class NxOgrePublicClass SphereDescription : public ShapeDescription
 {
   
   public:
   
-  /** \brief Constructor, and resets the member variables to their default values according to the PhysX SDK.
+  /*! constructor. BoxDescription
+      desc.
+       Constructor, and resets the member variables to their default values according to the PhysX SDK.
   */
-                                              ShapeBlueprint();
+  SphereDescription(Real radius = 0.5, const MaterialIdentifier& material = 0, const Matrix44& local_pose = Matrix44::IDENTITY);
+
+  /*! destructor.
+      desc.
+          Required destructor
+  */
+  ~SphereDescription();
   
-  /** \brief Required destructor
+  /*! function. createShapeDescription
+      desc.
+          Create NxBoxShapeDesc to be attached to an RigidBody.
+          This is an internal function and shouldn't be used in the User's app.
+      note.
+         Pointer is owned by the class/function calling it, and should be deleted when no longer used.
   */
-  virtual                                    ~ShapeBlueprint();
+  NxShapeDesc*  createShapeDescription() const;
+
+  /*! function. reset
+      desc.
+          Resets the member variables to their default values according to the PhysX SDK.
+  */
+  void reset();
   
+  /*! variable. mRadius
+      desc.
+          Radius of the sphere, in metres.
+  */
+  Real mRadius;
   
-  /** \brief Resets the member variables to their default values according to the PhysX SDK.
-  */
-  virtual               void                  reset();
-
-  /** \brief
-  */
-                        Matrix44              mLocalPose;
-
-  /** \brief
-  */
-                        unsigned int          mFlags;
-
-  /** \brief
-  */
-                        GroupIdentifier       mGroup;
-
-  /** \brief
-  */
-                        MaterialIdentifier    mMaterial;
-
-  /** \brief
-  */
-                        Mesh*                 mSkeleton;
-
-  /** \brief
-  */
-                        Real                  mDensity;
-
-  /** \brief
-  */
-                        Real                  mMass;
-
-  /** \brief
-  */
-                        Real                  mSkinWidth;
-  
-  /** \brief
-  */
-                        int4                  mGroupsMask;
-  
-  /** \brief
-  */
-                        unsigned int          mShapesCompartmentTypes;
-  
-  /** \brief Size or Scale of the Shape.
-  */
-                        Vec4                  mSize;
-  
-  /** \brief TriangleGeometry mesh flags
-      \see  NxOgre::Enums::MeshFlags
-  */
-                       unsigned int           mMeshFlags;
-
-  /** \brief Convex or Triangle Mesh.
-  */
-                        Mesh*                 mMesh;
-  
-}; // class ShapeBlueprint
+}; // class BoxDescription
 
                                                                                        
 

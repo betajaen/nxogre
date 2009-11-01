@@ -36,7 +36,8 @@
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreShape.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
+#include "NxOgreShapeFunctions.h"
 
                                                                                        
 
@@ -50,27 +51,21 @@ namespace NxOgre
 class NxOgrePublicClass TriangleGeometry : public Shape
 {
   
-  friend class RigidBodyPrototype;
+  friend class RigidBody;  // for destroy();
+  friend Shape* Functions::ShapeFunctions::createTriangleMesh(NxShape*); // for new
+  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
   
   public: // Functions
   
-  /** \brief TriangleGeometry
-  */
-                                              TriangleGeometry(Mesh*, ShapeBlueprint* blueprint = new ShapeBlueprint());
-  
-  /** \brief TriangleGeometry
-  */
-                                             ~TriangleGeometry(void);
-
   unsigned int getShapeType() const;
 
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */
-                   Enums::ShapeFunctionType   getShapeFunctionType(void) const;
+  Enums::ShapeFunctionType  getShapeFunctionType(void) const;
   
   /** \brief Get the triangle mesh.
   */
-                      Mesh*                   getTriangleMesh(void);
+  Mesh*  getTriangleMesh(void);
   
   /** \brief   Get a triangle based upon the triangleIndex.
       \params  Triangle; Triangle that was found
@@ -79,7 +74,7 @@ class NxOgrePublicClass TriangleGeometry : public Shape
       \params  worldSpaceTranslation; If the triangle should be translated to world space.
       \params  worldSpaceTranslation; If the triangle should be rotated to world space.
   */
-                           void               getTriangle(Triangle& triangle, unsigned int* flags, Index triangleIndex, bool worldSpaceTranslation = true, bool worldSpaceRotation = true );
+  void  getTriangle(Triangle& triangle, unsigned int* flags, Index triangleIndex, bool worldSpaceTranslation = true, bool worldSpaceRotation = true );
 
   /** \brief   Get a triangle based upon the triangleIndex.
       \params  triangle; World space triangle points.
@@ -89,7 +84,7 @@ class NxOgrePublicClass TriangleGeometry : public Shape
       \params  worldSpaceTranslation; If the triangle should be translated to world space.
       \params  worldSpaceTranslation; If the triangle should be rotated to world space.
   */
-                           void               getTriangle(Triangle& triangle, Triangle& edge, unsigned int* flags, Index triangleIndex, bool worldSpaceTranslation = true, bool worldSpaceRotation = true );
+  void  getTriangle(Triangle& triangle, Triangle& edge, unsigned int* flags, Index triangleIndex, bool worldSpaceTranslation = true, bool worldSpaceRotation = true );
 
   /** \brief Finds triangles touching the input bounds.
       \params bounds The Bounds to test against.
@@ -97,47 +92,45 @@ class NxOgrePublicClass TriangleGeometry : public Shape
       \params callback Used if the triangles overlay the AABB.
       \return True if there is an overlap, or is the shape has not been attached yet.
   */
-                           bool               overlapAAABTriangles(const Bounds3& bounds, unsigned int queryFlags, EntityReport<Index>* callback) const;
+  bool  overlapAAABTriangles(const Bounds3& bounds, unsigned int queryFlags, EntityReport<Index>* callback) const;
 
   /** \brief Send a page to the PhysX processor.
       \see NxTriangleMeshShape::mapPageInstance
       \param pageIndex the index of the page to map.
       \return False is there are insufficent resources available, or if the mesh is run in software mode, or is the shape has not been attached yet.
   */
-                           bool               mapPageInstance(unsigned int pageIndex);
+  bool  mapPageInstance(unsigned int pageIndex);
 
   /** \brief Release a page instance from the PhysX processor.
       \see NxTriangleMeshShape::unmapPageInstance
       \param pageIndex Index to unmap.
      \return False if the page index isn't mapped, or the mesh is in software mode, or is the shape has not been attached yet.
   */
-                           void               unmapPageInstance(unsigned int pageIndex);
+  void  unmapPageInstance(unsigned int pageIndex);
 
   /** \brief If a page instance is present from the PhysX processor.
       \see NxTriangleMeshShape::isPageInstanceMapped
       \param Page index to be queried.
       \return False if the page index isn't mapped, or the mesh is in software mode, or is the shape has not been attached yet.
   */
-                           bool               isPageInstanceMapped(unsigned int pageIndex) const;
+  bool  isPageInstanceMapped(unsigned int pageIndex) const;
 
+  protected:
 
-
+  /** \brief TriangleGeometry
+  */
+  TriangleGeometry(NxTriangleMeshShape*, Mesh*);
+  
+  /** \brief TriangleGeometry
+  */
+ ~TriangleGeometry(void);
+  
   protected:
   
-  /** \internal DO NOT USE.
-  */
-                      NxShapeDesc*            create(void);
-
-  /** \internal DO NOT USE.
-  */
-                      void                    assign(NxShape*);
-
-  protected:
-
-                      NxTriangleMeshShape*    mTriangleMeshShape;
-
-                      Mesh*                   mMesh;
-
+  NxTriangleMeshShape*    mTriangleMeshShape;
+  
+  Mesh*                   mMesh;
+  
 }; // class TriangleGeometry
 
                                                                                        

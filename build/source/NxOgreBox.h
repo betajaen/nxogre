@@ -36,7 +36,8 @@
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreShape.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
+#include "NxOgreShapeFunctions.h"
 
                                                                                        
 
@@ -55,54 +56,12 @@ namespace NxOgre
 class NxOgrePublicClass Box : public Shape
 {
   
-  friend class RigidBodyPrototype;
+  friend class RigidBody;  // for destroy();
+  friend Shape* Functions::ShapeFunctions::createBox(NxShape*); // for new
+  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
   
   public: // Functions
   
-  /*! constructor. Box
-      desc.
-           Box constructor with width, height, depth size argument as a Vec3.
-      note.
-           The Box class's dimensions are full diameter of the box, and not the radius as it is in PhysX.
-      args.
-           const Vec3& __dimensions__ -- Dimensions of the Box.
-           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
-  */
-  Box(const Vec3& dimensions, ShapeBlueprint* blueprint = new ShapeBlueprint());
-  
-  /*! constructor. Box
-      desc.
-           Box constructor with width, height, depth size argument as seperate Real components
-      note.
-           The Box class's dimensions are full diameter of the box, and not the radius as it is in PhysX.
-      args.
-           Real __x__ -- X/Width dimension of the Box.
-           Real __y__ -- Y/Height dimension of the Box.
-           Real __z__ -- Z/Depth dimension of the Box.
-           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
-  */
-  Box(Real w, Real h, Real d, ShapeBlueprint* blueprint = new ShapeBlueprint());
-  
-  /*! constructor. Box
-      desc.
-           Box constructor with width, height, depth size argument as a single Real component.
-      note.
-           The Box class's dimensions are full diameter of the box, and not the radius as it is in PhysX.
-      args.
-           Real __whd__ -- Width, Height and Depth size of the Box.
-           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
-  */
-  Box(Real whd, ShapeBlueprint* blueprint = new ShapeBlueprint());
-  
-  
-  /*! destructor. Box
-      desc.
-           As with all Shapes, deleting the Box should be left to the class that is responsible for it.
-      note.
-           Deleting the Box whilst it is attached to a RigidBody will probably cause a nasty crash.
-  */
- ~Box(void);
-
   unsigned int getShapeType() const;
 
   /*! function. getShapeFunctionType
@@ -111,7 +70,7 @@ class NxOgrePublicClass Box : public Shape
       return.
            **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
   */
-  Enums::ShapeFunctionType            getShapeFunctionType() const;
+  Enums::ShapeFunctionType  getShapeFunctionType() const;
   
   /*! function. getSize
       desc.
@@ -119,7 +78,7 @@ class NxOgrePublicClass Box : public Shape
       return.
            **Vec3** -- The size of the box.
   */
-  Vec3                    getSize() const;
+  Vec3  getSize() const;
   
   /*! function. setSize
       desc.
@@ -127,7 +86,7 @@ class NxOgrePublicClass Box : public Shape
       args.
            const Vec3& __size__ -- New size of the box.
   */
-  void                    setSize(const Vec3& size);
+  void  setSize(const Vec3& size);
   
 
   /*! function. setSize
@@ -138,30 +97,30 @@ class NxOgrePublicClass Box : public Shape
            Real __h__ -- New height of the box.
            Real __d__ -- New depth of the box.
   */
-  void                    setSize(Real w, Real h, Real d);
+  void  setSize(Real w, Real h, Real d);
 
   /*! function. getWorldOBB
       desc.
            Get the box represented as world space OBB.
-      note.
-           This function only works when the box is attached.
       return. **SimpleBox** -- World space OBB when attached or SimpleBox with default values.
   */
-                      SimpleBox               getWorldOBB(void);
+  SimpleBox  getWorldOBB(void);
   
   protected:
   
-  /* Create a NxShapeDesc (NxBoxDesc) of the current Box's configuration.
+  /* constructor. Box
   */
-                      NxShapeDesc*            create();
+  Box(NxBoxShape*);
   
-  /* Set the box to a NxShape
+  /* destructor. Box
   */
-                      void                    assign(NxShape*);
+ ~Box(void);
   
   protected:
   
-                      NxBoxShape*             mBoxShape;
+  /* A more specific version of the shape is kept to reduce the amount of casting required.
+  */
+  NxBoxShape*  mBoxShape;
   
 }; // class Box
 

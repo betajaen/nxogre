@@ -28,7 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgrePlaneGeometry.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
 #include "NxPhysics.h"
 
                                                                                        
@@ -38,13 +38,9 @@ namespace NxOgre
 
                                                                                        
 
-PlaneGeometry::PlaneGeometry(Real distance, Vec3 normal)
-: Shape(new ShapeBlueprint())
+PlaneGeometry::PlaneGeometry(NxPlaneShape* plane_shape)
+: Shape(plane_shape), mPlaneShape(plane_shape)
 {
- mBlueprint->mSize.w = distance;
- mBlueprint->mSize.x = normal.x;
- mBlueprint->mSize.y = normal.y;
- mBlueprint->mSize.z = normal.z;
 }
 
 PlaneGeometry::~PlaneGeometry(void)
@@ -54,26 +50,6 @@ PlaneGeometry::~PlaneGeometry(void)
 unsigned int PlaneGeometry::getShapeType() const
 {
  return Classes::_PlaneGeometry;
-}
-
-NxShapeDesc* PlaneGeometry::create()
-{
- NxPlaneShapeDesc* plane = new NxPlaneShapeDesc();
- 
- createAbstract(plane);
- 
- plane->d = mBlueprint->mSize.w;
- plane->normal.x = mBlueprint->mSize.x;
- plane->normal.y = mBlueprint->mSize.y;
- plane->normal.z = mBlueprint->mSize.z;
- 
- return plane;
-}
-
-void PlaneGeometry::assign(NxShape* plane)
-{
- assignAbstract(plane);
- mPlaneShape = plane->isPlane();
 }
 
 Enums::ShapeFunctionType PlaneGeometry::getShapeFunctionType() const

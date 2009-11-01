@@ -44,7 +44,7 @@ GLUTRenderSystem::~GLUTRenderSystem(void)
  mBodies.clear();
 }
 
-GLUTBody* GLUTRenderSystem::createGLUTBody(NxOgre::Shape* shape, const NxOgre::Matrix44& pose, NxOgre::Scene* scene, const NxOgre::RigidBodyDescription& description)
+GLUTBody* GLUTRenderSystem::createGLUTBody(const NxOgre::ShapeDescription& shape, const NxOgre::Matrix44& pose, NxOgre::Scene* scene, const NxOgre::RigidBodyDescription& description)
 {
  
  GLUTBodyDescription glut_description;

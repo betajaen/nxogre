@@ -36,7 +36,8 @@
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreShape.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
+#include "NxOgreShapeFunctions.h"
 
                                                                                        
 
@@ -56,28 +57,13 @@ namespace NxOgre
 class NxOgrePublicClass Convex : public Shape
 {
   
-  friend class RigidBodyPrototype;
+  friend class RigidBody;  // for destroy();
+  friend Shape* Functions::ShapeFunctions::createConvex(NxShape*); // for new
+  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
   
   public: // Functions
 
-  /*! constructor. Convex
-      desc.
-           Box constructor with a Mesh*
-      args.
-           Mesh* __mesh__ -- Convex Mesh to use.
-           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
-  */
-                                              Convex(Mesh*, ShapeBlueprint* box_blueprint = new ShapeBlueprint());
-  
-  /*! destructor. Convex
-      desc.
-           As with all Shapes, deleting the Convex should be left to the class that is responsible for it.
-      note.
-           Deleting the Convex whilst it is attached to a RigidBody will probably cause a nasty crash.
-  */
-                                             ~Convex(void);
-
-  unsigned int getShapeType() const;
+  unsigned int  getShapeType() const;
 
   /*! function. getShapeFunctionType
       desc.
@@ -85,7 +71,7 @@ class NxOgrePublicClass Convex : public Shape
       return.
            **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
   */
-                   Enums::ShapeFunctionType   getShapeFunctionType() const;
+  Enums::ShapeFunctionType  getShapeFunctionType() const;
   
   /*! function. getMesh
       desc.
@@ -95,23 +81,23 @@ class NxOgrePublicClass Convex : public Shape
       return.
            **Mesh** * -- The mesh shared by the Convex.
   */
-                      Mesh*                   getMesh(void);
+  Mesh*  getMesh(void);
   
   protected:
   
-  /* Create a NxShapeDesc (NxConvexDesc) of the current Box's configuration.
+  /*
   */
-                      NxShapeDesc*            create();
+  Convex(NxConvexShape*, Mesh*);
   
-  /* Set the convex to a NxShape
+  /*
   */
-                      void                    assign(NxShape*);
+ ~Convex(void);
   
   protected:
   
-                      NxConvexShape*          mConvexShape;
+  NxConvexShape*  mConvexShape;
   
-                      Mesh*                   mMesh;
+  Mesh*  mMesh;
   
 }; // class Convex
 

@@ -28,7 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreBox.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreSimple.h"
 
@@ -41,22 +41,9 @@ namespace NxOgre
 
                                                                                        
 
-Box::Box(Real whd_dimensions, ShapeBlueprint* blueprint)
-: Shape(blueprint)
+Box::Box(NxBoxShape* box_shape)
+: Shape(box_shape), mBoxShape(box_shape)
 {
- mBlueprint->mSize.set(0, whd_dimensions, whd_dimensions, whd_dimensions);
-}
-
-Box::Box(Real w, Real h, Real d, ShapeBlueprint* blueprint)
-: Shape(blueprint)
-{
- mBlueprint->mSize.set(0,w,h,d);
-}
-
-Box::Box(const Vec3& r, ShapeBlueprint* blueprint)
-: Shape(blueprint)
-{
- mBlueprint->mSize.set(0, r.x, r.y, r.z);
 }
 
 Box::~Box(void)
@@ -68,22 +55,6 @@ unsigned int Box::getShapeType() const
  return Classes::_Box;
 }
 
-NxShapeDesc* Box::create()
-{
- NxBoxShapeDesc* box = NxOgre_New(NxBoxShapeDesc)();
- Shape::createAbstract(box);
- 
- box->dimensions.set(mBlueprint->mSize.x * 0.5, mBlueprint->mSize.y * 0.5, mBlueprint->mSize.z * 0.5);
-
- return box;
-}
-
-void Box::assign(NxShape* box)
-{
- assignAbstract(box);
- mBoxShape = box->isBox();
-}
-
 Enums::ShapeFunctionType Box::getShapeFunctionType() const
 {
  return Enums::ShapeFunctionType_Box;
@@ -91,38 +62,17 @@ Enums::ShapeFunctionType Box::getShapeFunctionType() const
 
 Vec3 Box::getSize() const
 {
- if (mBoxShape)
- {
-  return Vec3(mBoxShape->getDimensions() * 2);
- }
- else
- {
-  return Vec3(mBlueprint->mSize.x, mBlueprint->mSize.y, mBlueprint->mSize.z);
- }
+ return Vec3(mBoxShape->getDimensions() * 2);
 }
 
 void Box::setSize(const Vec3& vec)
 {
- if (mBoxShape)
-  mBoxShape->setDimensions((vec * 0.5f).as<NxVec3>());
- else
- {
-  mBlueprint->mSize.x = vec.x;
-  mBlueprint->mSize.y = vec.y;
-  mBlueprint->mSize.z = vec.z;
- }
+ mBoxShape->setDimensions((vec * 0.5f).as<NxVec3>());
 }
 
 void Box::setSize(Real w, Real h, Real d)
 {
- if (mBoxShape)
-  mBoxShape->setDimensions(NxVec3(w * 0.5, h * 0.5, d * 0.5));
- else
- {
-  mBlueprint->mSize.x = w;
-  mBlueprint->mSize.y = h;
-  mBlueprint->mSize.z = d;
- }
+ mBoxShape->setDimensions(NxVec3(w * 0.5, h * 0.5, d * 0.5));
 }
 
 SimpleBox Box::getWorldOBB(void)

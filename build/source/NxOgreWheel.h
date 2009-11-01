@@ -36,6 +36,7 @@
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreShape.h"
+#include "NxOgreShapeFunctions.h"
 
                                                                                        
 
@@ -49,31 +50,19 @@ namespace NxOgre
 class NxOgrePublicClass Wheel : public Shape
 {
   
-  friend class RigidBodyPrototype;
+  friend class RigidBody;  // for destroy();
+  friend Shape* Functions::ShapeFunctions::createWheel(NxShape*); // for new
+  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
   
   public: // Functions
   
   
-  /** \brief Wheel constructor with width, height, depth size argument as a Vec3.
-      \note  The Wheel class's dimensions are full diameter of the box, and not the radius
-             as it is in PhysX.
-  */
-                                              Wheel(WheelBlueprint*);
-  
   unsigned int getShapeType() const;
-  /** \brief Wheel destructor. 
-      \warning Deleting the Wheel whilst it is attached to a RigidBody will probably cause a nasty crash.
-  */
-                                             ~Wheel(void);
+
 
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */
           Enums::ShapeFunctionType            getShapeFunctionType() const;
-  
-  /** \brief Default blueprint for shapes.
-  */
-  static              WheelBlueprint          DefaultWheelBlueprint;
-  
   
   /** \brief Sets the radius (distance from axle to contact surface) of the wheel.
       \note  Does not wake up the RigidBody.
@@ -201,15 +190,18 @@ class NxOgrePublicClass Wheel : public Shape
                       NxWheelShape*           getWheelShape();
 
   protected:
+
+
+  protected:
+
+  /*
+  */
+  Wheel(NxWheelShape*);
   
-  /** \internal DO NOT USE.
+  /*
   */
-                      NxShapeDesc*            create();
-
-  /** \internal DO NOT USE.
-  */
-                      void                    assign(NxShape*);
-
+  ~Wheel(void);
+  
   protected:
 
                       NxWheelShape*           mWheelShape;

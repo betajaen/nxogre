@@ -36,7 +36,8 @@
 
 #include "NxOgrePointerClass.h"
 #include "NxOgreShape.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
+#include "NxOgreShapeFunctions.h"
 
                                                                                        
 
@@ -55,48 +56,30 @@ namespace NxOgre
 class NxOgrePublicClass Capsule : public Shape
 {
   
-  friend class RigidBodyPrototype;
+  friend class RigidBody;  // for destroy();
+  friend Shape* Functions::ShapeFunctions::createCapsule(NxShape*); // for new
+  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
   
   public: // Functions
   
-  /*! constructor. Capsule
-      desc.
-           Capsule constructor with radius and height.
-      note.
-           The absolute height of the capsule is; @height + 2(radius)@.
-      args.
-           Real __radius__ -- Radius of the capsule
-           Real __height__ -- Distance between the top and bottom hemispheres of the capsule.
-           ShapeBlueprint* __blueprint__ -- Blueprint of the Shape.
-  */
-  Capsule(Real radius, Real height, ShapeBlueprint* box_blueprint = new ShapeBlueprint());
-  
-  /*! destructor. Capsule
-      desc.
-           As with all Shapes, deleting the Capsule should be left to the class that is responsible for it.
-      note.
-           Deleting the Box whilst it is attached to a RigidBody will probably cause a nasty crash.
-  */
-  ~Capsule(void);
-  
   unsigned int getShapeType() const;
-
+  
   /*! function. getShapeFunctionType
       desc.
            Get the shape type based upon the Classes::ShapeFunctionType enum.
       return.
            **ShapeFunctionType** -- This type of shape as a ShapeFunctionType enum.
   */
-  Enums::ShapeFunctionType            getShapeFunctionType() const;
+  Enums::ShapeFunctionType  getShapeFunctionType() const;
   
   /*! function. setDimensions
       desc.
            Set the radius and height of the capsule.
       args.
            Real __radius__ -- Radius of the capsule
-           Real __height__ -- Distance between the top and bottom hemispheres of the capsule.
+           Real __height__ -- Distance between the top and bottom centres hemispheres of the capsule.
   */
-  void                    setDimensions(Real radius, Real height);
+  void  setDimensions(Real radius, Real height);
   
   /*! function. setRadius
       desc.
@@ -104,15 +87,15 @@ class NxOgrePublicClass Capsule : public Shape
       args.
            Real __radius__ -- Radius of the capsule
   */
-  void                    setRadius(Real radius);
+  void  setRadius(Real radius);
   
   /*! function. setHeight
       desc.
            Set the height of the capsule.
       args.
-           Real __height__ -- Distance between the top and bottom hemispheres of the capsule.
+           Real __height__ -- Distance between the top and bottom centres hemispheres of the capsule.
   */
-  void                    setHeight(Real height);
+  void  setHeight(Real height);
   
   /*! function. getRadius
       desc.
@@ -120,15 +103,15 @@ class NxOgrePublicClass Capsule : public Shape
       return.
            **Real** -- The radius of the capsule.
   */
-  Real                    getRadius(void) const;
+  Real  getRadius(void) const;
   
   /*! function. getHeight
       desc.
            Get the height of the capsule
       return.
-           **Real** -- Distance between the top and bottom hemispheres of the capsule.
+           **Real** -- Distance between the top and bottom centres hemispheres of the capsule.
   */
-  Real                    getHeight(void) const;
+  Real  getHeight(void) const;
   
   /*! function. getWorldCapsule
       desc.
@@ -137,22 +120,22 @@ class NxOgrePublicClass Capsule : public Shape
            This function only works when the capsule is attached.
       return. **SimpleCapsule** -- World space capsule when attached or SimpleCapsule with default values.
   */
-  SimpleCapsule           getWorldCapsule(void);
-
+  SimpleCapsule  getWorldCapsule(void);
+  
   protected:
   
-  /* Create a NxShapeDesc (NxCapsuleDesc) of the current Capsule's configuration.
+  /*
   */
-                      NxShapeDesc*            create();
-
-  /* Set the capsule to a NxShape
+  Capsule(NxCapsuleShape*);
+  
+  /*
   */
-                      void                    assign(NxShape*);
-
+  ~Capsule(void);
+  
   protected:
-
-                      NxCapsuleShape*         mCapsuleShape;
-
+  
+  NxCapsuleShape*         mCapsuleShape;
+  
 }; // class Capsule
 
                                                                                        

@@ -29,7 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreTriangleGeometry.h"
 #include "NxOgreMesh.h"
-#include "NxOgreShapeBlueprint.h"
+#include "NxOgreShapeDescription.h"
 #include "NxOgreFunctions.h"
 #include "NxOgrePhysXUserEntityReport.h"
 
@@ -42,10 +42,9 @@ namespace NxOgre
 
                                                                                        
 
-TriangleGeometry::TriangleGeometry(Mesh* mesh, ShapeBlueprint* blueprint)
-: Shape(blueprint)
+TriangleGeometry::TriangleGeometry(NxTriangleMeshShape* shape, Mesh* mesh)
+: Shape(shape), mTriangleMeshShape(shape), mMesh(mesh)
 {
- mBlueprint->mMesh = mesh;
 }
 
 TriangleGeometry::~TriangleGeometry(void)
@@ -57,25 +56,6 @@ unsigned int TriangleGeometry::getShapeType() const
  return Classes::_TriangleGeometry;
 }
 
-NxShapeDesc* TriangleGeometry::create()
-{
- NxTriangleMeshShapeDesc* trimesh = new NxTriangleMeshShapeDesc();
-
- createAbstract(trimesh);
-
- trimesh->meshData = mBlueprint->mMesh->getAsTriangleMesh();
- trimesh->meshFlags = mBlueprint->mMeshFlags;
-
- return trimesh;
-}
-
-void TriangleGeometry::assign(NxShape* trimesh)
-{
- assignAbstract(trimesh);
- mMesh = mBlueprint->mMesh;
- mTriangleMeshShape = trimesh->isTriangleMesh();
-}
-
 Enums::ShapeFunctionType TriangleGeometry::getShapeFunctionType() const
 {
  return Enums::ShapeFunctionType_Mesh;
@@ -83,8 +63,6 @@ Enums::ShapeFunctionType TriangleGeometry::getShapeFunctionType() const
 
 Mesh* TriangleGeometry::getTriangleMesh(void)
 {
- if (mBlueprint)
-  return mBlueprint->mMesh;
  return mMesh;
 }
 
@@ -112,9 +90,6 @@ void TriangleGeometry::getTriangle(Triangle& out, Triangle& outEdge, unsigned in
 
 bool TriangleGeometry::overlapAAABTriangles(const Bounds3& bounds, unsigned int queryFlags, EntityReport<Index>* callback) const
 {
- if (mTriangleMeshShape == 0)
-  return false;
- 
  PhysXUserEntityReport<Index> report(callback);
  NxBounds3 nBounds;
  bounds.from<NxBounds3>(nBounds);
@@ -124,25 +99,16 @@ bool TriangleGeometry::overlapAAABTriangles(const Bounds3& bounds, unsigned int 
 
 bool TriangleGeometry::mapPageInstance(unsigned int pageIndex)
 {
- if (mTriangleMeshShape == 0)
-  return false;
- 
  return mTriangleMeshShape->mapPageInstance(pageIndex);
 }
 
 void TriangleGeometry::unmapPageInstance(unsigned int pageIndex)
 {
- if (mTriangleMeshShape == 0)
-  return;
- 
  mTriangleMeshShape->unmapPageInstance(pageIndex);
 }
 
 bool TriangleGeometry::isPageInstanceMapped(unsigned int pageIndex) const
 {
- if (mTriangleMeshShape == 0)
-  return false;
- 
  return mTriangleMeshShape->isPageInstanceMapped(pageIndex);
 }
 

@@ -32,6 +32,7 @@
 #include "NxOgreScene.h"
 #include "NxOgreShape.h"
 #include "NxOgreBox.h"
+#include "NxOgreBoxDescription.h"
 #include "NxOgreRigidBody.h"
 #include "NxOgreSimple.h"
 #include "NxOgreFunctions.h"
@@ -80,12 +81,11 @@ KinematicController::KinematicController(const NxOgre::Vec3 &size, const NxOgre:
 
  Vec3 boxSize(size);
  boxSize *= Real(0.8);
- mShape = NxOgre_New(Box)(boxSize);
-
+ 
  RigidBodyDescription description;
  description.mMass = 10.0f;
  
- createKinematic(globalPosition, description, mScene, mShape);
+ createKinematic(globalPosition, description, mScene, BoxDescription(boxSize));
  
 
 }

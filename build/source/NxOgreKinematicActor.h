@@ -210,11 +210,11 @@ class NxOgrePublicClass KinematicActor : public RigidBody
                                               KinematicActor(Scene*);
   /** \internal Use Scene::createKinematicActor
   */
-                                              KinematicActor(Shape* shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
+                                              KinematicActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
 
   /** \internal Use Scene::createKinematicActor
   */
-                                              KinematicActor(Shapes& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
+                                              KinematicActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
 
   /** \internal Use Scene::destroyKinematicActor
   */
@@ -232,7 +232,7 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Shapes belonging to this Actor.
   */
-  Shapes          mShapes;
+  CollisionModel  mShapes;
 
   
 }; // class KinematicActor
