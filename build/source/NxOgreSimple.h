@@ -47,8 +47,13 @@ namespace Functions
 inline void NxOgrePublicFunction SimpleShapeToActorDescription(NxActorDesc&, SimpleShape*);
 inline void NxOgrePublicFunction SimpleBoxToNxBox(const SimpleBox&, NxBox&);
 inline void NxOgrePublicFunction NxBoxToSimpleBox(const NxBox&, SimpleBox&);
+
+inline void NxOgrePublicFunction SimpleSphereToNxSphere(const SimpleSphere&, NxSphere&);
+inline void NxOgrePublicFunction NxSphereToSimpleSphere(const NxSphere&, SimpleSphere&);
+
 inline void NxOgrePublicFunction SimpleCapsuleToNxCapsule(const SimpleCapsule&, NxCapsule&);
 inline void NxOgrePublicFunction NxCapsuleToSimpleCapsule(const NxCapsule&, SimpleCapsule&);
+
 };
 
 struct SimpleShape : public ShapeAllocatable

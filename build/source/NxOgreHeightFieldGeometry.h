@@ -176,6 +176,9 @@ class NxOgrePublicClass HeightFieldGeometry : public Shape
   */
   Vec3  getSmoothNormalAt(const Vec2&);
   
+  /*! desc. saveToDescription
+  */
+  void saveToDescription(HeightFieldGeometryDescription&);
   
   protected:
   

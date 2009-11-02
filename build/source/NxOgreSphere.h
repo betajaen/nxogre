@@ -81,11 +81,17 @@ class NxOgrePublicClass Sphere : public Shape
   */
   Real getRadius() const;
   
-  ///*! function. getShapeType
-  //    desc.
-  //        Get the shape type based upon the Classes::xxxx enum.
-  //*/
-  //void getWorldSphere(NxSImSphere& worldSphere) const;
+  /*! function. getWorldSphere
+      desc.
+          Get the shape type based upon the Classes::xxxx enum.
+  */
+  SimpleSphere getWorldSphere() const;
+  
+  /*! function. saveToDescription
+      desc.
+          Save to a SphereDescription
+  */
+  void saveToDescription(SphereDescription& description);
   
   protected:
   

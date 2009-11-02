@@ -68,6 +68,12 @@ class NxOgrePublicClass PlaneGeometry : public Shape
   */
   unsigned int getShapeType() const;
   
+  /*! function. saveToDescription
+      desc.
+          Save to a PlaneGeometryDescription
+  */
+  void saveToDescription(PlaneGeometryDescription& description);
+  
   protected:
   
   /* constructor. PlaneGeometry

@@ -27,7 +27,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreShapeDescription.h"
+#include "NxOgreTriangleGeometryDescription.h"
 #include "NxOgreMesh.h"
 
 #include "NxPhysics.h"
@@ -39,61 +39,44 @@ namespace NxOgre
 
                                                                                        
 
-ShapeDescription::ShapeDescription()
+TriangleGeometryDescription::TriangleGeometryDescription(Mesh* mesh, const Matrix44& local_pose)
+: mMesh(mesh), mMeshFlags(0), mMeshPagingMode(Enums::MeshPagingMode_Manual)
+{
+ ShapeDescription::reset(0, local_pose);
+}
+
+TriangleGeometryDescription::~TriangleGeometryDescription()
 {
 }
 
-ShapeDescription::~ShapeDescription()
+void TriangleGeometryDescription::reset()
 {
+ ShapeDescription::reset();
+ mMesh = 0;
+ mMeshFlags = 0;
+ mMeshPagingMode = Enums::MeshPagingMode_Manual;
 }
 
-void ShapeDescription::reset(const MaterialIdentifier& material_identifier, const Matrix44& local_pose)
+NxShapeDesc* TriangleGeometryDescription::createShapeDescription() const
 {
- mLocalPose                      . set(local_pose);
- mFlags                          = Enums::ShapeFlags_Visualisation | Enums::ShapeFlags_TwoWayCloth | Enums::ShapeFlags_TwoWaySoftBody;
- mGroup                          = 0;
- mMaterial                       = material_identifier;
- mSkeleton                       = 0;
- mSkinWidth                      = 0;
- mDensity                        = Real(1.0);
- mMass                           = Real(-1.0);
- mGroupsMask                     . zero();
- mShapesCompartmentTypes         = 0;
-}
-
-NxShapeDesc* ShapeDescription::createShapeDescription() const
-{
- return 0;
-}
-
-void ShapeDescription::setShapeDescription(NxShapeDesc* description) const
-{
- description->ccdSkeleton = (mSkeleton != 0) ? mSkeleton->getAsSkeleton() : 0;
- description->density = mDensity;
- description->group = mGroup;
- description->groupsMask.bits0 = mGroupsMask.mBits0;
- description->groupsMask.bits1 = mGroupsMask.mBits1;
- description->groupsMask.bits2 = mGroupsMask.mBits2;
- description->groupsMask.bits3 = mGroupsMask.mBits3;
- description->localPose.setRowMajor44(mLocalPose.ptr());
- description->mass = mMass;
- description->materialIndex = mMaterial;
- description->nonInteractingCompartmentTypes = mNonInteractingCompartmentTypes;
- description->shapeFlags = mFlags;
- description->skinWidth = mSkinWidth;
-}
-
-bool ShapeDescription::isValid() const
-{
+ NxTriangleMeshShapeDesc* description = NxOgreAllocatedNew<NxTriangleMeshShapeDesc, PhysXClassAllocator>();
+ setShapeDescription(description);
  
- if (mGroup >= 32)
-  return false;
- if (mMaterial == 0xffff)
-  return false;
- if (mSkinWidth != -1 && mSkinWidth < 0)
-  return false;
+ description->meshData = (mMesh == 0) ? 0 : mMesh->getAsTriangleMesh();
+ description->meshFlags = mMeshFlags;
+ description->meshPagingMode = (NxMeshPagingMode) (int) mMeshPagingMode;
+ 
+ return description;
+}
 
- return true;
+bool TriangleGeometryDescription::isValid() const
+{
+ if (mMesh == 0)
+  return false;
+ if (mMesh->getType() != Enums::MeshType_Triangle)
+  return false;
+ 
+ return ShapeDescription::isValid();
 }
 
                                                                                        

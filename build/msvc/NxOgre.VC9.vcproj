@@ -1467,6 +1467,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreTriangleGeometryDescription.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreTriangleGeometryDescription.h"
 			>
 		</File>

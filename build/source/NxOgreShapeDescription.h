@@ -67,6 +67,10 @@ class NxOgrePublicClass ShapeDescription : public GenericBasedAllocatable
   */
   virtual NxShapeDesc* createShapeDescription() const;
   
+  /*! function. isValid
+  */
+  virtual bool isValid() const;
+  
   /** \brief
   */
   Matrix44              mLocalPose;
@@ -106,11 +110,6 @@ class NxOgrePublicClass ShapeDescription : public GenericBasedAllocatable
   /** \brief
   */
   unsigned int          mShapesCompartmentTypes;
-  
-  /** \brief TriangleGeometry mesh flags
-      \see  NxOgre::Enums::MeshFlags
-  */
-  unsigned int          mMeshFlags;
   
   /*! variable. mNonInteractingCompartmentTypes
   */

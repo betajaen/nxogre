@@ -70,6 +70,18 @@ NxShapeDesc* CapsuleDescription::createShapeDescription() const
  return description;
 }
 
+
+bool CapsuleDescription::isValid() const
+{
+ 
+ if (mRadius <=0)
+  return false;
+ 
+ if (mHeight <= 0)
+  return false;
+ 
+ return ShapeDescription::isValid();
+}
                                                                                        
 
 } // namespace NxOgre

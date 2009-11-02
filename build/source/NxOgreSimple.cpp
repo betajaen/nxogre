@@ -91,6 +91,22 @@ extern inline void NxBoxToSimpleBox(const NxBox& t, SimpleBox& s)
  t.rot.getColumnMajor(s.mRotation.ptr());
 }
 
+extern inline void SimpleSphereToNxSphere(const SimpleSphere& s , NxSphere& t)
+{
+ t.center.x = s.mCenter.x;
+ t.center.y = s.mCenter.y;
+ t.center.z = s.mCenter.z;
+ t.radius = s.mRadius;
+}
+
+extern inline void NxSphereToSimpleSphere(const NxSphere& s, SimpleSphere& t)
+{
+ t.mCenter.x = s.center.x;
+ t.mCenter.y = s.center.y;
+ t.mCenter.z = s.center.z;
+ t.mRadius = s.radius;
+}
+
 extern void SimpleCapsuleToNxCapsule(const SimpleCapsule& s, NxCapsule& t)
 {
  t.p0.x = s.mP0.x;

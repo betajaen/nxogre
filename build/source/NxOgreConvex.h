@@ -83,6 +83,12 @@ class NxOgrePublicClass Convex : public Shape
   */
   Mesh*  getMesh(void);
   
+  /*! function. saveToDescription
+      desc.
+          Save to a ConvexDescription
+  */
+  void saveToDescription(ConvexDescription& description);
+  
   protected:
   
   /*

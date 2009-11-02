@@ -122,6 +122,12 @@ class NxOgrePublicClass Capsule : public Shape
   */
   SimpleCapsule  getWorldCapsule(void);
   
+  /*! function. saveToDescription
+      desc.
+          Saves the capsule to a description
+  */
+  void saveToDescription(CapsuleDescription&);
+  
   protected:
   
   /*

@@ -167,8 +167,12 @@
 
 #define NxOgre_Stringify(x) NxOgre_PreprocessorToStringBase(x)
 
+#ifdef NXOGRE_SDK
 // All classes that use the TinyClassAllocatable, must use this macro when the class is defined.
-#define NxOgreTinyClassRestriction(CLASS) extern char NxOgreCompileAssert[size_t(sizeof(CLASS) == 16 ? 1 : -1)];
+#  define NxOgreTinyClassRestriction(CLASS) extern char NxOgreCompileAssert[size_t(sizeof(CLASS) == 16 ? 1 : -1)];
+#else
+#  define NxOgreTinyClassRestriction(CLASS)
+#endif
 
                                                                                        
 

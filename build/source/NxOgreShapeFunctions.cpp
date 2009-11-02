@@ -135,7 +135,6 @@ Shape* createShape(NxShape* physx_shape, RigidBody* rigid_body)
  return shape;
 }
 
-
                                                                                        
 
 } // namespace Shape

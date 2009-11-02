@@ -209,6 +209,7 @@ namespace NxOgre
                  struct                     SimpleSegment;                 //!<
                  struct                     SimplePlane;                   //!<
                  struct                     SimplePointCloud;              //!<
+                 struct                     SimpleSphere;                  //!<
                  struct                     SimpleTriangleMesh;            //!<
                  template<class T> class    Singleton;                     //!<
 //::             class                      SharedBuffer;                  //!<
@@ -228,6 +229,7 @@ namespace NxOgre
                  class                      Timer;                         //!<
                  class                      TireFunction;                  //!<
                  class                      TriangleGeometry;              //!<
+                 class                      TriangleGeometryDescription;   //!<
 //::             struct                     URIHash;                       //!< \brief Part of UniformResourceIdentifer
                  class                      VisualDebugger;                //!<
                  class                      VisualDebuggerMeshData;        //!<

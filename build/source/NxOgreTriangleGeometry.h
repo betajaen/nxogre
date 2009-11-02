@@ -114,7 +114,9 @@ class NxOgrePublicClass TriangleGeometry : public Shape
       \return False if the page index isn't mapped, or the mesh is in software mode, or is the shape has not been attached yet.
   */
   bool  isPageInstanceMapped(unsigned int pageIndex) const;
-
+  
+  void saveToDescription(TriangleGeometryDescription& description);
+  
   protected:
 
   /** \brief TriangleGeometry

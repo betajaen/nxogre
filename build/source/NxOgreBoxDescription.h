@@ -88,6 +88,12 @@ class NxOgrePublicClass BoxDescription : public ShapeDescription
   */
   void reset();
   
+  /*! function. isValid
+      desc. 
+          Returns true if the description is valid.
+  */
+  bool isValid() const;
+
   /*! variable. mSize
       desc.
           Size of the box, in metres.

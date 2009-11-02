@@ -29,6 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreBox.h"
 #include "NxOgreShapeDescription.h"
+#include "NxOgreBoxDescription.h"
 #include "NxOgreFunctions.h"
 #include "NxOgreSimple.h"
 
@@ -60,6 +61,26 @@ Enums::ShapeFunctionType Box::getShapeFunctionType() const
  return Enums::ShapeFunctionType_Box;
 }
 
+void Box::saveToDescription(BoxDescription& description)
+{
+ NxBoxShapeDesc desc;
+ mBoxShape->saveToDesc(desc);
+ description.mDensity = desc.density;
+ description.mFlags = desc.shapeFlags;
+ description.mGroup = desc.group;
+ description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
+ description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
+ description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
+ description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
+ desc.localPose.getRowMajor44(description.mLocalPose.ptr());
+ description.mMass = desc.mass;
+ description.mMaterial = desc.materialIndex;
+ description.mNonInteractingCompartmentTypes = desc.nonInteractingCompartmentTypes;
+ description.mSkinWidth = desc.skinWidth;
+
+ description.mSize = Vec3(desc.dimensions * 2);
+}
+
 Vec3 Box::getSize() const
 {
  return Vec3(mBoxShape->getDimensions() * 2);
@@ -79,13 +100,10 @@ SimpleBox Box::getWorldOBB(void)
 {
  SimpleBox box;
  
- if (mBoxShape)
- {
-  NxBox obb;
-  mBoxShape->getWorldOBB(obb);
-  Functions::NxBoxToSimpleBox(obb, box);
- }
- 
+ NxBox obb;
+ mBoxShape->getWorldOBB(obb);
+ Functions::NxBoxToSimpleBox(obb, box);
+
  return box;
 }
 

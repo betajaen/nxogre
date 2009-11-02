@@ -29,6 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCapsule.h"
 #include "NxOgreShapeDescription.h"
+#include "NxOgreCapsuleDescription.h"
 #include "NxOgreSimple.h"
 
 #include "NxPhysics.h"
@@ -96,6 +97,26 @@ SimpleCapsule Capsule::getWorldCapsule(void)
  return out;
 }
 
+void Capsule::saveToDescription(CapsuleDescription& description)
+{
+ NxCapsuleShapeDesc desc;
+ mCapsuleShape->saveToDesc(desc);
+ description.mDensity = desc.density;
+ description.mFlags = desc.shapeFlags;
+ description.mGroup = desc.group;
+ description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
+ description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
+ description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
+ description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
+ desc.localPose.getRowMajor44(description.mLocalPose.ptr());
+ description.mMass = desc.mass;
+ description.mMaterial = desc.materialIndex;
+ description.mNonInteractingCompartmentTypes = desc.nonInteractingCompartmentTypes;
+ description.mSkinWidth = desc.skinWidth;
+
+ description.mRadius = mCapsuleShape->getRadius();
+ description.mHeight = mCapsuleShape->getHeight();
+}
 
                                                                                        
 

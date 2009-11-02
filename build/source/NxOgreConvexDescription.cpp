@@ -61,8 +61,10 @@ NxShapeDesc* ConvexDescription::createShapeDescription() const
  NxConvexShapeDesc* description = NxOgreAllocatedNew<NxConvexShapeDesc, PhysXClassAllocator>();
  setShapeDescription(description);
  description->meshData = (mMesh == 0) ? 0 : mMesh->getAsConvex();
+ description->meshFlags = mMeshFlags;
  return description;
 }
+
 
                                                                                        
 

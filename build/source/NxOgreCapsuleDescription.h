@@ -82,6 +82,12 @@ class NxOgrePublicClass CapsuleDescription : public ShapeDescription
   */
   void reset();
   
+  /*! function. isValid
+      desc. 
+          Returns true if the description is valid.
+  */
+  bool isValid() const;
+  
   /*! variable. mRadius
       desc.
           Radius of the capsule

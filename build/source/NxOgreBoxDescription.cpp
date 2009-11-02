@@ -74,6 +74,18 @@ NxShapeDesc* BoxDescription::createShapeDescription() const
  return description;
 }
 
+bool BoxDescription::isValid() const
+{
+ if (mSize.x < 0.0f)
+  return false;
+ if (mSize.y < 0.0f)
+  return false;
+ if (mSize.z < 0.0f)
+  return false;
+ 
+ return ShapeDescription::isValid();
+}
+
                                                                                        
 
 } // namespace NxOgre

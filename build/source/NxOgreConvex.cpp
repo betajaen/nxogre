@@ -28,6 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreConvex.h"
+#include "NxOgreConvexDescription.h"
 #include "NxOgreMesh.h"
 #include "NxOgreShapeDescription.h"
 
@@ -41,7 +42,7 @@ namespace NxOgre
                                                                                        
 
 Convex::Convex(NxConvexShape* shape, Mesh* mesh)
-: Shape(shape), mMesh(mesh)
+: Shape(shape), mConvexShape(shape), mMesh(mesh)
 {
 }
 
@@ -64,7 +65,26 @@ Mesh* Convex::getMesh(void)
  return mMesh;
 }
 
+void Convex::saveToDescription(ConvexDescription& description)
+{
+ NxConvexShapeDesc desc;
+ mConvexShape->saveToDesc(desc);
+ description.mDensity = desc.density;
+ description.mFlags = desc.shapeFlags;
+ description.mGroup = desc.group;
+ description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
+ description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
+ description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
+ description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
+ desc.localPose.getRowMajor44(description.mLocalPose.ptr());
+ description.mMass = desc.mass;
+ description.mMaterial = desc.materialIndex;
+ description.mNonInteractingCompartmentTypes = desc.nonInteractingCompartmentTypes;
+ description.mSkinWidth = desc.skinWidth;
 
+ description.mMesh = mMesh;
+ description.mMeshFlags = desc.meshFlags;
+}
                                                                                        
 
 } // namespace NxOgre

@@ -24,12 +24,12 @@
     
 */
 
-                                                                                       
+         
 
 #ifndef NXOGRE_WHEEL_H
 #define NXOGRE_WHEEL_H
 
-                                                                                       
+         
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
@@ -38,12 +38,12 @@
 #include "NxOgreShape.h"
 #include "NxOgreShapeFunctions.h"
 
-                                                                                       
+         
 
 namespace NxOgre
 {
 
-                                                                                       
+         
 
 /** \brief  
 */ 
@@ -62,132 +62,138 @@ class NxOgrePublicClass Wheel : public Shape
 
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */
-          Enums::ShapeFunctionType            getShapeFunctionType() const;
+  Enums::ShapeFunctionType  getShapeFunctionType() const;
+    
+  /*! function. saveToDescription
+      desc.
+          Save to a BoxDescription
+  */
+  void saveToDescription(WheelDescription& description);
   
   /** \brief Sets the radius (distance from axle to contact surface) of the wheel.
       \note  Does not wake up the RigidBody.
   */
-                      void                    setRadius(Real radius);
+  void  setRadius(Real radius);
   
   
   /** \brief Gets the radius (distance from axle to contact surface) of the wheel.
   */
-                      Real                    getRadius(void) const;
+  Real  getRadius(void) const;
   
   
   /** \brief Sets the maximum extension distance of suspension along shape's -Y axis.
       \note  Does not wake up the RigidBody.
   */
-                      void                    setSuspensionTravel(Real radius);
+  void  setSuspensionTravel(Real radius);
   
   
   /** \brief Gets the maximum extension distance of suspension along shape's -Y axis.
   */
-                      Real                    getSuspensionTravel(void) const;
+  Real  getSuspensionTravel(void) const;
   
   /** \brief Sets the spring intended for the wheel suspension effects.
       \note  Does not wake up the RigidBody.
   */
-                      void                    setSuspension(const SpringDescription&);
+  void  setSuspension(const SpringDescription&);
   
   
   /** \brief Gets the spring intended for the wheel suspension effects.
   */
-                      SpringDescription       getSuspension(void) const;
+  SpringDescription       getSuspension(void) const;
   
   /** \brief 
       \note  Does not wake up the RigidBody.
   */
-                      void                    setLateralTireForceFunction(const TireFunction&);
+  void  setLateralTireForceFunction(const TireFunction&);
   
   
   /** \brief 
   */
-                      TireFunction            getLateralTireForceFunction(void) const;
+  TireFunction            getLateralTireForceFunction(void) const;
   
-  
-  /** \brief 
-      \note  Does not wake up the RigidBody.
-  */
-                      void                    setLongitudalTireForceFunction(const TireFunction&);
-  
-  
-  /** \brief 
-  */
-                      TireFunction            getLongitudalTireForceFunction(void) const;
   
   /** \brief 
       \note  Does not wake up the RigidBody.
   */
-                      void                    setInverseWheelMass(Real);
+  void  setLongitudalTireForceFunction(const TireFunction&);
   
   
   /** \brief 
   */
-                      Real                    getInverseWheelMass(void) const;
+  TireFunction  getLongitudalTireForceFunction(void) const;
   
   /** \brief 
       \note  Does not wake up the RigidBody.
   */
-                      void                    setWheelFlags(int);
+  void  setInverseWheelMass(Real);
   
   
   /** \brief 
   */
-                      int                     getWheelFlags(void) const;
+  Real  getInverseWheelMass(void) const;
+  
+  /** \brief 
+      \note  Does not wake up the RigidBody.
+  */
+  void  setWheelFlags(int);
+  
+  
+  /** \brief 
+  */
+  int   getWheelFlags(void) const;
   
   /** \brief Sets the motor torque. Torque must be positive. Body must be awake for this to make any effect.
       \note  Does not wake up the RigidBody.
   */
-                      void                    setMotorTorque(Real);
+  void  setMotorTorque(Real);
   
   
   /** \brief Gets the motor torque.
   */
-                      Real                    getMotorTorque(void) const;
+  Real  getMotorTorque(void) const;
   
   /** \brief Sets the brake torque. Torque must be positive.
       \note  Does not wake up the RigidBody.
   */
-                      void                    setBrakeTorque(Real);
+  void  setBrakeTorque(Real);
   
   
   /** \brief Gets the brake torque.
   */
-                      Real                    getBrakeTorque(void) const;
+  Real  getBrakeTorque(void) const;
   
   /** \brief Sets the steering angle (in radians)
       \note  Does not wake up the RigidBody.
   */
-                      void                    setSteeringAngle(Real);
+  void  setSteeringAngle(Real);
   
   
   /** \brief Gets the steering angle (in radians)
   */
-                      Real                    getSteeringAngle(void) const;
+  Real  getSteeringAngle(void) const;
   
   /** \brief Set Axle Speed.
       \warning This is an internal state variable. For any effect, the WheelFlags_AxleSpeedOverride must be enabled.
       \note  Does not wake up the RigidBody.
   */
-                      void                    setAxleSpeed(Real);
+  void  setAxleSpeed(Real);
   
   /** \brief Gets the axle speed.
   */
-                      Real                    getAxleSpeed(void) const;
+  Real  getAxleSpeed(void) const;
 #if 0
   /** \brief Set the contact callback.
   */
-                      void                    setCallback(void);
+  void  setCallback(void);
   
   /** \brief Get the contact callback.
   */
-                      Callback*               getCallback(void);
+  Callback*               getCallback(void);
 #endif
 
   /** \brief
   */
-                      NxWheelShape*           getWheelShape();
+  NxWheelShape*           getWheelShape();
 
   protected:
 
@@ -204,15 +210,15 @@ class NxOgrePublicClass Wheel : public Shape
   
   protected:
 
-                      NxWheelShape*           mWheelShape;
+  NxWheelShape*           mWheelShape;
 
-                      
+  
 }; // class Wheel
 
-                                                                                       
+         
 
 } // namespace NxOgre
 
-                                                                                       
+         
 
 #endif

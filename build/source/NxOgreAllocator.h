@@ -199,6 +199,9 @@ template<class Allocator> class Allocatable
 
 #define NxOgreDelete(PTR) if (PTR){delete PTR;PTR=0;}
 
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
 template<typename T, class Allocator> inline T* NxOgreAllocatedNew()
 {
  void* mem = Allocator::allocateBytes(sizeof(T));
@@ -206,6 +209,89 @@ template<typename T, class Allocator> inline T* NxOgreAllocatedNew()
  return ptr;
 }
 
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0> inline T* NxOgreAllocatedNew(const _0& arg0)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0, typename _1> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0, arg1);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0, typename _1, typename _2> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0, arg1, arg2);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0, arg1, arg2, arg3);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4, typename _5> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4, const _5& arg5)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4, arg5);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4, typename _5, typename _6> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4, const _5& arg5, const _6& arg6)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
+template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4, const _5& arg5, const _6& arg6, const _7& arg7)
+{
+ void* mem = Allocator::allocateBytes(sizeof(T));
+ T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+ return ptr;
+}
+
+/* Safe way of deleting a pointer of a class that was previously new'd through NxOgreAllocatedNew
+   Note: Only classes that don't inherit from Allocatable should use this function.
+*/
 template<typename T, class Allocator> inline void NxOgreAllocatedDelete(T* ptr)
 {
  if (ptr == 0)

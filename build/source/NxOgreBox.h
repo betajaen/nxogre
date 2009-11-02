@@ -106,6 +106,12 @@ class NxOgrePublicClass Box : public Shape
   */
   SimpleBox  getWorldOBB(void);
   
+  /*! function. saveToDescription
+      desc.
+          Save to a BoxDescription
+  */
+  void saveToDescription(BoxDescription& description);
+  
   protected:
   
   /* constructor. Box
