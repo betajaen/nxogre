@@ -47,6 +47,11 @@ Shape::~Shape(void)
 {
 }
 
+RigidBody* Shape::getRigidBody()
+{
+ return pointer_representive_cast<RigidBody>(mShape->getActor().userData);
+}
+
 void Shape::destroy()
 {
  mShape->getActor().releaseShape(*mShape);

@@ -152,6 +152,10 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   */
   void  setInteractingCompartmentTypes(const int&);
   
+  /** \brief Get the RigidBody this shape is attached to.
+  */
+  RigidBody* getRigidBody();
+
   protected:
   
   /* Optional name of the shape.
