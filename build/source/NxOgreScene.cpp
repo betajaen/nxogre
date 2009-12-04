@@ -499,6 +499,7 @@ RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, u
  NxShape* nxShape = mScene->raycastClosestBounds(inRay, NxShapesType(int(type)), hit, group, maxDistance, hintFlags, 0);
  
  RaycastHit out;
+ 
  out.mDistance = hit.distance;
  out.mFaceID = hit.faceID;
  out.mFlags = hit.flags;
@@ -509,9 +510,17 @@ RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, u
  Functions::XYZ<NxVec3, Vec3>(hit.worldImpact, out.mWorldImpact);
  Functions::XYZ<NxVec3, Vec3>(hit.worldNormal, out.mWorldNormal);
  
- PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
- out.mShape = shapePointer->get<Shape>();
- out.mRigidBody = shapePointer->getParent<RigidBody>();
+ if (nxShape && nxShape->userData && size_t(nxShape->userData) != 'CCTS')
+ {
+  PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
+  out.mShape = shapePointer->get<Shape>();
+  out.mRigidBody = shapePointer->getParent<RigidBody>();
+ }
+ else
+ {
+  out.mShape = 0;
+  out.mRigidBody = 0;
+ }
  
  return out;
 }
@@ -527,6 +536,7 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
  NxShape* nxShape = mScene->raycastClosestShape(inRay, NxShapesType(int(type)), hit, group, maxDistance, hintFlags, 0, cache);
  
  RaycastHit out;
+
  out.mDistance = hit.distance;
  out.mFaceID = hit.faceID;
  out.mFlags = hit.flags;
@@ -537,7 +547,7 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
  Functions::XYZ<NxVec3, Vec3>(hit.worldImpact, out.mWorldImpact);
  Functions::XYZ<NxVec3, Vec3>(hit.worldNormal, out.mWorldNormal);
  
- if (nxShape)
+ if (nxShape && nxShape->userData && size_t(nxShape->userData) != 'CCTS')
  {
   PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
   out.mShape = shapePointer->get<Shape>();

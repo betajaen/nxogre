@@ -125,6 +125,10 @@ class NxOgrePublicClass World : public PointerClass<Classes::_World>
   
 #endif
   
+  /** \brief
+  */
+                       PhysXUserAllocator*    getPhysXAllocator();
+  
   protected: // Functions
   
   /** \internal Use World::createWorld();

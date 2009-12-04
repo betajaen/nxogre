@@ -13,6 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGRE3DRenderSystem", "OgreR
 		{A633A666-D959-4D20-B2D4-6C2239FE48EB} = {A633A666-D959-4D20-B2D4-6C2239FE48EB}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxOgreAddonCharacterController", "NxOgre.Addon.CharacterController.VC9.vcproj", "{3D291A57-BF19-4649-8D79-366DFEADD79F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A633A666-D959-4D20-B2D4-6C2239FE48EB} = {A633A666-D959-4D20-B2D4-6C2239FE48EB}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -66,6 +71,20 @@ Global
 		{3DA5C845-3511-42C8-BD1F-9519D93307BD}.Release|Win32.Build.0 = Release|Win32
 		{3DA5C845-3511-42C8-BD1F-9519D93307BD}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
 		{3DA5C845-3511-42C8-BD1F-9519D93307BD}.ReleaseStatic|Win32.Build.0 = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.Debug|Win32.Build.0 = Debug|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.DebugStatic|Win32.ActiveCfg = Debug|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.DebugStatic|Win32.Build.0 = Debug|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.Minimal|Win32.ActiveCfg = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.Minimal|Win32.Build.0 = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.MinimalDebug|Win32.ActiveCfg = Debug|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.MinimalDebug|Win32.Build.0 = Debug|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.MinimalStatic|Win32.ActiveCfg = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.MinimalStatic|Win32.Build.0 = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.Release|Win32.ActiveCfg = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.Release|Win32.Build.0 = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
+		{3D291A57-BF19-4649-8D79-366DFEADD79F}.ReleaseStatic|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

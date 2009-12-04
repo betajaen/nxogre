@@ -76,8 +76,6 @@ void GLUTBody::render(void)
   getGlobalPose().columnMajor(glMat);
   
   glMultMatrixf(glMat);
-  glColor4f(mColourRed, mColourGreen, mColourBlue, 1.0f);
-
   switch (mVisualShape)
   {
    case GLUT_Box:

@@ -154,12 +154,12 @@ void OGRE3DRenderable::drawClothFast(NxOgre::PhysXMeshData* data, const NxOgre::
 }
 void OGRE3DRenderable::drawVisualDebugger(NxOgre::VisualDebuggerMeshData* data)
 {
- _resize(data->getNbLines(), 0);
+ _resize(data->getNbLines() * 2, 0);
 
  // Write the vertices.
- mVertexBuffer->writeData(0, 3 * data->getNbLines() * sizeof(float), data->getLines() );
- 
- mVertexColourBuffer->writeData(0, data->getNbLines() * sizeof(unsigned int), data->getColours() );
+ mVertexBuffer->writeData(0, 3 * data->getNbLines() * 2 * sizeof(float), data->getLines() );
+
+ mVertexColourBuffer->writeData(0, data->getNbLines() * 2 * sizeof(unsigned int), data->getColours() );
 
  mBox.setInfinite();
  

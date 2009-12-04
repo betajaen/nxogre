@@ -79,7 +79,7 @@ void PhysXCallback::onContactNotify(NxContactPair &pair, NxU32 events)
  if (pair.isDeletedActor[0] || pair.isDeletedActor[1])
   return;
  
- if (!pair.actors[0]->userData && !pair.actors[1]->userData)
+ if (pair.actors[0]->userData == 0 || pair.actors[1]->userData == 0)
   return;
  
  RigidBody* rbody_a = pointer_representive_cast<RigidBody>(pair.actors[0]->userData);

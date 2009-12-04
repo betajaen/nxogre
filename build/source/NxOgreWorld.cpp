@@ -304,6 +304,11 @@ NxCookingInterface* World::getPhysXCookingInterface(void)
  return mCookingInterface;
 }
 
+PhysXUserAllocator* World::getPhysXAllocator()
+{
+ return mPhysXUserAllocator;
+}
+
                                                                                        
 
 } // namespace NxOgre
