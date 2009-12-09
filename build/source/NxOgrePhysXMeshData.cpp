@@ -41,6 +41,7 @@ namespace NxOgre
                                                                                        
 
 PhysXMeshData::PhysXMeshData(Mesh* mesh, size_t modifier)
+: mNbVertices(0), mNbParentIndices(0), mNbIndices(0)
 {
  MeshStats stats = mesh->getStats();
  _configure(stats.getNbVertices() * modifier, stats.getNbIndices() * modifier, stats.getNbIndices() * modifier);
@@ -48,9 +49,16 @@ PhysXMeshData::PhysXMeshData(Mesh* mesh, size_t modifier)
 
 PhysXMeshData::~PhysXMeshData(void)
 {
- NxOgre_Delete(mNbVertices);
- NxOgre_Delete(mNbIndices);
- NxOgre_Delete(mNbParentIndices);
+ 
+ if (mNbVertices)
+  NXOGRE_DEALLOCATE(FourByteAllocator, mNbVertices);
+ 
+ if (mNbIndices)
+  NXOGRE_DEALLOCATE(FourByteAllocator, mNbIndices);
+ 
+ if (mNbParentIndices)
+  NXOGRE_DEALLOCATE(FourByteAllocator, mNbParentIndices);
+ 
 }
 
 NxMeshData PhysXMeshData::getMeshData()
@@ -114,13 +122,13 @@ void PhysXMeshData::_configure(size_t verts, size_t indices, size_t parent_indic
  mIndices.reserve(indices);
  mParentIndices.reserve(parent_indices);
 
- mNbVertices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre::Classes::_unsigned_int);
+ mNbVertices = (unsigned int*) NXOGRE_ALLOCATE(FourByteAllocator, (sizeof(unsigned int)));
  (*mNbVertices) = 0;
 
- mNbIndices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre::Classes::_unsigned_int);
+ mNbIndices = (unsigned int*) NXOGRE_ALLOCATE(FourByteAllocator, (sizeof(unsigned int)));
  (*mNbIndices) = 0;
 
- mNbParentIndices = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre::Classes::_unsigned_int);
+ mNbParentIndices = (unsigned int*) NXOGRE_ALLOCATE(FourByteAllocator, (sizeof(unsigned int)));
  (*mNbParentIndices) = 0;
 
 }

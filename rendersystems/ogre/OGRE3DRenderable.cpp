@@ -80,8 +80,8 @@ OGRE3DRenderable::OGRE3DRenderable(int type)
 
 OGRE3DRenderable::~OGRE3DRenderable()
 {
- NxOgre_Delete(mRenderOp.vertexData);
- NxOgre_Delete(mRenderOp.indexData);
+ NXOGRE_DELETE(mRenderOp.vertexData);
+ NXOGRE_DELETE(mRenderOp.indexData);
 }
 
 void OGRE3DRenderable::drawSoftBodySimple(NxOgre::PhysXMeshData* data, const NxOgre::Bounds3& bounds)

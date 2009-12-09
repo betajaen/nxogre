@@ -44,50 +44,50 @@ PhysXUserAllocator::~PhysXUserAllocator(void)
 {
 }
 
-void* PhysXUserAllocator::mallocDEBUG(size_t size, const char* fileName, int line)
+void* PhysXUserAllocator::mallocDEBUG(size_t size, const char* filename, int line)
 {
-#if NxOgreMemoryDebugger == 1
- return Memory::allocate(size, Classes::_void, fileName, line);
+#ifdef NXOGRE_DEBUG
+ return NxOgreAllocate<PhysXClassAllocator>(size, filename, line);
 #else
- return Memory::allocate(size);
+ return NxOgreAllocate<PhysXClassAllocator>(size);
 #endif
 }
 
-void* PhysXUserAllocator::mallocDEBUG(size_t size, const char* fileName, int line, const char* className, NxMemoryType type)
+void* PhysXUserAllocator::mallocDEBUG(size_t size, const char* filename, int line, const char*, NxMemoryType)
 {
-#if NxOgreMemoryDebugger == 1
- return Memory::allocate(size, type, fileName, line);
+#ifdef NXOGRE_DEBUG
+ return NxOgreAllocate<PhysXClassAllocator>(size, filename, line);
 #else
- return Memory::allocate(size);
+ return NxOgreAllocate<PhysXClassAllocator>(size);
 #endif
 }
 
 void* PhysXUserAllocator::malloc(size_t size)
 {
-#if NxOgreMemoryDebugger == 1
- return Memory::allocate(size, Classes::_void);
+#ifdef NXOGRE_DEBUG
+ return NxOgreAllocate<PhysXClassAllocator>(size, "PHYSX", 0);
 #else
- return Memory::allocate(size);
+ return NxOgreAllocate<PhysXClassAllocator>(size);
 #endif
 }
 
 void* PhysXUserAllocator::malloc(size_t size, NxMemoryType type)
 {
-#if NxOgreMemoryDebugger == 1
- return Memory::allocate(size, type);
+#ifdef NXOGRE_DEBUG
+ return NxOgreAllocate<PhysXClassAllocator>(size, "PHYSX", 0);
 #else
- return Memory::allocate(size);
+ return NxOgreAllocate<PhysXClassAllocator>(size);
 #endif
 }
 
 void* PhysXUserAllocator::realloc(void* memory, size_t size)
 {
- return Memory::reallocate(memory, size);
+ return NxOgreReallocate<PhysXClassAllocator>(memory, size);
 }
 
 void PhysXUserAllocator::free(void* memory)
 {
- Memory::unallocate(memory);
+ NxOgreDeallocate<PhysXClassAllocator>(memory);
 }
 
 void PhysXUserAllocator::checkDEBUG(void)

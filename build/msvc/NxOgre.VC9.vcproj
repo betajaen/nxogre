@@ -44,7 +44,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="source/;../../source/;&quot;$(PHYSX_DIR)/SDKs/Physics/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Foundation/include&quot;;&quot;$(PHYSX_DIR)/SDKs/Cooking/include&quot;;&quot;$(PHYSX_DIR)/SDKs/PhysXLoader/include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NXOGRE_DEBUG;NXOGRE_SDK;NXOGRE_OPTIONS_DYNAMIC_LIBRARY;NXOGRE_OPTIONS_USE_LOG;NXOGRE_MEMORY_DEBUGGER_USEFILE;NXOGRE_MEMORY_DEBUGGER_FILE=&quot;NxOgreLeaks.txt&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;NXOGRE_SDK;NXOGRE_OPTIONS_DYNAMIC_LIBRARY;NXOGRE_OPTIONS_USE_LOG;NXOGRE_MEMORY_DEBUGGER_USEFILE;NXOGRE_MEMORY_DEBUGGER_FILE=&quot;NxOgreLeaks.txt&quot;"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -323,50 +323,6 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\source\malloc.c.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\nedmalloc.cpp"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="DebugStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="ReleaseStatic|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="0"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="..\source\nedmalloc.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgre.h"
 			>
 		</File>
@@ -472,6 +428,10 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreClasses.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreClassPrototypes.h"
 			>
 		</File>
 		<File
@@ -787,6 +747,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreMallocAllocator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMallocAllocator.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreManualHeightField.cpp"
 			>
 		</File>
@@ -839,27 +807,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\source\NxOgreMemory.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMemory.h"
-			>
-		</File>
-		<File
 			RelativePath="..\source\NxOgreMemoryArchive.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\source\NxOgreMemoryArchive.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMemoryDebugger.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreMemoryDebugger.h"
 			>
 		</File>
 		<File
@@ -1052,10 +1004,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgrePlaneGeometryDescription.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgrePointerClass.h"
 			>
 		</File>
 		<File

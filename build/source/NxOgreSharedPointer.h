@@ -32,7 +32,6 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreMemory.h"
 
                                                                                        
 
@@ -69,7 +68,7 @@ class NxOgrePublicClass SharedPointer
   explicit                                    SharedPointer(T* ptr)
   : mPtr(ptr)
   {
-   mReferences = (unsigned short*) NxOgre_Allocate(sizeof(unsigned short), Classes::_BufferReferenceCounter)
+   mReferences = (unsigned int*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(unsigned int));
    (*mReferences) = 1;
   }
 
@@ -81,8 +80,8 @@ class NxOgrePublicClass SharedPointer
    {
     if (--(*mReferences) == 0)
     {
-     NxOgre_Delete(mPtr);
-     NxOgre_Unallocate(mReferences);
+     NXOGRE_DELETE_NXOGRE(mPtr);
+     NXOGRE_DEALLOCATE(FourByteAllocator, mReferences);
      mReferences = 0;
      mPtr        = 0;
     }
@@ -97,8 +96,8 @@ class NxOgrePublicClass SharedPointer
    {
     if (--(*mReferences) == 0)
     {
-     NxOgre_Delete(mPtr);
-     NxOgre_Unallocate(mReferences);
+     NXOGRE_DELETE_NXOGRE(mPtr);
+     NXOGRE_DEALLOCATE(FourByteAllocator, mReferences);
     }
    }
    mPtr = other.mPtr;
@@ -110,14 +109,14 @@ class NxOgrePublicClass SharedPointer
 
   /** \brief SharedPointer<T> -> operator
   */
-                        T*                       operator->(void) const
+  T*                       operator->(void) const
   {
    return mPtr;
   }
 
   /** \brief SharedPointer<T> * operator
   */
-                        T&                       operator*(void) const
+  T&                       operator*(void) const
   {
    return mPtr;
   }
@@ -131,22 +130,22 @@ class NxOgrePublicClass SharedPointer
 
   /** \brief Is the pointer that the SharedPointer represent actually NULL?
   */
-                        bool                     isNullPtr(void)
+  bool                     isNullPtr(void)
   {
    return (mPtr == 0);
   }
 
   /** \brief Does the SharedPointer actually contain a pointer?
   */
-                        bool                    isNull(void)
+  bool                    isNull(void)
   {
    return (mReferences == 0);
   }
 
   protected: // Variables
   
-                         T*                    mPtr;
-                         unsigned short*       mReferences;
+  T*             mPtr;
+  unsigned int*  mReferences;
   
 }; // class ClassName
 

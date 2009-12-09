@@ -63,7 +63,7 @@ void CapsuleDescription::reset()
 
 NxShapeDesc* CapsuleDescription::createShapeDescription() const
 {
- NxCapsuleShapeDesc* description = NxOgreAllocatedNew<NxCapsuleShapeDesc, PhysXClassAllocator>();
+ NxCapsuleShapeDesc* description = NXOGRE_NEW_PHYSX(NxCapsuleShapeDesc, PhysXClassAllocator);
  setShapeDescription(description);
  description->radius = mRadius;
  description->height = mHeight;

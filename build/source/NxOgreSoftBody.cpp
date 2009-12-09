@@ -55,7 +55,7 @@ SoftBody::SoftBody(const SoftBodyDescription& description, Renderable* renderabl
  NxSoftBodyDesc desc;
  ::NxOgre::Functions::PrototypeFunctions::SoftBodyDescriptionToNxSoftBodyDesc(description, desc);
 
- mMeshData = NxOgre_New(PhysXMeshData)(mMesh);
+ mMeshData = NXOGRE_NEW_NXOGRE(PhysXMeshData)(mMesh);
  
  desc.meshData = mMeshData->getMeshData();
  
@@ -74,7 +74,7 @@ SoftBody::SoftBody(const SoftBodyDescription& description, Renderable* renderabl
 SoftBody::~SoftBody()
 {
  TimeController::getSingleton()->removeTimeListener(this, mPriority);
- NxOgre_Delete(mMeshData);
+ NXOGRE_DELETE_NXOGRE(mMeshData);
 }
 
 bool SoftBody::advance(float deltaTime, const Enums::Priority&)

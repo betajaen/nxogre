@@ -74,7 +74,7 @@ void MemoryResource::open(void)
  std::cout << "[+] Opening Memory resource" << std::endl;
 #endif
  
- mStart = (char*) NxOgre_Allocate(16, Classes::_char);
+ mStart = (char*) NXOGRE_ALLOCATE(ResourceAllocator, 16);
  mEnd = mStart + 16;
  mPointer = mStart;
  mStatus = Enums::ResourceStatus_Opened;
@@ -95,7 +95,7 @@ void MemoryResource::close(void)
 #endif
  
  if (mStart)
-  NxOgre_Unallocate(mStart);
+  NXOGRE_DEALLOCATE(ResourceAllocator, mStart);
  mStart = mEnd = mPointer = 0;
  mStatus = Enums::ResourceStatus_Closed;
  
@@ -175,21 +175,18 @@ bool MemoryResource::write(const void* src, size_t src_size)
  size_t current_size = (mEnd - mStart);
  char* pointer_willbe = mPointer + src_size;
  
-// std::cout << "current_size = " << current_size << std::endl;
-// std::cout << "Pointer will be = " << pointer_willbe << std::endl;
-
  if (pointer_willbe > mStart + current_size)
  {
   mStatus = Enums::ResourceStatus_Maintenance;
   
   size_t new_buffer_size = (current_size * 2) + 1;
 
-  char* new_buffer = (char*) NxOgre_Allocate(new_buffer_size, Classes::_char);
+  char* new_buffer = (char*) NXOGRE_ALLOCATE(ResourceAllocator, new_buffer_size);
   if (mStart)
-   Memory::copy(new_buffer, mStart, current_size);
+   NxOgreCopy(new_buffer, mStart, current_size);
 
   size_t pointer_pos = mPointer - mStart;
-  NxOgre_Unallocate(mStart);
+  NXOGRE_DEALLOCATE(ResourceAllocator, mStart);
   
   mStart = new_buffer;
   mEnd = mStart + new_buffer_size;
@@ -198,7 +195,7 @@ bool MemoryResource::write(const void* src, size_t src_size)
   mStatus = Enums::ResourceStatus_Opened;
  }
   
- Memory::copy(mPointer, src, src_size);
+ NxOgreCopy(mPointer, src, src_size);
  mPointer += src_size;
   
  return true;
@@ -322,154 +319,154 @@ bool MemoryResource::writeLong(long* long_array, size_t length)
 bool MemoryResource::readBool(void)
 {
  bool t;
- Memory::copy(&t, mPointer, sizeof(bool));
+ NxOgreCopy(&t, mPointer, sizeof(bool));
  mPointer += sizeof(bool);
  return t;
 }
 
 void MemoryResource::readBoolArray(bool* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 unsigned char MemoryResource::readUChar(void)
 {
  unsigned char t;
- Memory::copy(&t, mPointer, sizeof(unsigned char));
+ NxOgreCopy(&t, mPointer, sizeof(unsigned char));
  mPointer += sizeof(unsigned char);
  return t;
 }
 
 void MemoryResource::readUCharArray(unsigned char* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 char MemoryResource::readChar(void)
 {
  char t;
- Memory::copy(&t, mPointer, sizeof(char));
+ NxOgreCopy(&t, mPointer, sizeof(char));
  mPointer += sizeof(char);
  return t;
 }
 
 void MemoryResource::readCharArray(char* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 unsigned short MemoryResource::readUShort(void)
 {
  unsigned short t;
- Memory::copy(&t, mPointer, sizeof(unsigned short));
+ NxOgreCopy(&t, mPointer, sizeof(unsigned short));
  mPointer += sizeof(unsigned short);
  return t;
 }
 
 void MemoryResource::readUShortArray(unsigned short* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 short MemoryResource::readShort(void)
 {
  short t;
- Memory::copy(&t, mPointer, sizeof(short));
+ NxOgreCopy(&t, mPointer, sizeof(short));
  mPointer += sizeof(short);
  return t;
 }
 
 void MemoryResource::readShortArray(short* t, size_t length)
 {
-Memory::copy(t, mPointer, length);
+NxOgreCopy(t, mPointer, length);
 mPointer += length;
 }
 
 unsigned int MemoryResource::readUInt(void)
 {
  unsigned int t;
- Memory::copy(&t, mPointer, sizeof(unsigned int));
+ NxOgreCopy(&t, mPointer, sizeof(unsigned int));
  mPointer += sizeof(unsigned int);
  return t;
 }
 
 void MemoryResource::readUIntArray(unsigned int* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 int MemoryResource::readInt(void)
 {
  int t;
- Memory::copy(&t, mPointer, sizeof(int));
+ NxOgreCopy(&t, mPointer, sizeof(int));
  mPointer += sizeof(int);
  return t;
 }
 
 void MemoryResource::readIntArray(int* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 float MemoryResource::readFloat(void)
 {
  float t;
- Memory::copy(&t, mPointer, sizeof(float));
+ NxOgreCopy(&t, mPointer, sizeof(float));
  mPointer += sizeof(float);
  return t;
 }
 
 void MemoryResource::readFloatArray(float* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 double MemoryResource::readDouble(void)
 {
  double t;
- Memory::copy(&t, mPointer, sizeof(double));
+ NxOgreCopy(&t, mPointer, sizeof(double));
  mPointer += sizeof(double);
  return t;
 }
 
 void MemoryResource::readDouble(double* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 Real MemoryResource::readReal(void)
 {
  NxOgreRealType t;
- Memory::copy(&t, mPointer, sizeof(NxOgreRealType));
+ NxOgreCopy(&t, mPointer, sizeof(NxOgreRealType));
  mPointer += sizeof(NxOgreRealType);
  return t;
 }
 
 void MemoryResource::readRealArray(NxOgreRealType* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 
 long MemoryResource::readLong(void)
 {
  long t;
- Memory::copy(&t, mPointer, sizeof(long));
+ NxOgreCopy(&t, mPointer, sizeof(long));
  mPointer += sizeof(long);
  return t;
 }
 
 void MemoryResource::readLongArray(long* t, size_t length)
 {
- Memory::copy(t, mPointer, length);
+ NxOgreCopy(t, mPointer, length);
  mPointer += length;
 }
 

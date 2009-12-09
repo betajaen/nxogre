@@ -58,7 +58,7 @@ void PlaneGeometryDescription::reset()
 
 NxShapeDesc* PlaneGeometryDescription::createShapeDescription() const
 {
- NxPlaneShapeDesc* description = NxOgreAllocatedNew<NxPlaneShapeDesc, PhysXClassAllocator>();
+ NxPlaneShapeDesc* description = NXOGRE_NEW_PHYSX(NxPlaneShapeDesc, PhysXClassAllocator);
  setShapeDescription(description);
  description->normal = mNormal.as<NxVec3>();
  description->d = mDistance;

@@ -68,7 +68,7 @@ void BoxDescription::reset()
 
 NxShapeDesc* BoxDescription::createShapeDescription() const
 {
- NxBoxShapeDesc* description = NxOgreAllocatedNew<NxBoxShapeDesc, PhysXClassAllocator>();
+ NxBoxShapeDesc* description = NXOGRE_NEW_PHYSX(NxBoxShapeDesc, PhysXClassAllocator);
  setShapeDescription(description);
  description->dimensions = (mSize * 0.5).as<NxVec3>();
  return description;

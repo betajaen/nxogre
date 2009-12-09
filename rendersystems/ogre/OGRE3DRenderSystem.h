@@ -50,6 +50,14 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::UserBigClassAllocata
      
      typedef NxOgre::ptr_multihashmap<OGRE3DKinematicBody>::iterator_t  KinematicBodyIterator;
      
+     typedef NxOgre::ptr_vector<OGRE3DRenderable>                       Renderables;
+     
+     typedef NxOgre::ptr_vector<OGRE3DRenderable>::iterator_t           RenderableIterator;
+     
+     typedef NxOgre::ptr_vector<OGRE3DPointRenderable>                  PointRenderables;
+     
+     typedef NxOgre::ptr_vector<OGRE3DPointRenderable>::iterator_t      PointRenderableIterator;
+     
      /** \brief OGRE3DRenderSystem constructor.
          \param Scene* Scene to work with
          \param SceneManager SceneManager, or 0 to use the first available.
@@ -169,20 +177,21 @@ class OGRE3DExportClass OGRE3DRenderSystem : public NxOgre::UserBigClassAllocata
      Ogre::SceneManager*                   mSceneManager;
      
      Bodies                                mBodies;
-
+     
      KinematicBodies                       mKinematicBodies;
-
-     NxOgre::Array<OGRE3DRenderable*>      mRenderables;
-
-     NxOgre::Array<OGRE3DPointRenderable*> mPointRenderables;
+     
+     Renderables                           mRenderables;
+     
+     PointRenderables                      mPointRenderables;
      
      OGRE3DRenderable*                     mVisualDebuggerRenderable;
      
      Ogre::SceneNode*                      mVisualDebuggerNode;
-
+     
      bool                                  mVisualDebuggerShown;
      
      static unsigned int                   mUniqueIdentifier;
+     
 };
 
                                                                                        

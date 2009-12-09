@@ -93,7 +93,7 @@ class OGRE3DExportClass OGRE3DBody : public NxOgre::Actor, public NxOgre::TimeLi
    
    /** \internal. Use OGRE3DRenderSystem::destroyBody
    */
-  ~OGRE3DBody(void);
+   virtual ~OGRE3DBody(void);
    
    void _destructNode(OGRE3DSceneNodeDestructorBehaviour);
    
@@ -105,9 +105,6 @@ class OGRE3DExportClass OGRE3DBody : public NxOgre::Actor, public NxOgre::TimeLi
      NxOgre::Enums::Priority             mRenderPriority; //< \brief Render priority.
      OGRE3DSceneNodeDestructorBehaviour  mSceneNodeDestructorBehaviour; //< \brief Behaviour when deleting the SceneNode.
      NxOgre::Matrix44                    mAlphaPose;      //< \brief Interpolation pose.
-     static unsigned int                 mNextBodyID;     //< \brief Not all actors have names. So when it comes to naming
-                                                          //<        nodes and entities. It will use nextBodyID as an unique
-                                                          //<        name; "ogre3d-entity-1", "ogre3d-node-1".
 
 };
 

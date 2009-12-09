@@ -121,7 +121,7 @@ class NxOgrePublicClass Mesh : public ResourceAllocatable
   Buffer<float>&                              getTextureCoords();
 
   /** \brief Save the mesh information into MeshData
-      \note  You should NxOgre_Delete the MeshData pointer after use.
+      \note  You should NXOGRE_DELETE_NXOGRE the MeshData pointer after use.
   */
   MeshData*                                   getMeshData();
   

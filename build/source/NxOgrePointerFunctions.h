@@ -45,10 +45,7 @@ namespace Functions
 
 template<typename type> inline void safe_delete(type* ptr)
 {
- if (ptr == 0)
-  return;
- 
- delete ptr;
+ NXOGRE_DELETE_NXOGRE(ptr);
 }
 
 }

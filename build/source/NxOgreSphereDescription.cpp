@@ -56,7 +56,7 @@ void SphereDescription::reset()
 
 NxShapeDesc* SphereDescription::createShapeDescription() const
 {
- NxSphereShapeDesc* description = NxOgreAllocatedNew<NxSphereShapeDesc, PhysXClassAllocator>();
+ NxSphereShapeDesc* description = NXOGRE_NEW_PHYSX(NxSphereShapeDesc, PhysXClassAllocator);
  setShapeDescription(description);
  description->radius = mRadius;
  return description;

@@ -63,7 +63,7 @@ Cloth::Cloth(const ClothDescription& description, Renderable* renderable, Enums:
  NxClothDesc desc;
  ::NxOgre::Functions::PrototypeFunctions::ClothDescriptionToNxClothDesc(description, desc);
 
- mMeshData = NxOgre_New(PhysXMeshData)(mMesh);
+ mMeshData = NXOGRE_NEW_NXOGRE(PhysXMeshData)(mMesh);
  
  desc.meshData = mMeshData->getMeshData();
  
@@ -81,7 +81,7 @@ Cloth::Cloth(const ClothDescription& description, Renderable* renderable, Enums:
 Cloth::~Cloth()
 {
  TimeController::getSingleton()->removeTimeListener(this, mPriority);
- NxOgre_Delete(mMeshData);
+ NXOGRE_DELETE_NXOGRE(mMeshData);
 }
 
 

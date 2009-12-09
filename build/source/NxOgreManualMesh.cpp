@@ -46,7 +46,7 @@ ManualMesh::ManualMesh(void)
 {
  mMesh = new MeshData();
 
- mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ManualMeshReferenceCounter);
+ mRef = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(RefT));
  (*mRef) = 1;
 }
 
@@ -54,7 +54,7 @@ ManualMesh::~ManualMesh(void)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre::Memory::unallocate(mRef);
+  NXOGRE_DEALLOCATE(FourByteAllocator, mRef);
   delete mMesh;
  }
 }
@@ -63,7 +63,7 @@ ManualMesh& ManualMesh::operator=(ManualMesh& other)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre::Memory::unallocate(mRef);
+  NXOGRE_DEALLOCATE(FourByteAllocator, mRef);
   delete mMesh;
  }
  mMesh      = other.mMesh;
@@ -130,11 +130,11 @@ void ManualMesh::acquire(MeshData* data)
  
  if(--(*mRef) == 0)
  {
-  ::NxOgre::Memory::unallocate(mRef);
+  NXOGRE_DEALLOCATE(FourByteAllocator, mRef);
   delete mMesh;
  }
  
- mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ManualMeshReferenceCounter);
+ mRef = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(RefT));
  (*mRef) = 1;
  
  mMesh = data;

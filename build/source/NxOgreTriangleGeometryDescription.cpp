@@ -59,7 +59,7 @@ void TriangleGeometryDescription::reset()
 
 NxShapeDesc* TriangleGeometryDescription::createShapeDescription() const
 {
- NxTriangleMeshShapeDesc* description = NxOgreAllocatedNew<NxTriangleMeshShapeDesc, PhysXClassAllocator>();
+ NxTriangleMeshShapeDesc* description = NXOGRE_NEW_PHYSX(NxTriangleMeshShapeDesc, PhysXClassAllocator);
  setShapeDescription(description);
  
  description->meshData = (mMesh == 0) ? 0 : mMesh->getAsTriangleMesh();

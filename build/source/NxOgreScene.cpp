@@ -80,7 +80,7 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
   mSceneTimer(0)
 {
 
- mPhysXCallback = NxOgre_New(PhysXCallback)(this);
+ mPhysXCallback = NXOGRE_NEW_NXOGRE(PhysXCallback)(this);
 
  mName = description.mName;
  mNameHash = Functions::StringHash(mName);
@@ -107,7 +107,7 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
   return;
  }
   
-  Material* material = NxOgre_New(Material)(mScene->getMaterialFromIndex(0), this);
+  Material* material = NXOGRE_NEW_NXOGRE(Material)(mScene->getMaterialFromIndex(0), this);
   mMaterials.insert(material->getNameHash(), material);
   mIndexedMaterials.insert(0, material);
   
@@ -140,9 +140,9 @@ Scene::~Scene(void)
   mFluids.clear();
   mCloths.destroyAll();
   mSoftBodies.destroyAll();
-  NxOgre_Delete(mSceneTimer);
+  NXOGRE_DELETE_NXOGRE(mSceneTimer);
   mSDK->releaseScene(*mScene);
-  NxOgre_Delete(mPhysXCallback);
+  NXOGRE_DELETE_NXOGRE(mPhysXCallback);
  }
 }
 
@@ -173,7 +173,7 @@ Scene::ActorIterator Scene::getActors(void)
 
 Actor* Scene::createActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- Actor* actor = NxOgre_New(Actor)(shapes, pose, description, this);
+ Actor* actor = NXOGRE_NEW_NXOGRE(Actor)(shapes, pose, description, this);
  StringHash hash = actor->getNameHash();
  mActors.insert(hash, actor);
  return actor;
@@ -182,7 +182,7 @@ Actor* Scene::createActor(const ShapeDescriptions& shapes, const Matrix44& pose,
   
 Actor* Scene::createActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- Actor* actor = NxOgre_New(Actor)(shape, pose, description, this);
+ Actor* actor = NXOGRE_NEW_NXOGRE(Actor)(shape, pose, description, this);
  StringHash hash = actor->getNameHash();
  mActors.insert(hash, actor);
  return actor;
@@ -190,7 +190,7 @@ Actor* Scene::createActor(const ShapeDescription& shape, const Matrix44& pose, c
 
 SceneGeometry* Scene::createSceneGeometry(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- SceneGeometry* sg = NxOgre_New(SceneGeometry)(shapes, pose, description, this);
+ SceneGeometry* sg = NXOGRE_NEW_NXOGRE(SceneGeometry)(shapes, pose, description, this);
  StringHash hash = sg->getNameHash();
  mSceneGeometries.insert(hash, sg);
  return sg;
@@ -198,7 +198,7 @@ SceneGeometry* Scene::createSceneGeometry(const ShapeDescriptions& shapes, const
 
 SceneGeometry* Scene::createSceneGeometry(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- SceneGeometry* sg = NxOgre_New(SceneGeometry)(shape, pose, description, this);
+ SceneGeometry* sg = NXOGRE_NEW_NXOGRE(SceneGeometry)(shape, pose, description, this);
  StringHash hash = sg->getNameHash();
  mSceneGeometries.insert(hash, sg);
  return sg;
@@ -245,7 +245,7 @@ bool Scene::isProcessing(void) const
 
 Material* Scene::createMaterial(const MaterialDescription& description)
 {
- Material* material = NxOgre_New Material(description, this);
+ Material* material = NXOGRE_NEW_NXOGRE Material(description, this);
  mMaterials.insert(material->getNameHash(), material);
  mIndexedMaterials.insert(material->getIdentifier(), material);
  return material;
@@ -265,7 +265,7 @@ Material* Scene::getMaterial(const MaterialIdentifier& identifier)
 
 KinematicActor* Scene::createKinematicActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- KinematicActor* ka = NxOgre_New(KinematicActor)(shape, pose, description, this);
+ KinematicActor* ka = NXOGRE_NEW_NXOGRE(KinematicActor)(shape, pose, description, this);
  StringHash hash = ka->getNameHash();
  mKinematicActors.insert(hash, ka);
  return ka;
@@ -273,7 +273,7 @@ KinematicActor* Scene::createKinematicActor(const ShapeDescription& shape, const
 
 KinematicActor* Scene::createKinematicActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- KinematicActor* ka = NxOgre_New(KinematicActor)(shapes, pose, description, this);
+ KinematicActor* ka = NXOGRE_NEW_NXOGRE(KinematicActor)(shapes, pose, description, this);
  StringHash hash = ka->getNameHash();
  mKinematicActors.insert(hash, ka);
  return ka;
@@ -281,7 +281,7 @@ KinematicActor* Scene::createKinematicActor(const ShapeDescriptions& shapes, con
 
 KinematicController* Scene::createKinematicController(const Vec3& size, const Vec3& globalPosition)
 {
- KinematicController* controller = NxOgre_New(KinematicController)(size, globalPosition, this);
+ KinematicController* controller = NXOGRE_NEW_NXOGRE(KinematicController)(size, globalPosition, this);
  StringHash hash = controller->getNameHash();
  mKinematicControllers.insert(hash, controller);
  return controller;
@@ -289,7 +289,7 @@ KinematicController* Scene::createKinematicController(const Vec3& size, const Ve
 
 Volume* Scene::createVolume(const ShapeDescription& shape, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
- Volume* vol = NxOgre_New(Volume)(shape, pose, vct, this, callback);
+ Volume* vol = NXOGRE_NEW_NXOGRE(Volume)(shape, pose, vct, this, callback);
  StringHash hash = vol->getNameHash();
  mVolumes.insert(hash, vol);
  return vol;
@@ -297,7 +297,7 @@ Volume* Scene::createVolume(const ShapeDescription& shape, const Matrix44& pose,
 
 Volume* Scene::createVolume(const ShapeDescriptions& shapes, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
- Volume* vol = NxOgre_New(Volume)(shapes, pose, vct, this, callback);
+ Volume* vol = NXOGRE_NEW_NXOGRE(Volume)(shapes, pose, vct, this, callback);
  StringHash hash = vol->getNameHash();
  mVolumes.insert(hash, vol);
  return vol;
@@ -306,7 +306,7 @@ Volume* Scene::createVolume(const ShapeDescriptions& shapes, const Matrix44& pos
 void Scene::destroyJoint(Joint* joint)
 {
  mJoints.remove(joint);
- NxOgre_Delete(joint);
+ NXOGRE_DELETE_NXOGRE(joint);
 }
 
 SphericalJoint* Scene::createSphericalJoint(RigidBody* first, const SphericalJointDescription& desc)
@@ -534,7 +534,7 @@ void Scene::unregisterMachine(Machine* machine)
 
 Cloth* Scene::createCloth(const ClothDescription& description, Renderable* renderable, Enums::Priority rp)
 {
- Cloth* cloth = NxOgre_New(Cloth)(description, renderable, rp, this);
+ Cloth* cloth = NXOGRE_NEW_NXOGRE(Cloth)(description, renderable, rp, this);
  mCloths.insert(cloth);
  return cloth;
 }
@@ -542,12 +542,12 @@ Cloth* Scene::createCloth(const ClothDescription& description, Renderable* rende
 void Scene::destroyCloth(Cloth* cloth)
 {
  mCloths.remove(cloth);
- NxOgre_Delete(cloth);
+ NXOGRE_DELETE_NXOGRE(cloth);
 }
 
 SoftBody* Scene::createSoftBody(const SoftBodyDescription& description, Renderable* renderable, Enums::Priority rp)
 {
- SoftBody* cloth = NxOgre_New(SoftBody)(description, renderable, rp, this);
+ SoftBody* cloth = NXOGRE_NEW_NXOGRE(SoftBody)(description, renderable, rp, this);
  mSoftBodies.insert(cloth);
  return cloth;
 }
@@ -555,12 +555,12 @@ SoftBody* Scene::createSoftBody(const SoftBodyDescription& description, Renderab
 void Scene::destroySoftBody(SoftBody* cloth)
 {
  mSoftBodies.remove(cloth);
- NxOgre_Delete(cloth);
+ NXOGRE_DELETE_NXOGRE(cloth);
 }
 
 Fluid* Scene::createFluid(const FluidDescription& description, Renderable* renderable, Enums::Priority rp)
 {
- Fluid* fluid = NxOgre_New(Fluid)(description, renderable, rp, this);
+ Fluid* fluid = NXOGRE_NEW_NXOGRE(Fluid)(description, renderable, rp, this);
  StringHash hash = fluid->getNameHash();
  mFluids.insert(hash, fluid);
  return fluid;
@@ -606,13 +606,13 @@ unsigned int Scene::linearOBBSweep(const SimpleBox& box, const Vec3& motion, uns
 
 SweepCache* Scene::createSweepCache()
 {
- return NxOgre_New(SweepCache)(mScene->createSweepCache());
+ return NXOGRE_NEW_NXOGRE(SweepCache)(mScene->createSweepCache());
 }
 
 void Scene::destroySweepCache(SweepCache* cache)
 {
  mScene->releaseSweepCache(cache->getCache());
- NxOgre_Delete(cache);
+ NXOGRE_DELETE_NXOGRE(cache);
 }
 
                                                                                        

@@ -290,7 +290,7 @@ Buffer<float>& Mesh::getTextureCoords()
 
 MeshData* Mesh::getMeshData()
 {
- MeshData* data = NxOgre_New(MeshData)();
+ MeshData* data = NXOGRE_NEW_NXOGRE(MeshData)();
  data->mType = getType();
  if (mType == NxOgre::Enums::MeshType_Triangle)
   Serialisation::MeshSerialiser::saveTriangleMesh(mMesh.mTriangle, data);

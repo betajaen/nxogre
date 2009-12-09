@@ -34,7 +34,7 @@
 #include "NxOgreFunctions.h"
 #include "NxOgreTimeController.h"
 
-unsigned int OGRE3DBody::mNextBodyID = 0;
+#include <iostream>
 
                                                                                        
 
@@ -81,6 +81,8 @@ OGRE3DBody::OGRE3DBody(const NxOgre::ShapeDescriptions& shapes, const NxOgre::Ma
 
 OGRE3DBody::~OGRE3DBody()
 {
+ 
+ std::cout << "\n\n\nOGRE3DBody Destructor\n\n\n\n";
  
  // Stop NxOgre calling the advance function in the future, otherwise bad things would happen.
  NxOgre::TimeController::getSingleton()->removeTimeListener(this, mRenderPriority);

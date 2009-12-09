@@ -51,7 +51,7 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
 {
  mNameHash = Functions::StringHash(mName);
  
- mParticleData = NxOgre_New(PhysXParticleData)();
+ mParticleData = NXOGRE_NEW_NXOGRE(PhysXParticleData)();
  mParticleData->configure(description.mMaxParticles, 2);
  
  NxFluidDesc fd;
@@ -122,7 +122,7 @@ Fluid::~Fluid()
   mFluid = 0;
  }
  
- NxOgre_Delete(mParticleData);
+ NXOGRE_DELETE_NXOGRE(mParticleData);
  
 }
 

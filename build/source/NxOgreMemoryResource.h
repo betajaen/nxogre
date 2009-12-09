@@ -34,7 +34,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 #include "NxOgreResource.h"
-#include "NxOgrePointerClass.h"
+
 
                                                                                        
 

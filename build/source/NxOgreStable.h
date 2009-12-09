@@ -83,74 +83,6 @@
 
                                                                                        
 
-/** \brief Global new operator/function for every NxOgre class that requires to be a pointer.
-    \example
-     <code>
-      Actor* a = NxOgre_New (arg0, arg1, ...);
-     </code>
-*/
-#define  NxOgre_New new
-
-/** \brief Global new operator/function for every user class (and classes that do not inherit Allocatable) which
-           wishes to be tracked and allocated by the NxOgre Memory class.
-    \note  Unless you want to inherit from NxOgre::PointerClass (and use NxOgre_New) the allocator
-           will allocate it as "_UserClass".
-    \example
-     <code>
-      class myClass
-      {
-       ...
-      };
-      ...
-      myClass* myclass_ptr = NxOgre_NewT(myClass)(arg0, arg1, ...);
-     </code>
-*/
-#define  NxOgre_NewT(USER_CLASS) new (::NxOgre::Memory::allocate(sizeof(USER_CLASS), ::NxOgre::Classes::_UserClass, __FILE__, __LINE__)) USER_CLASS
-
-/** \brief Global delete operator/function for every NxOgre class that requires to be deleted.
-    \example
-     <code>
-      NxOgre_Delete(a);
-     </code>
-*/
-#define NxOgre_Delete(PTR) {if(PTR){delete PTR;PTR=0;}}
-
-/** \brief Global delete operator/function for a user's class which has been previously created via NxOgre_NewT
-    \example
-     <code>
-       NxOgre_DeleteT(myClass, myclass_ptr);
-     </code>
-*/
-#define NxOgre_DeleteT(TYPE, PTR) {if(PTR){PTR->~TYPE();::NxOgre::Memory::unallocate(PTR);PTR=0}}
-
-/** \brief NxOgre's version of "malloc"; always used by NxOgre and PhysX, and can be used by the user if needed.
-    \example
-      <code>
-       int* i = (int*) NxOgre_Allocate(sizeof(int), NxOgre::Classes::_int);
-      </code>
-*/
-#if NxOgreMemoryDebugger == 1
-#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre::Memory::allocate(SIZE, CLASSES_TYPE, __FILE__, __LINE__);
-#else
-#  define NxOgre_Allocate(SIZE, CLASSES_TYPE) ::NxOgre::Memory::allocate(SIZE);
-#endif
-
-/** \brief NxOgre's version of "free"; always used by NxOgre and PhysX, and can be used by the user if needed.
-    \example
-      <code>
-      NxOgre_Unallocate(i);
-      </code>
-*/
-#define NxOgre_Unallocate(PTR) {if(PTR){::NxOgre::Memory::unallocate(PTR);PTR=0;}}
-
-/** \brief NxOgre's version of "realloc"; always used by NxOgre and PhysX, and can be used by the user if needed.
-    \example
-      <code>
-       i = NxOgre_Reallocate(i, sizeof(int) * 2);
-      </code>
-*/
-#define NxOgre_Reallocate(PTR, NEW_SIZE)      ::NxOgre::Memory::reallocate(PTR, NEW_SIZE)
-
 #define NxOgre_ExceptionNoClassType 0
 
 #define NxOgre_ThrowException(EXCEPTION, DESCRIPTION, CLASS_TYPE) throw EXCEPTION(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE);
@@ -169,9 +101,11 @@
 
 #ifdef NXOGRE_SDK
 // All classes that use the TinyClassAllocatable, must use this macro when the class is defined.
-#  define NxOgreTinyClassRestriction(CLASS) extern char NxOgreCompileAssert[size_t(sizeof(CLASS) == 16 ? 1 : -1)];
+#  define NxOgreSixteenBytesRestriction(CLASS) extern char NxOgreCompileAssert[size_t(sizeof(CLASS) == 16 ? 1 : -1)];
+#  define NxOgreFourBytesRestriction(CLASS) extern char NxOgreCompileAssert[size_t(sizeof(CLASS) == 4 ? 1 : -1)];
 #else
-#  define NxOgreTinyClassRestriction(CLASS)
+#  define NxOgreSixteenBytesRestriction(CLASS)
+#  define NxOgreFourBytesRestriction(CLASS)
 #endif
 
                                                                                        

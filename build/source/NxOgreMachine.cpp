@@ -56,7 +56,7 @@ void Machine::simulate(float user_deltaTime)
 
 MachinePart* Machine::createWheelMachinePart(Wheel* wheel, PointRenderable* point_renderable)
 {
- WheelMachinePart* part = NxOgre_New(WheelMachinePart)(wheel, point_renderable);
+ WheelMachinePart* part = NXOGRE_NEW_NXOGRE(WheelMachinePart)(wheel, point_renderable);
  mMachineParts.insert(part);
  return part;
 }

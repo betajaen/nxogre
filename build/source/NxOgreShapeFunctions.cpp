@@ -66,42 +66,42 @@ Shape* createNull(NxShape* shape)
 
 Shape* createPlane(NxShape* shape)
 {
- return NxOgre_New PlaneGeometry(shape->isPlane());
+ return NXOGRE_NEW_NXOGRE PlaneGeometry(shape->isPlane());
 }
 
 Shape* createBox(NxShape* shape)
 {
- return NxOgre_New Box(shape->isBox());
+ return NXOGRE_NEW_NXOGRE Box(shape->isBox());
 }
 
 Shape* createCapsule(NxShape* shape)
 {
- return NxOgre_New Capsule(shape->isCapsule());
+ return NXOGRE_NEW_NXOGRE Capsule(shape->isCapsule());
 }
 
 Shape* createSphere(NxShape* shape)
 {
- return NxOgre_New Sphere(shape->isSphere());
+ return NXOGRE_NEW_NXOGRE Sphere(shape->isSphere());
 }
 
 Shape* createWheel(NxShape* shape)
 {
- return NxOgre_New Wheel(shape->isWheel());
+ return NXOGRE_NEW_NXOGRE Wheel(shape->isWheel());
 }
 
 Shape* createConvex(NxShape* shape)
 {
- return NxOgre_New Convex(shape->isConvexMesh(), static_cast<Mesh*>(shape->userData));
+ return NXOGRE_NEW_NXOGRE Convex(shape->isConvexMesh(), static_cast<Mesh*>(shape->userData));
 }
 
 Shape* createHeightField(NxShape* shape)
 {
- return NxOgre_New HeightFieldGeometry(shape->isHeightField(), static_cast<HeightField*>(shape->userData));
+ return NXOGRE_NEW_NXOGRE HeightFieldGeometry(shape->isHeightField(), static_cast<HeightField*>(shape->userData));
 }
 
 Shape* createTriangleMesh(NxShape* shape)
 {
- return NxOgre_New TriangleGeometry(shape->isTriangleMesh(), static_cast<Mesh*>(shape->userData));
+ return NXOGRE_NEW_NXOGRE TriangleGeometry(shape->isTriangleMesh(), static_cast<Mesh*>(shape->userData));
 }
 
 typedef Shape* (*ShapeFunction)(NxShape*);
@@ -131,7 +131,7 @@ struct ShapeBinder
 Shape* createShape(NxShape* physx_shape, RigidBody* rigid_body)
 {
  Shape* shape = mFunctions[int(physx_shape->getType())] (physx_shape);
- physx_shape->userData = NxOgre_New PhysXPointer(shape, shape->getShapeType(), rigid_body);
+ physx_shape->userData = NXOGRE_NEW_NXOGRE PhysXPointer(shape, shape->getShapeType(), rigid_body);
  return shape;
 }
 

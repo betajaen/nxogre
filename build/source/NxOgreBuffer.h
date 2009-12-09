@@ -48,21 +48,17 @@ template<class T> class  Buffer;
 
 namespace Functions
 {
-  
-  template<typename T> class BufferFunctions
-  {
-    public:
-    
-    friend class ::NxOgre::Buffer<T>;
-    
-    typedef typename T* TIterator;
-    
-    static const int nPos = -1;
-    
-    class SharedBuffer
+ 
+    template<typename T> class SharedBuffer : public SixteenBytesAllocatable
     {
       public:
         
+       friend class ::NxOgre::Buffer<T>;
+       
+       typedef typename T* TIterator;
+       
+       static const int nPos = -1;
+
         SharedBuffer(int type = ::NxOgre::Classes::USER_CLASS)
         {
          _First = _Last = _End = 0;
@@ -72,44 +68,51 @@ namespace Functions
         ~SharedBuffer()
         {
          if (_First)
-          ::NxOgre::Memory::unallocate(_First);
+         {
+          NXOGRE_DEALLOCATE(FrequentOperationsAllocator, _First);
+         }
          _First = _Last = _End = 0;
-        }
-        
-        void* operator new(size_t size)
-        {
-         return NxOgre_Allocate(size, ::NxOgre::Classes::_SharedBuffer);
-        }
-        
-        void operator delete(void* ptr)
-        {
-         ::NxOgre::Memory::unallocate(ptr);
         }
         
         TIterator _First, _Last, _End;
         int       _Type;
     };
     
+  NxOgreSixteenBytesRestriction(SharedBuffer<int>);
+
+  template<typename T> class BufferFunctions
+  {
+    public:
+    
+    friend class ::NxOgre::Buffer<T>;
+    
+    typedef typename T* TIterator;
+    
+    typedef typename SharedBuffer<T> SharedBufferT;
+
+    static const int nPos = -1;
+    
+    
     class Functions
     {
       public:
         
-       static size_t size(SharedBuffer* shared_list)
+       static size_t size(SharedBufferT* shared_list)
        {
         return size_t(shared_list->_Last - shared_list->_First);
        }
         
-       static size_t capacity(SharedBuffer* shared_list)
+       static size_t capacity(SharedBufferT* shared_list)
        {
         return size_t(shared_list->_End - shared_list->_First);
        }
         
-       static T& get(SharedBuffer* shared_list, size_t nth_pos)
+       static T& get(SharedBufferT* shared_list, size_t nth_pos)
        {
         return *(shared_list->_First + nth_pos);
        }
         
-       static size_t where(SharedBuffer* shared_list, const T& t)
+       static size_t where(SharedBufferT* shared_list, const T& t)
        {
         TIterator begin = shared_list->_First, last = shared_list->_Last;
         for (;begin != last; ++begin)
@@ -118,7 +121,7 @@ namespace Functions
         return nPos;
        }
        
-       static void insert(SharedBuffer* shared_list, const T& t)
+       static void insert(SharedBufferT* shared_list, const T& t)
        {
         if (shared_list->_End <= shared_list->_Last)
         {
@@ -129,29 +132,29 @@ namespace Functions
         shared_list->_Last++;
        }
 
-       static void insertMany(SharedBuffer* shared_buffer, T* t_ptr, unsigned int length)
+       static void insertMany(SharedBufferT* shared_buffer, T* t_ptr, unsigned int length)
        {
         if (shared_list->_End <= shared_list->_Last + length)
         {
          size_t new_size = size(shared_list) == 0 ? length : size(shared_list) + length ;
          reserve(shared_list, new_size);
         }
-        Memory::copy(shared_list->_Last, t_ptr, sizeof(T) * length);
+        NxOgreCopy(shared_list->_Last, t_ptr, sizeof(T) * length);
         shared_list->_Last += length;
        }
         
-       static void insertMany(SharedBuffer* shared_list, unsigned int length, const void* t_ptr)
+       static void insertMany(SharedBufferT* shared_list, unsigned int length, const void* t_ptr)
        {
         if (shared_list->_End <= shared_list->_Last + length)
         {
          size_t new_size = size(shared_list) == 0 ? length : size(shared_list) + length ;
          reserve(shared_list, new_size);
         }
-        Memory::copy(shared_list->_Last, t_ptr, sizeof(T) * length);
+        NxOgreCopy(shared_list->_Last, t_ptr, sizeof(T) * length);
         shared_list->_Last += length;
        }
 
-       static void removeAll(SharedBuffer* shared_list)
+       static void removeAll(SharedBufferT* shared_list)
        {
         shared_list->_Last = shared_list->_First;
        }
@@ -162,26 +165,26 @@ namespace Functions
          *dest = *begin;
        }
         
-       static void clip(SharedBuffer* shared_list, size_t new_size)
+       static void clip(SharedBufferT* shared_list, size_t new_size)
        {
         if (new_size < size(shared_list))
          return;
         resize(shared_list, new_size);
        }
         
-       static void reserve(SharedBuffer* shared_list, size_t new_size)
+       static void reserve(SharedBufferT* shared_list, size_t new_size)
        {
         if (capacity(shared_list) >= new_size)
          return;
         resize(shared_list, new_size);
        }
         
-       static void resize(SharedBuffer* shared_list, size_t new_size)
+       static void resize(SharedBufferT* shared_list, size_t new_size)
        {
-        TIterator new_first = (TIterator) NxOgre_Allocate(new_size * sizeof(T), -(shared_list->_Type));
+        TIterator new_first = (TIterator) NXOGRE_ALLOCATE(FrequentOperationsAllocator, (new_size * sizeof(T)));
         copy(shared_list->_First, shared_list->_Last, new_first);
         range_destruct(shared_list->_First, shared_list->_Last);
-        ::NxOgre::Memory::unallocate(shared_list->_First);
+        NXOGRE_DEALLOCATE(FrequentOperationsAllocator, shared_list->_First);
         shared_list->_End = new_first + new_size;
         shared_list->_Last = new_first + size(shared_list);
         shared_list->_First = new_first;
@@ -207,23 +210,23 @@ namespace Functions
 template<typename T> class  Buffer
 {
   
-  typedef typename ::NxOgre::Functions::BufferFunctions<T>::TIterator  Iterator;
-  typedef typename ::NxOgre::Functions::BufferFunctions<T>::SharedBuffer TPayload;
-  typedef typename ::NxOgre::Functions::BufferFunctions<T>::Functions  TFunctions;
+  typedef typename ::NxOgre::Functions::BufferFunctions<T>::TIterator    Iterator;
+  typedef typename ::NxOgre::Functions::SharedBuffer<T> TPayload;
+  typedef typename ::NxOgre::Functions::BufferFunctions<T>::Functions    TFunctions;
 
   public:
 
    Buffer(void)
    {
-    _T = NxOgre_New(TPayload)(::NxOgre::Classes::_BufferUnknown);
-    _Usage = (RefT*)  NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_BufferReferenceCounter);
+    _T = NXOGRE_NEW_NXOGRE TPayload();
+    _Usage = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(unsigned int));
     (*_Usage) = 1;
    };
 
    Buffer(int type)
    {
-    _T = NxOgre_New(TPayload)(type);
-    _Usage = (RefT*)  NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_BufferReferenceCounter);
+    _T = NXOGRE_NEW_NXOGRE TPayload();
+    _Usage = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(unsigned int));
     (*_Usage) = 1;
    };
 
@@ -239,8 +242,8 @@ template<typename T> class  Buffer
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre::Memory::unallocate(_Usage);
-     delete _T;
+     NXOGRE_DEALLOCATE(FourByteAllocator, _Usage);
+     NXOGRE_DELETE_NXOGRE(_T);
     }
    }
 
@@ -248,8 +251,8 @@ template<typename T> class  Buffer
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre::Memory::unallocate(_Usage);
-     delete _T;
+     NXOGRE_DEALLOCATE(FourByteAllocator, _Usage);
+     NXOGRE_DELETE_NXOGRE(_T);
     }
     _T      = other._T;
     _Usage  = other._Usage;

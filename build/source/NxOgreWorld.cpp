@@ -48,9 +48,6 @@
 #include "NxPhysics.h"
 #include "NxCooking.h"
 
-#if NxOgreMemoryDebugger == 1
-extern void setNxOgreCreationStatus(int);
-#endif
                                                                                        
 
 namespace NxOgre
@@ -77,15 +74,15 @@ void World::precreateSingletons(void)
  mCookingInterface->NxInitCooking();
  
  if (ErrorStream::getSingleton() == 0)
-  NxOgre_New(ErrorStream)();
+  NXOGRE_NEW_NXOGRE ErrorStream();
  if (ResourceSystem::getSingleton() == 0)
-  NxOgre_New(ResourceSystem)();
+  NXOGRE_NEW_NXOGRE ResourceSystem();
  if (MeshManager::getSingleton() == 0)
-  NxOgre_New(MeshManager)();
+  NXOGRE_NEW_NXOGRE MeshManager();
  if (HeightFieldManager::getSingleton() == 0)
-  NxOgre_New(HeightFieldManager)();
+  NXOGRE_NEW_NXOGRE HeightFieldManager();
  if (TimeController::getSingleton() == 0)
-  NxOgre_New(TimeController)();
+  NXOGRE_NEW_NXOGRE TimeController();
  
 #ifdef NXOGRE_OPTIONS_USE_LOG
  {
@@ -94,7 +91,7 @@ void World::precreateSingletons(void)
    ErrorStream::getSingleton()->setLogResource(resource);
  }
 #endif
-
+ 
 }
 
 void World::destroySingletons(void)
@@ -103,31 +100,31 @@ void World::destroySingletons(void)
  if (ErrorStream::getSingleton() != 0)
  {
   ErrorStream* error_stream = ErrorStream::getSingleton();
-  NxOgre_Delete(error_stream);
+  NXOGRE_DELETE_NXOGRE(error_stream);
  }
 
  if (TimeController::getSingleton() != 0)
  {
   TimeController* time_controller = TimeController::getSingleton();
-  NxOgre_Delete(time_controller);
+  NXOGRE_DELETE_NXOGRE(time_controller);
  }
 
  if (ResourceSystem::getSingleton() != 0)
  {
   ResourceSystem* resource_system = ResourceSystem::getSingleton();
-  NxOgre_Delete(resource_system);
+  NXOGRE_DELETE_NXOGRE(resource_system);
  }
  
  if (MeshManager::getSingleton() != 0)
  {
   MeshManager* mesh_manager = MeshManager::getSingleton();
-  NxOgre_Delete(mesh_manager);
+  NXOGRE_DELETE_NXOGRE(mesh_manager);
  }
  
  if (HeightFieldManager::getSingleton() != 0)
  {
   HeightFieldManager* hf_manager = HeightFieldManager::getSingleton();
-  NxOgre_Delete(hf_manager);
+  NXOGRE_DELETE_NXOGRE(hf_manager);
  }
  
  mCookingInterface->NxCloseCooking();
@@ -141,7 +138,7 @@ World* World::createWorld(const WorldDescription& description)
   return 0;
  
  precreateSingletons();
- World::sWorldInstance = NxOgreNew World(description);
+ World::sWorldInstance = NXOGRE_NEW_NXOGRE World(description);
  return World::sWorldInstance;
  
 }
@@ -152,10 +149,15 @@ void World::destroyWorld(bool also_destroy_singletons)
  if (World::sWorldInstance == 0)
   return;
  
- NxOgreDelete(World::sWorldInstance);
+ // Clear all scenes
+ World::sWorldInstance->mScenes.clear();
  
+ // Clear all singletons
  if (also_destroy_singletons)
   destroySingletons();
+ 
+ // Shutdown PhysX.
+ NXOGRE_DELETE_NXOGRE(World::sWorldInstance);
  
 }
 
@@ -163,11 +165,8 @@ World::World(const WorldDescription& description)
 : mSDK(0), mDeadSDK(false), mPhysXOutputStream(0), mPhysXUserAllocator(0), mNullCallback(0)
 {
  
-#if NxOgreMemoryDebugger == 1
- setNxOgreCreationStatus(2);
-#endif
- mPhysXOutputStream = NxOgre_New(PhysXOutputStream)();
- mPhysXUserAllocator = NxOgre_New(PhysXUserAllocator)();
+ mPhysXOutputStream = NXOGRE_NEW_NXOGRE PhysXOutputStream();
+ mPhysXUserAllocator = NXOGRE_NEW_NXOGRE PhysXUserAllocator();
   
  NxPhysicsSDKDesc sdk_description;
  sdk_description.cookerThreadMask = description.mCookerThreadMask;
@@ -198,7 +197,7 @@ World::World(const WorldDescription& description)
   return;
  }
 
- mNullCallback = NxOgre_New(Callback)();
+ mNullCallback = NXOGRE_NEW Callback();
 
  mVisualDebugger = new VisualDebugger(this);
  mRemoteDebugger = new RemoteDebugger(this);
@@ -208,22 +207,18 @@ World::World(const WorldDescription& description)
 World::~World(void)
 {
  
- NxOgre_Delete(mRemoteDebugger);
- NxOgre_Delete(mVisualDebugger);
+ NXOGRE_DELETE_NXOGRE(mRemoteDebugger);
+ NXOGRE_DELETE_NXOGRE(mVisualDebugger);
  
  mScenes.clear();
  
  if (!mDeadSDK && mSDK)
   mSDK->release();
  
- NxOgre_Delete(mNullCallback);
- NxOgre_Delete(mPhysXOutputStream);
- NxOgre_Delete(mPhysXUserAllocator);
+ NXOGRE_DELETE_NXOGRE(mNullCallback);
+ NXOGRE_DELETE_NXOGRE(mPhysXOutputStream);
+ NXOGRE_DELETE_NXOGRE(mPhysXUserAllocator);
  
-#if NxOgreMemoryDebugger == 1
- setNxOgreCreationStatus(1);
-#endif
-
 }
 
 bool World::isDead(void) const
@@ -233,7 +228,7 @@ bool World::isDead(void) const
 
 Scene* World::createScene(const NxOgre::SceneDescription& description)
 {
- Scene* scene = NxOgre_New(Scene)(description, mSDK);
+ Scene* scene = NXOGRE_NEW_NXOGRE Scene(description, mSDK);
  StringHash hash = scene->getNameHash();
  mScenes.insert(hash, scene);
  return scene;

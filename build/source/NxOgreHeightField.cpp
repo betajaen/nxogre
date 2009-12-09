@@ -33,9 +33,12 @@
 #include "NxOgreXFunctions.h"
 #include "NxOgreManualHeightField.h"
 #include "NxOgrePhysXUserEntityReport.h"
+#include "NxOgreWorld.h"
 
 #include "NxPhysics.h"
 
+
+#include <iostream>
                                                                                        
 
 namespace NxOgre
@@ -65,11 +68,15 @@ HeightField::HeightField(const String& name, NxHeightField* hf)
 
 HeightField::~HeightField(void)
 {
+ 
  if (mHeightField == 0)
   return;
  
  NxPhysicsSDK* sdk = NxGetPhysicsSDK();
- sdk->releaseHeightField(*mHeightField);
+ 
+ if (sdk)
+  sdk->releaseHeightField(*mHeightField);
+ 
 }
 
 

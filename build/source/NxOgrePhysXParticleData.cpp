@@ -46,8 +46,8 @@ PhysXParticleData::PhysXParticleData()
 
 PhysXParticleData::~PhysXParticleData(void)
 {
- //NxOgre_Delete(mNbParticles);
- NxOgre_Unallocate(mNbParticles);
+ if (mNbParticles)
+  NXOGRE_DEALLOCATE(FourByteAllocator, mNbParticles);
 }
 
 NxParticleData PhysXParticleData::getParticleData()
@@ -134,7 +134,7 @@ void PhysXParticleData::configure(size_t maxParticles, size_t modifier)
  
  if (mNbParticles == 0)
  {
-  mNbParticles = (unsigned int*) NxOgre_Allocate(sizeof(unsigned int), ::NxOgre::Classes::_unsigned_int);
+  mNbParticles = (unsigned int*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(unsigned int));
   (*mNbParticles) = 0;
  }
  

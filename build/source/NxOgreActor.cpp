@@ -36,6 +36,8 @@
 #include "NxActor.h"
 #include "NxScene.h"
 
+#include <iostream>
+
                                                                                        
 
 namespace NxOgre

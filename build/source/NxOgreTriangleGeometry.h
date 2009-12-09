@@ -34,7 +34,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
-#include "NxOgrePointerClass.h"
+
 #include "NxOgreShape.h"
 #include "NxOgreShapeDescription.h"
 #include "NxOgreShapeFunctions.h"

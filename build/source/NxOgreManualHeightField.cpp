@@ -59,7 +59,7 @@ HeightFieldData::~HeightFieldData()
 ManualHeightField::ManualHeightField(void)
 {
  mHeightField = new HeightFieldData();
- mRef = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ManualHeightFieldReferenceCounter);
+ mRef = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, (sizeof(RefT)));
  (*mRef) = 1;
 }
 
@@ -67,7 +67,7 @@ ManualHeightField::~ManualHeightField(void)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre::Memory::unallocate(mRef);
+  NXOGRE_DEALLOCATE(FourByteAllocator, mRef);
   delete mHeightField;
  }
 }
@@ -76,7 +76,7 @@ ManualHeightField& ManualHeightField::operator=(ManualHeightField& other)
 {
  if(--(*mRef) == 0)
  {
-  ::NxOgre::Memory::unallocate(mRef);
+  NXOGRE_DEALLOCATE(FourByteAllocator, mRef);
   delete mHeightField;
  }
  mHeightField   = other.mHeightField;

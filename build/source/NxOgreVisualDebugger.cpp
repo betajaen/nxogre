@@ -44,12 +44,12 @@ namespace NxOgre
 VisualDebugger::VisualDebugger(World* world)
 : mWorld(world), mRenderable(0), mMeshData(0)
 {
- mMeshData = NxOgre_New(VisualDebuggerMeshData)();
+ mMeshData = NXOGRE_NEW_NXOGRE VisualDebuggerMeshData();
 }
 
 VisualDebugger::~VisualDebugger(void)
 {
- NxOgre_Delete(mMeshData);
+ NXOGRE_DELETE_NXOGRE(mMeshData);
 }
 
 void VisualDebugger::setRenderable(Renderable* renderable)

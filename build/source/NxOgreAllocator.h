@@ -32,8 +32,6 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include <map>
-#include <fstream>
 
                                                                                        
 
@@ -41,105 +39,6 @@ namespace NxOgre
 {
 
                                                                                        
-
-class MallocAllocator
-{
-  
- public:
-  
-  MallocAllocator()
-  {
-  }
-
-  ~MallocAllocator()
-  {
-  }
-
-  static inline void* allocateBytes(size_t length, const char* file, unsigned int line)
-  {
-   return malloc(length);
-  }
-  
-  static inline void* allocateBytes(size_t length)
-  {
-   return malloc(length);
-  }
-  
-  static inline void* reallocateBytes(void* memory, size_t newLength)
-  {
-   return realloc(memory, newLength);
-  }
-  
-  static inline void deallocateBytes(void* memory)
-  {
-   free(memory);
-  }
-  
-};
-
-
-class TrackedMallocAllocator
-{
- public:
-
-  TrackedMallocAllocator()
-  {
-  }
-
- ~TrackedMallocAllocator()
-  {
-   #ifdef NXOGRE_MEMORY_DEBUGGER_USEFILE
-    std::ofstream s("NxOgreLeaks.txt");
-    for (std::map<void*, size_t>::iterator i = sMemory.begin(); i != sMemory.end(); i++)
-     s << (*i).first << " => " << (*i).second << " b\n";
-    s.close();
-   #endif
-  }
-
-  static inline void* allocateBytes(size_t length, const char* file, unsigned int line)
-  {
-   void* ptr = malloc(length);
-   pushMem(ptr, length, file, line);
-   return ptr;
-  }
-
-  static inline void* allocateBytes(size_t length)
-  {
-   void* ptr = malloc(length);
-   pushMem(ptr, length,0,0);
-   return ptr;
-  }
-
-  static inline void* reallocateBytes(void* memory, size_t newLength)
-  {
-   void* newPtr = realloc(memory, newLength);
-   popMem(memory);
-   pushMem(newPtr, newLength, 0, 0);
-  }
-
-  static inline void deallocateBytes(void* memory)
-  {
-   free(memory);
-   popMem(memory);
-  }
-
- protected:
-
-  static void pushMem(void* ptr, size_t length, const char* file, unsigned int line)
-  {
-   sMemory.insert(std::pair<void*, size_t>(ptr, length));
-  }
-
-  static void popMem(void* ptr)
-  {
-   std::map<void*, size_t>::iterator i = sMemory.find(ptr);
-   if (i != sMemory.end())
-    sMemory.erase(i);
-  }
-
-  static std::map<void*, size_t> sMemory;
-
-};
 
 template<class SpecialisedAllocator> class Allocator : public SpecialisedAllocator {};
 
@@ -154,22 +53,38 @@ template<class Allocator> class Allocatable
   
   void* operator new (size_t length, const char* file, int line)
   {
+#ifdef NXOGRE_DEBUG
    return Allocator::allocateBytes(length, file, line);
+#else
+   return Allocator::allocateBytes(length);
+#endif
   }
   
   void* operator new(size_t length)
   {
+#ifdef NXOGRE_DEBUG
+   return Allocator::allocateBytes(length, 0, 0);
+#else
    return Allocator::allocateBytes(length);
+#endif
   }
 
   void* operator new[](size_t length, const char* file, int line)
   {
+#ifdef NXOGRE_DEBUG
    return Allocator::allocateBytes(length, file, line);
+#else
+   return Allocator::allocateBytes(length);
+#endif
   }
   
   void* operator new[](size_t length)
-  { 
+  {
+#ifdef NXOGRE_DEBUG
+   return Allocator::allocateBytes(length, 0, 0);
+#else
    return Allocator::allocateBytes(length);
+#endif
   }
 
   void operator delete(void* ptr)
@@ -194,100 +109,27 @@ template<class Allocator> class Allocatable
 
 };
 
-
-#define NxOgreNew new
-
-#define NxOgreDelete(PTR) if (PTR){delete PTR;PTR=0;}
-
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
+/* Macro for new, for any class that doesn't inherit from allocatable and won't be involved with the allocator.
 */
-template<typename T, class Allocator> inline T* NxOgreAllocatedNew()
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T();
- return ptr;
-}
+#define NXOGRE_NEW new
 
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
+/* Non-Safe way of deleting a class that inherits from Alloctable.
 */
-template<typename T, class Allocator, typename _0> inline T* NxOgreAllocatedNew(const _0& arg0)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0);
- return ptr;
-}
+#define NXOGRE_DELETE(PTR) if (PTR){delete PTR;PTR=0;}
 
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
+/* Safe way of new'ing a class that inherits from Allocatable.
 */
-template<typename T, class Allocator, typename _0, typename _1> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0, arg1);
- return ptr;
-}
+#ifdef NXOGRE_DEBUG
+#define NXOGRE_NEW_NXOGRE new(__FILE__, __LINE__)
+#else
+#define NXOGRE_NEW_NXOGRE new
+#endif
 
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
+/* Safe way of deleting a class that inherits from Alloctable.
 */
-template<typename T, class Allocator, typename _0, typename _1, typename _2> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0, arg1, arg2);
- return ptr;
-}
+#define NXOGRE_DELETE_NXOGRE(A_PTR) if (A_PTR){delete A_PTR;A_PTR=0;}
 
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
-*/
-template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0, arg1, arg2, arg3);
- return ptr;
-}
-
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
-*/
-template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4);
- return ptr;
-}
-
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
-*/
-template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4, typename _5> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4, const _5& arg5)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4, arg5);
- return ptr;
-}
-
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
-*/
-template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4, typename _5, typename _6> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4, const _5& arg5, const _6& arg6)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
- return ptr;
-}
-
-/* Safe way of new'ing a class through an Allocator.
-   Note: Only classes that don't inherit from Allocatable should use this function.
-*/
-template<typename T, class Allocator, typename _0, typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const _3& arg3, const _4& arg4, const _5& arg5, const _6& arg6, const _7& arg7)
-{
- void* mem = Allocator::allocateBytes(sizeof(T));
- T* ptr = new(mem) T(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
- return ptr;
-}
+#define NXOGRE_DELETE_PHYSX(TYPE, ALLOCATOR, PTR) NxOgreAllocatedDelete<TYPE, ALLOCATOR>(PTR);PTR=0;
 
 /* Safe way of deleting a pointer of a class that was previously new'd through NxOgreAllocatedNew
    Note: Only classes that don't inherit from Allocatable should use this function.
@@ -300,6 +142,125 @@ template<typename T, class Allocator> inline void NxOgreAllocatedDelete(T* ptr)
  Allocator::deallocateBytes(ptr);
 }
 
+/* Safe way of new'ing a class that doesn't inherit from Allocatable but wants to be managed by the Allocator.
+   Note: Only classes that don't inherit from Allocatable but want to use the allocator for memory, should use this function.
+   Remember to use the NXOGRE_NEW_PHYSX macro, rather than directly using the function.
+*/
+#ifdef NXOGRE_DEBUG
+#define NXOGRE_NEW_PHYSX(TYPE, ALLOCATOR) NxOgreAllocatedNew<TYPE, ALLOCATOR>(__FILE__, __LINE__)
+template<typename T, class Allocator> inline T* NxOgreAllocatedNew(const char* file, unsigned int line)
+#else
+#define NXOGRE_NEW_PHYSX(TYPE, ALLOCATOR) NxOgreAllocatedNew<TYPE, ALLOCATOR>()
+template<typename T, class Allocator> inline T* NxOgreAllocatedNew()
+#endif
+{
+ void* mem = Allocator::allocateBytes(sizeof(T)
+#ifdef NXOGRE_DEBUG
+ ,file,line
+#endif
+ );
+ T* ptr = new(mem) T();
+ return ptr;
+}
+
+/* Safe way of new'ing a class that doesn't inherit from Allocatable but wants to be managed by the Allocator.
+   Note: Only classes that don't inherit from Allocatable but want to use the allocator for memory, should use this function.
+   Remember to use the NXOGRE_NEW_PHYSX1 macro, rather than directly using the function.
+*/
+#ifdef NXOGRE_DEBUG
+#define NXOGRE_NEW_PHYSX1(TYPE, ALLOCATOR, TYPE0, ARG0) NxOgreAllocatedNew<TYPE, ALLOCATOR, TYPE0>(ARG0, __FILE__, __LINE__)
+template<typename T, class Allocator, typename _0> inline T* NxOgreAllocatedNew(const _0& arg0, const char* file, unsigned int line)
+#else
+#define NXOGRE_NEW_PHYSX1(TYPE, ALLOCATOR, TYPE0, ARG0) NxOgreAllocatedNew<TYPE, ALLOCATOR, TYPE0>(ARG0)
+template<typename T, class Allocator, typename _0> inline T* NxOgreAllocatedNew(const _0& arg0)
+#endif
+{
+ void* mem = Allocator::allocateBytes(sizeof(T)
+#ifdef NXOGRE_DEBUG
+ ,file,line
+#endif
+ );
+ T* ptr = new(mem) T(arg0);
+ return ptr;
+}
+
+/* Safe way of new'ing a class that doesn't inherit from Allocatable but wants to be managed by the Allocator.
+   Note: Only classes that don't inherit from Allocatable but want to use the allocator for memory, should use this function.
+   Remember to use the NXOGRE_NEW_PHYSX2 macro, rather than directly using the function.
+*/
+#ifdef NXOGRE_DEBUG
+#define NXOGRE_NEW_PHYSX2(TYPE, ALLOCATOR, TYPE0, ARG0, TYPE1, ARG1) NxOgreAllocatedNew<TYPE, ALLOCATOR, TYPE0, TYPE1>(ARG0, ARG1, __FILE__, __LINE__)
+template<typename T, class Allocator, typename _0, typename _1> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const char* file, unsigned int line)
+#else
+#define NXOGRE_NEW_PHYSX2(TYPE, ALLOCATOR, TYPE0, ARG0, TYPE1, ARG1) NxOgreAllocatedNew<TYPE, ALLOCATOR, TYPE0, TYPE1>(ARG0, ARG1)
+template<typename T, class Allocator, typename _0, typename _1> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1)
+#endif
+{
+ void* mem = Allocator::allocateBytes(sizeof(T)
+#ifdef NXOGRE_DEBUG
+ ,file,line
+#endif
+ );
+ T* ptr = new(mem) T(arg0, arg1);
+ return ptr;
+}
+
+/* Safe way of new'ing a class through an Allocator.
+   Note: Only classes that don't inherit from Allocatable should use this function.
+   Remember to use the NXOGRE_NEW_PHYSX3 macro, rather than directly using the function.
+*/
+#ifdef NXOGRE_DEBUG
+#define NXOGRE_NEW_PHYSX3(TYPE, ALLOCATOR, TYPE0, ARG0, TYPE1, ARG1, TYPE2, ARG2) NxOgreAllocatedNew<TYPE, ALLOCATOR, TYPE0, TYPE1, TYPE2>(ARG0, ARG1, ARG2__FILE__, __LINE__)
+template<typename T, class Allocator, typename _0, typename _1, typename _2> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2, const char* file, unsigned int line)
+#else
+#define NXOGRE_NEW_PHYSX3(TYPE, ALLOCATOR, TYPE0, ARG0, TYPE1, ARG1, TYPE2, ARG2) NxOgreAllocatedNew<TYPE, ALLOCATOR, TYPE0, TYPE1, TYPE2>(ARG0, ARG1, ARG2)
+template<typename T, class Allocator, typename _0, typename _1, typename _2> inline T* NxOgreAllocatedNew(const _0& arg0, const _1& arg1, const _2& arg2)
+#endif
+{
+ void* mem = Allocator::allocateBytes(sizeof(T)
+#ifdef NXOGRE_DEBUG
+ ,file,line
+#endif
+ );
+ T* ptr = new(mem) T(arg0, arg1, arg2);
+ return ptr;
+}
+
+#ifdef NXOGRE_DEBUG
+#define NXOGRE_ALLOCATE(ALLOCATOR, LENGTH) NxOgreAllocate<ALLOCATOR>(LENGTH, __FILE__, __LINE__)
+template<typename Allocator> void* NxOgreAllocate(size_t length, const char* file, unsigned int line)
+#else
+#define NXOGRE_ALLOCATE(ALLOCATOR, LENGTH) NxOgreAllocate<ALLOCATOR>(LENGTH)
+template<typename Allocator> void* NxOgreAllocate(size_t length)
+#endif
+{
+ return Allocator::allocateBytes(length
+#ifdef NXOGRE_DEBUG
+, file, line
+#endif
+ );
+}
+
+
+template<typename Allocator> void NxOgreDeallocate(void* ptr)
+{
+ Allocator::deallocateBytes(ptr);
+}
+
+#define NXOGRE_DEALLOCATE(ALLOCATOR, PTR) NxOgreDeallocate<ALLOCATOR>(PTR)
+
+template<typename Allocator> void* NxOgreReallocate(void* ptr, size_t newLength)
+{
+ return Allocator::reallocateBytes(ptr, newLength);
+}
+
+#define NXOGRE_REALLOCATE(ALLOCATOR, PTR, NEW_LENGTH) NxOgreReallocate<ALLOCATOR>(PTR, NEW_LENGTH)
+
+inline void NxOgreCopy(void* dest, const void* src, size_t length)
+{
+ memcpy(dest, src, length);
+}
+
                                                                                        
 
 } // namespace NxOgre
@@ -307,3 +268,5 @@ template<typename T, class Allocator> inline void NxOgreAllocatedDelete(T* ptr)
                                                                                        
 
 #endif
+
+

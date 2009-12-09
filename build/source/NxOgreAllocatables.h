@@ -4,7 +4,31 @@
     
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
     
+    This file is under public domain and may be modified by the user.
     
+*/
+
+/* page. NxOgreAllocatables_h
+   
+   NxOgreAllocatables.h is a set of typedefs allowing the user to specify an alternate preferred
+   way of allocating memory for NxOgre and PhysX classes. By default the MallocAllocator provided
+   in the NxOgre is the default allocator, but by bringing in extra code or modifying the MallocAllocator
+   the user can change the behaviour of memory allocation.
+   
+   Example:
+   
+   bc. typedef Allocator<MallocAllocator>                  GenericBasedAllocator;
+   
+   The GenericBasedAllocatable which uses the GenericBasedAllocator (which is the MallocAllocator)
+   to allocate memory when the class is new'd or deleted.
+   
+   This can be changed by altering the typedef to the preferred allocator.
+   
+   bc. typedef Allocator<MyAllocator>                  GenericBasedAllocator;
+   
+   Now all classes that inherit GenericBasedAllocatable now use the MyAllocator to allocate
+   memory. As you can probably see this has more advantages than personally altering each
+   NxOgre class to handle memory allocation behaviour in the way you want it to be.
 */
 
                                                                                        
@@ -16,6 +40,8 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreAllocator.h"
+
+#include "NxOgreMallocAllocator.h"
 
                                                                                        
 
@@ -60,9 +86,13 @@ typedef Allocatable<JointBasedAllocator>            JointBasedAllocatable;
 typedef Allocator<MallocAllocator>                  FrequentOperationsAllocator;
 typedef Allocatable<FrequentOperationsAllocator>    FrequentOperationsAllocatable;
 
-// Classes that is exactly 16 bytes in size.
-typedef Allocator<MallocAllocator>                  TinyClassAllocator;
-typedef Allocatable<TinyClassAllocator>             TinyClassAllocatable;
+// Classes/Memory that is exactly 16 bytes in size.
+typedef Allocator<MallocAllocator>                  SixteenBytesAllocator;
+typedef Allocatable<SixteenBytesAllocator>          SixteenBytesAllocatable;
+
+// Classes/Memory that is exactly 4 bytes in size.
+typedef Allocator<MallocAllocator>                  FourByteAllocator;
+typedef Allocatable<FourByteAllocator>              FourByteAllocatable;
 
 // STL classes, or classes that wrap them.
 typedef Allocator<MallocAllocator>                  STLBasedAllocator;

@@ -183,14 +183,14 @@ template<typename T> class  CircularBuffer
 
    CircularBuffer(void)
    {
-    _T = NxOgre_New(TPayload)(::NxOgre::Classes::USER_CLASS);
+    _T = NXOGRE_NEW_NXOGRE(TPayload)(::NxOgre::Classes::USER_CLASS);
     _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_CircularBufferReferenceCounter);
     (*_Usage) = 1;
    };
 
    CircularBuffer(int type)
    {
-    _T = NxOgre_New(TPayload)(type);
+    _T = NXOGRE_NEW_NXOGRE(TPayload)(type);
     _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_CircularBufferReferenceCounter);
     (*_Usage) = 1;
    };

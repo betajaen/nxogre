@@ -53,7 +53,7 @@ namespace NxOgre
     \note  Shapes are the exception to this rule, and have 0 or very briefly their representive
            Shape as userData. 
 */
-class PhysXPointer : public TinyClassAllocatable
+class PhysXPointer : public SixteenBytesAllocatable
 {
  public:
   
@@ -95,7 +95,7 @@ class PhysXPointer : public TinyClassAllocatable
   int          RESERVED;
 };
 
-NxOgreTinyClassRestriction(PhysXPointer);
+NxOgreSixteenBytesRestriction(PhysXPointer);
 
 
 /** \brief Handy helper macro to get a PhysXPointer instance.

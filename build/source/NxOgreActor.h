@@ -34,7 +34,6 @@
 #include "NxOgreCommon.h"
 #include "NxOgreShape.h"
 
-#include "NxOgrePointerClass.h"
 #include "NxOgreRigidBody.h"
 #include "NxOgreString.h"
 #include "NxOgreSweepQuery.h"

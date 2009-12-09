@@ -74,19 +74,20 @@ namespace Functions
        if (_First)
        {
         range_destruct(_First, _End);
-        ::NxOgre::Memory::unallocate(_First);
+        if (_First)
+         NXOGRE_DEALLOCATE(FrequentOperationsAllocator, _First);
        }
        _First = _Last = _End = 0;
       }
       
       void* operator new(size_t size)
       {
-       return NxOgre_Allocate(size, ::NxOgre::Classes::_SharedArray);
+       return NXOGRE_ALLOCATE(FrequentOperationsAllocator, size);
       }
       
       void operator delete(void* ptr)
       {
-       ::NxOgre::Memory::unallocate(ptr);
+       NXOGRE_DEALLOCATE(FrequentOperationsAllocator, ptr);
       }
        
       size_t size(void)
@@ -151,11 +152,11 @@ namespace Functions
       
       inline void resize(size_t new_size)
       {
-       TIterator new_first = (TIterator) NxOgre_Allocate(new_size * sizeof(T), -(_Type));
+       TIterator new_first = (TIterator) NXOGRE_ALLOCATE(FrequentOperationsAllocator, new_size * sizeof(T));
        range_construct(new_first, new_first + new_size);
        copy(_First, _Last, new_first);
        range_destruct(_First, _End);
-       ::NxOgre::Memory::unallocate(_First);
+       NXOGRE_DEALLOCATE(FrequentOperationsAllocator, _First);
        _End = new_first + new_size;
        _Last = new_first + size();
        _First = new_first;
@@ -209,18 +210,18 @@ namespace Functions
         inline ~SharedArray()
         {
          if (_First)
-          ::NxOgre::Memory::unallocate(_First);
+          NxOgreDeallocate<FrequentOperationsAllocator>(_First);
          _First = _Last = _End = 0;
         }
 
         inline void* operator new(size_t size)
         {
-         return NxOgre_Allocate(size, ::NxOgre::Classes::_SharedArray);
+         return NXOGRE_ALLOCATE(FrequentOperationsAllocator, size);
         }
 
         inline void operator delete(void* ptr)
         {
-         ::NxOgre::Memory::unallocate(ptr);
+         NXOGRE_DEALLOCATE(FrequentOperationsAllocator, ptr);
         }
 
         TIterator _First, _Last, _End;
@@ -289,7 +290,7 @@ namespace Functions
         TIterator begin = shared_array->_First, last = shared_array->_Last;
         for (;begin != last; ++begin)
         {
-         NxOgre_Delete((*begin));
+         NXOGRE_DELETE_NXOGRE((*begin));
         }
        }
        shared_array->_Last = shared_array->_First;
@@ -302,7 +303,7 @@ namespace Functions
        
        if (delete_them)
        {
-        NxOgre_Delete(*(shared_array->_First + nth_pos));
+        NXOGRE_DELETE_NXOGRE(*(shared_array->_First + nth_pos));
        }
 
        //copy(shared_array->_First + nth_pos + 1, shared_array->_Last, shared_array->_First + nth_pos);
@@ -334,10 +335,10 @@ namespace Functions
 
        static inline void resize(SharedArray* shared_array, size_t new_size)
        {
-        TIterator new_first = (TIterator) NxOgre_Allocate(new_size * sizeof(T*), -(shared_array->_Type));
+        TIterator new_first = (TIterator) NXOGRE_ALLOCATE(FrequentOperationsAllocator, new_size * sizeof(T*));
         copy(shared_array->_First, shared_array->_Last, new_first);
         /// range_destruct(shared_array->_First, shared_array->_Last);
-        ::NxOgre::Memory::unallocate(shared_array->_First);
+        NXOGRE_DEALLOCATE(FrequentOperationsAllocator, shared_array->_First);
         shared_array->_End = new_first + new_size;
         shared_array->_Last = new_first + size(shared_array);
         shared_array->_First = new_first;
@@ -529,13 +530,12 @@ template<typename T> class  Array
 
    Array(void)
    {
-    // printf("Array constructor\n");
-    _Array = NxOgre_New(SharedArrayT)(::NxOgre::Classes::_ArrayUnknown);
+    _Array = NXOGRE_NEW SharedArrayT(::NxOgre::Classes::_ArrayUnknown);
    };
 
    Array(int type)
    {
-    _Array = NxOgre_New(SharedArrayT)(type);
+    _Array = NXOGRE_NEW SharedArrayT(type);
    };
 
    Array(const Array<T>& other)
@@ -550,7 +550,7 @@ template<typename T> class  Array
     // printf("Array destructor\n");
     if(--_Array->_Usage == 0)
     {
-     NxOgre_Delete(_Array);
+     NXOGRE_DELETE_NXOGRE(_Array);
     }
    }
 
@@ -558,7 +558,7 @@ template<typename T> class  Array
    {
     if(--other._Array->_Usage == 0)
     {
-     NxOgre_Delete(_Array);
+     NXOGRE_DELETE_NXOGRE(_Array);
     }
     _Array = other._Array;
     other._Array->_Usage++;
@@ -641,16 +641,14 @@ template<typename T> class  Array<T*>
    Array(void)
    {
     _T = new TPayload(::NxOgre::Classes::USER_CLASS);
-    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ArrayReferenceCounter);
-
-//::NxOgre::Memory::allocate(sizeof(RefT), ::NxOgre::Classes::_ArrayReferenceCounter);
+    _Usage = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(unsigned int));
     (*_Usage) = 1;
    };
   
    Array(int type)
    {
     _T = new TPayload(type);
-    _Usage = (RefT*) NxOgre_Allocate(sizeof(RefT), ::NxOgre::Classes::_ArrayReferenceCounter);
+    _Usage = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(unsigned int));
     (*_Usage) = 1;
    };
 
@@ -665,7 +663,7 @@ template<typename T> class  Array<T*>
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre::Memory::unallocate(_Usage);
+     NXOGRE_DEALLOCATE(FourByteAllocator, _Usage);
      delete _T;
     }
    }
@@ -674,7 +672,7 @@ template<typename T> class  Array<T*>
    {
     if(--(*_Usage) == 0)
     {
-     ::NxOgre::Memory::unallocate(_Usage);
+     NXOGRE_DEALLOCATE(FourByteAllocator, _Usage);
      delete _T;
     }
     _T      = other._T;
@@ -741,7 +739,7 @@ template<typename T> class  Array<T*>
   protected:
 
     TPayload*       _T;
-    RefT*          _Usage;
+    unsigned int*   _Usage;
 
 }; // class Array<T*>
 

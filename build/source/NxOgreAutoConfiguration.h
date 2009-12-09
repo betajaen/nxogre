@@ -132,4 +132,10 @@
 #endif
 
 
+#ifdef _DEBUG
+#  define NXOGRE_DEBUG
 #endif
+
+#endif
+
+

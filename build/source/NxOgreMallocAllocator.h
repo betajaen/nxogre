@@ -26,13 +26,12 @@
 
                                                                                        
 
-#ifndef NXOGRE_POINTERCLASS_H
-#define NXOGRE_POINTERCLASS_H
+#ifndef NXOGRE_MALLOCALLOCATOR_H
+#define NXOGRE_MALLOCALLOCATOR_H
 
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreClasses.h"
 
                                                                                        
 
@@ -41,6 +40,29 @@ namespace NxOgre
 
                                                                                        
 
+/*! class. MallocAllocator
+    desc.
+        An allocator using malloc/free/realloc functions with optional tracking.
+    note.
+         The following macros must be defined in the NxOgre project settings to be tracking enabled.
+         NXOGRE_MEMORY_DEBUGGER_USEFILE
+         NXOGRE_MEMORY_DEBUGGER_FILE=RelativeFileName.txt
+*/
+class NxOgrePublicClass MallocAllocator
+{
+  
+ public:
+  
+#ifdef NXOGRE_DEBUG
+  static void* allocateBytes(size_t length, const char* file, unsigned int line);
+#else
+  static void* allocateBytes(size_t length);
+#endif
+  static void* reallocateBytes(void* memory, size_t newLength);
+  
+  static void  deallocateBytes(void* memory);
+  
+};
 
                                                                                        
 

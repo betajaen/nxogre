@@ -43,7 +43,7 @@
 #include "NxOgreFluid.h"
 #include "NxOgreMaterial.h"
 
-#include "NxOgrePointerClass.h"
+
 #include "NxOgreRigidBodyDescription.h"
 #include "NxOgreMaterialDescription.h"
 #include "NxOgreJointDescription.h"

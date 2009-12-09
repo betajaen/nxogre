@@ -69,7 +69,7 @@ KinematicController::KinematicController(const NxOgre::Vec3 &size, const NxOgre:
 
  mHandleSlope = mSlopeLimit != 0.0;
 
- mVolume = NxOgre_New(SimpleBox)();
+ mVolume = NXOGRE_NEW_NXOGRE(SimpleBox)();
  mVolume->mCenter = globalPosition;
  mVolume->mExtents = size;
  mVolume->mRotation = NxOgre::Matrix33::IDENTITY;
@@ -97,7 +97,7 @@ KinematicController::~KinematicController(void)
  mScene->getScene()->releaseSweepCache(mCache);
  mCache = 0;
 
- NxOgre_Delete(mVolume);
+ NXOGRE_DELETE_NXOGRE(mVolume);
 }
 
 unsigned int KinematicController::getRigidBodyType() const

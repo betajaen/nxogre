@@ -66,7 +66,7 @@ GLUTBody* GLUTRenderSystem::createGLUTBody(const NxOgre::ShapeDescription& shape
  //   - Where we want it to be.
  //   - GLUTBodyDescription
  //   - And Scene.
- GLUTBody* body = NxOgre_New(GLUTBody)(shape, pose, glut_description, scene);
+ GLUTBody* body = NXOGRE_NEW_NXOGRE GLUTBody(shape, pose, glut_description, scene);
 
  // We own the body, so make a good note of it in mBodies.
  NxOgre::StringHash hash = body->getNameHash();

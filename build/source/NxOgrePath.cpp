@@ -138,7 +138,6 @@ Path Path::operator /(const Path& other)
 #if NxOgrePlatform == NxOgrePlatformWindows
  out.mDrive = mDrive;
 #endif
- std::cout << "Combining:\n + " << getString() << (isAbsolute() ? "(A)" : "(R)") <<  "\n + " << other.getString() << (other.isAbsolute() ? "(A)" : "(R)") << "\n"; 
 
  for (std::list<String>::const_iterator d = mDirectories.begin(); d != mDirectories.end(); d++)
   out.mDirectories.push_back((*d));
@@ -551,7 +550,6 @@ void Path::set(const String& string)
 
    if (t == PathHelper::working_directory_marker())
    {
-    std::cout << "+ Working Directory marker" << std::endl;
     mAbsolute = false;
     begin = pos + 1;
     continue;
@@ -559,13 +557,11 @@ void Path::set(const String& string)
 
    if (t == PathHelper::parent_marker() && mAbsolute)
    {
-    std::cout << "+ Popping back" << std::endl;
     if (mDirectories.size() )
      mDirectories.pop_back();
     begin = pos + 1;
     continue;
    }
-   std::cout << "+ Pushing => '" << t << "'\n";
    mDirectories.push_back(t);
    begin = pos + 1;
   }
