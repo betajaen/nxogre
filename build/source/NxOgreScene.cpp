@@ -188,6 +188,20 @@ Actor* Scene::createActor(const ShapeDescription& shape, const Matrix44& pose, c
  return actor;
 }
 
+bool Scene::destroyActor(NxOgre::Actor* actor)
+{
+ 
+ if (actor == 0)
+  return false;
+ 
+ if (actor->isDynamic() == false)
+  return false;
+ 
+ mActors.erase(mActor);
+ 
+ return true;
+}
+
 SceneGeometry* Scene::createSceneGeometry(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
  SceneGeometry* sg = NXOGRE_NEW_NXOGRE(SceneGeometry)(shapes, pose, description, this);

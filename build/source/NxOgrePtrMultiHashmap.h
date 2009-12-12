@@ -203,7 +203,7 @@ template<typename type> class ptr_multihashmap
   // Erase a pointer from the multimap then delete it.
   void erase(key_type& key) 
   {
-   multimap_type::const_iterator it = multimap.find(key);
+   multimap_type::iterator it = multimap.find(key);
    if (it == multimap.end())
     return;
    
@@ -215,7 +215,7 @@ template<typename type> class ptr_multihashmap
   // Erase a pointer from the multimap then delete it.
   void erase(const key_type& key) 
   {
-   multimap_type::const_iterator it = multimap.find(key);
+   multimap_type::iterator it = multimap.find(key);
    if (it == multimap.end())
     return;
    

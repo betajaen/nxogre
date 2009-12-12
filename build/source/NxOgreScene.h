@@ -138,7 +138,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
       desc.
           
   */
-  void  destroyActor(Actor*);
+  bool  destroyActor(Actor*);
   
   /*! function. createSceneGeometry
       desc.
