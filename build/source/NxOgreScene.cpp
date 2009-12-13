@@ -197,7 +197,7 @@ bool Scene::destroyActor(NxOgre::Actor* actor)
  if (actor->isDynamic() == false)
   return false;
  
- mActors.erase(mActor);
+ mActors.erase(actor);
  
  return true;
 }

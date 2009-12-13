@@ -203,7 +203,7 @@ template<typename type> class ptr_hashmap
   // Erase a pointer from the map then delete it.
   void erase(key_type& key) 
   {
-   map_type::const_iterator it = map.find(key);
+   map_type::iterator it = map.find(key);
    if (it == map.end())
     return;
    
@@ -215,7 +215,7 @@ template<typename type> class ptr_hashmap
   // Erase a pointer from the map then delete it.
   void erase(const key_type& key) 
   {
-   map_type::const_iterator it = map.find(key);
+   map_type::iterator it = map.find(key);
    if (it == map.end())
     return;
    

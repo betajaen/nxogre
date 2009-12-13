@@ -166,7 +166,7 @@ template<typename key_type, typename type> class ptr_map
   // Erase a pointer from the map.
   void erase(key_type& key) 
   {
-   map_type::const_iterator it = map.find(key);
+   map_type::iterator it = map.find(key);
    if (it == map.end())
     return;
    
@@ -177,7 +177,7 @@ template<typename key_type, typename type> class ptr_map
   // Erase a pointer from the map.
   void erase(const key_type& key) 
   {
-   map_type::const_iterator it = map.find(key);
+   map_type::iterator it = map.find(key);
    if (it == map.end())
     return;
    
