@@ -131,6 +131,10 @@ typedef NxShape** RaycastCache;
 */
 typedef Buffer<SweepQueryHit> SweepQueryHits;
 
+/*! desc.
+*/
+typedef std::pair<Real, Real> ConstraintDominance;
+
 //
 static const Path MEMORY_PATH = Path("memory://");
 

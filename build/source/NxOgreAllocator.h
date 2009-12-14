@@ -47,6 +47,8 @@ template<class Allocator> class Allocatable
 {
  public:
   
+  typedef Allocator Allocator;
+  
   explicit Allocatable() {}
   
   ~Allocatable() {}

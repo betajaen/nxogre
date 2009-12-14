@@ -446,6 +446,24 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   const  TimeStep&  getTimeStep();
   
+  /*! function. setDominanceGroupPair 
+      desc.
+          Set the domaince constraint between two domaince groups
+  */
+  void setDominanceGroupPair(GroupIdentifier a, GroupIdentifier b, Real dominance0, Real domaince1);
+  
+  /*! function. setDominanceGroupPair 
+      desc.
+          Set the domaince constraint between two domaince groups
+  */
+  void setDominanceGroupPair(GroupIdentifier a, GroupIdentifier b, const ConstraintDominance&);
+  
+  /*! function. setDominanceGroupPair 
+      desc.
+          Set the domaince constraint between two domaince groups
+  */
+  ConstraintDominance getDominanceGroupPair(GroupIdentifier a, GroupIdentifier b);
+  
   protected: // Functions
 
   /** \internal Use World::createScene()

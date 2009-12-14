@@ -629,6 +629,22 @@ void Scene::destroySweepCache(SweepCache* cache)
  NXOGRE_DELETE_NXOGRE(cache);
 }
 
+void Scene::setDominanceGroupPair(GroupIdentifier a, GroupIdentifier b, Real dominance0, Real domaince1)
+{
+ mScene->setDominanceGroupPair(a, b, NxConstraintDominance(dominance0, domaince1));
+}
+
+void Scene::setDominanceGroupPair(GroupIdentifier a, GroupIdentifier b, const ConstraintDominance& constraint)
+{
+ mScene->setDominanceGroupPair(a, b, NxConstraintDominance(constraint.first, constraint.second));
+}
+
+ConstraintDominance Scene::getDominanceGroupPair(GroupIdentifier a, GroupIdentifier b)
+{
+ NxConstraintDominance constraint = mScene->getDominanceGroupPair(a, b);
+ return ConstraintDominance(constraint.dominance0, constraint.dominance1);
+}
+
                                                                                        
 
 } // namespace NxOgre
