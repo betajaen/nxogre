@@ -57,7 +57,6 @@ class PhysXControllerCallback : public NxUserControllerHitReport
   out.mWorldPosition.from<NxExtendedVec3>(hit.worldPos);
   
   return NxControllerAction(int(mCallback->onShape(out)));
-  
  }
 
  NxControllerAction  onControllerHit(const NxControllersHit& hit)
