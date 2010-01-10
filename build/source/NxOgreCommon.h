@@ -131,7 +131,11 @@ typedef NxShape** RaycastCache;
 */
 typedef Buffer<SweepQueryHit> SweepQueryHits;
 
-/*! desc.
+/*
+*/
+typedef Buffer<Shape*> OverlapQueryHits;
+
+/* 
 */
 typedef std::pair<Real, Real> ConstraintDominance;
 

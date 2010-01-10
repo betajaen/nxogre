@@ -136,6 +136,19 @@ class NxOgrePublicClass Callback
    */
    virtual void onContact(const ContactPair& pair);
    
+   
+   /*! function. onOverlap
+       desc.
+           When shapes are detected in an overlap
+       note.
+           This function may be called many times in an overlap test.
+       args.
+       
+       return.
+            true to continue overlap processing, false to cancel.
+   */
+   virtual bool onOverlap(const Buffer<Shape*>& shapes);
+
    /*! function. increaseReference
        desc.
             Increase the reference count of the callback

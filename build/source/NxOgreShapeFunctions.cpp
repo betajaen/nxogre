@@ -135,6 +135,12 @@ Shape* createShape(NxShape* physx_shape, RigidBody* rigid_body)
  return shape;
 }
 
+inline void NxOgrePublicFunction NxShapeArrayToBuffer(NxShape* nx_shape, unsigned int nb_nx_shapes, Buffer<Shape*>& shapes)
+{
+ while(nb_nx_shapes--)
+  shapes.append(pointer_representive_cast<Shape>(nx_shape[nb_nx_shapes].userData));
+}
+
                                                                                        
 
 } // namespace Shape

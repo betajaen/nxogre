@@ -434,11 +434,27 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   void  destroySweepCache(SweepCache*);
 
+  /*! function. linearCapsuleSweep
+      desc.
+          
+  */
+  unsigned int  linearCapsuleSweep(const SimpleCapsule&, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits&, unsigned int activeGroups=0xffffffff);
+
   /*! function. linearOBBSweep
       desc.
           
   */
   unsigned int  linearOBBSweep(const SimpleBox&, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits&, unsigned int activeGroups=0xffffffff);
+
+  /*! function. overlapSphereShapes
+      desc.
+  */
+  unsigned int overlapSphereShape(const SimpleSphere&, Enums::ShapesType, unsigned int maxShapes, Buffer<Shape*> shapes, unsigned int activeGroups=0xffffffff, bool accurateCollision=false);
+
+  /*! function. overlapSphereShapes
+      desc.
+  */
+  unsigned int overlapSphereShape(const SimpleSphere&, Enums::ShapesType, Callback*, unsigned int activeGroups=0xffffffff, bool accurateCollision=false);
 
   /*! function. getTimeStep
       desc.

@@ -63,6 +63,9 @@
 #include "NxOgreFluidDescription.h"
 #include "NxOgreSweepQuery.h"
 #include "NxOgreSimple.h"
+#include "NxOgreShapeFunctions.h"
+#include "NxOgreCallback.h"
+#include "NxOgrePhysXUserEntityReport.h"
 
 #include "NxPhysics.h"
 
@@ -604,6 +607,19 @@ Compartment* Scene::getCompartment(NxCompartment* compartment)
  return (*it).second;
 }
 
+unsigned int Scene::linearCapsuleSweep(const SimpleCapsule& capsule, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits& hits, unsigned int activeGroups)
+{
+ 
+ NxSweepQueryHit* query_hits = (NxSweepQueryHit*) malloc(sizeof(NxSweepQueryHit) * maxShapes);
+ NxCapsule physx_capsule;
+ Functions::SimpleCapsuleToNxCapsule(capsule, physx_capsule);
+
+ unsigned int count = mScene->linearCapsuleSweep(physx_capsule, motion.as<NxVec3>(), sweep_flags, 0, maxShapes, query_hits, 0, activeGroups, 0);
+ Functions::SweepFunctions::NxSweepQueryHitsToBuffer(query_hits, count, hits);
+ free(query_hits);
+ return count;
+}
+
 unsigned int Scene::linearOBBSweep(const SimpleBox& box, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits& hits, unsigned int activeGroups)
 {
  
@@ -614,6 +630,35 @@ unsigned int Scene::linearOBBSweep(const SimpleBox& box, const Vec3& motion, uns
  unsigned int count = mScene->linearOBBSweep(physx_box, motion.as<NxVec3>(), sweep_flags, 0, maxShapes, query_hits, 0, activeGroups, 0);
  Functions::SweepFunctions::NxSweepQueryHitsToBuffer(query_hits, count, hits);
  free(query_hits);
+ return count;
+}
+
+unsigned int Scene::overlapSphereShape(const SimpleSphere& sphere, Enums::ShapesType type, unsigned int maxShapes, Buffer<Shape*> shapes, unsigned int activeGroups, bool accurateCollision)
+{
+ 
+ NxShape* physx_shapes = (NxShape*) malloc(sizeof(NxShape*) * maxShapes);
+ 
+ NxSphere physx_sphere;
+ Functions::SimpleSphereToNxSphere(sphere, physx_sphere);
+ 
+ unsigned int count = mScene->overlapSphereShapes(physx_sphere, (NxShapesType) (int) type, maxShapes, &physx_shapes, 0, activeGroups, 0, accurateCollision);
+ Functions::ShapeFunctions::NxShapeArrayToBuffer(physx_shapes, count, shapes);
+ free(physx_shapes);
+ return count;
+ 
+}
+
+
+unsigned int Scene::overlapSphereShape(const SimpleSphere& sphere, Enums::ShapesType type, Callback* callback, unsigned int activeGroups, bool accurateCollision)
+{
+ NxSphere physx_sphere;
+ Functions::SimpleSphereToNxSphere(sphere, physx_sphere);
+ 
+ PhysXUserDataCallbackReport<NxShape*, Shape, Callback> cb(&Callback::onOverlap, callback);
+ 
+ unsigned int count = mScene->overlapSphereShapes(physx_sphere, (NxShapesType) (int) type, 0, 0, &cb, activeGroups, 0, accurateCollision);
+ 
+ //NXOGRE_DELETE(cb);
  
  return count;
 }

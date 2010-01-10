@@ -59,6 +59,11 @@ void Callback::onContact(const ContactPair&)
 {
 }
 
+bool Callback::onOverlap(const Buffer<Shape*>&)
+{
+ return false;
+}
+
 void Callback::increaseReference()
 {
  mNbReferences++;
