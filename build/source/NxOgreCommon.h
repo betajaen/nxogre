@@ -50,6 +50,7 @@
 #include "NxOgrePtrVector.h"
 #include "NxOgrePtrHashmap.h"
 #include "NxOgrePtrMultiHashmap.h"
+#include "NxOgreRefVector.h"
 #include "NxOgreBuffer.h"
 #include "NxOgreCircularBuffer.h"
 #include "NxOgreMath.h"

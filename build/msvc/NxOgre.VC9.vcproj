@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine=""
+				CommandLine="prebuild.bat"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -97,7 +97,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk Debug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;postbuild.bat Debug NxOgre_Debug.dll NxOgre_Debug.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -110,6 +110,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="prebuild.bat"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -178,7 +179,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk Release NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;postbuild.bat Release NxOgre.dll NxOgre.lib 1&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -190,7 +191,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine=""
+				CommandLine="prebuild.bat"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -248,7 +249,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk DebugStatic NO_DLL NxOgre_DebugStatic.lib 0&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;postbuild.bat DebugStatic NO_DLL NxOgre_DebugStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -261,6 +262,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="prebuild.bat"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -315,7 +317,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;../makesdk ReleaseStatic NO_DLL NxOgre_ReleaseStatic.lib 0&#x0D;&#x0A;"
+				CommandLine="echo ======== SDK Created ==========&#x0D;&#x0A;echo.&#x0D;&#x0A;echo Please read the file README_$(ConfigurationName).txt in the SDK folder for instructions on how to integrate NxOgre with your application.&#x0D;&#x0A;echo.&#x0D;&#x0A;&#x0D;&#x0A;postbuild.bat ReleaseStatic NO_DLL NxOgre_ReleaseStatic.lib 0&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -368,6 +370,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreAutoConfiguration.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAuxiliaryScene.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAuxiliaryScene.h"
 			>
 		</File>
 		<File
@@ -731,6 +741,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreKinematicSceneLink.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreKinematicSceneLink.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreMachine.cpp"
 			>
 		</File>
@@ -1019,6 +1037,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgrePrincipalScene.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePrincipalScene.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgrePrototypeFunctions.cpp"
 			>
 		</File>
@@ -1068,6 +1094,10 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreReason.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRefVector.h"
 			>
 		</File>
 		<File
@@ -1176,6 +1206,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreSceneGeometry.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneLink.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneLink.h"
 			>
 		</File>
 		<File
@@ -1456,6 +1494,10 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreVec4.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVersion.h"
 			>
 		</File>
 		<File

@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\rendersystems\ogre\include;..\..\sdk\;&quot;$(OGRE_HOME)\include\&quot;"
+				AdditionalIncludeDirectories="..\..\rendersystems\ogre\include;..\..\sdk\;&quot;$(OGRE_HOME)\include\&quot;;&quot;$(OGRE_HOME)\include\OGRE\&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;OGRE3D_FOR_NXOGRE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies="NxOgre_Debug.lib OgreMain_d.lib"
 				OutputFile="$(OutDir)\NxOgreOGRE3D_Debug.lib"
-				AdditionalLibraryDirectories="..\..\sdk\;&quot;$(OGRE_HOME)\..\lib\&quot;"
+				AdditionalLibraryDirectories="..\..\sdk\;&quot;$(OGRE_HOME)\..\lib\&quot;;&quot;$(OGRE_HOME)\lib\Debug\&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -107,7 +107,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\rendersystems\ogre\include;..\..\sdk\;&quot;$(OGRE_HOME)\include\&quot;"
+				AdditionalIncludeDirectories="..\..\rendersystems\ogre\include;..\..\sdk\;&quot;$(OGRE_HOME)\include\&quot;;&quot;$(OGRE_HOME)\include\OGRE\&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_NDEBUG;_LIB;OGRE3D_FOR_NXOGRE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -128,7 +128,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies="NxOgre.lib OgreMain.lib"
 				OutputFile="$(OutDir)\NxOgreOGRE3D.lib"
-				AdditionalLibraryDirectories="..\..\sdk\;&quot;$(OGRE_HOME)\..\lib\&quot;"
+				AdditionalLibraryDirectories="..\..\sdk\;&quot;$(OGRE_HOME)\..\lib\&quot;;&quot;$(OGRE_HOME)\lib\Release\&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"

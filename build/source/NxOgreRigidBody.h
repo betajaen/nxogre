@@ -128,7 +128,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
       return.
            **CollisionModelIterator** -- Iterator to the shapes.
   */
-  CollisionModelIterator getShapes() const;
+  CollisionModelIterator getShapes();
   
   protected: // Function
   
@@ -276,6 +276,8 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
   StringHash            mNameHash;
   
   CollisionModel        mShapes;
+  
+  bool                  mAuxiliaryMirror;
   
 }; // class RigidBody
 

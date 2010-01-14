@@ -46,6 +46,7 @@ void RigidBodyDescription::reset(void)
  mActorFlags = 0;
  mAngularDamping = Real(0.05);
  mAngularVelocity = Vec3::ZERO;
+ mAuxiliaryMirror = false;
  mBodyFlags = Enums::BodyFlags_Visualisation;
  mCCDMotionThreshold = Real(0.0);
  mCompartment = 0;
@@ -74,6 +75,7 @@ void RigidBodyDescription::clone(RigidBodyDescription& target) const
  target.mActorFlags = mActorFlags;
  target.mAngularDamping = mAngularDamping;
  target.mAngularVelocity = mAngularVelocity;
+ target.mAuxiliaryMirror = mAuxiliaryMirror;
  target.mBodyFlags = mBodyFlags;
  target.mCCDMotionThreshold = mCCDMotionThreshold;
  target.mCompartment = mCompartment;

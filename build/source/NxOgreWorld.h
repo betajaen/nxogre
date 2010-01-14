@@ -33,10 +33,12 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreEnums.h"
 
 #include "NxOgreWorldDescription.h"
 #include "NxOgreScene.h"
 #include "NxOgreSceneDescription.h"
+#include "NxOgreSceneLink.h"
 
                                                                                        
 
@@ -73,6 +75,9 @@ class NxOgrePublicClass World : public BigClassAllocatable
   typedef ptr_multihashmap<Scene>             Scenes;
   typedef ptr_multihashmap<Scene>::iterator_t SceneIterator;
   
+  typedef ptr_vector<SceneLink>               SceneLinks;
+  typedef ptr_vector<SceneLink>::iterator_t   SceneLinkIterator;
+
   /*! function. precreateSingletons
       Pre-create singletons of NxOgre (ResourceSystem, MeshManager, HeightFieldManager, ErrorStream, etc.)
       
@@ -139,12 +144,13 @@ class NxOgrePublicClass World : public BigClassAllocatable
       Scene* scene = World::getWorld()->createScene();
 
       args.
-      const SceneDescription&  = SceneDescription() -- SceneDescription to create the Scene with.
-
+       const SceneDescription&  = SceneDescription() -- SceneDescription to create the Scene with.
+       Enums::SceneType = Enums:SceneType_Principal -- Create a Principal or Auxiliary Scene.
+       Enums::SceneSource = Enums::SceneSource_Self -- N/A.
       return. Scene* -- The Scene, or NULL if the Scene was not created properly.
   */
-                       Scene*                 createScene(const SceneDescription& = SceneDescription());
-
+                       Scene*                 createScene(const SceneDescription& = SceneDescription(), Enums::SceneType = Enums::SceneType_Prinicipal);
+  
   /*! function. destroyScene
       Destroys a single scene and the contents within.
       
@@ -153,6 +159,19 @@ class NxOgrePublicClass World : public BigClassAllocatable
       
   */
                        void                   destroyScene(Scene*);
+
+  /*! function. createSceneLink
+  */
+                       SceneLink*             createSceneLink(PrincipalScene* first, AuxiliaryScene* second);
+
+  /*! function. createSceneLink
+  */
+                       SceneLink*             createSceneLink(PrincipalScene* first);
+
+  /*! function. createSceneLink
+  */
+                       void                   destroySceneLink(SceneLink*);
+
 
   /*! function. hasHardware
       Does the current computer have a PhysX accelerator, or a GPU capable of PhysX acceleration?
@@ -249,6 +268,10 @@ class NxOgrePublicClass World : public BigClassAllocatable
   /* Master copy of all the Scenes in the World.
   */
                       Scenes                  mScenes;
+
+  /* Master copy of all the Scenes in the World.
+  */
+                      SceneLinks              mSceneLinks;
 
   /* World's time controller instance
   */

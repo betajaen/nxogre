@@ -222,6 +222,13 @@ class NxOgrePublicClass RigidBodyDescription
   */
   Real                    mWakeUpCounter;
 
+
+  /*! variable. Mirror this RigidBody to AuxiliaryScenes.
+      default.  false
+      note.     This is assumed to be false if the RigidBody is static or a volume.
+  */
+  bool                    mAuxiliaryMirror;
+
 }; // class RigidBodyDescription
 
                                                                                        

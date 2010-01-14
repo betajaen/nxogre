@@ -541,6 +541,11 @@ StringHash RigidBody::getNameHash() const
  return mNameHash;
 }
 
+CollisionModelIterator RigidBody::getShapes()
+{
+ return mShapes.const_iterator();
+}
+
 #undef RIGIDBODY_EXCEPTIONS_PASS
 #undef RIGIDBODY_NON_STATIC_PASS
 #undef RIGIDBODY_STATIC_PASS

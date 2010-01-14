@@ -9,6 +9,7 @@ clean.bat
 # Files of a type
 *.py
 *.pyc
+*.rb
 *.lnk
 *.obj
 *.manifest

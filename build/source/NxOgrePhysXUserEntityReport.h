@@ -86,6 +86,50 @@ class NxOgrePublicClass PhysXUserEntityReport : public GenericBasedAllocatable, 
   
 }; // class ClassName
 
+/*! class. PhysXUserDataCallbackReport
+    desc.
+         Coverts a mass of PhysX classes into NxOgre ones via the userData property, then calls a function
+         in a class with them as an argument.
+*/
+template <typename T, typename T2, typename C>
+class NxOgrePublicClass PhysXUserDataCallbackReport : public NxUserEntityReport<T>
+{
+  
+  public: // Functions
+  
+  typedef bool (C::*CallbackFunction)(const Buffer<T2*>&);
+  
+  /** \brief Text
+  */
+  explicit PhysXUserDataCallbackReport(CallbackFunction func, C* c) 
+  : mFunction(func), mCallback(c)
+  {
+  }
+  
+  /** \brief Text
+  */
+ ~PhysXUserDataCallbackReport(void)
+  {
+  }
+  
+  /** \brief Text
+  */
+  bool onEvent(unsigned int tSize, T* t)
+  {
+   Buffer<T2*> buffer;//(t, t + tSize);
+   for (unsigned int i=0;i < tSize;i++)
+    buffer.append(pointer_representive_cast<T2>(t[i]->userData));
+   return (mCallback->*mFunction)(buffer);
+  }
+  
+  
+  protected: // Variables
+  
+  CallbackFunction  mFunction;
+  C*                mCallback;
+  
+}; // class
+
 #endif
 
                                                                                        

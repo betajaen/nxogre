@@ -72,7 +72,6 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
 {
   
   friend class World;
-  friend class Functions::ArrayFunctions<Scene*>::Write;
   template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
   
   public: // Functions
@@ -93,17 +92,23 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   typedef  ptr_multihashmap<Material>::iterator_t             MaterialIterator;
   typedef  ptr_map<unsigned short, Material>                  IndexedMaterials;
   
+  /*! function. getType
+      desc.
+          Get type of scene.
+  */
+  virtual       Enums::SceneType getType() const = 0;
+  
   /*! function. getName
       desc.
            Get the name of the Scene if it has one; otherwise NULL is returned.
   */
-  String  getName(void) const;
+  String        getName(void) const;
   
   /*! function. getName
       desc.
           HashGet the hash of the name of the Scene.
   */
-  StringHash  getNameHash(void) const;
+  StringHash    getNameHash(void) const;
   
   /*! function. getNbRigidBodies
       desc.
@@ -488,7 +493,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
 
   /** \internal Use World::destroyScene()
   */
-  ~Scene(void);
+  virtual ~Scene(void);
 
   protected: // Variables
 

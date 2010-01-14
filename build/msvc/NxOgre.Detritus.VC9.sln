@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxOgre", "NxOgre.VC9.vcproj", "{A633A666-D959-4D20-B2D4-6C2239FE48EB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxOgre.1.6.0.Detritus", "NxOgre.VC9.vcproj", "{A633A666-D959-4D20-B2D4-6C2239FE48EB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLUTRenderSystem", "GLUTRenderSystem.VC9.vcproj", "{D98D7017-3B37-4647-97EB-1D97B35298E8}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OGRE3DRenderSystem", "OgreR
 	ProjectSection(ProjectDependencies) = postProject
 		{A633A666-D959-4D20-B2D4-6C2239FE48EB} = {A633A666-D959-4D20-B2D4-6C2239FE48EB}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Soy", "Soy.VC9.vcproj", "{021E0051-6EA3-4307-A83D-786BAD1F9D55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,14 @@ Global
 		{3DA5C845-3511-42C8-BD1F-9519D93307BD}.Release|Win32.Build.0 = Release|Win32
 		{3DA5C845-3511-42C8-BD1F-9519D93307BD}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
 		{3DA5C845-3511-42C8-BD1F-9519D93307BD}.ReleaseStatic|Win32.Build.0 = Release|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.Debug|Win32.ActiveCfg = Debug|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.Debug|Win32.Build.0 = Debug|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.DebugStatic|Win32.ActiveCfg = Debug|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.DebugStatic|Win32.Build.0 = Debug|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.Release|Win32.ActiveCfg = Release|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.Release|Win32.Build.0 = Release|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
+		{021E0051-6EA3-4307-A83D-786BAD1F9D55}.ReleaseStatic|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

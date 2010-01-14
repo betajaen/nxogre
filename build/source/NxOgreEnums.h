@@ -108,6 +108,16 @@ enum CombineMode
  CombineMode_Max        = 3 
 };
 
+/*! enum. SceneLink
+    desc.
+        
+*/
+enum SceneType
+{
+ SceneType_Prinicipal   = 0,
+ SceneType_Auxiliary    = 1
+};
+
 /*! enum. ActorFlags
     desc.
          Actor flags to use with all types of RigidBodies.

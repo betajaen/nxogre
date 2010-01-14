@@ -31,6 +31,7 @@
 
                                                                                        
 
+#include "NxOgreVersion.h"
 #include "NxOgreAutoConfiguration.h"
 #include "NxOgreConfiguration.h"
 
@@ -46,14 +47,6 @@
 #include <vector>
 #include <map>
 #include <list>
-
-                                                                                       
-
-#define NxOgreVersionMajor 1
-#define NxOgreVersionMinor 6
-#define NxOgreVersionRelease 0
-#define NxOgreCodeName "Detritus"
-#define NxOgreBranch "detritus"
 
                                                                                        
 

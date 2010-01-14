@@ -44,7 +44,8 @@
 #include "NxOgreVisualDebugger.h"
 #include "NxOgreRemoteDebugger.h"
 #include "NxOgreUtil.h"
-
+#include "NxOgrePrincipalScene.h"
+#include "NxOgreAuxiliaryScene.h"
 #include "NxPhysics.h"
 #include "NxCooking.h"
 
@@ -226,12 +227,21 @@ bool World::isDead(void) const
  return mDeadSDK;
 }
 
-Scene* World::createScene(const NxOgre::SceneDescription& description)
+Scene* World::createScene(const NxOgre::SceneDescription& description, Enums::SceneType scene_type)
 {
- Scene* scene = NXOGRE_NEW_NXOGRE Scene(description, mSDK);
+ 
+ Scene* scene = 0;
+ 
+ if (scene_type == Enums::SceneType_Prinicipal)
+  scene = NXOGRE_NEW_NXOGRE PrincipalScene(description, mSDK);
+ else
+  scene = NXOGRE_NEW_NXOGRE AuxiliaryScene(description, mSDK);
+ 
  StringHash hash = scene->getNameHash();
  mScenes.insert(hash, scene);
+ 
  return scene;
+ 
 }
 
 void World::destroyScene(Scene* scene)
