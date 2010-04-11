@@ -48,7 +48,7 @@ namespace Serialisation
 
 /** \brief Collection of functions to serialise PhysX and NxOgre meshs to Resources or MeshDatas.
 */
-class NxOgrePublicClass MeshSerialiser
+class NxOgrePublicClass NXS
 {
   
  public:
@@ -146,11 +146,11 @@ class NxOgrePublicClass MeshSerialiser
   
   /** \internal DO NOT USE
   */
-  MeshSerialiser();
+  NXS();
   
   /** \internal DO NOT USE
   */
- ~MeshSerialiser();
+ ~NXS();
   
 };
 

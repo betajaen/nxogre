@@ -44,14 +44,14 @@ namespace NxOgre
 FileArchive::FileArchive(const String& name, const Path& path, ResourceProtocol* protocol)
 : Archive(name, path, protocol)
 {
-#ifdef _DEBUG
+#ifdef NXOGRE_DEBUG_RESOURCES
  std::cout << "[+] Opening File Archive '" << mName << "' from " << mPath.getString() << std::endl;
 #endif
 }
 
 FileArchive::~FileArchive(void)
 {
-#ifdef _DEBUG
+#ifdef NXOGRE_DEBUG_RESOURCES
  std::cout << "[-] Closing File Archive '" << mName << "' from " << mPath.getString() << std::endl;
 #endif
  mResources.clear();

@@ -278,6 +278,23 @@ const Real& Vec4::operator[](const size_t i) const
  return (&x)[i];
 }
 
+String Vec4::to_s() const
+{
+ std::ostringstream ss;
+ ss << w << " " << x << " " << y << " " << z;
+ return ss.str();
+}
+
+std::vector<Real> Vec4::to_a() const
+{
+ std::vector<Real> a;
+ a.push_back(w);
+ a.push_back(x);
+ a.push_back(y);
+ a.push_back(z);
+ return a;
+}
+
                                                                                        
 
 } // namespace NxOgre

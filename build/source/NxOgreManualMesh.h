@@ -53,6 +53,11 @@ namespace NxOgre
        m.vertex( 1, 1);
       Mesh* mesh = m.end();
      </code>
+     To modify an existing mesh.
+     ManualMesh m(myMesh->getMeshData());
+     for (unsigned int i=0;i < m.nbVertices();i++)
+      m.scaleVertex(i, Vec3(2,2,2) );
+     Mesh* myNewScaledMesh = m.end();
 */
 class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
 {
@@ -72,6 +77,10 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   */
                                               ManualMesh(const ManualMesh& other);
   
+  /** \brief Alternative constructor using MeshData.
+  */
+                                              ManualMesh(MeshData* other);
+  
   /** \brief ManualMesh destructor.
   */
                                              ~ManualMesh(void);
@@ -80,10 +89,11 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   */
   ManualMesh&                                 operator=(ManualMesh& other);
   
-  /** \brief Begin a definition of a mesh using type
+  /** \brief Begin a definition of a mesh using type.
       \param estimatedVerticesSize Rough estimate of how many vertices there are. ManualMesh will auto-resize if needed.
       \param estimatedTriangleSize Rough estimate of how many triangles there are. If value is "AUTO_CALCULATE_TRIANGLES" then it will
              use the indexCount * 3, if it is a mesh that uses Triangles, otherwise 0.
+      \note If using with an existing MeshData, this function may corrupt the existing data!
   */
   void                                        begin(NxOgre::Enums::MeshType type, unsigned int estimatedVerticesSize = 12, unsigned int AUTO_CALCULATE_TRIANGLES = -1);
   
@@ -118,6 +128,18 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   */
   void                                        vertex(const Vec3&);
   
+  /** \brief Set a vertex value
+  */
+  void                                        modifyVertex(unsigned index, const Vec3& newValue);
+  
+  /** \brief Set a vertex value
+  */
+  void                                        scaleVertex(unsigned index, const Vec3& factor);
+  
+  /** \brief Get number of vertices
+  */
+  unsigned int                                nbVertices() const;
+
   /** \brief Adds an index.
       \for   Triangle, Convex (Optional), Cloth, Tetrahedra.
   */

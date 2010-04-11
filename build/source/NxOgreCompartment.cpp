@@ -127,6 +127,11 @@ unsigned int Compartment::getFlags() const
  return mCompartment->getFlags();
 }
 
+String Compartment::to_s() const
+{
+ return NxOgre::to_s((void*)this, "Compartment");
+}
+
                                                                                        
 
 } // namespace NxOgre

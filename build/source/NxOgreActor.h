@@ -46,6 +46,7 @@ namespace NxOgre
                                                                                        
 
 /*! class. Actor
+    desc.
     Actor is a dynamic (moving) RigidBody, that can collide with SceneGeometries and KinematicActors.
     
     p. It is normal to inherit from the Actor to support visualisation in a RenderSystem, broadly
@@ -761,7 +762,13 @@ class NxOgrePublicClass Actor : public RigidBody
   /** \brief   Forces the actor to sleep. 
   */
   void                  putToSleep(void);
-
+  
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
+  
   protected: // Functions
   
   /** \internal Classes that inherit from Actor should use this constructor.

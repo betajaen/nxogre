@@ -117,7 +117,7 @@ extern void SimpleCapsuleToNxCapsule(const SimpleCapsule& s, NxCapsule& t)
  t.p1.y = s.mP1.y;
  t.p1.z = s.mP1.z;
 
- t.radius = s.Radius;
+ t.radius = s.mRadius;
 }
 
 extern void NxCapsuleToSimpleCapsule(const NxCapsule& t, SimpleCapsule& s)
@@ -130,7 +130,7 @@ extern void NxCapsuleToSimpleCapsule(const NxCapsule& t, SimpleCapsule& s)
  s.mP1.y = t.p1.y;
  s.mP1.z = t.p1.z;
 
- s.Radius = t.radius;
+ s.mRadius = t.radius;
 
 }
 

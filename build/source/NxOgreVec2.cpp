@@ -275,6 +275,21 @@ const Real& Vec2::operator[](const size_t i) const
  return (&x)[i];
 }
 
+String Vec2::to_s() const
+{
+ std::ostringstream ss;
+ ss << x << " " << y;
+ return ss.str();
+}
+
+std::vector<Real> Vec2::to_a() const
+{
+ std::vector<Real> a;
+ a.push_back(x);
+ a.push_back(y);
+ return a;
+}
+
                                                                                        
 
 } // namespace NxOgre

@@ -45,7 +45,7 @@ FluidEmitter::FluidEmitter(const FluidEmitterDescription& description, Fluid* fl
 : mFluid(fluid),
   mName(description.mName)
 {
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  NxFluidEmitterDesc ed;
  ed.dimensionX = description.mDimensionX;
  ed.dimensionY = description.mDimensionY;

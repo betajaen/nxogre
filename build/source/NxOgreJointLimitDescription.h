@@ -60,7 +60,7 @@ class NxOgrePublicClass JointLimitDescription
       \see NxJointLimitDesc::value
       \default 0
   */
-  Real mValue;
+  Radian mValue;
   
   /** \brief Limit bounce
       \see NxJointLimitDesc::restitution

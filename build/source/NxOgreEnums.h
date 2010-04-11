@@ -1,4 +1,4 @@
-/** 
+/* 
     
     This file is part of NxOgre.
     
@@ -93,12 +93,12 @@ enum TimerMode
     desc.
          Combine mode when two integrals meet.
     note.
-         Compatible with **NxCombineMode**
+         Compatible with @NxCombineMode@
     enums.
-          CombineMode_Average -- @(A + B) / 2)@
-          CombineMode_Min -- @a < b ? a : b@
-          CombineMode_Multiply -- @A * B@
-          CombineMode_Max -- @a > b ? a : b@
+          CombineMode_Average -- (A + B) / 2
+          CombineMode_Min -- a < b ? a : b
+          CombineMode_Multiply -- A &times; B
+          CombineMode_Max -- a > b ? a : b
 */
 enum CombineMode
 {
@@ -118,11 +118,22 @@ enum SceneType
  SceneType_Auxiliary    = 1
 };
 
+/*! enum. SceneLink
+    desc.
+        
+*/
+enum RigidBodyRole
+{
+ RigidBodyRole_None       = 0,
+ RigidBodyRole_Puppeteer  = 1,
+ RigidBodyRole_Puppet     = 2
+};
+
 /*! enum. ActorFlags
     desc.
          Actor flags to use with all types of RigidBodies.
     note.
-         Compatible with **NxActorFlag**
+         Compatible with @NxActorFlag@
     enums.
          ActorFlags_DisableCollision       -- Do not collide with other RigidBodies. Note this excludes from overlap tests.
          ActorFlags_DisableResponse        -- Disable collision response
@@ -147,7 +158,7 @@ enum ActorFlags
     desc.
          Body flags to use with Actor (and inherited) and KinematicActor types of RigidBodies ONLY.
     note.
-         Compatible with **NxBodyFlag**
+         Compatible with @NxBodyFlag@
     enums.
          BodyFlags_DisableGravity       -- Gravity should not be applied to this RigidBody.
          BodyFlags_FreezePositionX      -- Freeze movement in the X axis.
@@ -184,7 +195,7 @@ enum BodyFlags
     desc.
          Force mode for when using addForce in a RigidBody.
     note.
-         Compatible with **NxForceMode**.
+         Compatible with @NxForceMode@.
     enums.
          ForceMode_Force                -- Parameter has unit of <span class="math">m &times; s / t ^2^</span>, i.e. a force
          ForceMode_Impulse              -- Parameter has unit of <span class="math">m &times; s / t</span>
@@ -277,7 +288,7 @@ enum TimeStepMethod
     desc.
          Time stepping method.
     note.
-         Compatible with **NxPruningStructure**.
+         Compatible with @NxPruningStructure@.
     enums.
          PruningStructure_None -- No structure, using a linear list of objects.
          PruningStructure_Octree -- Using a preallocated loose octree.
@@ -423,7 +434,7 @@ enum KinematicContactAction
     desc.
          Type of shape filted by restriced movement of parent RigidBody, used with scene queries, and test methods in the Scene
     note.
-         Compatible with **NxShapesType**.
+         Compatible with @NxShapesType@.
     enums.
          ShapesType_Static  -- Static shapes (SceneGeometries and Volumes)
          ShapesType_Dynamic -- Dynamic shapes (Actors and KinematicActors)
@@ -459,7 +470,7 @@ enum SimpleShapeType
     desc.
          A list of the possible functions of shapes in NxOgre.
     note.
-         Compatible with **NxShapeType**.
+         Compatible with @NxShapeType@.
     enums.
          ShapeFunctionType_Plane -- PlaneGeometry,
          ShapeFunctionType_Sphere -- Sphere,
@@ -488,7 +499,7 @@ enum ShapeFunctionType
     desc.
          Describes the compartment types a rigid body shape might interact with.
     note.
-         Compatible with **NxShapeCompartmentType**.
+         Compatible with @NxShapeCompartmentType@.
     enums.
          ShapeCompartmentType_RigidBody_Software -- RigidBody Software
          ShapeCompartmentType_RigidBody_Hardware -- RigidBody Hardware
@@ -515,7 +526,7 @@ enum ShapeCompartmentType
     desc.
          Flags used when building a shape.
     note.
-         Mostly Compatible with the **NxShapeFlag** enum.
+         Mostly Compatible with the @NxShapeFlag@ enum.
     enums.
          ShapeFlags_Visualisation       -- Allow a visualation of this shape in the VisualDebugger.
          ShapeFlags_NoCollision         -- Used only with Compound Shapes, otherwise raise ActorFlags_DisableCollision.
@@ -545,7 +556,7 @@ enum ShapeFlags
  ShapeFlags_IsFluidDrain        = (1<<8),
  ShapeFlags_NoFluids            = (1<<10),
  ShapeFlags_TwoWayFluid         = (1<<11),
- ShapeFlags_DiableResponse      = (1<<12),
+ ShapeFlags_DisableResponse     = (1<<12),
  ShapeFlags_DynamicDynamicCCD   = (1<<13),
  ShapeFlags_DisableSceneQueries = (1<<14),
  ShapeFlags_IsClothDrain        = (1<<15),
@@ -962,7 +973,7 @@ enum RemoteDebuggerObjectType
     desc.
           Type of Joint
     note.
-         Compatible with **NxJointType**.
+         Compatible with @NxJointType@.
     enums.
          JointFunctionType_Prismatic     -- Prismatic joint
          JointFunctionType_Revolute      -- Revolute joint
@@ -995,7 +1006,7 @@ enum JointFunctionType
     desc.
           Type of Joint
     note.
-         Mostly compatible with **NxJointState**. apart from JointState_Dead
+         Mostly compatible with @NxJointState@. apart from JointState_Dead
     enums.
          JointState_Unbound -- Not used. 
          JointState_Simulating -- The joint is being simulated under normal conditions. I.e. it is not broken or deleted. 
@@ -1014,7 +1025,7 @@ enum JointState
     desc.
          Flags for Joints
     note.
-         Compatible with **NxJointFlag**.
+         Compatible with @NxJointFlag@.
     enums.
          JointFlag_CollisionEnabled --  Raised if collision detection should be enabled between the bodies attached to the joint.
          JointFlag_Visualisation -- Visualised in the debug renderer.
@@ -1029,7 +1040,7 @@ enum JointFlag
     desc.
          Joint projection is a method for correcting large joint errors.
     note.
-         Compatible with **NxJointProjectionMode**.
+         Compatible with @NxJointProjectionMode@.
     enums.
          JointProjectionMode_None -- Don't project this joint 
          JointProjectionMode_Point_MiniumDistance -- Linear and angular minimum distance projection 
@@ -1046,7 +1057,7 @@ enum JointProjectionMode
     desc.
          Control the behavior of revolute joints.
     note.
-         Compatible with **NxRevoluteJointFlag**.
+         Compatible with @NxRevoluteJointFlag@.
     enums.
          RevoluteJointFlags_LimitEnabled  -- Are limits enabled
          RevoluteJointFlags_MotorEnabled  -- Is the motor enabled
@@ -1063,7 +1074,7 @@ enum RevoluteJointFlags
     desc.
          Control the behavior of pulley joints.
     note.
-         Compatible with **NxPulleyJointFlag**.
+         Compatible with @NxPulleyJointFlag@.
     enums.
          PulleyJointFlags_IsRigid  -- The joint also maintains a minimum distance, not just a maximum
          PulleyJointFlags_MotorEnabled  -- Is the motor enabled
@@ -1078,7 +1089,7 @@ enum PulleyJointFlags
     desc.
          Control the behavior of distance joints.
     note.
-         Compatible with **NxDistanceJointFlag**.
+         Compatible with @NxDistanceJointFlag@.
     enums.
          DistanceJointFlags_MaxDistanceEnabled -- The joint enforces the maximum separate distance.
          DistanceJointFlags_MinDistanceEnabled -- The joint enforces the minimum separate distance.
@@ -1095,7 +1106,7 @@ enum DistanceJointFlags
     desc.
          Used to specifiy the range of motions allowed for a DOF in a D6 joint.
     note.
-         Compatible with **NxD6JointMotion**.
+         Compatible with @NxD6JointMotion@.
     enums.
          D6JointMotion_Locked  -- The DOF is locked, it does not allow relative motion.
          D6JointMotion_Limited -- The DOF is limited, it only allows motion within a specific range.
@@ -1112,7 +1123,7 @@ enum D6JointMotion
     desc.
          Used to specify a particular drive method. i.e. Having a position based goal or a velocity based goal.
     note.
-         Compatible with **NxD6JointDriveType**.
+         Compatible with @NxD6JointDriveType@.
     enums.
          D6JointDriveType_Position  -- Used to set a position goal when driving.
          D6JointMotion_Limited -- Used to set a velocity goal when driving.
@@ -1128,7 +1139,7 @@ enum D6JointDriveType
     desc.
          Control the general behavior of D6 joints.
     note.
-         Compatible with **NxD6JointFlag**.
+         Compatible with @NxD6JointFlag@.
     enums.
          D6JointFlag_SlerpDrive  -- Drive along the shortest spherical arc
          D6JointFlag_GearEnabled -- Apply gearing to the angular motion, e.g. body 2s angular motion is twice body 1s etc.
@@ -1156,7 +1167,7 @@ enum JointSpringType
     desc.
          Spherical joint spring type
     note.
-         Compatible with **NxSphericalJointFlag**.
+         Compatible with @NxSphericalJointFlag@.
     enums.
          SphericalJointFlags_TwistLimitEnabled - Enable twist limits.
          SphericalJointFlags_SwingLimitEnabled - Enable swing limits.
@@ -1179,7 +1190,7 @@ enum SphericalJointFlags
     desc.
          Flags to use with Wheels
     note.
-         Compatible with **NxWheelFlag**.
+         Compatible with @NxWheelFlag@.
     enums.
          WheelFlags_AxisContactNormal       -- Determines whether the suspension axis or ground contact normal is used for the suspension constraint.
          WheelFlags_InputLatSlipVelocity    -- The laterial slip veloicty is used as the input to the tire function, rather than the slip angle.
@@ -1204,7 +1215,7 @@ enum WheelFlags
     desc.
          Flags to use with Cloth
     note.
-         Compatible with **NxClothFlag**.
+         Compatible with @NxClothFlag@.
     enums.
          ClothFlags_Pressure                    -- Enable pressure simulation for closed cloth meshes.
          ClothFlags_Static                      -- Make the cloth static.
@@ -1250,7 +1261,7 @@ enum ClothFlags
     desc.
          Flags to use with Cloth when attaching vertices.
     note.
-         Compatible with **NxClothAttachmentFlag**.
+         Compatible with @NxClothAttachmentFlag@.
     enums.
          ClothAttachmentFlags_Twoway            -- Allow cloth &rArr; object interaction.
          ClothAttachmentFlags_Tearable          -- Vertex is tearable.
@@ -1265,7 +1276,7 @@ enum ClothAttachmentFlags
     desc.
          Set of attachment states a vertex can be in.
     note.
-         Compatible with **NxClothVertexAttachmentStatus**.
+         Compatible with @NxClothVertexAttachmentStatus@.
     enums.
          ClothVertexAttachmentStatus_None   -- Vertex is not attached.
          ClothVertexAttachmentStatus_Global -- Vertex is attached to the global frame.
@@ -1349,7 +1360,7 @@ enum SoftBodyAttachmentFlags
     desc.
          DeviceCode are used with compartments
     note.
-         Compatible with **NxDeviceCode**.
+         Compatible with @NxDeviceCode@.
     enums.
          DeviceCode_PPU0       -- Explicit PPU index corresponds to index numeric value (reserved for future use, currently only PPU 0 is valid). 
          DeviceCode_PPU1       -- Not Used.
@@ -1382,7 +1393,7 @@ enum DeviceCode
     desc.
          DeviceCode are used with compartments
     note.
-         Compatible with **NxCompartmentType**.
+         Compatible with @NxCompartmentType@.
     enums.
          CompartmentType_RigidBody -- RigidBody Compartment.
          CompartmentType_Fluid     -- Fluid Compartment.
@@ -1401,7 +1412,7 @@ enum CompartmentType
     desc.
          DeviceCode are used with compartments
     note.
-         Compatible with **NxCompartmentType**.
+         Compatible with @NxCompartmentType@.
     enums.
          CompartmentFlags_SleepNotification -- Enable/disable sleep event reporting
          CompartmentFlags_ContinuousCD      -- Enable/disable continuous collision detection
@@ -1420,7 +1431,7 @@ enum CompartmentFlags
     desc.
          Particle flags are used to give some additional information about the particles.
     note.
-         Compatible with **NxParticleFlag**.
+         Compatible with @NxParticleFlag@.
     enums.
          ParticleFlags_CollisionWithStatic  -- Collision with Static
          ParticleFlags_CollisionWithDynamic -- Collision with Dynamic
@@ -1445,7 +1456,7 @@ enum ParticleFlags
          you still get collision between particles and static/dynamic shapes, damping,
          acceleration due to gravity, and the user force.
    note.
-         Compatible with **NxFluidSimulationMethod**.
+         Compatible with @NxFluidSimulationMethod@.
    enums.
         FluidSimulationMethod_SPH                   -- Enable simulation of inter particle forces.
         FluidSimulationMethod_NoParticleInteraction -- Do not simulate inter particle forces.
@@ -1462,7 +1473,7 @@ enum FluidSimulationMethod
     desc.
          The NxFluid instance can be selected for collision with both static and dynamic shapes.
     note.
-         Compatible with **NxFluidCollisionMethod**.
+         Compatible with @NxFluidCollisionMethod@.
     enums.
          FluidCollisionMethod_Static         -- Collide with static shapes.
          FluidCollisionMethod_Dynamic        -- Collide with dynamic shapes.
@@ -1477,7 +1488,7 @@ enum FluidCollisionMethod
     desc.
          Flags used with fluids.
     note.
-         Compatible with **NxFluidFlag**.
+         Compatible with @NxFluidFlag@.
     enums.
          FluidFlags_Visualisation               -- Enables debug visualization for the Fluid.
          FluidFlags_DisableGravity              -- Disables scene gravity for the Fluid.
@@ -1505,7 +1516,7 @@ enum FluidFlags
     desc.
          Flags used for contacts
     note.
-         Compatible with **NxContactPairFlag**.
+         Compatible with @NxContactPairFlag@.
          ContactPairFlags are combined together with the @|@ (or) operator.
     enums.
          ContactPairFlags_Ignore                     -- Disable contact generation
@@ -1546,7 +1557,7 @@ enum ContactPairFlags
     desc.
          Flags used for sweep testings
     note.
-         Compatible with **NxSweepFlags**.
+         Compatible with @NxSweepFlags@.
          ContactPairFlags are combined together with the @|@ (or) operator.
     enums.
          SweepFlags_Statics             -- Sweep vs static objects (SceneGeometries)
@@ -1565,7 +1576,7 @@ enum SweepFlags
     desc.
         Flags that control the behaviour of fluid emitters.
     note.
-        Compatible with **NxFluidEmitterFlag**
+        Compatible with @NxFluidEmitterFlag@
     enums.
          FluidEmitterFlags_Visualisation   -- Should the emitters be shown in the VisualDebugger.
          FluidEmitterFlags_ForceOnBody     -- Should the emission cause a force on the attached Shape's RigidBody.
@@ -1585,7 +1596,7 @@ enum FluidEmitterFlags
     desc.
          The shape of the area of the emission.
     note.
-         Compatible with **NxEmitterShape**
+         Compatible with @NxEmitterShape@
     enums.
          FluidEmitterShape_Rectangular -- A Rectangle
          FluidEmitterShape_Ellipse     -- An Ellipse
@@ -1600,7 +1611,7 @@ enum FluidEmitterShape
     desc.
          Type of Fluid Emitter
     note.
-         Compatible with **NxEmitterType**
+         Compatible with @NxEmitterType@
     enums.
          FluidEmitterType_Pressure -- Pressure
          FluidEmitterType_FlowRate -- Flow rate
@@ -1618,6 +1629,21 @@ enum MeshPagingMode
  MeshPagingMode_Fallback,
  MeshPagingMode_Auto,
 };
+
+
+#ifdef NxOgreUsePhysXCharacterController
+
+enum CharacterControllerInteractionFlag
+{
+ CharacterControllerInteractionFlag_Include,
+ CharacterControllerInteractionFlag_Exclude,
+ CharacterControllerInteractionFlag_UseFilter
+};
+
+#endif
+
+
+                                                                                       
 
 } // namespace Enums
 

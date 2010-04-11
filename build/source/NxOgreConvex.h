@@ -89,6 +89,12 @@ class NxOgrePublicClass Convex : public Shape
   */
   void saveToDescription(ConvexDescription& description);
   
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
+  
   protected:
   
   /*

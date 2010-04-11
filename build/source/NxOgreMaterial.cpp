@@ -50,7 +50,7 @@ Material::Material(NxMaterial* material, Scene* scene)
 Material::Material(const MaterialDescription& description, Scene* scene)
 : mMaterial(0), mScene(scene), mName(description.mName)
 {
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  create(description);
 }
 

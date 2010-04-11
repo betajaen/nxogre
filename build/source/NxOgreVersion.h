@@ -31,14 +31,13 @@
 
                                                                                        
 
-// Thu Jan 14 21:41:34 +0000 2010
+// Mon Mar 15 15:39:54 +0000 2010
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 6
-#define NxOgreVersionRelease 1031
-#define NxOgreCommit "Uncrushed"
+#define NxOgreVersionRelease 1180
+#define NxOgreCommit "Nonrigid"
 #define NxOgreBranch "Detritus"
 
                                                                                        
 
 #endif
-

@@ -29,30 +29,30 @@
 #ifndef NXOGRE_AUTOCONFIGURATION_H
 #define NXOGRE_AUTOCONFIGURATION_H
 
-#define NxOgreMemoryAllocatorMalloc    1
+#define NxOgreMemoryAllocatorMalloc 1
 #define NxOgreMemoryAllocatorNedmalloc 2
 
-#define NxOgreFloatingPointFloat      1
-#define NxOgreFloatingPointDouble     2
-#define NxOgreCompilerUnknown      0
-#define NxOgreCompilerMSVC         1
-#define NxOgreCompilerGNUC         2
+#define NxOgreFloatingPointFloat 1
+#define NxOgreFloatingPointDouble 2
+#define NxOgreCompilerUnknown 0
+#define NxOgreCompilerMSVC 1
+#define NxOgreCompilerGNUC 2
 
-#define NxOgrePlatformUnknown      0
-#define NxOgrePlatformWindows      1
-#define NxOgrePlatformLinux        2
+#define NxOgrePlatformUnknown 0
+#define NxOgrePlatformWindows 1
+#define NxOgrePlatformLinux 2
 
-#define NxOgreArchitecture32Bit    32
-#define NxOgreArchitecture64Bit    64
+#define NxOgreArchitecture32Bit 32
+#define NxOgreArchitecture64Bit 64
 
 #define NXOGRE_EXPORT_OPTIONS_EXPORT 1
 #define NXOGRE_EXPORT_OPTIONS_IMPORT 2
-#define NXOGRE_EXPORT_OPTIONS_AVOID  3
+#define NXOGRE_EXPORT_OPTIONS_AVOID 3
 
 #if defined (_MSC_VER)
-#  define NxOgreCompiler NxOgreCompilerMSVC
+# define NxOgreCompiler NxOgreCompilerMSVC
 #elif defined ( __GNUC__ )
-#  define NxOgreCompiler NxOgreCompilerGNUC
+# define NxOgreCompiler NxOgreCompilerGNUC
 #endif
 
 
@@ -87,55 +87,77 @@
 // 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 #pragma warning (disable : 4996)
 
-                                                                                       
+ 
+/*
+#if defined(_DEBUG) || defined(DEBUG)
+# ifndef NXOGRE_DEBUG
+#  define NXOGRE_DEBUG
+# endif
+#endif
+
+#ifdef NXOGRE_SDK
+# define NxOgreForceInline __forceinline
+# define NxOgrePublicClass
+# define NxOgrePublicFunction
+# define NxOgrePublicTemplateClass
+# else
+# define NxOgreForceInline __forceinline
+# define NxOgrePublicClass
+# define NxOgrePublicFunction
+# define NxOgrePublicTemplateClass
+#endif
+
+#endif
+*/
+
 
 #if (NxOgreCompiler == NxOgreCompilerMSVC)
-    
-  #define NxOgreForceInline __forceinline
-  
-  #ifdef NXOGRE_OPTIONS_DYNAMIC_LIBRARY
-  #  define NXOGRE_EXPORT_OPTIONS NXOGRE_EXPORT_OPTIONS_EXPORT
-  #endif
-  
-  #ifdef NXOGRE_OPTIONS_STATIC_LIBRARY
-  #  define NXOGRE_EXPORT_OPTIONS NXOGRE_EXPORT_OPTIONS_AVOID
-  #endif
-  
-  #ifndef NXOGRE_EXPORT_OPTIONS
-  #  define NXOGRE_EXPORT_OPTIONS NXOGRE_EXPORT_OPTIONS_IMPORT
-  #endif
-  
-  #if (NXOGRE_EXPORT_OPTIONS == NXOGRE_EXPORT_OPTIONS_EXPORT)
-  #  define NxOgrePublicClass    __declspec(dllexport)
-  #  define NxOgrePublicFunction __declspec(dllexport)
-  #endif
-  
-  #if (NXOGRE_EXPORT_OPTIONS == NXOGRE_EXPORT_OPTIONS_IMPORT)
-  #  define NxOgrePublicClass    __declspec(dllimport)
-  #  define NxOgrePublicFunction __declspec(dllimport)
-  #endif
-  
-  #if (NXOGRE_EXPORT_OPTIONS == NXOGRE_EXPORT_OPTIONS_AVOID)
-  #  define NxOgrePublicClass
-  #  define NxOgrePublicFunction
-  #endif
-  
+ 
+ #define NxOgreForceInline __forceinline
+ 
+ #ifdef NXOGRE_DYNAMIC_LIBRARY
+ # define NXOGRE_EXPORT_OPTIONS NXOGRE_EXPORT_OPTIONS_EXPORT
+ #endif
+
+ #ifdef NXOGRE_STATIC_LIBRARY
+ # define NXOGRE_EXPORT_OPTIONS NXOGRE_EXPORT_OPTIONS_AVOID
+ #endif
+
+ #ifndef NXOGRE_EXPORT_OPTIONS
+ # define NXOGRE_EXPORT_OPTIONS NXOGRE_EXPORT_OPTIONS_IMPORT
+ #endif
+
+ #if (NXOGRE_EXPORT_OPTIONS == NXOGRE_EXPORT_OPTIONS_EXPORT)
+ # define NxOgrePublicClass __declspec(dllexport)
+ # define NxOgrePublicFunction __declspec(dllexport)
+ # define NxOgrePublicTemplateClass
+ #endif
+
+ #if (NXOGRE_EXPORT_OPTIONS == NXOGRE_EXPORT_OPTIONS_IMPORT)
+ # define NxOgrePublicClass __declspec(dllimport)
+ # define NxOgrePublicFunction __declspec(dllimport)
+ # define NxOgrePublicTemplateClass
+ #endif
+
+ #if (NXOGRE_EXPORT_OPTIONS == NXOGRE_EXPORT_OPTIONS_AVOID)
+ # define NxOgrePublicClass
+ # define NxOgrePublicFunction
+ # define NxOgrePublicTemplateClass
+ #endif
+
+
 #endif
 
 #if (NxOgreCompiler == NxOgreCompilerGNUC)
-  
-  #  define NxOgreForceInline __inline
-  
-  #  define NxOgrePublicClass
-  #  define NxOgrePublicFunction
-  
+# define NxOgreForceInline __inline
+# define NxOgrePublicClass
+# define NxOgrePublicFunction
 #endif
 
-
-#ifdef _DEBUG
+#if defined(_DEBUG) || defined(DEBUG)
+# ifndef NXOGRE_DEBUG
 #  define NXOGRE_DEBUG
+# endif
 #endif
 
 #endif
-
-

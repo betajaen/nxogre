@@ -334,7 +334,7 @@ String Path::getProtocol() const
 
 StringHash Path::getProtocolHash() const
 {
- return Functions::StringHash(mProtocol);
+ return Strings::hash(mProtocol);
 }
 
 #if NxOgrePlatform == NxOgrePlatformWindows

@@ -277,7 +277,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
   
   CollisionModel        mShapes;
   
-  bool                  mAuxiliaryMirror;
+  Enums::RigidBodyRole  mRole;
   
 }; // class RigidBody
 

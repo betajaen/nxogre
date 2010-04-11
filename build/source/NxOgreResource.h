@@ -236,6 +236,10 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   */
   virtual bool writeLong(long*, size_t length);
 
+  /** \brief Write a null terminated string
+  */
+  virtual bool writeString(const String&);
+
   /** \brief Read a bool otherwise fail.
   */
   virtual bool readBool(void);
@@ -335,7 +339,13 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   /** \brief Force any changes to the resource
   */
   virtual void flush();
-
+    
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
+  
   protected: // Variables
   
   /** \brief Open the resource.

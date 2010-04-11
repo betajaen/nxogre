@@ -76,6 +76,10 @@ Enums::JointFunctionType D6Joint::getJointType()
  return Enums::JointFunctionType_D6;
 }
 
+String D6Joint::to_s() const
+{
+ return NxOgre::to_s((void*)this, String("D6Joint") );
+}
 
                                                                                        
 

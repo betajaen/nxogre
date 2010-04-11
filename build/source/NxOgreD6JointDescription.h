@@ -269,7 +269,7 @@ class NxOgrePublicClass D6JointDescription : public JointDescription
       default.
           0.0872 (~5 degrees)
   */
-  Real  mProjectionAngle;
+  Radian  mProjectionAngle;
   
   /*! variable. mGearRatio
       desc.

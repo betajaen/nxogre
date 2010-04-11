@@ -205,6 +205,10 @@ class NxOgrePublicClass MemoryResource : public Resource
   */
                        bool                  writeLong(long*, size_t length);
   
+  /** \brief Write a single long otherwise fail.
+  */
+                       bool                  writeString(const String&);
+  
   /** \brief Read a bool otherwise fail.
   */
                        bool                  readBool(void);

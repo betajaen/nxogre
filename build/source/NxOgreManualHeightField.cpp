@@ -119,7 +119,7 @@ String ManualHeightField::name(void) const
 HeightField* ManualHeightField::end(const String& name)
 {
  HeightField* hf = new HeightField(name, cook());
- StringHash hashed_name = Functions::StringHash(name);
+ StringHash hashed_name = Strings::hash(name);
  HeightFieldManager::getSingleton()->mHeightFields.insert(hashed_name, hf);
  return hf;
 }

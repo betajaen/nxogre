@@ -417,6 +417,16 @@ class NxOgrePublicClass FileResource : public Resource
   */
   bool  writeLong(long* values, size_t length);
   
+  /*! function. writeString
+      desc.
+          Write a string (without a null ending byte) otherwise fail.
+      args.
+          const String& __string__ -- String to write.
+      return.
+          **bool** -- If the write was sucessful or not.
+  */
+  bool writeString(const String&);
+
   /*! function. readBool
       desc.
           Read a single bool otherwise fail.

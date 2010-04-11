@@ -69,6 +69,11 @@
 
 #include "NxPhysics.h"
 
+#if NxOgreUsePhysXCharacterController == 1
+#include "NxOgreCharacterController.h"
+#include "NxOgreCharacterControllerDescription.h"
+#endif
+
                                                                                        
 
 namespace NxOgre
@@ -86,7 +91,7 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
  mPhysXCallback = NXOGRE_NEW_NXOGRE(PhysXCallback)(this);
 
  mName = description.mName;
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  
  NxSceneDesc scene_description;
  Functions::PrototypeFunctions::SceneDescriptionToNxSceneDesc(description, scene_description);
@@ -120,8 +125,6 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
   
   mSceneTimer = new FixedSceneTimer(this, description.mMaxTimeStep); // temp.
   
-  mMachineIterator = mMachines.getIterator();
-  
 }
 
 Scene::~Scene(void)
@@ -141,8 +144,8 @@ Scene::~Scene(void)
   mVolumes.clear();
   mMaterials.clear();
   mFluids.clear();
-  mCloths.destroyAll();
-  mSoftBodies.destroyAll();
+  mCloths.clear();
+  mSoftBodies.clear();
   NXOGRE_DELETE_NXOGRE(mSceneTimer);
   mSDK->releaseScene(*mScene);
   NXOGRE_DELETE_NXOGRE(mPhysXCallback);
@@ -191,7 +194,7 @@ Actor* Scene::createActor(const ShapeDescription& shape, const Matrix44& pose, c
  return actor;
 }
 
-bool Scene::destroyActor(NxOgre::Actor* actor)
+bool Scene::destroyActor(Actor* actor)
 {
  
  if (actor == 0)
@@ -221,29 +224,21 @@ SceneGeometry* Scene::createSceneGeometry(const ShapeDescription& shape, const M
  return sg;
 }
 
-
 bool Scene::advance(float user_deltaTime, const Enums::Priority& p)
 {
  
  if (p == mProcessingPriority && mSceneTimer->getTimerMode() > 0 )
  {
-  for (Machine* machine = mMachineIterator.begin();machine = mMachineIterator.next();)
-   machine->simulate(user_deltaTime);
-  
+  mMachines.each(Machine::MachineLambda(user_deltaTime));
   mCanRender = false;
-  
   mSceneTimer->simulate(user_deltaTime);
-  
   return true;
  }
  
  if (p == mFetchingPriority && mSceneTimer->getTimerMode() == Enums::TimerMode_Simulating)
  {
-  
   mSceneTimer->fetchResults();
-  
   mCanRender = true;
-  
   return true;
  }
  
@@ -322,70 +317,70 @@ Volume* Scene::createVolume(const ShapeDescriptions& shapes, const Matrix44& pos
 
 void Scene::destroyJoint(Joint* joint)
 {
- mJoints.remove(joint);
+ mJoints.erase(joint);
  NXOGRE_DELETE_NXOGRE(joint);
 }
 
 SphericalJoint* Scene::createSphericalJoint(RigidBody* first, const SphericalJointDescription& desc)
 {
  SphericalJoint* joint = new SphericalJoint(first, 0, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 SphericalJoint* Scene::createSphericalJoint(RigidBody* first, RigidBody* second, const SphericalJointDescription& desc)
 {
  SphericalJoint* joint = new SphericalJoint(first, second, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 FixedJoint* Scene::createFixedJoint(RigidBody* first, const FixedJointDescription& desc)
 {
  FixedJoint* joint = new FixedJoint(first, 0, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 FixedJoint* Scene::createFixedJoint(RigidBody* first, RigidBody* second, const FixedJointDescription& desc)
 {
  FixedJoint* joint = new FixedJoint(first, second, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 RevoluteJoint* Scene::createRevoluteJoint(RigidBody* first, const RevoluteJointDescription& desc)
 {
  RevoluteJoint* joint = new RevoluteJoint(first, 0, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 RevoluteJoint* Scene::createRevoluteJoint(RigidBody* first, RigidBody* second, const RevoluteJointDescription& desc)
 {
  RevoluteJoint* joint = new RevoluteJoint(first, second, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 D6Joint* Scene::createD6Joint(RigidBody* first, const D6JointDescription& desc)
 {
  D6Joint* joint = new D6Joint(first, 0, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 D6Joint* Scene::createD6Joint(RigidBody* first, RigidBody* second, const D6JointDescription& desc)
 {
  D6Joint* joint = new D6Joint(first, second, desc);
- mJoints.insert(joint);
+ mJoints.push_back(joint);
  return joint;
 }
 
 Compartment* Scene::createCompartment(const CompartmentDescription& description)
 {
  Compartment* compartment = new Compartment(description, this);
- mCompartments.insert(compartment);
+ mCompartments.push_back(compartment);
  mCompartmentPairs[compartment->getCompartment()] = compartment;
  return compartment;
 }
@@ -541,37 +536,37 @@ const TimeStep& Scene::getTimeStep(void)
 
 void Scene::registerMachine(Machine* machine)
 {
- mMachines.insert(machine);
+ mMachines.push_back(machine);
 }
 
 void Scene::unregisterMachine(Machine* machine)
 {
- mMachines.remove(machine);
+ mMachines.erase(machine);
 }
 
 Cloth* Scene::createCloth(const ClothDescription& description, Renderable* renderable, Enums::Priority rp)
 {
  Cloth* cloth = NXOGRE_NEW_NXOGRE(Cloth)(description, renderable, rp, this);
- mCloths.insert(cloth);
+ mCloths.push_back(cloth);
  return cloth;
 }
 
 void Scene::destroyCloth(Cloth* cloth)
 {
- mCloths.remove(cloth);
+ mCloths.erase(cloth);
  NXOGRE_DELETE_NXOGRE(cloth);
 }
 
 SoftBody* Scene::createSoftBody(const SoftBodyDescription& description, Renderable* renderable, Enums::Priority rp)
 {
  SoftBody* cloth = NXOGRE_NEW_NXOGRE(SoftBody)(description, renderable, rp, this);
- mSoftBodies.insert(cloth);
+ mSoftBodies.push_back(cloth);
  return cloth;
 }
 
 void Scene::destroySoftBody(SoftBody* cloth)
 {
- mSoftBodies.remove(cloth);
+ mSoftBodies.erase(cloth);
  NXOGRE_DELETE_NXOGRE(cloth);
 }
 
@@ -688,6 +683,44 @@ ConstraintDominance Scene::getDominanceGroupPair(GroupIdentifier a, GroupIdentif
 {
  NxConstraintDominance constraint = mScene->getDominanceGroupPair(a, b);
  return ConstraintDominance(constraint.dominance0, constraint.dominance1);
+}
+
+#if NxOgreUsePhysXCharacterController == 1
+
+CharacterController* Scene::createBoxCharacterController(const SimpleBox& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description)
+{
+// CharacterController* controller = NXOGRE_NEW_NXOGRE CharacterController(shape, globalPosition, yaw, description);
+ 
+ //CharacterController* characterController =NXOGRE_NEW_NXOGRE Material(description, this);
+ //StringHash hash = fluid->getNameHash();
+ //mFluids.insert(hash, fluid);
+ //return fluid;
+ return 0;
+}
+
+CharacterController* Scene::createCapsuleCharacterController(const SimpleCapsule& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description)
+{
+// CharacterController* controller = NXOGRE_NEW_NXOGRE CharacterController(shape, globalPosition, yaw, description);
+ 
+ return 0;
+}
+
+void Scene::destroyCharacterController(CharacterController*)
+{
+ //if (fluid)
+ //{
+ // if (fluid->getNameHash() == BLANK_HASH)
+ //  mFluids.erase(fluid);
+ // else
+ //  mFluids.erase(fluid->getNameHash());
+ //}
+}
+
+#endif
+
+std::string Scene::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Scene") ));
 }
 
                                                                                        

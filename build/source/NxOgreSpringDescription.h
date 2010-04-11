@@ -72,7 +72,7 @@ class NxOgrePublicClass SpringDescription
       \see NxSpringDesc::targetValue
       \default 0
   */
-  Real mTargetValue;
+  Radian mTargetValue;
   
 }; // class SpringDescription
 

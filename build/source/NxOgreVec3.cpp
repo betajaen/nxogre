@@ -72,6 +72,13 @@ Vec3::Vec3(const Real& X, const Real& Y, const Real& Z)
  set(X, Y, Z);
 };
 
+Vec3::Vec3(const String& str)
+{
+ std::stringstream s;
+ s << Strings::replace_copy(str, ',', ' ');
+ s >> x >> y >> z;
+}
+
 void Vec3::set(const Real& X, const Real& Y, const Real& Z)
 {
  x = X;
@@ -175,6 +182,11 @@ void Vec3::zero()
 bool Vec3::isZero() const
 {
  return (x == (Real) 0) && (y == (Real) 0) && (z == (Real) 0) ;
+}
+
+bool Vec3::isNegative() const
+{
+ return (x <= (Real) 0) || (y <= (Real) 0) || (z <= (Real) 0) ;
 }
 
 Vec3 Vec3::lerp(const Vec3& other, const Real& alpha) const
@@ -347,6 +359,22 @@ const Real& Vec3::operator[](const size_t i) const
 Vec3 Vec3::random(float x0, float x1, float y0, float y1, float z0, float z1)
 {
  return Vec3(Math::random(x0,x1), Math::random(y0,y1), Math::random(z0,z1));
+}
+
+String Vec3::to_s() const
+{
+ std::ostringstream ss;
+ ss << x << " " << y << " " << z;
+ return ss.str();
+}
+
+std::vector<Real> Vec3::to_a() const
+{
+ std::vector<Real> a;
+ a.push_back(x);
+ a.push_back(y);
+ a.push_back(z);
+ return a;
 }
 
                                                                                        

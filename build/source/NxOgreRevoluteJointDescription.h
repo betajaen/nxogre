@@ -78,7 +78,7 @@ class NxOgrePublicClass RevoluteJointDescription : public JointDescription
       \default 0.0872 (~5 degrees)
       \see NxRevoluteJointDesc::projectionDistance
   */
-                Real                      mProjectionAngle;
+                Radian                    mProjectionAngle;
 
   /** \brief Limits rotation around twist axis
       \default JointLimitDescription::reset()

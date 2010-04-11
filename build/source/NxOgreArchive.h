@@ -130,6 +130,12 @@ class NxOgrePublicClass Archive : public ResourceAllocatable
            **Path** -- Pat of the Archive
   */
   Path getPath() const;
+    
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
   
   protected: // Variables
   

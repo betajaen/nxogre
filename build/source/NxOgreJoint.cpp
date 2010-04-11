@@ -160,6 +160,11 @@ void Joint::purgeLimitPlanes(void)
  mJoint->purgeLimitPlanes();
 }
 
+String Joint::to_s() const
+{
+ return NxOgre::to_s((void*)this, String("Joint") );
+}
+
                                                                                        
 
 } // namespace NxOgre

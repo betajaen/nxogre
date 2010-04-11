@@ -50,6 +50,15 @@ ManualMesh::ManualMesh(void)
  (*mRef) = 1;
 }
 
+ManualMesh::ManualMesh(MeshData* data)
+: mMesh(data)
+{
+ 
+ mRef = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, sizeof(RefT));
+ (*mRef) = 1;
+ 
+}
+
 ManualMesh::~ManualMesh(void)
 {
  if(--(*mRef) == 0)
@@ -153,6 +162,25 @@ void ManualMesh::vertex(const Vec3& r)
  mMesh->mVertices.append(r.x);
  mMesh->mVertices.append(r.y);
  mMesh->mVertices.append(r.z);
+}
+
+unsigned int ManualMesh::nbVertices() const
+{
+ return mMesh->mVertices.size() / 3;
+}
+
+void ManualMesh::modifyVertex(unsigned index, const Vec3& newValue)
+{
+ mMesh->mVertices[(index*3)] = newValue.x;
+ mMesh->mVertices[(index*3)+1] = newValue.y;
+ mMesh->mVertices[(index*3)+2] = newValue.z;
+}
+
+void ManualMesh::scaleVertex(unsigned index, const Vec3& factor)
+{
+ mMesh->mVertices[(index*3)] *= factor.x;
+ mMesh->mVertices[(index*3)+1] *= factor.y;
+ mMesh->mVertices[(index*3)+2] *= factor.z;
 }
 
 void ManualMesh::index(unsigned int i)

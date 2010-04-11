@@ -32,6 +32,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreRadian.h"
 
                                                                                        
 
@@ -55,7 +56,7 @@ class NxOgrePublicClass Quat
 
  Quat(const Real& w_val, const Real& x_val, const Real& y_val, const Real& z_val);
   
- Quat(const float& rad, const Vec3&);
+ Quat(const Radian& rad, const Vec3&);
 
  Quat(const Matrix33& other);
   
@@ -106,7 +107,7 @@ class NxOgrePublicClass Quat
 
  void invert();
  
- void fromAngleAxis(const float& rad, const Vec3& axis);
+ void fromAngleAxis(const Radian& rad, const Vec3& axis);
  
  static Quat invert(const Quat& original);
 

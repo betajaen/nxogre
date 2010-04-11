@@ -111,6 +111,12 @@ class NxOgrePublicClass Box : public Shape
           Save to a BoxDescription
   */
   void saveToDescription(BoxDescription& description);
+    
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
   
   protected:
   

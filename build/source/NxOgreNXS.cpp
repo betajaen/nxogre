@@ -27,7 +27,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreMeshSerialiser.h"
+#include "NxOgreNXS.h"
 #include "NxOgreWorld.h"
 #include "NxOgreResource.h"
 #include "NxOgrePhysXStream.h"
@@ -48,17 +48,17 @@ namespace Serialisation
 
                                                                                        
 
-MeshSerialiser::MeshSerialiser()
+NXS::NXS()
 {
- assert(0); // NEVER TO BE CREATED.
+ // Should never happen.
 }
 
-MeshSerialiser::~MeshSerialiser()
+NXS::~NXS()
 {
- assert(0); // NEVER TO BE DELETED.
+ // Should never happen.
 }
 
-NxTriangleMesh* MeshSerialiser::loadTriangleMesh(Resource* resource, bool perform_check)
+NxTriangleMesh* NXS::loadTriangleMesh(Resource* resource, bool perform_check)
 {
  
  if (perform_check)
@@ -89,7 +89,7 @@ NxTriangleMesh* MeshSerialiser::loadTriangleMesh(Resource* resource, bool perfor
  
 }
 
-bool MeshSerialiser::saveTriangleMesh(Resource* resource, MeshData* mesh_data)
+bool NXS::saveTriangleMesh(Resource* resource, MeshData* mesh_data)
 {
  
  NxTriangleMeshDesc description;
@@ -115,7 +115,7 @@ bool MeshSerialiser::saveTriangleMesh(Resource* resource, MeshData* mesh_data)
 }
 
 
-bool MeshSerialiser::saveTriangleMesh(NxTriangleMesh* mesh, MeshData* mesh_data)
+bool NXS::saveTriangleMesh(NxTriangleMesh* mesh, MeshData* mesh_data)
 {
  
  NxTriangleMeshDesc desc;
@@ -165,7 +165,7 @@ bool MeshSerialiser::saveTriangleMesh(NxTriangleMesh* mesh, MeshData* mesh_data)
 }
 
 
-NxConvexMesh* MeshSerialiser::loadConvexMesh(Resource* resource, bool perform_check)
+NxConvexMesh* NXS::loadConvexMesh(Resource* resource, bool perform_check)
 {
 
  if (perform_check)
@@ -196,7 +196,7 @@ NxConvexMesh* MeshSerialiser::loadConvexMesh(Resource* resource, bool perform_ch
 
 }
 
-bool MeshSerialiser::saveConvexMesh(Resource* resource, MeshData* mesh_data)
+bool NXS::saveConvexMesh(Resource* resource, MeshData* mesh_data)
 {
  
  NxConvexMeshDesc description;
@@ -223,7 +223,7 @@ bool MeshSerialiser::saveConvexMesh(Resource* resource, MeshData* mesh_data)
  
 }
 
-bool MeshSerialiser::saveConvexMesh(NxConvexMesh* mesh, MeshData* mesh_data)
+bool NXS::saveConvexMesh(NxConvexMesh* mesh, MeshData* mesh_data)
 {
  NxConvexMeshDesc desc;
  mesh->saveToDesc(desc); 
@@ -259,7 +259,7 @@ bool MeshSerialiser::saveConvexMesh(NxConvexMesh* mesh, MeshData* mesh_data)
 
 
 
-NxCCDSkeleton* MeshSerialiser::loadSkeletonMesh(Resource* resource, bool perform_check)
+NxCCDSkeleton* NXS::loadSkeletonMesh(Resource* resource, bool perform_check)
 {
  // VIRTUAL
  return 0;
@@ -268,13 +268,13 @@ NxCCDSkeleton* MeshSerialiser::loadSkeletonMesh(Resource* resource, bool perform
 
 
 
-bool MeshSerialiser::saveSkeletonMesh(Resource*, NxCCDSkeleton*)
+bool NXS::saveSkeletonMesh(Resource*, NxCCDSkeleton*)
 {
  return false;
 }
 
 
-bool MeshSerialiser::saveSkeletonMesh(NxCCDSkeleton*, MeshData*)
+bool NXS::saveSkeletonMesh(NxCCDSkeleton*, MeshData*)
 {
  return false;
 }
@@ -283,7 +283,7 @@ bool MeshSerialiser::saveSkeletonMesh(NxCCDSkeleton*, MeshData*)
 
 
 
-NxClothMesh* MeshSerialiser::loadClothMesh(Resource* resource, bool perform_check)
+NxClothMesh* NXS::loadClothMesh(Resource* resource, bool perform_check)
 {
  
  if (perform_check)
@@ -313,7 +313,7 @@ NxClothMesh* MeshSerialiser::loadClothMesh(Resource* resource, bool perform_chec
  return sdk->createClothMesh(PhysXStream(resource));
 }
 
-bool MeshSerialiser::saveClothMesh(Resource* resource, MeshData* mesh_data)
+bool NXS::saveClothMesh(Resource* resource, MeshData* mesh_data)
 {
  
  NxClothMeshDesc description;
@@ -351,7 +351,7 @@ bool MeshSerialiser::saveClothMesh(Resource* resource, MeshData* mesh_data)
  
 }
 
-bool MeshSerialiser::saveClothMesh(NxClothMesh* mesh, MeshData* mesh_data)
+bool NXS::saveClothMesh(NxClothMesh* mesh, MeshData* mesh_data)
 {
  NxClothMeshDesc desc;
  mesh->saveToDesc(desc);
@@ -411,7 +411,7 @@ bool MeshSerialiser::saveClothMesh(NxClothMesh* mesh, MeshData* mesh_data)
 
 
 
-NxClothMesh* MeshSerialiser::loadExtendedClothMesh(Resource* resource, Buffer<float>& texture_coords, bool perform_check)
+NxClothMesh* NXS::loadExtendedClothMesh(Resource* resource, Buffer<float>& texture_coords, bool perform_check)
 {
  
  if (perform_check)
@@ -448,7 +448,7 @@ NxClothMesh* MeshSerialiser::loadExtendedClothMesh(Resource* resource, Buffer<fl
  return mesh;
 }
 
-bool MeshSerialiser::saveExtendedClothMesh(Resource* resource, MeshData* mesh_data)
+bool NXS::saveExtendedClothMesh(Resource* resource, MeshData* mesh_data)
 {
  
  NxClothMeshDesc description;
@@ -499,7 +499,7 @@ bool MeshSerialiser::saveExtendedClothMesh(Resource* resource, MeshData* mesh_da
 
 
 
-void MeshSerialiser::loadClothTextureCoords(Resource* resource, Buffer<float>& texture_coords)
+void NXS::loadClothTextureCoords(Resource* resource, Buffer<float>& texture_coords)
 {
 
  
@@ -532,7 +532,7 @@ void MeshSerialiser::loadClothTextureCoords(Resource* resource, Buffer<float>& t
   texture_coords.append(resource->readFloat());
 }
 
-void MeshSerialiser::saveClothTextureCoords(Resource* resource, Buffer<float>& texture_coords)
+void NXS::saveClothTextureCoords(Resource* resource, Buffer<float>& texture_coords)
 {
  
  size_t texture_length = texture_coords.size();
@@ -552,7 +552,7 @@ void MeshSerialiser::saveClothTextureCoords(Resource* resource, Buffer<float>& t
 
 
 
-bool MeshSerialiser::isNXSFile(Resource* resource)
+bool NXS::isNXSFile(Resource* resource)
 {
 
  // False on a resource that isn't opened.
@@ -607,7 +607,7 @@ bool MeshSerialiser::isNXSFile(Resource* resource)
 
 
 
-bool MeshSerialiser::isXSKFile(Resource* resource)
+bool NXS::isXSKFile(Resource* resource)
 {
  return false;
 }
@@ -615,7 +615,7 @@ bool MeshSerialiser::isXSKFile(Resource* resource)
 
 
 
-Enums::MeshType MeshSerialiser::getMeshType(Resource* resource)
+Enums::MeshType NXS::getMeshType(Resource* resource)
 {
  char meshType[4] = {0, 0, 0, 0};
  resource->seekBeginning();
@@ -651,7 +651,7 @@ Enums::MeshType MeshSerialiser::getMeshType(Resource* resource)
  return Enums::MeshType_Unknown;
 }
 
-String MeshSerialiser::getMeshTypeAsString(Enums::MeshType type)
+String NXS::getMeshTypeAsString(Enums::MeshType type)
 {
  if (type == Enums::MeshType_Cloth)
   return "cloth";

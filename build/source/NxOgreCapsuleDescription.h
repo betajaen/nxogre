@@ -42,7 +42,8 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+/*! class. CapsuleDescription
+    desc. A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
 */
 class NxOgrePublicClass CapsuleDescription : public ShapeDescription
 {

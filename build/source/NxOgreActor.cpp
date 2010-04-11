@@ -54,7 +54,7 @@ Actor::Actor(const ShapeDescription& shape, const Matrix44& pose, const RigidBod
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  
  createDynamic(pose, description, scene, shape);
 }
@@ -63,7 +63,7 @@ Actor::Actor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidB
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  
  createDynamic(pose, description, scene, shapes);
 }
@@ -71,6 +71,11 @@ Actor::Actor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidB
 Actor::~Actor(void)
 {
  destroy();
+}
+
+String Actor::getName() const
+{
+ return mName;
 }
 
 unsigned int Actor::getRigidBodyType() const 
@@ -535,13 +540,10 @@ unsigned int Actor::linearSweep(const Vec3& motion, unsigned int sweep_flags, un
  return count;
 }
 
-
-/*
-NxU32 Actor::linearSweep (const Vec3& motion, NxU32 flags, void *userData, NxU32 nbShapes, NxSweepQueryHit *shapes, NxUserEntityReport< NxSweepQueryHit > *callback, const NxSweepCache *sweepCache=NULL)
+String Actor::to_s() const
 {
- NxSweepQueryHit
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Actor") ));
 }
-*/ 
 
                                                                                        
 

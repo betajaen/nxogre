@@ -377,6 +377,24 @@ template<typename key_type, typename type> class ptr_map_iterator
 };
 
 
+                                                                                       
+
+namespace Maps
+{
+
+                                                                                       
+
+template<typename K, typename T> T* get_or_null(const std::map<K,T*>& map, const K& lookFor)
+{
+ std::map<K,T*>::const_iterator it = map.find(lookFor);
+ if (it == map.end())
+  return NULL;
+ return (*it).second;
+}
+
+                                                                                       
+
+}; // namespace Maps
 
                                                                                        
 

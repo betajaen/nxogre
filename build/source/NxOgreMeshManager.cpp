@@ -83,7 +83,7 @@ Mesh* MeshManager::load(Resource* resource, const String& name)
 
 Mesh* MeshManager::getByName(const String& meshIdentifier)
 {
- return getByHash(Functions::StringHash(meshIdentifier));
+ return getByHash(Strings::hash(meshIdentifier));
 }
 
 Mesh* MeshManager::getByHash(const StringHash& hashed_name)

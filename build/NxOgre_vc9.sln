@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxOgreWithCharacterController", "vc9\NxOgreWithCharacterController.vcproj", "{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxOgre", "vc9\NxOgre.vcproj", "{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Final|Win32 = Final|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Debug|Win32.Build.0 = Debug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Final|Win32.ActiveCfg = Final|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Final|Win32.Build.0 = Final|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Debug|Win32.Build.0 = Debug|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Final|Win32.ActiveCfg = Final|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Final|Win32.Build.0 = Final|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

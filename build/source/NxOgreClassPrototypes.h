@@ -182,6 +182,15 @@ class World;
 class WorldDescription;
 class WorldPrototype;
 
+#if NxOgreUsePhysXCharacterController == 1
+
+class CharacterController;
+class CharacterControllerDescription;
+class BoxCharacterControllerDescription;
+class CapsuleCharacterControllerDescription;
+
+#endif
+
 // struct ArrayReferenceCounter;
 // struct ArrayUnknown;
 // struct BufferReferenceCounter;
@@ -192,7 +201,7 @@ class WorldPrototype;
 // class SharedArray;
 // class SharedBuffer;
 // struct TBuffer;
-// class MeshSerialiser;
+// class NXS;
 
                                                                                        
 

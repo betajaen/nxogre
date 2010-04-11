@@ -218,7 +218,13 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   /** \internal Use Scene::destroyKinematicActor
   */
   virtual                                    ~KinematicActor(void);
-
+  
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
+  
   protected: // Variables
   
   /** \brief Name of the KinematicActor, otherwise a blank string.

@@ -116,8 +116,11 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  while (nbShapes--)
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
-
-
+ 
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
 
 void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
@@ -143,7 +146,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  //////////////////////////////////////////////////
  for (unsigned int i=0;i < shapes.size();i++)
  {
-  NxShapeDesc* shape_description = shapes[i].createShapeDescription();
+  NxShapeDesc* shape_description = shapes[i]->createShapeDescription();
   if (shape_description->getType() >= Enums::ShapeFunctionType_Mesh)
    NxOgre_ThrowException(DescriptionInvalidException, "Cannot attach a TriangleMeshGeometry or HeightFieldShape shape to a dynamic actor", Classes::_RigidBody);
   actor_description.shapes.push_back(shape_description);
@@ -174,8 +177,13 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
 
-
+ 
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
+
 
 void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
 {
@@ -221,7 +229,12 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
  
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
+
 
 void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
 {
@@ -246,7 +259,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  //////////////////////////////////////////////////
  for (unsigned int i=0;i < shapes.size();i++)
  {
-  NxShapeDesc* shape_description = shapes[i].createShapeDescription();
+  NxShapeDesc* shape_description = shapes[i]->createShapeDescription();
   actor_description.shapes.push_back(shape_description);
  }
  //////////////////////////////////////////////////
@@ -275,7 +288,12 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
  
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
+
 
 void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
 {
@@ -326,7 +344,12 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
  
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
+
 
 void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
 {
@@ -354,7 +377,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  //////////////////////////////////////////////////
  for (unsigned int i=0;i < shapes.size();i++)
  {
-  NxShapeDesc* shape_description = shapes[i].createShapeDescription();
+  NxShapeDesc* shape_description = shapes[i]->createShapeDescription();
   if (shape_description->getType() >= Enums::ShapeFunctionType_Mesh)
    NxOgre_ThrowException(DescriptionInvalidException, "Cannot attach a TriangleMeshGeometry or HeightFieldShape shape to a dynamic actor", Classes::_RigidBody);
   actor_description.shapes.push_back(shape_description);
@@ -385,7 +408,12 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
  
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
+
 
 void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, const ShapeDescription& shape)
 {
@@ -433,7 +461,12 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
  
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
+
 
 void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, const ShapeDescriptions& shapes)
 {
@@ -457,7 +490,7 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  //////////////////////////////////////////////////
  for (unsigned int i=0;i < shapes.size();i++)
  {
-  NxShapeDesc* shape_description = shapes[i].createShapeDescription();
+  NxShapeDesc* shape_description = shapes[i]->createShapeDescription();
   actor_description.shapes.push_back(shape_description);
  }
  //////////////////////////////////////////////////
@@ -489,13 +522,19 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
   mShapes.push_back(Functions::ShapeFunctions::createShape(physx_shapes[nbShapes], this));
  //////////////////////////////////////////////////
  
+ // RIGIDBODY USERDATA PASS
+ //////////////////////////////////////////////////
+ mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ //////////////////////////////////////////////////
 }
+
 
 void RigidBody::destroy(void)
 {
  
  if (mActor == 0)
   return;
+ 
  
  PhysXPointer* ptr = pointer_cast(mActor->userData);
  NXOGRE_DELETE_NXOGRE(ptr);

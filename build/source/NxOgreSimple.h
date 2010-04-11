@@ -71,6 +71,9 @@ struct SimplePlane : public SimpleShape
 
 struct SimpleBox : public SimpleShape
 {
+ SimpleBox() {}
+ SimpleBox(Real extentsX, Real extentsY, Real extentsZ) : mExtents(extentsX, extentsY, extentsZ) {}
+ SimpleBox(Vec3 extents) : mExtents(extents) {}
  Matrix33    mRotation;
  Vec3        mExtents;
 };
@@ -88,7 +91,12 @@ struct SimpleSegment : public SimpleShape
 
 struct SimpleCapsule : public SimpleSegment
 {
- Real Radius;
+ SimpleCapsule()
+ {}
+ SimpleCapsule(Real height, Real radius) : mHeight(height), mRadius(radius)
+ {}
+ Real mHeight;
+ Real mRadius;
 };
 
 struct SimplePointCloud : public SimpleShape

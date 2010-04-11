@@ -111,7 +111,7 @@ class NxOgrePublicClass WheelDescription : public ShapeDescription
       \default 0
       \range (-Pi, Pi)
   */
-                        Real                 mSteeringAngle;
+                        Radian               mSteeringAngle;
  
   /** \brief Callback used for modifying the wheel contact point before the wheel constraints are created. 
   */

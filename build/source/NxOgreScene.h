@@ -42,7 +42,10 @@
 #include "NxOgreShape.h"
 #include "NxOgreFluid.h"
 #include "NxOgreMaterial.h"
-
+#include "NxOgreJoint.h"
+#include "NxOgreSoftBody.h"
+#include "NxOgreMachine.h"
+#include "NxOgreCloth.h"
 
 #include "NxOgreRigidBodyDescription.h"
 #include "NxOgreMaterialDescription.h"
@@ -56,6 +59,12 @@
 #include "NxOgreFluidDescription.h"
 
 #include "NxOgreTimeListener.h"
+
+#if NxOgreUsePhysXCharacterController == 1
+
+#include "NxOgreCharacterControllerDescription.h"
+
+#endif
 
                                                                                        
 
@@ -91,7 +100,12 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   typedef  ptr_multihashmap<Material>                         Materials;
   typedef  ptr_multihashmap<Material>::iterator_t             MaterialIterator;
   typedef  ptr_map<unsigned short, Material>                  IndexedMaterials;
-  
+
+#if NxOgreUsePhysXCharacterController == 1
+  typedef  ptr_multihashmap<CharacterController>              CharacterControllers;
+  typedef  ptr_multihashmap<CharacterController>::iterator_t  CharacterControllerIterator;
+#endif
+
   /*! function. getType
       desc.
           Get type of scene.
@@ -163,6 +177,28 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   KinematicActor*  createKinematicActor(const ShapeDescription&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
+#if NxOgreUsePhysXCharacterController == 1
+
+  /*! function. createBoxCharacterController
+      desc.
+          Create a box based Character Controller.
+  */
+  CharacterController*  createBoxCharacterController(const SimpleBox& shape, const Vec3& globalPosition = Vec3(0,0,0), const Radian& yaw = 0, const CharacterControllerDescription& = CharacterControllerDescription());
+
+  /*! function. createCapsuleCharacterController
+      desc.
+          Create a capsule based Character Controller.
+  */
+  CharacterController*  createCapsuleCharacterController(const SimpleCapsule& shape, const Vec3& globalPosition = Vec3(0,0,0), const Radian& yaw = 0, const CharacterControllerDescription& = CharacterControllerDescription());
+
+  /*! function. destroyCharacterController
+      desc.
+          Destroy an existing Character Controller
+  */
+  void destroyCharacterController(CharacterController*);
+
+#endif
+
   /*! function. createKinematicActor
       desc.
           
@@ -485,8 +521,14 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   ConstraintDominance getDominanceGroupPair(GroupIdentifier a, GroupIdentifier b);
   
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
+  
   protected: // Functions
-
+  
   /** \internal Use World::createScene()
   */
   Scene(const SceneDescription&, NxPhysicsSDK*);
@@ -494,7 +536,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   /** \internal Use World::destroyScene()
   */
   virtual ~Scene(void);
-
+  
   protected: // Variables
 
   /** \brief Name as a String. Use Scene::getName() to fetch, or Scene::setName() to set.
@@ -529,6 +571,12 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   KinematicControllers  mKinematicControllers;
 
+#if NxOgreUsePhysXCharacterController == 1
+  /** \internal Master character controllers array
+  */
+  CharacterControllers mCharacterControllers;
+#endif
+
   /** \internal Master volumes array
   */
   Volumes  mVolumes;
@@ -543,27 +591,25 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
 
   /** \internal Master joints array
   */
-  Array<Joint*>  mJoints;
+//  Array<Joint*>  mJoints;
+  ptr_vector<Joint> mJoints;
 
   /** \internal Master machines array
   */
-  Array<Machine*>  mMachines;
+  //Array<Machine*>  mMachines;
+  ptr_vector<Machine> mMachines;
 
   /** \internal
   */
-  Array<Machine*>::Iterator  mMachineIterator;
+  ptr_vector<Cloth>  mCloths;
 
   /** \internal
   */
-  Array<Cloth*>  mCloths;
+  ptr_vector<SoftBody>  mSoftBodies;
 
   /** \internal
   */
-  Array<SoftBody*>  mSoftBodies;
-
-  /** \internal
-  */
-  Array<Compartment*>  mCompartments;
+  ptr_vector<Compartment>  mCompartments;
 
   /** \brief
   */

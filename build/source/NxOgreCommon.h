@@ -55,6 +55,7 @@
 #include "NxOgreCircularBuffer.h"
 #include "NxOgreMath.h"
 #include "NxOgreTuple.h"
+#include "NxOgreRadian.h"
 #include "NxOgreVec2.h"
 #include "NxOgreVec3.h"
 #include "NxOgreVec4.h"
@@ -80,7 +81,6 @@ namespace NxOgre
 typedef BoundsT<Vec2> Bounds2;
 typedef BoundsT<Vec3> Bounds3;
 typedef BoundsT<Vec4> Bounds4;
-typedef Real          Radian;
 
                                                                                        
 
@@ -176,3 +176,48 @@ enum
                                                                                        
 
 #endif
+
+
+
+/*! page. Compiling NxOgre
+
+h1. Using a Visual Studio project file
+
+By default the NxOgre supplies a Visual Studio C++ project file with it's source code, as the
+lead developer uses Visual Studio. It is always up to date and tested.
+
+The Visual Studio project files (vcproj) are found in the following directories:
+
+build/MSVC-9.00
+build/MSVC-8.00
+
+Where "MSVC-?.??" corresponds to the Visual Studio version in question. Inside there are
+at least two Visual Studio project files.
+
+- NxOgre.vcproj
+- NxOgreDebug.vcproj
+
+Further more, there may be "variants" which may include or exclude particular parts of code.
+
+"NxOgre.vcproj" is the project file for a complete NxOgre static library for use in a production
+application. The debug version "NxOgreDebug.vcproj" is for developers or those wishing to debug
+NxOgre with their application.
+
+There are no VisualStudio solution (.sln) files, these will be auto-created once you open a particular
+project in Visual Studio.
+
+h1. Using Pasta to generate a Visual Studio project file.
+
+"Pasta" is a small Ruby based application to generate project files for your IDE. You require
+Ruby to be install on your computer.
+
+Pasta uses Pasta files to define what the project is; in the case of NxOgre, "build/nxogre.pasta" is
+the pasta file. It contains the Final and Debug versions, as well as any variants.
+
+To generate the project files, open a command prompt into the @build@ directory.
+
+bc. > pasta nxogre.pasta
+
+*/
+
+

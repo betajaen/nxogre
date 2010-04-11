@@ -85,6 +85,12 @@ void Convex::saveToDescription(ConvexDescription& description)
  description.mMesh = mMesh;
  description.mMeshFlags = desc.meshFlags;
 }
+
+String Convex::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Convex") ));
+}
+
                                                                                        
 
 } // namespace NxOgre

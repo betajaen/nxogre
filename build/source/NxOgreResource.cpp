@@ -247,6 +247,11 @@ bool Resource::writeLong(long*, size_t length)
  return false;
 }
 
+bool Resource::writeString(const String&)
+{
+ return false;
+}
+
 bool Resource::readBool(void)
 {
  return false;
@@ -348,6 +353,11 @@ void Resource::readLongArray(long*, size_t length)
 
 void Resource::flush()
 {
+}
+
+String Resource::to_s() const
+{
+ return NxOgre::to_s((void*)this, String("'" + mPath.getString() + "'") );
 }
 
                                                                                        

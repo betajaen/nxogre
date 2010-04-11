@@ -48,7 +48,7 @@ template<typename type> class ptr_hashmap_iterator;
 template<typename type> class const_ptr_hashmap_iterator;
 
 
-template<typename type> class ptr_hashmap
+template<typename type> class NxOgrePublicTemplateClass ptr_hashmap
 {
   
  public:
@@ -245,7 +245,7 @@ template<typename type> class ptr_hashmap
 
 
 
-template<typename type> class const_ptr_hashmap_iterator
+template<typename type> class NxOgrePublicTemplateClass const_ptr_hashmap_iterator
 {
  public:
   
@@ -333,7 +333,7 @@ template<typename type> class const_ptr_hashmap_iterator
 
 
 
-template<typename type> class ptr_hashmap_iterator
+template<typename type> class NxOgrePublicTemplateClass ptr_hashmap_iterator
 {
  public:
   

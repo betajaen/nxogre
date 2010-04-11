@@ -32,6 +32,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreString.h"
 #include "NxOgreMath.h"
 #include "NxOgreMatrix.h"
 
@@ -142,6 +143,10 @@ class NxOgrePublicClass Vec4
   inline Real& operator[](const size_t i);
   
   inline const Real& operator[](const size_t i) const;
+
+  inline String to_s() const;
+
+  inline std::vector<Real> to_a() const;
 
   Real x, y, z, w;
 

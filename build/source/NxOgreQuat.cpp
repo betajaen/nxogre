@@ -56,7 +56,7 @@ Quat::Quat(const Real& w_val, const Real& x_val, const Real& y_val, const Real& 
  setWXYZ(w_val, x_val, y_val, z_val);
 }
 
-Quat::Quat(const float& rad, const Vec3& vec)
+Quat::Quat(const Radian& rad, const Vec3& vec)
 {
  fromAngleAxis(rad, vec);
 }
@@ -251,7 +251,7 @@ Quat Quat::operator=(const Matrix44& other)
   z = -z;
  }
 
- void Quat::fromAngleAxis(const float& rad, const Vec3& axis)
+ void Quat::fromAngleAxis(const Radian& rad, const Vec3& axis)
  {
   float half_rad = rad * 0.5f;
   float s = Math::sin(half_rad);

@@ -72,6 +72,11 @@ class NxOgrePublicClass Mesh : public ResourceAllocatable
   */
   Enums::MeshType                             getType(void) const;
   
+  /** \brief Get type (as a string).
+      \note Use Mesh::getType for comparisions.
+  */
+  String                                      getTypeAsString(void) const;
+  
   /** \brief Is the shape loaded?
   */
   bool                                        isLoaded(void) const;

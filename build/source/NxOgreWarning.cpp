@@ -98,7 +98,7 @@ unsigned int Warning::getClassType() const
 std::string Warning::str() const
 {
  // Warning (ClassType)
- // =========================
+ // ===================
  //
  // Description Text. Description Text. Description Text. Description Text. Description Text. Description Text. 
  // Description Text. Description Text. Description Text. Description Text. Description Text. Description Text. 

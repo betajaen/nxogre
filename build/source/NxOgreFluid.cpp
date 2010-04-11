@@ -49,7 +49,7 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
   mRenderable(renderable),
   mPriority(priority)
 {
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  
  mParticleData = NXOGRE_NEW_NXOGRE(PhysXParticleData)();
  mParticleData->configure(description.mMaxParticles, 2);

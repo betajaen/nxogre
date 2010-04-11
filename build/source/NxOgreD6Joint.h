@@ -113,6 +113,12 @@ class NxOgrePublicClass D6Joint : public Joint
   */
   ~D6Joint(void);
   
+  /*! function. to_s
+      desc.
+          Returns the pointer and class type as string.
+  */
+  virtual String to_s() const;
+
   protected: // Variables
   
   NxD6Joint*    mD6Joint;

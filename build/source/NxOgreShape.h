@@ -155,7 +155,13 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   /** \brief Get the RigidBody this shape is attached to.
   */
   RigidBody* getRigidBody();
-
+  
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  virtual String to_s() const;
+  
   protected:
   
   /* Optional name of the shape.
@@ -190,7 +196,7 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
 
                                                                                        
 
-typedef std::vector<ShapeDescription> ShapeDescriptions;
+typedef std::vector<ShapeDescription*> ShapeDescriptions;
 
 /** \brief A collection of shapes that belong to a RigidBody (long term storage).
 */

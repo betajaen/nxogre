@@ -127,6 +127,12 @@ class NxOgrePublicClass Capsule : public Shape
           Saves the capsule to a description
   */
   void saveToDescription(CapsuleDescription&);
+    
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
   
   protected:
   

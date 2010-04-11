@@ -202,6 +202,12 @@ class NxOgrePublicClass Compartment : public GenericBasedAllocatable
   */
   unsigned int                                getFlags() const;
 
+  /*! function. to_s
+      desc.
+          Returns the pointer as string and class type.
+  */
+  String to_s() const;
+  
   protected:
   
                       Scene*                  mScene;

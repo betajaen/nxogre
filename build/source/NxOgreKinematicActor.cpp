@@ -50,7 +50,7 @@ KinematicActor::KinematicActor(const ShapeDescription& shape, const Matrix44& po
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  
  createKinematic(pose, description, scene, shape);
 }
@@ -59,7 +59,7 @@ KinematicActor::KinematicActor(const ShapeDescriptions& shapes, const Matrix44& 
 : RigidBody(), mScene(scene)
 {
  mName = description.mName;
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
  
  createKinematic(pose, description, scene, shapes);
 }
@@ -222,6 +222,11 @@ void KinematicActor::moveGlobalOrientation (const Matrix33& r33)
 void KinematicActor::moveGlobalOrientationQuat (const Quat& q)
 {
  ::NxOgre::Functions::RigidBodyFunctions::moveGlobalOrientationQuat(q, mActor);
+}
+
+String KinematicActor::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("KinematicActor") ));
 }
 
                                                                                        

@@ -63,7 +63,7 @@ HeightField::HeightField(const String& name, NxHeightField* hf)
 : mName(name),
   mHeightField(hf)
 {
- mNameHash = Functions::StringHash(mName);
+ mNameHash = Strings::hash(mName);
 }
 
 HeightField::~HeightField(void)

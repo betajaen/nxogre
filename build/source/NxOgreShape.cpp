@@ -185,6 +185,11 @@ void Shape::setInteractingCompartmentTypes(const int& types)
  mShape->setNonInteractingCompartmentTypes(types);
 }
 
+String Shape::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Shape") ));
+}
+
                                                                                        
 
 } // namespace NxOgre

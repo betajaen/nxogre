@@ -118,6 +118,11 @@ void Capsule::saveToDescription(CapsuleDescription& description)
  description.mHeight = mCapsuleShape->getHeight();
 }
 
+String Capsule::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Capsule") ));
+}
+
                                                                                        
 
 } // namespace NxOgre

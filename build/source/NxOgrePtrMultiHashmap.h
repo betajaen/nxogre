@@ -48,7 +48,7 @@ template<typename type> class const_ptr_multihashmap_iterator;
 
                                                                                        
 
-template<typename type> class ptr_multihashmap
+template<typename type> class NxOgrePublicTemplateClass ptr_multihashmap
 {
   
  public:
@@ -232,6 +232,7 @@ template<typename type> class ptr_multihashmap
     {
      multimap.erase(it);
      Functions::safe_delete<type>(ptr);
+     return;
     }
   }
 

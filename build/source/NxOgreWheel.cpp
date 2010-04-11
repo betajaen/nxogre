@@ -188,12 +188,12 @@ Real Wheel::getBrakeTorque(void) const
  return mWheelShape->getBrakeTorque();
 }
 
-void Wheel::setSteeringAngle(Real angle)
+void Wheel::setSteeringAngle(Radian angle)
 {
  mWheelShape->setSteerAngle(angle);
 }
 
-Real Wheel::getSteeringAngle(void) const
+Radian Wheel::getSteeringAngle(void) const
 {
  return mWheelShape->getSteerAngle();
 }

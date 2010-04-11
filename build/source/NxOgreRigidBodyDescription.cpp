@@ -62,6 +62,7 @@ void RigidBodyDescription::reset(void)
  mMassLocalPose = Matrix44::IDENTITY;
  mMassSpaceInertia = Vec3::ZERO;
  mMaxAngularVelocity = Real(-1.0);
+ mName.clear();
  mSleepAngularVelocity = Real(-1.0);
  mSleepDamping = Real(0.0);
  mSleepEnergyThreshold = Real(0.005);

@@ -164,12 +164,12 @@ class NxOgrePublicClass Wheel : public Shape
   /** \brief Sets the steering angle (in radians)
       \note  Does not wake up the RigidBody.
   */
-  void  setSteeringAngle(Real);
+  void  setSteeringAngle(Radian);
   
   
   /** \brief Gets the steering angle (in radians)
   */
-  Real  getSteeringAngle(void) const;
+  Radian  getSteeringAngle(void) const;
   
   /** \brief Set Axle Speed.
       \warning This is an internal state variable. For any effect, the WheelFlags_AxleSpeedOverride must be enabled.

@@ -29,7 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreMeshData.h"
 #include "NxOgreResourceSystem.h"
-#include "NxOgreMeshSerialiser.h"
+#include "NxOgreNXS.h"
 
                                                                                        
 
@@ -66,16 +66,16 @@ void MeshData::cook(Resource* resource)
 {
  
  if (mType == Enums::MeshType_Convex)
-  Serialisation::MeshSerialiser::saveConvexMesh(resource, this);
+  Serialisation::NXS::saveConvexMesh(resource, this);
 
  else if (mType == Enums::MeshType_Triangle)
-  Serialisation::MeshSerialiser::saveTriangleMesh(resource, this);
+  Serialisation::NXS::saveTriangleMesh(resource, this);
 
  else if (mType == Enums::MeshType_Cloth)
-  Serialisation::MeshSerialiser::saveClothMesh(resource, this);
+  Serialisation::NXS::saveClothMesh(resource, this);
 
 // else if (mType == Enums::MeshType_SoftBody)
-//  Serialisation::MeshSerialiser::saveSoftBodyMesh(resource, this);
+//  Serialisation::NXS::saveSoftBodyMesh(resource, this);
  
 }
 

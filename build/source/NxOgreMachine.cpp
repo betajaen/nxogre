@@ -49,16 +49,41 @@ void Machine::simulate(float user_deltaTime)
 {
  ActorMachinePart::simulate(user_deltaTime);
  
- ArrayIterator<MachinePart*> it = mMachineParts.getIterator();
+ mMachineParts.each(MachinePartLambda(user_deltaTime));
+ 
+/* ArrayIterator<MachinePart*> it = mMachineParts.getIterator();
  for (MachinePart* part = it.begin(); part = it.next();)
-  part->simulate(user_deltaTime);
+  part->simulate(user_deltaTime);*/
 }
 
 MachinePart* Machine::createWheelMachinePart(Wheel* wheel, PointRenderable* point_renderable)
 {
  WheelMachinePart* part = NXOGRE_NEW_NXOGRE(WheelMachinePart)(wheel, point_renderable);
- mMachineParts.insert(part);
+ mMachineParts.push_back(part);
  return part;
+}
+
+Machine::MachinePartLambda::MachinePartLambda(float dt)
+: mDt(dt)
+{}
+
+void Machine::MachinePartLambda::operator()(MachinePart* part)
+{
+ part->simulate(mDt);
+}
+
+Machine::MachineLambda::MachineLambda(float dt)
+: mDt(dt)
+{}
+
+void Machine::MachineLambda::operator()(Machine* part)
+{
+ part->simulate(mDt);
+}
+
+String Machine::to_s() const
+{
+ return NxOgre::to_s((void*)this, String("Machine") );
 }
 
                                                                                        

@@ -46,7 +46,7 @@ template<typename type> class ptr_vector;
 template<typename type> class ptr_vector_iterator;
 template<typename type> class const_ptr_vector_iterator;
 
-template<typename type> class ptr_vector
+template<typename type> class NxOgrePublicTemplateClass ptr_vector
 {
   
  public:
@@ -247,7 +247,7 @@ template<typename type> class ptr_vector
 
 
 
-template<typename type> class const_ptr_vector_iterator
+template<typename type> class NxOgrePublicTemplateClass const_ptr_vector_iterator
 {
  public:
   
@@ -329,7 +329,7 @@ template<typename type> class const_ptr_vector_iterator
 
 
 
-template<typename type> class ptr_vector_iterator
+template<typename type> class NxOgrePublicTemplateClass ptr_vector_iterator
 {
  public:
   

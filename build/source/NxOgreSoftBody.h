@@ -46,10 +46,10 @@ namespace NxOgre
 */
 class NxOgrePublicClass SoftBody : public NonRigidBodyBasedAllocatable, public TimeListener
 {
- 
- friend class Scene;
- friend class Functions::ArrayFunctions<SoftBody*>::Write;
-
+  
+  friend class Scene;
+  template<class T> friend inline void Functions::safe_delete(T*);
+  
  public:
   
     /** \brief Get the renderable.

@@ -88,28 +88,28 @@ void FileResource::open()
 
  if (mAccess == Enums::ResourceAccess_ReadOnly)
  {
-  #ifdef _DEBUG
+  #ifdef NXOGRE_DEBUG_RESOURCES
    std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read from " << mArchive->getName() << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "rb");
  }
  else if (mAccess == Enums::ResourceAccess_WriteOnly)
  {
-  #ifdef _DEBUG
+  #ifdef NXOGRE_DEBUG_RESOURCES
    std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as write from " << mArchive->getName() << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "wb");
  }
  else if (mAccess == Enums::ResourceAccess_AppendOnly)
  {
-  #ifdef _DEBUG
+  #ifdef NXOGRE_DEBUG_RESOURCES
    std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as append from " << mArchive->getName() << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "ab");
  }
  else if (mAccess == Enums::ResourceAccess_ReadAndWrite)
  {
-  #ifdef _DEBUG
+  #ifdef NXOGRE_DEBUG_RESOURCES
    std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read/write from " << mArchive->getName() <<  std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "rb+");
@@ -136,7 +136,7 @@ void FileResource::close(void)
   fclose(mFile);
  mStatus = Enums::ResourceStatus_Closed;
 
-#ifdef _DEBUG
+#ifdef NXOGRE_DEBUG_RESOURCES
  std::cout << "[-] Closing File Resource -> " << mFilePath.getString() << " did R: " << mNbReadOperations << " W: " << mNbWriteOperations << std::endl;
 #endif
  
@@ -403,6 +403,14 @@ bool FileResource::writeLong(long* v, size_t length)
  mNbWriteOperations++;
  mWroteNbBytes += sizeof(long) * length;
  return fwrite(&v, sizeof(long) * length, 1, mFile) == 1;
+}
+
+bool FileResource::writeString(const String& str)
+{
+ // printf(__FUNCTION__ "at %i\n", at());
+ mNbWriteOperations++;
+ mWroteNbBytes +=  str.length() + 1;
+ return fwrite(str.data(), str.length(), 1, mFile);
 }
 
 bool FileResource::readBool(void)

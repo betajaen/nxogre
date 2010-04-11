@@ -138,7 +138,13 @@ class NxOgrePublicClass Joint : public JointBasedAllocatable
 
   /** \brief Get the limit planes of this Joint.
   */
-  Array<SimplePlane>                          getLimitPlaneIterator(void);
+  std::vector<SimplePlane>                    getLimitPlaneIterator(void);
+
+  /*! function. to_s
+      desc.
+          Returns the pointer and class type as string.
+  */
+  virtual String to_s() const;
 
   protected:
   

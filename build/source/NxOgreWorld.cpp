@@ -295,6 +295,11 @@ NxCookingInterface* World::getPhysXCookingInterface(void)
  return mCookingInterface;
 }
 
+std::string World::to_s() const
+{
+ return NxOgre::to_s((void*)this, String("World"));
+}
+
                                                                                        
 
 } // namespace NxOgre

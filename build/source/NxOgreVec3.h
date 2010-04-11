@@ -32,6 +32,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreString.h"
 #include "NxOgreMatrix.h"
 
                                                                                        
@@ -78,6 +79,8 @@ class NxOgrePublicClass Vec3
   
   inline Vec3(const Real& X, const Real& Y, const Real& Z);
   
+  inline Vec3(const String&);
+  
   inline void set(const Real& X, const Real& Y, const Real& Z);
   
   inline void set(const Vec3& other);
@@ -111,6 +114,8 @@ class NxOgrePublicClass Vec3
   inline void zero();
 
   inline bool isZero() const;
+
+  inline bool isNegative() const;
 
   inline Vec3 lerp(const Vec3& other, const Real& alpha) const;
 
@@ -197,6 +202,10 @@ class NxOgrePublicClass Vec3
    y = vec.y;
    z = vec.z;
   }
+
+  inline String to_s() const;
+
+  inline std::vector<Real> to_a() const;
 
   static Vec3 random(float x0, float x1, float y0, float y1, float z0, float z1);
 

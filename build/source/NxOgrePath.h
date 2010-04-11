@@ -39,15 +39,16 @@ namespace NxOgre
 
                                                                                        
 
-/* \brief Simple path class used with ResourceSystem to represent paths in a filesystem, or represent identifiers to
+/*! class. Path
+    desc. Simple path class used with ResourceSystem to represent paths in a filesystem, or represent identifiers to
           resources in archives using a specific protocol.
           
           A path is formatted as;
           
-            protocol://drive:/directory_name/sub_directory_name/filename.extension#portion
-            
-            
-   \examples
+          bc. protocol://drive:/directory_name/sub_directory_name/filename.extension#portion
+          
+          
+   examples.
           
           file://C:/Program Files/Game/Game.exe               (Specific file)
           
@@ -67,59 +68,54 @@ namespace NxOgre
           
           zip://media.zip#file.nxs                            (Relative file, accessing a file in file.nxs zip file)
           
-          file:///home/franky/Desktop/file.nxs                (Supports Linux paths)
+          file:///home/franky/Desktop/file.nxs                (Supports Unix paths)
           
           memory://                                           (Protocol is given only)
           
           
-   \usage
-     <code>
-       
-       1. Basic usage
-        Path path("c:/Program Files/My Game/Game.exe");
-       
-       2. ".." modifiers work.
-        Path path("c:/Program Files/My Game/../No my other game/Game.exe");
-       
-       3. Combining two paths together with the / operator.
-        Path path = Path("c:/Program Files/My Game/../No my other game/) / Path("Game.exe");
-       
-       4. Combining a path and string together with the / operator.
-        Path path = Path("c:/Program Files/My Game/../No my other game/) / "Game.exe";
-       
-       5. Multi-line combination of paths.
+   usage.
+       # Basic usage -- @Path path("c:/Program Files/My Game/Game.exe");@
+       # ".." modifiers work -- @Path path("c:/Program Files/My Game/../No my other game/Game.exe");@
+       # Combining two paths together with the / operator -- @Path path = Path("c:/Program Files/My Game/../No my other game/) / Path("Game.exe");@
+       # Combining a path and string together with the / operator -- @Path path = Path("c:/Program Files/My Game/../No my other game/) / "Game.exe";@
+       # Multi-line combination of paths.
+       bc.
         Path path("c:/Program Files/");
         path /= "My Game/";
         path /= "Game.exe";
-       
-       6. Getting the parent path.
+       # Getting the parent path.
+       bc.
         Path path("c:/Program Files/My Game");
         Path program_files = path.getParent().getParent();
         program_files /= "My Other Game/OtherGame.exe";
        
-       7. Getting the filename of the path
+       # Getting the filename of the path
+       bc.
         Path path("c:/Program Files/My Game/Game.exe");
         path.getFilename() => Game.exe
        
-       8. Getting the directory name of the file.
+       # Getting the directory name of the file.
+       bc.
         Path path("c:/Program Files/My Game/Game.exe");
         path.getDirectory() => My Game
        
-       9. Getting the parent directory name of the file.
+       # Getting the parent directory name of the file.
+       bc.
         Path path("c:/Program Files/My Game/Game.exe");
         path.getDirectory(1) => Program Files
        
-      10. Using protocols and portions.
+       # Using protocols and portions.
+       bc.
         Path path("zip://c:/Program Files/My Game/media.zip#poem.txt");
         path.getProtocol() => zip
         path.getPortion() => poem.txt
       
-      11. Natural protocols
+       # Natural protocols
+       bc.
         Path path("file://c:/Program Files/My Game/Game.exe");
         path.getProtocol() => file
         Path path("c:/Program Files/My Game/Game.exe");
         path.getProtocol() => file
-     </code>
 */
 class NxOgrePublicClass Path
 {

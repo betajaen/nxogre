@@ -43,8 +43,7 @@ namespace NxOgre
 Archive::Archive(const String& archive_name, const Path& path, ResourceProtocol* protocol)
 : mName(archive_name), mPath(path), mProtocol(protocol)
 {
- mNameHash = Functions::StringHash(archive_name);
-
+ mNameHash = Strings::hash(archive_name);
 }
 
 Archive::~Archive(void)
@@ -94,6 +93,11 @@ void Archive::_addResource(Resource* resource)
 void Archive::_removeResource(Resource* resource)
 {
  mResources.erase(resource);
+}
+
+String Archive::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Archive") ));
 }
 
                                                                                        

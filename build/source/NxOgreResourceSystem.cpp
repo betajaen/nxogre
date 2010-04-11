@@ -127,7 +127,7 @@ Resource* ResourceSystem::open(const Path& path, Enums::ResourceAccess resource_
   return 0;
  }
  
- Archive* archive = getArchiveByHash(Functions::StringHash(protocol->calculateArchiveName(path)));
+ Archive* archive = getArchiveByHash(Strings::hash(protocol->calculateArchiveName(path)));
  
  if (archive == 0)
  {
@@ -184,7 +184,7 @@ void ResourceSystem::closeArchive(Archive* archive)
 
 Archive* ResourceSystem::getArchiveByName(const String& name)
 {
- return getArchiveByHash(Functions::StringHash(name));
+ return getArchiveByHash(Strings::hash(name));
 }
 
 Archive* ResourceSystem::getArchiveByHash(const StringHash& hashed_name)

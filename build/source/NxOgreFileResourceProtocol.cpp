@@ -48,7 +48,7 @@ namespace NxOgre
 FileResourceProtocol::FileResourceProtocol(void)
 {
  mProtocolName = "file";
- mProtocolHash = Functions::StringHash(mProtocolName);
+ mProtocolHash = Strings::hash(mProtocolName);
 }
 
 FileResourceProtocol::~FileResourceProtocol(void)
@@ -57,8 +57,8 @@ FileResourceProtocol::~FileResourceProtocol(void)
 
 Archive* FileResourceProtocol::openArchive(const String& name, const Path& path)
 {
-#ifdef _DEBUG
- std::cout << "Opening file archive as '" << name << "' from '" << path.getString() << std::endl;
+#ifdef NXOGRE_DEBUG_RESOURCES
+ std::cout << "[+] Opening file archive as '" << name << "' from '" << path.getString() << std::endl;
 #endif
  return new FileArchive(name, path, this);
 }

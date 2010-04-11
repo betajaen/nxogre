@@ -48,6 +48,9 @@ namespace NxOgre
 class NxOgrePublicClass Machine : public ActorMachinePart
 {
   
+  friend class Scene;
+  template<class T> friend inline void Functions::safe_delete(T*);
+  
   public: // Functions
   
   /** \brief Text
@@ -66,9 +69,30 @@ class NxOgrePublicClass Machine : public ActorMachinePart
   */
   virtual void                                simulate(float user_deltaTime);
   
+  
+  /*! function. to_s
+      desc.
+          Returns the pointer and class type as string.
+  */
+  String to_s() const;
+  
+  struct MachinePartLambda
+  {
+   MachinePartLambda(float dt);
+   void operator()(MachinePart*);
+   float mDt;
+  };
+
+  struct MachineLambda
+  {
+   MachineLambda(float);
+   void operator()(Machine*);
+   float mDt;
+  };
+
   protected: // Variables
   
-  Array<MachinePart*>                         mMachineParts;
+  ptr_vector<MachinePart> mMachineParts;
   
 }; // class ClassName
 

@@ -47,35 +47,36 @@ namespace NxOgre
 
 /*! class. Fluid
     desc.
-        The fluid class represents the main module for the particle based fluid simulation.
-        SPH (Smoothed Particle Hydrodynamics) is used to animate the particles.
-        
-        There are two kinds of particle interaction forces which govern the behaviour of the fluid:
-        
-        *Pressure* 
-          These forces result from particle densities higher than the "rest density" of the fluid. 
-          The rest density is given by specifying the inter-particle distance at which the fluid is in its relaxed state.
-          Particles which are closer than the rest spacing are pushed away from each other. =:
-        *Viscosity*
-          These forces act on neighboring particles depending on the difference of their velocities.
-          Particles drag other particles with them which is used to simulate the viscous behaviour of the fluid. =:
-        
-        The fluid class manages a set of particles. Particles can be created in two ways:
-        
-        * Particles can be added by the user directly.
-        * The user can add emitters to the fluid and configure the parameters of the emission. (See FluidEmitter)
-        
-        Particles can be removed in two ways as well:
-        * The user can specify a lifetime for the particles.  When its lifetime expires, a particle is deleted.
-        * Shapes can be configured to act as drains.  When a particle intersects with a drain, the particle is deleted. (See Enums::ShapeFlags)
-        
-        Particles collide with static and dynamic shapes. Particles are also affected by the scene gravity and a user force, 
-        as well as global velocity damping.  In order to render a fluid, the user can supply the fluid instance with a 
-        user buffer into which the particle state is written after each simuation step.
+    The fluid class represents the main module for the particle based fluid simulation.
+    SPH (Smoothed Particle Hydrodynamics) is used to animate the particles.
+    
+    There are two kinds of particle interaction forces which govern the behaviour of the fluid:
+    
+    *Pressure* 
+      These forces result from particle densities higher than the "rest density" of the fluid. 
+      The rest density is given by specifying the inter-particle distance at which the fluid is in its relaxed state.
+      Particles which are closer than the rest spacing are pushed away from each other. =:
+    *Viscosity*
+      These forces act on neighboring particles depending on the difference of their velocities.
+      Particles drag other particles with them which is used to simulate the viscous behaviour of the fluid. =:
+    
+    The fluid class manages a set of particles. Particles can be created in two ways:
+    
+    * Particles can be added by the user directly.
+    * The user can add emitters to the fluid and configure the parameters of the emission. (See FluidEmitter)
+    
+    Particles can be removed in two ways as well:
+    * The user can specify a lifetime for the particles.  When its lifetime expires, a particle is deleted.
+    * Shapes can be configured to act as drains.  When a particle intersects with a drain, the particle is deleted. (See Enums::ShapeFlags)
+    
+    Particles collide with static and dynamic shapes. Particles are also affected by the scene gravity and a user force, 
+    as well as global velocity damping.  In order to render a fluid, the user can supply the fluid instance with a 
+    user buffer into which the particle state is written after each simuation step.
 
-        For a good introduction to SPH fluid simulation,
-        see http://graphics.ethz.ch/~mattmuel/publications/sca03.pdf
+    For a good introduction to SPH fluid simulation,
+    see http://graphics.ethz.ch/~mattmuel/publications/sca03.pdf
 
+    see. FluidDescription
 */
 class NxOgrePublicClass Fluid : public NonRigidBodyBasedAllocatable, public TimeListener
 {

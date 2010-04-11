@@ -45,7 +45,7 @@ namespace NxOgre
 MemoryResourceProtocol::MemoryResourceProtocol(void) : mHasInit(false)
 {
  mSingleArchiveName = mProtocolName = "memory";
- mProtocolHash = Functions::StringHash(mProtocolName);
+ mProtocolHash = Strings::hash(mProtocolName);
 }
 
 MemoryResourceProtocol::~MemoryResourceProtocol(void)

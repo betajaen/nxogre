@@ -556,6 +556,10 @@ void Cloth::setForceFieldMaterial(MaterialIdentifier mi)
  mCloth->setForceFieldMaterial(mi);
 }
 
+String Cloth::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Cloth") ));
+}
 
                                                                                        
 

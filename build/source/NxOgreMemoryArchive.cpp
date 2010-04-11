@@ -44,14 +44,14 @@ namespace NxOgre
 MemoryArchive::MemoryArchive(const String& name, const Path& path, ResourceProtocol* protocol)
 : Archive(name, path, protocol)
 {
-#ifdef _DEBUG
+#ifdef NXOGRE_DEBUG_RESOURCES
  std::cout << "[+] Opening Memory Archive" << std::endl;
 #endif
 }
 
 MemoryArchive::~MemoryArchive(void)
 {
-#ifdef _DEBUG
+#ifdef NXOGRE_DEBUG_RESOURCES
  std::cout << "[-] Closing Memory Archive" << std::endl;
 #endif
  mResources.clear();

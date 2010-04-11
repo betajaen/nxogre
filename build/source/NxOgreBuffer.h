@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreClasses.h"
+#include "NxOgreAllocatables.h"
 #include "stdio.h"
 
                                                                                        
@@ -334,6 +335,27 @@ template<typename T> class  Buffer
    Iterator end()
    {
     return _T->_End;
+   }
+   
+   unsigned int contains(const T& value)
+   {
+    unsigned int s = size();
+    for (unsigned int i=0;i < s;i++)
+    {
+     if ((_T->_First + i) == value)
+      return true;
+    }
+    return false;
+   }
+
+   void replace(const T& existing, const T& newValue)
+   {
+    unsigned int s = size();
+    for (unsigned int i=0;i < s;i++)
+    {
+     if (*(_T->_First + i) == existing)
+      *(_T->_First + i) = newValue;
+    }
    }
 
   protected:

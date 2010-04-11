@@ -82,7 +82,7 @@ class NxOgrePublicClass SphereDescription : public ShapeDescription
   */
   Real mRadius;
   
-}; // class BoxDescription
+}; // class SphereDescription
 
                                                                                        
 

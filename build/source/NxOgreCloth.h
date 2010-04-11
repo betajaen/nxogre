@@ -54,7 +54,7 @@ class NxOgrePublicClass Cloth : public NonRigidBodyBasedAllocatable, public Time
 {
   
   friend class Scene;
-  friend class Functions::ArrayFunctions<Cloth*>::Write;
+  template<class T> friend inline void Functions::safe_delete(T*);
   
   public:
   
@@ -902,7 +902,13 @@ bool                                        tearVertex(const unsigned int vertex
            MaterialIdentifier __material__ -- New forcefield material.
   */
   void                                         setForceFieldMaterial(MaterialIdentifier material);
-
+    
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  String to_s() const;
+  
   protected: // Functions
   
   /*! constructor. Cloth

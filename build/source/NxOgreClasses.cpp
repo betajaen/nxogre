@@ -41,7 +41,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[622] = {
+static const char*  sClasses[625] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -519,6 +519,7 @@ static const char*  sClasses[622] = {
   "Array",
   "ArrayReferenceCounter",
   "ArrayUnknown",
+  "AuxiliaryScene",
   "Box",
   "BoxDescription",
   "Buffer",
@@ -585,7 +586,7 @@ static const char*  sClasses[622] = {
   "Mesh",
   "MeshData",
   "MeshManager",
-  "MeshSerialiser",
+  "NXS",
   "MeshStats",
   "MotorDescription",
   "Notice",
@@ -603,6 +604,7 @@ static const char*  sClasses[622] = {
   "PlaneGeometryDescription",
   "PointParticleRenderer",
   "PointRenderable",
+  "PrincipalScene",
   "Ray",
   "RaycastHit",
   "RemoteDebugger",
@@ -618,6 +620,7 @@ static const char*  sClasses[622] = {
   "Scene",
   "SceneDescription",
   "SceneGeometry",
+  "SceneLink",
   "ScenePrototype",
   "SceneRenderer",
   "SceneTimer",

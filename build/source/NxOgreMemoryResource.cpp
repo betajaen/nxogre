@@ -70,7 +70,7 @@ void MemoryResource::open(void)
  mDirectionality = Enums::ResourceDirectionality_Unknown;
  mAccess = Enums::ResourceAccess_ReadAndWrite;
 
-#ifdef _DEBUG
+#ifdef NXOGRE_DEBUG_RESOURCES
  std::cout << "[+] Opening Memory resource" << std::endl;
 #endif
  
@@ -90,7 +90,7 @@ void MemoryResource::close(void)
  mStatus = Enums::ResourceStatus_Closing;
  mDirectionality = Enums::ResourceDirectionality_Unknown;
 
-#ifdef _DEBUG
+#ifdef NXOGRE_DEBUG_RESOURCES
  std::cout << "[-] Closing Memory resource. -> End Size is " << int(mEnd - mStart) << " bytes" << std::endl;
 #endif
  
@@ -314,6 +314,12 @@ bool MemoryResource::writeLong(long long_value)
 bool MemoryResource::writeLong(long* long_array, size_t length)
 {
  return write(long_array, sizeof(long) * length);
+}
+
+bool MemoryResource::writeString(const String& str)
+{
+ write(str.data(), str.length());
+ return write(&NULL_BYTE, sizeof(char));
 }
 
 bool MemoryResource::readBool(void)

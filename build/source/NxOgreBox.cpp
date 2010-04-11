@@ -107,6 +107,11 @@ SimpleBox Box::getWorldOBB(void)
  return box;
 }
 
+String Box::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Box") ));
+}
+
                                                                                        
 
 } // namespace NxOgre
