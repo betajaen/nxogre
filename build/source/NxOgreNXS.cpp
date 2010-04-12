@@ -110,6 +110,10 @@ bool NXS::saveTriangleMesh(Resource* resource, MeshData* mesh_data)
  
  NxCookingInterface* cookingInterface = World::getWorld()->getPhysXCookingInterface();
  
+// #ifdef NXOGRE_DEBUG
+  std::cout << "[#] saveTriangleMesh, isValid = " << description.isValid() << std::endl;
+// #endif
+ 
  return cookingInterface->NxCookTriangleMesh(description, PhysXStream(resource));
  
 }

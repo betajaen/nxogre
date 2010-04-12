@@ -16,7 +16,7 @@
    <Tool Name="VCManagedResourceCompilerTool"/>
    <Tool Name="VCResourceCompilerTool"/>
    <Tool Name="VCPreLinkEventTool"/>
-   <Tool AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" Name="VCLinkerTool" OutputFile="$(OutDir)\NxOgreWithCharacterControllerFinal.dll" AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib"/>
+   <Tool AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" Name="VCLinkerTool" OutputFile="$(OutDir)\NxOgreWithCharacterControllerFinal.dll" AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib"/>
    <Tool Name="VCALinkTool"/>
    <Tool Name="VCManifestTool"/>
    <Tool Name="VCXDCMakeTool"/>
@@ -35,7 +35,7 @@
    <Tool Name="VCManagedResourceCompilerTool"/>
    <Tool Name="VCResourceCompilerTool"/>
    <Tool Name="VCPreLinkEventTool"/>
-   <Tool AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" Name="VCLinkerTool" OutputFile="$(OutDir)\NxOgreWithCharacterControllerDebug.dll" AdditionalDependencies="PhysXLoader.lib NxCooking.lib NxCharacter.lib"/>
+   <Tool AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" Name="VCLinkerTool" OutputFile="$(OutDir)\NxOgreWithCharacterControllerDebug.dll" AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib"/>
    <Tool Name="VCALinkTool"/>
    <Tool Name="VCManifestTool"/>
    <Tool Name="VCXDCMakeTool"/>

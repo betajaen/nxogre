@@ -39,7 +39,7 @@ sources:
     - source
 libraries:
     - %PHYSX_DIR%/SDKs/lib/Win32/PhysXLoader.lib if windows
-    - %PHYSX_DIR%/SDKs/lib/Win32/NxCooking.lib if windows
+    - %PHYSX_DIR%/SDKs/lib/Win32/PhysXCooking.lib if windows
 preprocessor:
     - NXOGRE_SDK
     - NXOGRE_DYNAMIC_LIBRARY if dynamiclibrary
