@@ -131,6 +131,12 @@ class NxOgrePublicClass PrototypeFunctions
   static void SoftBodyDescriptionToNxSoftBodyDesc(const SoftBodyDescription& source, NxSoftBodyDesc& desc);
 #endif
   
+#ifdef NXOGRE_SDK
+  /** \brief Copies all relevant SoftBody properties to a NxSoftBodyDesc.
+  */
+  static void ForceFieldLinearKernelDescriptionToNxForceFieldLinearKernelDesc(const ForceFieldLinearKernelDescription&, NxForceFieldLinearKernelDesc&);
+#endif
+  
  private:
   
   PrototypeFunctions();

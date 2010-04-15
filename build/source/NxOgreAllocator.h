@@ -32,6 +32,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreEnums.h"
 
                                                                                        
 

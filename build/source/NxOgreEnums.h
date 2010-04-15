@@ -39,6 +39,21 @@ namespace NxOgre
 namespace Enums
 {
 
+/*! enum. UserDestructionPolicy
+    desc.
+        What to do when faced with deleting a user class that has originated outside of NxOgre.
+    enums.
+        UserDestructionPolicy_NeverDelete -- Don't delete. Pointer will be left as it is.
+        UserDestructionPolicy_Delete -- Delete it, using the NXOGRE_DELETE macro.
+        UserDestructionPolicy_Callback -- Use the given callback (UserDestructionCallback) with the pointer. Callback is OWNED by user application.
+*/
+enum UserDestructionPolicy
+{
+ UserDestructionPolicy_NeverDelete = 0,
+ UserDestructionPolicy_Delete = 1,
+ UserDestructionPolicy_Callback = 2,
+};
+
 /*! enum. ExceptionType
 */
 enum
@@ -72,6 +87,23 @@ enum Axis
  Y      = (1<<0),
  Z      = (1<<2),
  NoAxis = (1<<3)
+};
+
+/*! enum. CoordinateSystem
+    desc.
+        Type of Coordinate systems.
+    enums.
+        CoordinateSystem_Cartesian -- Cartesian
+        CoordinateSystem_Spherical -- Spherical
+        CoordinateSystem_Cylindrical Cylindrical
+        CoordinateSystem_Toroidal -- Toroidal
+*/
+enum CoordinateSystem
+{
+ CoordinateSystem_Cartesian,
+ CoordinateSystem_Spherical,
+ CoordinateSystem_Cylindrical,
+ CoordinateSystem_Toroidal
 };
 
 /*! enum. TimerMode
@@ -1630,6 +1662,41 @@ enum MeshPagingMode
  MeshPagingMode_Auto,
 };
 
+/*! enum. ForceFieldType
+    desc.
+         Type of Force Field.
+    note.
+         Compatible with @NxForceFieldType@
+    enums.
+         ForceFieldType_Gravitational -- Scales the force by the mass of the particle or rigid body.
+         ForceFieldType_Other -- Does not scale the value from the force field.
+         ForceFieldType_NoInteraction -- Used to disable force field interaction with a specific feature.
+*/
+enum ForceFieldType
+{
+ ForceFieldType_Gravitational = 2,
+ ForceFieldType_Other = 3,
+ ForceFieldType_NoInteraction = 4,
+};
+
+/*! enum. ForceFieldType
+    desc.
+         Type of Force Field.
+    note.
+         Compatible with @NxForceFieldFlags@
+    enums.
+         ForceFieldFlag_ScalingFluid -- indicates whether the force is scaled by the amount of volume represented by the feature.
+         ForceFieldFlag_ScalingCloth -- indicates whether the force is scaled by the amount of volume represented by the feature.
+         ForceFieldFlag_ScalingSoftBody -- indicates whether the force is scaled by the amount of volume represented by the feature.
+         ForceFieldFlag_ScalingRigidBody -- indicates whether the force is scaled by the amount of volume represented by the feature.
+*/
+enum ForceFieldFlags
+{
+ ForceFieldFlag_ScalingFluid = (1 << 5),
+ ForceFieldFlag_ScalingCloth = (1 << 6),
+ ForceFieldFlag_ScalingSoftBody = (1 << 7),
+ ForceFieldFlag_ScalingRigidBody = (1 << 8),
+};
 
 #ifdef NxOgreUsePhysXCharacterController
 

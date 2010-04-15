@@ -45,6 +45,8 @@
 #include "NxOgreClothDescription.h"
 #include "NxOgreSoftBodyDescription.h"
 
+#include "NxOgreForceFieldLinearKernelDescription.h"
+
 #include "NxOgreCompartment.h"
 
 #include "NxPhysics.h"
@@ -382,6 +384,20 @@ void PrototypeFunctions::SoftBodyDescriptionToNxSoftBodyDesc(const SoftBodyDescr
  desc.wakeUpCounter = source.mWakeUpCounter;
  
 }
+
+void PrototypeFunctions::ForceFieldLinearKernelDescriptionToNxForceFieldLinearKernelDesc(const ForceFieldLinearKernelDescription& desc, NxForceFieldLinearKernelDesc& description)
+{
+ description.constant = desc.mConstant.as<NxVec3>();
+ description.falloffLinear = desc.mFalloffLinear.as<NxVec3>();
+ description.falloffQuadratic = desc.mFalloffQuadratic.as<NxVec3>();
+ description.noise = desc.mNoise.as<NxVec3>();
+ description.positionMultiplier.setRowMajor(desc.mPositionMultiplier.ptr());
+ description.positionTarget = desc.mPositionTarget.as<NxVec3>();
+ description.torusRadius = desc.mTorusRadius;
+ description.velocityMultiplier.setRowMajor(desc.mVelocityMultiplier.ptr());
+ description.velocityTarget = desc.mVelocityTarget.as<NxVec3>();
+}
+
                                                                                        
 
 }

@@ -39,9 +39,9 @@ namespace NxOgre
 {
 
                                                                                        
-Resource::Resource(const Path& path, Archive* archive, Enums::ResourceAccess access)
+Resource::Resource(const Path& path, ResourceProtocol* protocol, Enums::ResourceAccess access)
 : mPath(path),
-  mArchive(archive), 
+  mProtocol(protocol), 
   mStatus(Enums::ResourceStatus_Closed),
   mDirectionality(Enums::ResourceDirectionality_Unknown),
   mAccess(access)
@@ -52,9 +52,9 @@ Resource::~Resource(void)
 {
 }
 
-Archive* Resource::getArchive()
+ResourceProtocol* Resource::getProtocol()
 {
- return mArchive;
+ return mProtocol;
 }
 
 Path Resource::getPath() const

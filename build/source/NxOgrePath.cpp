@@ -28,6 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgrePath.h"
+#include "NxOgreList.h"
 
 #include <iostream>
 
@@ -35,6 +36,8 @@
 
 namespace NxOgre
 {
+
+std::map<String, String> Path::sAliases = std::map<String, String>();
 
                                                                                        
 class PathHelper
@@ -104,6 +107,14 @@ Path::Path(const Path& other)
 
 Path::~Path()
 {
+}
+
+void Path::SetAlias(const String& aliasName, const String& pathString)
+{
+ String aliasPath = pathString;
+ if (aliasPath[aliasPath.length() - 1] == '//')
+  aliasPath = aliasPath.substr(0, aliasPath.length() - 1);
+ sAliases[aliasName] = aliasPath;
 }
 
 Path& Path::operator=(const Path& other)
@@ -450,6 +461,25 @@ void Path::set(const String& string)
   return;
  }
  
+ // Check for an alias; ~aliasname/
+ if (path[0] == '+' && Strings::has(path, '/'))
+ {
+  std::cout << "alias" << std::endl;
+  size_t ender = path.find_first_of('/');
+  String alias = path.substr(1, ender - 1);
+  
+  std::cout << "alias => '" << alias << "'.\n";
+  AliasIterator it =  sAliases.find(alias);
+  
+  if (it == sAliases.end()) // Unknown Alias.
+   return;
+  
+  String after = path.substr(ender);
+  std::cout << after << std::endl;
+  set((*it).second + "/" + after);
+  return;
+ }
+
  // Check for drive or protocol. 
  String t;
  size_t begin = pos;
@@ -618,36 +648,33 @@ void Path::set(const String& string)
   mExtension = String();
 }
 
-std::string Path::dump() const
+void Path::inspect() const
 {
- std::stringstream s;
  
- s << "Path\n----\nFull: " << getString() << "\nIs Relative: " << (mAbsolute == false ? "Yes" : "No") << "\n";
- 
+ std::cout << "[ ";
+
  if (mProtocol.length())
-  s << "Protocol: " << mProtocol << "\n";
+  std::cout << "'" << mProtocol << "'";
  
 #if NxOgrePlatform == NxOgrePlatformWindows
  if (mDrive.length())
-  s << "Drive: " << mDrive << "\n";
+  std::cout << ", '" << mDrive << "'";
 #endif
  
  if (mDirectories.size())
- {
-  s << "Directories" << (mDirectories.size() - 1) << ":\n";
-  unsigned int i=mDirectories.size() - 1;
-  for (std::list<String>::const_reverse_iterator d = mDirectories.rbegin(); d != mDirectories.rend(); d++)
-   s << " " << i-- << " : " << (*d)  << "\n";
- }
+  std::cout << ", [" << Lists::join(mDirectories, ", ") << "]";
  
  if (mFilename.length())
-  s << "File: " <<  mFilename << "\n";
+  std::cout << ", " << mFilename;
+ 
  if (mExtension.length())
-  s << "Extension: " << mExtension << "\n";
+  std::cout << ", " << mExtension;
+ 
  if (mPortion.length())
-  s << "Portion: " <<  mPortion << "\n";
-
- return s.str();
+  std::cout << ", " << mPortion;
+ 
+ std::cout << "]\n";
+ 
 }
 
                                                                                        

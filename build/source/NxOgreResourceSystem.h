@@ -34,7 +34,6 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 #include "NxOgreResourceProtocol.h"
-#include "NxOgreArchive.h"
 
                                                                                        
 
@@ -52,23 +51,8 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSyst
    
   public: // Functions
   
-  typedef ptr_hashmap<ResourceProtocol> Protocols;
-  
-  typedef ptr_hashmap<Archive>          Archives;
-
-  /** \brief Open a resource protocol, pointer is owned by the ResourceSystem when passed on.
-      \note  These can never be closed.
-  */
-                       void                   openProtocol(ResourceProtocol*);
-  
-  /** \brief Open an archive, using a path.
-      \note  If BLANK_STRING is given as the name, then the ResourceProtocol given will calculate the archive name for you.
-      \usage
-       <code>
-        resource_system_ptr->open("file://c:/Program Files/My Game/", "game");
-       </code>
-  */
-                       Archive*               openArchive(const Path& path, const String& name = BLANK_STRING);
+  typedef ptr_hashmap<ResourceProtocol>              Protocols;
+  typedef ptr_hashmap<ResourceProtocol>::iterator_t  ProtocolIterator;
 
   /** \brief Open an resource, using an Path. Archive will be created or opened based of the directories of the file, unless specified
              by the protocol.
@@ -78,47 +62,58 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSyst
        </code>
       \note  In the event of the resource not existing in the archive, the ResourceProtocol may create one for you.
   */
-                       Resource*              open(const Path&, Enums::ResourceAccess);
+  Resource*  open(const Path&, Enums::ResourceAccess = Enums::ResourceAccess_ReadOnly);
   
-  /** \brief Open a resource with a previously opened archive, using a relative filename or identifier to that archive.
-      \note  This is the fastest way to access a resource.
+  /*! function. close
+      desc.
+          Close a resource.
   */
-                       Resource*              open(Archive*, const Path& relative_path, Enums::ResourceAccess);
+  void  close(Resource*);
+  
+  /*! function. getProtocols
+      desc.
+          Return an iterator to the current protocols loaded.
+      return.
+          ProtocolIterator -- The iterator.
+  */
+  ProtocolIterator  getProtocols();
 
-  /** \brief Close a resource.
-  */
-                       void                   close(Resource*);
-  
-  /** \brief Close an archive, and close any resources of that archive.
-  */
-                       void                   closeArchive(Archive*);
-
-  /** \brief Get archive by name.
-  */
-                       Archive*               getArchiveByName(const String& name);
-  
-  /** \brief Get archive by hash.
-  */
-                       Archive*               getArchiveByHash(const StringHash& hashed_name);
-  
   protected:
   
-                                              ResourceSystem();
-  
-  
-                                             ~ResourceSystem();
-  
-  /** \brief Loaded protocols stored in an associative container using a StringHash as the protocol's lowercase
-             name with the ResourceProtocol stored and owned by the container.
+  /*! constructor. openProtocol
+      desc.
+          Open a resource protocol, pointer is owned by the ResourceSystem when passed on.
+          ResourceProtocols last the entire lifetime of the ResourceSystem, so they can never
+          be closed.
+      note.
+          The Protocol will be deleted according to its destruction policy. (ResourceProtocol::getDestructionPolicy)
   */
-                       Protocols              mProtocols;
+  void  openProtocol(ResourceProtocol*);
   
-  /** \brief All current archives opened, referenced by a StringHash of the ArchiveName, and the Archive is stored
-             and owned by the container.
+  /*! constructor. ResourceSystem
+      desc.
+           Private Constructor
+      see.
+          World::precreateSingletons() or World::createWorld()
   */
-                       Archives               mArchives;
+  ResourceSystem();
   
-}; // class ClassName
+  /*! destructor. ResourceSystem
+      desc.
+          Private Destructor
+      see.
+         World::destroySingletons() or World::destroyWorld()
+  */
+  ~ResourceSystem();
+  
+  /* \internal
+     mProtocols
+      Loaded protocols stored in an associative container using a StringHash as the protocol's lowercase 
+      name with the ResourceProtocol stored and owned by the container.
+  */
+  Protocols  mProtocols;
+  
+}; // class ResourceSystem
 
                                                                                        
 

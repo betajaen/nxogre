@@ -78,28 +78,15 @@ class NxOgrePublicClass MemoryResourceProtocol : public ResourceProtocol
   */
                        StringHash             getProtocolHash(void) const;
   
-  /** \brief Is there only one archive by default?
-  */
-                       bool                   isSingleArchive(void) const;
-  
   /** \brief Does the resources use filenames?
   */
                        bool                   usesNamelessResources(void) const;
   
-  /** \brief "memory" will always be returned due to the single archive nature of the MemoryProtocol classes.
-  */
-                       String                 calculateArchiveName(const Path&);
+                       Resource*              open(const Path&, Enums::ResourceAccess);
   
-  protected: // Functions
+                       void                   close(Resource*);
   
-  
-  /** \internal NOT USED.
-  */
-                       Archive*               openArchive(const String&, const Path&);
-  
-  /** \internal NOT USED.
-  */
-                       void                   closeArchive(Archive*);
+  protected:
   
   /** \brief Initialise the memory resource protocol and creates the "memory" archive.
   */
@@ -111,8 +98,6 @@ class NxOgrePublicClass MemoryResourceProtocol : public ResourceProtocol
   
                        StringHash             mProtocolHash;
   
-                       String                 mSingleArchiveName;
-
   /** \brief Has the initialise function been called?
   */
                        bool                   mHasInit;

@@ -32,6 +32,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreEnums.h"
 
                                                                                        
 
@@ -46,6 +47,14 @@ namespace Functions
 template<typename type> inline void safe_delete(type* ptr)
 {
  NXOGRE_DELETE_NXOGRE(ptr);
+}
+
+template<typename type> inline void safe_delete_policy(type* ptr)
+{
+ if (ptr->getDestructionPolicy() == Enums::UserDestructionPolicy_Delete)
+ {
+  NXOGRE_DELETE_NXOGRE(ptr);
+ }
 }
 
 }

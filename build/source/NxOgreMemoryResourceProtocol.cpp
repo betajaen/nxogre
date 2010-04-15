@@ -29,11 +29,9 @@
 #include "NxOgreStable.h"
 #include "NxOgreMemoryResourceProtocol.h"
 #include "NxOgreFunctions.h"
-#include "NxOgreArchive.h"
 #include "NxOgreResource.h"
 #include "NxOgreMemoryResource.h"
 #include "NxOgreResourceSystem.h"
-#include "NxOgreMemoryArchive.h"
 
                                                                                        
 
@@ -44,7 +42,7 @@ namespace NxOgre
 
 MemoryResourceProtocol::MemoryResourceProtocol(void) : mHasInit(false)
 {
- mSingleArchiveName = mProtocolName = "memory";
+ mProtocolName = "memory";
  mProtocolHash = Strings::hash(mProtocolName);
 }
 
@@ -52,19 +50,19 @@ MemoryResourceProtocol::~MemoryResourceProtocol(void)
 {
 }
 
-Archive* MemoryResourceProtocol::openArchive(const String&, const Path&)
+Resource* MemoryResourceProtocol::open(const Path& path, Enums::ResourceAccess access)
 {
- if (mHasInit)
- {
-  NxOgre_ThrowException(IOException, "Archive has already been initialised", Classes::_MemoryResourceProtocol);
-  return 0;
- }
- 
- return new MemoryArchive(mSingleArchiveName, BLANK_STRING, this);
+ MemoryResource* resource = NXOGRE_NEW_NXOGRE(MemoryResource)(this);
+ resource->open();
+ addResource(resource);
+ return resource;
 }
 
-void MemoryResourceProtocol::closeArchive(Archive* archive)
+void MemoryResourceProtocol::close(Resource* resource)
 {
+ MemoryResource* mresource = static_cast<MemoryResource*>(resource);
+ mresource->close();
+ removeResource(mresource); // Removing it will automatically delete it as well.
 }
 
 String MemoryResourceProtocol::getProtocol(void)
@@ -77,11 +75,6 @@ StringHash MemoryResourceProtocol::getProtocolHash(void) const
  return mProtocolHash;
 }
 
-bool MemoryResourceProtocol::isSingleArchive(void) const
-{
- return true;
-}
-
 bool MemoryResourceProtocol::usesNamelessResources(void) const
 {
  return true;
@@ -89,15 +82,6 @@ bool MemoryResourceProtocol::usesNamelessResources(void) const
 
 void MemoryResourceProtocol::initialise(void)
 {
- // Create a the single archive.
- NxOgre::ResourceSystem::getSingleton()->openArchive(Path("memory://"), "memory");
- // Archive has been created, so no longer need to do this agian.
- mHasInit = true;
-}
-
-String MemoryResourceProtocol::calculateArchiveName(const Path&)
-{
- return mProtocolName;
 }
 
                                                                                        

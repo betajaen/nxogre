@@ -168,6 +168,14 @@ class NxOgrePublicClass Matrix44
 
  operator Vec3() const;
 
+ template<typename T> T translation_as() const
+ {
+  T t;
+  t.x = m.m[0][3];
+  t.y = m.m[1][3];
+  t.z = m.m[2][3];
+ }
+
  inline void identity();
 
  inline void translationIdentity();

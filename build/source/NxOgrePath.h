@@ -116,11 +116,23 @@ namespace NxOgre
         path.getProtocol() => file
         Path path("c:/Program Files/My Game/Game.exe");
         path.getProtocol() => file
+       
+       # Don't repeat your self (Aliases)
+       Aliases can be used to prevent repetition, and to define a partial path early
+       on in your Application.
+       bc.
+        Path::AddAlias("media", "file://c:/Program Files/My Game/");
+        Path path("+game/Game.exe");
+       Which is equilvant to.
+        Path path("file://c:/Program Files/My Game/Game.exe");
 */
 class NxOgrePublicClass Path
 {
-   
+ 
  public:
+   
+   typedef std::map<String, String>                  Aliases;
+   typedef std::map<String, String>::const_iterator  AliasIterator;
    
    static const Path BAD_PATH;
    
@@ -147,6 +159,8 @@ class NxOgrePublicClass Path
    Path& operator /=(const String& other);
    
    Path& operator /=(const char* other);
+   
+   static void SetAlias(const String& aliasName, const String& pathString); 
    
    /** \brief Get the directory of the path, or the directories of lower levels.
    */
@@ -224,11 +238,11 @@ class NxOgrePublicClass Path
    */
    String getOSString();
    
-   /*! function. dump
+   /*! function. inspect
        desc.
            Developer/Testing function.
    */
-   std::string dump() const;
+   void inspect() const;
 
  protected:
    
@@ -251,6 +265,8 @@ class NxOgrePublicClass Path
    std::list<String> mDirectories;
    
    bool              mAbsolute;
+   
+   static Aliases sAliases;
    
 };
 

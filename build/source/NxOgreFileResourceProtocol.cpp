@@ -28,12 +28,11 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreFileResourceProtocol.h"
-#include "NxOgreFunctions.h"
-#include "NxOgreArchive.h"
-#include "NxOgreResource.h"
-#include "NxOgreFileArchive.h"
+#include "NxOgreFileResource.h"
 
-#include "time.h"
+#include "NxOgreFunctions.h"
+#include "NxOgreResource.h"
+
 #ifdef _DEBUG
 #include <iostream>
 #endif
@@ -55,16 +54,19 @@ FileResourceProtocol::~FileResourceProtocol(void)
 {
 }
 
-Archive* FileResourceProtocol::openArchive(const String& name, const Path& path)
+Resource* FileResourceProtocol::open(const Path& path, Enums::ResourceAccess access)
 {
-#ifdef NXOGRE_DEBUG_RESOURCES
- std::cout << "[+] Opening file archive as '" << name << "' from '" << path.getString() << std::endl;
-#endif
- return new FileArchive(name, path, this);
+ FileResource* resource = NXOGRE_NEW_NXOGRE(FileResource)(path, this, access);
+ addResource(resource);
+ resource->open();
+ return resource;
 }
 
-void FileResourceProtocol::closeArchive(Archive* archive)
+void FileResourceProtocol::close(Resource* resource)
 {
+ FileResource* fresource = static_cast<FileResource*>(resource);
+ fresource->close();
+ removeResource(fresource); // Removing it will automatically delete it as well.
 }
 
 String FileResourceProtocol::getProtocol(void) const
@@ -77,11 +79,6 @@ StringHash FileResourceProtocol::getProtocolHash(void) const
  return mProtocolHash;
 }
 
-bool FileResourceProtocol::isSingleArchive(void) const
-{
- return false;
-}
-
 bool FileResourceProtocol::usesNamelessResources(void) const
 {
  return false;
@@ -91,71 +88,6 @@ void FileResourceProtocol::initialise(void)
 {
  // No default archives, so nothing to do.
 }
-
-String FileResourceProtocol::calculateArchiveName(const Path& path)
-{
- 
- // Working Directory.
- if (path.isAbsolute() == false && path.getNbDirectories() == 0)
- {
-  return String("working_directory");
- }
- 
- if (path.getNbDirectories() == 0) // Root.
- {
-
-  if (path.hasDrive() == false)
-  {
-   srand ( time(NULL) );
-   std::stringstream ss;
-   ss << "file_archive_" << std::hex << rand() % 10000000;
-   return ss.str();
-  }
-  else
-  {
-   return path.getDrive();
-  }
- }
- 
- if (path.getNbDirectories() == 1)
- {
-  return path.getDirectory();
- }
- else
- {
-  
-  std::stringstream archive_name;
-  unsigned int relative_path = 0;
-  for (unsigned int i = 0;i < path.getNbDirectories();i++)
-  {
-   std::string dir_name = path.getDirectory(i);
-   if (dir_name == "..")
-   {
-    relative_path++;
-    continue;
-   }
-   
-   if (relative_path)
-   {
-    archive_name << "#.." << relative_path;
-    relative_path = 0;
-   }
-   
-   if (i!=0)
-    archive_name << "#" << dir_name;
-   else
-    archive_name << dir_name;
-  }
-  
-  if (relative_path)
-  {
-    archive_name << "#.." << relative_path;
-  }
-  
-  return archive_name.str();
- }
-}
-
 
                                                                                        
 

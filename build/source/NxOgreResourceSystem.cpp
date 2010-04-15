@@ -32,7 +32,6 @@
 #include "NxOgreMemoryResourceProtocol.h"
 #include "NxOgreFileResourceProtocol.h"
 #include "NxOgreResource.h"
-#include "NxOgreArchive.h"
 #include "NxOgreFunctions.h"
 
 #ifdef _DEBUG
@@ -61,56 +60,13 @@ ResourceSystem::ResourceSystem()
 
 ResourceSystem::~ResourceSystem()
 {
- mArchives.clear();
- mProtocols.clear();
+ mProtocols.clear_to_policy();
 }
 
 void ResourceSystem::openProtocol(ResourceProtocol* protocol)
 {
  StringHash protocol_hash = protocol->getProtocolHash();
  mProtocols.insert(protocol_hash, protocol);
-}
-
-Archive* ResourceSystem::openArchive(const Path& path, const String& name)
-{
- 
- ResourceProtocol* protocol = mProtocols.at(path.getProtocolHash());
- 
- if (protocol == 0)
- {
-  StringStream error_message;
-  error_message << "Could not open archive '" << path.getString() << "\n"
-                << "Reason: Protocol '" << path.getProtocol() << "' could not be found.";
-   NxOgre_ThrowException(IOException, error_message.str(), Classes::_MeshSerialiser);
-  return 0;
- }
- 
- Archive* archive = 0;
- String archive_name = name;
- 
- if (archive_name.length() == 0)
- {
-  archive_name = protocol->calculateArchiveName(path);
-  archive = protocol->openArchive(archive_name, path);
- }
- else
- {
-  archive = protocol->openArchive(archive_name, path);
- }
- 
- if (archive == 0)
- {
-  StringStream error_message;
-  error_message << "Could not open archive '" << path.getString() << "' as '" << archive_name << "'\n"
-                << "Reason: Location could not be found.";
-   NxOgre_ThrowException(IOException, error_message.str(), Classes::_ResourceSystem);
-  return 0;
- }
- 
- StringHash hash = archive->getNameHash();
- mArchives.insert(hash, archive);
- return archive;
- 
 }
 
 Resource* ResourceSystem::open(const Path& path, Enums::ResourceAccess resource_access)
@@ -127,39 +83,7 @@ Resource* ResourceSystem::open(const Path& path, Enums::ResourceAccess resource_
   return 0;
  }
  
- Archive* archive = getArchiveByHash(Strings::hash(protocol->calculateArchiveName(path)));
- 
- if (archive == 0)
- {
-  archive = openArchive(path.getParent());
-  if (archive == 0)
-  {
-   StringStream error_message;
-   error_message << "Could not open resource '" << path.getString() << "\n"
-                 << "Reason: Archive could not be found or could be opened.";
-   NxOgre_ThrowException(IOException, error_message.str(), Classes::_ResourceSystem);
-   return 0;
-  }
- }
- 
- 
- 
- return archive->open(path.getRelative(), resource_access);
-}
-
-Resource* ResourceSystem::open(Archive* archive, const Path& relative_path, Enums::ResourceAccess resource_access)
-{
- 
- if (archive == 0)
- {
-  StringStream error_message;
-  error_message << "Could not open resource '" << relative_path.getString() << " (Relative) \n"
-                << "Reason: Archive pointer is null.";
-  NxOgre_ThrowException(IOException, error_message.str(), Classes::_ResourceSystem);
-  return 0;
- }
- 
- return archive->open(relative_path.getRelative(), resource_access);
+ return protocol->open(path, resource_access);
 }
 
 void ResourceSystem::close(Resource* resource)
@@ -167,29 +91,12 @@ void ResourceSystem::close(Resource* resource)
  if (resource == 0)
   return;
  
- resource->getArchive()->close(resource);
+ resource->getProtocol()->close(resource);
 }
 
-void ResourceSystem::closeArchive(Archive* archive)
+ResourceSystem::ProtocolIterator ResourceSystem::getProtocols()
 {
- if (archive == 0)
-  return;
-
-
- archive->getProtocol()->closeArchive(archive);
- 
- mArchives.erase(archive->getNameHash());
- 
-}
-
-Archive* ResourceSystem::getArchiveByName(const String& name)
-{
- return getArchiveByHash(Strings::hash(name));
-}
-
-Archive* ResourceSystem::getArchiveByHash(const StringHash& hashed_name)
-{
- return mArchives.at(hashed_name);
+ return mProtocols.iterator();
 }
 
                                                                                        

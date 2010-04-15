@@ -80,14 +80,6 @@ class NxOgrePublicClass FileResourceProtocol : public ResourceProtocol
   */
   StringHash  getProtocolHash() const;
   
-  /*! function. isSingleArchive
-      desc.
-          Is there only one archive by default?
-      return.
-          **bool** -- Always returns false.
-  */
-  bool  isSingleArchive() const;
-  
   /*! function. usesNamelessResource
       desc.
           Does the resources use filenames?
@@ -95,45 +87,16 @@ class NxOgrePublicClass FileResourceProtocol : public ResourceProtocol
           **bool** -- Always returns true.
   */
   bool usesNamelessResources() const;
-  
-  /*! function. calculateArchiveName
-      desc.
-           Calculates the archive name given by a path
-            
-           The process of getting the name is;
-           # Is Relative Path? Has No Directories?  => @current_directory@
-           # Has Directories? => @path.directory(0)@
-           # Has No Directories? Has Drive => @path.drive()@
-           # Otherwise => @file_archive_<random_hex_string>@
-      args.
-       const Path& __path__ -- Path to calculate the archive name from
-      return.
-       **String** -- The archive name.
-  */
-  String  calculateArchiveName(const Path&);
-  
+    
   protected: // Functions
   
-  /*! function. openArchive
-      desc.
-          Open an archive, and parse the contents. An archive being a single folder.
-      example.
-        ResourceSystem::getSingleton()->openArchive("media", "file://C:/Program Files/myGame/media/");
-      args.
-       const String& archive_name -- Name of the archive; usually given by FileResourceProtocol::calculateArchiveName
-       const Path& path -- Directory path of the archive to represent.
-      return.
-        **Archive** * -- The opened archive.
+  /*! function. open
   */
-  Archive*  openArchive(const String& archive_name, const Path& path);
+  Resource*  open(const Path&, Enums::ResourceAccess);
   
   /*! function. closeArchive
-      desc.
-          Close an archive.
-      args.
-          Archive* __archive__ -- Archive to close.
   */
-  void  closeArchive(Archive*);
+  void  close(Resource*);
 
   /*! function. initialise
       desc.

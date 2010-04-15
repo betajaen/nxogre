@@ -48,13 +48,13 @@ namespace NxOgre
 class NxOgrePublicClass MemoryResource : public Resource
 {
  
- friend class MemoryArchive;
+ friend class MemoryResourceProtocol;
  
  public:
   
   /** \brief
   */
-                                             MemoryResource(Archive*);
+                                             MemoryResource(ResourceProtocol*);
   
   /** \brief
   */

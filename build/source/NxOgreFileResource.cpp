@@ -28,7 +28,6 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreFileResource.h"
-#include "NxOgreFileArchive.h"
 #include "NxOgreErrorStream.h"
 #include "NxOgreReason.h"
 
@@ -43,8 +42,8 @@ namespace NxOgre
                                                                                        
 
 
-FileResource::FileResource(const Path& path, Archive* archive, Enums::ResourceAccess ra)
-: Resource(path, archive, ra), mWroteNbBytes(0)
+FileResource::FileResource(const Path& path, ResourceProtocol* protocol, Enums::ResourceAccess ra)
+: Resource(path, protocol, ra), mWroteNbBytes(0)
 {
 }
 
@@ -80,37 +79,33 @@ void FileResource::open()
  mDirectionality = Enums::ResourceDirectionality_Unknown;
  mFile = 0;
  
- FileArchive* file_archive = static_cast<FileArchive*>(mArchive);
- 
- mFilePath = mArchive->getPath() / mPath;
-
- std::string os_path = mFilePath.getOSString();
+ std::string os_path = mPath.getOSString();
 
  if (mAccess == Enums::ResourceAccess_ReadOnly)
  {
   #ifdef NXOGRE_DEBUG_RESOURCES
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read from " << mArchive->getName() << std::endl;
+   std::cout << "[+] Opening File Resource -> " << mPath.getString() << " as read" << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "rb");
  }
  else if (mAccess == Enums::ResourceAccess_WriteOnly)
  {
   #ifdef NXOGRE_DEBUG_RESOURCES
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as write from " << mArchive->getName() << std::endl;
+   std::cout << "[+] Opening File Resource -> " << mPath.getString() << " as write" << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "wb");
  }
  else if (mAccess == Enums::ResourceAccess_AppendOnly)
  {
   #ifdef NXOGRE_DEBUG_RESOURCES
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as append from " << mArchive->getName() << std::endl;
+   std::cout << "[+] Opening File Resource -> " << mPath.getString() << " as append" << std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "ab");
  }
  else if (mAccess == Enums::ResourceAccess_ReadAndWrite)
  {
   #ifdef NXOGRE_DEBUG_RESOURCES
-   std::cout << "[+] Opening File Resource -> " << mFilePath.getString() << " as read/write from " << mArchive->getName() <<  std::endl;
+   std::cout << "[+] Opening File Resource -> " << mPath.getString() << " as read/write" <<  std::endl;
   #endif
   mFile = fopen(os_path.c_str(), "rb+");
  }
@@ -137,7 +132,7 @@ void FileResource::close(void)
  mStatus = Enums::ResourceStatus_Closed;
 
 #ifdef NXOGRE_DEBUG_RESOURCES
- std::cout << "[-] Closing File Resource -> " << mFilePath.getString() << " did R: " << mNbReadOperations << " W: " << mNbWriteOperations << std::endl;
+ std::cout << "[-] Closing File Resource -> " << mPath.getString() << " did R: " << mNbReadOperations << " W: " << mNbWriteOperations << std::endl;
 #endif
  
 }

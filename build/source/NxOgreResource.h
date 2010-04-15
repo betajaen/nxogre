@@ -33,7 +33,6 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
-#include "NxOgreArchive.h"
 
                                                                                        
 
@@ -61,15 +60,15 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   
   /** \brief Required abstract constructor
   */
-  Resource(const Path& relative_path, Archive*, Enums::ResourceAccess);
+  Resource(const Path& relative_path, ResourceProtocol*, Enums::ResourceAccess);
   
   /** \brief Required virtual destructor
   */
   virtual ~Resource(void);
   
-  /** \brief Get the parent Archive.
+  /** \brief Get the protocol.
   */
-  Archive* getArchive();
+  ResourceProtocol* getProtocol();
   
   /** \brief Get the resource location; e.x. filename, memory address, etc.
   */
@@ -374,7 +373,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   
   /** \brief Parent archive
   */
-  Archive*  mArchive;
+  ResourceProtocol*  mProtocol;
   
   /** \brief Number of Read Operations.
   */

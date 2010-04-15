@@ -6,18 +6,28 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxOgre", "vc9\NxOgre.vcproj
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
-		Final|Win32 = Final|Win32
+		NxOgreDebug|Win32 = NxOgreDebug|Win32
+		NxOgreFinal|Win32 = NxOgreFinal|Win32
+		NxOgreWithCharacterControllerDebug|Win32 = NxOgreWithCharacterControllerDebug|Win32
+		NxOgreWithCharacterControllerFinal|Win32 = NxOgreWithCharacterControllerFinal|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Debug|Win32.Build.0 = Debug|Win32
-		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Final|Win32.ActiveCfg = Final|Win32
-		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.Final|Win32.Build.0 = Final|Win32
-		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Debug|Win32.Build.0 = Debug|Win32
-		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Final|Win32.ActiveCfg = Final|Win32
-		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.Final|Win32.Build.0 = Final|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreDebug|Win32.ActiveCfg = NxOgreWithCharacterControllerDebug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreDebug|Win32.Build.0 = NxOgreWithCharacterControllerDebug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreFinal|Win32.ActiveCfg = NxOgreWithCharacterControllerDebug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreFinal|Win32.Build.0 = NxOgreWithCharacterControllerDebug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreWithCharacterControllerDebug|Win32.ActiveCfg = NxOgreWithCharacterControllerDebug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreWithCharacterControllerDebug|Win32.Build.0 = NxOgreWithCharacterControllerDebug|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreWithCharacterControllerFinal|Win32.ActiveCfg = NxOgreWithCharacterControllerFinal|Win32
+		{7E1308F9-EA4C-C372-EC32-2FE89C173B9E}.NxOgreWithCharacterControllerFinal|Win32.Build.0 = NxOgreWithCharacterControllerFinal|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreDebug|Win32.ActiveCfg = NxOgreDebug|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreDebug|Win32.Build.0 = NxOgreDebug|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreFinal|Win32.ActiveCfg = NxOgreFinal|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreFinal|Win32.Build.0 = NxOgreFinal|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreWithCharacterControllerDebug|Win32.ActiveCfg = NxOgreDebug|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreWithCharacterControllerDebug|Win32.Build.0 = NxOgreDebug|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreWithCharacterControllerFinal|Win32.ActiveCfg = NxOgreDebug|Win32
+		{2DC6BDB4-2A01-AD08-9DC8-51A73229706A}.NxOgreWithCharacterControllerFinal|Win32.Build.0 = NxOgreDebug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,14 +26,8 @@
 
                                                                                        
 
-#ifndef NXOGRE_MEMORY_ARCHIVE_H
-#define NXOGRE_MEMORY_ARCHIVE_H
-
-                                                                                       
-
 #include "NxOgreStable.h"
-#include "NxOgreCommon.h"
-#include "NxOgreArchive.h"
+#include "NxOgreList.h"
 
                                                                                        
 
@@ -42,38 +36,9 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
-*/
-class NxOgrePublicClass MemoryArchive : public Archive
-{
-  
-  public: // Functions
-  
-                                              MemoryArchive(const String& name, const Path&, ResourceProtocol*);
-  
-  /** \brief Required virtual constructor.
-  */
-                                             ~MemoryArchive(void);
-  
-  /** \brief
-  */
-                 Resource*                    open(const Path&, NxOgre::Enums::ResourceAccess);
-  
-  /** \brief
-  */
-                 void                         close(Resource*);
-  
-  protected:
-
-  
-  
-  
-}; // class ClassName
 
                                                                                        
 
-} // namespace NxOgre
+} // namespace NXOGRE_NAMESPACE
 
                                                                                        
-
-#endif

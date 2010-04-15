@@ -40,8 +40,8 @@ namespace NxOgre
 
                                                                                        
 
-MemoryResource::MemoryResource(Archive* archive)
-:Resource(MEMORY_PATH, archive, Enums::ResourceAccess_ReadAndWrite), mStart(0), mEnd(0), mPointer(0)
+MemoryResource::MemoryResource(ResourceProtocol* protocol)
+:Resource(MEMORY_PATH, protocol, Enums::ResourceAccess_ReadAndWrite), mStart(0), mEnd(0), mPointer(0)
 {
 }
 

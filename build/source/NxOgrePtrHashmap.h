@@ -233,6 +233,14 @@ template<typename type> class NxOgrePublicTemplateClass ptr_hashmap
    map.clear();
   }
   
+  // delete all pointers and clear the map.
+  void clear_to_policy()
+  {
+   for (map_type::iterator it = map.begin(); it != map.end(); ++it)
+    Functions::safe_delete_policy<type>((*it).second);
+   
+   map.clear();
+  }
  protected:
   
   map_type  map;

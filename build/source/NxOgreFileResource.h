@@ -60,7 +60,7 @@ class NxOgrePublicClass FileResource : public Resource
           Archive* __archive__ -- Archive that the Resource must belong to. Archive must be a FileArchive.
           Enums::ResourceAccess __access__ -- Access restrictions.
   */
-  FileResource(const Path& path, Archive* archive, Enums::ResourceAccess access);
+  FileResource(const Path& path, ResourceProtocol* protocol, Enums::ResourceAccess access);
   
   /*! destructor. FileResource
   */
@@ -627,7 +627,6 @@ class NxOgrePublicClass FileResource : public Resource
   
   unsigned int  mWroteNbBytes;
   
-  Path          mFilePath;
   
 }; // class FileResource
 

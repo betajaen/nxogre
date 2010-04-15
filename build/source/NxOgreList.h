@@ -26,13 +26,15 @@
 
                                                                                        
 
-#include "NxOgreStable.h"
-#include "NxOgreMemoryArchive.h"
-#include "NxOgreMemoryResource.h"
 
-#ifdef _DEBUG
-#include <iostream>
-#endif
+#ifndef NXOGRE_LIST_H
+#define NXOGRE_LIST_H
+
+                                                                                       
+
+#include "NxOgreStable.h"
+#include "NxOgreString.h"
+#include <list>
 
                                                                                        
 
@@ -41,44 +43,37 @@ namespace NxOgre
 
                                                                                        
 
-MemoryArchive::MemoryArchive(const String& name, const Path& path, ResourceProtocol* protocol)
-: Archive(name, path, protocol)
+namespace Lists
 {
-#ifdef NXOGRE_DEBUG_RESOURCES
- std::cout << "[+] Opening Memory Archive" << std::endl;
-#endif
+
+
+template<typename T> String join(const std::list<T>& values, const std::string& seperator = " ")
+{
+ StringStream s;
+ for (std::list<T>::const_iterator it = values.begin(); it != values.end(); ++it)
+  s << (*it) << seperator;
+ std::string out = s.str();
+ return out.substr(0, out.length() - seperator.length());
 }
 
-MemoryArchive::~MemoryArchive(void)
+template<typename T, typename AX> String join(const std::list<T, AX>& values, const std::string& seperator = " ")
 {
-#ifdef NXOGRE_DEBUG_RESOURCES
- std::cout << "[-] Closing Memory Archive" << std::endl;
-#endif
- mResources.clear();
+ StringStream s;
+ for (std::list<T, AX>::const_iterator it = values.begin(); it != values.end(); ++it)
+  s << (*it) << seperator;
+ std::string out = s.str();
+ return out.substr(0, out.length() - seperator.length());
 }
 
-Resource* MemoryArchive::open(const Path&, NxOgre::Enums::ResourceAccess)
-{
- MemoryResource* resource = new MemoryResource(this);
- _addResource(resource);
- resource->open();
- return resource;
-}
-
-void MemoryArchive::close(Resource* resource)
-{
- if (resource == 0)
-  return;
- 
- MemoryResource* memory_resource = static_cast<MemoryResource*>(resource);
- memory_resource->close();
- 
- _removeResource(resource);
- 
-}
 
                                                                                        
 
-} // namespace NxOgre
+} // namespace Vectors
 
                                                                                        
+
+} // namespace NXOGRE_NAMESPACE
+
+                                                                                       
+
+#endif

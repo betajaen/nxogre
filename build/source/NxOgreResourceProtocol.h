@@ -41,56 +41,132 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. ResourceProtocol
+    desc.
+        A ResourceProtocol is an abstract/inherited class that represents a type of way of accessing
+        data outside the application. They create, destroy and maintain Resources; a handle of that
+        data. ResourceProtocols are generally hidden away from the user, they are instead accessed
+        through the ResourceSystem class.
 */
 class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
 {
-  public: // Functions
   
-  /** \brief Constructor
+ public: // Functions
+  
+  typedef ptr_vector<Resource>              Resources;
+  typedef ptr_vector<Resource>::iterator_t  ResourceIterator;
+  
+  /*! constructor. ResourceProtocol
+      desc.
+          Resource Protocol constructor.
   */
   ResourceProtocol();
   
-  /** \brief Virtual Destructor.
+  /*! destructor.
+      desc.
+          Virtual Destructor.
   */
   virtual ~ResourceProtocol(void);
   
-  /** \brief Open an archive based on a uniform resource identifier.
-      \example
-       <code>
-        ResourceSystem::getSingleton->openArchive("media1", "zip://media1.zip");
-       </code>
+  /*! function. open
+      desc.
+          Open a resource from a path with the following access, the resource should be closed/destroyed
+          by the equivalent close function.
+      args.
+          const Path& -- Path of the resource
+          Enums::ResourceAccess -- Read/Write privileges
+      return.
+          Resource* -- The resource pointer or NULL if the resource could not be opened.
+      note.
+          You should not use this function directly. Use the ResourceSystem::open function instead.
+      example.
+        bc. ResourceSystem::getSingleton->open("file://C:/Program Files/Game/mesh.nxs", );
   */
-  virtual  Archive*  openArchive(const String& name, const Path&);
+  virtual Resource* open(const Path&, Enums::ResourceAccess);
   
-  /** \brief Close an archive, and close any resources in that archive.
+  /*! function. close
+      desc.
+          Close an opened resource.
+      args.
+          Resource* -- The resource to close.
+      note.
+          You should not use this function directly. Use the ResourceSystem::close function instead.
   */
-  virtual  void      closeArchive(Archive*);
+  virtual void  close(Resource*);
   
-  /** \brief Calculate the archive name of a path.
+  /*! function. getProtocol
+      desc.
+          Get the a lowercased string of the name of the protocol; i.e. file, memory, etc.
+      return.
+          String -- The protocol string.
   */
-  virtual String     calculateArchiveName(const Path&);
-
-  /** \brief Get the name of the protocol; i.e. file, memory, etc.
-  */
-  virtual String     getProtocol(void) const;
+  virtual String getProtocol(void) const;
   
-  /** \brief Get the hash of the protocol name
+  /*! function. getProtocolHash
+      desc.
+          Get the hash of the getProtocol function.
+      return.
+          StringHash -- The hash
+      see.
+         ResourceProtocol::getProtocol 
   */
   virtual StringHash getProtocolHash(void) const;
   
-  /** \brief Is there only one archive by default?
-  */
-  virtual bool isSingleArchive(void) const;
-  
-  /** \brief Does the resources use filenames?
+  /*! function. usesNamelessResources
+      desc.
+          Does this resource protocol use names?
+      note.
+          Some resource protocols may not use names for access. The MemoryProtocol is an example of
+          this; Since it is not possible to allocate specific parts of the memory at the time, it cannot
+          be addressed - so it cannot use names. The FileProtocol uses names (filenames) and thus
+          can be addressed.
+      return.
+          bool -- If the resource protocol doesn't use names.
   */
   virtual bool usesNamelessResources(void) const;
   
-  /** \brief Initialise the resource system; create any default archives, etc.
-      \note  This is called when the protocol is opened by the ResourceSystem
+  /*! function. initialise
+      desc.
+          Initialise the resource system; create any default archives, etc.
+      note.
+          This is called when the protocol is first opened by the ResourceSystem.
   */
   virtual void initialise(void);
+  
+  /*! function. getDestructionPolicy
+      desc.
+          When the ResourceSystem is destroyed, should this protocol be destroyed also?
+      note.
+          This applies to user created ResourceProtocols who may have their own memory
+          allocation systems, or the ResourceProtocol may be part of a larger class.
+      see.
+         Enums::UserDestructionPolicy
+  */
+  virtual Enums::UserDestructionPolicy getDestructionPolicy() const;
+  
+  /*! function. getOpenedResources
+      desc.
+          Get a iterator to the current resources opened by this protocol
+  */
+  ResourceIterator getOpenedResources();
+  
+ protected:
+  
+  /*! function. addResource
+      desc.
+          Add a resource to opened resources.
+  */
+  void addResource(Resource*);
+  
+  /*! function. removeResource
+      desc.
+          Remove a resource from opened resources.
+  */
+  void removeResource(Resource*);
+  
+ protected:
+  
+  Resources mOpenResources;
   
 }; // class ResourceProtocol
 

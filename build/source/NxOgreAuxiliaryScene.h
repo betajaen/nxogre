@@ -39,7 +39,6 @@
 #include "NxOgreSceneGeometry.h"
 #include "NxOgreKinematicActor.h"
 #include "NxOgreVolume.h"
-#include "NxOgreKinematicController.h"
 #include "NxOgreShape.h"
 #include "NxOgreFluid.h"
 #include "NxOgreMaterial.h"

@@ -46,12 +46,12 @@ ResourceProtocol::~ResourceProtocol(void)
  // virtual function.
 }
 
-Archive* ResourceProtocol::openArchive(const String& name, const Path&)
+Resource* ResourceProtocol::open(const Path&, Enums::ResourceAccess)
 {
  return 0; // virtual function.
 }
 
-void ResourceProtocol::closeArchive(Archive*)
+void ResourceProtocol::close(Resource*)
 {
  // virtual function.
 }
@@ -66,11 +66,6 @@ StringHash ResourceProtocol::getProtocolHash(void) const
  return BLANK_HASH;
 }
 
-bool ResourceProtocol::isSingleArchive(void) const
-{
- return false;
-}
-
 bool ResourceProtocol::usesNamelessResources(void) const
 {
  return false;
@@ -81,9 +76,26 @@ void ResourceProtocol::initialise(void)
  // virtual function.
 }
 
-String ResourceProtocol::calculateArchiveName(const Path&)
+Enums::UserDestructionPolicy ResourceProtocol::getDestructionPolicy() const
 {
- return BLANK_STRING;
+ return Enums::UserDestructionPolicy_Delete;
+}
+
+ResourceProtocol::ResourceIterator ResourceProtocol::getOpenedResources()
+{
+ return mOpenResources.iterator();
+}
+
+void ResourceProtocol::addResource(Resource* resource)
+{
+ if (resource)
+  mOpenResources.push_back(resource);
+}
+
+void ResourceProtocol::removeResource(Resource* resource)
+{
+ if (resource)
+  mOpenResources.erase(resource);
 }
 
                                                                                        

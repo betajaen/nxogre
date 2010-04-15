@@ -106,6 +106,10 @@ typedef Allocatable<UserExtendedClassAllocator>     UserExtendedClassAllocatable
 typedef Allocator<MallocAllocator>                  UserBigClassAllocator;
 typedef Allocatable<UserExtendedClassAllocator>     UserBigClassAllocatable;
 
+// ForceFields and related/inherited classes.
+typedef Allocator<MallocAllocator>                  ForceFieldBasedAllocator;
+typedef Allocatable<RigidBodyBasedAllocator>        ForceFieldBasedAllocatable;
+
 
                                                                                        
 
