@@ -88,7 +88,6 @@
 #include "NxOgreJointLimitDescription.h"
 #include "NxOgreJointLimitSoftDescription.h"
 #include "NxOgreKinematicActor.h"
-#include "NxOgreKinematicController.h"
 #include "NxOgreKinematicSceneLink.h"
 #include "NxOgreMachine.h"
 #include "NxOgreMachinePart.h"
