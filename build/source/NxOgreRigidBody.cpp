@@ -585,6 +585,11 @@ CollisionModelIterator RigidBody::getShapes()
  return mShapes.const_iterator();
 }
 
+String RigidBody::to_s() const
+{
+ return String("RigidBody");
+}
+
 #undef RIGIDBODY_EXCEPTIONS_PASS
 #undef RIGIDBODY_NON_STATIC_PASS
 #undef RIGIDBODY_STATIC_PASS

@@ -37,7 +37,6 @@
 #include "NxOgreActor.h"
 #include "NxOgreSceneGeometry.h"
 #include "NxOgreKinematicActor.h"
-#include "NxOgreKinematicController.h"
 #include "NxOgreTimeController.h"
 #include "NxOgreMaterial.h"
 #include "NxOgreVolume.h"
@@ -57,6 +56,9 @@
 #include "NxOgreClothDescription.h"
 #include "NxOgreSoftBody.h"
 #include "NxOgreSoftBodyDescription.h"
+#include "NxOgreForceFieldLinearKernel.h"
+#include "NxOgreForceFieldKernel.h"
+#include "NxOgreForceField.h"
 #include "NxOgreCompartment.h"
 #include "NxOgreCompartmentDescription.h"
 #include "NxOgreFluid.h"
@@ -140,7 +142,6 @@ Scene::~Scene(void)
   mActors.clear();
   mSceneGeometries.clear();
   mKinematicActors.clear();
-  mKinematicControllers.clear();
   mVolumes.clear();
   mMaterials.clear();
   mFluids.clear();
@@ -289,14 +290,6 @@ KinematicActor* Scene::createKinematicActor(const ShapeDescriptions& shapes, con
  StringHash hash = ka->getNameHash();
  mKinematicActors.insert(hash, ka);
  return ka;
-}
-
-KinematicController* Scene::createKinematicController(const Vec3& size, const Vec3& globalPosition)
-{
- KinematicController* controller = NXOGRE_NEW_NXOGRE(KinematicController)(size, globalPosition, this);
- StringHash hash = controller->getNameHash();
- mKinematicControllers.insert(hash, controller);
- return controller;
 }
 
 Volume* Scene::createVolume(const ShapeDescription& shape, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
@@ -717,6 +710,29 @@ void Scene::destroyCharacterController(CharacterController*)
 }
 
 #endif
+
+ForceFieldKernel* Scene::createForceFieldLinearKernel(const ForceFieldLinearKernelDescription& description)
+{
+ ForceFieldKernel* kernel = NXOGRE_NEW_NXOGRE(ForceFieldLinearKernel)(description, this);
+ StringHash hash = kernel->getNameHash();
+ mForceFieldKernels.insert(hash, kernel);
+ return kernel;
+}
+
+bool Scene::destroyForceFieldLinearKernel(ForceFieldLinearKernel* kernel)
+{
+ if (kernel == 0)
+  return false;
+ 
+ if (kernel->getNbReferences() == 0)
+  return false;
+ 
+ mForceFieldKernels.erase(kernel);
+ NXOGRE_DELETE_NXOGRE(kernel);
+ 
+ return true;
+}
+
 
 std::string Scene::to_s() const
 {

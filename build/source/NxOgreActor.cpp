@@ -542,7 +542,7 @@ unsigned int Actor::linearSweep(const Vec3& motion, unsigned int sweep_flags, un
 
 String Actor::to_s() const
 {
- return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Actor") ));
+ return String("Actor") ;
 }
 
                                                                                        

@@ -59,60 +59,69 @@ inline void NxOgrePublicFunction NxCapsuleToSimpleCapsule(const NxCapsule&, Simp
 struct SimpleShape : public ShapeAllocatable
 {
  Enums::SimpleShapeType  mType;
- Vec3                    mCenter;
- void*                   mUser;
 };
 
 struct SimplePlane : public SimpleShape
 {
+ SimplePlane();
+ SimplePlane(const Vec3& normal, float distance);
  Vec3        mNormal;
- double      mDistance;
+ float       mDistance;
 };
 
 struct SimpleBox : public SimpleShape
 {
- SimpleBox() {}
- SimpleBox(Real extentsX, Real extentsY, Real extentsZ) : mExtents(extentsX, extentsY, extentsZ) {}
- SimpleBox(Vec3 extents) : mExtents(extents) {}
- Matrix33    mRotation;
- Vec3        mExtents;
+ SimpleBox();
+ SimpleBox(const Vec3& size, const Vec3& position = Vec3::ZERO, const Quat& orientation = Quat::IDENTITY);
+ SimpleBox(const Vec3& size, const Vec3& position, const Matrix33&);
+ SimpleBox(const NxBox&);
+ 
+ NxBox to_box() const;
+ 
+ Vec3     mCenter;
+ Matrix33 mRotation;
+ Vec3     mSize;
 };
 
 struct SimpleSphere : public SimpleShape
 {
+ SimpleSphere();
+ SimpleSphere(Real radius, const Vec3& position = Vec3::ZERO);
+ Vec3 mPose;
  Real mRadius;
 };
 
-struct SimpleSegment : public SimpleShape
+struct SimpleCapsule : public SimpleShape
 {
- Vec3 mP0;
- Vec3 mP1;
-};
-
-struct SimpleCapsule : public SimpleSegment
-{
- SimpleCapsule()
- {}
- SimpleCapsule(Real height, Real radius) : mHeight(height), mRadius(radius)
- {}
+ SimpleCapsule();
+ SimpleCapsule(Real height, Real radius, const Vec3& position = Vec3::ZERO, const Quat& orientation = Quat::IDENTITY);
+ SimpleCapsule(Real height, Real radius, const Matrix44& pose);
+ Matrix44    mPose;
  Real mHeight;
  Real mRadius;
 };
 
 struct SimplePointCloud : public SimpleShape
 {
- unsigned int   mNbVertices;
- Vec3*          mVertices;
+ 
+ SimplePointCloud();
+~SimplePointCloud();
+ 
+ Buffer<Vec3>  mPoints;
 };
 
 struct SimpleTriangleMesh : public SimpleShape
 {
- unsigned int    mNbVertices;
- Vec3*           mVertices;
- Vec3*           mNormals;
- unsigned int    mNbIndicies;
- unsigned int*   mIndicies;
+ 
+ SimpleTriangleMesh();
+~SimpleTriangleMesh();
+ 
+ Buffer<Vec3>          mPoints;
+ Buffer<Vec3>          mNormals;
+ Buffer<unsigned int>  mIndices;
 };
+
+typedef std::vector<SimpleShape*> SimpleShapes;
 
                                                                                        
 

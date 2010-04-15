@@ -130,6 +130,12 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
   */
   CollisionModelIterator getShapes();
   
+  /*! function. to_s
+      desc.
+          Returns the pointer and name as string.
+  */
+  virtual String to_s() const;
+  
   protected: // Function
   
   /*! constructor. RigidBody

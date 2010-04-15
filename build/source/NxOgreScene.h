@@ -38,7 +38,6 @@
 #include "NxOgreSceneGeometry.h"
 #include "NxOgreKinematicActor.h"
 #include "NxOgreVolume.h"
-#include "NxOgreKinematicController.h"
 #include "NxOgreShape.h"
 #include "NxOgreFluid.h"
 #include "NxOgreMaterial.h"
@@ -46,6 +45,8 @@
 #include "NxOgreSoftBody.h"
 #include "NxOgreMachine.h"
 #include "NxOgreCloth.h"
+#include "NxOgreForceField.h"
+#include "NxOgreForceFieldKernel.h"
 
 #include "NxOgreRigidBodyDescription.h"
 #include "NxOgreMaterialDescription.h"
@@ -57,6 +58,8 @@
 #include "NxOgreCompartmentDescription.h"
 #include "NxOgreCompartment.h"
 #include "NxOgreFluidDescription.h"
+#include "NxOgreForceFieldDescription.h"
+#include "NxOgreForceFieldLinearKernelDescription.h"
 
 #include "NxOgreTimeListener.h"
 
@@ -91,14 +94,16 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   typedef  ptr_multihashmap<SceneGeometry>::iterator_t        SceneGeometryIterator;
   typedef  ptr_multihashmap<KinematicActor>                   KinematicActors;
   typedef  ptr_multihashmap<KinematicActor>::iterator_t       KinematicActorIterator;
-  typedef  ptr_multihashmap<KinematicController>              KinematicControllers;
-  typedef  ptr_multihashmap<KinematicController>::iterator_t  KinematicControllerIterator;
   typedef  ptr_multihashmap<Volume>                           Volumes;
   typedef  ptr_multihashmap<Volume>::iterator_t               VolumeIterator;
   typedef  ptr_multihashmap<Fluid>                            Fluids;
   typedef  ptr_multihashmap<Fluid>::iterator_t                FluidIterator;
   typedef  ptr_multihashmap<Material>                         Materials;
   typedef  ptr_multihashmap<Material>::iterator_t             MaterialIterator;
+  typedef  ptr_multihashmap<ForceFieldKernel>                 ForceFieldKernels;
+  typedef  ptr_multihashmap<ForceFieldKernel>::iterator_t     ForceFieldKernelIterator;
+  typedef  ptr_multihashmap<ForceField>                       ForceFields;
+  typedef  ptr_multihashmap<ForceField>::iterator_t           ForceFieldIterator;
   typedef  ptr_map<unsigned short, Material>                  IndexedMaterials;
 
 #if NxOgreUsePhysXCharacterController == 1
@@ -218,12 +223,6 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   Volume*  createVolume(const ShapeDescriptions&, const Matrix44&, Callback*, Enums::VolumeCollisionType = Enums::VolumeCollisionType_All);
   
-  /*! function. createKinematicController
-      desc.
-          
-  */
-  KinematicController*  createKinematicController(const Vec3& size, const Vec3& globalPosition);
-
   /*! function. createMaterial
       desc.
           
@@ -341,6 +340,20 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
           
   */
   void  destroyFluid(Fluid*);
+
+  /*! function. createForceFieldLinearKernel
+      desc.
+  */
+  ForceFieldKernel* createForceFieldLinearKernel(const ForceFieldLinearKernelDescription&);
+
+  /*! function. createForceFieldLinearKernel
+      desc.
+          Attempst to destroy a forcefield linear kernel. It is deleted if it is no longer
+          used with a ForceField.
+      return.
+          bool -- If the kernel was destroyed or not.
+  */
+  bool destroyForceFieldLinearKernel(ForceFieldLinearKernel*);
 
   /*! function. createCompartment
       desc.
@@ -567,10 +580,6 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   KinematicActors  mKinematicActors;
 
-  /** \internal Master kinematic controllers array
-  */
-  KinematicControllers  mKinematicControllers;
-
 #if NxOgreUsePhysXCharacterController == 1
   /** \internal Master character controllers array
   */
@@ -610,6 +619,10 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   /** \internal
   */
   ptr_vector<Compartment>  mCompartments;
+
+  /** \internal Master kernels array
+  */
+  ForceFieldKernels  mForceFieldKernels;
 
   /** \brief
   */

@@ -263,6 +263,17 @@ StringHash NxOgrePublicFunction hash(const String& str);
 */
 size_t NxOgrePublicFunction index(const String& string, char search);
 
+/* function. index
+   desc.
+       Find the first occurance of a char in a string
+   args. 
+      const String& string -- String to search
+      char search - Character to search
+   return.
+      bool -- If the character exists.
+*/
+bool NxOgrePublicFunction has(const String& string, char search);
+
 /*! function. replace
     desc.
         Replaces all instances of a char with another.

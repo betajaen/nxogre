@@ -243,6 +243,11 @@ size_t index(const String& string, char search)
  return string.find_first_of(search);
 }
 
+bool has(const String& string, char search)
+{
+ return string.find_first_of(search) != String::npos;
+}
+
 void trim(String& string)
 {
  string.erase(string.find_last_not_of(whitespace)+1);
