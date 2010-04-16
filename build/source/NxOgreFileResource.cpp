@@ -80,7 +80,7 @@ void FileResource::open()
  mFile = 0;
  
  std::string os_path = mPath.getOSString();
-
+ 
  if (mAccess == Enums::ResourceAccess_ReadOnly)
  {
   #ifdef NXOGRE_DEBUG_RESOURCES
@@ -236,8 +236,8 @@ bool FileResource::writeBool(bool* v, size_t length)
 {
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
- mWroteNbBytes += sizeof(char) * length;
- return fwrite(&v, sizeof(char) * length, 1, mFile) == 1;
+ mWroteNbBytes += sizeof(bool) * length;
+ return fwrite(&v, sizeof(bool) * length, 1, mFile) == 1;
 }
 
 bool FileResource::writeUChar(unsigned char v)

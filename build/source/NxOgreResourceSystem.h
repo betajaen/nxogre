@@ -78,8 +78,6 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSyst
   */
   ProtocolIterator  getProtocols();
 
-  protected:
-  
   /*! constructor. openProtocol
       desc.
           Open a resource protocol, pointer is owned by the ResourceSystem when passed on.
@@ -89,6 +87,8 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSyst
           The Protocol will be deleted according to its destruction policy. (ResourceProtocol::getDestructionPolicy)
   */
   void  openProtocol(ResourceProtocol*);
+  
+  protected:
   
   /*! constructor. ResourceSystem
       desc.

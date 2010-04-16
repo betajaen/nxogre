@@ -82,9 +82,9 @@ class NxOgrePublicClass FileResourceProtocol : public ResourceProtocol
   
   /*! function. usesNamelessResource
       desc.
-          Does the resources use filenames?
+          Does the resources not use filenames?
       return
-          **bool** -- Always returns true.
+          **bool** -- Always returns false.
   */
   bool usesNamelessResources() const;
     
@@ -110,7 +110,7 @@ class NxOgrePublicClass FileResourceProtocol : public ResourceProtocol
   
   StringHash             mProtocolHash;
   
-}; // class ClassName
+}; // class FileResourceProtocol
 
                                                                                        
 

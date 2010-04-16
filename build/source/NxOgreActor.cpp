@@ -545,6 +545,54 @@ String Actor::to_s() const
  return String("Actor") ;
 }
 
+
+void Actor::setGlobalPosition(Real x, Real y, Real z)
+{
+ mActor->setGlobalPosition(NxVec3(x,y,z));
+}
+
+void Actor::setGlobalOrientationQuat(Real w, Real x, Real y, Real z)
+{
+ NxQuat q;
+ q.setWXYZ(w,x,y,z);
+ mActor->setGlobalOrientationQuat(q);
+}
+
+void Actor::setCMassOffsetLocalPosition(Real x, Real y, Real z)
+{
+ mActor->setCMassOffsetLocalPosition(NxVec3(x,y,z));
+}
+
+void Actor::setCMassOffsetGlobalPosition(Real x, Real y, Real z)
+{
+ mActor->setCMassOffsetGlobalPosition(NxVec3(x,y,z));
+}
+
+void Actor::setCMassGlobalPosition(Real x, Real y, Real z)
+{
+ mActor->setCMassGlobalPosition(NxVec3(x,y,z));
+}
+
+void Actor::setLinearVelocity(Real x, Real y, Real z)
+{
+ mActor->setLinearVelocity(NxVec3(x,y,z));
+}
+
+void Actor::setAngularVelocity(Real x, Real y, Real z)
+{
+ mActor->setAngularVelocity(NxVec3(x,y,z));
+}
+
+void Actor::setLinearMomentum(Real x, Real y, Real z)
+{
+ mActor->setLinearMomentum(NxVec3(x,y,z));
+}
+
+void Actor::setAngularMomentum(Real x, Real y, Real z)
+{
+ mActor->setAngularMomentum(NxVec3(x,y,z));
+}
+
                                                                                        
 
 } // namespace NxOgre

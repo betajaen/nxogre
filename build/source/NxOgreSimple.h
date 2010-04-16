@@ -45,14 +45,6 @@ namespace Functions
 {
 
 inline void NxOgrePublicFunction SimpleShapeToActorDescription(NxActorDesc&, SimpleShape*);
-inline void NxOgrePublicFunction SimpleBoxToNxBox(const SimpleBox&, NxBox&);
-inline void NxOgrePublicFunction NxBoxToSimpleBox(const NxBox&, SimpleBox&);
-
-inline void NxOgrePublicFunction SimpleSphereToNxSphere(const SimpleSphere&, NxSphere&);
-inline void NxOgrePublicFunction NxSphereToSimpleSphere(const NxSphere&, SimpleSphere&);
-
-inline void NxOgrePublicFunction SimpleCapsuleToNxCapsule(const SimpleCapsule&, NxCapsule&);
-inline void NxOgrePublicFunction NxCapsuleToSimpleCapsule(const NxCapsule&, SimpleCapsule&);
 
 };
 
@@ -75,7 +67,10 @@ struct SimpleBox : public SimpleShape
  SimpleBox(const Vec3& size, const Vec3& position = Vec3::ZERO, const Quat& orientation = Quat::IDENTITY);
  SimpleBox(const Vec3& size, const Vec3& position, const Matrix33&);
  SimpleBox(const NxBox&);
+ SimpleBox(const Bounds3& aabb, const Matrix44& trans);
+
  
+ bool  contains(const Vec3&) const;
  NxBox to_box() const;
  
  Vec3     mCenter;
@@ -86,18 +81,24 @@ struct SimpleBox : public SimpleShape
 struct SimpleSphere : public SimpleShape
 {
  SimpleSphere();
- SimpleSphere(Real radius, const Vec3& position = Vec3::ZERO);
- Vec3 mPose;
+ SimpleSphere(Real radius, const Vec3& center = Vec3::ZERO);
+ SimpleSphere(const NxSphere&);
+ 
+ NxSphere to_sphere() const;
+ 
+ Vec3 mCenter;
  Real mRadius;
 };
 
 struct SimpleCapsule : public SimpleShape
 {
  SimpleCapsule();
- SimpleCapsule(Real height, Real radius, const Vec3& position = Vec3::ZERO, const Quat& orientation = Quat::IDENTITY);
- SimpleCapsule(Real height, Real radius, const Matrix44& pose);
- Matrix44    mPose;
- Real mHeight;
+ SimpleCapsule(Real radius, const Vec3& p0, const Vec3& p1);
+ SimpleCapsule(const NxCapsule&);
+ 
+ NxCapsule to_capsule() const;
+ 
+ Vec3 mP0, mP1;
  Real mRadius;
 };
 

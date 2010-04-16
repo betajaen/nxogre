@@ -92,7 +92,7 @@ SimpleCapsule Capsule::getWorldCapsule(void)
  {
   NxCapsule capsule;
   mCapsuleShape->getWorldCapsule(capsule);
-  Functions::NxCapsuleToSimpleCapsule(capsule, out);
+  return SimpleCapsule(capsule);
  }
  return out;
 }

@@ -46,41 +46,6 @@ namespace Util
 
                                                                                        
 
-bool SimpleBoxContainsPoint(const SimpleBox& oBox, const Vec3& oP)
-{
- NxBox box;
- Functions::SimpleBoxToNxBox(oBox, box);
- NxVec3 p = oP.as<NxVec3>();
- 
- return NxGetUtilLib()->NxBoxContainsPoint(box, p);
-}
-
-SimpleBox NxOgrePublicFunction createSimpleBox(const Bounds3& aabb, const Matrix44& trans)
-{
- SimpleBox out;
- NxBounds3 bounds;
- bounds.max.x = aabb.max.x;
- bounds.max.y = aabb.max.y;
- bounds.max.z = aabb.max.z;
- bounds.min.x = aabb.min.x;
- bounds.min.y = aabb.min.y;
- bounds.min.z = aabb.min.z;
- NxMat34 mat;
- mat.setColumnMajor44(trans.ptr());
- NxBox box;
- NxGetUtilLib()->NxCreateBox(box, bounds, mat);
- Functions::NxBoxToSimpleBox(box, out);
- return out;
-}
-
-SimplePlane NxOgrePublicFunction createSimplePlane(const Vec3& normal, const Real& distance)
-{
- SimplePlane plane;
- plane.mDistance = distance;
- plane.mNormal = normal;
- return plane;
-}
-
 bool NxOgrePublicFunction RayPlaneIntersect(const Ray& ray, const SimplePlane& simplePlane, Real& distance, Vec3& pointOnPlane)
 {
  NxPlane plane;

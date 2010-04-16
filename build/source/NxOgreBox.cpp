@@ -102,9 +102,7 @@ SimpleBox Box::getWorldOBB(void)
  
  NxBox obb;
  mBoxShape->getWorldOBB(obb);
- Functions::NxBoxToSimpleBox(obb, box);
-
- return box;
+ return SimpleBox(obb);
 }
 
 String Box::to_s() const

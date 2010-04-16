@@ -245,6 +245,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Vec3& __position__ -- New Actor position.
   */
   void                   setGlobalPosition(const Vec3& position);
+  void                   setGlobalPosition(Real x, Real y, Real z);
   
   /*! function. setGlobalOrientation
       desc.
@@ -262,6 +263,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Quat& __orientation__ -- New Actor orientation.
   */
   void                   setGlobalOrientationQuat(const Quat&);
+  void                   setGlobalOrientationQuat(Real w, Real x, Real y, Real z);
   
   /*! function. getGlobalPose
       desc.
@@ -320,6 +322,7 @@ class NxOgrePublicClass Actor : public RigidBody
       !wake
   */
   void                 setCMassOffsetLocalPosition(const Vec3& position);
+  void                 setCMassOffsetLocalPosition(Real x, Real y, Real z);
   
   /*! function. setCMassOffsetLocalOrientation
       desc.
@@ -347,6 +350,7 @@ class NxOgrePublicClass Actor : public RigidBody
       !wake
   */
   void                 setCMassOffsetGlobalPosition(const Vec3&); 
+  void                 setCMassOffsetGlobalPosition(Real x, Real y, Real z); 
   
   /*! function. setCMassOffsetGlobalOrientation
       desc.
@@ -374,6 +378,7 @@ class NxOgrePublicClass Actor : public RigidBody
       !wake
   */
   void                 setCMassGlobalPosition(const Vec3&);
+  void                 setCMassGlobalPosition(Real x, Real y, Real z); 
   
   /*! function. setCMassGlobalOrientation
       desc.
@@ -445,7 +450,7 @@ class NxOgrePublicClass Actor : public RigidBody
       Retrieves the mass of the actor. 
       return Real -- Mass of the actor.
   */
-  Real                 getMass(void) const; 
+  Real                  getMass(void) const; 
   
   /*! function. setMassSpaceInertiaTensor
       desc.
@@ -508,7 +513,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            bool -- True if succesful
   */
-                                       bool                  updateMassFromShapes(Real density, Real totalMass) const;
+  bool                  updateMassFromShapes(Real density, Real totalMass) const;
 
   /*! function. setLinearDamping
       desc.
@@ -553,6 +558,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Vec3& __linVel__ -- New linear velocity of the actor.
   */
   void                  setLinearVelocity(const Vec3& linVel);
+  void                  setLinearVelocity(Real x, Real y, Real z);
   
   /*! function. setAngularVelocity
       desc.
@@ -567,6 +573,7 @@ class NxOgrePublicClass Actor : public RigidBody
       
   */
   void                  setAngularVelocity(const Vec3& angVel);
+  void                  setAngularVelocity(Real x, Real y, Real z);
   
   /*! function. getLinearVelocity
       desc.  
@@ -650,6 +657,7 @@ class NxOgrePublicClass Actor : public RigidBody
       !wake
   */
   void                  setLinearMomentum(const Vec3& linMoment);
+  void                  setLinearMomentum(Real x, Real y, Real z);
 
   /*! function. setAngularMomentum
       desc. 
@@ -663,6 +671,7 @@ class NxOgrePublicClass Actor : public RigidBody
       !wake
   */
   void                  setAngularMomentum(const Vec3& angMoment);
+  void                  setAngularMomentum(Real x, Real y, Real z);
 
   /*! function. getLinearMomentum
       desc.  

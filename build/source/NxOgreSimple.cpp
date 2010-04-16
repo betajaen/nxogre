@@ -69,30 +69,6 @@ extern inline void SimpleShapeToActorDescription(NxActorDesc& description, Simpl
  }
 }
 
-extern inline void SimpleBoxToNxBox(const SimpleBox& s, NxBox& t)
-{
-}
-
-extern inline void NxBoxToSimpleBox(const NxBox& t, SimpleBox& s)
-{
-}
-
-extern inline void SimpleSphereToNxSphere(const SimpleSphere& s , NxSphere& t)
-{
-}
-
-extern inline void NxSphereToSimpleSphere(const NxSphere& s, SimpleSphere& t)
-{
-}
-
-extern void SimpleCapsuleToNxCapsule(const SimpleCapsule& s, NxCapsule& t)
-{
-}
-
-extern void NxCapsuleToSimpleCapsule(const NxCapsule& t, SimpleCapsule& s)
-{
-}
-
                                                                                        
 
 } // namespace Functions
@@ -115,12 +91,6 @@ SimpleBox::SimpleBox()
  mRotation.identity();
 }
 
-SimpleBox::SimpleBox(const NxBox& box)
-{
- mSize.from<NxVec3>(box.extents);
- mCenter.from<NxVec3>(box.center);
- box.rot.getRowMajor(mRotation.ptr());
-}
 
 SimpleBox::SimpleBox(const Vec3& size, const Vec3& position, const Quat& orientation)
 : mSize(size)
@@ -134,6 +104,37 @@ SimpleBox::SimpleBox(const Vec3& size, const Vec3& position, const Matrix33& rot
 { // constructor.
 }
 
+SimpleBox::SimpleBox(const NxBox& box)
+{
+ mSize.from<NxVec3>(box.extents);
+ mCenter.from<NxVec3>(box.center);
+ box.rot.getRowMajor(mRotation.ptr());
+}
+
+SimpleBox::SimpleBox(const Bounds3& aabb, const Matrix44& trans)
+{
+ SimpleBox out;
+ NxBounds3 bounds;
+ bounds.max.x = aabb.max.x;
+ bounds.max.y = aabb.max.y;
+ bounds.max.z = aabb.max.z;
+ bounds.min.x = aabb.min.x;
+ bounds.min.y = aabb.min.y;
+ bounds.min.z = aabb.min.z;
+ NxMat34 mat;
+ mat.setColumnMajor44(trans.ptr());
+ NxBox box;
+ NxGetUtilLib()->NxCreateBox(box, bounds, mat);
+ mSize.from<NxVec3>(box.extents);
+ mCenter.from<NxVec3>(box.center);
+ box.rot.getRowMajor(mRotation.ptr());
+}
+
+bool SimpleBox::contains(const Vec3& point) const
+{
+ return NxGetUtilLib()->NxBoxContainsPoint(to_box(), point.as<NxVec3>());
+}
+
 NxBox SimpleBox::to_box() const
 {
  NxBox box;
@@ -144,33 +145,54 @@ NxBox SimpleBox::to_box() const
 }
 
 SimpleSphere::SimpleSphere()
-{
+{ // constructor.
 }
 
-SimpleSphere::SimpleSphere(Real radius, const Vec3& position)
-: mRadius(radius)
+SimpleSphere::SimpleSphere(Real radius, const Vec3& center)
+: mRadius(radius), mCenter(center)
+{ // constructor.
+}
+
+SimpleSphere::SimpleSphere(const NxSphere& sphere)
+: mRadius(sphere.radius)
 {
- mPose.set(position);
+ mCenter.from<NxVec3>(sphere.center);
+}
+
+NxSphere SimpleSphere::to_sphere() const
+{
+ NxSphere sphere;
+ sphere.center.set(mCenter.as<NxVec3>());
+ sphere.radius = mRadius;
+ return sphere;
 }
 
 SimpleCapsule::SimpleCapsule()
-: mRadius(0), mHeight(0)
+: mRadius(0)
 {
 }
 
-SimpleCapsule::SimpleCapsule(Real height, Real radius, const Vec3& position, const Quat& orientation)
-: mRadius(0), mHeight(0)
+SimpleCapsule::SimpleCapsule(Real radius, const Vec3& p0, const Vec3& p1)
+: mRadius(radius), mP0(p0), mP1(p1)
 { // constructor.
- mPose.set(position);
- mPose.set(orientation);
 }
 
-SimpleCapsule::SimpleCapsule(Real height, Real radius, const Matrix44& pose)
-: mRadius(0), mHeight(0)
-{ // constructor.
- mPose.set(pose);
+
+SimpleCapsule::SimpleCapsule(const NxCapsule& capsule)
+{
+ mP0.from<NxVec3>(capsule.p0);
+ mP1.from<NxVec3>(capsule.p1);
+ mRadius = capsule.radius;
 }
 
+NxCapsule SimpleCapsule::to_capsule() const
+{
+ NxCapsule capsule;
+ capsule.p0.set(mP0.as<NxVec3>());
+ capsule.p1.set(mP1.as<NxVec3>());
+ capsule.radius = mRadius;
+ return capsule;
+}
 
                                                                                        
 

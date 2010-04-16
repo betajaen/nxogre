@@ -71,13 +71,9 @@ Real Sphere::getRadius() const
 
 SimpleSphere Sphere::getWorldSphere() const
 {
- SimpleSphere sphere;
- 
  NxSphere world_sphere;
  mSphereShape->getWorldSphere(world_sphere);
- Functions::NxSphereToSimpleSphere(world_sphere, sphere);
- 
- return sphere;
+ return SimpleSphere(world_sphere);
 }
 
 void Sphere::saveToDescription(SphereDescription& description)
