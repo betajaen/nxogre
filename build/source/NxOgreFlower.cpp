@@ -96,7 +96,7 @@ void Flower::load(MeshData* mesh, Resource* resource)
 {
 
  Buffer<char> lineBuffer;
- unsigned int line = 0;
+ 
  while(resource->atEnd() == false)
  {
   getLine(resource, lineBuffer);

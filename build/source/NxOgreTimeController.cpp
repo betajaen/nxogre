@@ -42,24 +42,24 @@ namespace NxOgre
 
                                                                                        
 
-TimeController::TimeController(void)
+TimeController::TimeController()
 {
  resume();
 }
 
-TimeController::~TimeController(void)
+TimeController::~TimeController()
 {
 }
 
 void TimeController::pause(void)
 {
- mFunction = &TimeController::_pause;
+ mTimeFunction = &TimeController::_pause;
  mPaused = true;
 }
 
 void TimeController::resume(void)
 {
- mFunction = &TimeController::_literal;
+ mTimeFunction = &TimeController::_call_controllers;
  mPaused = false;
 }
 
@@ -70,69 +70,80 @@ bool TimeController::isPaused(void) const
 
 void TimeController::advance(Real deltaTime)
 {
- (this->*mFunction)(deltaTime);
+ (this->*mTimeFunction)(deltaTime);
 }
 
-void TimeController::addTimeListener(TimeListener* listener, Enums::Priority priority)
+void TimeController::_createTimeListenerGroup(Enums::Priority id)
 {
- if (priority == Enums::Priority_High || priority == Enums::Priority_MediumHigh)
-  mListeners[Enums::Priority_MediumHigh].insert(listener);
- else if (priority == Enums::Priority_Medium)
-  mListeners[Enums::Priority_Medium].insert(listener);
- else if (priority == Enums::Priority_MediumLow)
-  mListeners[Enums::Priority_MediumLow].insert(listener);
- else
-  mListeners[Enums::Priority_Low].insert(listener);
+ 
+ TimeListenerGroupIterator group = mListeners.find(id);
+ if (group != mListeners.end())
+  return;
+ 
+ mListeners.insert(std::pair<Enums::Priority, vector<TimeListener*> >(id, vector<TimeListener*>()));
 }
 
-void TimeController::removeTimeListener(TimeListener* listener, Enums::Priority priority)
+void TimeController::_removeTimeListenerGroup(Enums::Priority id)
 {
- if (priority == Enums::Priority_High || priority == Enums::Priority_MediumHigh)
-  mListeners[Enums::Priority_MediumHigh].remove(listener);
- else if (priority == Enums::Priority_Medium)
-  mListeners[Enums::Priority_Medium].remove(listener);
- else if (priority == Enums::Priority_MediumLow)
-  mListeners[Enums::Priority_MediumLow].remove(listener);
- else
-  mListeners[Enums::Priority_Low].remove(listener);
+ TimeListenerGroupIterator group = mListeners.find(id);
+ if (group != mListeners.end())
+  return;
+ 
+ mListeners.erase(group);
+ 
 }
 
-void TimeController::_literal(Real user_deltaTime)
+void TimeController::addTimeListener(TimeListener* listener, NxOgre::Enums::Priority priority)
 {
-
- Array<TimeListener*>::Iterator iterator;
- iterator = mWaitingList.getIterator();
-
- for (TimeListener* listener = iterator.begin();listener = iterator.next();)
+ TimeListenerGroupIterator group = mListeners.find(priority);
+ if (group == mListeners.end())
  {
-  listener->advance(user_deltaTime, Enums::Priority_Low);
+  _createTimeListenerGroup(priority);
+  group = mListeners.find(priority);
  }
 
- mWaitingList.removeAll();
- bool NotOnList = false;
- for (unsigned int i=0;i < 5;i++)
- {
-   iterator = mListeners[i].getIterator();
-   for (TimeListener* listener = iterator.begin();listener = iterator.next();)
-   {
-    NotOnList = listener->advance(user_deltaTime, Enums::Priority(i));
-    if (NotOnList == false)
-     mWaitingList.insert(listener);
-   }
- }
+ (*group).second.push_back(listener);
+}
 
- iterator = mWaitingList.getIterator();
- for (TimeListener* listener = iterator.begin();listener = iterator.next();)
- {
-  listener->advance(user_deltaTime, Enums::Priority_Low);
- }
-
-
+void TimeController::removeTimeListener(TimeListener* listener, NxOgre::Enums::Priority priority)
+{
+ TimeListenerGroupIterator group = mListeners.find(priority);
+ if (group == mListeners.end())
+  return;
+ 
+ (*group).second.destroy(listener);
 }
 
 void TimeController::_pause(Real)
 {
+ // Paused. Do not call the TimeListeners.
 }
+
+void TimeController::_call_controllers(Real deltaTime)
+{
+ 
+ // Run through the TimeListeners in order of priority.
+ for(mGroupIterator = mListeners.begin(); mGroupIterator != mListeners.end(); ++mGroupIterator)
+ {
+  for (mListenerIterator = (*mGroupIterator).second.iterator(); mListenerIterator.end(); mListenerIterator++)
+  {
+   // Run the TimeListener, if returned false, then place the pointer into WaitingListeners.
+   bool mListenerState = (*mListenerIterator)->advance(deltaTime, (*mGroupIterator).first);
+   if (mListenerState == false)
+    mWaitingListeners.push_back((*mListenerIterator));
+  }
+ }
+ 
+ // If there are any WaitingListeners, run them again.
+ if (mWaitingListeners.size())
+ {
+  for (mListenerIterator = mWaitingListeners.iterator(); mListenerIterator.end(); mListenerIterator++)
+   (*mListenerIterator)->advance(deltaTime, Enums::Priority_Low);
+  mWaitingListeners.clear();
+ }
+ 
+}
+
 
 } // namespace NxOgre
 

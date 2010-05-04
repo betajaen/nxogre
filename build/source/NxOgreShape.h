@@ -66,17 +66,13 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   */
   NxShape*  getAbstractShape() const;
   
-  /** \brief Get the name of the shape
+  /** \brief Get the optional ID of the shape
   */
-  StringHash  getNameHash() const;
-  
-  /** \brief Get the name of the shape
+  unsigned int  getId() const;
+    
+  /** \brief Set the optional ID of the shape
   */
-  String  getName() const;
-  
-  /** \brief Set the name of the shape
-  */
-  void  setName(const String&);
+  void  setId(unsigned int);
   
   /** \brief Get the local pose of the shape
   */
@@ -164,13 +160,9 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   
   protected:
   
-  /* Optional name of the shape.
-  */
-  String mName;
-  
   /* Optional hash of the name of the shape.
   */
-  StringHash  mNameHash;
+  unsigned int  mId;
   
   /* Abstract Shape to be used with the non-specific functions
   */

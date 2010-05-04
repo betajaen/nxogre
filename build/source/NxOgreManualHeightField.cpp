@@ -103,7 +103,7 @@ void ManualHeightField::begin(unsigned int nbColumns, unsigned int nbRows, Enums
  mHeightField->mAxis = upAxis;
  mHeightField->mNbRows = nbRows;
  mHeightField->mNbColumns = nbColumns;
- mHeightField->mSamples.removeAll();
+ mHeightField->mSamples.clear();
 }
 
 void ManualHeightField::name(const char* name)
@@ -133,7 +133,7 @@ NxHeightField* ManualHeightField::cook(void)
  description.setToDefault();
  description.nbRows = mHeightField->mNbRows;
  description.nbColumns = mHeightField->mNbColumns;
- description.samples = mHeightField->mSamples.ptr();
+ description.samples = mHeightField->mSamples.first();
  description.format = NX_HF_S16_TM;
  description.thickness = mHeightField->mThickness;
  description.verticalExtent = mHeightField->mVerticalExtent;
@@ -202,7 +202,7 @@ bool ManualHeightField::getHasNoBoundaryEdges(void) const
 
 void ManualHeightField::sample(HeightFieldSample sample)
 {
- mHeightField->mSamples.insert(sample);
+ mHeightField->mSamples.append(sample);
 }
 
 void ManualHeightField::sample(short height, MaterialIdentifier mat0, MaterialIdentifier mat1, Enums::HeightFieldTesselation tesselation)
@@ -212,7 +212,7 @@ void ManualHeightField::sample(short height, MaterialIdentifier mat0, MaterialId
  sample.mMaterial0 = mat0;
  sample.mMaterial1 = mat1;
  sample.mTessellationFlag = tesselation;
- mHeightField->mSamples.insert(sample);
+ mHeightField->mSamples.append(sample);
 }
 
                                                                                        

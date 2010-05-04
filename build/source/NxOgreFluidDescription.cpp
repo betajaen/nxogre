@@ -107,9 +107,9 @@ bool FluidDescription::valid(void)
  if (mSurfaceTension < 0.0f)
   return false;
  
- bool isNoInteraction = (mSimulationMethod & Enums::FluidSimulationMethod_NoParticleInteraction) > 0;
- bool isSPH = (mSimulationMethod & Enums::FluidSimulationMethod_SPH);
- bool isMixed = (mSimulationMethod & Enums::FluidSimulationMethod_MixedMode);
+// bool isNoInteraction = (mSimulationMethod & Enums::FluidSimulationMethod_NoParticleInteraction) > 0;
+// bool isSPH = (mSimulationMethod & Enums::FluidSimulationMethod_SPH);
+// bool isMixed = (mSimulationMethod & Enums::FluidSimulationMethod_MixedMode);
  
  if (mDamping < 0.0f) 
   return false;

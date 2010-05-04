@@ -29,6 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 #include "NxOgreReason.h"
+#include "NxOgreMesh.h"
 
 #include "NxPhysics.h"
 
@@ -621,6 +622,30 @@ String Reason::Exceptionise(const Path& path, Enums::ResourceStatus status)
 {
  
  return String();
+}
+
+
+String Reason::Exceptionise(Mesh* mesh, Enums::MeshType expectedType)
+{
+ StringStream message;
+ message << "Function was expecting a '";
+ 
+ if (expectedType == Enums::MeshType_Cloth)
+  message << "Cloth";
+ else if (expectedType == Enums::MeshType_Convex)
+  message << "Convex";
+ else if (expectedType == Enums::MeshType_Triangle)
+  message << "Triangle";
+ else if (expectedType == Enums::MeshType_Skeleton)
+  message << "Skeleton";
+ else if (expectedType == Enums::MeshType_SoftBody)
+  message << "SoftBody";
+ else
+  message << "Unknown";
+ 
+ message << "' when was given a mesh that is a '" << mesh->getTypeAsString() << "'\n";
+ 
+ return message.str();
 }
 
 #undef NXOGRE_CASE_STRING_RETURN

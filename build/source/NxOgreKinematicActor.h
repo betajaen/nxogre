@@ -35,6 +35,7 @@
 #include "NxOgreCommon.h"
 
 #include "NxOgreRigidBody.h"
+#include "NxOgreDynamicRigidBodyFlags.h"
 #include "NxOgreString.h"
 
                                                                                        
@@ -61,7 +62,7 @@ class NxOgrePublicClass KinematicActor : public RigidBody
 {
   
   friend class Scene;
-  friend class Functions::ArrayFunctions<KinematicActor*>::Write;
+  // // friend class Functions::ArrayFunctions<KinematicActor*>::Write;
   
   template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
   
@@ -70,6 +71,24 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   /** \brief
   */
   virtual                             unsigned int           getRigidBodyType() const;
+
+  /*! function. raiseDynamicFlag
+      desc. 
+          Set a dynamic flag.
+  */
+  void raiseDynamicFlag(DynamicRigidbodyFlags::Flags);
+  
+  /*! function. clearDynamicFlag
+      desc. 
+          Clear a dynamic flag.
+  */
+  void clearDynamicFlag(DynamicRigidbodyFlags::Flags);
+  
+  /*! function. hasDynamicFlag
+      desc. 
+          Is a dynamic flag set?
+  */
+  bool hasDynamicFlag(DynamicRigidbodyFlags::Flags) const;
 
   /** \brief Assigns the actor to a user defined group of rigid bodies. 
   */

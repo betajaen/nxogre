@@ -205,6 +205,12 @@ class NxOgrePublicClass Vec3
 
   inline String to_s() const;
 
+  inline NxOgrePublicFunction friend std::ostream& operator << (std::ostream& o, const Vec3& v)
+  {
+   o << v.to_s();
+   return o;
+  }
+
   inline std::vector<Real> to_a() const;
 
   static Vec3 random(float x0, float x1, float y0, float y1, float z0, float z1);
@@ -222,6 +228,7 @@ class NxOgrePublicClass Vec3
   static const Vec3 NEGATIVE_UNIT_Y;
 
   static const Vec3 NEGATIVE_UNIT_Z;
+
 
 
   Real x, y, z;

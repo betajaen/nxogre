@@ -669,7 +669,7 @@ static const char*  sClasses[625] = {
   "USER_CLASSES_BEGIN",
 };
 
-const char*  TypeToCStr(int i)
+const char* TypeToCStr(int i)
 {
  if (i < RENDERSYSTEMS_CLASSES_BEGIN)
   return sClasses[i];

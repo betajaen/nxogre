@@ -222,45 +222,6 @@ NxWheelShape* Wheel::getWheelShape()
  return mWheelShape;
 }
 
-void Wheel::saveToDescription(WheelDescription& description)
-{
- NxWheelShapeDesc desc;
- mWheelShape->saveToDesc(desc);
- description.mDensity = desc.density;
- description.mFlags = desc.shapeFlags;
- description.mGroup = desc.group;
- description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
- description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
- description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
- description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
- desc.localPose.getRowMajor44(description.mLocalPose.ptr());
- description.mMass = desc.mass;
- description.mMaterial = desc.materialIndex;
- description.mNonInteractingCompartmentTypes = desc.nonInteractingCompartmentTypes;
- description.mSkinWidth = desc.skinWidth;
- 
- description.mRadius = desc.radius;
- description.mSuspensionTravel = desc.suspensionTravel;
- description.mSuspension.mDamper = desc.suspension.damper;
- description.mSuspension.mSpring = desc.suspension.spring;
- description.mSuspension.mTargetValue = desc.suspension.targetValue;
- description.mLongitudalTireFunction.mAsymptoteSlip = desc.longitudalTireForceFunction.asymptoteSlip;
- description.mLongitudalTireFunction.mAsymptoteValue = desc.longitudalTireForceFunction.asymptoteValue;
- description.mLongitudalTireFunction.mExtremumSlip = desc.longitudalTireForceFunction.extremumSlip;
- description.mLongitudalTireFunction.mExtremumValue = desc.longitudalTireForceFunction.extremumValue;
- description.mLongitudalTireFunction.mStiffnessFactor = desc.longitudalTireForceFunction.stiffnessFactor;
- description.mLateralTireFunction.mAsymptoteSlip = desc.lateralTireForceFunction.asymptoteSlip;
- description.mLateralTireFunction.mAsymptoteValue = desc.lateralTireForceFunction.asymptoteValue;
- description.mLateralTireFunction.mExtremumSlip = desc.lateralTireForceFunction.extremumSlip;
- description.mLateralTireFunction.mExtremumValue = desc.lateralTireForceFunction.extremumValue;
- description.mLateralTireFunction.mStiffnessFactor = desc.lateralTireForceFunction.stiffnessFactor;
- description.mInverseWheelMass = desc.inverseWheelMass;
- description.mWheelFlags = desc.wheelFlags;
- description.mMotorTorque = desc.motorTorque;
- description.mBrakeTorque = desc.brakeTorque;
- description.mSteeringAngle = desc.steerAngle;
- 
-}
 
                                                                                        
 

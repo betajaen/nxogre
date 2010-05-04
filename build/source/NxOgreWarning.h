@@ -100,7 +100,7 @@ class NxOgrePublicClass Warning
       desc.
            Formats the warning as a markdown formatted string
   */
-  std::string str() const;
+  std::string to_s() const;
   
  protected:
   

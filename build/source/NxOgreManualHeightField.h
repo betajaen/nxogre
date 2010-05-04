@@ -53,7 +53,7 @@ class NxOgrePublicClass HeightFieldData : public ResourceAllocatable
   Enums::Axis                                mAxis;
   unsigned int                               mNbRows;
   unsigned int                               mNbColumns;
-  Array<HeightFieldSample>                   mSamples;
+  Buffer<HeightFieldSample>                  mSamples;
   Real                                       mThickness;
   Real                                       mVerticalExtent;
   Real                                       mConvexEdgeThreshold;

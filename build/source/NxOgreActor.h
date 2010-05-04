@@ -2,10 +2,10 @@
     
     This file is part of NxOgre.
     
-    Copyright (c) 2009 Robin Southern, http://www.nxogre.org
+    Copyright(c) 2009 Robin Southern, http://www.nxogre.org
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
+    of this software and associated documentation files(the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
@@ -29,12 +29,12 @@
 #ifndef NXOGRE_ACTOR_H
 #define NXOGRE_ACTOR_H
 
-
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 #include "NxOgreShape.h"
 
 #include "NxOgreRigidBody.h"
+#include "NxOgreDynamicRigidBodyFlags.h"
 #include "NxOgreString.h"
 #include "NxOgreSweepQuery.h"
 
@@ -47,20 +47,20 @@ namespace NxOgre
 
 /*! class. Actor
     desc.
-    Actor is a dynamic (moving) RigidBody, that can collide with SceneGeometries and KinematicActors.
-    
-    p. It is normal to inherit from the Actor to support visualisation in a RenderSystem, broadly
-    speaking any class that inherits the Actor class is called a *Body*.
-    
-    p. Actors uses RigidBodyDescriptions to create it's properities as well as a Matrix44 pose, a *Shape*
-    or group of *Shapes*. The RigidBodyDescription is required to have a mass is at least zero, or otherwise
-    a density of at least zero - but not both.
-    
+        Actor is a dynamic(moving) RigidBody, that can collide with SceneGeometries and KinematicActors.
+        
+        p. It is normal to inherit from the Actor to support visualisation in a RenderSystem, broadly
+        speaking any class that inherits the Actor class is called a *Body*.
+        
+        p. Actors uses RigidBodyDescriptions to create it's properities as well as a Matrix44 pose, a *Shape*
+        or group of *Shapes*. The RigidBodyDescription is required to have a mass is at least zero, or otherwise
+        a density of at least zero - but not both.
+        
     example.
-    RigidBodyDescription description;
-    description.mMass = 15.0f; // 15 kg
+        RigidBodyDescription description;
+        description.mMass = 15.0f; // 15 kg
     
-    Actor* actor = mScene->createActor(shape, pose, description);
+        Actor* actor = mScene->createActor(shape, pose, description);
     
     see. RigidBody
 */
@@ -78,18 +78,36 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            String -- The name of the Actor
   */
-  String  getName() const;
+  String getName() const;
   
   /*! function. getRigidBodyType
       desc.
-          Get the cpp type (see Classes namespace) as a unsigned integer.
+          Get the cpp type(see Classes namespace) as a unsigned integer.
       note.
           All classes that inherit from RigidBody, and classes that inherit from them, and them must implement getRigidBodyType
       return.
           **unsigned int** -- The class type, Classes::_Actor in this case.
   */
   virtual unsigned int  getRigidBodyType() const;
-
+  
+  /*! function. raiseDynamicFlag
+      desc.
+          Set a dynamic flag.
+  */
+  void raiseDynamicFlag(DynamicRigidbodyFlags::Flags);
+  
+  /*! function. clearDynamicFlag
+      desc.
+          Clear a dynamic flag.
+  */
+  void clearDynamicFlag(DynamicRigidbodyFlags::Flags);
+  
+  /*! function. hasDynamicFlag
+      desc.
+          Is a dynamic flag set?
+  */
+  bool hasDynamicFlag(DynamicRigidbodyFlags::Flags) const;
+  
   /*! function. setGroup
       desc.
           Assigns the actor to a user defined group of rigid bodies.
@@ -97,7 +115,7 @@ class NxOgrePublicClass Actor : public RigidBody
           GroupIdentifier _actorGroup_ -- The actorGroup for the Actor to be assigned to.
       !wake
   */
-  void                   setGroup(GroupIdentifier actorGroup); 
+  void setGroup(GroupIdentifier actorGroup); 
 
   /*! function. getGroup
       desc.
@@ -105,7 +123,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            GroupIdentifier -- The actorGroup the Actor belongs too.
   */
-  GroupIdentifier        getGroup(void) const;
+  GroupIdentifier getGroup(void) const;
 
   /*! function. setDominanceGroup
       desc.
@@ -114,7 +132,7 @@ class NxOgrePublicClass Actor : public RigidBody
            GroupIdentifier __dominanceGroup__ -- The domninance actorGroup for the Actor to be assigned to.
       !wake
   */
-  void                   setDominanceGroup(GroupIdentifier dominanceGroup); 
+  void setDominanceGroup(GroupIdentifier dominanceGroup); 
   
   /*! function. getDominanceGroup
       desc.
@@ -123,7 +141,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            GroupIdentifier -- The dominance actorGroup the Actor belongs too.
   */
-  GroupIdentifier        getDominanceGroup(void) const;
+  GroupIdentifier getDominanceGroup(void) const;
  
   /*! function. resetPairFiltering
       desc.
@@ -131,16 +149,16 @@ class NxOgrePublicClass Actor : public RigidBody
            to be called again for any pairs involving this actor. Use this method when you wish to change
            the filtering policy of an actor that may already be in contact with other actors.
   */
-  void                   resetPairFiltering(void); 
+  void resetPairFiltering(void); 
 
   /*! function. computeKineticEnergy
       desc.
-           Computes the total kinetic (rotational and translational) energy of the actor.
+           Computes the total kinetic(rotational and translational) energy of the actor.
            
       return.
            Real -- The total kinetic energy of the actor.
   */
-  Real                   computeKineticEnergy(void) const;
+  Real computeKineticEnergy(void) const;
 
   /*! function. setSolverIterationCount
       desc.
@@ -148,7 +166,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            unsigned int _iterCount_ -- New Solver iteration count.
   */
-  void                   setSolverIterationCount(unsigned int iterCount);
+  void setSolverIterationCount(unsigned int iterCount);
 
   /*! function. getSolverIterationCount
       desc.
@@ -156,7 +174,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            unsigned int -- Solver iteration count for the actor.
   */
-  unsigned int           getSolverIterationCount(void) const; 
+  unsigned int getSolverIterationCount(void) const; 
 
   /*! function. getContactReportThreshold
       desc.
@@ -164,7 +182,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Real -- The force threshold
   */
-  Real                   getContactReportThreshold(void) const;
+  Real getContactReportThreshold(void) const;
 
   /*! function. setContactReportThreshold
       desc.
@@ -172,7 +190,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
             Real __threshold__ -- New force threshold
   */
-  void                   setContactReportThreshold(Real threshold);
+  void setContactReportThreshold(Real threshold);
   
   /*! function. getContactReportFlags
       desc.
@@ -180,7 +198,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Actor contact report flags
   */
-  unsigned int           getContactReportFlags(void) const;
+  unsigned int getContactReportFlags(void) const;
  
   /*! function. setContactReportFlags
       desc.
@@ -188,7 +206,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            unsigned int __flags__ -- New contact report flags.
   */
-  void                   setContactReportFlags(unsigned int flags);
+  void setContactReportFlags(unsigned int flags);
    
   /*! function. linearSweep
       desc.
@@ -204,7 +222,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            unsigned int -- Number of SweepHits
   */
-  unsigned int           linearSweep(const Vec3& motion, unsigned int sweepFlags, unsigned int size, SweepQueryHits&, SweepCache* = 0); 
+  unsigned int linearSweep(const Vec3& motion, unsigned int sweepFlags, unsigned int size, SweepQueryHits&, SweepCache* = 0); 
 
   /*! function. getCompartment
       desc.
@@ -212,7 +230,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
             Compartment* -- The Actors compartment, or *NULL*.
   */
-  Compartment*           getCompartment(void);
+  Compartment* getCompartment(void);
  
   /*! function. getForceFieldMaterial
       desc.
@@ -220,7 +238,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
             unsigned short -- Force field material index.
   */
-  unsigned short         getForceFieldMaterial(void) const; 
+  unsigned short getForceFieldMaterial(void) const; 
  
   /*! function. setForceFieldMaterial
       desc. 
@@ -228,7 +246,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
             unsigned short __material__ -- New forcefield material to use.
   */
-  void                   setForceFieldMaterial(unsigned short material); 
+  void setForceFieldMaterial(unsigned short material); 
   
   /*! function. setGlobalPose
       desc.
@@ -236,7 +254,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            const Matrix44& __globalPose__ -- New Actor pose.
   */
-  void                   setGlobalPose(const Matrix44& globalPose);
+  void setGlobalPose(const Matrix44& globalPose);
  
   /*! function. setGlobalPosition
       desc.
@@ -244,8 +262,8 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            const Vec3& __position__ -- New Actor position.
   */
-  void                   setGlobalPosition(const Vec3& position);
-  void                   setGlobalPosition(Real x, Real y, Real z);
+  void setGlobalPosition(const Vec3& position);
+  void setGlobalPosition(Real x, Real y, Real z);
   
   /*! function. setGlobalOrientation
       desc.
@@ -253,7 +271,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            const Matrix33& __orientation__ -- New Actor orientation.
   */
-  void                   setGlobalOrientation(const Matrix33& orientation);
+  void setGlobalOrientation(const Matrix33& orientation);
  
   
   /*! function. setGlobalOrientationQuat
@@ -262,8 +280,8 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            const Quat& __orientation__ -- New Actor orientation.
   */
-  void                   setGlobalOrientationQuat(const Quat&);
-  void                   setGlobalOrientationQuat(Real w, Real x, Real y, Real z);
+  void setGlobalOrientationQuat(const Quat&);
+  void setGlobalOrientationQuat(Real w, Real x, Real y, Real z);
   
   /*! function. getGlobalPose
       desc.
@@ -271,7 +289,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix44 -- The global pose of the Actor.
   */
-  Matrix44               getGlobalPose(void) const;
+  Matrix44 getGlobalPose(void) const;
   
   /*! function. getGlobalPosition
       desc.
@@ -279,7 +297,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix44 -- The global pose of the Actor.
   */
-  Vec3                   getGlobalPosition(void) const;
+  Vec3 getGlobalPosition(void) const;
 
   /*! function. getGlobalOrientation
       desc.
@@ -287,7 +305,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix33 -- The global pose of the Actor.
   */
-  Matrix33               getGlobalOrientation(void) const;
+  Matrix33 getGlobalOrientation(void) const;
 
   /*! function. getGlobalOrientation
       desc. 
@@ -295,7 +313,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Quat -- The global pose of the Actor.
   */
-  Quat                   getGlobalOrientationQuat(void) const;
+  Quat getGlobalOrientationQuat(void) const;
   
   /*! function. getNbShapes
       desc.
@@ -303,7 +321,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            unsigned int -- Number of shapes assigned to the actor.
   */
-  unsigned int           getNbShapes(void) const;
+  unsigned int getNbShapes(void) const;
 
   /*! function. setCMassOffsetLocalPose
       desc.
@@ -312,7 +330,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Matrix44& __pose__ -- New COM pose
       !wake
   */
-  void                 setCMassOffsetLocalPose(const Matrix44&);
+  void setCMassOffsetLocalPose(const Matrix44&);
   
   /*! function. setCMassOffsetLocalPosition
       desc.
@@ -321,8 +339,8 @@ class NxOgrePublicClass Actor : public RigidBody
            const Vec3& __position__ -- New COM position
       !wake
   */
-  void                 setCMassOffsetLocalPosition(const Vec3& position);
-  void                 setCMassOffsetLocalPosition(Real x, Real y, Real z);
+  void setCMassOffsetLocalPosition(const Vec3& position);
+  void setCMassOffsetLocalPosition(Real x, Real y, Real z);
   
   /*! function. setCMassOffsetLocalOrientation
       desc.
@@ -331,7 +349,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Matrix33& __orientation__ -- New COM orientation
       !wake
   */
-  void                 setCMassOffsetLocalOrientation(const Matrix33&);
+  void setCMassOffsetLocalOrientation(const Matrix33&);
   
   /*! function. setCMassOffsetGlobalPose
       desc.
@@ -340,7 +358,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Matrix44& __pose__ -- New COM pose
       !wake
   */
-  void                 setCMassOffsetGlobalPose(const Matrix44&);
+  void setCMassOffsetGlobalPose(const Matrix44&);
   
   /*! function. setCMassOffsetGlobalPosition
       desc.
@@ -349,8 +367,8 @@ class NxOgrePublicClass Actor : public RigidBody
            const Vec3& __position__ -- New COM position
       !wake
   */
-  void                 setCMassOffsetGlobalPosition(const Vec3&); 
-  void                 setCMassOffsetGlobalPosition(Real x, Real y, Real z); 
+  void setCMassOffsetGlobalPosition(const Vec3&); 
+  void setCMassOffsetGlobalPosition(Real x, Real y, Real z); 
   
   /*! function. setCMassOffsetGlobalOrientation
       desc.
@@ -359,7 +377,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Matrix33& __orientation__ -- New COM orientation
       !wake
   */
-  void                 setCMassOffsetGlobalOrientation(const Matrix33&);
+  void setCMassOffsetGlobalOrientation(const Matrix33&);
   
   /*! function. setCMassGlobalPose
       desc.
@@ -368,7 +386,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Matrix44& __pose__ -- New COM pose
       !wake
   */
-  void                 setCMassGlobalPose(const Matrix44&);
+  void setCMassGlobalPose(const Matrix44&);
   
   /*! function. setCMassGlobalPosition
       desc.
@@ -377,8 +395,8 @@ class NxOgrePublicClass Actor : public RigidBody
            const Vec3& __position__ -- New COM position
       !wake
   */
-  void                 setCMassGlobalPosition(const Vec3&);
-  void                 setCMassGlobalPosition(Real x, Real y, Real z); 
+  void setCMassGlobalPosition(const Vec3&);
+  void setCMassGlobalPosition(Real x, Real y, Real z); 
   
   /*! function. setCMassGlobalOrientation
       desc.
@@ -387,7 +405,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Matrix33& __orientation__ -- New COM orientation
       !wake
   */
-  void                 setCMassGlobalOrientation(const Matrix33&);
+  void setCMassGlobalOrientation(const Matrix33&);
   
   /*! function. getCMassLocalPose
       desc.
@@ -395,7 +413,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix44 -- Local COM pose
   */
-  Matrix44             getCMassLocalPose(void) const; 
+  Matrix44 getCMassLocalPose(void) const; 
   
   /*! function. getCMassLocalPose
       desc.
@@ -403,7 +421,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Vec3 -- Local COM position
   */
-  Vec3                 getCMassLocalPosition(void) const;
+  Vec3   getCMassLocalPosition(void) const;
   
   /*! function. getCMassLocalPose
       desc.
@@ -411,7 +429,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix33 -- Local COM orientation
   */
-  Matrix33             getCMassLocalOrientation(void) const; 
+  Matrix33 getCMassLocalOrientation(void) const; 
   
   /*! function. getCMassLocalPose
       desc.
@@ -419,7 +437,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix44 -- Global COM pose
   */
-  Matrix44             getCMassGlobalPose(void) const; 
+  Matrix44 getCMassGlobalPose(void) const; 
   
   /*! function. getCMassLocalPose
       desc.
@@ -427,7 +445,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Vec3 -- Global COM position
   */
-   Vec3                 getCMassGlobalPosition(void) const;
+  Vec3 getCMassGlobalPosition(void) const;
   
   /*! function. getCMassLocalPose
       desc.
@@ -435,7 +453,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix33 -- Global COM orientation
   */
-  Matrix33             getCMassGlobalOrientation(void) const;
+  Matrix33 getCMassGlobalOrientation(void) const;
   
   /*! function. setMass
       desc.
@@ -444,13 +462,13 @@ class NxOgrePublicClass Actor : public RigidBody
            Real __mass__ -- New mass of the Actor
       !no_wake
   */
-   void                 setMass(Real mass); 
+  void setMass(Real mass); 
   
   /*! function. getMass
       Retrieves the mass of the actor. 
       return Real -- Mass of the actor.
   */
-  Real                  getMass(void) const; 
+  Real getMass(void) const; 
   
   /*! function. setMassSpaceInertiaTensor
       desc.
@@ -459,7 +477,7 @@ class NxOgrePublicClass Actor : public RigidBody
            const Vec3& __tensor__ -- New Mass Space Inertia Tensor
       !no_wake
   */
-  void                  setMassSpaceInertiaTensor(const Vec3& tensor); 
+  void setMassSpaceInertiaTensor(const Vec3& tensor); 
   
   /*! function. getMassSpaceInertiaTensor
       desc.
@@ -467,7 +485,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Vec3 -- Mass Space Inertia tensor
   */
-  Vec3                  getMassSpaceInertiaTensor(void) const; 
+  Vec3 getMassSpaceInertiaTensor(void) const; 
   
   /*! function. getGlobalInertiaTensor
       desc.
@@ -475,7 +493,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix33 -- Inertia Tensor
   */
-  Matrix33              getGlobalInertiaTensor(void) const; 
+  Matrix33 getGlobalInertiaTensor(void) const; 
  
   /*! function. getGlobalInertiaTensorInverse
       desc.
@@ -483,7 +501,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Matrix33 -- Inverse Inertia Tensor
   */
-  Matrix33              getGlobalInertiaTensorInverse(void) const;
+  Matrix33 getGlobalInertiaTensorInverse(void) const;
   
   /*! function. updateMassFromShapes
       desc.
@@ -492,7 +510,7 @@ class NxOgrePublicClass Actor : public RigidBody
            p. Given a constant density or total mass, the actors mass properties can be recomputed
            using the shapes attached to the actor. 
            
-           p. The mass of each shape is either the shape's local density (default 1.0)  multiplied by the shape's volume
+           p. The mass of each shape is either the shape's local density(default 1.0)  multiplied by the shape's volume
            or a directly specified shape mass. 
            
            p. The inertia tensor, mass frame and center of mass will always be recomputed. If there are no
@@ -513,15 +531,15 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            bool -- True if succesful
   */
-  bool                  updateMassFromShapes(Real density, Real totalMass) const;
+  bool updateMassFromShapes(Real density, Real totalMass) const;
 
   /*! function. setLinearDamping
       desc.
-           Sets the linear (translational movement) damping coefficient.
+           Sets the linear(translational movement) damping coefficient.
       args.
            Real __linDamp__ -- New linear damping
   */
-  void                  setLinearDamping(Real linDamp);
+  void setLinearDamping(Real linDamp);
    
   /*! function. getLinearDamping
       desc.
@@ -529,15 +547,15 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Real -- Current linear damping
   */
-  Real                  getLinearDamping(void) const; 
+  Real getLinearDamping(void) const; 
   
   /*! function. setAngularDamping
       desc.
-           Sets the angular (angular movement) damping coefficient.
+           Sets the angular(angular movement) damping coefficient.
       args.
            Real __angDamp__ -- New angular damping
   */
-  void                  setAngularDamping(Real angDamp); 
+  void setAngularDamping(Real angDamp); 
    
   /*! function. getAngularDamping
       desc.
@@ -545,7 +563,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
            Real -- Current angular damping
   */
-  Real                  getAngularDamping(void) const;
+  Real getAngularDamping(void) const;
 
   /*! function. setLinearVelocity
       Sets the linear velocity of the actor.
@@ -557,8 +575,8 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            const Vec3& __linVel__ -- New linear velocity of the actor.
   */
-  void                  setLinearVelocity(const Vec3& linVel);
-  void                  setLinearVelocity(Real x, Real y, Real z);
+  void setLinearVelocity(const Vec3& linVel);
+  void setLinearVelocity(Real x, Real y, Real z);
   
   /*! function. setAngularVelocity
       desc.
@@ -572,8 +590,8 @@ class NxOgrePublicClass Actor : public RigidBody
            const Vec3& __angVel__ -- New angular velocity of the actor.
       
   */
-  void                  setAngularVelocity(const Vec3& angVel);
-  void                  setAngularVelocity(Real x, Real y, Real z);
+  void setAngularVelocity(const Vec3& angVel);
+  void setAngularVelocity(Real x, Real y, Real z);
   
   /*! function. getLinearVelocity
       desc.  
@@ -581,7 +599,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return. 
              Vec3 -- Current linear velocity
   */
-  Vec3                  getLinearVelocity(void) const;
+  Vec3 getLinearVelocity(void) const;
   
   /*! function. getAngularVelocity
       desc.
@@ -589,7 +607,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
              Vec3 -- Current angular velocity
   */
-  Vec3                  getAngularVelocity (void) const;
+  Vec3 getAngularVelocity(void) const;
   
   /*! function. setMaxAngularVelocity
       desc.
@@ -610,7 +628,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.
            Real __maxAngVel__ -- Max allowable angular velocity for actor
   */
-  void                  setMaxAngularVelocity(Real maxAngVel); 
+  void setMaxAngularVelocity(Real maxAngVel); 
   
   /*! function. getMaxAngularVelocity
       desc.
@@ -618,7 +636,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
               Real -- The maximum allowed angular velocity for this actor.
   */
-  Real                  getMaxAngularVelocity(void) const;
+  Real getMaxAngularVelocity(void) const;
 
   /*! function. setCCDMotionThreshold
       desc.  
@@ -635,7 +653,7 @@ class NxOgrePublicClass Actor : public RigidBody
       args.  
            Real __thresh__ -- CCD Motion threshold
   */
-  void                  setCCDMotionThreshold(Real thresh); 
+  void setCCDMotionThreshold(Real thresh); 
   
   /*! function. getCCDMotionThreshold
       desc.  
@@ -643,7 +661,7 @@ class NxOgrePublicClass Actor : public RigidBody
       return.
              Real - Motion threshold
   */
-  Real                  getCCDMotionThreshold(void) const;
+  Real getCCDMotionThreshold(void) const;
 
   /*! function. setLinearMomentum
       desc. 
@@ -656,8 +674,8 @@ class NxOgrePublicClass Actor : public RigidBody
             const Vec3& __linMoment__ -- New linear momentum
       !wake
   */
-  void                  setLinearMomentum(const Vec3& linMoment);
-  void                  setLinearMomentum(Real x, Real y, Real z);
+  void setLinearMomentum(const Vec3& linMoment);
+  void setLinearMomentum(Real x, Real y, Real z);
 
   /*! function. setAngularMomentum
       desc. 
@@ -670,143 +688,151 @@ class NxOgrePublicClass Actor : public RigidBody
             const Vec3& __angMoment__ -- New angular momentum
       !wake
   */
-  void                  setAngularMomentum(const Vec3& angMoment);
-  void                  setAngularMomentum(Real x, Real y, Real z);
+  void setAngularMomentum(const Vec3& angMoment);
+  void setAngularMomentum(Real x, Real y, Real z);
 
   /*! function. getLinearMomentum
       desc.  
-             Retrieves the linear momentum (velocity * mass) of an actor.
+             Retrieves the linear momentum(velocity * mass) of an actor.
              
       return.
              Vec3 - Linear momentum of the Actor.
   */
-  Vec3                  getLinearMomentum(void) const; 
+  Vec3 getLinearMomentum(void) const; 
 
   /*! function. getAngularMomentum
       desc.  
-             Retrieves the angular momentum (angular velocity * global space inertia) of an actor.
+             Retrieves the angular momentum(angular velocity * global space inertia) of an actor.
              
       return.
              Vec3 - angular momentum of the Actor.
   */
-  Vec3                  getAngularMomentum(void) const;
+  Vec3 getAngularMomentum(void) const;
 
-  /** \brief Applies a force (or impulse) defined in the global coordinate frame, acting at a particular point in global coordinates, to the actor. 
+  /** \brief Applies a force(or impulse) defined in the global coordinate frame, acting at a particular point in global coordinates, to the actor. 
   */
-  void                  addForceAtPos (const Vec3&  force, const Vec3&  pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true); 
+  void addForceAtPos(const Vec3&  force, const Vec3&  pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true); 
 
-  /** \brief Applies a force (or impulse) defined in the global coordinate frame, acting at a particular point in local coordinates, to the actor. 
+  /** \brief Applies a force(or impulse) defined in the global coordinate frame, acting at a particular point in local coordinates, to the actor. 
    */
-  void                  addForceAtLocalPos(const Vec3&  force, const Vec3&  pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true); 
-  
-  /** \brief Applies a force (or impulse) defined in the actor local coordinate frame, acting at a particular point in global coordinates, to the actor.
+  void addForceAtLocalPos(const Vec3&  force, const Vec3&  pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
+
+  /** \brief Applies a force(or impulse) defined in the actor local coordinate frame, acting at a particular point in global coordinates, to the actor.
   */
-  void                  addLocalForceAtPos (const Vec3& force, const Vec3& pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
-  
-  /** \brief Applies a force (or impulse) defined in the actor local coordinate frame, acting at a particular point in local coordinates, to the actor. 
+  void addLocalForceAtPos(const Vec3& force, const Vec3& pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
+
+  /** \brief Applies a force(or impulse) defined in the actor local coordinate frame, acting at a particular point in local coordinates, to the actor.
   */
-  void                  addLocalForceAtLocalPos (const Vec3& force, const Vec3& pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
+  void addLocalForceAtLocalPos(const Vec3& force, const Vec3& pos, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
   
-  /** \brief Applies a force (or impulse) defined in the global coordinate frame to the actor.
+  /** \brief Applies a force(or impulse) defined in the global coordinate frame to the actor.
   */
-  void                  addForce (const Vec3& force, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
+  void addForce(const Vec3& force, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
   
-  /** \brief Applies a force (or impulse) defined in the actor local coordinate frame to the actor.
+  /** \brief Applies a force(or impulse) defined in the actor local coordinate frame to the actor.
    */
-  void                  addLocalForce (const Vec3& force, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
+  void addLocalForce(const Vec3& force, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
   
   /** \brief Applies an impulsive torque defined in the global coordinate frame to the actor.
   */
-  void                  addTorque (const Vec3& torque, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
+  void addTorque(const Vec3& torque, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
   
   /** \brief Applies an impulsive torque defined in the actor local coordinate frame to the actor.
   */
-  void                  addLocalTorque (const Vec3& torque, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
+  void addLocalTorque(const Vec3& torque, NxOgre::Enums::ForceMode mode = NxOgre::Enums::ForceMode_Force, bool wakeup = true);
 
   /** \brief Computes the velocity of a point given in world coordinates if it were attached to the actor and moving with it. 
   */
-  Vec3                  getPointVelocity (const Vec3&  point) const;
-  
+  Vec3 getPointVelocity(const Vec3&  point) const;
+
   /** \brief Computes the velocity of a point given in body local coordinates as if it were attached to the actor and moving with it.
   */
-  Vec3                  getLocalPointVelocity(const Vec3&  point) const; 
+  Vec3 getLocalPointVelocity(const Vec3&  point) const; 
 
   /** \brief Returns true if this body and all the actors it is touching or is linked to with joints are sleeping. 
   */
-  bool                  isGroupSleeping(void) const;
+  bool isGroupSleeping(void) const;
 
   /** \brief Returns true if this body is sleeping. 
   */
-  bool                  isSleeping(void) const;
-  
+  bool isSleeping(void) const;
+
   /** \brief Returns the linear velocity below which an actor may go to sleep. 
   */
-  Real                  getSleepLinearVelocity(void) const;
+  Real getSleepLinearVelocity(void) const;
 
   /** \brief Sets the linear velocity below which an actor may go to sleep. 
   */
-  void                  setSleepLinearVelocity(Real threshold);
+  void setSleepLinearVelocity(Real threshold);
 
   /** \brief Returns the angular velocity below which an actor may go to sleep. 
   */
-  Real                  getSleepAngularVelocity(void) const;
+  Real getSleepAngularVelocity(void) const;
 
   /** \brief Sets the angular velocity below which an actor may go to sleep. 
   */
-  void                  setSleepAngularVelocity(Real threshold); 
-  
+  void setSleepAngularVelocity(Real threshold); 
+
   /** \brief Returns the energy below which an actor may go to sleep. 
   */
-  Real                  getSleepEnergyThreshold(void) const;
-  
+  Real getSleepEnergyThreshold(void) const;
+
   /** \brief Sets the energy threshold below which an actor may go to sleep. 
   */
-  void                  setSleepEnergyThreshold(Real threshold); 
-  
+  void setSleepEnergyThreshold(Real threshold); 
+
   /** \brief Wakes up the actor if it is sleeping.
       \default Real(20.0 * 0.02)
   */
-  void                  wakeUp(Real wakeCounterValue);
-  
-  /** \brief   Forces the actor to sleep. 
+  void wakeUp(Real wakeCounterValue);
+
+  /** \brief Forces the actor to sleep. 
   */
-  void                  putToSleep(void);
-  
+  void putToSleep(void);
+
   /*! function. to_s
       desc.
           Returns the pointer and name as string.
   */
   String to_s() const;
-  
+
   protected: // Functions
-  
-  /** \internal Classes that inherit from Actor should use this constructor.
+
+  /*! constructor. Actor
+      desc.
+          Classes that inherit from Actor should use this constructor.
   */
   Actor(Scene*);
-  
-  /** \internal Use Scene::createActor
+
+  /*! constructor. Actor
+      desc.
+          Use Scene::createActor
   */
   Actor(const ShapeDescription&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
-  
-  /** \internal Use Scene::createActor
+
+  /*! constructor. Actor
+      desc.
+          Use Scene::createActor
   */
   Actor(const ShapeDescriptions&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
-  
-  /** \internal Use Scene::destroyActor
+
+  /*! destructor. Actor
+      desc.
+          Use Scene::destroyActor
   */
   virtual ~Actor(void);
-  
-  protected: // Variables
-  
-  /** \brief Name of the Actor, otherwise a blank string.
+
+  protected:
+
+  /* Name of the Actor, otherwise a blank string.
   */
   String  mName;
-  
-  /** \brief Actor's parent Scene
+
+  /* Actor's parent Scene
   */
   Scene*  mScene;
-  
-}; // class ClassName
+
+}; // class Actor
 
                                                                                        
 

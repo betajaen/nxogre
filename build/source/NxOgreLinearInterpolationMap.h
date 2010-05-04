@@ -26,14 +26,15 @@
 
                                                                                        
 
-#ifndef NXOGRE_REASON_H
-#define NXOGRE_REASON_H
+#ifndef NXOGRE_LINEARINTERPOLATIONMAP_H
+#define NXOGRE_LINEARINTERPOLATIONMAP_H
 
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreString.h"
-#include "NxOgrePhysXPrototypes.h"
+#include "NxOgreMath.h"
+#include <map>
+#include <sstream>
 
                                                                                        
 
@@ -42,52 +43,91 @@ namespace NxOgre
 
                                                                                        
 
-/*! class. Reason
-    desc.
-         Reason is a collection of static functions that turns descriptions and error codes into why they could be invalid.
-*/
-class NxOgrePublicClass Reason
+template<typename T> class LinearInterpolationMap
 {
-  
+ 
  public:
   
-  static const char* Exceptionise(int PhysXSDKCreateError);
+  typedef std::map<T, T>                 MapType;
+  typedef typename std::map<T, T>::const_iterator Iterator;
   
-  static const char* toCStr(int PhysXErrorEcode);
+  LinearInterpolationMap()
+  : min(0), max(0)
+  {
+  }
   
-  static String Exceptionise(const NxPhysicsSDKDesc&, bool isSdkNull, int errorCode);
+ ~LinearInterpolationMap()
+  {
+  }
   
-  static String Exceptionise(const NxSceneDesc&, bool isSDKNull, const String& sceneName);
+  void clear()
+  {
+   values.clear();
+  }
   
-  static String Exceptionise(const NxActorDesc&);
+  void insert(const T& index, const T& value)
+  {
+   
+   if (values.empty())
+   {
+    min = max = index;
+   }
+   else
+   {
+    min = NxOgre::Math::min<T>(min, index);
+    max = NxOgre::Math::max<T>(max, index);
+   }
+   
+   values[index] = value;
+  }
   
-  static String Exceptionise(const NxMaterialDesc&);
-  
-  static String Exceptionise(const NxHeightFieldDesc&);
-  
-  static String Exceptionise(const NxJointLimitDesc&, const char* sourceName);
-  
-  static String Exceptionise(const NxSpringDesc&, const char* sourceName);
-  
-  static String Exceptionise(const NxJointDesc&);
-  
-  static String Exceptionise(const NxSphericalJointDesc&);
-  
-  static String Exceptionise(const NxRevoluteJointDesc&);
-  
-  static String Exceptionise(const NxClothDesc&);
-  
-  static String Exceptionise(const NxSoftBodyDesc&);
-  
-  static String Exceptionise(const Path& path, Enums::ResourceStatus status);
-  
-  static String Exceptionise(Mesh*, Enums::MeshType expectedType);
+  bool valid(const T& number) const
+  {
+   return number >= min && number <= max;
+  }
 
- private:
+  T getValue(const T& number) const
+  {
+   Iterator lower = values.begin();
+   if (number < min)
+    return (*lower).second;
+   Iterator upper = values.end();
+   upper--;
+   if (number > max)
+    return (*lower).second;
+   lower = upper;
+   lower--;
+   
+   T w1 = number - (*lower).first;
+   T w2 = (*upper).first - number;
+   
+   return ((w2 * (*lower).second) + (w1 * (*upper).second)) / (w1 + w2);
+  }
   
-  Reason();
+  T at(int index)
+  {
+   Iterator it = map.begin();
+   for (int i=0;i < index; i++)
+    ++it;
+   return (*it).second;
+  }
+
+  std::string to_s() const
+  {
+   std::ostringstream o;
+   o << "[";
+   for (Iterator it = values.begin(); it != values.end(); ++it)
+    o << (*it).first << " => " << (*it).second << " ";
+   o << "]";
+   return o.str();
+  }
   
-}; // class Reason
+  
+
+  T       min, max;
+  MapType values;
+
+};
 
                                                                                        
 

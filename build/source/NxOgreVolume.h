@@ -51,7 +51,7 @@ class NxOgrePublicClass Volume : public RigidBody
 {
   
   friend class Scene;
-  friend class Functions::ArrayFunctions<Volume*>::Write;
+  // friend class Functions::ArrayFunctions<Volume*>::Write;
   template<class T> friend inline void Functions::safe_delete(T*);
   
   public:

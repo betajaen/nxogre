@@ -75,7 +75,9 @@ HeightFieldGeometryDescription::HeightFieldGeometryDescription(HeightField* heig
   mHeightField(heightfield),
   mMeshFlags(0)
 {
- ShapeDescription::reset(0, local_pose);
+ ShapeDescription::reset();
+ mMaterial = 0;
+ mLocalPose = local_pose;
 }
 
 HeightFieldGeometryDescription::HeightFieldGeometryDescription(HeightField* heightfield, Real dx, Real dy, Real dz, const Matrix44& local_pose)
@@ -88,7 +90,9 @@ HeightFieldGeometryDescription::HeightFieldGeometryDescription(HeightField* heig
   mHeightField(heightfield),
   mMeshFlags(0)
 {
- ShapeDescription::reset(0, local_pose);
+ ShapeDescription::reset();
+ mMaterial = 0;
+ mLocalPose = local_pose;
 }
 
 HeightFieldGeometryDescription::~HeightFieldGeometryDescription()
@@ -121,21 +125,94 @@ NxShapeDesc* HeightFieldGeometryDescription::createShapeDescription() const
  return description;
 }
 
-void HeightFieldGeometryDescription::reset()
-{
- mDimensions.set(1,1,1);
- mScaleDimensions = false;
- mTerrainCentering = Enums::TerrainCentering_LocalPose;
- mSmoothSphereCollisions = false;
- mHoleMaterial = 65535;
- mHighBits = 0;
- mHeightField = 0;
- 
- ShapeDescription::reset();
-}
+
 
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
+
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+HeightFieldGeometryDescription::HeightFieldGeometryDescription(const HeightFieldGeometryDescription& other)
+{
+ other.copy_into(this);
+}
+
+HeightFieldGeometryDescription& HeightFieldGeometryDescription::operator=(const HeightFieldGeometryDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+HeightFieldGeometryDescription* HeightFieldGeometryDescription::duplicate() const
+{
+ HeightFieldGeometryDescription* dup = new HeightFieldGeometryDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void HeightFieldGeometryDescription::copy_into(HeightFieldGeometryDescription* other) const
+{
+ ShapeDescription::copy_into(other);
+
+ other->mDimensions = mDimensions;
+ other->mHeightField = mHeightField;
+ other->mHighBits = mHighBits;
+ other->mHoleMaterial = mHoleMaterial;
+ other->mMeshFlags = mMeshFlags;
+ other->mScaleDimensions = mScaleDimensions;
+ other->mSmoothSphereCollisions = mSmoothSphereCollisions;
+ other->mTerrainCentering = mTerrainCentering;
+}
+
+void HeightFieldGeometryDescription::reset()
+{
+ mDimensions.set(1,1,1);
+ mHeightField = NULL;
+ mHighBits = 0;
+ mHoleMaterial = 65535;
+ mMeshFlags = 0;
+ mScaleDimensions = false;
+ mSmoothSphereCollisions = false;
+ mTerrainCentering = Enums::TerrainCentering_LocalPose;
+}
+
+bool HeightFieldGeometryDescription::valid() const
+{
+ if (!ShapeDescription::valid())
+  return false; // mHeightField pointer cannot be null
+ if (mHeightField == NULL)
+  return false;
+
+ return true;
+}
+
+void HeightFieldGeometryDescription::inspect() const
+{
+ ShapeDescription::inspect();
+
+ std::cout << "HeightFieldGeometryDescription => {\n";
+ std::cout << "  mDimensions => '" << mDimensions << "'\n";
+ std::cout << "  mHeightField => '" << mHeightField << "'\n";
+ std::cout << "  mHighBits => '" << mHighBits << "'\n";
+ std::cout << "  mHoleMaterial => '" << mHoleMaterial << "'\n";
+ std::cout << "  mMeshFlags => '" << mMeshFlags << "'\n";
+ std::cout << "  mScaleDimensions => '" << mScaleDimensions << "'\n";
+ std::cout << "  mSmoothSphereCollisions => '" << mSmoothSphereCollisions << "'\n";
+ std::cout << "  mTerrainCentering => '" << mTerrainCentering << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "HeightFieldGeometryDescription-9b665079e3ebd114391a4feefb62b4e2"
+

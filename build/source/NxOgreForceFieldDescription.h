@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreSimple.h"
 
                                                                                        
 
@@ -152,6 +153,29 @@ class NxOgrePublicClass ForceFieldDescription
   */
   int  mFlags;
   
+  /*! variable. mIncludeGroupShapes
+      desc.
+          Array of force field shapes descriptors which will be created inside the include group of this force field. This group moves with the force field and cannot be shared. 
+      note.
+          Pass the shapes on as references, not as pointers. As they will not be deleted by the Forcefield.
+      example.
+          bc. SimpleBox box(Vec3(1,8,1));
+              ForceFieldDescription desc;
+              desc.mIncludeGroupShapes.push_back(&box);
+  */
+  SimpleShapes mIncludeGroupShapes;
+
+  /*! variable. mIncludeGroupShapes
+      desc.
+          Array of force field shapes descriptors which will be created inside the include group of this force field. This group moves with the force field and cannot be shared. 
+      note.
+          Pass the shapes on as references, not as pointers. As they will not be deleted by the Forcefield.
+      example.
+          bc. SimpleBox box(Vec3(1,8,1));
+              ForceFieldDescription desc;
+              desc.mShapeGroups.push_back(&box);
+  */
+  //SimpleShapes mShapeGroups;
 
 
   /*! variable. Name

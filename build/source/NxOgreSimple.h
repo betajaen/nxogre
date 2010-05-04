@@ -41,27 +41,26 @@ namespace NxOgre
 
                                                                                        
 
-namespace Functions
+struct NxOgrePublicClass SimpleShape : public ShapeAllocatable
 {
-
-inline void NxOgrePublicFunction SimpleShapeToActorDescription(NxActorDesc&, SimpleShape*);
+ virtual Enums::SimpleShapeType  getType() const = 0;
+ virtual NxForceFieldShapeDesc*  to_ff_shape() const;
 
 };
 
-struct SimpleShape : public ShapeAllocatable
-{
- Enums::SimpleShapeType  mType;
-};
-
-struct SimplePlane : public SimpleShape
+struct NxOgrePublicClass SimplePlane : public SimpleShape
 {
  SimplePlane();
  SimplePlane(const Vec3& normal, float distance);
+ 
+ Enums::SimpleShapeType  getType() const;
+ NxForceFieldShapeDesc*  to_ff_shape() const;
+ 
  Vec3        mNormal;
  float       mDistance;
 };
 
-struct SimpleBox : public SimpleShape
+struct NxOgrePublicClass SimpleBox : public SimpleShape
 {
  SimpleBox();
  SimpleBox(const Vec3& size, const Vec3& position = Vec3::ZERO, const Quat& orientation = Quat::IDENTITY);
@@ -69,58 +68,60 @@ struct SimpleBox : public SimpleShape
  SimpleBox(const NxBox&);
  SimpleBox(const Bounds3& aabb, const Matrix44& trans);
 
- 
- bool  contains(const Vec3&) const;
- NxBox to_box() const;
- 
+ Enums::SimpleShapeType  getType() const;
+ bool                    contains(const Vec3&) const;
+ NxBox                   to_box() const;
+ NxForceFieldShapeDesc*  to_ff_shape() const;
+
  Vec3     mCenter;
  Matrix33 mRotation;
  Vec3     mSize;
 };
 
-struct SimpleSphere : public SimpleShape
+struct NxOgrePublicClass SimpleSphere : public SimpleShape
 {
  SimpleSphere();
  SimpleSphere(Real radius, const Vec3& center = Vec3::ZERO);
  SimpleSphere(const NxSphere&);
  
- NxSphere to_sphere() const;
+ Enums::SimpleShapeType  getType() const;
+ NxSphere                to_sphere() const;
+ NxForceFieldShapeDesc*  to_ff_shape() const;
  
  Vec3 mCenter;
  Real mRadius;
 };
 
-struct SimpleCapsule : public SimpleShape
+struct NxOgrePublicClass SimpleCapsule : public SimpleShape
 {
  SimpleCapsule();
+ SimpleCapsule(const Vec3& origin, const Vec3& direction, Real radius);
  SimpleCapsule(Real radius, const Vec3& p0, const Vec3& p1);
  SimpleCapsule(const NxCapsule&);
  
- NxCapsule to_capsule() const;
+ Vec3 getOrigin();
+ Vec3 getDirection();
+
+ Enums::SimpleShapeType  getType() const;
+ NxCapsule               to_capsule() const;
+ NxForceFieldShapeDesc*  to_ff_shape() const;
  
  Vec3 mP0, mP1;
  Real mRadius;
 };
 
-struct SimplePointCloud : public SimpleShape
+struct SimpleConvexPointCloud : public SimpleShape
 {
  
- SimplePointCloud();
-~SimplePointCloud();
+ SimpleConvexPointCloud();
+~SimpleConvexPointCloud();
+
+ Enums::SimpleShapeType  getType() const;
+ NxForceFieldShapeDesc*  to_ff_shape() const;
  
  Buffer<Vec3>  mPoints;
 };
 
-struct SimpleTriangleMesh : public SimpleShape
-{
- 
- SimpleTriangleMesh();
-~SimpleTriangleMesh();
- 
- Buffer<Vec3>          mPoints;
- Buffer<Vec3>          mNormals;
- Buffer<unsigned int>  mIndices;
-};
 
 typedef std::vector<SimpleShape*> SimpleShapes;
 

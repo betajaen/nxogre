@@ -42,18 +42,12 @@ namespace NxOgre
 PlaneGeometryDescription::PlaneGeometryDescription(const Vec3& normal, Real distance, const MaterialIdentifier& material)
 : mNormal(normal), mDistance(distance)
 {
- ShapeDescription::reset(material, Matrix44::ZERO);
+ ShapeDescription::reset();
+ mMaterial = material;
 }
 
 PlaneGeometryDescription::~PlaneGeometryDescription()
 {
-}
-
-void PlaneGeometryDescription::reset()
-{
- ShapeDescription::reset();
- mNormal.set(0.0, 1.0, 0.0);
- mDistance = 0;
 }
 
 NxShapeDesc* PlaneGeometryDescription::createShapeDescription() const
@@ -70,3 +64,65 @@ NxShapeDesc* PlaneGeometryDescription::createShapeDescription() const
 } // namespace NxOgre
 
                                                                                        
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+PlaneGeometryDescription::PlaneGeometryDescription(const PlaneGeometryDescription& other)
+{
+ other.copy_into(this);
+}
+
+PlaneGeometryDescription& PlaneGeometryDescription::operator=(const PlaneGeometryDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+PlaneGeometryDescription* PlaneGeometryDescription::duplicate() const
+{
+ PlaneGeometryDescription* dup = new PlaneGeometryDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void PlaneGeometryDescription::copy_into(PlaneGeometryDescription* other) const
+{
+ ShapeDescription::copy_into(other);
+
+ other->mDistance = mDistance;
+ other->mNormal = mNormal;
+}
+
+void PlaneGeometryDescription::reset()
+{
+ mDistance = 0;
+ mNormal.set(0,1,0);
+}
+
+bool PlaneGeometryDescription::valid() const
+{
+ if (!ShapeDescription::valid())
+  return false;
+ return true;
+}
+
+void PlaneGeometryDescription::inspect() const
+{
+ ShapeDescription::inspect();
+
+ std::cout << "PlaneGeometryDescription => {\n";
+ std::cout << "  mDistance => '" << mDistance << "'\n";
+ std::cout << "  mNormal => '" << mNormal << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "PlaneGeometryDescription-e9d569ded62d6428f4adef457efaed17"
+

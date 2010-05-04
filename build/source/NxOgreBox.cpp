@@ -66,7 +66,7 @@ void Box::saveToDescription(BoxDescription& description)
  NxBoxShapeDesc desc;
  mBoxShape->saveToDesc(desc);
  description.mDensity = desc.density;
- description.mFlags = desc.shapeFlags;
+ description.mFlags.from_i(desc.shapeFlags);
  description.mGroup = desc.group;
  description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
  description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
@@ -107,7 +107,7 @@ SimpleBox Box::getWorldOBB(void)
 
 String Box::to_s() const
 {
- return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Box") ));
+ return String("Box");
 }
 
                                                                                        

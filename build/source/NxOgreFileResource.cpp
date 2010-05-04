@@ -212,7 +212,7 @@ bool FileResource::write(const void* src, size_t src_size)
  // printf(__FUNCTION__ "at %i\n", at());
  mNbWriteOperations++;
  mWroteNbBytes += src_size;
- size_t w =  (fwrite(src, src_size, 1, mFile));
+ fwrite(src, src_size, 1, mFile);
  return true;
 }
 

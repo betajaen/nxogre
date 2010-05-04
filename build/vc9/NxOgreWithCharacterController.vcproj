@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<VisualStudioProject TargetFrameworkVersion="131072" ProjectType="Visual C++" Name="NxOgreWithCharacterController" ProjectGUID="{7e1308f9-ea4c-c372-ec32-2fe89c173b9e}" Version="9.00" Keyword="Win32Proj">
+<VisualStudioProject Keyword="Win32Proj" TargetFrameworkVersion="131072" ProjectType="Visual C++" Name="NxOgreWithCharacterController" Version="9.00" ProjectGUID="{7e1308f9-ea4c-c372-ec32-2fe89c173b9e}">
  <Platforms>
   <Platform Name="Win32"/>
  </Platforms>
  <ToolFiles>
  </ToolFiles>
  <Configurations>
-  <Configuration CharacterSet="1" Name="NxOgreWithCharacterControllerFinal|Win32" OutputDirectory="NxOgreWithCharacterController\Final" IntermediateDirectory="NxOgreWithCharacterController\Final" ConfigurationType="2">
+  <Configuration ConfigurationType="2" CharacterSet="1" Name="NxOgreWithCharacterControllerFinal|Win32" OutputDirectory="NxOgreWithCharacterController\Final" IntermediateDirectory="NxOgreWithCharacterController\Final">
    <Tool CommandLine="..\VC.prebuild.bat NxOgreWithCharacterController Final" Name="VCPreBuildEventTool"/>
    <Tool Name="VCCustomBuildTool"/>
    <Tool Name="VCXMLDataGeneratorTool"/>
@@ -16,7 +16,7 @@
    <Tool Name="VCManagedResourceCompilerTool"/>
    <Tool Name="VCResourceCompilerTool"/>
    <Tool Name="VCPreLinkEventTool"/>
-   <Tool AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib" AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" Name="VCLinkerTool" OutputFile="$(OutDir)\NxOgreWithCharacterControllerFinal.dll"/>
+   <Tool AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib" AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" OutputFile="$(OutDir)\NxOgreWithCharacterControllerFinal.dll" Name="VCLinkerTool"/>
    <Tool Name="VCALinkTool"/>
    <Tool Name="VCManifestTool"/>
    <Tool Name="VCXDCMakeTool"/>
@@ -25,7 +25,7 @@
    <Tool Name="VCAppVerifierTool"/>
    <Tool CommandLine="..\VC.postbuild.bat NxOgreWithCharacterController Final" Name="VCPostBuildEventTool"/>
   </Configuration>
-  <Configuration CharacterSet="1" Name="NxOgreWithCharacterControllerDebug|Win32" OutputDirectory="NxOgreWithCharacterController\Debug" IntermediateDirectory="NxOgreWithCharacterController\Debug" ConfigurationType="2">
+  <Configuration ConfigurationType="2" CharacterSet="1" Name="NxOgreWithCharacterControllerDebug|Win32" OutputDirectory="NxOgreWithCharacterController\Debug" IntermediateDirectory="NxOgreWithCharacterController\Debug">
    <Tool CommandLine="..\VC.prebuild.bat NxOgreWithCharacterController Debug" Name="VCPreBuildEventTool"/>
    <Tool Name="VCCustomBuildTool"/>
    <Tool Name="VCXMLDataGeneratorTool"/>
@@ -35,7 +35,7 @@
    <Tool Name="VCManagedResourceCompilerTool"/>
    <Tool Name="VCResourceCompilerTool"/>
    <Tool Name="VCPreLinkEventTool"/>
-   <Tool AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib" AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" Name="VCLinkerTool" OutputFile="$(OutDir)\NxOgreWithCharacterControllerDebug.dll"/>
+   <Tool AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib NxCharacter.lib" AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" OutputFile="$(OutDir)\NxOgreWithCharacterControllerDebug.dll" Name="VCLinkerTool"/>
    <Tool Name="VCALinkTool"/>
    <Tool Name="VCManifestTool"/>
    <Tool Name="VCXDCMakeTool"/>
@@ -98,6 +98,7 @@
   <File RelativePath="..\source\NxOgreJointLimitSoftDescription.cpp"/>
   <File RelativePath="..\source\NxOgreKinematicActor.cpp"/>
   <File RelativePath="..\source\NxOgreKinematicSceneLink.cpp"/>
+  <File RelativePath="..\source\NxOgreLinearInterpolationMap.cpp"/>
   <File RelativePath="..\source\NxOgreList.cpp"/>
   <File RelativePath="..\source\NxOgreMachine.cpp"/>
   <File RelativePath="..\source\NxOgreMachinePart.cpp"/>
@@ -122,6 +123,7 @@
   <File RelativePath="..\source\NxOgreParticleData.cpp"/>
   <File RelativePath="..\source\NxOgrePath.cpp"/>
   <File RelativePath="..\source\NxOgrePhysXCallback.cpp"/>
+  <File RelativePath="..\source\NxOgrePhysXConfiguration.cpp"/>
   <File RelativePath="..\source\NxOgrePhysXMeshData.cpp"/>
   <File RelativePath="..\source\NxOgrePhysXOutputStream.cpp"/>
   <File RelativePath="..\source\NxOgrePhysXParticleData.cpp"/>
@@ -196,7 +198,6 @@
   <File RelativePath="..\source\NxOgreActorMachinePart.h"/>
   <File RelativePath="..\source\NxOgreAllocatables.h"/>
   <File RelativePath="..\source\NxOgreAllocator.h"/>
-  <File RelativePath="..\source\NxOgreArray.h"/>
   <File RelativePath="..\source\NxOgreAutoConfiguration.h"/>
   <File RelativePath="..\source\NxOgreAuxiliaryScene.h"/>
   <File RelativePath="..\source\NxOgreBounds.h"/>
@@ -222,6 +223,7 @@
   <File RelativePath="..\source\NxOgreConvexDescription.h"/>
   <File RelativePath="..\source\NxOgreD6Joint.h"/>
   <File RelativePath="..\source\NxOgreD6JointDescription.h"/>
+  <File RelativePath="..\source\NxOgreDynamicRigidBodyFlags.h"/>
   <File RelativePath="..\source\NxOgreEntityReport.h"/>
   <File RelativePath="..\source\NxOgreEnums.h"/>
   <File RelativePath="..\source\NxOgreErrorStream.h"/>
@@ -255,6 +257,7 @@
   <File RelativePath="..\source\NxOgreJointLimitSoftDescription.h"/>
   <File RelativePath="..\source\NxOgreKinematicActor.h"/>
   <File RelativePath="..\source\NxOgreKinematicSceneLink.h"/>
+  <File RelativePath="..\source\NxOgreLinearInterpolationMap.h"/>
   <File RelativePath="..\source\NxOgreList.h"/>
   <File RelativePath="..\source\NxOgreMachine.h"/>
   <File RelativePath="..\source\NxOgreMachinePart.h"/>
@@ -280,6 +283,7 @@
   <File RelativePath="..\source\NxOgreParticleData.h"/>
   <File RelativePath="..\source\NxOgrePath.h"/>
   <File RelativePath="..\source\NxOgrePhysXCallback.h"/>
+  <File RelativePath="..\source\NxOgrePhysXConfiguration.h"/>
   <File RelativePath="..\source\NxOgrePhysXMeshData.h"/>
   <File RelativePath="..\source\NxOgrePhysXOutputStream.h"/>
   <File RelativePath="..\source\NxOgrePhysXParticleData.h"/>
@@ -315,14 +319,17 @@
   <File RelativePath="..\source\NxOgreRevoluteJointDescription.h"/>
   <File RelativePath="..\source\NxOgreRigidBody.h"/>
   <File RelativePath="..\source\NxOgreRigidBodyDescription.h"/>
+  <File RelativePath="..\source\NxOgreRigidBodyFlags.h"/>
   <File RelativePath="..\source\NxOgreRigidBodyFunctions.h"/>
   <File RelativePath="..\source\NxOgreScene.h"/>
   <File RelativePath="..\source\NxOgreSceneDescription.h"/>
+  <File RelativePath="..\source\NxOgreSceneFlags.h"/>
   <File RelativePath="..\source\NxOgreSceneGeometry.h"/>
   <File RelativePath="..\source\NxOgreSceneLink.h"/>
   <File RelativePath="..\source\NxOgreSceneTimer.h"/>
   <File RelativePath="..\source\NxOgreShape.h"/>
   <File RelativePath="..\source\NxOgreShapeDescription.h"/>
+  <File RelativePath="..\source\NxOgreShapeFlags.h"/>
   <File RelativePath="..\source\NxOgreShapeFunctions.h"/>
   <File RelativePath="..\source\NxOgreSharedPointer.h"/>
   <File RelativePath="..\source\NxOgreSimple.h"/>

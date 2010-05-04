@@ -45,7 +45,7 @@ Callback::~Callback()
  // virtual function.
 }
 
-void Callback::onVolumeEvent(Volume* volume, Shape* volumeShape, RigidBody* rigidBody, Shape* rigidBodyShape, unsigned int collisionEvent)
+void Callback::onVolumeEvent(Volume*, Shape*, RigidBody*, Shape*, unsigned int)
 {
  // virtual function.
 }

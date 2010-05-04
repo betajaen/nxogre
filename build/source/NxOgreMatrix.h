@@ -35,8 +35,7 @@
 #include "NxOgreMatrix.h"
 #include "NxOgreVec3.h"
 #include "NxOgreQuat.h"
-
-#include "string.h"
+#include "NxOgreString.h"
 
                                                                                        
 
@@ -94,7 +93,15 @@ class NxOgrePublicClass Matrix33
  inline Real* ptr();
  
  inline const Real* ptr() const;
- 
+
+ inline String to_s() const;
+
+ inline NxOgrePublicFunction friend std::ostream& operator << (std::ostream& o, const Matrix33& m)
+ {
+  o << m.to_s();
+  return o;
+ }
+
  static const Matrix33 ZERO;
  
  static const Matrix33 IDENTITY;
@@ -190,6 +197,14 @@ class NxOgrePublicClass Matrix44
 
  inline const Real* ptr() const;
  
+ inline String to_s() const;
+
+ inline NxOgrePublicFunction friend std::ostream& operator << (std::ostream& o, const Matrix44& m)
+ {
+  o << m.to_s();
+  return o;
+ }
+
  void columnMajor(Real* f_16);
  
  Vec3 operator*(const Vec3& other) const;

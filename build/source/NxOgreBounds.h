@@ -271,6 +271,12 @@ template<class VecType> class BoundsT
            min.z > max.z);
   }
 
+  inline void zero()
+  {
+   min.zero();
+   max.zero();
+  }
+
   /*! function. empty
       desc.
            Sets the min to infinity and max to negative infinity.
@@ -302,7 +308,15 @@ template<class VecType> class BoundsT
   {
    return BoundsT(other.min, other.max);
   }
-  
+
+  inline String to_s() const;
+
+  inline NxOgrePublicFunction friend std::ostream& operator << (std::ostream& o, const BoundsType& b)
+  {
+   o << b.min << ", " << b.max;
+   return o;
+  }
+
   /*! variable. min
       desc.
        Minimum bounds.

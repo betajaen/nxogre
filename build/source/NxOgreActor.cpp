@@ -78,6 +78,21 @@ String Actor::getName() const
  return mName;
 }
 
+void Actor::raiseDynamicFlag(DynamicRigidbodyFlags::Flags flag)
+{
+ mActor->raiseBodyFlag((NxBodyFlag) (int) flag);
+}
+
+void Actor::clearDynamicFlag(DynamicRigidbodyFlags::Flags flag)
+{
+ mActor->clearBodyFlag((NxBodyFlag) (int) flag);
+}
+
+bool Actor::hasDynamicFlag(DynamicRigidbodyFlags::Flags flag) const
+{
+ return mActor->readBodyFlag((NxBodyFlag) (int) flag);
+}
+
 unsigned int Actor::getRigidBodyType() const 
 {
  return ::NxOgre::Classes::_Actor;

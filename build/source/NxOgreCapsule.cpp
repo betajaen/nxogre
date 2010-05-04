@@ -102,7 +102,7 @@ void Capsule::saveToDescription(CapsuleDescription& description)
  NxCapsuleShapeDesc desc;
  mCapsuleShape->saveToDesc(desc);
  description.mDensity = desc.density;
- description.mFlags = desc.shapeFlags;
+ description.mFlags.from_i(desc.shapeFlags);
  description.mGroup = desc.group;
  description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
  description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
@@ -120,7 +120,7 @@ void Capsule::saveToDescription(CapsuleDescription& description)
 
 String Capsule::to_s() const
 {
- return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Capsule") ));
+ return String("Capsule");
 }
 
                                                                                        

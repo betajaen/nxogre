@@ -47,7 +47,7 @@ Warning::Warning(const std::string& file, unsigned int line, const std::string& 
   mClassType(class_type)
 {
  
- std::cout << str() << std::endl;
+ std::cout << to_s() << std::endl;
  
  if (NxOgre::ErrorStream::getSingleton())
   NxOgre::ErrorStream::getSingleton()->addWarning(*this);
@@ -95,8 +95,9 @@ unsigned int Warning::getClassType() const
  return mClassType;
 }
 
-std::string Warning::str() const
+std::string Warning::to_s() const
 {
+ 
  // Warning (ClassType)
  // ===================
  //
@@ -107,18 +108,17 @@ std::string Warning::str() const
  // Description Text. Description Text. Description Text. Description Text. Description Text. Description Text. 
  // 
  // From: File.cpp#42
-
- StringStream s;
- std::string header("Warning (");
- header.append(Classes::TypeToCStr(mClassType));
- header.append(")");
- s << header << "\n";
  
- for (unsigned int i=0; i < header.length(); i++)
-  s << "=";
- s << "\n\n" << mDescription << "\nFrom: " << mFile << "#" << mLine << "\n\n";
+ std::ostringstream s;
+
+ s << "\n=====================================================================\n";
+ s << "Warning (" << Classes::TypeToCStr(mClassType) << ")\n";
+ s << "=====================================================================\n";
+ s << "\n" << mDescription << "\nFrom: " << mFile << "#" << mLine << "\n\n";
+ s << "=====================================================================\n\n";
  
  return s.str();
+ 
 }
 
 

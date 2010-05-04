@@ -49,7 +49,6 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
 {
   
   friend class Scene;
-  friend class Functions::ArrayFunctions<SceneGeometry*>::Write;
   
   public:
   

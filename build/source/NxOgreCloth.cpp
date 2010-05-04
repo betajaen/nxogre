@@ -85,7 +85,7 @@ Cloth::~Cloth()
 }
 
 
-bool Cloth::advance(float deltaTime, const Enums::Priority&)
+bool Cloth::advance(float, const Enums::Priority&)
 {
  
  if (mRenderable && mMeshData)
@@ -295,7 +295,7 @@ Vec3   Cloth::getVertexAttachmentPosition(unsigned int vertexId) const
 
 void   Cloth::attachToCore(RigidBody* rigidbody, Real impulseThreshold, Real penetrationDepth, Real maxDeformationDistance)
 {
- return mCloth->attachToCore(rigidbody->getNxActor(), impulseThreshold, penetrationDepth);
+ return mCloth->attachToCore(rigidbody->getNxActor(), impulseThreshold, penetrationDepth, maxDeformationDistance);
 }
 
 bool   Cloth::tearVertex(const unsigned int vertexId, const Vec3& normal)

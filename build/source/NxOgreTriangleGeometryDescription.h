@@ -42,7 +42,18 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+/*! class. TriangleGeometryDescription
+    desc.
+      Description to describe a TriangleGeometry shape.
+    properties.
+      Mesh* mMesh -- Mesh to use. default: NULL
+      unsigned int mMeshFlags -- Mesh flags (see Enums::MeshFlags). default: 0
+      Enums::MeshPagingMode mMeshPagingMode -- Paging mode. default: Enums::MeshPagingMode_Manual
+    conditions.
+      mMesh must not be a pointer -- (mMesh == NULL)
+      mMesh must be a triangle mesh -- (mMesh->getType() != Enums::MeshType_Triangle)
+    namespace. NxOgre
+    from. ShapeDescription
 */
 class NxOgrePublicClass TriangleGeometryDescription : public ShapeDescription
 {
@@ -61,6 +72,8 @@ class NxOgrePublicClass TriangleGeometryDescription : public ShapeDescription
   */
  ~TriangleGeometryDescription();
   
+ protected:
+  
   /*! function. createShapeDescription
       desc.
           Create NxBoxShapeDesc to be attached to an RigidBody.
@@ -70,37 +83,78 @@ class NxOgrePublicClass TriangleGeometryDescription : public ShapeDescription
   */
   NxShapeDesc*  createShapeDescription() const;
 
-  /*! function. reset
-      desc.
-          Resets the member variables to their default values according to the PhysX SDK.
-  */
-  void reset();
-  
-  /*! function. isValid
-      desc. 
-          Returns true if the description is valid.
-  */
-  bool isValid() const;
 
-  /*! variable. mSize
+
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
+
+  /*! variable. mMesh
       desc.
-          Size of the box, in metres.
+          Mesh to use.
+      default.
+          NULL
   */
   Mesh* mMesh;
-  
-  /*! variable. mSize
+
+  /*! variable. mMeshFlags
       desc.
-          Size of the box, in metres.
+          Mesh flags (see Enums::MeshFlags).
+      default.
+          0
   */
   unsigned int mMeshFlags;
-  
-  /*! variable. mSize
+
+  /*! variable. mMeshPagingMode
       desc.
-          Paging mode
+          Paging mode.
       default.
-          MeshPagingMode_Manual
+          Enums::MeshPagingMode_Manual
   */
   Enums::MeshPagingMode mMeshPagingMode;
+
+  /*! constructor. TriangleGeometryDescription
+      desc.
+          Copy constructor for TriangleGeometryDescription
+  */
+  TriangleGeometryDescription(const TriangleGeometryDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  TriangleGeometryDescription& operator=(const TriangleGeometryDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this TriangleGeometryDescription as a pointer.
+  */
+  virtual TriangleGeometryDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of TriangleGeometryDescription into another.
+  */
+  virtual void copy_into(TriangleGeometryDescription*) const;
+
+  /*! function. reset
+      desc.
+          Resets TriangleGeometryDescription properties to their default values.
+  */
+  virtual void reset();
+
+  /*! function. valid
+      desc.
+          Is this TriangleGeometryDescription valid according to each property.
+  */
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "TriangleGeometryDescription-23818dae2a7d516e43ac7064c70a63dd"
 
 }; // class BoxDescription
 

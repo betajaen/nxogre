@@ -114,7 +114,7 @@ class NxOgrePublicClass Exception : public std::exception
       desc.
            Formats the exception as a markdown formatted string
   */
-  std::string str() const;
+  std::string to_s() const;
   
  protected:
   
@@ -190,6 +190,17 @@ class NxOgrePublicClass DescriptionInvalidException : public Exception
  public:
   DescriptionInvalidException(const std::string& file, unsigned int line, const std::string& description, unsigned int class_type)
   : Exception(file, line, description, class_type, Enums::ExceptionType_DescriptionInvalid, "Description properties is invalid") {}
+};
+
+/*! exception. WrongTypeException
+    desc.
+        Thrown when the a type of class isn't the one that was expected.
+*/
+class NxOgrePublicClass WrongTypeException : public Exception
+{
+ public:
+  WrongTypeException(const std::string& file, unsigned int line, const std::string& description, unsigned int class_type)
+  : Exception(file, line, description, class_type, Enums::ExceptionType_WrongType, "Type given isn't the type expected.") {}
 };
 
 /*! exception. NullPointerException

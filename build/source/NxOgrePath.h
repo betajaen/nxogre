@@ -47,7 +47,6 @@ namespace NxOgre
           
           bc. protocol://drive:/directory_name/sub_directory_name/filename.extension#portion
           
-          
    examples.
           
           file://C:/Program Files/Game/Game.exe               (Specific file)
@@ -121,7 +120,7 @@ namespace NxOgre
        Aliases can be used to prevent repetition, and to define a partial path early
        on in your Application.
        bc.
-        Path::AddAlias("media", "file://c:/Program Files/My Game/");
+        Path::AddAlias("game", "file://c:/Program Files/My Game/");
         Path path("+game/Game.exe");
        Which is equilvant to.
         Path path("file://c:/Program Files/My Game/Game.exe");
@@ -160,81 +159,126 @@ class NxOgrePublicClass Path
    
    Path& operator /=(const char* other);
    
+   /*! function. SetAlias
+       desc.
+           Set or add an path alias. Aliases can be used to prevent repetition, and to define a partial path early on in your Application.
+           bc.
+            Path::AddAlias("game", "file://c:/Program Files/My Game/");
+            Path path("+game/Game.exe");
+           Which is equilvant to.
+            Path path("file://c:/Program Files/My Game/Game.exe");
+   */
    static void SetAlias(const String& aliasName, const String& pathString); 
    
-   /** \brief Get the directory of the path, or the directories of lower levels.
+   /*! function. getDirectory
+       desc.
+           Get the directory of the path, or the directories of lower levels.
    */
    String getDirectory(unsigned int parent_level = 0) const;
       
-   /** \brief Get the number of directories or how deep the file is.
+   /*! function. getNbDirectories
+       desc.
+           Get the number of directories or how deep the file is.
    */
    unsigned int getNbDirectories() const;
    
-   /** \brief Get the filename (and extension)
+   /*! function. getFilename
+       desc.
+           Get the filename (and extension)
    */
    String getFilename() const;
    
-   /** \brief Has the path have a filename?
+   /*! function. hasFilename
+       desc.
+           Has the path have a filename?
    */
    bool hasFilename() const;
 
-   /** \brief Get just the filename (no extension)
+   /*! function. getFilenameOnly
+       desc.
+            Get just the filename (no extension)
    */
    String getFilenameOnly() const;
    
-   /** \brief Get the extension
+      /*! function. getExtension
+       desc.
+            Get the extension
    */
    String getExtension() const;
    
-   /** \brief Has an extension?
+   /*! function. hasExtension
+       desc.
+            Has an extension?
    */
    bool hasExtension() const;
    
-   /** \brief Get the portion
+   /*! function. getPortion
+       desc.
+            Get the portion
    */
    String getPortion() const;
    
-   /** \brief Has an extension?
+   /*! function. hasPortion
+       desc.
+            Has an extension?
    */
    bool hasPortion() const;
    
-   /** \brief Get the protocol
+   /*! function. getProtocol
+       desc.
+            Get the protocol
    */
    String getProtocol() const;
    
-   /** \brief Get the hash of the protocol
+   /*! function. getProtocolHash
+       desc.
+            Get the hash of the protocol
    */
    StringHash getProtocolHash() const;
    
 #if NxOgrePlatform == NxOgrePlatformWindows
-   /** \brief Get the drive.
+   /*! function. getDrive
+       desc.
+            Get the drive.
    */
    String getDrive() const;
 #endif
 
 #if NxOgrePlatform == NxOgrePlatformWindows
-   /** \brief Has an extension?
+   /*! function. hasDrive
+       desc.
+            Has an extension?
    */
    bool hasDrive() const;
 #endif
 
-   /** \brief Is the path absolute or relative?
+   /*! function. isAbsolute
+       desc.
+            Is the path absolute or relative?
    */
    bool isAbsolute() const;
    
-   /** \brief Get parent path. A directory (if has filename), drive (has one directory and no filename) or file (has portion).
+   /*! function. getParent
+       desc.
+            Get parent path. A directory (if has filename), drive (has one directory and no filename) or file (has portion).
    */
    Path getParent() const;
 
-   /** \brief Get relative path to the file, the path without directories or drives.
+   /*! function. getRelative
+       desc.
+            Get relative path to the file, the path without directories or drives.
    */
    Path getRelative() const;
    
-   /** \brief Correctly format it.
+   /*! function. getString
+       desc.
+            Correctly format it.
    */
    String getString() const;
    
-   /** \brief Correctly format it as a OS string; no protocol or portion.
+   /*! function. getOSString
+       desc.
+            Correctly format it as a OS string; no protocol or portion.
    */
    String getOSString();
    
@@ -246,11 +290,11 @@ class NxOgrePublicClass Path
 
  protected:
    
-   /** \internal Turns path into drive, filename, directories, etc.
+   /* Turns path into drive, filename, directories, etc.
    */
    void set(const String& path);
    
-   /** \internal Clears the path.
+   /* Clears the path.
    */
    void clear();
 

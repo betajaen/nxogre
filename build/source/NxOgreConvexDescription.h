@@ -42,7 +42,17 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+/*! class. ConvexDescription
+    desc.
+         Description to describe a Capsule shape.
+    properties.
+      Mesh* mMesh -- Convex mesh to use default: NULL
+      unsigned int mMeshFlags -- Flags to use (See Enums::MeshFlags) default: 0
+    validations.
+      mMesh pointer cannot be null -- mMesh == NULL
+      mMesh must be a convex mesh -- (mMesh->getType() != Enums::MeshType_Convex)
+    namespace. NxOgre
+    from. ShapeDescription
 */
 class NxOgrePublicClass ConvexDescription : public ShapeDescription
 {
@@ -61,35 +71,77 @@ class NxOgrePublicClass ConvexDescription : public ShapeDescription
   */
  ~ConvexDescription();
   
-  /*! function. createShapeDescription
-      desc.
-          Create NxBoxShapeDesc to be attached to an RigidBody.
-          This is an internal function and shouldn't be used in the User's app.
-      note.
-         Pointer is owned by the class/function calling it, and should be deleted when no longer used.
-         userData variable is the Mesh pointer assigned to the Shape. The Mesh is assigned to the userData
-         for speed reasons, and replaced with a PhysXPointer once the Convex shape has been created.
-  */
+ protected:
+  
   NxShapeDesc*  createShapeDescription() const;
+
+ 
+
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
+
+  /*! variable. mMesh
+      desc.
+          Convex mesh to use
+      default.
+          NULL
+      condition.
+          mMesh must be a convex mesh
+  */
+  Mesh* mMesh;
+
+  /*! variable. mMeshFlags
+      desc.
+          Flags to use (See Enums::MeshFlags)
+      default.
+          0
+  */
+  unsigned int mMeshFlags;
+
+  /*! constructor. ConvexDescription
+      desc.
+          Copy constructor for ConvexDescription
+  */
+  ConvexDescription(const ConvexDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  ConvexDescription& operator=(const ConvexDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this ConvexDescription as a pointer.
+  */
+  virtual ConvexDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of ConvexDescription into another.
+  */
+  virtual void copy_into(ConvexDescription*) const;
 
   /*! function. reset
       desc.
-          Resets the member variables to their default values according to the PhysX SDK.
+          Resets ConvexDescription properties to their default values.
   */
-  void reset();
-  
-  /*! variable. mMesh
+  virtual void reset();
+
+  /*! function. valid
       desc.
-          Mesh to use.
+          Is this ConvexDescription valid according to each property.
   */
-  Mesh* mMesh;
-  
-  /*! variable. mMeshFlags
+  virtual bool valid() const;
+  /*! function. inspect
       desc.
-          Mesh flags to set.
+        Writes the contents of this to the console.
   */
-  unsigned int mMeshFlags;
-  
+  virtual void inspect() const;
+
+  // END - Serialisation. "ConvexDescription-1ead03930ffbdc2d8f5fbcfe475ea5e5"
+
 }; // class ConvexDescription
 
                                                                                        

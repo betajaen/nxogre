@@ -196,6 +196,17 @@ const Real* Matrix33::ptr() const
  return (Real*) m.M;
 }
 
+inline String Matrix33::to_s() const
+{
+ std::ostringstream s;
+ 
+ s << m.m[0][0] << ", " << m.m[0][1] << ", " << m.m[0][2] << ", "
+   << m.m[1][0] << ", " << m.m[1][1] << ", " << m.m[1][2] << ", "
+   << m.m[2][0] << ", " << m.m[2][1] << ", " << m.m[2][2];
+ 
+ return s.str();
+}
+
 
 Matrix44::Matrix44()
 {
@@ -467,6 +478,18 @@ Vec3 Matrix44::operator*(const Vec3& other) const
        (m.m[1][0] * other.x + m.m[1][1] * other.y + m.m[1][2] * other.z + m.m[1][3]) * fInvW,
        (m.m[2][0] * other.x + m.m[2][1] * other.y + m.m[2][2] * other.z + m.m[2][3]) * fInvW
        );
+}
+
+inline String Matrix44::to_s() const
+{
+ std::ostringstream s;
+ 
+ s << m.m[0][0] << ", " << m.m[0][1] << ", " << m.m[0][2] << ", "<< m.m[0][3] << ", "
+   << m.m[1][0] << ", " << m.m[1][1] << ", " << m.m[1][2] << ", "<< m.m[1][3] << ", "
+   << m.m[2][0] << ", " << m.m[2][1] << ", " << m.m[2][2] << ", "<< m.m[2][3] << ", "
+   << m.m[3][0] << ", " << m.m[3][1] << ", " << m.m[3][2] << ", "<< m.m[3][3];
+ 
+ return s.str();
 }
 
                                                                                        

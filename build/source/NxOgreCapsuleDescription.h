@@ -43,7 +43,16 @@ namespace NxOgre
                                                                                        
 
 /*! class. CapsuleDescription
-    desc. A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+    desc.
+         Description to describe a Capsule shape.
+    properties.
+      Real mHeight -- Height of the capsule default: 1.0
+      Real mRadius -- Radius of the capsule default: 1.0
+    validations.
+      mReal cannot have negative or zero values -- mSize <= 0
+      mRadius cannot have negative or zero values -- mSize <= 0
+    namespace. NxOgre
+    from. ShapeDescription
 */
 class NxOgrePublicClass CapsuleDescription : public ShapeDescription
 {
@@ -77,30 +86,70 @@ class NxOgrePublicClass CapsuleDescription : public ShapeDescription
   */
   NxShapeDesc*  createShapeDescription() const;
 
-  /*! function. reset
-      desc.
-          Resets the member variables to their default values according to the PhysX SDK.
-  */
-  void reset();
-  
-  /*! function. isValid
-      desc. 
-          Returns true if the description is valid.
-  */
-  bool isValid() const;
-  
-  /*! variable. mRadius
-      desc.
-          Radius of the capsule
-  */
-  Real mRadius;
-  
+
+
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
 
   /*! variable. mHeight
       desc.
-          Distance between the center of top and center of the bottom hemispheres of the capsule.
+          Height of the capsule
+      default.
+          1.0
   */
   Real mHeight;
+
+  /*! variable. mRadius
+      desc.
+          Radius of the capsule
+      default.
+          1.0
+  */
+  Real mRadius;
+
+  /*! constructor. CapsuleDescription
+      desc.
+          Copy constructor for CapsuleDescription
+  */
+  CapsuleDescription(const CapsuleDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  CapsuleDescription& operator=(const CapsuleDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this CapsuleDescription as a pointer.
+  */
+  virtual CapsuleDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of CapsuleDescription into another.
+  */
+  virtual void copy_into(CapsuleDescription*) const;
+
+  /*! function. reset
+      desc.
+          Resets CapsuleDescription properties to their default values.
+  */
+  virtual void reset();
+
+  /*! function. valid
+      desc.
+          Is this CapsuleDescription valid according to each property.
+  */
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "CapsuleDescription-12a528ce1e3ee22e9914301366c24bc0"
 
 }; // class ShapeDescription
 

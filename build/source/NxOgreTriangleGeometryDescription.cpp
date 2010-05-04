@@ -42,19 +42,12 @@ namespace NxOgre
 TriangleGeometryDescription::TriangleGeometryDescription(Mesh* mesh, const Matrix44& local_pose)
 : mMesh(mesh), mMeshFlags(0), mMeshPagingMode(Enums::MeshPagingMode_Manual)
 {
- ShapeDescription::reset(0, local_pose);
+ ShapeDescription::reset();
+ mLocalPose = local_pose;
 }
 
 TriangleGeometryDescription::~TriangleGeometryDescription()
 {
-}
-
-void TriangleGeometryDescription::reset()
-{
- ShapeDescription::reset();
- mMesh = 0;
- mMeshFlags = 0;
- mMeshPagingMode = Enums::MeshPagingMode_Manual;
 }
 
 NxShapeDesc* TriangleGeometryDescription::createShapeDescription() const
@@ -69,18 +62,74 @@ NxShapeDesc* TriangleGeometryDescription::createShapeDescription() const
  return description;
 }
 
-bool TriangleGeometryDescription::isValid() const
-{
- if (mMesh == 0)
-  return false;
- if (mMesh->getType() != Enums::MeshType_Triangle)
-  return false;
- 
- return ShapeDescription::isValid();
-}
 
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+TriangleGeometryDescription::TriangleGeometryDescription(const TriangleGeometryDescription& other)
+{
+ other.copy_into(this);
+}
+
+TriangleGeometryDescription& TriangleGeometryDescription::operator=(const TriangleGeometryDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+TriangleGeometryDescription* TriangleGeometryDescription::duplicate() const
+{
+ TriangleGeometryDescription* dup = new TriangleGeometryDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void TriangleGeometryDescription::copy_into(TriangleGeometryDescription* other) const
+{
+ ShapeDescription::copy_into(other);
+
+ other->mMesh = mMesh;
+ other->mMeshFlags = mMeshFlags;
+ other->mMeshPagingMode = mMeshPagingMode;
+}
+
+void TriangleGeometryDescription::reset()
+{
+ mMesh = NULL;
+ mMeshFlags = 0;
+ mMeshPagingMode = Enums::MeshPagingMode_Manual;
+}
+
+bool TriangleGeometryDescription::valid() const
+{
+ if (!ShapeDescription::valid())
+  return false;
+ return true;
+}
+
+void TriangleGeometryDescription::inspect() const
+{
+ ShapeDescription::inspect();
+
+ std::cout << "TriangleGeometryDescription => {\n";
+ std::cout << "  mMesh => '" << mMesh << "'\n";
+ std::cout << "  mMeshFlags => '" << mMeshFlags << "'\n";
+ std::cout << "  mMeshPagingMode => '" << mMeshPagingMode << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "TriangleGeometryDescription-23818dae2a7d516e43ac7064c70a63dd"
+

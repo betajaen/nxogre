@@ -52,7 +52,7 @@ ActorMachinePart::~ActorMachinePart()
 {
 }
 
-void ActorMachinePart::simulate(float time)
+void ActorMachinePart::simulate(float)
 {
  mPointRenderable->render(mActor->getGlobalPosition(), mActor->getGlobalOrientationQuat());
 }

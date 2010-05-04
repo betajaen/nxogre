@@ -105,6 +105,8 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   typedef  ptr_multihashmap<ForceField>                       ForceFields;
   typedef  ptr_multihashmap<ForceField>::iterator_t           ForceFieldIterator;
   typedef  ptr_map<unsigned short, Material>                  IndexedMaterials;
+  typedef  vector<Machine*>                                   Machines;
+  typedef  vector_iterator<Machine*>                          MachineIterator;
 
 #if NxOgreUsePhysXCharacterController == 1
   typedef  ptr_multihashmap<CharacterController>              CharacterControllers;
@@ -605,8 +607,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
 
   /** \internal Master machines array
   */
-  //Array<Machine*>  mMachines;
-  ptr_vector<Machine> mMachines;
+  Machines          mMachines;
 
   /** \internal
   */

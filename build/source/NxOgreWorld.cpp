@@ -175,7 +175,7 @@ World::World(const WorldDescription& description)
   sdk_description.flags |= NX_SDKF_NO_HARDWARE;
  sdk_description.hwConvexMax = description.mHardwareMaximumConvex;
  sdk_description.hwPageMax= description.mHardwareMaximumPage;
- sdk_description.hwPageSize = description.mHardwarePageSize;
+ sdk_description.hwPageSize = 65536; // Restriction imposed by NxPhysXSDKDesc
  
   
  NxSDKCreateError errorCode = NXCE_NO_ERROR;

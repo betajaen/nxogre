@@ -207,7 +207,6 @@ void Mesh::load(Resource* resource)
  }
  
  resource->seekBeginning();
- NxPhysicsSDK* sdk = NxGetPhysicsSDK();
  
  if (mType == Enums::MeshType_Convex)
   mMesh.mConvex = Serialisation::NXS::loadConvexMesh(resource);
@@ -330,6 +329,13 @@ MeshData* Mesh::getMeshData()
   Serialisation::NXS::saveSkeletonMesh(mMesh.mSkeleton, data);
 
  return data;
+}
+
+String Mesh::inspect() const
+{
+ std::ostringstream s;
+ s << "{ 'name' => '" << getName() << "' 'type' => '" << getTypeAsString() << "' }";
+ return s.str();
 }
 
 

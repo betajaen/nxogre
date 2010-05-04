@@ -46,7 +46,7 @@ Notice::Notice(const std::string& file, unsigned int line, const std::string& de
   mDescription(description)
 {
  
- std::cout << str() << std::endl;
+ std::cout << to_s() << std::endl;
  
  if (NxOgre::ErrorStream::getSingleton())
   NxOgre::ErrorStream::getSingleton()->addNotice(*this);
@@ -87,8 +87,9 @@ const std::string& Notice::getDescription() const
  return mDescription;
 }
 
-std::string Notice::str() const
+std::string Notice::to_s() const
 {
+ 
  // Notice (ClassType)
  // =========================
  //
@@ -99,12 +100,13 @@ std::string Notice::str() const
  // Description Text. Description Text. Description Text. Description Text. Description Text. Description Text. 
  // 
  // From: File.cpp#42
-
- StringStream s;
- s << "Warning\n=======";
- s << "\n\n" << mDescription << "\nFrom: " << mFile << "#" << mLine << "\n\n";
+ 
+ std::ostringstream s;
+ s << "Notice\n======\n";
+ s << mDescription << "\nFrom: " << mFile << "#" << mLine << "\n\n";
  
  return s.str();
+ 
 }
 
 

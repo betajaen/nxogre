@@ -56,7 +56,7 @@ enum UserDestructionPolicy
 
 /*! enum. ExceptionType
 */
-enum
+enum ExceptionType
 {
  ExceptionType_UnknownError,
  ExceptionType_InternalError,
@@ -65,11 +65,10 @@ enum
  ExceptionType_PhysXInternalError,
  ExceptionType_NullPointerException,
  ExceptionType_NonNullPointerException,
- 
  ExceptionType_PhysXSDKCreationFailed,
  ExceptionType_DescriptionInvalid,
+ ExceptionType_WrongType,
  ExceptionType_PathInvalidException
- 
 };
 
 /*! enum. Axis
@@ -159,68 +158,6 @@ enum RigidBodyRole
  RigidBodyRole_None       = 0,
  RigidBodyRole_Puppeteer  = 1,
  RigidBodyRole_Puppet     = 2
-};
-
-/*! enum. ActorFlags
-    desc.
-         Actor flags to use with all types of RigidBodies.
-    note.
-         Compatible with @NxActorFlag@
-    enums.
-         ActorFlags_DisableCollision       -- Do not collide with other RigidBodies. Note this excludes from overlap tests.
-         ActorFlags_DisableResponse        -- Disable collision response
-         ActorFlags_LockCOM                -- Disable COM (Center of Mass) update when computing inertial properties at creation.
-         ActorFlags_DisableFluidCollision  -- Disable Collision with fluids.
-         ActorFlags_ContactModification    -- Turn on contact modification for the RigidBody.
-         ActorFlags_ForceConeFriction      -- Force cone friction to be used with this RigidBody.
-         ActorFlags_UserActorPairFiltering -- Enable custom contact filering.
-*/
-enum ActorFlags
-{
- ActorFlags_DisableCollision       = (1 << 0),
- ActorFlags_DisableResponse        = (1 << 1),
- ActorFlags_LockCOM                = (1 << 2),
- ActorFlags_DisableFluidCollision  = (1 << 3),
- ActorFlags_ContactModification    = (1 << 4),
- ActorFlags_ForceConeFriction      = (1 << 5),
- ActorFlags_UserActorPairFiltering = (1 << 6) 
-};
-
-/*! enum. BodyFlags
-    desc.
-         Body flags to use with Actor (and inherited) and KinematicActor types of RigidBodies ONLY.
-    note.
-         Compatible with @NxBodyFlag@
-    enums.
-         BodyFlags_DisableGravity       -- Gravity should not be applied to this RigidBody.
-         BodyFlags_FreezePositionX      -- Freeze movement in the X axis.
-         BodyFlags_FreezePositionY      -- Freeze movement in the Y axis.
-         BodyFlags_FreezePositionZ      -- Freeze movement in the Z axis.
-         BodyFlags_FreezePosition       -- Freeze position in all axes.
-         BodyFlags_FreezeRotationX      -- Freeze rotation in the X axis.
-         BodyFlags_FreezeRotationY      -- Freeze rotation in the Y axis.
-         BodyFlags_FreezeRotationZ      -- Freeze rotation in the Z axis.
-         BodyFlags_FreezeRotation       -- Freeze rotation in all axis.
-         BodyFlags_Frozen               -- Freeze position and rotation, in a sense pretend to be like a KinematicActor or StaticGeometry for a period of time.
-         BodyFlags_Visualisation        -- Visualise the body component in the VisualDebugger.
-         BodyFlags_FilterSleepVelocity  -- Filter sleep velocity.
-         BodyFlags_EnergySleepTest      -- Enable energy-based sleepig algorithm.
-*/
-enum BodyFlags
-{
- BodyFlags_DisableGravity          = (1 << 0),
- BodyFlags_FreezePositionX         = (1 << 1),
- BodyFlags_FreezePositionY         = (1 << 2),
- BodyFlags_FreezePositionZ         = (1 << 3),
- BodyFlags_FreezePosition          = BodyFlags_FreezePositionX | BodyFlags_FreezePositionY  | BodyFlags_FreezePositionZ,
- BodyFlags_FreezeRotationX         = (1 << 4),
- BodyFlags_FreezeRotationY         = (1 << 5),
- BodyFlags_FreezeRotationZ         = (1 << 6),
- BodyFlags_FreezeRotation          = BodyFlags_FreezeRotationX | BodyFlags_FreezeRotationY | BodyFlags_FreezeRotationZ,
- BodyFlags_Frozen                  = BodyFlags_FreezePosition | BodyFlags_FreezeRotation,
- BodyFlags_Visualisation           = (1 << 8),
- BodyFlags_FilterSleepVelocity     = (1 <<10),
- BodyFlags_EnergySleepTest         = (1 <<11),
 };
 
 /*! enum. ForceMode
@@ -483,19 +420,21 @@ enum ShapesType
     desc.
          Type of SimpleShape.
     enums.
-         SimpleShape_Box          -- Cuboid
-         SimpleShape_Sphere       -- Sphere
-         SimpleShape_Capsule      -- Capsule
-         SimpleShape_PointCloud   -- Convex point cloud
-         SimpleShape_TriangleMesh -- Triangle mesh.
+         SimpleShape_Box               -- Cuboid
+         SimpleShape_Sphere            -- Sphere
+         SimpleShape_Capsule           -- Capsule
+         SimpleShape_ConvexPointCloud  -- Convex point cloud
+         SimpleShape_TriangleMesh      -- Triangle mesh.
+         SimpleShape_Plane             -- Plane.
 */
 enum SimpleShapeType
 {
  SimpleShape_Box,
  SimpleShape_Sphere,
  SimpleShape_Capsule,
- SimpleShape_PointCloud,
+ SimpleShape_ConvexPointCloud,
  SimpleShape_TriangleMesh,
+ SimpleShape_Plane
 };
 
 /*! enum. ShapeFunctionType
@@ -577,6 +516,7 @@ enum ShapeCompartmentType
          ShapeFlags_IsSoftBodyDrain     -- Sets the shape to be a SoftBody drain.
          ShapeFlags_NoSoftBody          -- Disable Collision with SoftBody.
          ShapeFlags_TwoWaySoftBody      -- Enables the reaction of the shapes rigidbody on SoftBody collision.
+         ShapeFlags_Default             -- Enable Visualisation, TwoWayCloth and TwoWaySoftBody
 */
 enum ShapeFlags
 {
@@ -596,7 +536,8 @@ enum ShapeFlags
  ShapeFlags_TwoWayCloth         = (1<<17),
  ShapeFlags_IsSoftBodyDrain     = (1<<18),
  ShapeFlags_NoSoftBody          = (1<<19),
- ShapeFlags_TwoWaySoftBody      = (1<<20)
+ ShapeFlags_TwoWaySoftBody      = (1<<20),
+ ShapeFlags_Default             = Enums::ShapeFlags_Visualisation | Enums::ShapeFlags_TwoWayCloth | Enums::ShapeFlags_TwoWaySoftBody
 };
 
 /*! enum. MeshType

@@ -29,6 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreConvexDescription.h"
 #include "NxOgreMesh.h"
+#include "NxOgreReason.h"
 
 #include "NxPhysics.h"
 
@@ -42,24 +43,29 @@ namespace NxOgre
 ConvexDescription::ConvexDescription(Mesh* mesh, const MaterialIdentifier& material, const Matrix44& local_pose)
 : mMesh(mesh), mMeshFlags(0)
 {
- ShapeDescription::reset(material, local_pose);
+ ShapeDescription::reset();
+ mMaterial = material;
+ mLocalPose = local_pose;
 }
 
 ConvexDescription::~ConvexDescription()
 {
 }
 
-void ConvexDescription::reset()
-{
- ShapeDescription::reset();
- mMesh = 0;
- mMeshFlags = 0;
-}
-
 NxShapeDesc* ConvexDescription::createShapeDescription() const
 {
+ 
+ NxOgre_ThrowExceptionIfNull(mMesh, Classes::_Mesh);
+ 
+ if (mMesh->getType() != Enums::MeshType_Convex)
+ {
+  NxOgre_ThrowException(WrongTypeException, Reason::Exceptionise(mMesh, Enums::MeshType_Convex), Classes::_Mesh);
+  return 0;
+ }
+ 
  NxConvexShapeDesc* description = NXOGRE_NEW_PHYSX(NxConvexShapeDesc, PhysXClassAllocator);
  setShapeDescription(description);
+ 
  description->meshData = (mMesh == 0) ? 0 : mMesh->getAsConvex();
  description->meshFlags = mMeshFlags;
  return description;
@@ -71,3 +77,68 @@ NxShapeDesc* ConvexDescription::createShapeDescription() const
 } // namespace NxOgre
 
                                                                                        
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+ConvexDescription::ConvexDescription(const ConvexDescription& other)
+{
+ other.copy_into(this);
+}
+
+ConvexDescription& ConvexDescription::operator=(const ConvexDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+ConvexDescription* ConvexDescription::duplicate() const
+{
+ ConvexDescription* dup = new ConvexDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void ConvexDescription::copy_into(ConvexDescription* other) const
+{
+ ShapeDescription::copy_into(other);
+
+ other->mMesh = mMesh;
+ other->mMeshFlags = mMeshFlags;
+}
+
+void ConvexDescription::reset()
+{
+ mMesh = NULL;
+ mMeshFlags = 0;
+}
+
+bool ConvexDescription::valid() const
+{
+ if (!ShapeDescription::valid())
+  return false; // mMesh must be a convex mesh
+ if ((mMesh->getType() != Enums::MeshType_Convex))
+  return false;
+
+ return true;
+}
+
+void ConvexDescription::inspect() const
+{
+ ShapeDescription::inspect();
+
+ std::cout << "ConvexDescription => {\n";
+ std::cout << "  mMesh => '" << mMesh << "'\n";
+ std::cout << "  mMeshFlags => '" << mMeshFlags << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "ConvexDescription-1ead03930ffbdc2d8f5fbcfe475ea5e5"
+

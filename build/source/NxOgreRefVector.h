@@ -194,6 +194,21 @@ template<typename type> class ref_vector
    vector.erase(it);
    return ref;
   }
+  
+  // Erase a pointer from the vector, but don't delete it, and return pointer.
+  void release(type_ref ref)
+  {
+   if (ref == 0)
+    return;
+   for (vector_type::iterator it = vector.begin(); it != vector.end(); ++it)
+   {
+    if ((*it) == ref)
+    {
+     vector.erase(it);
+     break;
+    }
+   }
+  }
 
   // Erase a pointer from the vector then delete it.
   void erase(iterator_t& it)
@@ -201,7 +216,7 @@ template<typename type> class ref_vector
    type_ref ref = (*it);
    vector.erase(it);
   }
-
+/*
   // Erase a pointer from the vector then delete it.
   void erase(type_ref ref)
   {
@@ -215,7 +230,7 @@ template<typename type> class ref_vector
      break;
     }
    }
-  }
+  }*/
   
   // Erase all pointers from the vector
   void clear()

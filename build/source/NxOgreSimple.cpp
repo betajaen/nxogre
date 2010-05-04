@@ -38,42 +38,10 @@ namespace NxOgre
 
                                                                                        
 
-namespace Functions
+NxForceFieldShapeDesc* SimpleShape::to_ff_shape() const
 {
-
-                                                                                       
-
-extern inline void SimpleShapeToActorDescription(NxActorDesc& description, SimpleShape* shape)
-{
- switch(shape->mType)
- {
-  case NxOgre::Enums::SimpleShape_Box:
-  {
-   SimpleBox* box = (SimpleBox*) shape;
-   NxBoxShapeDesc s;
-   s.dimensions = box->mSize.as<NxVec3>();
-   s.localPose.t = box->mCenter.as<NxVec3>();
-   s.localPose.M.getRowMajor(box->mRotation.ptr());
-   description.shapes.push_back(&s);
-  }
-  break;
-  case NxOgre::Enums::SimpleShape_Sphere:
-  {
-   SimpleSphere* sphere = (SimpleSphere*) shape;
-   NxSphereShapeDesc s;
-   s.radius = sphere->mRadius;
-   description.shapes.push_back(&s);
-  }
-  break;
-
- }
+ return 0;
 }
-
-                                                                                       
-
-} // namespace Functions
-
-                                                                                       
 
 SimplePlane::SimplePlane()
 : mNormal(0,1,0), mDistance(0)
@@ -85,12 +53,24 @@ SimplePlane::SimplePlane(const Vec3& normal, float distance)
 { // constructor.
 }
 
+NxForceFieldShapeDesc* SimplePlane::to_ff_shape() const
+{
+ return 0;
+}
+
+Enums::SimpleShapeType SimplePlane::getType() const
+{
+ return Enums::SimpleShape_Plane;
+}
+
+
+
+
 SimpleBox::SimpleBox()
 { // constructor.
  mSize.zero();
  mRotation.identity();
 }
-
 
 SimpleBox::SimpleBox(const Vec3& size, const Vec3& position, const Quat& orientation)
 : mSize(size)
@@ -144,6 +124,23 @@ NxBox SimpleBox::to_box() const
  return box;
 }
 
+NxForceFieldShapeDesc*  SimpleBox::to_ff_shape() const
+{
+ NxBoxForceFieldShapeDesc* shape = NXOGRE_NEW_PHYSX(NxBoxForceFieldShapeDesc, PhysXClassAllocator);
+ shape->dimensions.set(mSize.as<NxVec3>());
+ shape->pose.t.set(mCenter.as<NxVec3>());
+ shape->pose.M.setColumnMajor(mRotation.ptr());
+ return shape;
+}
+
+Enums::SimpleShapeType SimpleBox::getType() const
+{
+ return Enums::SimpleShape_Box;
+}
+
+
+
+
 SimpleSphere::SimpleSphere()
 { // constructor.
 }
@@ -167,6 +164,22 @@ NxSphere SimpleSphere::to_sphere() const
  return sphere;
 }
 
+NxForceFieldShapeDesc* SimpleSphere::to_ff_shape() const
+{
+ NxSphereForceFieldShapeDesc* shape = NXOGRE_NEW_PHYSX(NxSphereForceFieldShapeDesc, PhysXClassAllocator);
+ shape->pose.t.set(mCenter.as<NxVec3>());
+ shape->radius = mRadius;
+ return shape;
+}
+
+Enums::SimpleShapeType SimpleSphere::getType() const
+{
+ return Enums::SimpleShape_Sphere;
+}
+
+
+
+
 SimpleCapsule::SimpleCapsule()
 : mRadius(0)
 {
@@ -177,12 +190,27 @@ SimpleCapsule::SimpleCapsule(Real radius, const Vec3& p0, const Vec3& p1)
 { // constructor.
 }
 
+SimpleCapsule::SimpleCapsule(const Vec3& origin, const Vec3& direction, Real radius)
+{ // constructor.
+ mP0 = mP1 = origin;
+ mP1 += direction;
+}
 
 SimpleCapsule::SimpleCapsule(const NxCapsule& capsule)
 {
  mP0.from<NxVec3>(capsule.p0);
  mP1.from<NxVec3>(capsule.p1);
  mRadius = capsule.radius;
+}
+
+Vec3 SimpleCapsule::getOrigin()
+{
+ return mP0;
+}
+
+Vec3 SimpleCapsule::getDirection()
+{
+ return mP1 - mP0;
 }
 
 NxCapsule SimpleCapsule::to_capsule() const
@@ -192,6 +220,44 @@ NxCapsule SimpleCapsule::to_capsule() const
  capsule.p1.set(mP1.as<NxVec3>());
  capsule.radius = mRadius;
  return capsule;
+}
+
+NxForceFieldShapeDesc* SimpleCapsule::to_ff_shape() const
+{
+ return 0;
+ /*
+ NxCapsule cap;
+ 
+ NxCapsuleForceFieldShapeDesc* shape = NXOGRE_NEW_PHYSX(NxCapsuleForceFieldShapeDesc, PhysXClassAllocator);
+ //shape->pose.t.set(.as<NxVec3>());
+ //shape->pose.M.fromQuat(NxQuat()));
+ shape->radius = mRadius;
+ return shape;*/
+}
+
+Enums::SimpleShapeType SimpleCapsule::getType() const
+{
+ return Enums::SimpleShape_Capsule;
+}
+
+
+
+SimpleConvexPointCloud::SimpleConvexPointCloud()
+{ // empty constructor.
+}
+
+SimpleConvexPointCloud::~SimpleConvexPointCloud()
+{ // empty destructor.
+}
+
+Enums::SimpleShapeType  SimpleConvexPointCloud::getType() const
+{
+ return Enums::SimpleShape_ConvexPointCloud;
+}
+
+NxForceFieldShapeDesc*  SimpleConvexPointCloud::to_ff_shape() const
+{
+ return 0;
 }
 
                                                                                        

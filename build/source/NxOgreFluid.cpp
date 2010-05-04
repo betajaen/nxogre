@@ -136,7 +136,7 @@ NxFluid* Fluid::getFluid()
  return mFluid;
 }
 
-bool Fluid::advance(float deltaTime, const Enums::Priority&)
+bool Fluid::advance(float, const Enums::Priority&)
 {
  if (mRenderable && mParticleData)
  {
@@ -168,7 +168,7 @@ Fluid::FluidEmitterIterator Fluid::getEmitters()
  return FluidEmitterIterator(mFluidEmitters);
 }
 
-unsigned int Fluid::addParticles(ParticleData&, bool appendIds)
+unsigned int Fluid::addParticles(ParticleData&, bool)
 {
  return 0; // Temp.
 }

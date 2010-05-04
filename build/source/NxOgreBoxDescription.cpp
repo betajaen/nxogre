@@ -39,31 +39,31 @@ namespace NxOgre
                                                                                        
 
 BoxDescription::BoxDescription(const Vec3& size, const MaterialIdentifier& material, const Matrix44& local_pose)
-: mSize(size)
 {
- ShapeDescription::reset(material, local_pose);
+ ShapeDescription::reset();
+ mSize = size;
+ mMaterial = material;
+ mLocalPose = local_pose;
 }
 
 BoxDescription::BoxDescription(Real width, Real height, Real depth, const MaterialIdentifier& material, const Matrix44& local_pose)
-: mSize(width, height, depth)
 {
- ShapeDescription::reset(material, local_pose);
+ ShapeDescription::reset();
+ mSize = Vec3(width, height, depth);
+ mMaterial = material;
+ mLocalPose = local_pose;
 }
 
-BoxDescription::BoxDescription(Real combined_width_height_and_depth, const MaterialIdentifier& material, const Matrix44& local_pose)
-: mSize(combined_width_height_and_depth, combined_width_height_and_depth, combined_width_height_and_depth)
+BoxDescription::BoxDescription(Real r, const MaterialIdentifier& material, const Matrix44& local_pose)
 {
- ShapeDescription::reset(material, local_pose);
+ ShapeDescription::reset();
+ mSize = Vec3(r, r, r);
+ mMaterial = material;
+ mLocalPose = local_pose;
 }
 
 BoxDescription::~BoxDescription()
 {
-}
-
-void BoxDescription::reset()
-{
- ShapeDescription::reset();
- mSize.set(1.0, 1.0, 1.0);
 }
 
 NxShapeDesc* BoxDescription::createShapeDescription() const
@@ -74,20 +74,70 @@ NxShapeDesc* BoxDescription::createShapeDescription() const
  return description;
 }
 
-bool BoxDescription::isValid() const
-{
- if (mSize.x < 0.0f)
-  return false;
- if (mSize.y < 0.0f)
-  return false;
- if (mSize.z < 0.0f)
-  return false;
- 
- return ShapeDescription::isValid();
-}
-
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+BoxDescription::BoxDescription(const BoxDescription& other)
+{
+ other.copy_into(this);
+}
+
+BoxDescription& BoxDescription::operator=(const BoxDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+BoxDescription* BoxDescription::duplicate() const
+{
+ BoxDescription* dup = new BoxDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void BoxDescription::copy_into(BoxDescription* other) const
+{
+ ShapeDescription::copy_into(other);
+
+ other->mSize = mSize;
+}
+
+void BoxDescription::reset()
+{
+ mSize.set(1,1,1);
+}
+
+bool BoxDescription::valid() const
+{
+ if (!ShapeDescription::valid())
+  return false; // mSize cannot have negative or zero values
+ if (mSize.isNegative() || mSize.isZero())
+  return false;
+
+ return true;
+}
+
+void BoxDescription::inspect() const
+{
+ ShapeDescription::inspect();
+
+ std::cout << "BoxDescription => {\n";
+ std::cout << "  mSize => '" << mSize << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "BoxDescription-b0de51e9b492dd515101858546e9314f"
+

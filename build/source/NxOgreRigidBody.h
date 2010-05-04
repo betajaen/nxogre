@@ -35,6 +35,8 @@
 #include "NxOgreCommon.h"
 #include "NxOgreShape.h"
 
+#include "NxOgreRigidbodyFlags.h"
+
                                                                                        
 
 namespace NxOgre
@@ -79,6 +81,26 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
   */
   bool  isDynamic(void) const;
   
+
+  /*! function. raiseFlag
+      desc. 
+          Set a flag.
+  */
+  void raiseFlag(RigidbodyFlags::Flags);
+  
+  /*! function. clearFlag
+      desc. 
+          Clear a flag.
+  */
+  void clearFlag(RigidbodyFlags::Flags);
+  
+  /*! function. hasFlag
+      desc. 
+          Is a flag set?
+  */
+  bool hasFlag(RigidbodyFlags::Flags) const;
+
+
   /*! function. getNxActor
       desc.
            Get the PhysX *NxActor* that this RigidBody represents.

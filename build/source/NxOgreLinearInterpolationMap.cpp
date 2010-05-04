@@ -27,43 +27,4 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreRevoluteJointDescription.h"
-#include "NxOgreJointDescription.h"
-
-                                                                                       
-
-namespace NxOgre
-{
-
-                                                                                       
-
-RevoluteJointDescription::RevoluteJointDescription(void)
-{
- reset();
-}
-
-RevoluteJointDescription::~RevoluteJointDescription(void)
-{
-}
-
-void RevoluteJointDescription::reset(void)
-{
- JointDescription::reset();
- 
- mProjectionDistance = 1.0;
- mProjectionAngle = 0.0872f;
- mRevoluteJointFlags = 0;
- mProjectionMode = Enums::JointProjectionMode_None;
- 
-}
-
-bool RevoluteJointDescription::isValid(void) const
-{
- return true; // temp.
-}
-
-                                                                                       
-
-} // namespace NxOgre
-
-                                                                                       
+#include "NxOgreLinearInterpolationMap.h"

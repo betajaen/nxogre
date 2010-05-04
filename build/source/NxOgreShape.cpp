@@ -39,7 +39,7 @@ namespace NxOgre
                                                                                        
 
 Shape::Shape(NxShape* shape)
-: mShape(shape), mNameHash(BLANK_HASH)
+: mShape(shape), mId(0)
 {
 }
 
@@ -67,19 +67,14 @@ NxShape* Shape::getAbstractShape() const
  return mShape;
 }
 
-StringHash Shape::getNameHash() const
+unsigned int Shape::getId() const
 {
- return mNameHash;
+ return mId;
 }
 
-String Shape::getName() const
+void Shape::setId(unsigned int id)
 {
- return mName;
-}
-
-void Shape::setName(const String& name)
-{
- mName = name;
+ mId = id;
 }
 
 Matrix44 Shape::getLocalPose() const
@@ -187,7 +182,7 @@ void Shape::setInteractingCompartmentTypes(const int& types)
 
 String Shape::to_s() const
 {
- return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Shape") ));
+ return String("Shape");
 }
 
                                                                                        

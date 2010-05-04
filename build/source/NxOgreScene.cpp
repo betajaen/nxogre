@@ -96,7 +96,8 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
  mNameHash = Strings::hash(mName);
  
  NxSceneDesc scene_description;
- Functions::PrototypeFunctions::SceneDescriptionToNxSceneDesc(description, scene_description);
+ //Functions::PrototypeFunctions::SceneDescriptionToNxSceneDesc(description, scene_description);
+ description.to_nxscene(&scene_description);
  mProcessingPriority = description.mProcessingPriority;
  mFetchingPriority = description.mFetchingPriority;
  mProcessing = false;
@@ -121,9 +122,11 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
   mMaterials.insert(material->getNameHash(), material);
   mIndexedMaterials.insert(0, material);
   
-  TimeController::getSingleton()->mListeners[mProcessingPriority].insert(this);
-  TimeController::getSingleton()->mListeners[mFetchingPriority].insert(this);
-  
+//  TimeController::getSingleton()->mListeners[mProcessingPriority].push_back(this);
+//  TimeController::getSingleton()->mListeners[mFetchingPriority].push_back(this);
+  TimeController::getSingleton()->addTimeListener(this, mProcessingPriority);
+  TimeController::getSingleton()->addTimeListener(this, mFetchingPriority);
+
   
   mSceneTimer = new FixedSceneTimer(this, description.mMaxTimeStep); // temp.
   
@@ -132,8 +135,8 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 Scene::~Scene(void)
 {
  
- TimeController::getSingleton()->mListeners[mProcessingPriority].remove(this);
- TimeController::getSingleton()->mListeners[mFetchingPriority].remove(this);
+ TimeController::getSingleton()->removeTimeListener(this, mProcessingPriority);
+ TimeController::getSingleton()->removeTimeListener(this, mFetchingPriority);
  
  //TimeController::getSingleton()->removeListener(this);
  
@@ -534,7 +537,7 @@ void Scene::registerMachine(Machine* machine)
 
 void Scene::unregisterMachine(Machine* machine)
 {
- mMachines.erase(machine);
+ mMachines.erase(mMachines.index(machine));
 }
 
 Cloth* Scene::createCloth(const ClothDescription& description, Renderable* renderable, Enums::Priority rp)

@@ -42,7 +42,14 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+/*! class. PlaneGeometryDescription
+    desc.
+      Description to describe a Plane Geometry shape.
+    properties.
+      Vec3 mNormal -- Normal of the plane default. default: mNormal.set(0,1,0)
+      Real mDistance -- Distance from the world scene. default: 0
+    namespace. NxOgre
+    from. ShapeDescription
 */
 class NxOgrePublicClass PlaneGeometryDescription : public ShapeDescription
 {
@@ -60,7 +67,9 @@ class NxOgrePublicClass PlaneGeometryDescription : public ShapeDescription
           Required destructor
   */
  ~PlaneGeometryDescription();
-
+  
+ protected:
+  
   /*! function. createShapeDescription
       desc.
           Create NxBoxShapeDesc to be attached to an RigidBody.
@@ -70,27 +79,69 @@ class NxOgrePublicClass PlaneGeometryDescription : public ShapeDescription
   */
   NxShapeDesc*  createShapeDescription() const;
 
-  /*! function. reset
-      desc.
-          Resets the member variables to their default values according to the PhysX SDK.
-  */
-  void reset();
 
-  /*! variable. mNormal
-      desc.
-          Direction of the plane (as integers).
-      default.
-          Vec3(0,1,0)
-  */
-  Vec3 mNormal;
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
 
   /*! variable. mDistance
       desc.
-          Distance from the center of the world
+          Distance from the world scene.
       default.
           0
   */
   Real mDistance;
+
+  /*! variable. mNormal
+      desc.
+          Normal of the plane default.
+      default.
+          mNormal.set(0,1,0)
+  */
+  Vec3 mNormal;
+
+  /*! constructor. PlaneGeometryDescription
+      desc.
+          Copy constructor for PlaneGeometryDescription
+  */
+  PlaneGeometryDescription(const PlaneGeometryDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  PlaneGeometryDescription& operator=(const PlaneGeometryDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this PlaneGeometryDescription as a pointer.
+  */
+  virtual PlaneGeometryDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of PlaneGeometryDescription into another.
+  */
+  virtual void copy_into(PlaneGeometryDescription*) const;
+
+  /*! function. reset
+      desc.
+          Resets PlaneGeometryDescription properties to their default values.
+  */
+  virtual void reset();
+
+  /*! function. valid
+      desc.
+          Is this PlaneGeometryDescription valid according to each property.
+  */
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "PlaneGeometryDescription-e9d569ded62d6428f4adef457efaed17"
 
 }; // class PlaneGeometryDescription
 

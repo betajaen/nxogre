@@ -67,7 +67,6 @@ class PhysXPointer : public SixteenBytesAllocatable
   {
   }
   
-  
   template<typename T>  T* get(void)
   {
    return static_cast<T*>(mRepClass);
@@ -86,7 +85,7 @@ class PhysXPointer : public SixteenBytesAllocatable
   
  protected:
   
-  const int    mType;
+  int          mType;
   
   void*        mRepClass;
 

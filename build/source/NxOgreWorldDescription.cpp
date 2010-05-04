@@ -29,46 +29,84 @@
 #include "NxOgreStable.h"
 #include "NxOgreWorldDescription.h"
 
-                                                                                       
-
 namespace NxOgre
 {
-
-                                                                                       
 
 WorldDescription::WorldDescription(void)
 {
  reset();
 }
 
-void WorldDescription::reset(void)
+} // namespace NxOgre
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
 {
+
+WorldDescription::WorldDescription(const WorldDescription& other)
+{
+ other.copy_into(this);
+}
+
+WorldDescription& WorldDescription::operator=(const WorldDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+WorldDescription* WorldDescription::duplicate() const
+{
+ WorldDescription* dup = new WorldDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void WorldDescription::copy_into(WorldDescription* other) const
+{
+ other->mAssertionResponse = mAssertionResponse;
+ other->mCookerThreadMask = mCookerThreadMask;
+ other->mHardwareMaximumConvex = mHardwareMaximumConvex;
+ other->mHardwareMaximumPage = mHardwareMaximumPage;
+ other->mNoHardware = mNoHardware;
+}
+
+void WorldDescription::reset()
+{
+ mAssertionResponse = Enums::PhysXAssertion_Continue;
  mCookerThreadMask = 0;
  mHardwareMaximumConvex = 2048;
  mHardwareMaximumPage = 256;
- mHardwarePageSize = 65536;
  mNoHardware = false;
 }
 
-bool WorldDescription::valid(void)
+bool WorldDescription::valid() const
 {
- // Hardware page size must be 65536
- if (mHardwarePageSize != 65536)
+ // mHardwareMaximumConvex must be a power of 2
+ if ((mHardwareMaximumConvex & (mHardwareMaximumConvex - 1)))
   return false;
-
- // Hardware Convex Maximum must be a power of 2.
- if (mHardwareMaximumConvex & (mHardwareMaximumConvex - 1))
-  return false;
-
- // Hardware Page Maximum must be a power of 2
- if (mHardwareMaximumPage & (mHardwareMaximumPage - 1))
+ // mHardwareMaximumPage must be a power of 2
+ if ((mHardwareMaximumPage & (mHardwareMaximumPage - 1)))
   return false;
 
  return true;
 }
 
-                                                                                       
+void WorldDescription::inspect() const
+{
+ std::cout << "WorldDescription => {\n";
+ std::cout << "  mAssertionResponse => '" << mAssertionResponse << "'\n";
+ std::cout << "  mCookerThreadMask => '" << mCookerThreadMask << "'\n";
+ std::cout << "  mHardwareMaximumConvex => '" << mHardwareMaximumConvex << "'\n";
+ std::cout << "  mHardwareMaximumPage => '" << mHardwareMaximumPage << "'\n";
+ std::cout << "  mNoHardware => '" << mNoHardware << "'\n";
+ std::cout << "}\n";
+}
+
 
 } // namespace NxOgre
 
-                                                                                       
+// END - Serialisation. "WorldDescription-c13960d86c98f541e399d9182795dca9"
+

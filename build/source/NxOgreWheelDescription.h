@@ -59,6 +59,7 @@ class NxOgrePublicClass WheelDescription : public ShapeDescription
   */
   virtual                                    ~WheelDescription();
   
+  virtual NxShapeDesc* createShapeDescription() const;
   
   /** \brief Resets the member variables to their default values according to the PhysX SDK.
   */

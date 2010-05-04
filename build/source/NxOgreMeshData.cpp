@@ -38,7 +38,7 @@ namespace NxOgre
 
                                                                                        
 
-MeshData::MeshData() : mType(NxOgre::Enums::MeshType_Unknown), mClothWeldingDistance(0.0f), mFlags(0)
+MeshData::MeshData() : mType(NxOgre::Enums::MeshType_Unknown), mClothWeldingDistance(0.0f)
 {
 }
 
@@ -58,7 +58,7 @@ void MeshData::clear()
  mMaterials.clear();
  mFlags.clear();
  mMasses.clear();
- mFlags = 0;
+ mMeshFlags = 0;
  mClothWeldingDistance = 0.0f;
 }
 

@@ -49,7 +49,7 @@ Exception::Exception(const std::string& file, unsigned int line, const std::stri
   mExceptionName(exception_name)
 {
  
- std::cout << str() << std::endl;
+ std::cout << to_s() << std::endl;
  
  if (NxOgre::ErrorStream::getSingleton())
   NxOgre::ErrorStream::getSingleton()->addException(*this);
@@ -111,8 +111,9 @@ unsigned int Exception::getClassType() const
  return mClassType;
 }
 
-std::string Exception::str() const
+std::string Exception::to_s() const
 {
+
  // ExceptionName (ClassType)
  // =========================
  //
@@ -124,20 +125,15 @@ std::string Exception::str() const
  // 
  // From: File.cpp#42
 
- StringStream s;
- std::string header(mExceptionName);
- header.append("(");
- header.append(Classes::TypeToCStr(mClassType));
- header.append(")");
- s << header << "\n";
- 
- for (unsigned int i=0; i < header.length(); i++)
-  s << "=";
- s << "\n\n" << mDescription << "\nFrom: " << mFile << "#" << mLine << "\n\n";
- 
+ std::ostringstream s;
+ s << "\n=====================================================================\n";
+ s << mExceptionName <<  " (" << Classes::TypeToCStr(mClassType) << ")\n";
+ s << "=====================================================================\n";
+ s << "\n" << mDescription << "\nFrom: " << mFile << "#" << mLine << "\n\n";
+ s << "=====================================================================\n\n";
  return s.str();
-}
 
+}
 
                                                                                        
 

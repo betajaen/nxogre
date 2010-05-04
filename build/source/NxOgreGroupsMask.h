@@ -32,6 +32,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#include "NxOgreString.h"
 
                                                                                        
 
@@ -66,6 +67,14 @@ class NxOgrePublicClass GroupsMask
           Set bits0, bits1, bits2, bits3 to zero.
   */
   void zero();
+
+  inline String to_s() const;
+
+  inline NxOgrePublicFunction friend std::ostream& operator << (std::ostream& o, const GroupsMask& m)
+  {
+   o << m.to_s();
+   return o;
+  }
 
   unsigned int mBits0, mBits1, mBits2, mBits3;
   

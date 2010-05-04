@@ -41,55 +41,120 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. WorldDescription
+    namespace. NxOgre
+    desc. Description class for World
+    
+    properties.
+     bool mNoHardware -- Disable simulation on a PPU or GPU completely. default: false
+     unsigned int mHardwareMaximumPage -- Maximum number of hardware pages supported on the hardware. default: 256
+     unsigned int mHardwareMaximumConvex -- Maximum number of convex meshes that would be resident on hardware. default: 2048
+     unsigned int mCookerThreadMask -- Thread affinity mask for the background cooker thread. default: 0
+     Enums::PhysXAssertionResponse mAssertionResponse -- What to do when there is an assertion from PhysX. default: Enums::PhysXAssertion_Continue
+    validations.
+     mHardwareMaximumConvex must be a power of 2 -- (mHardwareMaximumConvex & (mHardwareMaximumConvex - 1))
+     mHardwareMaximumPage must be a power of 2 -- (mHardwareMaximumPage & (mHardwareMaximumPage - 1))
 */
 class NxOgrePublicClass WorldDescription
 {
-  public: // Functions
   
-  /** \brief WorldDescription constructor, all it does is call WorldDescription::reset.
+  public:
+    
+  WorldDescription();
+  
+
+
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
+
+  /*! variable. mAssertionResponse
+      desc.
+          What to do when there is an assertion from PhysX.
+      default.
+          Enums::PhysXAssertion_Continue
   */
-                                              WorldDescription(void);
-  
-  /** \brief Resets everything to their default values, and pointers are set to NULL.
+  Enums::PhysXAssertionResponse mAssertionResponse;
+
+  /*! variable. mCookerThreadMask
+      desc.
+          Thread affinity mask for the background cooker thread.
+      default.
+          0
   */
-  void                                        reset(void);
-  
-  /** \brief Returns if the variables are in a valid range or not
+  unsigned int mCookerThreadMask;
+
+  /*! variable. mHardwareMaximumConvex
+      desc.
+          Maximum number of convex meshes that would be resident on hardware.
+      default.
+          2048
+      condition.
+          mHardwareMaximumConvex must be a power of 2
   */
-                        bool                  valid(void);
-  
-  /** \brief Disable simulation on a PPU or GPU completely.
-      \default false
+  unsigned int mHardwareMaximumConvex;
+
+  /*! variable. mHardwareMaximumPage
+      desc.
+          Maximum number of hardware pages supported on the hardware.
+      default.
+          256
+      condition.
+          mHardwareMaximumPage must be a power of 2
   */
-  bool                                        mNoHardware;
-  
-  /** \brief Size of hardware mesh pages.
-      \note  Currently the PhysX SDK only supports a value of 65536 only.
-      \default 65536
+  unsigned int mHardwareMaximumPage;
+
+  /*! variable. mNoHardware
+      desc.
+          Disable simulation on a PPU or GPU completely.
+      default.
+          false
   */
-  unsigned int                                mHardwarePageSize;
-  
-  /** \brief Maximum number of hardware pages supported on the hardware, must be a power of 2.
-      \default 256
+  bool mNoHardware;
+
+  /*! constructor. WorldDescription
+      desc.
+          Copy constructor for WorldDescription
   */
-  unsigned int                                mHardwareMaximumPage;
-  
-  /** \brief Maximum number of convex meshes that would be resident on hardware, must be a power of 2.
-      \default 2048
+  WorldDescription(const WorldDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
   */
-  unsigned int                                mHardwareMaximumConvex;
-  
-  /** \brief Thread affinity mask for the background cooker thread.
-      \default 0 (SDK determines the affinity).
+  WorldDescription& operator=(const WorldDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this WorldDescription as a pointer.
   */
-  unsigned int                                mCookerThreadMask;
-  
-  /** \brief What to do when there is an assertion from PhysX.
-      \default PhysXAssertion_Continue
+  virtual WorldDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of WorldDescription into another.
   */
-  Enums::PhysXAssertionResponse               mAssertionResponse;
-  
+  virtual void copy_into(WorldDescription*) const;
+
+  /*! function. reset
+      desc.
+          Resets WorldDescription properties to their default values.
+  */
+  virtual void reset();
+
+  /*! function. valid
+      desc.
+          Is this WorldDescription valid according to each property.
+  */
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "WorldDescription-c13960d86c98f541e399d9182795dca9"
+
 }; // class WorldDescription
 
                                                                                        

@@ -29,6 +29,8 @@
 #include "NxOgreStable.h"
 #include "NxOgreWheelDescription.h"
 
+#include "NxPhysics.h"
+
                                                                                        
 
 namespace NxOgre
@@ -58,6 +60,39 @@ void WheelDescription::reset()
  mBrakeTorque = 0;
  mSteeringAngle = 0;
  mContactModifier = 0;
+}
+
+
+NxShapeDesc* WheelDescription::createShapeDescription() const
+{
+ 
+ NxWheelShapeDesc* description = NXOGRE_NEW_PHYSX(NxWheelShapeDesc, PhysXClassAllocator);
+ setShapeDescription(description);
+ 
+  description->radius = mRadius;
+  description->suspensionTravel = mSuspensionTravel;
+  description->suspension.damper = mSuspension.mDamper;
+  description->suspension.spring = mSuspension.mSpring;
+  description->suspension.targetValue = mSuspension.mTargetValue;
+  description->longitudalTireForceFunction.asymptoteSlip = mLongitudalTireFunction.mAsymptoteSlip;
+  description->longitudalTireForceFunction.asymptoteValue = mLongitudalTireFunction.mAsymptoteValue;
+  description->longitudalTireForceFunction.extremumSlip = mLongitudalTireFunction.mExtremumSlip;
+  description->longitudalTireForceFunction.extremumValue = mLongitudalTireFunction.mExtremumValue;
+  description->longitudalTireForceFunction.stiffnessFactor = mLongitudalTireFunction.mStiffnessFactor;
+  description->lateralTireForceFunction.asymptoteSlip = mLateralTireFunction.mAsymptoteSlip;
+  description->lateralTireForceFunction.asymptoteValue = mLateralTireFunction.mAsymptoteValue;
+  description->lateralTireForceFunction.extremumSlip = mLateralTireFunction.mExtremumSlip;
+  description->lateralTireForceFunction.extremumValue = mLateralTireFunction.mExtremumValue;
+  description->lateralTireForceFunction.stiffnessFactor = mLateralTireFunction.mStiffnessFactor;
+  description->inverseWheelMass = mInverseWheelMass;
+  description->wheelFlags = mWheelFlags;
+  description->motorTorque = mMotorTorque;
+  description->brakeTorque = mBrakeTorque;
+  description->steerAngle = mSteeringAngle;
+
+
+ return description;
+
 }
 
                                                                                        

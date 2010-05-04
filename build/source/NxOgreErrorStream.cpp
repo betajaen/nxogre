@@ -70,8 +70,7 @@ void ErrorStream::addException(const Exception& exception)
 {
  if (mLogResource)
  {
-  std::string str = exception.str();
-  mLogResource->write(str.c_str(), str.length());
+  mLogResource->writeString(exception.to_s());
  }
  
  for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)
@@ -83,8 +82,7 @@ void ErrorStream::addWarning(const Warning& warning)
 {
  if (mLogResource)
  {
-  std::string str = warning.str();
-  mLogResource->write(str.c_str(), str.length());
+  mLogResource->writeString(warning.to_s());
  }
  
  for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)
@@ -96,8 +94,7 @@ void ErrorStream::addNotice(const Notice& notice)
 {
  if (mLogResource)
  {
-  std::string str = notice.str();
-  mLogResource->write(str.c_str(), str.length());
+  mLogResource->writeString(notice.to_s());
  }
  
  for (std::vector<ErrorListener*>::iterator it = mListeners.begin(); it != mListeners.end(); it++)

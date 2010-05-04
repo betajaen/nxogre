@@ -131,6 +131,7 @@ struct ShapeBinder
 Shape* createShape(NxShape* physx_shape, RigidBody* rigid_body)
 {
  Shape* shape = mFunctions[int(physx_shape->getType())] (physx_shape);
+ shape->setId((int) physx_shape->userData);
  physx_shape->userData = NXOGRE_NEW_NXOGRE PhysXPointer(shape, shape->getShapeType(), rigid_body);
  return shape;
 }

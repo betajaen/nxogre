@@ -56,25 +56,6 @@ class NxOgrePublicClass PrototypeFunctions
  public:
 
 #ifdef NXOGRE_SDK
-  /** \brief Copies all relevant ScenePrototype properties to a NxSceneDesc
-  */
-  static void SceneDescriptionToNxSceneDesc(const SceneDescription&, NxSceneDesc&);
-#endif
-
-
-#ifdef NXOGRE_SDK
-  /** \brief Copies all relevant RigidBodyPrototype properties to a NxActorDesc and NxBodyDesc.
-  */
-  static void RigidBodyDescriptionToNxActorAndNxBodyDesc(const RigidBodyDescription&, NxActorDesc&, NxBodyDesc&);
-#endif
-
-#ifdef NXOGRE_SDK
-  /** \brief Copies all relevant RigidBodyPrototype properties to a NxActorDesc and NxBodyDesc.
-  */
-  static void RigidBodyDescriptionToNxActorDesc(const RigidBodyDescription&, NxActorDesc&);
-#endif
-
-#ifdef NXOGRE_SDK
   /** \brief Copies all relevant Joint properties to a NxJointDesc.
   */
   static void JointDescriptionToNxJointDescription(const JointDescription&, NxJointDesc&);

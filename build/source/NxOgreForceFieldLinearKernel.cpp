@@ -40,7 +40,7 @@ namespace NxOgre
                                                                                        
 
 ForceFieldLinearKernel::ForceFieldLinearKernel(const ForceFieldLinearKernelDescription& desc, Scene* scene)
-: ForceFieldKernel(desc.mName)
+: ForceFieldKernel(desc.mName) 
 {
  
  NxForceFieldLinearKernelDesc description;

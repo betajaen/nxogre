@@ -34,6 +34,10 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
+#include "NxOgreRigidbodyFlags.h"
+#include "NxOgreDynamicRigidbodyFlags.h"
+
+
                                                                                        
 
 namespace NxOgre
@@ -41,193 +45,348 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. RigidBodyDescription
+    desc.
+      Description to describe a RigidBody and it's inherited classes.
+    properties.
+      String mName -- Name of the RigidBody. This is optional and may be ignored with some inherited RigidBodies (optional). default: mName.clear()
+      RigidbodyFlags mRigidbodyFlags -- Rigidbody flags. (See RigidbodyFlags) Enums: mRigidbodyFlags.reset();
+      DynamicRigidbodyFlags mDynamicRigidbodyFlags --  Flags for dynamic rigidbodies (Actors/KinematicBodies). default: mDynamicRigidbodyFlags.reset();
+      unsigned int mContactReportFlags -- Flags for contact reporting see (Enums::ContactPairFlags). default: 0
+      Compartment* mCompartment -- Compartment to use. default: NULL
+      Real mDensity -- Density (mass/shape volume). When set to zero, mMass is used. default: 0
+      GroupIdentifier mDominanceGroup -- Dominance group index to be assigned to. default: 0
+      GroupIdentifier mGroup -- Group index to be assigned to. default: 0
+      Real mAngularDamping -- Damping for angular motion. default: 0.05
+      Vec3 mAngularVelocity -- Initial angular velocity. default: mAngularVelocity.zero()
+      Real mCCDMotionThreshold -- CCD Motion Threshold. default: 0
+      Real mContactReportThreshold -- Force threshold for contact reports. default: NxOgreRealMax
+      MaterialIdentifier mForceFieldMaterial -- Force Field Material Index. default: 0
+      unsigned int mInternalThreadCount -- The number of SDK managed worker threads used when running the simulation is in parallel. default: 0
+      Real mLinearDamping -- Damping for linear motion. default: 0.0
+      Vec3 mLinearVelocity -- Initial linear velocity. default: mLinearVelocity.zero()
+      Real mMass -- Mass of a non-dynamic RigidBody. When set to zero, mDensity is used. default: 1.0
+      Matrix44 mMassLocalPose -- Mass Local Pose of the body portion of the Actor. default: mMassLocalPose.identity()
+      Vec3 mMassSpaceInertia -- Diagonal mass space inertia tensor in bodies mass frame. default: mMassSpaceInertia.zero()
+      Real mMaxAngularVelocity -- Maximum angular velocity of the Actor. When set to -1.0 it has none. default: -1.0
+      Real mSleepAngularVelocity -- Maximum angular velocity at which body can go to sleep. When set to -1.0 it has none. default: -1.0
+      Real mSleepDamping -- Damping factor for bodies that are about to sleep. default: 0
+      Real mSleepEnergyThreshold -- Threshold for the energy-based sleeping algorithm. Only if flags has Enums::BodyFlags_EnergySleepTest. default: -1.0
+      Real mSleepLinearVelocity -- Maximum linear velocity at which body can go to sleep. When set to -1.0 it has none. default: -1.0
+      unsigned int mSolverIterationCount -- Number of solver iterations performed when processing joint/contacts connected to this body. default: 4
+      Real mWakeUpCounter -- The body's initial wake up counter. default: 0.04
+      bool mAuxiliaryMirror -- Mirror this RigidBody (Actors and KinematicActors) to AuxiliaryScenes. default: false
+    validations.
+      mDensity cannot be negative and/or mass cannot non-zero -- (mDensity < 0.0) || (mDensity > 0.0 && mMass > 0.0)
+      mMass cannot be negative and/or density cannot non-zero -- (mMass < 0.0) || (mMass > 0.0 && mDensity > 0.0)
+      mWakeUpCounter cannot be negative -- (mWakeUpCounter < 0.0)
+      mLinearDamping cannot be negative -- (mLinearDamping < 0.0)
+      mAngularDamping cannot be negative -- (mAngularDamping < 0.0)
+      mCCDMotionThreshold cannot be negative -- (mCCDMotionThreshold < 0.0)
+      mSolverIterationCount cannot be less than 1 or more than 255 -- (mSolverIterationCount < 1) || (mSolverIterationCount > 255)
+      mContactReportThreshold cannot be negative -- (mContactReportThreshold < 0.0)
+    namespace. NxOgre
 */
 class NxOgrePublicClass RigidBodyDescription
 {
   public: // Functions
   
-  /** \brief RigidBodyDescription constructor, all it does is call RigidBodyDescription::reset.
+  /*! constructor. BoxDescription
+      desc.
+       Constructor, and resets the member variables to their default values according to the PhysX SDK.
   */
-                                               RigidBodyDescription(void);
-  
-  /** \brief Resets everything to their default values, and pointers are set to NULL.
-  */
-  void                                         reset(void);
-  
-  /** \brief Returns if the variables are in a valid range or not
-  */
-                        bool                   valid(void);
-  
-  /** \brief Clone the properties of this into another RigidBodyDescription or a class derived from it.
-  */
-                        void                   clone(RigidBodyDescription& target) const;
-  
-  /** \brief Optional name of the RigidBody
-      \note  Apart from Actors (and probably derivations of), names are ignored.
-  */
-  String           mName;
-  
-  /** \brief Type of RigidBody
-      \default RigidBodyType_Dynamic
-      \note Properties of the RigidBody may not be available for the type of RigidBody. e.x. Geometry RigidBodies
-            do not have any mass or density.
-  */
-  Enums::RigidBodyType                         mType;
-  
-  /** \brief Actor flags, which is to be used with the or operator (|, |=).
-      \see Enums::ActorFlags
-      \default 0 (No Flags)
-      \example
-       <code>
-        description.mActorFlags |= Enums::ActorFlags_DisableCollision;
-        description.mActorFlags |= Enums::ActorFlags_ContactModification;
-       </code>
-  */
-  unsigned int           mActorFlags;
-  
-  /** \brief Body flags, which is to be used with the or operator (|, |=).
-      \see Enums::ActorFlags
-      \default Enums::BodyFlags_Visualisation
-      \example
-       <code>
-        description.mBodyFlags |= Enums::BodyFlags_DisableGravity;
-        description.mBodyFlags |= Enums::BodyFlags_FrozenRot;
-       </code>
-      \note  If your RigidBody is a Volume or StaticGeometry then these flags are ignored.
-  */
-  unsigned int           mBodyFlags;
-  
-  /** \brief Contact report flags
-      \see Enums::ContactPairFlags
-      \default 0 (No Flags)
-      \example
-       <code>
-        description.mContactReportFlags |= Enums::ContactPairFlags_StartTouch;
-        description.mContactReportFlags |= Enums::ContactPairFlags_Forces;
-       </code>
-  */
-  unsigned int           mContactReportFlags;
-  
-  /** \brief Compartment.
-      \default NULL
-  */
-  Compartment*           mCompartment;
-  
-  /** \brief Density (mass calculated by volume).
-      \default 0
-      \note When setting Density the mass must be set to zero, and when the mass is set the density must be zero.
-  */
-  Real                   mDensity;
+  RigidBodyDescription();
 
-  /** \brief DominanceGroup
-      \default 0
+  /*! function. to_nxactor
+      desc.
+          Assigns the values of this RigidBodyDescription to an NxActorDesc, that related to all RigidBodies.
   */
-  unsigned short         mDominanceGroup;
+  void to_nxactor(NxActorDesc*) const;
 
-  /** \brief ActorGroup this Actor belongs to.
-      \default 0
+  /*! function. to_nxbody
+      desc.
+          Assigns the values of this RigidBodyDescription to an NxBodyDesc, that related to dynamic RigidBodies.
   */
-  unsigned short         mGroup;
+  void to_nxactor(NxActorDesc*, NxBodyDesc*) const;
 
-  /** \brief Angular Damping.
-      \default 0.05f;
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
+
+  /*! variable. mAngularDamping
+      desc.
+          Damping for angular motion.
+      default.
+          0.05
+      condition.
+          mAngularDamping cannot be negative
   */
-  Real                   mAngularDamping;
+  Real mAngularDamping;
 
-  /** \brief The initial angular velocity of the actor.
-      \default Vec3::ZERO
+  /*! variable. mAngularVelocity
+      desc.
+          Initial angular velocity.
+      default.
+          mAngularVelocity.zero()
   */
-  Vec3                  mAngularVelocity;
+  Vec3 mAngularVelocity;
 
-  /** \brief CCD Motion Threshold.
-      \default 0
+  /*! variable. mAuxiliaryMirror
+      desc.
+          Mirror this RigidBody (Actors and KinematicActors) to AuxiliaryScenes.
+      default.
+          false
   */
-  Real                   mCCDMotionThreshold;
+  bool mAuxiliaryMirror;
 
-  /** \brief The force threshold for contact reports.
-      \default NxOgreRealMax
+  /*! variable. mCCDMotionThreshold
+      desc.
+          CCD Motion Threshold.
+      default.
+          0
+      condition.
+          mCCDMotionThreshold cannot be negative
   */
-  Real                   mContactReportThreshold;
+  Real mCCDMotionThreshold;
 
-  /** \brief Force Field Material Index.
-      \default 0
+  /*! variable. mCompartment
+      desc.
+          Compartment to use.
+      default.
+          NULL
   */
-  unsigned short         mForceFieldMaterial;
+  Compartment* mCompartment;
 
-  /** \brief The number of SDK managed worker threads used when running the simulation in parallel.
-      \default 0
+  /*! variable. mContactReportFlags
+      desc.
+          Flags for contact reporting see (Enums::ContactPairFlags).
+      default.
+          0
   */
-  unsigned int           mInternalThreadCount;
+  unsigned int mContactReportFlags;
 
-  /** \brief Linear Damping of the Actor
-      \default 0.0f
+  /*! variable. mContactReportThreshold
+      desc.
+          Force threshold for contact reports.
+      default.
+          NxOgreRealMax
+      condition.
+          mContactReportThreshold cannot be negative
   */
-  Real                   mLinearDamping;
+  Real mContactReportThreshold;
 
-  /** \brief Initial linear velocity of the actor
-      \default Vec3::ZERO
+  /*! variable. mDensity
+      desc.
+          Density (mass/shape volume). When set to zero, mMass is used.
+      default.
+          0
+      condition.
+          mDensity cannot be negative and/or mass cannot non-zero
   */
-  Vec3                  mLinearVelocity;
+  Real mDensity;
 
-  /** \brief Mass of a non-dynamic RigidBody
-      \default 1.0
-      \note When setting Mass the Density must be set to zero, and when the Density is set the Mass must be zero.
+  /*! variable. mDominanceGroup
+      desc.
+          Dominance group index to be assigned to.
+      default.
+          0
   */
-  Real                    mMass;
+  GroupIdentifier mDominanceGroup;
 
-  /** \brief Mass Local Pose of the body portion of the Actor
-      \default matrix44_identity
+  /*! variable. mDynamicRigidbodyFlags
+      desc.
+          Flags for dynamic rigidbodies (Actors/KinematicBodies).
+      default.
+          mDynamicRigidbodyFlags.reset();
   */
-  Matrix44                mMassLocalPose;
+  DynamicRigidbodyFlags mDynamicRigidbodyFlags;
 
-  /** \brief Diagonal mass space inertia tensor in bodies mass frame.
-      \default Vec3::ZERO
+  /*! variable. mForceFieldMaterial
+      desc.
+          Force Field Material Index.
+      default.
+          0
   */
-  Vec3                    mMassSpaceInertia;
+  MaterialIdentifier mForceFieldMaterial;
 
-  /** \brief Maximum angular velocity of the Actor
-      \default -1.0f (PhysX assumes this to be a maximum linear velocity)
+  /*! variable. mGroup
+      desc.
+          Group index to be assigned to.
+      default.
+          0
   */
-  Real                    mMaxAngularVelocity;
+  GroupIdentifier mGroup;
 
-  /** \brief Maximum angular velocity at which body can go to sleep.
-      \default -1.0f (No maximum)
+  /*! variable. mInternalThreadCount
+      desc.
+          The number of SDK managed worker threads used when running the simulation is in parallel.
+      default.
+          0
   */
-  Real                    mSleepAngularVelocity;
+  unsigned int mInternalThreadCount;
 
-  /** \brief Damping factor for bodies that are about to sleep.
-      \default 0
+  /*! variable. mLinearDamping
+      desc.
+          Damping for linear motion.
+      default.
+          0.0
+      condition.
+          mLinearDamping cannot be negative
   */
-  Real                    mSleepDamping;
+  Real mLinearDamping;
 
-  /** \brief Threshold for the energy-based sleeping algorithm.
-      \default 0.005
-      \note Only used when the mBodyFlags.mEnergySleepTest flag is set.
+  /*! variable. mLinearVelocity
+      desc.
+          Initial linear velocity.
+      default.
+          mLinearVelocity.zero()
   */
-  Real                    mSleepEnergyThreshold;
+  Vec3 mLinearVelocity;
 
-  /** \brief Maximum linear velocity at which body can go to sleep.
-      \default -1.0f (No maximum)
+  /*! variable. mMass
+      desc.
+          Mass of a non-dynamic RigidBody. When set to zero, mDensity is used.
+      default.
+          1.0
+      condition.
+          mMass cannot be negative and/or density cannot non-zero
   */
-  Real                    mSleepLinearVelocity;
+  Real mMass;
 
-  /** \brief Number of solver iterations performed when processing joint/contacts connected to this body.
-      \default 4
+  /*! variable. mMassLocalPose
+      desc.
+          Mass Local Pose of the body portion of the Actor.
+      default.
+          mMassLocalPose.identity()
   */
-  unsigned int            mSolverIterationCount;
+  Matrix44 mMassLocalPose;
 
-  /** \brief The body's initial wake up counter.
-      \default 0.02
+  /*! variable. mMassSpaceInertia
+      desc.
+          Diagonal mass space inertia tensor in bodies mass frame.
+      default.
+          mMassSpaceInertia.zero()
   */
-  Real                    mWakeUpCounter;
+  Vec3 mMassSpaceInertia;
 
-
-  /*! variable. Mirror this RigidBody to AuxiliaryScenes.
-      default.  false
-      note.     This is assumed to be false if the RigidBody is static or a volume.
+  /*! variable. mMaxAngularVelocity
+      desc.
+          Maximum angular velocity of the Actor. When set to -1.0 it has none.
+      default.
+          -1.0
   */
-  bool                    mAuxiliaryMirror;
+  Real mMaxAngularVelocity;
+
+  /*! variable. mName
+      desc.
+          Name of the RigidBody. This is optional and may be ignored with some inherited RigidBodies (optional).
+      default.
+          mName.clear()
+  */
+  String mName;
+
+  /*! variable. mRigidbodyFlags
+      desc.
+          Rigidbody flags. (See RigidbodyFlags) Enums: mRigidbodyFlags.reset();
+      default.
+          
+  */
+  RigidbodyFlags mRigidbodyFlags;
+
+  /*! variable. mSleepAngularVelocity
+      desc.
+          Maximum angular velocity at which body can go to sleep. When set to -1.0 it has none.
+      default.
+          -1.0
+  */
+  Real mSleepAngularVelocity;
+
+  /*! variable. mSleepDamping
+      desc.
+          Damping factor for bodies that are about to sleep.
+      default.
+          0
+  */
+  Real mSleepDamping;
+
+  /*! variable. mSleepEnergyThreshold
+      desc.
+          Threshold for the energy-based sleeping algorithm. Only if flags has Enums::BodyFlags_EnergySleepTest.
+      default.
+          -1.0
+  */
+  Real mSleepEnergyThreshold;
+
+  /*! variable. mSleepLinearVelocity
+      desc.
+          Maximum linear velocity at which body can go to sleep. When set to -1.0 it has none.
+      default.
+          -1.0
+  */
+  Real mSleepLinearVelocity;
+
+  /*! variable. mSolverIterationCount
+      desc.
+          Number of solver iterations performed when processing joint/contacts connected to this body.
+      default.
+          4
+      condition.
+          mSolverIterationCount cannot be less than 1 or more than 255
+  */
+  unsigned int mSolverIterationCount;
+
+  /*! variable. mWakeUpCounter
+      desc.
+          The body's initial wake up counter.
+      default.
+          0.04
+      condition.
+          mWakeUpCounter cannot be negative
+  */
+  Real mWakeUpCounter;
+
+  /*! constructor. RigidBodyDescription
+      desc.
+          Copy constructor for RigidBodyDescription
+  */
+  RigidBodyDescription(const RigidBodyDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  RigidBodyDescription& operator=(const RigidBodyDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this RigidBodyDescription as a pointer.
+  */
+  virtual RigidBodyDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of RigidBodyDescription into another.
+  */
+  virtual void copy_into(RigidBodyDescription*) const;
+
+  /*! function. reset
+      desc.
+          Resets RigidBodyDescription properties to their default values.
+  */
+  virtual void reset();
+
+  /*! function. valid
+      desc.
+          Is this RigidBodyDescription valid according to each property.
+  */
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "RigidBodyDescription-e94c041377ba1096a6cfef32ba15503c"
 
 }; // class RigidBodyDescription
 

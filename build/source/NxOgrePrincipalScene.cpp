@@ -61,7 +61,7 @@ void PrincipalScene::addPrincipalDynamic(RigidBody* rbody)
 
 void PrincipalScene::removePrincipalDynamic(RigidBody* rbody)
 {
- mPrincipalDynamics.erase(rbody);
+ mPrincipalDynamics.release(rbody);
 }
 
 PrincipalScene::PrincipalDynamicIterator PrincipalScene::getPrincipalDynamics()

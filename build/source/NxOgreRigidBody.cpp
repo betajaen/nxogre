@@ -86,7 +86,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  NxBodyDesc body_description;
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = &body_description;
- Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+ description.to_nxactor(&actor_description, &body_description);
  //////////////////////////////////////////////////
 
  // RIGIDBODY_SINGLE_SHAPE_DESCRIPTION_PASS(SHAPE)
@@ -139,7 +139,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  NxBodyDesc body_description;
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = &body_description;
- Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+ description.to_nxactor(&actor_description, &body_description);
  //////////////////////////////////////////////////
  
  // RIGIDBODY_MULTIPLE_SHAPES_DESCRIPTION_PASS(SHAPES)
@@ -200,7 +200,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  NxActorDesc actor_description;
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = 0;
- Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorDesc(description, actor_description);
+ description.to_nxactor(&actor_description);
  //////////////////////////////////////////////////
 
  // RIGIDBODY_SINGLE_SHAPE_DESCRIPTION_PASS(SHAPE)
@@ -211,9 +211,12 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  
  // RIGIDBODY_CREATE_OR_THROW_EXCEPTION
  //////////////////////////////////////////////////
+ 
  mActor = mScene->getScene()->createActor(actor_description);
  if (mActor == 0)
+ {
   NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(actor_description), Classes::_RigidBody);
+ }
  //////////////////////////////////////////////////
  
  // RIGIDBODY_SINGLE_SHAPE_DESCRIPTION_PASS_POST
@@ -252,7 +255,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  NxActorDesc actor_description;
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = 0;
- Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorDesc(description, actor_description);
+ description.to_nxactor(&actor_description);
  //////////////////////////////////////////////////
  
  // RIGIDBODY_MULTIPLE_SHAPES_DESCRIPTION_PASS(SHAPES)
@@ -311,7 +314,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  NxBodyDesc body_description;
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = &body_description;
- Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+ description.to_nxactor(&actor_description, &body_description);
  //////////////////////////////////////////////////
  
  body_description.flags |= NX_BF_KINEMATIC;
@@ -368,7 +371,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  NxBodyDesc body_description;
  actor_description.globalPose.setRowMajor44(pose.ptr());
  actor_description.body = &body_description;
- Functions::PrototypeFunctions::RigidBodyDescriptionToNxActorAndNxBodyDesc(description, actor_description, body_description);
+ description.to_nxactor(&actor_description, &body_description);
  //////////////////////////////////////////////////
  
  body_description.flags |= NX_BF_KINEMATIC;
@@ -553,6 +556,21 @@ void RigidBody::destroy(void)
 bool RigidBody::isDynamic(void) const
 {
  return mActor->isDynamic();
+}
+
+void RigidBody::raiseFlag(RigidbodyFlags::Flags flag)
+{
+ mActor->raiseBodyFlag((NxBodyFlag) (int) flag);
+}
+
+void RigidBody::clearFlag(RigidbodyFlags::Flags flag)
+{
+ mActor->clearBodyFlag((NxBodyFlag) (int) flag);
+}
+
+bool RigidBody::hasFlag(RigidbodyFlags::Flags flag) const
+{
+ return mActor->readBodyFlag((NxBodyFlag) (int) flag);
 }
 
 NxActor* RigidBody::getNxActor(void)

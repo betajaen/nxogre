@@ -33,7 +33,6 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreSingleton.h"
-#include "NxOgreArray.h"
 #include "NxOgreString.h"
 #include "NxogreException.h"
 #include "NxogreWarning.h"

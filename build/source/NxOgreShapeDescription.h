@@ -26,13 +26,15 @@
 
                                                                                        
 
-#ifndef NXOGRE_SHAPEBLUEPRINT_H
-#define NXOGRE_SHAPEBLUEPRINT_H
+#ifndef NXOGRE_SHAPEDESCRIPTION_H
+#define NXOGRE_SHAPEDESCRIPTION_H
 
                                                                                        
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+
+#include "NxOgreShapeFlags.h"
 
                                                                                        
 
@@ -41,88 +43,183 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+/*! class. ShapeDescription
+    desc.
+         Generic Description for Shapes, inherited by BoxDescription, SphereDescription, etc.
+    note.
+         You should never need to create this class directly. Use a more specific shape description instead.
+    properties.
+      unsigned int mId -- Optional id of the ship. This is stored as a unsigne int instead of a string for memory reasons. default: 0
+      Matrix44 mLocalPose -- The pose of the shape relative to the owning RigidBody. default: mLocalPose.identity()
+      ShapeFlags mFlags -- Shape flags default: mFlags.reset()
+      GroupIdentifier mGroup -- Shape Group to be assigned to. default: 0
+      MaterialIdentifier mMaterial -- Material index of the shape. default: 0
+      Mesh* mSkeleton -- CCD Skeleton to use. default: 0
+      Real mDensity -- Density when computing mass for internal properties for a rigid body. default: 1.0
+      Real mMass -- Mass of this shape when computing mass for internal properties for a rigid body. (Set to -1.0 to compute from density). default: -1.0
+      Real mSkinWidth -- How much a shape can interpenetrate with each other. (Set to -1.0 to use global Skin width property). default: -1.0
+      GroupsMask mGroupsMask -- Group bit mask for collision filtering. default: mGroupsMask.zero()
+      unsigned int mNonInteractingCompartmentTypes -- Flags of what the shape should not interact with (See Enums::ShapeCompartmentType). default: 0
+    validations.
+       mGroup index should be in the first 32 groups -- (mGroup >= 32)
+       mSkinwidth can be only -1.0 when negative -- (skinWidth != -1 && skinWidth < 0)
+    namespace. NxOgre
 */
 class NxOgrePublicClass ShapeDescription : public GenericBasedAllocatable
 {
   
-  public:
+  friend class RigidBody;
   
-  /** \brief Constructor, and resets the member variables to their default values according to the PhysX SDK.
-  */
+  public:
+
   ShapeDescription();
   
-  /** \brief Required destructor
-  */
   virtual  ~ShapeDescription();
   
+  protected:
   
-  /** \brief Resets the member variables to their default values according to the PhysX SDK.
-  */
-  virtual  void  reset(const MaterialIdentifier& = 0, const Matrix44& local_pose = Matrix44::IDENTITY);
-
-  /*! function. createShapeDescription
-      desc.
-          Create the shape description
-  */
   virtual NxShapeDesc* createShapeDescription() const;
-  
-  /*! function. isValid
-  */
-  virtual bool isValid() const;
-  
-  /** \brief
-  */
-  Matrix44              mLocalPose;
+ 
+  void setShapeDescription(NxShapeDesc* description) const;
 
-  /** \brief
-  */
-  unsigned int          mFlags;
 
-  /** \brief
-  */
-  GroupIdentifier       mGroup;
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
 
-  /** \brief
-  */
-  MaterialIdentifier    mMaterial;
-
-  /** \brief
-  */
-  Mesh*                 mSkeleton;
-
-  /** \brief
-  */
-  Real                  mDensity;
-
-  /** \brief
-  */
-  Real                  mMass;
-
-  /** \brief
-  */
-  Real                  mSkinWidth;
-  
-  /** \brief
-  */
-  GroupsMask            mGroupsMask;
-  
-  /** \brief
-  */
-  unsigned int          mShapesCompartmentTypes;
-  
-  /*! variable. mNonInteractingCompartmentTypes
-  */
-  unsigned int          mNonInteractingCompartmentTypes;
-
- protected:
-  
-  /*! function. setShapeDescription
+  /*! variable. mDensity
       desc.
-          
+          Density when computing mass for internal properties for a rigid body.
+      default.
+          1.0
   */
-  void setShapeDescription(NxShapeDesc*) const;
-  
+  Real mDensity;
+
+  /*! variable. mFlags
+      desc.
+          Shape flags
+      default.
+          mFlags.reset()
+  */
+  ShapeFlags mFlags;
+
+  /*! variable. mGroup
+      desc.
+          Shape Group to be assigned to.
+      default.
+          0
+      condition.
+          mGroup index should be in the first 32 groups
+  */
+  GroupIdentifier mGroup;
+
+  /*! variable. mGroupsMask
+      desc.
+          Group bit mask for collision filtering.
+      default.
+          mGroupsMask.zero()
+  */
+  GroupsMask mGroupsMask;
+
+  /*! variable. mId
+      desc.
+          Optional id of the ship. This is stored as a unsigne int instead of a string for memory reasons.
+      default.
+          0
+  */
+  unsigned int mId;
+
+  /*! variable. mLocalPose
+      desc.
+          The pose of the shape relative to the owning RigidBody.
+      default.
+          mLocalPose.identity()
+  */
+  Matrix44 mLocalPose;
+
+  /*! variable. mMass
+      desc.
+          Mass of this shape when computing mass for internal properties for a rigid body. (Set to -1.0 to compute from density).
+      default.
+          -1.0
+  */
+  Real mMass;
+
+  /*! variable. mMaterial
+      desc.
+          Material index of the shape.
+      default.
+          0
+  */
+  MaterialIdentifier mMaterial;
+
+  /*! variable. mNonInteractingCompartmentTypes
+      desc.
+          Flags of what the shape should not interact with (See Enums::ShapeCompartmentType).
+      default.
+          0
+  */
+  unsigned int mNonInteractingCompartmentTypes;
+
+  /*! variable. mSkeleton
+      desc.
+          CCD Skeleton to use.
+      default.
+          0
+  */
+  Mesh* mSkeleton;
+
+  /*! variable. mSkinWidth
+      desc.
+          How much a shape can interpenetrate with each other. (Set to -1.0 to use global Skin width property).
+      default.
+          -1.0
+  */
+  Real mSkinWidth;
+
+  /*! constructor. ShapeDescription
+      desc.
+          Copy constructor for ShapeDescription
+  */
+  ShapeDescription(const ShapeDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  ShapeDescription& operator=(const ShapeDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this ShapeDescription as a pointer.
+  */
+  virtual ShapeDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of ShapeDescription into another.
+  */
+  virtual void copy_into(ShapeDescription*) const;
+
+  /*! function. reset
+      desc.
+          Resets ShapeDescription properties to their default values.
+  */
+  virtual void reset();
+
+  /*! function. valid
+      desc.
+          Is this ShapeDescription valid according to each property.
+  */
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "ShapeDescription-55a7d2cd8aa582448657d1db022f4a76"
+
 }; // class ShapeDescription
 
                                                                                        

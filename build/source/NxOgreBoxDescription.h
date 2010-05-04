@@ -43,10 +43,19 @@ namespace NxOgre
                                                                                        
 
 /*! class. BoxDescription
-    desc. A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+    desc.
+         Description to describe a Box shape.
+    properties.
+      Vec3 mSize -- Size of the Box default: mSize.set(1,1,1)
+    validations.
+       mSize cannot have negative or zero values -- mSize.isNegative() || mSize.isZero()
+    namespace. NxOgre
+    from. ShapeDescription
 */
 class NxOgrePublicClass BoxDescription : public ShapeDescription
 {
+  
+  friend class RigidBody;
   
   public:
   
@@ -73,34 +82,69 @@ class NxOgrePublicClass BoxDescription : public ShapeDescription
           Required destructor
   */
   ~BoxDescription();
-  
-  /*! function. createShapeDescription
-      desc.
-          Create NxBoxShapeDesc to be attached to an RigidBody.
-          This is an internal function and shouldn't be used in the User's app.
-      note.
-         Pointer is owned by the class/function calling it, and should be deleted when no longer used.
-  */
-  NxShapeDesc*  createShapeDescription() const;
 
-  /*! function. reset
-      desc.
-          Resets the member variables to their default values according to the PhysX SDK.
-  */
-  void reset();
-  
-  /*! function. isValid
-      desc. 
-          Returns true if the description is valid.
-  */
-  bool isValid() const;
+  protected:
+
+  virtual NxShapeDesc* createShapeDescription() const;
+
+
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
 
   /*! variable. mSize
       desc.
-          Size of the box, in metres.
+          Size of the Box
+      default.
+          mSize.set(1,1,1)
+      condition.
+          mSize cannot have negative or zero values
   */
   Vec3 mSize;
-  
+
+  /*! constructor. BoxDescription
+      desc.
+          Copy constructor for BoxDescription
+  */
+  BoxDescription(const BoxDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  BoxDescription& operator=(const BoxDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this BoxDescription as a pointer.
+  */
+  virtual BoxDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of BoxDescription into another.
+  */
+  virtual void copy_into(BoxDescription*) const;
+
+  /*! function. reset
+      desc.
+          Resets BoxDescription properties to their default values.
+  */
+  virtual void reset();
+
+  /*! function. valid
+      desc.
+          Is this BoxDescription valid according to each property.
+  */
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "BoxDescription-b0de51e9b492dd515101858546e9314f"
+
 }; // class BoxDescription
 
                                                                                        

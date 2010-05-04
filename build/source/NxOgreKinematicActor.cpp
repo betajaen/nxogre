@@ -33,6 +33,8 @@
 #include "NxOgreShape.h"
 #include "NxOgreRigidBodyFunctions.h"
 
+#include "NxActor.h"
+
                                                                                        
 
 namespace NxOgre
@@ -72,6 +74,21 @@ KinematicActor::~KinematicActor(void)
 unsigned int KinematicActor::getRigidBodyType() const
 {
  return Classes::_KinematicActor;
+}
+
+void KinematicActor::raiseDynamicFlag(DynamicRigidbodyFlags::Flags flag)
+{
+ mActor->raiseBodyFlag((NxBodyFlag) (int) flag);
+}
+
+void KinematicActor::clearDynamicFlag(DynamicRigidbodyFlags::Flags flag)
+{
+ mActor->clearBodyFlag((NxBodyFlag) (int) flag);
+}
+
+bool KinematicActor::hasDynamicFlag(DynamicRigidbodyFlags::Flags flag) const
+{
+ return mActor->readBodyFlag((NxBodyFlag) (int) flag);
 }
 
 void KinematicActor::setGroup(GroupIdentifier actorGroup)

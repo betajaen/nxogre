@@ -78,7 +78,7 @@
 
 #define NxOgre_ExceptionNoClassType 0
 
-#define NxOgre_ThrowException(EXCEPTION, DESCRIPTION, CLASS_TYPE) throw EXCEPTION(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE);
+#define NxOgre_ThrowException(EXCEPTION, DESCRIPTION, CLASS_TYPE) throw EXCEPTION(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE); 
 
 #define NxOgre_ThrowExceptionIfNull(PTR, CLASS_TYPE) if(PTR == 0){throw ::NxOgre::NullPointerException(__FILE__, __LINE__, CLASS_TYPE);}
 

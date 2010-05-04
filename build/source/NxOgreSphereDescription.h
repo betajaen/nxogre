@@ -42,7 +42,15 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A ShapeDescription is a possible configuration for Box, Spheres, Capsules, Convex and TriangleGeometry shapes.
+/*! class. SphereDescription
+    desc.
+      Description to describe a Sphere shape.
+    properties.
+      Real mRadius -- Radius of the Sphere. default: 0.5
+    conditions.
+      mRadius must be positive and not zero in length -- (mRadius <= 0.0f)
+    namespace. NxOgre
+    from. ShapeDescription
 */
 class NxOgrePublicClass SphereDescription : public ShapeDescription
 {
@@ -61,6 +69,8 @@ class NxOgrePublicClass SphereDescription : public ShapeDescription
   */
   ~SphereDescription();
   
+ protected:
+
   /*! function. createShapeDescription
       desc.
           Create NxBoxShapeDesc to be attached to an RigidBody.
@@ -69,19 +79,63 @@ class NxOgrePublicClass SphereDescription : public ShapeDescription
          Pointer is owned by the class/function calling it, and should be deleted when no longer used.
   */
   NxShapeDesc*  createShapeDescription() const;
+ 
+
+  // BEGIN - Serialisation
+  // The following code is computer generated. Please do not modify.
+  public:
+
+  /*! variable. mRadius
+      desc.
+          Radius of the Sphere.
+      default.
+          0.5
+  */
+  Real mRadius;
+
+  /*! constructor. SphereDescription
+      desc.
+          Copy constructor for SphereDescription
+  */
+  SphereDescription(const SphereDescription&);
+
+  /*! function. operator=
+      desc.
+          Assignment operator
+  */
+  SphereDescription& operator=(const SphereDescription&);
+
+  /*! function. duplicate
+      desc.
+          Create a duplicate of this SphereDescription as a pointer.
+  */
+  virtual SphereDescription* duplicate() const;
+
+  /*! function. copy_into
+      desc.
+          Copy all of the properties of SphereDescription into another.
+  */
+  virtual void copy_into(SphereDescription*) const;
 
   /*! function. reset
       desc.
-          Resets the member variables to their default values according to the PhysX SDK.
+          Resets SphereDescription properties to their default values.
   */
-  void reset();
-  
-  /*! variable. mRadius
+  virtual void reset();
+
+  /*! function. valid
       desc.
-          Radius of the sphere, in metres.
+          Is this SphereDescription valid according to each property.
   */
-  Real mRadius;
-  
+  virtual bool valid() const;
+  /*! function. inspect
+      desc.
+        Writes the contents of this to the console.
+  */
+  virtual void inspect() const;
+
+  // END - Serialisation. "SphereDescription-58d367fc3c5c197ecd5290b1e16f08ad"
+
 }; // class SphereDescription
 
                                                                                        

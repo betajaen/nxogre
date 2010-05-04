@@ -45,7 +45,7 @@
 #include "NxOgrePhysXPointer.h"
 #include "NxOgreSharedPointer.h"
 #include "NxOgreSingleton.h"
-#include "NxOgreArray.h"
+#include "NxOgreVector.h"
 #include "NxOgreMap.h"
 #include "NxOgrePtrVector.h"
 #include "NxOgrePtrHashmap.h"
@@ -160,12 +160,14 @@ namespace Constants
 
 /** \brief Unknown resource size constant.
 */
-static const size_t ResourceSizeUnknown = -1;
+static const size_t ResourceSizeUnknown = size_t(-1);
 
 enum
 {
  DefaultRemoteDebuggerPort = 5425
 };
+
+static const Vec3 MEAN_EARTH_GRAVITY = Vec3(0, -9.80665f, 0);
 
 }; // namespace Constants
 

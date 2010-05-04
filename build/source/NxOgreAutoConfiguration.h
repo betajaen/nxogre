@@ -55,7 +55,6 @@
 # define NxOgreCompiler NxOgreCompilerGNUC
 #endif
 
-
 #if defined (_WIN32) || defined (__WIN32)
 # define NxOgrePlatform NxOgrePlatformWindows
 #else
@@ -86,30 +85,6 @@
 
 // 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 #pragma warning (disable : 4996)
-
- 
-/*
-#if defined(_DEBUG) || defined(DEBUG)
-# ifndef NXOGRE_DEBUG
-#  define NXOGRE_DEBUG
-# endif
-#endif
-
-#ifdef NXOGRE_SDK
-# define NxOgreForceInline __forceinline
-# define NxOgrePublicClass
-# define NxOgrePublicFunction
-# define NxOgrePublicTemplateClass
-# else
-# define NxOgreForceInline __forceinline
-# define NxOgrePublicClass
-# define NxOgrePublicFunction
-# define NxOgrePublicTemplateClass
-#endif
-
-#endif
-*/
-
 
 #if (NxOgreCompiler == NxOgreCompilerMSVC)
  

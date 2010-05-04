@@ -58,6 +58,13 @@ void GroupsMask::zero()
  mBits3 = 3;
 }
 
+String GroupsMask::to_s() const
+{
+ std::stringstream s;
+ s << mBits0 << ", " << mBits1 << ", " << mBits2 << ", " << mBits3;
+ return s.str();
+}
+
                                                                                        
 
 } // namespace NxOgre

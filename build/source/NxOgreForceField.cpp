@@ -70,20 +70,36 @@ void ForceField::create(const ForceFieldDescription& description, ForceFieldKern
  if (description.mRigidBody)
   desc.actor = description.mRigidBody->getNxActor();
  
-#if 0
- desc.clothType = description.mClothType;
- desc.coordinates = description.mCoordinates;
+ desc.clothType = (NxForceFieldType) (int) description.mClothType;
+ desc.coordinates = (NxForceFieldCoordinates) (int) description.mCoordinates;
  desc.flags = description.mFlags;
- desc.fluidType = description.mFluidType;
- desc.forceFieldVariety = description.mVariety;
+ desc.fluidType = (NxForceFieldType) (int) description.mFluidType;
+ desc.forceFieldVariety = (NxForceFieldVariety) (int) description.mVariety;
  desc.group = description.mGroup;
- desc.groupsMask = description.mGroupsMask;
+ desc.groupsMask.bits0 = description.mGroupsMask.mBits0;
+ desc.groupsMask.bits1 = description.mGroupsMask.mBits1;
+ desc.groupsMask.bits2 = description.mGroupsMask.mBits2;
+ desc.groupsMask.bits3 = description.mGroupsMask.mBits3;
  desc.name = mName.c_str();
- desc.globalPose.setRowMajor44(description.mPose.ptr());
- desc.rigidBodyType = description.mRigidBodyType;
- desc.softBodyType = description.mSoftBodyType;
-#endif
+ desc.pose.setRowMajor44(description.mPose.ptr());
+ desc.rigidBodyType = (NxForceFieldType) (int) description.mRigidBodyType;
+ desc.softBodyType = (NxForceFieldType) (int) description.mSoftBodyType;
+ 
+ for(SimpleShapes::const_iterator shape = description.mIncludeGroupShapes.begin(); shape != description.mIncludeGroupShapes.end(); ++shape)
+ {
+  NxForceFieldShapeDesc* shape_desc = (*shape)->to_ff_shape();
+  if (shape_desc)
+   desc.includeGroupShapes.push_back(shape_desc);
+ }
+ 
  mForceField = scene->getScene()->createForceField(desc);
+ 
+ // Delete includeShapesDescriptions.
+ for (unsigned int i=0; i < desc.includeGroupShapes.size(); i++)
+ {
+  NxForceFieldShapeDesc* ptr = desc.includeGroupShapes[i];
+  NXOGRE_DELETE_PHYSX(NxForceFieldShapeDesc, PhysXClassAllocator, ptr);
+ }
  
  if (mKernel)
   mKernel->increaseReference();

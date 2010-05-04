@@ -40,25 +40,11 @@ namespace NxOgre
                                                                                        
 
 ShapeDescription::ShapeDescription()
-{
+{ // virtual
 }
 
 ShapeDescription::~ShapeDescription()
-{
-}
-
-void ShapeDescription::reset(const MaterialIdentifier& material_identifier, const Matrix44& local_pose)
-{
- mLocalPose                      . set(local_pose);
- mFlags                          = Enums::ShapeFlags_Visualisation | Enums::ShapeFlags_TwoWayCloth | Enums::ShapeFlags_TwoWaySoftBody;
- mGroup                          = 0;
- mMaterial                       = material_identifier;
- mSkeleton                       = 0;
- mSkinWidth                      = 0;
- mDensity                        = Real(1.0);
- mMass                           = Real(-1.0);
- mGroupsMask                     . zero();
- mShapesCompartmentTypes         = 0;
+{ // virtual
 }
 
 NxShapeDesc* ShapeDescription::createShapeDescription() const
@@ -79,21 +65,9 @@ void ShapeDescription::setShapeDescription(NxShapeDesc* description) const
  description->mass = mMass;
  description->materialIndex = mMaterial;
  description->nonInteractingCompartmentTypes = mNonInteractingCompartmentTypes;
- description->shapeFlags = mFlags;
+ description->shapeFlags = mFlags.to_i();
  description->skinWidth = mSkinWidth;
-}
-
-bool ShapeDescription::isValid() const
-{
- 
- if (mGroup >= 32)
-  return false;
- if (mMaterial == 0xffff)
-  return false;
- if (mSkinWidth != -1 && mSkinWidth < 0)
-  return false;
-
- return true;
+ description->userData = (void*) mId;
 }
 
                                                                                        
@@ -101,3 +75,91 @@ bool ShapeDescription::isValid() const
 } // namespace NxOgre
 
                                                                                        
+
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+ShapeDescription::ShapeDescription(const ShapeDescription& other)
+{
+ other.copy_into(this);
+}
+
+ShapeDescription& ShapeDescription::operator=(const ShapeDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+ShapeDescription* ShapeDescription::duplicate() const
+{
+ ShapeDescription* dup = new ShapeDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void ShapeDescription::copy_into(ShapeDescription* other) const
+{
+ other->mDensity = mDensity;
+ other->mFlags = mFlags;
+ other->mGroup = mGroup;
+ other->mGroupsMask = mGroupsMask;
+ other->mId = mId;
+ other->mLocalPose = mLocalPose;
+ other->mMass = mMass;
+ other->mMaterial = mMaterial;
+ other->mNonInteractingCompartmentTypes = mNonInteractingCompartmentTypes;
+ other->mSkeleton = mSkeleton;
+ other->mSkinWidth = mSkinWidth;
+}
+
+void ShapeDescription::reset()
+{
+ mDensity = 1.0;
+ mFlags.reset();
+ mGroup = 0;
+ mGroupsMask.zero();
+ mId = 0;
+ mLocalPose.identity();
+ mMass = -1.0;
+ mMaterial = 0;
+ mNonInteractingCompartmentTypes = 0;
+ mSkeleton = 0;
+ mSkinWidth = -1.0;
+}
+
+bool ShapeDescription::valid() const
+{
+ // mGroup index should be in the first 32 groups
+ if ((mGroup >= 32))
+  return false;
+
+ return true;
+}
+
+void ShapeDescription::inspect() const
+{
+ std::cout << "ShapeDescription => {\n";
+ std::cout << "  mDensity => '" << mDensity << "'\n";
+ std::cout << "  mFlags => '" << mFlags << "'\n";
+ std::cout << "  mGroup => '" << mGroup << "'\n";
+ std::cout << "  mGroupsMask => '" << mGroupsMask << "'\n";
+ std::cout << "  mId => '" << mId << "'\n";
+ std::cout << "  mLocalPose => '" << mLocalPose << "'\n";
+ std::cout << "  mMass => '" << mMass << "'\n";
+ std::cout << "  mMaterial => '" << mMaterial << "'\n";
+ std::cout << "  mNonInteractingCompartmentTypes => '" << mNonInteractingCompartmentTypes << "'\n";
+ std::cout << "  mSkeleton => '" << mSkeleton << "'\n";
+ std::cout << "  mSkinWidth => '" << mSkinWidth << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "ShapeDescription-55a7d2cd8aa582448657d1db022f4a76"
+

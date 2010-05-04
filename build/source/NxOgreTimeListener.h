@@ -43,20 +43,31 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A TimeListener is any class that needs to react when the timestep goes fowards in NxOgre.
+/*! class. TimeListener
+    desc.
+        A TimeListener is any class that needs to react when the timestep goes fowards in NxOgre.
 */
 class NxOgrePublicClass TimeListener
 {
   
-  public: // Functions
+  public:
   
-  /** \brief Must be implemented by user. Called when a time step is injected into NxOgre.
-             In some cases your class advance function may not be ready for use (such as waiting for
-             a thread to finish); in that case return false to be placed onto a waiting list - which
-             the time controller will try again at the end of each priority and at the next timestep.
-      \return True if the function was carried out normally, false if the function needs to be revisited later in this timeStep.
+  /*! function. advance
+      desc.
+          Must be implemented by user. Called when a time step is injected into NxOgre.
+          In some cases your class advance function may not be ready for use (such as waiting for
+          a thread to finish); in that case return false to be placed onto a waiting list - which
+          the time controller will try again for one time, once the other TimeListeners have had their turn.
+      args.
+          float deltaTime -- Time passed.
+          const Enums::Priority& -- Priority assigned to this TimeListener.
+      return.
+          True if the function was carried out normally, false if the function needs to be revisited later in this timestep.
+      note.
+          Calling false only applies if the TimeListener isn't placed on the "waiting list". returning false once the timelistener
+          has had it's two turns will not give it a third. Anything that needs to be done should be done on the second visit.
   */
-  virtual bool                               advance(float deltaTime, const Enums::Priority&) = 0;
+  virtual bool advance(float deltaTime, const Enums::Priority&) = 0;
   
 }; // class TimeListener
 

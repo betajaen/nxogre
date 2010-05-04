@@ -44,8 +44,8 @@ namespace NxOgre
 Joint::Joint(RigidBody* first, RigidBody* second)
 : mJoint(0)
 {
- mRigidBodies[0] = 0;
- mRigidBodies[1] = 0;
+ mRigidBodies[0] = first;
+ mRigidBodies[1] = second;
 }
 
 Joint::~Joint(void)

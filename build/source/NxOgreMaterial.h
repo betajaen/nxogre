@@ -47,7 +47,7 @@ class NxOgrePublicClass Material : public GenericBasedAllocatable
 {
   
   friend class Scene;
-  friend class Functions::ArrayFunctions<Material*>::Write;
+  // friend class Functions::ArrayFunctions<Material*>::Write;
   template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
   
   public: // Functions

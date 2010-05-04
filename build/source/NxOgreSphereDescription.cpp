@@ -41,17 +41,13 @@ namespace NxOgre
 SphereDescription::SphereDescription(Real radius, const MaterialIdentifier& material, const Matrix44& local_pose)
 : mRadius(radius)
 {
- ShapeDescription::reset(material, local_pose);
+ ShapeDescription::reset();
+ mMaterial = material;
+ mLocalPose = local_pose;
 }
 
 SphereDescription::~SphereDescription()
 {
-}
-
-void SphereDescription::reset()
-{
- ShapeDescription::reset();
- mRadius = Real(0.5);
 }
 
 NxShapeDesc* SphereDescription::createShapeDescription() const
@@ -67,3 +63,62 @@ NxShapeDesc* SphereDescription::createShapeDescription() const
 } // namespace NxOgre
 
                                                                                        
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+SphereDescription::SphereDescription(const SphereDescription& other)
+{
+ other.copy_into(this);
+}
+
+SphereDescription& SphereDescription::operator=(const SphereDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+SphereDescription* SphereDescription::duplicate() const
+{
+ SphereDescription* dup = new SphereDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void SphereDescription::copy_into(SphereDescription* other) const
+{
+ ShapeDescription::copy_into(other);
+
+ other->mRadius = mRadius;
+}
+
+void SphereDescription::reset()
+{
+ mRadius = 0.5;
+}
+
+bool SphereDescription::valid() const
+{
+ if (!ShapeDescription::valid())
+  return false;
+ return true;
+}
+
+void SphereDescription::inspect() const
+{
+ ShapeDescription::inspect();
+
+ std::cout << "SphereDescription => {\n";
+ std::cout << "  mRadius => '" << mRadius << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "SphereDescription-58d367fc3c5c197ecd5290b1e16f08ad"
+

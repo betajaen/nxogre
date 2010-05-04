@@ -45,24 +45,24 @@ class PathHelper
   
  public:
 
-   static bool is_directory(char c)         { return c == '\\' || c == '/'; }
-   static bool is_drive(char c)             { return c == ':'; }
-   static bool is_protocol(char c)          { return c == ':'; }
-   static bool is_portion(char c)           { return c == '#'; }
-   static bool is_extension(char c)         { return c == '.'; }
-   static bool is_relative_path(char c)     { return c == '.'; }
+   static inline bool is_directory(char c)         { return c == '\\' || c == '/'; }
+   static inline bool is_drive(char c)             { return c == ':'; }
+   static inline bool is_protocol(char c)          { return c == ':'; }
+   static inline bool is_portion(char c)           { return c == '#'; }
+   static inline bool is_extension(char c)         { return c == '.'; }
+   static inline bool is_relative_path(char c)     { return c == '.'; }
+
+   static inline char protocol()                   { return ':'; }
+   static inline char drive()                      { return ':'; }
+   static inline char directory()                  { return '/'; }
+   static inline char extension()                  { return '.'; }
+   static inline char portion()                    { return '#'; }
+   static inline char relative_path()              { return '.'; }
+   static inline String parent_marker()            { return String(".."); }
+  
+   static inline String working_directory_marker() { return String("."); }
    
-   static char protocol()                   { return ':'; }
-   static char drive()                      { return ':'; }
-   static char directory()                  { return '/'; }
-   static char extension()                  { return '.'; }
-   static char portion()                    { return '#'; }
-   static char relative_path()              { return '.'; }
-   static String parent_marker()            { return String(".."); }
-   
-   static String working_directory_marker() { return String("."); }
-   
-   static bool next_is(const String& string, size_t pos, char delimiter)
+   static inline bool next_is(const String& string, size_t pos, char delimiter)
    {
     if (pos + 1 >= string.length())
      return false;
@@ -70,7 +70,7 @@ class PathHelper
     return (string[pos + 1] == delimiter);
    }
    
-   static bool at_end(const String& string, size_t pos)
+   static inline bool at_end(const String& string, size_t pos)
    {
     return (pos >= string.length() - 1);
    }

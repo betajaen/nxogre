@@ -130,6 +130,12 @@ class NxOgrePublicClass Mesh : public ResourceAllocatable
   */
   MeshData*                                   getMeshData();
   
+  /*! function. inspect
+      desc.
+          Give a description of what this mesh is.
+  */
+  String inspect() const;
+  
   protected: // Variables
   
   Enums::MeshType                             mType;

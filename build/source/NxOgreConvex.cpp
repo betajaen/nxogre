@@ -70,7 +70,7 @@ void Convex::saveToDescription(ConvexDescription& description)
  NxConvexShapeDesc desc;
  mConvexShape->saveToDesc(desc);
  description.mDensity = desc.density;
- description.mFlags = desc.shapeFlags;
+ description.mFlags.from_i(desc.shapeFlags);
  description.mGroup = desc.group;
  description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
  description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
@@ -81,14 +81,14 @@ void Convex::saveToDescription(ConvexDescription& description)
  description.mMaterial = desc.materialIndex;
  description.mNonInteractingCompartmentTypes = desc.nonInteractingCompartmentTypes;
  description.mSkinWidth = desc.skinWidth;
-
+ 
  description.mMesh = mMesh;
  description.mMeshFlags = desc.meshFlags;
 }
 
 String Convex::to_s() const
 {
- return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Convex") ));
+ return String("Convex");
 }
 
                                                                                        

@@ -41,24 +41,21 @@ namespace NxOgre
 CapsuleDescription::CapsuleDescription(Real radius, Real height, const MaterialIdentifier& material, const Matrix44& local_pose)
 : mRadius(radius), mHeight(height)
 {
- ShapeDescription::reset(material, local_pose);
+ ShapeDescription::reset();
+ mMaterial = material;
+ mLocalPose = local_pose;
 }
 
 CapsuleDescription::CapsuleDescription(const Vec2& size, const MaterialIdentifier& material, const Matrix44& local_pose)
 : mRadius(size.x), mHeight(size.y)
 {
- ShapeDescription::reset(material, local_pose);
+ ShapeDescription::reset();
+ mMaterial = material;
+ mLocalPose = local_pose;
 }
 
 CapsuleDescription::~CapsuleDescription()
 {
-}
-
-void CapsuleDescription::reset()
-{
- ShapeDescription::reset();
- mRadius = Real(1.0);
- mHeight = Real(1.0);
 }
 
 NxShapeDesc* CapsuleDescription::createShapeDescription() const
@@ -70,20 +67,70 @@ NxShapeDesc* CapsuleDescription::createShapeDescription() const
  return description;
 }
 
-
-bool CapsuleDescription::isValid() const
-{
- 
- if (mRadius <=0)
-  return false;
- 
- if (mHeight <= 0)
-  return false;
- 
- return ShapeDescription::isValid();
-}
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
+
+
+// BEGIN - Serialisation
+// The following code is computer generated. Please do not modify.
+
+namespace NxOgre
+{
+
+CapsuleDescription::CapsuleDescription(const CapsuleDescription& other)
+{
+ other.copy_into(this);
+}
+
+CapsuleDescription& CapsuleDescription::operator=(const CapsuleDescription& other)
+{
+ other.copy_into(this);
+ return *this;
+}
+
+CapsuleDescription* CapsuleDescription::duplicate() const
+{
+ CapsuleDescription* dup = new CapsuleDescription();
+ copy_into(dup);
+ return dup;
+}
+
+void CapsuleDescription::copy_into(CapsuleDescription* other) const
+{
+ ShapeDescription::copy_into(other);
+
+ other->mHeight = mHeight;
+ other->mRadius = mRadius;
+}
+
+void CapsuleDescription::reset()
+{
+ mHeight = 1.0;
+ mRadius = 1.0;
+}
+
+bool CapsuleDescription::valid() const
+{
+ if (!ShapeDescription::valid())
+  return false;
+ return true;
+}
+
+void CapsuleDescription::inspect() const
+{
+ ShapeDescription::inspect();
+
+ std::cout << "CapsuleDescription => {\n";
+ std::cout << "  mHeight => '" << mHeight << "'\n";
+ std::cout << "  mRadius => '" << mRadius << "'\n";
+ std::cout << "}\n";
+}
+
+
+} // namespace NxOgre
+
+// END - Serialisation. "CapsuleDescription-12a528ce1e3ee22e9914301366c24bc0"
+

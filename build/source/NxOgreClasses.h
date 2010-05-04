@@ -212,9 +212,9 @@ enum
 
                                                                                        
 
-  /** \brief Turns a NxOgre::Classes::Enum into a String and any PhysX MemoryType enum value as well.
-  */
-  const char*  TypeToCStr(int i);
+/** \brief Turns a NxOgre::Classes::Enum into a String and any PhysX MemoryType enum value as well.
+*/
+const char*  TypeToCStr(int i);
 
                                                                                        
 } // namespace Classes
