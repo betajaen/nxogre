@@ -30,6 +30,7 @@
 #include "NxOgreMeshData.h"
 #include "NxOgreResourceSystem.h"
 #include "NxOgreNXS.h"
+#include "NxOgreX.h"
 
                                                                                        
 
@@ -50,20 +51,22 @@ void MeshData::clear()
 {
  mName.clear();
  mType = Enums::MeshType_Unknown;
- mVertices.clear();
- mIndexes.clear();
- mNormals.clear();
- mTextureCoordinates.clear();
- mTetrahedra.clear();
- mMaterials.clear();
- mFlags.clear();
- mMasses.clear();
+ mVertices.remove_all();
+ mIndexes.remove_all();
+ mNormals.remove_all();
+ mTextureCoordinates.remove_all();
+ mTetrahedra.remove_all();
+ mMaterials.remove_all();
+ mFlags.remove_all();
+ mMasses.remove_all();
  mMeshFlags = 0;
  mClothWeldingDistance = 0.0f;
 }
 
 void MeshData::cook(Resource* resource)
 {
+ 
+ NxOgre_DebugPrint_Cooking("[MeshData] Attempting to cook to resource");
  
  if (mType == Enums::MeshType_Convex)
   Serialisation::NXS::saveConvexMesh(resource, this);
@@ -73,6 +76,9 @@ void MeshData::cook(Resource* resource)
 
  else if (mType == Enums::MeshType_Cloth)
   Serialisation::NXS::saveClothMesh(resource, this);
+
+ else if (mType == Enums::MeshType_Skeleton)
+  Serialisation::X::saveSkeletonMesh(resource, this);
 
 // else if (mType == Enums::MeshType_SoftBody)
 //  Serialisation::NXS::saveSoftBodyMesh(resource, this);

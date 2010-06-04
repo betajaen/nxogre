@@ -62,13 +62,13 @@ class NxOgrePublicClass FixedSceneTimer : public SceneTimer
            Real __maxTime__ -- Maximum timestep.
            unsigned int __subSteps__ -- Number of substeps
   */
-                                              FixedSceneTimer(Scene*, Real maxTime = _1_60);
+  FixedSceneTimer(Scene*, Real maxTime = _1_60);
   
   /*! destructor. FixedSceneTimer
       desc.
            Destructor.
   */
-                                             ~FixedSceneTimer(void);
+  ~FixedSceneTimer();
   
   /*! function. simulate
       desc.
@@ -79,7 +79,7 @@ class NxOgrePublicClass FixedSceneTimer : public SceneTimer
            float __deltaTime__ -- Amount of time passed, this shouldn't be the maximum timeseep.
       
   */
-  void                                        simulate(float deltaTime);
+  void  simulate(float deltaTime);
   
   /*! function. hasResults
       desc.
@@ -87,7 +87,7 @@ class NxOgrePublicClass FixedSceneTimer : public SceneTimer
       return.
           **bool** -- If PhysX has finished simulating or not.
   */
-  bool                                        hasResults() const;
+  bool  hasResults() const;
   
   /*! function. fetchResults
       desc.
@@ -96,7 +96,7 @@ class NxOgrePublicClass FixedSceneTimer : public SceneTimer
            Do not call this function by hand. Scene will call this at the appropriate time.
       
   */
-  void                                        fetchResults();
+  void  fetchResults();
   
   /*! function. getTimeStep
       desc.

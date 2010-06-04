@@ -1,373 +1,1533 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<VisualStudioProject Keyword="Win32Proj" TargetFrameworkVersion="131072" ProjectType="Visual C++" Name="NxOgre" Version="9.00" ProjectGUID="{2dc6bdb4-2a01-ad08-9dc8-51a73229706a}">
- <Platforms>
-  <Platform Name="Win32"/>
- </Platforms>
- <ToolFiles>
- </ToolFiles>
- <Configurations>
-  <Configuration ConfigurationType="2" CharacterSet="1" Name="NxOgreFinal|Win32" OutputDirectory="NxOgre\Final" IntermediateDirectory="NxOgre\Final">
-   <Tool CommandLine="..\VC.prebuild.bat NxOgre Final" Name="VCPreBuildEventTool"/>
-   <Tool Name="VCCustomBuildTool"/>
-   <Tool Name="VCXMLDataGeneratorTool"/>
-   <Tool Name="VCWebServiceProxyGeneratorTool"/>
-   <Tool Name="VCMIDLTool"/>
-   <Tool AdditionalIncludeDirectories="..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\" PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;WIN32;_DLL" Name="VCCLCompilerTool" RuntimeLibrary="2"/>
-   <Tool Name="VCManagedResourceCompilerTool"/>
-   <Tool Name="VCResourceCompilerTool"/>
-   <Tool Name="VCPreLinkEventTool"/>
-   <Tool AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib" AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" OutputFile="$(OutDir)\NxOgreFinal.dll" Name="VCLinkerTool"/>
-   <Tool Name="VCALinkTool"/>
-   <Tool Name="VCManifestTool"/>
-   <Tool Name="VCXDCMakeTool"/>
-   <Tool Name="VCBscMakeTool"/>
-   <Tool Name="VCFxCopTool"/>
-   <Tool Name="VCAppVerifierTool"/>
-   <Tool CommandLine="..\VC.postbuild.bat NxOgre Final" Name="VCPostBuildEventTool"/>
-  </Configuration>
-  <Configuration ConfigurationType="2" CharacterSet="1" Name="NxOgreDebug|Win32" OutputDirectory="NxOgre\Debug" IntermediateDirectory="NxOgre\Debug">
-   <Tool CommandLine="..\VC.prebuild.bat NxOgre Debug" Name="VCPreBuildEventTool"/>
-   <Tool Name="VCCustomBuildTool"/>
-   <Tool Name="VCXMLDataGeneratorTool"/>
-   <Tool Name="VCWebServiceProxyGeneratorTool"/>
-   <Tool Name="VCMIDLTool"/>
-   <Tool AdditionalIncludeDirectories="..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\" PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_DEBUG;WIN32;_DLL" Name="VCCLCompilerTool" RuntimeLibrary="3"/>
-   <Tool Name="VCManagedResourceCompilerTool"/>
-   <Tool Name="VCResourceCompilerTool"/>
-   <Tool Name="VCPreLinkEventTool"/>
-   <Tool AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib" AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32" OutputFile="$(OutDir)\NxOgreDebug.dll" Name="VCLinkerTool"/>
-   <Tool Name="VCALinkTool"/>
-   <Tool Name="VCManifestTool"/>
-   <Tool Name="VCXDCMakeTool"/>
-   <Tool Name="VCBscMakeTool"/>
-   <Tool Name="VCFxCopTool"/>
-   <Tool Name="VCAppVerifierTool"/>
-   <Tool CommandLine="..\VC.postbuild.bat NxOgre Debug" Name="VCPostBuildEventTool"/>
-  </Configuration>
- </Configurations>
- <References>
- </References>
- <Files>
-  <File RelativePath="..\source\NxOgreActor.cpp"/>
-  <File RelativePath="..\source\NxOgreActorMachinePart.cpp"/>
-  <File RelativePath="..\source\NxOgreAllocator.cpp"/>
-  <File RelativePath="..\source\NxOgreAuxiliaryScene.cpp"/>
-  <File RelativePath="..\source\NxOgreBox.cpp"/>
-  <File RelativePath="..\source\NxOgreBoxDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreCallback.cpp"/>
-  <File RelativePath="..\source\NxOgreCapsule.cpp"/>
-  <File RelativePath="..\source\NxOgreCapsuleDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreCharacterController.cpp"/>
-  <File RelativePath="..\source\NxOgreCharacterControllerDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreClasses.cpp"/>
-  <File RelativePath="..\source\NxOgreCloth.cpp"/>
-  <File RelativePath="..\source\NxOgreClothDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreCompartment.cpp"/>
-  <File RelativePath="..\source\NxOgreCompartmentDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreConvex.cpp"/>
-  <File RelativePath="..\source\NxOgreConvexDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreD6Joint.cpp"/>
-  <File RelativePath="..\source\NxOgreD6JointDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreErrorStream.cpp"/>
-  <File RelativePath="..\source\NxOgreException.cpp"/>
-  <File RelativePath="..\source\NxOgreFileResource.cpp"/>
-  <File RelativePath="..\source\NxOgreFileResourceProtocol.cpp"/>
-  <File RelativePath="..\source\NxOgreFixedJoint.cpp"/>
-  <File RelativePath="..\source\NxOgreFixedSceneTimer.cpp"/>
-  <File RelativePath="..\source\NxOgreFlower.cpp"/>
-  <File RelativePath="..\source\NxOgreFluid.cpp"/>
-  <File RelativePath="..\source\NxOgreFluidDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreFluidEmitter.cpp"/>
-  <File RelativePath="..\source\NxOgreFluidEmitterDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreForceField.cpp"/>
-  <File RelativePath="..\source\NxOgreForceFieldDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreForceFieldKernel.cpp"/>
-  <File RelativePath="..\source\NxOgreForceFieldLinearKernel.cpp"/>
-  <File RelativePath="..\source\NxOgreForceFieldLinearKernelDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreFunctions.cpp"/>
-  <File RelativePath="..\source\NxOgreGroupsMask.cpp"/>
-  <File RelativePath="..\source\NxOgreHeightField.cpp"/>
-  <File RelativePath="..\source\NxOgreHeightFieldGeometry.cpp"/>
-  <File RelativePath="..\source\NxOgreHeightFieldGeometryDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreHeightFieldManager.cpp"/>
-  <File RelativePath="..\source\NxOgreIntVectors.cpp"/>
-  <File RelativePath="..\source\NxOgreJoint.cpp"/>
-  <File RelativePath="..\source\NxOgreJointDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreJointDriveDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreJointLimitDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreJointLimitSoftDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreKinematicActor.cpp"/>
-  <File RelativePath="..\source\NxOgreKinematicSceneLink.cpp"/>
-  <File RelativePath="..\source\NxOgreLinearInterpolationMap.cpp"/>
-  <File RelativePath="..\source\NxOgreList.cpp"/>
-  <File RelativePath="..\source\NxOgreMachine.cpp"/>
-  <File RelativePath="..\source\NxOgreMachinePart.cpp"/>
-  <File RelativePath="..\source\NxOgreMallocAllocator.cpp"/>
-  <File RelativePath="..\source\NxOgreManualHeightField.cpp"/>
-  <File RelativePath="..\source\NxOgreManualMesh.cpp"/>
-  <File RelativePath="..\source\NxOgreMaterial.cpp"/>
-  <File RelativePath="..\source\NxOgreMaterialDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreMath.cpp"/>
-  <File RelativePath="..\source\NxOgreMatrix.cpp"/>
-  <File RelativePath="..\source\NxOgreMemoryResource.cpp"/>
-  <File RelativePath="..\source\NxOgreMemoryResourceProtocol.cpp"/>
-  <File RelativePath="..\source\NxOgreMesh.cpp"/>
-  <File RelativePath="..\source\NxOgreMeshData.cpp"/>
-  <File RelativePath="..\source\NxOgreMeshGenerator.cpp"/>
-  <File RelativePath="..\source\NxOgreMeshManager.cpp"/>
-  <File RelativePath="..\source\NxOgreMeshStats.cpp"/>
-  <File RelativePath="..\source\NxOgreMotorDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreNodeRenderable.cpp"/>
-  <File RelativePath="..\source\NxOgreNotice.cpp"/>
-  <File RelativePath="..\source\NxOgreNXS.cpp"/>
-  <File RelativePath="..\source\NxOgreParticleData.cpp"/>
-  <File RelativePath="..\source\NxOgrePath.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXCallback.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXConfiguration.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXMeshData.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXOutputStream.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXParticleData.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXPointer.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXRaycastReport.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXStream.cpp"/>
-  <File RelativePath="..\source\NxOgrePhysXUserAllocator.cpp"/>
-  <File RelativePath="..\source\NxOgrePlaneGeometry.cpp"/>
-  <File RelativePath="..\source\NxOgrePlaneGeometryDescription.cpp"/>
-  <File RelativePath="..\source\NxOgrePointRenderable.cpp"/>
-  <File RelativePath="..\source\NxOgrePrincipalScene.cpp"/>
-  <File RelativePath="..\source\NxOgrePrototypeFunctions.cpp"/>
-  <File RelativePath="..\source\NxOgreQuat.cpp"/>
-  <File RelativePath="..\source\NxOgreRadian.cpp"/>
-  <File RelativePath="..\source\NxOgreRay.cpp"/>
-  <File RelativePath="..\source\NxOgreRaycastHit.cpp"/>
-  <File RelativePath="..\source\NxOgreReason.cpp"/>
-  <File RelativePath="..\source\NxOgreRemoteDebugger.cpp"/>
-  <File RelativePath="..\source\NxOgreRenderable.cpp"/>
-  <File RelativePath="..\source\NxOgreResource.cpp"/>
-  <File RelativePath="..\source\NxOgreResourceProtocol.cpp"/>
-  <File RelativePath="..\source\NxOgreResourceStream.cpp"/>
-  <File RelativePath="..\source\NxOgreResourceSystem.cpp"/>
-  <File RelativePath="..\source\NxOgreRevoluteJoint.cpp"/>
-  <File RelativePath="..\source\NxOgreRevoluteJointDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreRigidBody.cpp"/>
-  <File RelativePath="..\source\NxOgreRigidBodyDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreRigidBodyFunctions.cpp"/>
-  <File RelativePath="..\source\NxOgreScene.cpp"/>
-  <File RelativePath="..\source\NxOgreSceneDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreSceneGeometry.cpp"/>
-  <File RelativePath="..\source\NxOgreSceneLink.cpp"/>
-  <File RelativePath="..\source\NxOgreSceneTimer.cpp"/>
-  <File RelativePath="..\source\NxOgreShape.cpp"/>
-  <File RelativePath="..\source\NxOgreShapeDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreShapeFunctions.cpp"/>
-  <File RelativePath="..\source\NxOgreSimple.cpp"/>
-  <File RelativePath="..\source\NxOgreSoftBody.cpp"/>
-  <File RelativePath="..\source\NxOgreSoftBodyDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreSphere.cpp"/>
-  <File RelativePath="..\source\NxOgreSphereDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreSphericalJoint.cpp"/>
-  <File RelativePath="..\source\NxOgreSphericalJointDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreSpringDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreStable.cpp"/>
-  <File RelativePath="..\source\NxOgreString.cpp"/>
-  <File RelativePath="..\source\NxOgreSweepQuery.cpp"/>
-  <File RelativePath="..\source\NxOgreTimeController.cpp"/>
-  <File RelativePath="..\source\NxOgreTimer.cpp"/>
-  <File RelativePath="..\source\NxOgreTimeStep.cpp"/>
-  <File RelativePath="..\source\NxOgreTireFunction.cpp"/>
-  <File RelativePath="..\source\NxOgreTriangle.cpp"/>
-  <File RelativePath="..\source\NxOgreTriangleGeometry.cpp"/>
-  <File RelativePath="..\source\NxOgreTriangleGeometryDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreUtil.cpp"/>
-  <File RelativePath="..\source\NxOgreVec2.cpp"/>
-  <File RelativePath="..\source\NxOgreVec3.cpp"/>
-  <File RelativePath="..\source\NxOgreVec4.cpp"/>
-  <File RelativePath="..\source\NxOgreVector.cpp"/>
-  <File RelativePath="..\source\NxOgreVisualDebugger.cpp"/>
-  <File RelativePath="..\source\NxOgreVisualDebuggerMeshData.cpp"/>
-  <File RelativePath="..\source\NxOgreVolume.cpp"/>
-  <File RelativePath="..\source\NxOgreWarning.cpp"/>
-  <File RelativePath="..\source\NxOgreWheel.cpp"/>
-  <File RelativePath="..\source\NxOgreWheelDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreWheelMachinePart.cpp"/>
-  <File RelativePath="..\source\NxOgreWorld.cpp"/>
-  <File RelativePath="..\source\NxOgreWorldDescription.cpp"/>
-  <File RelativePath="..\source\NxOgreXFunctions.cpp"/>
-  <File RelativePath="..\source\NxOgre.h"/>
-  <File RelativePath="..\source\NxOgreActor.h"/>
-  <File RelativePath="..\source\NxOgreActorMachinePart.h"/>
-  <File RelativePath="..\source\NxOgreAllocatables.h"/>
-  <File RelativePath="..\source\NxOgreAllocator.h"/>
-  <File RelativePath="..\source\NxOgreAutoConfiguration.h"/>
-  <File RelativePath="..\source\NxOgreAuxiliaryScene.h"/>
-  <File RelativePath="..\source\NxOgreBounds.h"/>
-  <File RelativePath="..\source\NxOgreBox.h"/>
-  <File RelativePath="..\source\NxOgreBoxDescription.h"/>
-  <File RelativePath="..\source\NxOgreBuffer.h"/>
-  <File RelativePath="..\source\NxOgreCallback.h"/>
-  <File RelativePath="..\source\NxOgreCapsule.h"/>
-  <File RelativePath="..\source\NxOgreCapsuleDescription.h"/>
-  <File RelativePath="..\source\NxOgreCharacterController.h"/>
-  <File RelativePath="..\source\NxOgreCharacterControllerDescription.h"/>
-  <File RelativePath="..\source\NxOgreCircularBuffer.h"/>
-  <File RelativePath="..\source\NxOgreClasses.h"/>
-  <File RelativePath="..\source\NxOgreClassPrototypes.h"/>
-  <File RelativePath="..\source\NxOgreCloth.h"/>
-  <File RelativePath="..\source\NxOgreClothDescription.h"/>
-  <File RelativePath="..\source\NxOgreCommon.h"/>
-  <File RelativePath="..\source\NxOgreCompartment.h"/>
-  <File RelativePath="..\source\NxOgreCompartmentDescription.h"/>
-  <File RelativePath="..\source\NxOgreConfiguration.h"/>
-  <File RelativePath="..\source\NxOgreContactPair.h"/>
-  <File RelativePath="..\source\NxOgreConvex.h"/>
-  <File RelativePath="..\source\NxOgreConvexDescription.h"/>
-  <File RelativePath="..\source\NxOgreD6Joint.h"/>
-  <File RelativePath="..\source\NxOgreD6JointDescription.h"/>
-  <File RelativePath="..\source\NxOgreDynamicRigidBodyFlags.h"/>
-  <File RelativePath="..\source\NxOgreEntityReport.h"/>
-  <File RelativePath="..\source\NxOgreEnums.h"/>
-  <File RelativePath="..\source\NxOgreErrorStream.h"/>
-  <File RelativePath="..\source\NxOgreException.h"/>
-  <File RelativePath="..\source\NxOgreFileResource.h"/>
-  <File RelativePath="..\source\NxOgreFileResourceProtocol.h"/>
-  <File RelativePath="..\source\NxOgreFixedJoint.h"/>
-  <File RelativePath="..\source\NxOgreFixedSceneTimer.h"/>
-  <File RelativePath="..\source\NxOgreFlower.h"/>
-  <File RelativePath="..\source\NxOgreFluid.h"/>
-  <File RelativePath="..\source\NxOgreFluidDescription.h"/>
-  <File RelativePath="..\source\NxOgreFluidEmitter.h"/>
-  <File RelativePath="..\source\NxOgreFluidEmitterDescription.h"/>
-  <File RelativePath="..\source\NxOgreForceField.h"/>
-  <File RelativePath="..\source\NxOgreForceFieldDescription.h"/>
-  <File RelativePath="..\source\NxOgreForceFieldKernel.h"/>
-  <File RelativePath="..\source\NxOgreForceFieldLinearKernel.h"/>
-  <File RelativePath="..\source\NxOgreForceFieldLinearKernelDescription.h"/>
-  <File RelativePath="..\source\NxOgreFunctions.h"/>
-  <File RelativePath="..\source\NxOgreGroupsMask.h"/>
-  <File RelativePath="..\source\NxOgreHeightField.h"/>
-  <File RelativePath="..\source\NxOgreHeightFieldGeometry.h"/>
-  <File RelativePath="..\source\NxOgreHeightFieldGeometryDescription.h"/>
-  <File RelativePath="..\source\NxOgreHeightFieldManager.h"/>
-  <File RelativePath="..\source\NxOgreHeightFieldSample.h"/>
-  <File RelativePath="..\source\NxOgreIntVectors.h"/>
-  <File RelativePath="..\source\NxOgreJoint.h"/>
-  <File RelativePath="..\source\NxOgreJointDescription.h"/>
-  <File RelativePath="..\source\NxOgreJointDriveDescription.h"/>
-  <File RelativePath="..\source\NxOgreJointLimitDescription.h"/>
-  <File RelativePath="..\source\NxOgreJointLimitSoftDescription.h"/>
-  <File RelativePath="..\source\NxOgreKinematicActor.h"/>
-  <File RelativePath="..\source\NxOgreKinematicSceneLink.h"/>
-  <File RelativePath="..\source\NxOgreLinearInterpolationMap.h"/>
-  <File RelativePath="..\source\NxOgreList.h"/>
-  <File RelativePath="..\source\NxOgreMachine.h"/>
-  <File RelativePath="..\source\NxOgreMachinePart.h"/>
-  <File RelativePath="..\source\NxOgreMallocAllocator.h"/>
-  <File RelativePath="..\source\NxOgreManualHeightField.h"/>
-  <File RelativePath="..\source\NxOgreManualMesh.h"/>
-  <File RelativePath="..\source\NxOgreMap.h"/>
-  <File RelativePath="..\source\NxOgreMaterial.h"/>
-  <File RelativePath="..\source\NxOgreMaterialDescription.h"/>
-  <File RelativePath="..\source\NxOgreMath.h"/>
-  <File RelativePath="..\source\NxOgreMatrix.h"/>
-  <File RelativePath="..\source\NxOgreMemoryResource.h"/>
-  <File RelativePath="..\source\NxOgreMemoryResourceProtocol.h"/>
-  <File RelativePath="..\source\NxOgreMesh.h"/>
-  <File RelativePath="..\source\NxOgreMeshData.h"/>
-  <File RelativePath="..\source\NxOgreMeshGenerator.h"/>
-  <File RelativePath="..\source\NxOgreMeshManager.h"/>
-  <File RelativePath="..\source\NxOgreMeshStats.h"/>
-  <File RelativePath="..\source\NxOgreMotorDescription.h"/>
-  <File RelativePath="..\source\NxOgreNodeRenderable.h"/>
-  <File RelativePath="..\source\NxOgreNotice.h"/>
-  <File RelativePath="..\source\NxOgreNXS.h"/>
-  <File RelativePath="..\source\NxOgreParticleData.h"/>
-  <File RelativePath="..\source\NxOgrePath.h"/>
-  <File RelativePath="..\source\NxOgrePhysXCallback.h"/>
-  <File RelativePath="..\source\NxOgrePhysXConfiguration.h"/>
-  <File RelativePath="..\source\NxOgrePhysXMeshData.h"/>
-  <File RelativePath="..\source\NxOgrePhysXOutputStream.h"/>
-  <File RelativePath="..\source\NxOgrePhysXParticleData.h"/>
-  <File RelativePath="..\source\NxOgrePhysXPointer.h"/>
-  <File RelativePath="..\source\NxOgrePhysXPrototypes.h"/>
-  <File RelativePath="..\source\NxOgrePhysXRaycastReport.h"/>
-  <File RelativePath="..\source\NxOgrePhysXStream.h"/>
-  <File RelativePath="..\source\NxOgrePhysXUserAllocator.h"/>
-  <File RelativePath="..\source\NxOgrePhysXUserEntityReport.h"/>
-  <File RelativePath="..\source\NxOgrePlaneGeometry.h"/>
-  <File RelativePath="..\source\NxOgrePlaneGeometryDescription.h"/>
-  <File RelativePath="..\source\NxOgrePointerFunctions.h"/>
-  <File RelativePath="..\source\NxOgrePointRenderable.h"/>
-  <File RelativePath="..\source\NxOgrePrincipalScene.h"/>
-  <File RelativePath="..\source\NxOgrePrototypeFunctions.h"/>
-  <File RelativePath="..\source\NxOgrePtrHashmap.h"/>
-  <File RelativePath="..\source\NxOgrePtrMultiHashmap.h"/>
-  <File RelativePath="..\source\NxOgrePtrVector.h"/>
-  <File RelativePath="..\source\NxOgreQuat.h"/>
-  <File RelativePath="..\source\NxOgreRadian.h"/>
-  <File RelativePath="..\source\NxOgreRay.h"/>
-  <File RelativePath="..\source\NxOgreRaycastHit.h"/>
-  <File RelativePath="..\source\NxOgreReason.h"/>
-  <File RelativePath="..\source\NxOgreRefVector.h"/>
-  <File RelativePath="..\source\NxOgreRemoteDebugger.h"/>
-  <File RelativePath="..\source\NxOgreRemoteDebuggerListener.h"/>
-  <File RelativePath="..\source\NxOgreRenderable.h"/>
-  <File RelativePath="..\source\NxOgreResource.h"/>
-  <File RelativePath="..\source\NxOgreResourceProtocol.h"/>
-  <File RelativePath="..\source\NxOgreResourceStream.h"/>
-  <File RelativePath="..\source\NxOgreResourceSystem.h"/>
-  <File RelativePath="..\source\NxOgreRevoluteJoint.h"/>
-  <File RelativePath="..\source\NxOgreRevoluteJointDescription.h"/>
-  <File RelativePath="..\source\NxOgreRigidBody.h"/>
-  <File RelativePath="..\source\NxOgreRigidBodyDescription.h"/>
-  <File RelativePath="..\source\NxOgreRigidBodyFlags.h"/>
-  <File RelativePath="..\source\NxOgreRigidBodyFunctions.h"/>
-  <File RelativePath="..\source\NxOgreScene.h"/>
-  <File RelativePath="..\source\NxOgreSceneDescription.h"/>
-  <File RelativePath="..\source\NxOgreSceneFlags.h"/>
-  <File RelativePath="..\source\NxOgreSceneGeometry.h"/>
-  <File RelativePath="..\source\NxOgreSceneLink.h"/>
-  <File RelativePath="..\source\NxOgreSceneTimer.h"/>
-  <File RelativePath="..\source\NxOgreShape.h"/>
-  <File RelativePath="..\source\NxOgreShapeDescription.h"/>
-  <File RelativePath="..\source\NxOgreShapeFlags.h"/>
-  <File RelativePath="..\source\NxOgreShapeFunctions.h"/>
-  <File RelativePath="..\source\NxOgreSharedPointer.h"/>
-  <File RelativePath="..\source\NxOgreSimple.h"/>
-  <File RelativePath="..\source\NxOgreSingleton.h"/>
-  <File RelativePath="..\source\NxOgreSoftBody.h"/>
-  <File RelativePath="..\source\NxOgreSoftBodyDescription.h"/>
-  <File RelativePath="..\source\NxOgreSphere.h"/>
-  <File RelativePath="..\source\NxOgreSphereDescription.h"/>
-  <File RelativePath="..\source\NxOgreSphericalJoint.h"/>
-  <File RelativePath="..\source\NxOgreSphericalJointDescription.h"/>
-  <File RelativePath="..\source\NxOgreSpringDescription.h"/>
-  <File RelativePath="..\source\NxOgreStable.h"/>
-  <File RelativePath="..\source\NxOgreString.h"/>
-  <File RelativePath="..\source\NxOgreSweepQuery.h"/>
-  <File RelativePath="..\source\NxOgreTimeController.h"/>
-  <File RelativePath="..\source\NxOgreTimeListener.h"/>
-  <File RelativePath="..\source\NxOgreTimer.h"/>
-  <File RelativePath="..\source\NxOgreTimeStep.h"/>
-  <File RelativePath="..\source\NxOgreTireFunction.h"/>
-  <File RelativePath="..\source\NxOgreTriangle.h"/>
-  <File RelativePath="..\source\NxOgreTriangleGeometry.h"/>
-  <File RelativePath="..\source\NxOgreTriangleGeometryDescription.h"/>
-  <File RelativePath="..\source\NxOgreTuple.h"/>
-  <File RelativePath="..\source\NxOgreUtil.h"/>
-  <File RelativePath="..\source\NxOgreVec2.h"/>
-  <File RelativePath="..\source\NxOgreVec3.h"/>
-  <File RelativePath="..\source\NxOgreVec4.h"/>
-  <File RelativePath="..\source\NxOgreVector.h"/>
-  <File RelativePath="..\source\NxOgreVersion.h"/>
-  <File RelativePath="..\source\NxOgreVisualDebugger.h"/>
-  <File RelativePath="..\source\NxOgreVisualDebuggerMeshData.h"/>
-  <File RelativePath="..\source\NxOgreVolume.h"/>
-  <File RelativePath="..\source\NxOgreWarning.h"/>
-  <File RelativePath="..\source\NxOgreWheel.h"/>
-  <File RelativePath="..\source\NxOgreWheelDescription.h"/>
-  <File RelativePath="..\source\NxOgreWheelMachinePart.h"/>
-  <File RelativePath="..\source\NxOgreWorld.h"/>
-  <File RelativePath="..\source\NxOgreWorldDescription.h"/>
-  <File RelativePath="..\source\NxOgreXFunctions.h"/>
- </Files>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9.00"
+	Name="NxOgre"
+	ProjectGUID="{2dc6bdb4-2a01-ad08-9dc8-51a73229706a}"
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="NxOgreFinal|Win32"
+			OutputDirectory="NxOgre\Final"
+			IntermediateDirectory="NxOgre\Final"
+			ConfigurationType="2"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine="..\VC.prebuild.bat NxOgre Final"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\"
+				PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;WIN32;_DLL"
+				RuntimeLibrary="2"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib"
+				OutputFile="$(OutDir)\NxOgreFinal.dll"
+				AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="..\VC.postbuild.bat NxOgre Final"
+			/>
+		</Configuration>
+		<Configuration
+			Name="NxOgreDebug|Win32"
+			OutputDirectory="NxOgre\Debug"
+			IntermediateDirectory="NxOgre\Debug"
+			ConfigurationType="2"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine="..\VC.prebuild.bat NxOgre Debug"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\"
+				PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_DEBUG;_DLL"
+				MinimalRebuild="true"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="NxOgreStable.h"
+				DebugInformationFormat="4"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib"
+				OutputFile="$(OutDir)\NxOgreDebug.dll"
+				AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32"
+				GenerateDebugInformation="true"
+				GenerateMapFile="true"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="..\VC.postbuild.bat NxOgre Debug"
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<File
+			RelativePath="..\source\NxOgre.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreActor.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreActor.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreActorMachinePart.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreActorMachinePart.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAllocatables.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAllocator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAllocator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAutoConfiguration.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAuxiliaryScene.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreAuxiliaryScene.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBounds.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBox.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBox.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBoxDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBoxDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreBuffer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCallback.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCallback.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCapsule.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCapsule.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCapsuleDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCapsuleDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCharacterController.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCharacterController.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCharacterControllerDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCharacterControllerDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCircularBuffer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreClasses.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreClasses.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreClassPrototypes.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCloth.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCloth.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreClothDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreClothDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCommon.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCommonMachineParts.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCommonMachineParts.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCompartment.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCompartment.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCompartmentDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreCompartmentDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreConfiguration.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreContactPair.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreConvex.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreConvex.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreConvexDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreConvexDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreD6Joint.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreD6Joint.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreD6JointDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreD6JointDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreDynamicRigidBodyFlags.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreEntityReport.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreEnums.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreErrorStream.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreErrorStream.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreException.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreException.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResource.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResource.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResourceProtocol.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFileResourceProtocol.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFixedJoint.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFixedJoint.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFixedSceneTimer.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFixedSceneTimer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFlower.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFlower.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluid.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluid.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitter.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitter.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitterDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFluidEmitterDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceField.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceField.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldKernel.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldKernel.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldLinearKernel.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldLinearKernel.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldLinearKernelDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreForceFieldLinearKernelDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFunctions.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreGC.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreGC.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreGroupsMask.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreGroupsMask.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHash.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHashmap.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHashmapIterator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightField.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightField.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldData.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldData.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldGeometry.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldGeometry.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldGeometryDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldGeometryDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldManager.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldManager.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreHeightFieldSample.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreIndexBuffer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreIntVectors.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreIntVectors.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJoint.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJoint.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointDriveDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointDriveDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointLimitDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointLimitDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointLimitSoftDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreJointLimitSoftDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreKinematicActor.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreKinematicActor.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreKinematicSceneLink.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreKinematicSceneLink.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreLinearInterpolationMap.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreLinearInterpolationMap.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreList.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreList.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMachine.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMachine.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMachinePart.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMachinePart.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMallocAllocator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMallocAllocator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreManualHeightField.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreManualHeightField.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreManualMesh.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreManualMesh.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMap.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMapIterator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMaterial.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMaterial.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMaterialDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMaterialDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMath.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMath.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMatrix.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMatrix.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMemoryResource.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMemoryResource.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMemoryResourceProtocol.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMemoryResourceProtocol.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMesh.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMesh.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshData.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshData.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshGenerator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshGenerator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshManager.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshManager.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshRenderable.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshRenderable.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshStats.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMeshStats.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMotorDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMotorDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMultihashmap.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMultihashmapIterator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMultimap.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreMultimapIterator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNodeRenderable.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNodeRenderable.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNotice.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNotice.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNXS.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreNXS.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreParticleData.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreParticleData.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePath.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePath.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXBuffer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXCallback.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXCallback.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXConfiguration.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXConfiguration.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXOutputStream.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXOutputStream.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXParticleData.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXParticleData.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXPointer.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXPointer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXPrototypes.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXRaycastReport.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXRaycastReport.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXStream.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXStream.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXUserAllocator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXUserAllocator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXUserEntityReport.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePlaneGeometry.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePlaneGeometry.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePlaneGeometryDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePlaneGeometryDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePointerFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePointRenderable.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePointRenderable.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePrincipalScene.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePrincipalScene.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePrototypeFunctions.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePrototypeFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreQuat.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreQuat.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRadian.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRadian.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRay.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRay.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRaycastHit.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRaycastHit.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreReason.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreReason.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRefVector.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRemoteDebugger.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRemoteDebugger.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRemoteDebuggerListener.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRenderable.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRenderable.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResource.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResource.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResourceProtocol.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResourceProtocol.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResourceStream.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResourceStream.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResourceSystem.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreResourceSystem.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRevoluteJoint.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRevoluteJoint.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRevoluteJointDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRevoluteJointDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBody.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBody.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBodyDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBodyDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBodyEventIterator.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBodyEventIterator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBodyFlags.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBodyFunctions.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreRigidBodyFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreScene.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreScene.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneFlags.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneGeometry.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneGeometry.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneLink.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneLink.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneTimer.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSceneTimer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShape.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShape.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShapeDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShapeDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShapeFlags.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShapeFunctions.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreShapeFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSharedPointer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSimple.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSimple.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSingleton.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSoftBody.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSoftBody.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSoftBodyDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSoftBodyDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphere.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphere.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphereDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphereDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphericalJoint.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphericalJoint.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphericalJointDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSphericalJointDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSpringDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSpringDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreStable.cpp"
+			>
+			<FileConfiguration
+				Name="NxOgreDebug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreStable.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreString.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreString.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSweepQuery.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreSweepQuery.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimeListener.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimeListenerGroup.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimeListenerGroup.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimer.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimeStep.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTimeStep.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTireFunction.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTireFunction.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTriangle.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTriangle.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTriangleGeometry.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTriangleGeometry.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTriangleGeometryDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTriangleGeometryDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreTuple.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreType2Id.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreUtil.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreUtil.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec2.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec2.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec3.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec3.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec4.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVec4.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVector.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVectorIterator.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVersion.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVertexBuffer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVisualDebugger.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVisualDebugger.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVisualDebuggerMeshData.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVisualDebuggerMeshData.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVolume.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreVolume.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWarning.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWarning.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWheel.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWheel.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWheelDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWheelDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWheelMachinePart.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWheelMachinePart.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWorld.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWorld.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWorldDescription.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreWorldDescription.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreX.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreX.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreXFunctions.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreXFunctions.h"
+			>
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>

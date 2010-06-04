@@ -66,7 +66,7 @@ CharacterController::~CharacterController()
 
 //}
 
-void CharacterController::destroy(void)
+void CharacterController::destroy()
 {
  /*
  if (mCharacter == 0)
@@ -81,7 +81,7 @@ void CharacterController::destroy(void)
 }
 
 
-Scene* CharacterController::getScene(void)
+Scene* CharacterController::getScene()
 {
  return mScene;
 }

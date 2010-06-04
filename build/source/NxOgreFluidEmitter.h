@@ -23,6 +23,7 @@
     THE SOFTWARE.
     
 */
+#if NxOgreHasFluids == 1
 
                                                                                        
 
@@ -71,10 +72,10 @@ namespace NxOgre
 class NxOgrePublicClass FluidEmitter : public NonRigidBodyBasedAllocatable
 {
   
-  public: // Functions
+  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_DELETE
   
-  friend class Fluid;
-  template<class T> friend inline void Functions::safe_delete(T*);
+  public: // Functions
   
   /*! function. getName
       desc.
@@ -394,7 +395,7 @@ class NxOgrePublicClass FluidEmitter : public NonRigidBodyBasedAllocatable
       desc.
            Fluid Emitters are owned by the Fluid and will be destroyed by it.
   */
- ~FluidEmitter(void);
+ ~FluidEmitter();
   
   protected:
   
@@ -414,4 +415,5 @@ class NxOgrePublicClass FluidEmitter : public NonRigidBodyBasedAllocatable
 
                                                                                        
 
+#endif
 #endif

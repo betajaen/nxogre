@@ -47,7 +47,7 @@ RemoteDebugger::RemoteDebugger(World* world)
  mRemoteDebugger = mWorld->getPhysXSDK()->getFoundationSDK().getRemoteDebugger();
 }
 
-RemoteDebugger::~RemoteDebugger(void)
+RemoteDebugger::~RemoteDebugger()
 {
  if (isConnected())
   disconnect();
@@ -58,22 +58,22 @@ void RemoteDebugger::connect(const char* address, unsigned int port, unsigned in
  mRemoteDebugger->connect(address, port, eventMask);
 }
 
-void RemoteDebugger::disconnect(void)
+void RemoteDebugger::disconnect()
 {
  mRemoteDebugger->disconnect();
 }
 
-void RemoteDebugger::flush(void)
+void RemoteDebugger::flush()
 {
  mRemoteDebugger->flush();
 }
 
-bool RemoteDebugger::isConnected(void) const
+bool RemoteDebugger::isConnected() const
 {
  return mRemoteDebugger->isConnected();
 }
 
-void RemoteDebugger::frameBreak(void)
+void RemoteDebugger::frameBreak()
 {
  mRemoteDebugger->frameBreak();
 }
@@ -203,7 +203,7 @@ void RemoteDebugger::setMask(unsigned int mask)
  mRemoteDebugger->setMask(mask);
 }
 
-unsigned int RemoteDebugger::getMask(void)
+unsigned int RemoteDebugger::getMask()
 {
  return mRemoteDebugger->getMask();
 }
@@ -213,7 +213,7 @@ void* RemoteDebugger::getPickedObject()
  return mRemoteDebugger->getPickedObject();
 }
 
-Vec3 RemoteDebugger::getPickedPoint(void)
+Vec3 RemoteDebugger::getPickedPoint()
 {
  return Vec3(mRemoteDebugger->getPickPoint());
 }

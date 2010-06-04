@@ -54,19 +54,19 @@ class NxOgrePublicClass CompartmentDescription
       desc.
           CompartmentDescription constructor, all it does is call RigidBodyDescription::reset.
   */
-  CompartmentDescription(void);
+  CompartmentDescription();
   
   /*! function. reset
       desc.
           Resets everything to their default values, and pointers are set to NULL.
   */
-  void  reset(void);
+  void  reset();
   
   /*! function. valid
       desc.
           Returns if the variables are in a valid range or not
   */
-  bool  valid(void);
+  bool  valid();
   
   /*! variable. mType
       desc.

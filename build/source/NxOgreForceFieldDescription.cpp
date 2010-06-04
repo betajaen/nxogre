@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-ForceFieldDescription::ForceFieldDescription(void)
+ForceFieldDescription::ForceFieldDescription()
 {
  reset();
 }
 
-void ForceFieldDescription::reset(void)
+void ForceFieldDescription::reset()
 {
  mPose.identity();
  mRigidBody = NULL;
@@ -73,7 +73,7 @@ void ForceFieldDescription::clone(ForceFieldDescription& target) const
  target.mName.assign(mName);
 }
 
-bool ForceFieldDescription::valid(void)
+bool ForceFieldDescription::valid()
 {
  if (mGroup >= 32)
   return false;

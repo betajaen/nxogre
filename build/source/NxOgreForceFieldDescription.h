@@ -51,15 +51,15 @@ class NxOgrePublicClass ForceFieldDescription
   
   /** \brief ForceFieldDescription constructor, all it does is call RigidBodyDescription::reset.
   */
-  ForceFieldDescription(void);
+  ForceFieldDescription();
   
   /** \brief Resets everything to their default values, and pointers are set to NULL.
   */
-  void  reset(void);
+  void  reset();
   
   /** \brief Returns if the variables are in a valid range or not
   */
-  bool  valid(void);
+  bool  valid();
   
   /** \brief Clone the properties of this into another ForceFieldDescription or a class derived from it.
   */

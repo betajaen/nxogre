@@ -82,6 +82,8 @@
 
 #define NxOgre_ThrowExceptionIfNull(PTR, CLASS_TYPE) if(PTR == 0){throw ::NxOgre::NullPointerException(__FILE__, __LINE__, CLASS_TYPE);}
 
+#define NxOgre_ThrowExceptionIfNotNull(PTR, DESCRIPTION, CLASS_TYPE) if(PTR != 0){throw ::NxOgre::NonNullPointerException(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE);}
+
 #define NxOgre_ThrowWarning(DESCRIPTION, CLASS_TYPE) ::NxOgre::ErrorStream::getSingleton()->addWarning(Warning(__FILE__, __LINE__, DESCRIPTION, CLASS_TYPE));
 
 #define NxOgre_ThrowNotice(DESCRIPTION) ::NxOgre::ErrorStream::getSingleton()->addNotice(Notice(__FILE__, __LINE__, DESCRIPTION));
@@ -99,6 +101,58 @@
 #else
 #  define NxOgreSixteenBytesRestriction(CLASS)
 #  define NxOgreFourBytesRestriction(CLASS)
+#endif
+
+                                                                                       
+
+#define NxOgre_DebugPrint(MESSAGE) std::cout << MESSAGE << std::endl;
+
+#if NXOGRE_DEBUG_CORE == 1
+ #define NxOgre_DebugPrint_Core(MESSAGE) NxOgre_DebugPrint("[NxOgre/Core] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_Core(MESSAGE) /* MESSAGE */
+#endif
+
+#if NXOGRE_DEBUG_RESOURCES == 1
+ #define NxOgre_DebugPrint_Resources(MESSAGE) NxOgre_DebugPrint("[NxOgre/Resources] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_Resources(MESSAGE) /* MESSAGE */
+#endif
+
+#if NXOGRE_DEBUG_MEMORY == 1
+ #define NxOgre_DebugPrint_Memory(MESSAGE) NxOgre_DebugPrint("[NxOgre/Memory] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_Memory(MESSAGE) /* MESSAGE */
+#endif
+
+#if NXOGRE_DEBUG_COOKING == 1
+ #define NxOgre_DebugPrint_Cooking(MESSAGE) NxOgre_DebugPrint("[NxOgre/Cooking] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_Cooking(MESSAGE) /* MESSAGE */
+#endif
+
+#if NXOGRE_DEBUG_BUFFER == 1
+ #define NxOgre_DebugPrint_Buffer(MESSAGE) NxOgre_DebugPrint("[NxOgre/Buffer] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_Buffer(MESSAGE) /* MESSAGE */
+#endif
+
+#if NXOGRE_DEBUG_MESHES == 1
+ #define NxOgre_DebugPrint_Meshes(MESSAGE) NxOgre_DebugPrint("[NxOgre/Meshes] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_Meshes(MESSAGE) /* MESSAGE */
+#endif
+
+#if NXOGRE_DEBUG_HEIGHTFIELDS == 1
+ #define NxOgre_DebugPrint_HeightFields(MESSAGE) NxOgre_DebugPrint("[NxOgre/HeightFields] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_HeightFields(MESSAGE) /* MESSAGE */
+#endif
+
+#if NXOGRE_DEBUG_CLOTH == 1
+ #define NxOgre_DebugPrint_Cloth(MESSAGE) NxOgre_DebugPrint("[NxOgre/Cloth] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_Cloth(MESSAGE) /* MESSAGE */
 #endif
 
                                                                                        

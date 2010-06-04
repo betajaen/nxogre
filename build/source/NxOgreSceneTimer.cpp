@@ -44,7 +44,7 @@ SceneTimer::SceneTimer(Scene* scene, Real maxTime)
  mScene = mParent->getScene();
 }
 
-SceneTimer::~SceneTimer(void)
+SceneTimer::~SceneTimer()
 {
 }
 
@@ -52,12 +52,12 @@ void SceneTimer::simulate(float user_deltaTime)
 {
 }
 
-bool SceneTimer::hasResults(void) const
+bool SceneTimer::hasResults() const
 {
  return true;
 }
 
-void SceneTimer::fetchResults(void)
+void SceneTimer::fetchResults()
 {
 }
 

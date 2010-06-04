@@ -52,13 +52,13 @@ class NxOgrePublicClass ForceFieldLinearKernelDescription
       desc.
           Calls RigidBodyDescription::reset
   */
-  ForceFieldLinearKernelDescription(void);
+  ForceFieldLinearKernelDescription();
   
   /*! function. reset
       desc.
           Resets everything to their default values, and pointers are set to NULL.
   */
-  void reset(void);
+  void reset();
   
   /*! function. valid
       desc.
@@ -66,7 +66,7 @@ class NxOgrePublicClass ForceFieldLinearKernelDescription
       return.
           bool - If it is valid or not.
   */
-  bool valid(void);
+  bool valid();
   
   /*! function. clone
       desc.

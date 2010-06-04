@@ -36,7 +36,7 @@ namespace NxOgre
 
                                                                                        
 
-Ray::Ray(void)
+Ray::Ray()
 : mOrigin(0,0,0), mDirection(1,0,0)
 {
 }
@@ -46,7 +46,7 @@ Ray::Ray(const Vec3& origin, const Vec3& direction)
 {
 }
 
-Ray::~Ray(void)
+Ray::~Ray()
 {
 }
 

@@ -47,7 +47,8 @@ namespace NxOgre
 class NxOgrePublicClass SphericalJoint : public Joint
 {
   
-  friend class Scene;
+  NXOGRE_GC_FRIEND_DELETE
+  NXOGRE_GC_FRIEND_NEW3
   
   public: // Functions
   
@@ -57,7 +58,7 @@ class NxOgrePublicClass SphericalJoint : public Joint
   
   /** \brief Sets the joint projection mode. 
   */
-  Enums::JointProjectionMode                  getProjectionMode(void) const;
+  Enums::JointProjectionMode                  getProjectionMode() const;
 
   /** \brief Get the type of joint
   */
@@ -72,7 +73,7 @@ class NxOgrePublicClass SphericalJoint : public Joint
   
   /** \internal Private Destructor. Use Scene::destroyJoint.
   */
-                                             ~SphericalJoint(void);
+                                             ~SphericalJoint();
   
   protected: // Spherical
   

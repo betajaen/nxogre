@@ -23,7 +23,6 @@
     THE SOFTWARE.
     
 */
-
                                                                                        
 
 #ifndef NXOGRE_FLUIDDESCRIPTION_H
@@ -32,6 +31,9 @@
                                                                                        
 
 #include "NxOgreStable.h"
+
+#if NxOgreHasFluids == 1
+
 #include "NxOgreCommon.h"
 #include "NxOgreParticleData.h"
 #include "NxOgreSimple.h"
@@ -52,19 +54,21 @@ class NxOgrePublicClass FluidDescription
   
   /** \brief FluidDescription constructor, all it does is call RigidBodyDescription::reset.
   */
-                                               FluidDescription(void);
+                                               FluidDescription();
   
+  virtual                                     ~FluidDescription();
+
   /** \brief Resets everything to their default values, and pointers are set to NULL.
   */
-  void                                         reset(void);
+  void                                         reset();
   
   /** \brief Returns if the variables are in a valid range or not
   */
-  bool                                         valid(void);
+  bool                                         valid();
   
   /** \brief
   */
-  ParticleData                                 mParticleData;
+  SharedPointer<ParticleData>                  mParticleData;
   
   /** \brief
   */  
@@ -201,5 +205,7 @@ class NxOgrePublicClass FluidDescription
 } // namespace NxOgre
 
                                                                                        
+
+#endif
 
 #endif

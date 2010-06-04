@@ -49,7 +49,8 @@ namespace NxOgre
 class NxOgrePublicClass FixedJoint : public Joint
 {
   
-  friend class Scene;
+  NXOGRE_GC_FRIEND_DELETE
+  NXOGRE_GC_FRIEND_NEW3
   
   public: // Functions
   
@@ -82,7 +83,7 @@ class NxOgrePublicClass FixedJoint : public Joint
       note.
            Use Scene::destroyJoint.
   */
-                                             ~FixedJoint(void);
+                                             ~FixedJoint();
   
   protected: // Fixed
   

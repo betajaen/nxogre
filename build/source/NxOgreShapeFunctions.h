@@ -106,7 +106,7 @@ inline Shape* createHeightField(NxShape*);
 */
 inline Shape* createTriangleMesh(NxShape*);
 
-void NxOgrePublicFunction NxShapeArrayToBuffer(NxShape*, unsigned int nb_nx_shapes, Buffer<Shape*>&);
+void NxOgrePublicFunction NxShapeArrayToBuffer(NxShape*, unsigned int nb_nx_shapes, buffer<Shape*>&);
 
                                                                                        
 

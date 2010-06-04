@@ -64,7 +64,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   
   /** \brief Required virtual destructor
   */
-  virtual ~Resource(void);
+  virtual ~Resource();
   
   /** \brief Get the protocol.
   */
@@ -78,31 +78,31 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   */
   bool hasTouched() const;
   
-  /** \brief Get the number of read operations on that resource.
+  /** \brief Get the number of read wrote on that resource.
   */
-  unsigned int getNbReadOperations() const;
+  unsigned int getNbBytesRead() const;
   
-  /** \brief Get the number of write operations on that resource.
+  /** \brief Get the number of bytes wrote on that resource.
   */
-  unsigned int getNbWriteOperations() const;
+  unsigned int getNbBytesWrote() const;
   
   /** \brief What is the resources status?
   */
-  virtual Enums::ResourceStatus getStatus(void) const;
+  virtual Enums::ResourceStatus getStatus() const;
   
   /** \brief Get the directionality of the resource
   */
-  virtual Enums::ResourceDirectionality getDirectionality(void) const;
+  virtual Enums::ResourceDirectionality getDirectionality() const;
   
   /** \brief Get the type of access of the resource
   */
-  virtual Enums::ResourceAccess   getAccess(void) const;
+  virtual Enums::ResourceAccess   getAccess() const;
   
   /** \brief Get the size (in bytes) of the resource, or Constants::ResourceSizeUnknown.
    \note  If the Directionality is sucessional or the status is anything but open then
     the file size will be Constants::ResourceSizeUnknown.
   */
-  virtual size_t  getSize(void) const;
+  virtual size_t  getSize() const;
   
   /** \brief Go somewhere into the resource from, this is relative to the ReadWrite pointer and not an absolute.
    \note Depending on status, or directionality this will not be possible.
@@ -114,26 +114,26 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
    \note Depending on status, or directionality this will not be possible.
    \return True if the seek did happen, or false if it did not.
   */
-  virtual bool seekBeginning(void);
+  virtual bool seekBeginning();
 
   /** \brief Go to the end of the resource.
    \note Depending on status, or directionality this will not be possible.
    \return True if the seek did happen, or false if it did not.
   */
-  virtual bool seekEnd(void);
+  virtual bool seekEnd();
 
   /** \brief Is the ReadWrite pointer at the end of Resource?
   */
-  virtual bool atBeginning(void) const;
+  virtual bool atBeginning() const;
 
   /** \brief Is the ReadWrite pointer at the end of Resource, just like a standard "EOF" function.
   */
-  virtual bool atEnd(void) const;
+  virtual bool atEnd() const;
 
   /** \brief Where the ReadWrite is from the beginning of the resource.
    \note  Constants::ResourceSizeUnknown will be returned if it is an unknown.
   */
-  virtual size_t  at(void) const;
+  virtual size_t  at() const;
 
   /** \brief Write something otherwise fail.
   */
@@ -141,7 +141,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Write a single null (0x00) to the resource otherwise fail.
   */
-  virtual bool writeNull(void);
+  virtual bool writeNull();
 
   /** \brief Write a bool otherwise fail.
   */
@@ -241,7 +241,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a bool otherwise fail.
   */
-  virtual bool readBool(void);
+  virtual bool readBool();
 
   /** \brief Read a bool* array otherwise fail.
    \note  Length should be given as "array_size * sizeof(T)" or the same value you give
@@ -251,7 +251,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single unsigned char otherwise fail.
   */
-  virtual unsigned char   readUChar(void);
+  virtual unsigned char   readUChar();
 
   /** \brief Read a unsigned char* array otherwise fail.
    \note  Length should be given as "array_size * sizeof(T)" or the same value you give
@@ -261,7 +261,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single char otherwise fail.
   */
-  virtual char readChar(void);
+  virtual char readChar();
 
   /** \brief Read a char* array otherwise fail.
    \note  Length should be given as "array_size * sizeof(T)" or the same value you give
@@ -271,7 +271,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single unsigned short otherwise fail.
   */
-  virtual unsigned short  readUShort(void);
+  virtual unsigned short  readUShort();
 
   /** \brief Read a unsigned short* array otherwise fail.
    \note  Length should be given as "array_size * sizeof(T)" or the same value you give
@@ -281,7 +281,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single short otherwise fail.
   */
-  virtual short   readShort(void);
+  virtual short   readShort();
 
   /** \brief Read a short* array otherwise fail.
   */
@@ -289,7 +289,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single unsigned int otherwise fail.
   */
-  virtual unsigned int    readUInt(void);
+  virtual unsigned int    readUInt();
 
   /** \brief Read a unsigned int* array otherwise fail.
   */
@@ -297,7 +297,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single int otherwise fail.
   */
-  virtual int  readInt(void);
+  virtual int  readInt();
 
   /** \brief Read a int* array otherwise fail.
   */
@@ -305,7 +305,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single float otherwise fail.
   */
-  virtual float   readFloat(void);
+  virtual float   readFloat();
 
   /** \brief Read a float* array otherwise fail.
   */
@@ -313,7 +313,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single double otherwise fail.
   */
-  virtual double  readDouble(void);
+  virtual double  readDouble();
 
   /** \brief Read a double* array otherwise fail.
   */
@@ -321,7 +321,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a float or double otherwise fail
   */
-  virtual Real readReal(void);
+  virtual Real readReal();
 
   /** \brief Read a float or double array otherwise fail
   */
@@ -329,7 +329,7 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
 
   /** \brief Read a single long otherwise fail.
   */
-  virtual long readLong(void);
+  virtual long readLong();
 
   /** \brief Read a long* array otherwise fail.
   */
@@ -349,11 +349,11 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   
   /** \brief Open the resource.
   */
-  void  open(void);
+  void  open();
   
   /** \brief Close the resource.
   */
-  void  close(void);
+  void  close();
 
   /** \internal Local copy of the resource location
   */
@@ -375,18 +375,18 @@ class NxOgrePublicClass Resource : public ResourceAllocatable
   */
   ResourceProtocol*  mProtocol;
   
-  /** \brief Number of Read Operations.
-  */
-  unsigned int mNbReadOperations;
-  
-  /** \brief Number of Write operations.
-  */
-  unsigned int mNbWriteOperations;
-
   /** \internal A single null byte
   */
   static const char    NULL_BYTE;
   
+  /* Number of bytes read.
+  */
+  unsigned int mNbReadBytes;
+  
+  /* Number of bytes wrote.
+  */
+  unsigned int mNbWroteBytes;
+
 }; // class Resource
 
                                                                                        

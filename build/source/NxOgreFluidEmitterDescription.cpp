@@ -27,6 +27,9 @@
                                                                                        
 
 #include "NxOgreStable.h"
+
+#if NxOgreHasFluids == 1
+
 #include "NxOgreFluidEmitterDescription.h"
 
                                                                                        
@@ -36,12 +39,12 @@ namespace NxOgre
 
                                                                                        
 
-FluidEmitterDescription::FluidEmitterDescription(void)
+FluidEmitterDescription::FluidEmitterDescription()
 {
  reset();
 }
 
-void FluidEmitterDescription::reset(void)
+void FluidEmitterDescription::reset()
 {
  mPose.identity();
  mFrameShape = 0;
@@ -60,7 +63,7 @@ void FluidEmitterDescription::reset(void)
  
 }
 
-bool FluidEmitterDescription::valid(void)
+bool FluidEmitterDescription::valid()
 {
  if (mDimensionX < 0.0f || mDimensionY < 0.0f)
   return false;
@@ -97,3 +100,5 @@ bool FluidEmitterDescription::valid(void)
 } // namespace NxOgre
 
                                                                                        
+
+#endif

@@ -51,8 +51,11 @@ class NxOgrePublicClass ResourceSystem : public ::NxOgre::Singleton<ResourceSyst
    
   public: // Functions
   
-  typedef ptr_hashmap<ResourceProtocol>              Protocols;
-  typedef ptr_hashmap<ResourceProtocol>::iterator_t  ProtocolIterator;
+  NXOGRE_GC_FRIEND_NEW0
+  NXOGRE_GC_FRIEND_DELETE
+  
+  typedef map<size_t, ResourceProtocol*>          Protocols;
+  typedef map_iterator<size_t, ResourceProtocol*> ProtocolIterator;
 
   /** \brief Open an resource, using an Path. Archive will be created or opened based of the directories of the file, unless specified
              by the protocol.

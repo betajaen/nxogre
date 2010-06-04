@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,10 +21,10 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
-                                                                                       
+
 
 #include "NxOgreStable.h"
 #include "NxOgreCompartment.h"
@@ -33,29 +33,29 @@
 
 #include "NxPhysics.h"
 
-                                                                                       
+
 
 namespace NxOgre
 {
 
-                                                                                       
+
 
 Compartment::Compartment(const CompartmentDescription& description, Scene* scene) : mCompartment(0), mScene(scene)
 {
  NxCompartmentDesc desc;
- desc.deviceCode         = NxDeviceCode(unsigned int(description.mDeviceCode));
+ desc.deviceCode         = NxDeviceCode(int(description.mDeviceCode));
  desc.flags              = description.mFlags;
  desc.gridHashCellSize   = description.mGridHashCellSize;
  desc.gridHashTablePower = description.mGridHashTablePower;
  desc.threadMask         = description.mThreadMask;
  desc.timeScale          = description.mTimeScale;
- desc.type               = NxCompartmentType(unsigned int(description.mType));
- 
+ desc.type               = NxCompartmentType(int(description.mType));
+
  mCompartment = mScene->getScene()->createCompartment(desc);
- 
+
 }
 
-Compartment::~Compartment(void)
+Compartment::~Compartment()
 {
  // Compartments cannot be released manually.
 }
@@ -97,14 +97,14 @@ void Compartment::setTimeScale(Real time_scale)
 
 void Compartment::setTiming(Real maxTimeStep, unsigned int max_iterator, Enums::TimeStepMethod method)
 {
- mCompartment->setTiming(maxTimeStep, max_iterator, NxTimeStepMethod(unsigned int(method)));
+ mCompartment->setTiming(maxTimeStep, max_iterator, NxTimeStepMethod(int(method)));
 }
 
 void Compartment::getTiming(Real& maxTimeStep, unsigned int& max_iterator, Enums::TimeStepMethod& method, unsigned int& num_time_steps) const
 {
  NxTimeStepMethod m;
  mCompartment->getTiming(maxTimeStep, max_iterator, m, &num_time_steps);
- method = (Enums::TimeStepMethod) (unsigned int)  m;
+ method = (Enums::TimeStepMethod) (int)  m;
 }
 
 bool Compartment::checkResults(bool block)
@@ -132,8 +132,8 @@ String Compartment::to_s() const
  return NxOgre::to_s((void*)this, "Compartment");
 }
 
-                                                                                       
+
 
 } // namespace NxOgre
 
-                                                                                       
+

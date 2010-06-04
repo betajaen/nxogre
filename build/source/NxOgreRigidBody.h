@@ -71,7 +71,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
       return
            **Scene** * -- Scene that this RigidBody belongs to.
   */
-  Scene*  getScene(void); 
+  Scene*  getScene(); 
   
   /*! function. isDynamic
       desc.
@@ -79,7 +79,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
       return.
            **bool** -- If the Actor is dynamic or not.
   */
-  bool  isDynamic(void) const;
+  bool  isDynamic() const;
   
 
   /*! function. raiseFlag
@@ -110,7 +110,7 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
            **NxActor** * -- NxActor instance.
       !physx
   */
-  NxActor*  getNxActor(void);
+  NxActor*  getNxActor();
   
   /*! function. getRigidBodyType
       desc.
@@ -164,14 +164,14 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
       desc.
            RigidBody constructor
   */
-  RigidBody(void);
+  RigidBody();
   
   /*! destructor. RigidBody
       desc.
            RigidBody destructor
       !virtual
   */
-  virtual  ~RigidBody(void);
+  virtual  ~RigidBody();
   
   /*! function. createDynamic.0
       desc.

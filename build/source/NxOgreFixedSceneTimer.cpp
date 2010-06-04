@@ -46,7 +46,7 @@ FixedSceneTimer::FixedSceneTimer(Scene* scene, Real maxTime)
 {
 }
 
-FixedSceneTimer::~FixedSceneTimer(void)
+FixedSceneTimer::~FixedSceneTimer()
 {
 }
 
@@ -66,12 +66,12 @@ void FixedSceneTimer::simulate(float dt)
  
 }
 
-bool FixedSceneTimer::hasResults(void) const
+bool FixedSceneTimer::hasResults() const
 {
  return mScene->checkResults(NX_RIGID_BODY_FINISHED, false);
 }
 
-void FixedSceneTimer::fetchResults(void)
+void FixedSceneTimer::fetchResults()
 {
  mScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
  mTimerMode = Enums::TimerMode_FetchedResults;

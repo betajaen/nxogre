@@ -41,19 +41,38 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. MachinePart
+    desc.
+         A physical device (e.x. a Wheel, Helicopter Blade, Thruster) that is simulated every TimeStep.
 */
 class NxOgrePublicClass MachinePart : public GenericBasedAllocatable
 {
   
   public: // Functions
   
+  /*! destructor. MachinePart
+  */
   virtual ~MachinePart();
   
-  /** \brief Text
+  /*! function. simulate
+      desc.
+       User code to process logic, and physics before the scene state is updated.
+      args.
+       float userDeltaTime -- Time passed since last timestep.
+      note.
+       This is automatically called (by the Scene), once TimeController::advance is called.
   */
-  virtual void                                simulate(float);
+  virtual void simulate(float userDeltaTime);
   
+  /*! function. render
+      desc.
+       User code to commit changes to the render system, after the scene state was updated.
+      args.
+       float userDeltaTime -- Time passed since last timestep.
+      note.
+       This is automatically called (by the Scene), once TimeController::advance is called.
+  */
+  virtual void render(float userDeltaTime);
   
 }; // class ClassName
 

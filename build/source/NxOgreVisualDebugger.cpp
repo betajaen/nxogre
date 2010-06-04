@@ -44,12 +44,12 @@ namespace NxOgre
 VisualDebugger::VisualDebugger(World* world)
 : mWorld(world), mRenderable(0), mMeshData(0)
 {
- mMeshData = NXOGRE_NEW_NXOGRE VisualDebuggerMeshData();
+ mMeshData = GC::safe_new0<VisualDebuggerMeshData>(NXOGRE_GC_THIS);
 }
 
-VisualDebugger::~VisualDebugger(void)
+VisualDebugger::~VisualDebugger()
 {
- NXOGRE_DELETE_NXOGRE(mMeshData);
+ GC::safe_delete(mMeshData, NXOGRE_GC_THIS);
 }
 
 void VisualDebugger::setRenderable(Renderable* renderable)
@@ -57,7 +57,7 @@ void VisualDebugger::setRenderable(Renderable* renderable)
  mRenderable = renderable;
 }
 
-Renderable* VisualDebugger::getRenderable(void)
+Renderable* VisualDebugger::getRenderable()
 {
  return mRenderable;
 }
@@ -137,14 +137,11 @@ void VisualDebugger::setVisualisationMode(NxOgre::Enums::VisualDebugger dm)
 void VisualDebugger::draw()
 {
  
- World::SceneIterator iterator = mWorld->getScenes();
- //ArrayIterator<Scene*> iterator = mWorld->getScenes();
- mMeshData->mLines.clear();
- mMeshData->mColours.clear();
+ mMeshData->mLines.remove_all();
+ mMeshData->mColours.remove_all();
  mMeshData->mNbLines = 0;
-
- //for (Scene* scene = iterator.begin(); scene = iterator.next();)
- for (; iterator != iterator.end(); ++iterator)
+ 
+ for (World::SceneIterator iterator = mWorld->getScenes(); iterator != iterator.end(); iterator++)
  {
   const NxDebugRenderable* renderable = iterator->getScene()->getDebugRenderable();
   
@@ -155,14 +152,14 @@ void VisualDebugger::draw()
   const NxDebugLine* lines = renderable->getLines();
   while(nbLines--)
   {
-   mMeshData->mLines.append(lines->p0.x);
-   mMeshData->mLines.append(lines->p0.y);
-   mMeshData->mLines.append(lines->p0.z);
-   mMeshData->mLines.append(lines->p1.x);
-   mMeshData->mLines.append(lines->p1.y);
-   mMeshData->mLines.append(lines->p1.z);
-   mMeshData->mColours.append(lines->color);
-   mMeshData->mColours.append(lines->color);
+   mMeshData->mLines.push_back(lines->p0.x);
+   mMeshData->mLines.push_back(lines->p0.y);
+   mMeshData->mLines.push_back(lines->p0.z);
+   mMeshData->mLines.push_back(lines->p1.x);
+   mMeshData->mLines.push_back(lines->p1.y);
+   mMeshData->mLines.push_back(lines->p1.z);
+   mMeshData->mColours.push_back(lines->color);
+   mMeshData->mColours.push_back(lines->color);
    lines++;
   }
   mMeshData->mNbLines += renderable->getNbLines();

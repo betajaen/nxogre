@@ -55,31 +55,31 @@ class NxOgrePublicClass VisualDebuggerMeshData : public GenericBasedAllocatable
   
   /** \brief Constructor
   */
-                                              VisualDebuggerMeshData(void);
+                                              VisualDebuggerMeshData();
   
   /** \brief Destructor
   */
-                                             ~VisualDebuggerMeshData(void);
+                                             ~VisualDebuggerMeshData();
   
   /** \brief Get Debug Lines.
   */
-  float*                                      getLines(void);
+  float*                                      getLines();
 
   /** \brief Get Debug colours
   */
-  unsigned int*                               getColours(void);
+  unsigned int*                               getColours();
 
     /** \brief Get number of debug lines
   */
-  unsigned int                                getNbLines(void) const;
+  unsigned int                                getNbLines() const;
   
   protected: // Variables
   
   unsigned int                                mNbLines;
   
-  NxOgre::Buffer<float>                       mLines;
+  NxOgre::buffer<float>                       mLines;
   
-  NxOgre::Buffer<unsigned int>                mColours;
+  NxOgre::buffer<unsigned int>                mColours;
   
   
 }; // class ClassName

@@ -50,7 +50,7 @@ ForceFieldLinearKernel::ForceFieldLinearKernel(const ForceFieldLinearKernelDescr
  
 }
 
-ForceFieldLinearKernel::~ForceFieldLinearKernel(void)
+ForceFieldLinearKernel::~ForceFieldLinearKernel()
 {
 }
 

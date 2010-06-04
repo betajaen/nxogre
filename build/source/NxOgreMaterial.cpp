@@ -54,7 +54,7 @@ Material::Material(const MaterialDescription& description, Scene* scene)
  create(description);
 }
 
-Material::~Material(void)
+Material::~Material()
 {
 }
 
@@ -94,28 +94,28 @@ void Material::create(const MaterialDescription& desc)
  mMaterial = mScene->getScene()->createMaterial(description);
 }
 
-void Material::destroy(void)
+void Material::destroy()
 {
  mScene->getScene()->releaseMaterial(*mMaterial);
  mMaterial = 0;
 }
 
-MaterialIdentifier Material::getIdentifier(void) const
+MaterialIdentifier Material::getIdentifier() const
 {
  return mMaterial->getMaterialIndex();
 }
 
-Real Material::getRestitution(void) const
+Real Material::getRestitution() const
 {
  return mMaterial->getRestitution();
 }
 
-Real Material::getStaticFriction(void) const
+Real Material::getStaticFriction() const
 {
  return mMaterial->getStaticFriction();
 }
 
-Real Material::getDynamicFriction(void) const
+Real Material::getDynamicFriction() const
 {
  return mMaterial->getDynamicFriction();
 }
@@ -133,6 +133,14 @@ void Material::setStaticFriction(Real coef)
 void Material::setDynamicFriction(Real coef)
 {
  mMaterial->setDynamicFriction(coef);
+}
+
+void Material::setAll(Real restitution, Real staticFriction, Real dynamicFriction)
+{
+ mMaterial->setRestitution(restitution);
+ mMaterial->setStaticFriction(staticFriction);
+ mMaterial->setDynamicFriction(dynamicFriction);
+
 }
 
                                                                                        

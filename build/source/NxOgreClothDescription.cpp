@@ -36,14 +36,15 @@ namespace NxOgre
 
                                                                                        
 
-ClothDescription::ClothDescription(void)
+ClothDescription::ClothDescription()
 {
  reset();
 }
 
-void ClothDescription::reset(void)
+void ClothDescription::reset()
 {
  mMesh = 0;
+ mCompartment = 0;
  mGlobalPose.identity();
  mThickness = Real(0.01);
  mDensity = Real(1.0);
@@ -75,7 +76,7 @@ void ClothDescription::reset(void)
  mRelativeGridSpacing = Real(0.25);
 }
 
-bool ClothDescription::valid(void)
+bool ClothDescription::valid()
 {
 
  return true; /// TEMP!

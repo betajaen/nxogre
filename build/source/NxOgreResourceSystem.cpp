@@ -60,7 +60,7 @@ ResourceSystem::ResourceSystem()
 
 ResourceSystem::~ResourceSystem()
 {
- mProtocols.clear_to_policy();
+ mProtocols.remove_all();
 }
 
 void ResourceSystem::openProtocol(ResourceProtocol* protocol)
@@ -72,7 +72,7 @@ void ResourceSystem::openProtocol(ResourceProtocol* protocol)
 Resource* ResourceSystem::open(const Path& path, Enums::ResourceAccess resource_access)
 {
 
- ResourceProtocol* protocol = mProtocols.at(path.getProtocolHash());
+ ResourceProtocol* protocol = mProtocols[path.getProtocolHash()];
 
  if (protocol == 0)
  {
@@ -96,7 +96,7 @@ void ResourceSystem::close(Resource* resource)
 
 ResourceSystem::ProtocolIterator ResourceSystem::getProtocols()
 {
- return mProtocols.iterator();
+ return mProtocols.elements();
 }
 
                                                                                        

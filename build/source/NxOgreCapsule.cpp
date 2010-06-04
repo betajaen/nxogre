@@ -46,7 +46,7 @@ Capsule::Capsule(NxCapsuleShape* shape)
 {
 }
 
-Capsule::~Capsule(void)
+Capsule::~Capsule()
 {
 }
 
@@ -75,17 +75,17 @@ void Capsule::setHeight(Real height)
  mCapsuleShape->setHeight(height);
 }
 
-Real Capsule::getRadius(void) const
+Real Capsule::getRadius() const
 {
  return mCapsuleShape->getRadius();
 }
 
-Real Capsule::getHeight(void) const
+Real Capsule::getHeight() const
 {
  return mCapsuleShape->getHeight();
 }
 
-SimpleCapsule Capsule::getWorldCapsule(void)
+SimpleCapsule Capsule::getWorldCapsule()
 {
  SimpleCapsule out;
  if (mCapsuleShape)
@@ -104,10 +104,10 @@ void Capsule::saveToDescription(CapsuleDescription& description)
  description.mDensity = desc.density;
  description.mFlags.from_i(desc.shapeFlags);
  description.mGroup = desc.group;
- description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
- description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
- description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
- description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
+ description.mGroupsMask.bits0 = desc.groupsMask.bits0;
+ description.mGroupsMask.bits1 = desc.groupsMask.bits1;
+ description.mGroupsMask.bits2 = desc.groupsMask.bits2;
+ description.mGroupsMask.bits3 = desc.groupsMask.bits3;
  desc.localPose.getRowMajor44(description.mLocalPose.ptr());
  description.mMass = desc.mass;
  description.mMaterial = desc.materialIndex;

@@ -37,16 +37,16 @@ namespace NxOgre
 
                                                                                        
 
-RevoluteJointDescription::RevoluteJointDescription(void)
+RevoluteJointDescription::RevoluteJointDescription()
 {
  reset();
 }
 
-RevoluteJointDescription::~RevoluteJointDescription(void)
+RevoluteJointDescription::~RevoluteJointDescription()
 {
 }
 
-void RevoluteJointDescription::reset(void)
+void RevoluteJointDescription::reset()
 {
  JointDescription::reset();
  
@@ -57,7 +57,7 @@ void RevoluteJointDescription::reset(void)
  
 }
 
-bool RevoluteJointDescription::isValid(void) const
+bool RevoluteJointDescription::isValid() const
 {
  return true; // temp.
 }

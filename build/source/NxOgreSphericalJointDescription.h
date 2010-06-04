@@ -53,19 +53,19 @@ class NxOgrePublicClass SphericalJointDescription : public JointDescription
   
   /** \brief Text
   */
-                                              SphericalJointDescription(void);
+                                              SphericalJointDescription();
   
   /** \brief Text
   */
-                                             ~SphericalJointDescription(void);
+                                             ~SphericalJointDescription();
   
   /** \brief Text
   */
-  void                                        reset(void);
+  void                                        reset();
   
   /** \brief
   */
-  bool                                        isValid(void) const;
+  bool                                        isValid() const;
 
 
   /** \brief Swing limit axis (directional vector) defined in the joint space of RigidBody 0.

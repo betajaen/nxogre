@@ -71,9 +71,6 @@ namespace NxOgre
 class NxOgrePublicClass AuxiliaryScene : public Scene
 {
   
-  friend class World;
-  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
-  
   public: // Functions
   
   /** \internal Use World::createScene()
@@ -82,7 +79,7 @@ class NxOgrePublicClass AuxiliaryScene : public Scene
   
   /** \internal Use World::destroyScene()
   */
- ~AuxiliaryScene(void);
+ ~AuxiliaryScene();
   
   /*! function. getType
       desc.

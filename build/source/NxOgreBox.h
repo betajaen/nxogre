@@ -56,9 +56,8 @@ namespace NxOgre
 class NxOgrePublicClass Box : public Shape
 {
   
-  friend class RigidBody;  // for destroy();
-  friend Shape* Functions::ShapeFunctions::createBox(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -104,7 +103,7 @@ class NxOgrePublicClass Box : public Shape
            Get the box represented as world space OBB.
       return. **SimpleBox** -- World space OBB when attached or SimpleBox with default values.
   */
-  SimpleBox  getWorldOBB(void);
+  SimpleBox  getWorldOBB();
   
   /*! function. saveToDescription
       desc.
@@ -126,7 +125,7 @@ class NxOgrePublicClass Box : public Shape
   
   /* destructor. Box
   */
- ~Box(void);
+ ~Box();
   
   protected:
   

@@ -30,12 +30,14 @@
 #include "NxOgrePhysXCallback.h"
 #include "NxOgreCallback.h"
 
+#include "NxOgreScene.h"
 #include "NxOgreVolume.h"
 #include "NxOgreShape.h"
 #include "NxOgreBox.h"
 #include "NxOgreRigidBodyFunctions.h"
 #include "NxOgreRigidBody.h"
 #include "NxOgreContactPair.h"
+#include "NxOgreRigidBodyEventIterator.h"
 
                                                                                        
 
@@ -99,6 +101,21 @@ void PhysXCallback::onContactNotify(NxContactPair &pair, NxU32 events)
  if (rbody_b->getContactCallback() != 0)
   rbody_b->getContactCallback()->onContact(contact_pair);
  
+}
+
+bool PhysXCallback::onJointBreak(NxReal breakingImpulse, NxJoint& brokenJoint)
+{
+ return true;
+}
+
+void PhysXCallback::onWake(NxActor** actors, NxU32 count)
+{
+ mScene->mSleepCallback->onWake(RigidBodyEventIterator(actors, count));
+}
+
+void PhysXCallback::onSleep(NxActor** actors, NxU32 count)
+{
+ mScene->mSleepCallback->onSleep(RigidBodyEventIterator(actors, count));
 }
 
                                                                                        

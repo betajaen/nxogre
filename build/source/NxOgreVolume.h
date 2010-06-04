@@ -34,7 +34,6 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
-
 #include "NxOgreRigidBody.h"
 #include "NxOgreString.h"
 
@@ -45,107 +44,144 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. Volume
+    desc.
+        Volumes (or also known as Triggers) are RigidBodies in space that can be passed through.
+        In an event of another RigidBody passing through this, a callback is called.
 */
 class NxOgrePublicClass Volume : public RigidBody
 {
   
-  friend class Scene;
-  // friend class Functions::ArrayFunctions<Volume*>::Write;
-  template<class T> friend inline void Functions::safe_delete(T*);
+  NXOGRE_GC_FRIEND_NEW5
+  NXOGRE_GC_FRIEND_DELETE
   
   public:
   
-  /** \brief 
+  /*! function. getRigidBodyType
+      desc.
+          Get the the type of RigidBody.
+      return.
+          Classes::_Volume
   */
-  virtual                             unsigned int           getRigidBodyType() const;
+  virtual  unsigned int  getRigidBodyType() const;
   
-  /** \brief Methods for setting a dynamic Volume's pose in the world. 
+  /*! function. setGlobalPose
+      desc.
+          Methods for setting a dynamic Volume's pose in the world. 
   */
-                                      void                   setGlobalPose(const Matrix44&);
+  void  setGlobalPose(const Matrix44&);
  
-  /** \brief Sets a dynamic Volume's position in the world.
+  /*! function. setGlobalPosition
+      desc.
+          Sets a dynamic Volume's position in the world.
    */
-                                      void                   setGlobalPosition (const Vec3&);
+  void  setGlobalPosition (const Vec3&);
   
-  /** \brief Sets a dynamic Volume's orientation in the world.
+  /*! function. setGlobalOrientation
+      desc.
+          Sets a dynamic Volume's orientation in the world.
   */
-                                      void                   setGlobalOrientation(const Matrix33&);
+  void  setGlobalOrientation(const Matrix33&);
  
-  /** \brief Sets a dynamic Volume's orientation in the world.
+  /*! function. setGlobalOrientationQuat
+      desc.
+          Sets a dynamic Volume's orientation in the world.
   */
-                                      void                   setGlobalOrientationQuat(const Quat&);
+  void  setGlobalOrientationQuat(const Quat&);
  
-  /** \brief Retrieves the Volumes world space transform.
+  /*! function. getGlobalPose
+      desc.
+          Retrieves the Volumes world space transform.
   */
-                                      Matrix44               getGlobalPose(void) const;
+  Matrix44  getGlobalPose() const;
 
-  /** \brief Retrieves the Volumes world space position.
+  /*! function. getGlobalPosition
+      desc.
+          Retrieves the Volumes world space position.
   */
-                                      Vec3                   getGlobalPosition(void) const;
+  Vec3  getGlobalPosition() const;
 
-  /** \brief Retrieves the Volumes world space orientation.
+  /*! function. getGlobalOrientation
+      desc.
+          Retrieves the Volumes world space orientation.
   */
-                                      Matrix33               getGlobalOrientation(void) const;
+  Matrix33  getGlobalOrientation() const;
   
-  /** \brief Retrieves the Volumes world space orientation.
+  /*! function.
+      dsec.
+          Retrieves the Volumes world space orientation.
   */
-                                      Quat                   getGlobalOrientationQuat(void) const;
+  Quat  getGlobalOrientationQuat() const;
 
-  /** \brief Creates a new shape and adds it to the list of shapes of this Volume. 
+  /*! function. createShape
+      desc.
+          Creates a new shape and adds it to the list of shapes of this Volume. 
   */
-                                      void                   createShape(Shape*);
+  void  createShape(Shape*);
   
-  /** \brief Deletes the specified shape.
+  /*! function. releaseShape
+      desc.
+          Deletes the specified shape.
   */
-                                      void                   releaseShape(Shape*);
+  void  releaseShape(Shape*);
   
-  /** \brief Returns the number of shapes assigned to the Volume.
+  /*! function. getNbShapes
+      desc.
+          Returns the number of shapes assigned to the Volume.
   */
-                                      unsigned int           getNbShapes(void) const;
+  unsigned int  getNbShapes() const;
   
-  /** \brief Get the callback
+  /*! function. getVolumeCallback
+      desc.
+          Get the callback
   */
-                                      Callback*              getVolumeCallback();
+  Callback*  getVolumeCallback();
   
-  /** \brief Set the callback
+  /*! function. setVolumeCallback
+      desc.
+          Set the callback
   */
-                                      void                   setVolumeCallback(Callback*);
+  void  setVolumeCallback(Callback*);
   
-  /** \brief Remove the callback, and replace it with a Null one.
+  /*! function. removeVolumeCallback
+      desc.
+          Remove the callback, and replace it with a Null one (Do not delete this).
   */
-                                      void                   removeVolumeCallback();
+  void  removeVolumeCallback();
 
   protected: // Functions
   
-  /** \internal Classes that inherit from Volume should use this constructor.
+  /* Classes that inherit from Volume should use this constructor.
   */
-                                                             Volume(Scene*, Callback*);
+  Volume(Scene*, Callback*);
   
-  /** \internal Use Scene::createVolume
+  /* Private do not use.
+     Use Scene::createVolume
   */
-                                                             Volume(const ShapeDescription&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
+  Volume(const ShapeDescription&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
   
-  /** \internal Use Scene::createVolume
+  /* Private do not use.
+     Use Scene::createVolume
   */
-                                                             Volume(const ShapeDescriptions&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
+  Volume(const ShapeDescriptions&, const Matrix44& pose, Enums::VolumeCollisionType type, Scene*, Callback*);
   
-  /** \internal Use Scene::destroyVolume
+  /* Private do not use.
+     Use Scene::destroyVolume
   */
-  virtual                                                   ~Volume(void);
+  virtual  ~Volume();
   
 
   protected: // Variables
   
   /** \brief Volume's parent Scene
   */
-                       Scene*                mScene;
+  Scene*  mScene;
   
-                       CollisionModel        mShapes;
+  CollisionModel  mShapes;
   
-                       Callback*             mVolumeCallback;
+  Callback*  mVolumeCallback;
   
-}; // class ClassName
+}; // class Volume
 
                                                                                        
 

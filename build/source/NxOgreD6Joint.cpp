@@ -66,7 +66,7 @@ D6Joint::D6Joint(RigidBody* first, RigidBody* second, const D6JointDescription& 
  mD6Joint = mJoint->isD6Joint();
 }
 
-D6Joint::~D6Joint(void)
+D6Joint::~D6Joint()
 {
  mRigidBodies[0]->getScene()->getScene()->releaseJoint(*mJoint);
 }

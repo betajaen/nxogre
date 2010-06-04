@@ -37,11 +37,15 @@ namespace NxOgre
                                                                                        
 
 MachinePart::~MachinePart()
-{
+{ // virtual function.
 }
 
 void MachinePart::simulate(float)
-{
+{ // virtual function.
+}
+
+void MachinePart::render(float)
+{ // virtual function.
 }
 
                                                                                        

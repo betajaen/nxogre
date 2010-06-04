@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-TireFunction::TireFunction(void)
+TireFunction::TireFunction()
 {
  reset();
 }
 
-void TireFunction::reset(void)
+void TireFunction::reset()
 {
  mExtremumSlip = 1.0f;
  mExtremumValue = 0.02f;

@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-SoftBodyDescription::SoftBodyDescription(void)
+SoftBodyDescription::SoftBodyDescription()
 {
  reset();
 }
 
-void SoftBodyDescription::reset(void)
+void SoftBodyDescription::reset()
 {
  mMesh = 0;
  mGlobalPose.identity();
@@ -72,7 +72,7 @@ void SoftBodyDescription::reset(void)
  mValidBounds.empty();
 }
 
-bool SoftBodyDescription::valid(void)
+bool SoftBodyDescription::valid()
 {
 
  return true; /// TEMP!

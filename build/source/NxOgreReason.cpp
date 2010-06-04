@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,10 +21,10 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
-                                                                                       
+
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
@@ -33,12 +33,12 @@
 
 #include "NxPhysics.h"
 
-                                                                                       
+
 
 namespace NxOgre
 {
 
-                                                                                       
+
 
 #define NXOGRE_CASE_STRING_RETURN(VAL, STR) case VAL: return STR; break;
 
@@ -89,9 +89,9 @@ const char* Reason::toCStr(int error)
 
 String Reason::Exceptionise(const NxPhysicsSDKDesc& description, bool isSDKNull, int errorCode)
 {
-  
+
   StringStream stream;
-  
+
   if (isSDKNull)
    stream << "The PhysX SDK is a null pointer. The reason(s) could be:\n";
   else
@@ -134,9 +134,9 @@ String Reason::Exceptionise(const NxPhysicsSDKDesc& description, bool isSDKNull,
 String Reason::Exceptionise(const NxSceneDesc& description, bool isSDKNull, const String& sceneName)
 {
   StringStream message;
-  
+
   message << "Could not create Scene. Reasons could be are:\n";
-  
+
   if(description.bpType==NX_BP_TYPE_SAP_MULTI)
   {
    if(!description.nbGridCellsX || !NxIsPowerOfTwo(description.nbGridCellsX) || description.nbGridCellsX>8)
@@ -195,12 +195,13 @@ String Reason::Exceptionise(const NxSceneDesc& description, bool isSDKNull, cons
      message << " - Wrong up axis used with a pruning quadtree dynamic structure\n";
   }
 
-  if (description.dynamicTreeRebuildRateHint < 5)
+#if NxOgreMinimalPhysXVersion >= 281
+  if (description.dynamicTreeRebuildRateHint < 5) // Not in 2.8.0
   {
    message << " - Dynamic Tree rebuild rate hint is less than five.\n"
               "   You have '" << description.dynamicTreeRebuildRateHint << "'\n";
   }
-
+#endif
   if ((description.customScheduler!=NULL)&&(description.internalThreadCount>0))
   {
    message << " - Scene is using a custom scheduler but the internal thread count is not zero.\n"
@@ -212,7 +213,7 @@ String Reason::Exceptionise(const NxSceneDesc& description, bool isSDKNull, cons
    message << " - Scene is using a custom scheduler but the background thread count is not zero.\n"
               "   You have '" << description.backgroundThreadCount << "'\n";
   }
-  
+
   return message.str();
 
 }
@@ -220,16 +221,16 @@ String Reason::Exceptionise(const NxSceneDesc& description, bool isSDKNull, cons
 String Reason::Exceptionise(const NxActorDesc& description)
 {
   StringStream message;
-  
+
   message << "Could not create RigidBody. Reasons could be are:\n";
-  
+
   if (description.density < 0.0f)
    message << " - Density is less than zero.\n"
               "   You have " << description.density << "\n";
-  
+
   if (description.globalPose.isFinite() == false)
    message << " - Global Pose is not finite or malformed.\n";
-  
+
   if (description.body == 0 && description.dominanceGroup)
    message << " - RigidBody has a dominance group, when it should not have one.\n";
 
@@ -238,7 +239,7 @@ String Reason::Exceptionise(const NxActorDesc& description)
 
   if (description.body->mass < 0.0f)
    message << " - Mass is less than zero.\n   You have " << description.body->mass << "\n";
-  
+
   if (description.body->wakeUpCounter < 0.0f)
    message << " - Wake up counter is less than zero.\n   You have " << description.body->wakeUpCounter << "\n";
 
@@ -274,7 +275,7 @@ String Reason::Exceptionise(const NxActorDesc& description)
    if ((description.shapes[i]->shapeFlags & NX_TRIGGER_ENABLE) == 0)
     nonTriggerShapes++;
   }
-  
+
   if (nonTriggerShapes == 0 && (!(description.body->flags & NX_BF_KINEMATIC)) && (description.body->mass < 0 || description.body->massSpaceInertia.isZero()))
    message << " - RigidBody is dynamic but has no non-trigger shapes.\n   You have " << description.shapes.size() << " shapes of " << (description.shapes.size()-nonTriggerShapes) << " are trigger shapes.";
 
@@ -295,28 +296,28 @@ String Reason::Exceptionise(const NxActorDesc& description)
 String Reason::Exceptionise(const NxHeightFieldDesc& description)
 {
   StringStream message;
-  
+
  message << "Could not create HeightField. Reasons could be are:\n";
- 
+
   if (description.nbColumns < 2)
    message << " - Number of columns is less than 2. You have '" << description.nbColumns << "'\n";
-  
+
   if (description.nbRows < 2)
    message << " - Number of rows is less than 2. You have '" << description.nbRows << "'\n";
-  
+
   if (description.format == NX_HF_S16_TM)
    if (description.sampleStride < 4)
     message << " - Stride is less than 4 bytes with a NX_HF_S16_TM format\n";
-  
+
   if (description.convexEdgeThreshold < 0)
    message << " - Convex edge threshold is less than 0. You have '" << description.convexEdgeThreshold << "'\n";
-  
+
   if ((description.flags & NX_HF_NO_BOUNDARY_EDGES) != description.flags)
    message << " - Something about NX_HF_NO_BOUNDARY_EDGES'\n";
-  
+
   if (description.verticalExtent !=0 && description.thickness != 0)
    message << " - VerticalExtent and Thickness are both not zero. You have '" << description.verticalExtent << "' and '" << description.thickness << "'\n";
-  
+
  return message.str();
 }
 
@@ -324,7 +325,7 @@ String Reason::Exceptionise(const NxHeightFieldDesc& description)
 String Reason::Exceptionise(const NxJointLimitDesc& description, const char* sourceName)
 {
  StringStream message;
- 
+
  if (description.restitution < 0 || description.restitution > 1)
   message << " - " << sourceName << " restitution is not in range\n";
 
@@ -350,7 +351,7 @@ String Reason::Exceptionise(const NxSpringDesc& description, const char* sourceN
 String Reason::Exceptionise(const NxJointDesc& description)
 {
  StringStream message;
- 
+
  if (description.actor[0] == description.actor[1])
   message << " - RigidBody0 is the same as RigidBody1\n";
 
@@ -376,8 +377,11 @@ String Reason::Exceptionise(const NxJointDesc& description)
  if (description.maxTorque <= 0)
   message << " - Max Force is zero or negative\n   You have '" << description.maxTorque << "'.\n";
 
+#if NxOgreMinimalPhysXVersion >= 281
+ // Not in 2.8.0
  if (description.solverExtrapolationFactor < 0.5 || description.solverExtrapolationFactor > 1.0f)
   message << " - Solver Extrapolation Factor should be between 0.5 and 1.0\n   You have '" << description.solverExtrapolationFactor << "'.\n";
+#endif
 
  return message.str();
 }
@@ -385,63 +389,63 @@ String Reason::Exceptionise(const NxJointDesc& description)
 String Reason::Exceptionise(const NxRevoluteJointDesc& description)
 {
  StringStream message;
- 
+
  message << "Could not create RevoluteJoint. Reasons could be are:\n";
- 
+
  message << Exceptionise((const NxJointDesc&) description);
 
  if (description.projectionDistance < 0.0f)
   message << " - Projection distance is negative\n";
- 
+
  if (description.projectionAngle < 0.02f)
   message << " - Projection angle is to small\n";
- 
+
  message << Exceptionise(description.limit.low, "Limit low");
- 
+
  message << Exceptionise(description.limit.high, "Limit high");
- 
+
  /// message << Exceptionise(description.motor, "Motor");
- 
+
  message << Exceptionise(description.spring, "Spring");
- 
+
  return message.str();
 }
 
 String Reason::Exceptionise(const NxSphericalJointDesc& description)
 {
  StringStream message;
- 
+
  message << "Could not create SphericalJoint. Reasons could be are:\n";
- 
+
  message << Exceptionise((const NxJointDesc&) description);
- 
+
  if (description.swingAxis.magnitudeSquared() < 0.9f)
   message << " - Swing axis magnitude < 0.9\n";
- 
+
  if (description.projectionDistance < 0.0f)
   message << " - Projection distance is negative\n";
- 
+
  message << Exceptionise(description.twistLimit.low, "Twist limit low");
- 
+
  message << Exceptionise(description.twistLimit.low, "Twist limit high");
- 
+
  message << Exceptionise(description.swingLimit, "Swing limit");
- 
+
  message << Exceptionise(description.swingSpring, "Swing spring");
- 
+
  message << Exceptionise(description.twistSpring, "Twist spring");
- 
+
  message << Exceptionise(description.jointSpring, "Joint spring");
- 
+
  return message.str();
 }
 
 String Reason::Exceptionise(const NxClothDesc& desc)
 {
  StringStream message;
- 
+
  message << "Could not create Cloth. Reasons could be are:\n";
- 
+
  if (desc.clothMesh == 0)
   message << " - Mesh has not been assigned to the cloth\n";
 
@@ -511,11 +515,11 @@ String Reason::Exceptionise(const NxClothDesc& desc)
 
 String Reason::Exceptionise(const NxSoftBodyDesc& desc)
 {
- 
+
  StringStream message;
- 
+
  message << "Could not create SoftBody. Reasons could be are:\n";
- 
+
  if (desc.softBodyMesh == 0)
   message << " - Mesh has not been assigned to the cloth\n";
 
@@ -584,16 +588,16 @@ String Reason::Exceptionise(const NxSoftBodyDesc& desc)
 String Reason::Exceptionise(const NxMaterialDesc& desc)
 {
  StringStream message;
- 
+
  message << "Could not create Material. Reasons could be are:\n";
- 
- if(desc.dynamicFriction < 0.0f) 
+
+ if(desc.dynamicFriction < 0.0f)
   message << " - Dynamic friction is negative\n";
 
- if(desc.staticFriction < 0.0f) 
+ if(desc.staticFriction < 0.0f)
   message << " - Static friction is negative\n";
 
- if(desc.restitution < 0.0f || desc.restitution > 1.0f) 
+ if(desc.restitution < 0.0f || desc.restitution > 1.0f)
   message << " - Restitution is not in range of (0..1)\n";
 
  if (desc.flags & NX_MF_ANISOTROPIC)
@@ -602,16 +606,16 @@ String Reason::Exceptionise(const NxMaterialDesc& desc)
   if (ad < 0.98f || ad > 1.03f)
    message << " - Direction of anistropy is invalid\n";
 
-  if(desc.dynamicFrictionV < 0.0f) 
+  if(desc.dynamicFrictionV < 0.0f)
    message << " - Dynamic frictionV is negative\n";
 
-  if(desc.staticFrictionV < 0.0f) 
+  if(desc.staticFrictionV < 0.0f)
    message << " - Static friction V is negative\n";
  }
 
  if (desc.frictionCombineMode >= NX_CM_N_VALUES)
   message << " - Incorrect flag for Friction combine mode\n";
- 
+
  if (desc.restitutionCombineMode >= NX_CM_N_VALUES)
   message << " - Incorrect flag for restitution combine mode\n";
 
@@ -620,8 +624,10 @@ String Reason::Exceptionise(const NxMaterialDesc& desc)
 
 String Reason::Exceptionise(const Path& path, Enums::ResourceStatus status)
 {
- 
- return String();
+ StringStream message;
+ message << "The following path could not be opened or is invalid: \n";
+ message << path.getString() << "\n";
+ return message.str();
 }
 
 
@@ -629,7 +635,7 @@ String Reason::Exceptionise(Mesh* mesh, Enums::MeshType expectedType)
 {
  StringStream message;
  message << "Function was expecting a '";
- 
+
  if (expectedType == Enums::MeshType_Cloth)
   message << "Cloth";
  else if (expectedType == Enums::MeshType_Convex)
@@ -642,16 +648,16 @@ String Reason::Exceptionise(Mesh* mesh, Enums::MeshType expectedType)
   message << "SoftBody";
  else
   message << "Unknown";
- 
+
  message << "' when was given a mesh that is a '" << mesh->getTypeAsString() << "'\n";
- 
+
  return message.str();
 }
 
 #undef NXOGRE_CASE_STRING_RETURN
 
-                                                                                       
+
 
 } // namespace NxOgre
 
-                                                                                       
+

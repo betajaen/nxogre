@@ -56,9 +56,8 @@ namespace NxOgre
 class NxOgrePublicClass Capsule : public Shape
 {
   
-  friend class RigidBody;  // for destroy();
-  friend Shape* Functions::ShapeFunctions::createCapsule(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -103,7 +102,7 @@ class NxOgrePublicClass Capsule : public Shape
       return.
            **Real** -- The radius of the capsule.
   */
-  Real  getRadius(void) const;
+  Real  getRadius() const;
   
   /*! function. getHeight
       desc.
@@ -111,7 +110,7 @@ class NxOgrePublicClass Capsule : public Shape
       return.
            **Real** -- Distance between the top and bottom centres hemispheres of the capsule.
   */
-  Real  getHeight(void) const;
+  Real  getHeight() const;
   
   /*! function. getWorldCapsule
       desc.
@@ -120,7 +119,7 @@ class NxOgrePublicClass Capsule : public Shape
            This function only works when the capsule is attached.
       return. **SimpleCapsule** -- World space capsule when attached or SimpleCapsule with default values.
   */
-  SimpleCapsule  getWorldCapsule(void);
+  SimpleCapsule  getWorldCapsule();
   
   /*! function. saveToDescription
       desc.
@@ -142,7 +141,7 @@ class NxOgrePublicClass Capsule : public Shape
   
   /*
   */
-  ~Capsule(void);
+  ~Capsule();
   
   protected:
   

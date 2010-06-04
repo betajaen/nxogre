@@ -44,8 +44,7 @@ namespace NxOgre
 
 /*! class. ActorMachinePart
     desc.
-         ActorMachinePart is a MachinePart that is an Actor.
-    
+         A physical device that uses an Actor for physics and collisions and a PointRenderable for visualisation.
 */
 class NxOgrePublicClass ActorMachinePart : public MachinePart
 {
@@ -72,20 +71,32 @@ class NxOgrePublicClass ActorMachinePart : public MachinePart
   ~ActorMachinePart();
   
   /*! function. simulate
+      desc.
+       User code to process logic, and physics before the scene state is updated.
       args.
-       float __deltaTime__ -- Delta time
-      !time_listener
-      !virtual
+       float userDeltaTime -- Time passed since last timestep.
+      note.
+       This is automatically called (by the Scene), once TimeController::advance is called.
   */
-  virtual void                                simulate(float user_deltaTime);
+  virtual void simulate(float userDeltaTime);
   
+  /*! function. render
+      desc.
+       User code to commit changes to the render system, after the scene state was updated.
+      args.
+       float userDeltaTime -- Time passed since last timestep.
+      note.
+       This is automatically called (by the Scene), once TimeController::advance is called.
+  */
+  virtual void render(float userDeltaTime);
+
   /* Assigned Actor
   */
-  Actor*                                      mActor;
+  Actor*  mActor;
   
   /* Assigned PointRenderable
   */
-  PointRenderable*                            mPointRenderable;
+  PointRenderable*  mPointRenderable;
   
 }; // class ClassName
 

@@ -57,7 +57,7 @@
 
 #if defined (_WIN32) || defined (__WIN32)
 # define NxOgrePlatform NxOgrePlatformWindows
-#else
+#elif defined (LINUX) || defined(_LINUX)
 # define NxOgrePlatform NxOgrePlatformLinux
 #endif
 

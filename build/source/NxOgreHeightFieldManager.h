@@ -34,6 +34,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 #include "NxOgreHeightField.h"
+#include "NxOgreHeightFieldData.h"
 
                                                                                        
 
@@ -42,54 +43,106 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief HeightFieldManager holds all HeightFieldes that are currently in the World.
+/** \brief HeightFieldManager holds all meshes that are currently in the World.
 */
 class NxOgrePublicClass HeightFieldManager: public ::NxOgre::Singleton<HeightFieldManager>, public BigClassAllocatable
 {
   
   friend class World;
-  friend class ManualHeightField;
+  
+  NXOGRE_GC_FRIEND_NEW0
+  NXOGRE_GC_FRIEND_DELETE
+  
+  friend class HeightFieldData;
   
   public: // Functions
   
-  typedef ptr_multihashmap<HeightField>             HeightFields;
+  typedef map<size_t, HeightField*, GC::HasGarbageCollection> HeightFields;
   
-  typedef ptr_multihashmap<HeightField>::iterator_t HeightFieldIterator;
+  typedef map_iterator<size_t, HeightField*>                  HeightFieldIterator;
+  
+  /*! function. load
+      desc.
+          Load a mesh into the World, that can be used in any Scene.
+      note.
+          If the name is blank, then the mesh name is taken from the path filename, if it can't do that
+          then a name is created for it.
+  */
+  HeightField* load(const Path&, const String& name = BLANK_STRING);
+  
+  /*! function. load
+      desc.
+          Load a mesh into the World, that can be used in any Scene.
+      note.
+          If the name is blank then a name is created for it.
+  */
+  HeightField* load(Resource*, const String& name = BLANK_STRING);
+  
+  /*! function. unload
+      desc.
+          Try and unload a mesh otherwise return false.
+      note.
+          The mesh cannot be used by anything to be unloaded.
+  */
+  bool unload(const String& name);
+  
+  /*! function. unload
+      desc.
+          Try and unload a mesh otherwise return false.
+      note.
+          The mesh cannot be used by anything to be unloaded.
+  */
+  bool unload(const StringHash& name);
+  
+  /*! function. hasHeightField
+      desc.
+          Is a mesh loaded?
+  */
+  bool hasHeightField(const String& name) const;
+  
+  /*! function. hasHeightField
+      desc.
+          Is a mesh loaded?
+  */
+  bool hasHeightField(const StringHash& hash_name) const;
+  
+  /*! function. getByName
+      desc.
+          Get a mesh by it's name or null if it doesn't exist.
+  */
+  HeightField* getByName(const String& name);
+  
+  /*! function. getByHash
+      desc.
+          Get a mesh by it's hashed name or null if it doesn't exist.
+  */
+  HeightField* getByHash(const StringHash& hashed_name);
+  
+  /*! function. getHeightFields
+      desc.
+          Get an iterator to all the loaded meshes.
+  */
+  HeightFieldIterator getHeightFields() const;
   
   protected: // Variables
   
-  /** \brief Load a heightfield into the World, that can be used in any Scene.
-      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
+  /* \internal For use with HeightFieldData::cookQuickly
   */
-  HeightField*                                       load(const Path&, const String& name = BLANK_STRING);
+  HeightField* load(HeightField*, const String& name = BLANK_STRING);
+
+  /* \internal See World::precreateSingletons
+  */
+  HeightFieldManager();
   
-  /** \brief Load a heightfield into the World, that can be used in any Scene.
-      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
+  /* \internal See World::destroySingletons
   */
-  HeightField*                                       load(Resource*, const String& name = BLANK_STRING);
+ ~HeightFieldManager();
   
-  /** \brief Get a heightfield by it's name. (Slower)
+  /* Known loaded meshes in the World.
   */
-  HeightField*                                       getByName(const String& name);
+  HeightFields mHeightFields;
   
-  /** \brief Get a heightfield by it's the hash of its name. (Faster)
-  */
-  HeightField*                                       getByHash(const StringHash& hashed_name);
-  
-  /** \brief
-  */
-  HeightFieldIterator                                getMeshes();
-  
-  /** \internal See World::precreateSingletons
-  */
-                                                     HeightFieldManager(void);
-  
-  /** \internal See World::destroySingletons
-  */
-                                                    ~HeightFieldManager(void);
-  /** \brief Known loaded HeightFields in the World.
-  */
-  HeightFields                                       mHeightFields;
+  unsigned int mNextHeightFieldID;
   
 }; // class ClassName
 

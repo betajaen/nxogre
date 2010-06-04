@@ -47,7 +47,8 @@ namespace NxOgre
 class NxOgrePublicClass RevoluteJoint : public Joint
 {
   
-  friend class Scene;
+  NXOGRE_GC_FRIEND_NEW3
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -57,11 +58,11 @@ class NxOgrePublicClass RevoluteJoint : public Joint
   
   /** \brief Sets the joint projection mode. 
   */
-  Enums::JointProjectionMode                  getProjectionMode(void) const;
+  Enums::JointProjectionMode                  getProjectionMode() const;
 
   /** \brief Get the type of joint
   */
-  Enums::JointFunctionType                    getJointType(void);
+  Enums::JointFunctionType                    getJointType();
 
   /** \brief Set the angular joint limits
   */
@@ -69,7 +70,7 @@ class NxOgrePublicClass RevoluteJoint : public Joint
 
   /** \brief Get the angular joint limits
   */
-  JointLimitPairDescription                   getLimits(void);
+  JointLimitPairDescription                   getLimits();
 
   /** \brief Set motor parameters for the joints
   */
@@ -77,7 +78,7 @@ class NxOgrePublicClass RevoluteJoint : public Joint
 
   /** \brief Get back the motor parameters.
   */
-  MotorDescription                            getMotor(void);
+  MotorDescription                            getMotor();
 
   /** \brief Get back the motor parameters.
   */
@@ -85,15 +86,15 @@ class NxOgrePublicClass RevoluteJoint : public Joint
 
   /** \brief Get back the motor parameters.
   */
-  SpringDescription                           getSpring(void);
+  SpringDescription                           getSpring();
 
   /** \brief Get the current revolute joint angle.
   */
-  Real                                        getAngle(void);
+  Real                                        getAngle();
 
   /** \brief Get the current angular velocity.
   */
-  Real                                        getVelocity(void);
+  Real                                        getVelocity();
 
   /** \brief Set Revolute joint Flags using the OR operator
       \see Enums::RevoluteJointFlags
@@ -103,7 +104,7 @@ class NxOgrePublicClass RevoluteJoint : public Joint
   /** \brief Set Revolute joint Flags using the OR operator
       \see Enums::RevoluteJointFlags
   */
-  unsigned int                                getRevoluteJointFlags(void);
+  unsigned int                                getRevoluteJointFlags();
 
 
   protected: // Functions
@@ -114,7 +115,7 @@ class NxOgrePublicClass RevoluteJoint : public Joint
   
   /** \internal Private Destructor. Use Scene::destroyJoint.
   */
-                                             ~RevoluteJoint(void);
+                                             ~RevoluteJoint();
   
   protected: // Revolute
   

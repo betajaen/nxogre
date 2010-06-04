@@ -102,7 +102,7 @@ class NxOgrePublicClass FileResourceProtocol : public ResourceProtocol
       desc.
           Required initialise function
   */
-  void  initialise(void);
+  void  initialise();
   
   protected: // Variables
   

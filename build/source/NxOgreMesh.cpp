@@ -33,6 +33,8 @@
 #include "NxOgreManualMesh.h"
 #include "NxOgreMeshData.h"
 #include "NxOgreNXS.h"
+#include "NxOgreX.h"
+
 
 #include "NxPhysics.h"
 
@@ -63,8 +65,8 @@ inline MeshStats _calculateNxClothStats(::NxOgre::Mesh* mesh)
  NxClothMeshDesc desc;
  if (cloth_mesh->saveToDesc(desc) == false)
   return MeshStats();
-
- return MeshStats(desc.numVertices, desc.numTriangles * 3, 0, mesh->getTextureCoords().size(), 0);
+ 
+ return MeshStats(desc.numVertices, desc.numTriangles, 0, mesh->getNbTextureCoords(), 0);
 }
 
 inline MeshStats _calculateNxSoftBodyStats(::NxOgre::Mesh* mesh)
@@ -113,17 +115,17 @@ Mesh::Mesh(Resource* resource) : mType(Enums::MeshType_Unknown)
  load(resource);
 }
 
-Mesh::~Mesh(void)
+Mesh::~Mesh()
 {
  unload();
 }
 
-Enums::MeshType Mesh::getType(void) const
+Enums::MeshType Mesh::getType() const
 {
  return mType;
 }
 
-String Mesh::getTypeAsString(void) const
+String Mesh::getTypeAsString() const
 {
  switch(mType)
  {
@@ -149,12 +151,12 @@ String Mesh::getTypeAsString(void) const
  return "unknown";
 }
 
-bool Mesh::isLoaded(void) const
+bool Mesh::isLoaded() const
 {
  return (mType != Enums::MeshType_Unknown);
 }
 
-bool Mesh::isUsed(void) const
+bool Mesh::isUsed() const
 {
  
  switch(mType)
@@ -187,39 +189,70 @@ void Mesh::load(Resource* resource)
  
  unload();
  
- if (Serialisation::NXS::isNXSFile(resource) == false) 
+ if (Serialisation::NXS::isNXSFile(resource)) 
  {
-  StringStream stream;
-  stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS mesh file.";
-  NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
-  return;
- }
- 
- mType = Serialisation::NXS::getMeshType(resource);
+  
+  mType = Serialisation::NXS::getMeshType(resource);
 
- if (mType == Enums::MeshType_Unknown)
- {
-  StringStream stream;
-  stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Mesh file.\n"
-         << "Reason: Un-recongised mesh header";
-  NxOgre_ThrowException(IOException, stream.str(), Classes::_MeshSerialiser);
+  if (mType == Enums::MeshType_Unknown)
+  {
+   StringStream stream;
+   stream << "Resource '" << resource->getPath().getString() << " is not a valid PhysX NXS Mesh file.\n"
+          << "Reason: Un-recongised mesh header";
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_Mesh);
+   return;
+  }
+  
+  resource->seekBeginning();
+  
+  if (mType == Enums::MeshType_Convex)
+   mMesh.mConvex = Serialisation::NXS::loadConvexMesh(resource);
+  else if (mType == Enums::MeshType_Triangle)
+   mMesh.mTriangle = Serialisation::NXS::loadTriangleMesh(resource);
+  else if (mType == Enums::MeshType_Cloth)
+   mMesh.mCloth = Serialisation::NXS::loadClothMesh(resource, mTextureCoords);
+ // else if (mType == Enums::MeshType_SoftBody)
+ //  mMesh.mSoftBody = Serialisation::NXS::loadSoftBodyMesh(resource);
+
   return;
  }
- 
- resource->seekBeginning();
- 
- if (mType == Enums::MeshType_Convex)
-  mMesh.mConvex = Serialisation::NXS::loadConvexMesh(resource);
- else if (mType == Enums::MeshType_Triangle)
-  mMesh.mTriangle = Serialisation::NXS::loadTriangleMesh(resource);
- else if (mType == Enums::MeshType_Cloth)
-  mMesh.mCloth = Serialisation::NXS::loadExtendedClothMesh(resource, mTextureCoords);
-// else if (mType == Enums::MeshType_SoftBody)
-//  mMesh.mSoftBody = Serialisation::NXS::loadSoftBodyMesh(resource);
- else if (mType == Enums::MeshType_Skeleton)
-  mMesh.mSkeleton = Serialisation::NXS::loadSkeletonMesh(resource);
- 
+ else if (Serialisation::X::isXFile(resource))
+ {
+  
+  Enums::XType type = Serialisation::X::getXType(resource);
+  
+  if (type != Enums::XType_Skeleton)
+  {
+   StringStream stream;
+   stream << "Resource '" << resource->getPath().getString() << " is not a valid NxOgre X Mesh file.\n"
+          << "Reason: Un-reconised header";
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_Mesh);
+   return;
+  }
+  
+  resource->seekBeginning();
+  
+  if (type == Enums::XType_Skeleton)
+  {
+   mType = Enums::MeshType_Skeleton;
+   mMesh.mSkeleton = Serialisation::X::loadSkeletonMesh(resource);
+   return;
+  }
+  
+  return;
+ }
+ else
+ {
+  
+  StringStream stream;
+  stream << "Resource '" << resource->getPath().getString() << " is not a PhysX NXS or NxOgre X mesh file.";
+  NxOgre_ThrowException(IOException, stream.str(), Classes::_Mesh);
+  return;
+  
+ }
+  
 }
+
 
 void Mesh::unload()
 {
@@ -242,14 +275,15 @@ void Mesh::unload()
  }
  
  mMesh.mCloth = 0;
- mTextureCoords.clear();
- mVertices.clear();
- mIndices.clear();
- mNormals.clear();
+ mTextureCoords.remove_all();
+ mVertices.remove_all();
+ mIndices.remove_all();
+ mNormals.remove_all();
  mType = Enums::MeshType_Unknown;
  mName = BLANK_STRING;
  mNameHash = BLANK_HASH;
  mMeshStats.clear();
+ 
 }
 
 NxConvexMesh* Mesh::getAsConvex()
@@ -308,14 +342,25 @@ MeshStats Mesh::getStats()
  return mMeshStats;
 }
 
-Buffer<float>& Mesh::getTextureCoords()
+void Mesh::getTextureCoords(float* arr)
 {
- return mTextureCoords;
+ for (unsigned int i=0; i < mTextureCoords.capacity();i++)
+ {
+  arr[i] = mTextureCoords[i];
+ }
 }
+
+unsigned int Mesh::getNbTextureCoords() const
+{
+ if (mTextureCoords.capacity() == 0)
+  return 0;
+ return mTextureCoords.capacity() / 2;
+}
+
 
 MeshData* Mesh::getMeshData()
 {
- MeshData* data = NXOGRE_NEW_NXOGRE(MeshData)();
+ MeshData* data = GC::safe_new0<MeshData>(NXOGRE_GC_THIS);
  data->mType = getType();
  if (mType == NxOgre::Enums::MeshType_Triangle)
   Serialisation::NXS::saveTriangleMesh(mMesh.mTriangle, data);
@@ -326,7 +371,7 @@ MeshData* Mesh::getMeshData()
 // else if (mType == NxOgre::Enums::MeshType_SoftBody)
 //  NxOgre::Functions::Mesh::saveSoftBodyMesh(mMesh.mSoftBody, data);
  else if (mType == NxOgre::Enums::MeshType_Skeleton)
-  Serialisation::NXS::saveSkeletonMesh(mMesh.mSkeleton, data);
+  Serialisation::X::saveSkeletonMesh(mMesh.mSkeleton, data);
 
  return data;
 }

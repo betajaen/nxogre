@@ -49,41 +49,48 @@ void Machine::simulate(float user_deltaTime)
 {
  ActorMachinePart::simulate(user_deltaTime);
  
- mMachineParts.each(MachinePartLambda(user_deltaTime));
+ for (mMachinePartIterator = mMachineParts.elements(); mMachinePartIterator != mMachinePartIterator.end(); mMachinePartIterator++)
+  mMachinePartIterator->simulate(user_deltaTime);
  
-/* ArrayIterator<MachinePart*> it = mMachineParts.getIterator();
- for (MachinePart* part = it.begin(); part = it.next();)
-  part->simulate(user_deltaTime);*/
 }
 
-MachinePart* Machine::createWheelMachinePart(Wheel* wheel, PointRenderable* point_renderable)
+void Machine::render(float user_deltaTime)
 {
- WheelMachinePart* part = NXOGRE_NEW_NXOGRE(WheelMachinePart)(wheel, point_renderable);
+ ActorMachinePart::render(user_deltaTime);
+ 
+ for (mMachinePartIterator = mMachineParts.elements(); mMachinePartIterator != mMachinePartIterator.end(); mMachinePartIterator++)
+  mMachinePartIterator->render(user_deltaTime);
+ 
+}
+
+
+
+WheelMachinePart* Machine::createWheelMachinePart(Wheel* wheel, PointRenderable* point_renderable)
+{
+ WheelMachinePart* part = GC::safe_new2<WheelMachinePart>(wheel, point_renderable, NXOGRE_GC_THIS);
  mMachineParts.push_back(part);
  return part;
 }
 
-Machine::MachinePartLambda::MachinePartLambda(float dt)
-: mDt(dt)
-{}
-
-void Machine::MachinePartLambda::operator()(MachinePart* part)
+void Machine::addMachinePart(MachinePart* part)
 {
- part->simulate(mDt);
+ mMachineParts.push_back(part);
 }
 
-Machine::MachineLambda::MachineLambda(float dt)
-: mDt(dt)
-{}
-
-void Machine::MachineLambda::operator()(Machine* part)
+void Machine::removeMachinePart(MachinePart* part)
 {
- part->simulate(mDt);
+ mMachineParts.remove(mMachineParts.index(part));
 }
+
+Machine::MachinePartIterator Machine::getMachineParts()
+{
+ return mMachineParts.elements();
+}
+
 
 String Machine::to_s() const
 {
- return NxOgre::to_s((void*)this, String("Machine") );
+ return String("Machine");
 }
 
                                                                                        

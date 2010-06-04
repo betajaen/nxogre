@@ -34,6 +34,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 #include "NxOgreActorMachinePart.h"
+#include "NxOgreCommonMachineParts.h"
 
                                                                                        
 
@@ -42,59 +43,104 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief A machine is a dynamic RigidBody, which has many parts that may be "rendered" or controlled seperatly. A vehicle
-           is a type of machine.
+/*! class. Machine
+    desc. A machine is a dynamic RigidBody, which has many parts that may be "rendered" or controlled seperatly. A vehicle
+          is a type of machine. All Machines inherit from ActorMachinePart, so they have an Actor and PointRenderable as
+          a basis. Further MachineParts then can be created and added to this Machine.
 */
 class NxOgrePublicClass Machine : public ActorMachinePart
 {
   
-  friend class Scene;
-  template<class T> friend inline void Functions::safe_delete(T*);
-  
   public: // Functions
   
-  /** \brief Text
+  typedef vector<MachinePart*>           MachineParts;
+  typedef vector_iterator<MachinePart*>  MachinePartIterator;
+  
+  /*! constructor. Machine
   */
-                                              Machine(void);
+  Machine();
   
-  /** \brief Text
+  /*! destructor. Machine
   */
-                                             ~Machine(void);
+ ~Machine();
   
-  /** \brief Text
+  /*! function. createWheelMachinePart
+      desc.
+          Create a machine wheel part (add add it to this machine), based on an existing Wheel and PointRenderable.
   */
-  MachinePart*                                createWheelMachinePart(Wheel*, PointRenderable*);
+  WheelMachinePart* createWheelMachinePart(Wheel*, PointRenderable*);
   
-  /** \brief
+  /*! function. createMoverMachinePart
+      desc.
+          Create a machine wheel part (add add it to this machine), based on an existing Wheel and PointRenderable.
+      note.
+          If interval is 0, then it is fired every TimeStep.
   */
-  virtual void                                simulate(float user_deltaTime);
+  MoverMachinePart* createMoverMachinePart(const Vec3& force, float interval = 0, Enums::ForceMode = Enums::ForceMode_Impulse);
   
+  /*! function. createRotatorMachinePart
+      desc.
+          Create a machine wheel part (add add it to this machine), based on an existing Wheel and PointRenderable.
+      note.
+          If interval is 0, then it is fired every TimeStep.
+  */
+  RotatorMachinePart* createRotatorMachinePart(const Vec3& torque, float interval = 0, Enums::ForceMode = Enums::ForceMode_Impulse);
   
+  /*! function. addMachinePart
+      desc.
+          Add a machine part.
+      note.
+          The MachinePart pointer is garbaged collected automatically by the Machine destructor.
+  */
+  void addMachinePart(MachinePart*);
+  
+  /*! function. addMachinePart
+      desc.
+          Add a machine part.
+      note.
+          The MachinePart pointer is garbaged collected automatically by the Machine destructor.
+  */
+  void removeMachinePart(MachinePart*);
+  
+  /*! function. getMachineParts
+      desc.
+          Get machine parts attached this machine
+  */
+  MachinePartIterator getMachineParts();
+  
+  /*! function. simulate
+      desc.
+       User code to process logic, and physics before the scene state is updated.
+      args.
+       float userDeltaTime -- Time passed since last timestep.
+      note.
+       This is automatically called (by the Scene), once TimeController::advance is called.
+  */
+  void simulate(float userDeltaTime);
+  
+  /*! function. render
+      desc.
+       User code to commit changes to the render system, after the scene state was updated.
+      args.
+       float userDeltaTime -- Time passed since last timestep.
+      note.
+       This is automatically called (by the Scene), once TimeController::advance is called.
+  */
+  void render(float userDeltaTime);
+
   /*! function. to_s
       desc.
           Returns the pointer and class type as string.
   */
   String to_s() const;
   
-  struct MachinePartLambda
-  {
-   MachinePartLambda(float dt);
-   void operator()(MachinePart*);
-   float mDt;
-  };
-
-  struct MachineLambda
-  {
-   MachineLambda(float);
-   void operator()(Machine*);
-   float mDt;
-  };
-
   protected: // Variables
-  
-  ptr_vector<MachinePart> mMachineParts;
-  
-}; // class ClassName
+   
+   MachineParts         mMachineParts;
+   
+   MachinePartIterator  mMachinePartIterator;
+   
+}; // class Machine
 
                                                                                        
 

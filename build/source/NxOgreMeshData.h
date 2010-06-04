@@ -73,43 +73,43 @@ class NxOgrePublicClass MeshData : public ResourceAllocatable
   /** \brief Vertices
       \for   Triangle, Convex, Cloth, SoftBodies.
   */
-  Buffer<float>                    mVertices;
+  buffer<float>                    mVertices;
   
   /** \brief Indexes.
       \for   Triangle, Convex (Optional), Cloth, SoftBodies.
   */
-  Buffer<unsigned int>             mIndexes;
+  buffer<unsigned int>             mIndexes;
   
   /** \brief Normals.
       \for   Cloth, SoftBodies.
   */
-  Buffer<float>                    mNormals;
+  buffer<float>                    mNormals;
 
   /** \brief Texture Coordinates.
       \for   Cloth (optional), SoftBodies (optional).
       \note  Texture Coordinates are not compatible/ignored by vanilla PhysX installations.
   */
-  Buffer<float>                    mTextureCoordinates;
+  buffer<float>                    mTextureCoordinates;
 
   /** \brief Tetrahedra indexes.
       \for   SoftBodies. 
   */
-  Buffer<unsigned int>             mTetrahedra;
+  buffer<unsigned int>             mTetrahedra;
 
   /** \brief Materials per index.
       \for   Triangles (optional)
   */
-  Buffer<MaterialIdentifier>       mMaterials;
+  buffer<MaterialIdentifier>       mMaterials;
 
   /** \brief Vertex Flags
       \for   Cloth (optional) and SoftBodies (optional).
   */
-  Buffer<unsigned int>             mFlags;
+  buffer<unsigned int>             mFlags;
 
   /** \brief Vertex Masses
       \for   Cloth (optional) and SoftBodies (optional).
   */
-  Buffer<float>                    mMasses;
+  buffer<float>                    mMasses;
   
   /** \brief Mesh Flags
       \see NxOgre::Enums::MeshConstructionFlags

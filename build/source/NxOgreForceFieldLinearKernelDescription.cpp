@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-ForceFieldLinearKernelDescription::ForceFieldLinearKernelDescription(void)
+ForceFieldLinearKernelDescription::ForceFieldLinearKernelDescription()
 {
  reset();
 }
 
-void ForceFieldLinearKernelDescription::reset(void)
+void ForceFieldLinearKernelDescription::reset()
 {
  mConstant.zero();
  mPositionMultiplier.zero();
@@ -67,7 +67,7 @@ void ForceFieldLinearKernelDescription::clone(ForceFieldLinearKernelDescription&
  target.mNoise = mNoise;
 }
 
-bool ForceFieldLinearKernelDescription::valid(void)
+bool ForceFieldLinearKernelDescription::valid()
 {
  
  if(mTorusRadius < 0.f)

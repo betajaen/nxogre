@@ -54,8 +54,8 @@ class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
   
  public: // Functions
   
-  typedef ptr_vector<Resource>              Resources;
-  typedef ptr_vector<Resource>::iterator_t  ResourceIterator;
+  typedef vector<Resource*>           Resources;
+  typedef vector_iterator<Resource*>  ResourceIterator;
   
   /*! constructor. ResourceProtocol
       desc.
@@ -67,7 +67,7 @@ class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
       desc.
           Virtual Destructor.
   */
-  virtual ~ResourceProtocol(void);
+  virtual ~ResourceProtocol();
   
   /*! function. open
       desc.
@@ -101,7 +101,7 @@ class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
       return.
           String -- The protocol string.
   */
-  virtual String getProtocol(void) const;
+  virtual String getProtocol() const;
   
   /*! function. getProtocolHash
       desc.
@@ -111,7 +111,7 @@ class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
       see.
          ResourceProtocol::getProtocol 
   */
-  virtual StringHash getProtocolHash(void) const;
+  virtual StringHash getProtocolHash() const;
   
   /*! function. usesNamelessResources
       desc.
@@ -124,7 +124,7 @@ class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
       return.
           bool -- If the resource protocol doesn't use names.
   */
-  virtual bool usesNamelessResources(void) const;
+  virtual bool usesNamelessResources() const;
   
   /*! function. initialise
       desc.
@@ -132,7 +132,7 @@ class NxOgrePublicClass ResourceProtocol : public ResourceAllocatable
       note.
           This is called when the protocol is first opened by the ResourceSystem.
   */
-  virtual void initialise(void);
+  virtual void initialise();
   
   /*! function. getDestructionPolicy
       desc.

@@ -61,7 +61,7 @@ class NxOgrePublicClass Compartment : public GenericBasedAllocatable
   
   /*! destructor. Compartment
   */
-                                             ~Compartment(void);
+                                             ~Compartment();
   
   /*! function. getCompartment
       desc.

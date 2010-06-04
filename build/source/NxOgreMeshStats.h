@@ -51,15 +51,15 @@ class NxOgrePublicClass MeshStats
    
    MeshStats(unsigned int nbVertices, unsigned int nbIndices = 0, unsigned int nbParentIndices = 0, unsigned int nbTextureCoords = 0, unsigned int nbTetrahedra = 0);
    
-   unsigned int getNbVertices(void) const;
+   unsigned int getNbVertices() const;
    
-   unsigned int getNbIndices(void) const;
+   unsigned int getNbIndices() const;
    
-   unsigned int getNbParentIndices(void) const;
+   unsigned int getNbParentIndices() const;
    
-   unsigned int getNbTextureCoords(void) const;
+   unsigned int getNbTextureCoords() const;
    
-   unsigned int getNbTetrahedra(void) const;
+   unsigned int getNbTetrahedra() const;
    
    void clear();
    
@@ -75,7 +75,7 @@ class NxOgrePublicClass MeshStats
    
    unsigned int mNbTetrahedra;
 
-}; // class ClassName
+}; // class MeshStats
 
                                                                                        
 

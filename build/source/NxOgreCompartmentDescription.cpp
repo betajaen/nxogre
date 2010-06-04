@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-CompartmentDescription::CompartmentDescription(void)
+CompartmentDescription::CompartmentDescription()
 {
  reset();
 }
 
-void CompartmentDescription::reset(void)
+void CompartmentDescription::reset()
 {
  mType = Enums::CompartmentType_RigidBody;
  mDeviceCode = Enums::DeviceCode_AutoAssign;
@@ -52,7 +52,7 @@ void CompartmentDescription::reset(void)
  mThreadMask = 0;
 }
 
-bool CompartmentDescription::valid(void)
+bool CompartmentDescription::valid()
 {
  if (mDeviceCode != Enums::DeviceCode_PPU0 &&
      mDeviceCode != Enums::DeviceCode_AutoAssign &&

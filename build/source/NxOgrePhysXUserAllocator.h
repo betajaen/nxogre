@@ -50,17 +50,18 @@ namespace NxOgre
 class NxOgrePublicClass PhysXUserAllocator : public GenericBasedAllocatable, public NxUserAllocator
 {
   
-  friend class World;
+  NXOGRE_GC_FRIEND_NEW0
+  NXOGRE_GC_FRIEND_DELETE
   
   protected: // Functions
   
   /** \internal
   */
-                                              PhysXUserAllocator(void);
+                                              PhysXUserAllocator();
   
   /** \internal
   */
-                                             ~PhysXUserAllocator(void);
+                                             ~PhysXUserAllocator();
   
   /** \internal
   */
@@ -88,7 +89,7 @@ class NxOgrePublicClass PhysXUserAllocator : public GenericBasedAllocatable, pub
   
   /** \internal
   */
-                        void                  checkDEBUG(void);
+                        void                  checkDEBUG();
   
 }; // class ClassName
 

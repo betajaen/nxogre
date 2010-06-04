@@ -50,9 +50,8 @@ namespace NxOgre
 class NxOgrePublicClass Sphere : public Shape
 {
   
-  friend class RigidBody;  // for destroy();
-  friend Shape* Functions::ShapeFunctions::createSphere(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
 
@@ -100,7 +99,7 @@ class NxOgrePublicClass Sphere : public Shape
   
   /** \brief Sphere
   */
- ~Sphere(void);
+ ~Sphere();
   
   protected:
 

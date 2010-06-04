@@ -27,6 +27,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
+#if NxOgreHasFluids == 1
 #include "NxOgreFluidEmitter.h"
 #include "NxOgreFluidEmitterDescription.h"
 #include "NxOgreFluid.h"
@@ -62,6 +63,7 @@ FluidEmitter::FluidEmitter(const FluidEmitterDescription& description, Fluid* fl
  ed.repulsionCoefficient = description.mReplusionCoefficient;
  ed.shape = description.mShape;
  ed.type = description.mType;
+ ed.rate = description.mRate;
  
  mFluidEmitter = mFluid->getFluid()->createEmitter(ed);
  if (mFluidEmitter == 0)
@@ -75,7 +77,7 @@ FluidEmitter::FluidEmitter(const FluidEmitterDescription& description, Fluid* fl
 
 }
 
-FluidEmitter::~FluidEmitter(void)
+FluidEmitter::~FluidEmitter()
 {
  if (mFluidEmitter && mFluid)
  {
@@ -298,3 +300,5 @@ bool FluidEmitter::isShape(Enums::FluidEmitterShape shape) const
 } // namespace NxOgre
 
                                                                                        
+
+#endif

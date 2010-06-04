@@ -71,7 +71,7 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   
   /** \brief ManualMesh constructor.
   */
-                                              ManualMesh(void);
+                                              ManualMesh();
   
   /** \brief ManualMesh copy constructor.
   */
@@ -83,7 +83,7 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   
   /** \brief ManualMesh destructor.
   */
-                                             ~ManualMesh(void);
+                                             ~ManualMesh();
   
   /** \brief Assignment operator
   */
@@ -107,7 +107,7 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   
   /** \brief Get the name of the mesh.
   */
-  String                                      name(void) const;
+  String                                      name() const;
   
   /** \brief Clean the meshdata
   */
@@ -139,6 +139,14 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   /** \brief Get number of vertices
   */
   unsigned int                                nbVertices() const;
+
+  /** \brief Get number of triangles
+  */
+  unsigned int                                nbTriangles() const;
+
+  /** \brief Get number of triangles
+  */
+  unsigned int                                nbTextureCoords() const;
 
   /** \brief Adds an index.
       \for   Triangle, Convex (Optional), Cloth, Tetrahedra.
@@ -194,7 +202,7 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   
   /** \brief Does the mesh meet the criteria for the mesh type?
   */
-  bool                                        isValid(void) const;
+  bool                                        isValid() const;
   
   /** \brief Cook the mesh to a ResourceIdentifier target (default is memory) and return a Mesh to use. Mesh is automatically registered
              by the MeshManager. Mesh name is automatically generated unless MeshManager::name() is used.
@@ -211,9 +219,8 @@ class NxOgrePublicClass ManualMesh : public GenericBasedAllocatable
   
   protected: // Variables
   
-  MeshData*                                   mMesh;
+  NxOgre::SharedPointer<MeshData>             mMesh;
   
-  RefT*                                       mRef;
   
 }; // class ManualMesh
 

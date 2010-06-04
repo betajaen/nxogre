@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-SpringDescription::SpringDescription(void)
+SpringDescription::SpringDescription()
 {
  reset();
 }
 
-void SpringDescription::reset(void)
+void SpringDescription::reset()
 {
  mSpring = 0;
  mDamper = 0;

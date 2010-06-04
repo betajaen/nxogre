@@ -48,11 +48,11 @@ class NxOgrePublicClass int2
   
   public: // Functions
    
-   int2(void);
+   int2();
    
    int2(int _x, int _y);
    
-  ~int2(void);
+  ~int2();
    
    void operator+=(const int2& other);
    
@@ -75,11 +75,11 @@ class NxOgrePublicClass int3
    
   public: // Functions
    
-    int3(void);
+    int3();
    
     int3(int _x, int _y, int _z);
    
-   ~int3(void);
+   ~int3();
    
     void operator+=(const int3& other);
    
@@ -103,11 +103,11 @@ class NxOgrePublicClass int4
    
   public: // Functions
    
-   int4(void);
+   int4();
    
    int4(int _w, int _x, int _y, int _z);
    
-  ~int4(void);
+  ~int4();
    
    void operator+=(const int4& other);
    

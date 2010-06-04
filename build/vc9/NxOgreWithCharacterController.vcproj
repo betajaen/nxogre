@@ -62,6 +62,7 @@
   <File RelativePath="..\source\NxOgreClasses.cpp"/>
   <File RelativePath="..\source\NxOgreCloth.cpp"/>
   <File RelativePath="..\source\NxOgreClothDescription.cpp"/>
+  <File RelativePath="..\source\NxOgreCommonMachineParts.cpp"/>
   <File RelativePath="..\source\NxOgreCompartment.cpp"/>
   <File RelativePath="..\source\NxOgreCompartmentDescription.cpp"/>
   <File RelativePath="..\source\NxOgreConvex.cpp"/>
@@ -215,6 +216,7 @@
   <File RelativePath="..\source\NxOgreCloth.h"/>
   <File RelativePath="..\source\NxOgreClothDescription.h"/>
   <File RelativePath="..\source\NxOgreCommon.h"/>
+  <File RelativePath="..\source\NxOgreCommonMachineParts.h"/>
   <File RelativePath="..\source\NxOgreCompartment.h"/>
   <File RelativePath="..\source\NxOgreCompartmentDescription.h"/>
   <File RelativePath="..\source\NxOgreConfiguration.h"/>

@@ -62,7 +62,7 @@ SceneGeometry::SceneGeometry(const ShapeDescriptions& shapes, const Matrix44& po
  createStatic(pose, description, scene, shapes);
 }
 
-SceneGeometry::~SceneGeometry(void)
+SceneGeometry::~SceneGeometry()
 {
  destroy();
 }
@@ -77,12 +77,12 @@ void SceneGeometry::setGroup(GroupIdentifier SceneGeometryGroup)
  ::NxOgre::Functions::RigidBodyFunctions::setGroup(SceneGeometryGroup, mActor);
 }
 
-GroupIdentifier SceneGeometry::getGroup(void) const
+GroupIdentifier SceneGeometry::getGroup() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGroup(mActor);
 }
 
-unsigned int SceneGeometry::getContactReportFlags(void) const
+unsigned int SceneGeometry::getContactReportFlags() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
 }
@@ -92,22 +92,22 @@ void SceneGeometry::setContactReportFlags(unsigned int flags)
  ::NxOgre::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
 }
 
-Matrix44 SceneGeometry::getGlobalPose(void) const
+Matrix44 SceneGeometry::getGlobalPose() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
 }
 
-Vec3 SceneGeometry::getGlobalPosition(void) const
+Vec3 SceneGeometry::getGlobalPosition() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
 }
 
-Matrix33 SceneGeometry::getGlobalOrientation(void) const
+Matrix33 SceneGeometry::getGlobalOrientation() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
 }
 
-Quat SceneGeometry::getGlobalOrientationQuat(void) const
+Quat SceneGeometry::getGlobalOrientationQuat() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
 }
@@ -123,7 +123,7 @@ void SceneGeometry::releaseShape(Shape*)
  //< \argh
 }
 
-unsigned int SceneGeometry::getNbShapes(void) const
+unsigned int SceneGeometry::getNbShapes() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
 }

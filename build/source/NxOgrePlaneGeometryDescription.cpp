@@ -52,7 +52,7 @@ PlaneGeometryDescription::~PlaneGeometryDescription()
 
 NxShapeDesc* PlaneGeometryDescription::createShapeDescription() const
 {
- NxPlaneShapeDesc* description = NXOGRE_NEW_PHYSX(NxPlaneShapeDesc, PhysXClassAllocator);
+ NxPlaneShapeDesc* description = GC::safe_allocated_new0<NxPlaneShapeDesc, PhysXClassAllocator>(NXOGRE_GC_THIS);
  setShapeDescription(description);
  description->normal = mNormal.as<NxVec3>();
  description->d = mDistance;

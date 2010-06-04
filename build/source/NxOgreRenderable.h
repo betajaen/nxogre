@@ -56,35 +56,35 @@ class NxOgrePublicClass Renderable
   
   /**
   */
-  virtual ~Renderable(void);
+  virtual ~Renderable();
   
   /** \brief Draw some PhysXMeshData.
   */
-  virtual void                              drawSoftBodySimple(PhysXMeshData*, const Bounds3&) = 0;
+  virtual void drawSoftBodySimple(MeshRenderable*, const Bounds3&) = 0;
   
   /** \brief Draw some PhysXMeshData with texture coordinates.
   */
-  virtual void                              drawCloth(PhysXMeshData*, Buffer<float>& textureCoords, const Bounds3&) = 0;
+  virtual void drawCloth(MeshRenderable*, const Bounds3&) = 0;
    
   /** \brief Draw some PhysXMeshData with texture coordinates.
   */
-  virtual void                              drawClothFast(PhysXMeshData*, const Bounds3&) = 0;
+  virtual void drawClothFast(MeshRenderable*, const Bounds3&) = 0;
   
   /** \brief Draw some VisualDebuggerData.
   */
-  virtual void                              drawVisualDebugger(VisualDebuggerMeshData*) = 0;
+  virtual void drawVisualDebugger(VisualDebuggerMeshData*) = 0;
 
   /** \brief Draw a Fluid
   */
-  virtual void                              drawFluid(PhysXParticleData*, const Bounds3&) = 0;
+  virtual void drawFluid(PhysXParticleData*, const Bounds3&) = 0;
 
   /** \brief Get the RenderableType.
   */
-  int             getType(void) const;
+  int getType() const;
   
   protected:
   
-   int            mType;
+   int mType;
   
 }; // class Renderable
 

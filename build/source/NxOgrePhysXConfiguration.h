@@ -229,6 +229,8 @@ class NxOgrePublicClass PhysXConfiguration
   
   static void setSkinWidth(Real skinWidth);
   
+  static void setCCDEnabled(bool is_enabled, float delta);
+
   static void setSDKParameter(PhysXParameter parameter, Real value);
   
 }; // class PhysXConfiguration

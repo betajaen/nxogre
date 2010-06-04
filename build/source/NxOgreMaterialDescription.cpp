@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-MaterialDescription::MaterialDescription(void)
+MaterialDescription::MaterialDescription()
 {
  reset();
 }
 
-void MaterialDescription::reset(void)
+void MaterialDescription::reset()
 {
  mDynamicFriction  = 0.0f;
  mStaticFriction   = 0.0f;
@@ -54,7 +54,7 @@ void MaterialDescription::reset(void)
  mResitutionCombineMode = Enums::CombineMode_Average;
 }
 
-bool MaterialDescription::valid(void)
+bool MaterialDescription::valid()
 {
  // Temp.
  return true;

@@ -54,7 +54,7 @@ Radian::Radian(const Radian& other)
 {
 }
 
-Real Radian::rad()
+Real Radian::rad() const
 {
  return mRadian;
 }

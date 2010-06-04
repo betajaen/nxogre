@@ -28,6 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreString.h"
+#include "NxOgreHash.h"
 #include "NxOgreVec2.h"
 #include "NxOgreVec3.h"
 #include "NxOgreVec4.h"
@@ -132,6 +133,23 @@ std::string to_s(const Radian& v)
  return v.to_s();
 }
 
+String NxOgrePublicFunction to_s(float* arr, size_t length)
+{
+ std::ostringstream s;
+ for (size_t i=0;i < length;i++)
+  s << arr[i] << " ";
+ return s.str();
+}
+
+String NxOgrePublicFunction to_s(unsigned int* arr, size_t length)
+{
+ std::ostringstream s;
+ for (size_t i=0;i < length;i++)
+  s << arr[i] << " ";
+ return s.str();
+}
+
+
 std::string to_s(void* ptr, const String& description)
 {
  std::ostringstream s;
@@ -203,7 +221,20 @@ void inspect(const String& value)
 
 namespace Strings
 {
+#if 1
 
+StringHash hash(const char* str)
+{
+ return hash(NxOgre::String(str));
+}
+
+StringHash hash(const NxOgre::String& str)
+{
+ static HashFunction<NxOgre::String> function;
+ return function(str);
+}
+
+#else
 StringHash hash(const char* str)
 {
  if (strlen(str) == 0 || str == 0)
@@ -213,7 +244,6 @@ StringHash hash(const char* str)
  int c = 0;
  while (c = *str++)
   hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-
  return hash; 
 }
 
@@ -222,6 +252,7 @@ StringHash hash(const String& str)
  return hash(str.c_str());
 }
 
+#endif
 void NxOgrePublicFunction replace(String& string, char search, char replacement)
 {
  for (String::iterator it = string.begin(); it != string.end(); ++it)
@@ -283,8 +314,8 @@ void lower(String& string)
 String lower_copy(const String& original)
 {
  String dest;
- dest.reserve(original.length());
- std::transform(original.begin(), original.end(), dest.begin(), tolower);
+ dest.append(original);
+ lower(dest);
  return dest;
 }
 
@@ -296,8 +327,8 @@ void upper(String& string)
 String upper_copy(const String& original)
 {
  String dest;
- dest.reserve(original.length());
- std::transform(original.begin(), original.end(), dest.begin(), toupper);
+ dest.append(original);
+ upper(dest);
  return dest;
 }
 
@@ -306,6 +337,20 @@ void slice_to_first_of(String& string, char pattern)
  size_t pos = string.find_first_of(pattern);
  if (pos != String::npos)
   string.assign(string.substr(0, pos));
+}
+
+void slice_to_last_of(String& string, char pattern)
+{
+ size_t pos = string.find_last_of(pattern);
+ if (pos != String::npos)
+  string.assign(string.substr(0, pos));
+}
+
+void slice_after_first_of(String& string, char pattern)
+{
+ size_t pos = string.find_first_of(pattern);
+ if (pos != String::npos)
+  string.assign(string.substr(pos+1));
 }
 
 void slice_after_last_of(String& string, char pattern)
@@ -353,6 +398,16 @@ bool starts_insensitive(const String& original, const String& comparision)
  return true;
 }
 
+bool matches(const String& original, const String& comparision)
+{
+ return original == comparision;
+}
+
+bool matches_insensitive(const String& original, const String& comparision)
+{
+ return lower_copy(original) == lower_copy(comparision);
+}
+
 bool split(const String& str, std::map<String, String>& value, char delimiter, bool lowerKey, bool trim)
 {
  size_t pos = str.find_first_of(delimiter);
@@ -375,6 +430,31 @@ bool split(const String& str, std::map<String, String>& value, char delimiter, b
 
  return true;
 }
+
+
+bool split(const String& str, NxOgre::map<String, String>& value, char delimiter, bool lowerKey, bool trim)
+{
+ size_t pos = str.find_first_of(delimiter);
+ if (pos == String::npos)
+  return false;
+ 
+ std::string k = str.substr(0,pos);
+ std::string v = str.substr(pos+1);
+
+ if (lowerKey)
+  lower(k);
+
+ if (trim)
+ {
+  Strings::trim(k);
+  Strings::trim(v);
+ }
+ 
+ value.insert(k, v);
+
+ return true;
+}
+
 
 }
 

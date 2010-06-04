@@ -49,9 +49,8 @@ namespace NxOgre
 class NxOgrePublicClass Wheel : public Shape
 {
   
-  friend class RigidBody;  // for destroy();
-  friend Shape* Functions::ShapeFunctions::createWheel(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -77,7 +76,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief Gets the radius (distance from axle to contact surface) of the wheel.
   */
-  Real  getRadius(void) const;
+  Real  getRadius() const;
   
   
   /** \brief Sets the maximum extension distance of suspension along shape's -Y axis.
@@ -88,7 +87,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief Gets the maximum extension distance of suspension along shape's -Y axis.
   */
-  Real  getSuspensionTravel(void) const;
+  Real  getSuspensionTravel() const;
   
   /** \brief Sets the spring intended for the wheel suspension effects.
       \note  Does not wake up the RigidBody.
@@ -98,7 +97,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief Gets the spring intended for the wheel suspension effects.
   */
-  SpringDescription       getSuspension(void) const;
+  SpringDescription       getSuspension() const;
   
   /** \brief 
       \note  Does not wake up the RigidBody.
@@ -108,7 +107,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief 
   */
-  TireFunction            getLateralTireForceFunction(void) const;
+  TireFunction            getLateralTireForceFunction() const;
   
   
   /** \brief 
@@ -119,7 +118,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief 
   */
-  TireFunction  getLongitudalTireForceFunction(void) const;
+  TireFunction  getLongitudalTireForceFunction() const;
   
   /** \brief 
       \note  Does not wake up the RigidBody.
@@ -129,7 +128,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief 
   */
-  Real  getInverseWheelMass(void) const;
+  Real  getInverseWheelMass() const;
   
   /** \brief 
       \note  Does not wake up the RigidBody.
@@ -139,7 +138,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief 
   */
-  int   getWheelFlags(void) const;
+  int   getWheelFlags() const;
   
   /** \brief Sets the motor torque. Torque must be positive. Body must be awake for this to make any effect.
       \note  Does not wake up the RigidBody.
@@ -149,7 +148,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief Gets the motor torque.
   */
-  Real  getMotorTorque(void) const;
+  Real  getMotorTorque() const;
   
   /** \brief Sets the brake torque. Torque must be positive.
       \note  Does not wake up the RigidBody.
@@ -159,7 +158,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief Gets the brake torque.
   */
-  Real  getBrakeTorque(void) const;
+  Real  getBrakeTorque() const;
   
   /** \brief Sets the steering angle (in radians)
       \note  Does not wake up the RigidBody.
@@ -169,7 +168,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief Gets the steering angle (in radians)
   */
-  Radian  getSteeringAngle(void) const;
+  Radian  getSteeringAngle() const;
   
   /** \brief Set Axle Speed.
       \warning This is an internal state variable. For any effect, the WheelFlags_AxleSpeedOverride must be enabled.
@@ -179,15 +178,15 @@ class NxOgrePublicClass Wheel : public Shape
   
   /** \brief Gets the axle speed.
   */
-  Real  getAxleSpeed(void) const;
+  Real  getAxleSpeed() const;
 #if 0
   /** \brief Set the contact callback.
   */
-  void  setCallback(void);
+  void  setCallback();
   
   /** \brief Get the contact callback.
   */
-  Callback*               getCallback(void);
+  Callback*               getCallback();
 #endif
 
   /** \brief
@@ -205,7 +204,7 @@ class NxOgrePublicClass Wheel : public Shape
   
   /*
   */
-  ~Wheel(void);
+  ~Wheel();
   
   protected:
 

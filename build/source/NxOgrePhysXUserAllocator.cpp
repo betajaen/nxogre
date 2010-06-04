@@ -36,62 +36,46 @@ namespace NxOgre
 
                                                                                        
 
-PhysXUserAllocator::PhysXUserAllocator(void)
+PhysXUserAllocator::PhysXUserAllocator()
 {
 }
 
-PhysXUserAllocator::~PhysXUserAllocator(void)
+PhysXUserAllocator::~PhysXUserAllocator()
 {
 }
 
 void* PhysXUserAllocator::mallocDEBUG(size_t size, const char* filename, int line)
 {
-#ifdef NXOGRE_DEBUG
- return NxOgreAllocate<PhysXClassAllocator>(size, filename, line);
-#else
- return NxOgreAllocate<PhysXClassAllocator>(size);
-#endif
+ return GC::safe_malloc<void, PhysXClassAllocator>(size, filename, line);
 }
 
-void* PhysXUserAllocator::mallocDEBUG(size_t size, const char* filename, int line, const char*, NxMemoryType)
+void* PhysXUserAllocator::mallocDEBUG(size_t size, const char* filename, int line, const char* class_name, NxMemoryType type)
 {
-#ifdef NXOGRE_DEBUG
- return NxOgreAllocate<PhysXClassAllocator>(size, filename, line);
-#else
- return NxOgreAllocate<PhysXClassAllocator>(size);
-#endif
+ return GC::safe_malloc<void, PhysXClassAllocator>(size, Classes::TypeToCStr(type), filename, line);
 }
 
 void* PhysXUserAllocator::malloc(size_t size)
 {
-#ifdef NXOGRE_DEBUG
- return NxOgreAllocate<PhysXClassAllocator>(size, "PHYSX", 0);
-#else
- return NxOgreAllocate<PhysXClassAllocator>(size);
-#endif
+ return GC::safe_malloc<void, PhysXClassAllocator>(size, NXOGRE_GC_THIS);
 }
 
 void* PhysXUserAllocator::malloc(size_t size, NxMemoryType type)
 {
-#ifdef NXOGRE_DEBUG
- return NxOgreAllocate<PhysXClassAllocator>(size, "PHYSX", 0);
-#else
- return NxOgreAllocate<PhysXClassAllocator>(size);
-#endif
+ return GC::safe_malloc<void, PhysXClassAllocator>(size, Classes::TypeToCStr(type), NXOGRE_GC_THIS);
 }
 
 void* PhysXUserAllocator::realloc(void* memory, size_t size)
 {
- return NxOgreReallocate<PhysXClassAllocator>(memory, size);
+ return GC::safe_realloc<void, PhysXClassAllocator>(memory, size, NXOGRE_GC_THIS);
 }
 
-void PhysXUserAllocator::free(void* memory)
+void PhysXUserAllocator::free(void* mem)
 {
- NxOgreDeallocate<PhysXClassAllocator>(memory);
+ GC::safe_free<void, PhysXClassAllocator>(mem, NXOGRE_GC_THIS);
 }
 
-void PhysXUserAllocator::checkDEBUG(void)
-{
+void PhysXUserAllocator::checkDEBUG()
+{ // cannot be not implemented.
 }
 
                                                                                        

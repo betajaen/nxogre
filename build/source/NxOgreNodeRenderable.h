@@ -51,7 +51,7 @@ class NxOgrePublicClass NodeRenderable
   
   /** \brief Destructor
   */
-  virtual                                    ~NodeRenderable(void);
+  virtual                                    ~NodeRenderable();
   
   /** \brief Text
   */

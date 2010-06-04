@@ -58,7 +58,7 @@ ForceField::ForceField(Scene* scene)
 {
 }
 
-ForceField::~ForceField(void)
+ForceField::~ForceField()
 {
  destroy();
 }
@@ -76,10 +76,10 @@ void ForceField::create(const ForceFieldDescription& description, ForceFieldKern
  desc.fluidType = (NxForceFieldType) (int) description.mFluidType;
  desc.forceFieldVariety = (NxForceFieldVariety) (int) description.mVariety;
  desc.group = description.mGroup;
- desc.groupsMask.bits0 = description.mGroupsMask.mBits0;
- desc.groupsMask.bits1 = description.mGroupsMask.mBits1;
- desc.groupsMask.bits2 = description.mGroupsMask.mBits2;
- desc.groupsMask.bits3 = description.mGroupsMask.mBits3;
+ desc.groupsMask.bits0 = description.mGroupsMask.bits0;
+ desc.groupsMask.bits1 = description.mGroupsMask.bits1;
+ desc.groupsMask.bits2 = description.mGroupsMask.bits2;
+ desc.groupsMask.bits3 = description.mGroupsMask.bits3;
  desc.name = mName.c_str();
  desc.pose.setRowMajor44(description.mPose.ptr());
  desc.rigidBodyType = (NxForceFieldType) (int) description.mRigidBodyType;
@@ -98,7 +98,7 @@ void ForceField::create(const ForceFieldDescription& description, ForceFieldKern
  for (unsigned int i=0; i < desc.includeGroupShapes.size(); i++)
  {
   NxForceFieldShapeDesc* ptr = desc.includeGroupShapes[i];
-  NXOGRE_DELETE_PHYSX(NxForceFieldShapeDesc, PhysXClassAllocator, ptr);
+  GC::safe_allocated_delete<NxForceFieldShapeDesc, PhysXClassAllocator>(ptr, NXOGRE_GC_THIS);
  }
  
  if (mKernel)

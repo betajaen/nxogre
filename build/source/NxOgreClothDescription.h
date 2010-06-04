@@ -55,19 +55,19 @@ class NxOgrePublicClass ClothDescription
       desc.
           Calls ClothDescription::reset.
   */
-                         ClothDescription(void);
+                         ClothDescription();
   
   /*! function. reset
       desc.
            Resets everything to their default values, and pointers are set to NULL.
   */
-  void                   reset(void);
+  void                   reset();
   
   /*! function. valid
       desc.
            Returns if the variables are in a valid range or not
   */
-  bool                   valid(void);
+  bool                   valid();
   
   /*! variable. mName
       desc.
@@ -408,6 +408,18 @@ class NxOgrePublicClass ClothDescription
         desc.mFlags = ClothFlags_Gravity | ClothFlags_Tearable;
   */
   unsigned int           mFlags;
+  
+  /*! variable. mCompartment
+      desc.
+          OptionalCompartment to place the cloth into.
+      default.
+          0 (No compartment)
+      type.
+          Compartment*
+      note.
+          Compartment must be a cloth compartment.
+  */
+  Compartment*  mCompartment;
   
 }; // class ClothDescription
 

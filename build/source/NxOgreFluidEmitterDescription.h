@@ -32,6 +32,9 @@
                      
 
 #include "NxOgreStable.h"
+
+#if NxOgreHasFluids == 1
+
 #include "NxOgreCommon.h"
 
                      
@@ -238,5 +241,7 @@ class NxOgrePublicClass FluidEmitterDescription
 } // namespace NxOgre
 
                      
+
+#endif
 
 #endif

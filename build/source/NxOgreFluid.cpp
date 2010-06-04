@@ -26,7 +26,11 @@
 
                                                                                        
 
+
 #include "NxOgreStable.h"
+
+#if NxOgreHasFluids == 1
+
 #include "NxOgreFluid.h"
 #include "NxOgreFluidDescription.h"
 #include "NxOgreCompartment.h"
@@ -51,7 +55,7 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
 {
  mNameHash = Strings::hash(mName);
  
- mParticleData = NXOGRE_NEW_NXOGRE(PhysXParticleData)();
+ mParticleData = GC::safe_new0<PhysXParticleData>(NXOGRE_GC_THIS);
  mParticleData->configure(description.mMaxParticles, 2);
  
  NxFluidDesc fd;
@@ -84,7 +88,7 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
  fd.packetSizeMultiplier = description.mPacketSizeMultiplier;
  //fd.particleCreationIdWriteData = ...
  //fd.particleDeletionIdWriteData = ...
- fd.particlesWriteData = mParticleData->getParticleData();
+ mParticleData->getParticleData(fd.particlesWriteData);
  //fd.projectionPlane = ...
  fd.restDensity = description.mRestDensity;
  fd.restitutionForDynamicShapes = description.mRestitutionForDynamicShapes;
@@ -107,22 +111,23 @@ Fluid::Fluid(const FluidDescription& description, Renderable* renderable, Enums:
   return;
  }
  
- TimeController::getSingleton()->addTimeListener(this, mPriority);
+ mScene->addRenderListener(this, mPriority);
+
 }
 
 Fluid::~Fluid()
 {
  
- TimeController::getSingleton()->removeTimeListener(this, mPriority);
+ mScene->addRenderListener(this, mPriority);
  
  if (mFluid)
  {
-  mFluidEmitters.clear();
+  mFluidEmitters.remove_all();
   mScene->getScene()->releaseFluid(*mFluid);
   mFluid = 0;
  }
  
- NXOGRE_DELETE_NXOGRE(mParticleData);
+ GC::safe_delete(mParticleData, NXOGRE_GC_THIS);
  
 }
 
@@ -149,13 +154,18 @@ bool Fluid::advance(float, const Enums::Priority&)
 
 FluidEmitter* Fluid::createEmitter(const FluidEmitterDescription& description)
 {
- FluidEmitter* emitter = new FluidEmitter(description, this);
+ FluidEmitter* emitter = GC::safe_new2<FluidEmitter>(description, this, NXOGRE_GC_THIS);
  mFluidEmitters.insert(emitter->getNameHash(), emitter);
  return emitter;
 }
 
-void Fluid::destroyEmitter(FluidEmitter*)
+//void Fluid::destroyEmitter(FluidEmitter*)
+//{
+//}
+
+unsigned int Fluid::getNbParticles() const
 {
+ return mParticleData->getNbParticles();
 }
 
 unsigned int Fluid::getNbEmitters() const
@@ -165,7 +175,7 @@ unsigned int Fluid::getNbEmitters() const
 
 Fluid::FluidEmitterIterator Fluid::getEmitters()
 {
- return FluidEmitterIterator(mFluidEmitters);
+ return mFluidEmitters.elements();
 }
 
 unsigned int Fluid::addParticles(ParticleData&, bool)
@@ -178,10 +188,10 @@ void Fluid::removeAllParticles()
  mFluid->removeAllParticles();
 }
 
-ParticleData* Fluid::getParticleData()
-{
- return 0; // Temp.
-}
+//ParticleData* Fluid::getParticleData()
+//{
+// return 0;
+//}
 
 unsigned int Fluid::getNbReserveParticles() const
 {
@@ -203,9 +213,9 @@ void Fluid::setCurrentParticleLimit(unsigned int limit)
  mFluid->setCurrentParticleLimit(limit);
 }
 
-Buffer<FluidPacket*> Fluid::getFluidPacketData() const
+buffer<FluidPacket*> Fluid::getFluidPacketData() const
 {
- return Buffer<FluidPacket*>(); // Temp.
+ return buffer<FluidPacket*>(); // Temp.
 }
 
 unsigned int Fluid::getSimulationMethod() const
@@ -530,3 +540,5 @@ void Fluid::setForceFieldMaterial(MaterialIdentifier identifier)
 } // namespace NxOgre
 
                                                                                        
+
+#endif

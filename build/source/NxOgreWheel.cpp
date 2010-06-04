@@ -49,7 +49,7 @@ Wheel::Wheel(NxWheelShape* wheel_shape)
 {
 }
 
-Wheel::~Wheel(void)
+Wheel::~Wheel()
 {
 }
 
@@ -68,7 +68,7 @@ void Wheel::setRadius(Real radius)
  mWheelShape->setRadius(radius);
 }
 
-Real Wheel::getRadius(void) const
+Real Wheel::getRadius() const
 {
   return mWheelShape->getRadius();
 }
@@ -78,7 +78,7 @@ void Wheel::setSuspensionTravel(Real travel)
  mWheelShape->setSuspensionTravel(travel);
 }
 
-Real Wheel::getSuspensionTravel(void) const
+Real Wheel::getSuspensionTravel() const
 {
  return mWheelShape->getSuspensionTravel();
 }
@@ -92,7 +92,7 @@ void Wheel::setSuspension(const SpringDescription& description)
   mWheelShape->setSuspension(desc);
 }
 
-SpringDescription Wheel::getSuspension(void) const
+SpringDescription Wheel::getSuspension() const
 {
   NxSpringDesc description = mWheelShape->getSuspension();
   SpringDescription desc;
@@ -113,7 +113,7 @@ void Wheel::setLateralTireForceFunction(const TireFunction& function)
   mWheelShape->setLateralTireForceFunction(func);
 }
 
-TireFunction Wheel::getLateralTireForceFunction(void) const
+TireFunction Wheel::getLateralTireForceFunction() const
 {
   NxTireFunctionDesc function = mWheelShape->getLateralTireForceFunction();
   TireFunction func;
@@ -136,7 +136,7 @@ void Wheel::setLongitudalTireForceFunction(const TireFunction& function)
   mWheelShape->setLongitudalTireForceFunction(func);
 }
 
-TireFunction Wheel::getLongitudalTireForceFunction(void) const
+TireFunction Wheel::getLongitudalTireForceFunction() const
 {
   NxTireFunctionDesc function = mWheelShape->getLongitudalTireForceFunction();
   TireFunction func;
@@ -153,7 +153,7 @@ void Wheel::setInverseWheelMass(Real invMass)
   mWheelShape->setInverseWheelMass(invMass);
 }
 
-Real Wheel::getInverseWheelMass(void) const
+Real Wheel::getInverseWheelMass() const
 {
   return mWheelShape->getInverseWheelMass();
 }
@@ -163,7 +163,7 @@ void  Wheel::setWheelFlags(int flags)
   mWheelShape->setWheelFlags(flags);
 }
 
-int Wheel::getWheelFlags(void) const
+int Wheel::getWheelFlags() const
 {
   return mWheelShape->getWheelFlags();
 }
@@ -173,7 +173,7 @@ void Wheel::setMotorTorque(Real torque)
   mWheelShape->setMotorTorque(torque);
 }
 
-Real Wheel::getMotorTorque(void) const
+Real Wheel::getMotorTorque() const
 {
  return mWheelShape->getMotorTorque();
 }
@@ -183,7 +183,7 @@ void Wheel::setBrakeTorque(Real torque)
  mWheelShape->setBrakeTorque(torque);
 }
 
-Real Wheel::getBrakeTorque(void) const
+Real Wheel::getBrakeTorque() const
 {
  return mWheelShape->getBrakeTorque();
 }
@@ -193,7 +193,7 @@ void Wheel::setSteeringAngle(Radian angle)
  mWheelShape->setSteerAngle(angle);
 }
 
-Radian Wheel::getSteeringAngle(void) const
+Radian Wheel::getSteeringAngle() const
 {
  return mWheelShape->getSteerAngle();
 }
@@ -203,16 +203,16 @@ void Wheel::setAxleSpeed(Real speed)
  mWheelShape->setAxleSpeed(speed);
 }
 
-Real Wheel::getAxleSpeed(void) const
+Real Wheel::getAxleSpeed() const
 {
  return mWheelShape->getAxleSpeed();
 }
 #if 0
-void Wheel::setCallback(void)
+void Wheel::setCallback()
 {
 }
 
-Callback* Wheel::getCallback(void)
+Callback* Wheel::getCallback()
 {
 }
 #endif

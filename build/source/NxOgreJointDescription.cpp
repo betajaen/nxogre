@@ -36,16 +36,16 @@ namespace NxOgre
 
                                                                                        
 
-JointDescription::JointDescription(void)
+JointDescription::JointDescription()
 {
  reset();
 }
 
-JointDescription::~JointDescription(void)
+JointDescription::~JointDescription()
 {
 }
 
-void JointDescription::reset(void)
+void JointDescription::reset()
 {
  for (unsigned int i = 0; i < 2;i ++)
  {
@@ -60,7 +60,7 @@ void JointDescription::reset(void)
  mJointFlags = Enums::JointFlag_Visualisation;
 }
 
-bool JointDescription::isValid(void) const
+bool JointDescription::isValid() const
 {
  return true; // temp.
 }

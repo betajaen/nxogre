@@ -47,7 +47,7 @@ HeightFieldGeometry::HeightFieldGeometry(NxHeightFieldShape* shape, HeightField*
 {
 }
 
-HeightFieldGeometry::~HeightFieldGeometry(void)
+HeightFieldGeometry::~HeightFieldGeometry()
 {
 }
 
@@ -80,17 +80,17 @@ void  HeightFieldGeometry::setScale(const Vec3& scale)
  mHeightFieldShape->setColumnScale(scale.z);
 }
 
-Real  HeightFieldGeometry::getHeightScale(void) const
+Real  HeightFieldGeometry::getHeightScale() const
 {
  return mHeightFieldShape->getHeightScale();
 }
 
-Real  HeightFieldGeometry::getRowScale(void) const
+Real  HeightFieldGeometry::getRowScale() const
 {
  return mHeightFieldShape->getRowScale();
 }
 
-Real  HeightFieldGeometry::getColumnScale(void) const
+Real  HeightFieldGeometry::getColumnScale() const
 {
  return mHeightFieldShape->getColumnScale();
 }
@@ -189,10 +189,10 @@ void HeightFieldGeometry::saveToDescription(HeightFieldGeometryDescription& desc
  description.mDensity = desc.density;
  description.mFlags.from_i(desc.shapeFlags);
  description.mGroup = desc.group;
- description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
- description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
- description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
- description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
+ description.mGroupsMask.bits0 = desc.groupsMask.bits0;
+ description.mGroupsMask.bits1 = desc.groupsMask.bits1;
+ description.mGroupsMask.bits2 = desc.groupsMask.bits2;
+ description.mGroupsMask.bits3 = desc.groupsMask.bits3;
  desc.localPose.getRowMajor44(description.mLocalPose.ptr());
  description.mMass = desc.mass;
  description.mMaterial = desc.materialIndex;

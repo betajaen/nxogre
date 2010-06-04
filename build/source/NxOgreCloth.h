@@ -53,8 +53,8 @@ namespace NxOgre
 class NxOgrePublicClass Cloth : public NonRigidBodyBasedAllocatable, public TimeListener
 {
   
-  friend class Scene;
-  template<class T> friend inline void Functions::safe_delete(T*);
+  NXOGRE_GC_FRIEND_NEW4
+  NXOGRE_GC_FRIEND_DELETE
   
   public:
   
@@ -88,16 +88,16 @@ class NxOgrePublicClass Cloth : public NonRigidBodyBasedAllocatable, public Time
   */
   NxCloth*                                    getPhysXCloth();
 
-  /*! function. getPhysXMeshData
+  /*! function. getMeshRenderable
       desc.
-           Get the PhysXMeshData instance.
+           Get the MeshRenderable instance.
       note.
            This mesh is owned by the Cloth; do not delete the pointer.
       return.
-           **PhysXMeshData** * -- PhysXMeshData used by the cloth.
-      see. PhysXMeshData
+           **MeshRenderable** * -- MeshRenderable used by the cloth.
+      see. MeshRenderable
   */
-  PhysXMeshData*                              getPhysXMeshData();
+  MeshRenderable*                              getMeshRenderable();
 
   /*! function. getName
       desc.
@@ -105,7 +105,15 @@ class NxOgrePublicClass Cloth : public NonRigidBodyBasedAllocatable, public Time
       return.
            **String** -- The name of the cloth.
   */
-  String                                      getName();
+  String                                      getName() const;
+
+  /*! function. getName
+      desc.
+           Get the name of the cloth or BLANK_STRING
+      return.
+           **String** -- The name of the cloth.
+  */
+  StringHash                                   getNameHash() const;
 
   /*! function. setBendingStiffness
       desc.
@@ -545,9 +553,9 @@ bool                                        tearVertex(const unsigned int vertex
       desc.
            Set the position for _all_ of the particles at once.
       args.
-           Buffer<Vec3>& __positions__ -- All the new positions of the vertices as a Buffer of Vec3s.
+           buffer<Vec3>& __positions__ -- All the new positions of the vertices as a Buffer of Vec3s.
   */
-  void                                        setPositions(Buffer<Vec3>& positions);
+  void                                        setPositions(buffer<Vec3>& positions);
 
   /*! function. getPosition
       desc.
@@ -563,9 +571,9 @@ bool                                        tearVertex(const unsigned int vertex
       desc.
            Get the position for _all_ of the particles at once.
       args.
-           Buffer<Vec3>& __outPositions__ -- Returns all the positions of the vertices as a Buffer of Vec3s.
+           buffer<Vec3>& __outPositions__ -- Returns all the positions of the vertices as a Buffer of Vec3s.
   */
-  void                                        getPositions(Buffer<Vec3>& outPositions);
+  void                                        getPositions(buffer<Vec3>& outPositions);
 
   /*! function. setVelocity
       desc.
@@ -580,9 +588,9 @@ bool                                        tearVertex(const unsigned int vertex
       desc.
            Set the velocities of all the vertices at once.
       args.
-           Buffer<Vec3>& __velocities__ -- All the new velocities of the vertices as a Buffer of Vec3s.
+           buffer<Vec3>& __velocities__ -- All the new velocities of the vertices as a Buffer of Vec3s.
   */
-  void                                        setVelocities(Buffer<Vec3>& velocities);
+  void                                        setVelocities(buffer<Vec3>& velocities);
 
   /*! function. getVelocity
       desc.
@@ -598,9 +606,9 @@ bool                                        tearVertex(const unsigned int vertex
       desc.
            Get the velocities for _all_ of the particles at once.
       args.
-           Buffer<Vec3>& __outVelocities__ -- Returns all the velocities of the vertices as a Buffer of Vec3s.
+           buffer<Vec3>& __outVelocities__ -- Returns all the velocities of the vertices as a Buffer of Vec3s.
   */
-  void                                        getVelocities(Buffer<Vec3>& outVelocities);
+  void                                        getVelocities(buffer<Vec3>& outVelocities);
 
   /*! function. getNumberOfParticles
       desc.
@@ -922,7 +930,7 @@ bool                                        tearVertex(const unsigned int vertex
   /*! destructor. Cloth
       !private
   */
-  virtual                                     ~Cloth(void);
+  virtual                                     ~Cloth();
   
   /*! advance
       desc.
@@ -954,12 +962,16 @@ bool                                        tearVertex(const unsigned int vertex
 
   /** \brief
   */
-  PhysXMeshData*                                mMeshData;
+  MeshRenderable*                               mMeshRenderable;
   
   /** \brief Possible name of the mesh.
   */
   String                                        mName;
   
+  /** \brief Possible name of the mesh.
+  */
+  StringHash                                    mNameHash;
+
   /** \brief Current render priority.
   */
   Enums::Priority                               mPriority;

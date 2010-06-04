@@ -52,7 +52,7 @@ TriangleGeometryDescription::~TriangleGeometryDescription()
 
 NxShapeDesc* TriangleGeometryDescription::createShapeDescription() const
 {
- NxTriangleMeshShapeDesc* description = NXOGRE_NEW_PHYSX(NxTriangleMeshShapeDesc, PhysXClassAllocator);
+ NxTriangleMeshShapeDesc* description = GC::safe_new0<NxTriangleMeshShapeDesc>(__FILE__, __LINE__);
  setShapeDescription(description);
  
  description->meshData = (mMesh == 0) ? 0 : mMesh->getAsTriangleMesh();

@@ -76,7 +76,17 @@ class NxOgrePublicClass GroupsMask
    return o;
   }
 
-  unsigned int mBits0, mBits1, mBits2, mBits3;
+  template<typename T> T as() const
+  {
+   T ret;
+   ret.bits0 = bits0;
+   ret.bits1 = bits1;
+   ret.bits2 = bits2;
+   ret.bits3 = bits3;
+   return ret;
+  }
+
+  unsigned int bits0, bits1, bits2, bits3;
   
 }; // class GroupsMask
 

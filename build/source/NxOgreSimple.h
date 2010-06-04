@@ -119,7 +119,7 @@ struct SimpleConvexPointCloud : public SimpleShape
  Enums::SimpleShapeType  getType() const;
  NxForceFieldShapeDesc*  to_ff_shape() const;
  
- Buffer<Vec3>  mPoints;
+ buffer<Vec3>  mPoints;
 };
 
 

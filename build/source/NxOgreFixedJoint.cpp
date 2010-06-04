@@ -66,7 +66,7 @@ FixedJoint::FixedJoint(RigidBody* first, RigidBody* second, const FixedJointDesc
  mFixedJoint = mJoint->isFixedJoint();
 }
 
-FixedJoint::~FixedJoint(void)
+FixedJoint::~FixedJoint()
 {
  mRigidBodies[0]->getScene()->getScene()->releaseJoint(*mJoint);
 }

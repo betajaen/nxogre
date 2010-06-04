@@ -43,7 +43,7 @@ Shape::Shape(NxShape* shape)
 {
 }
 
-Shape::~Shape(void)
+Shape::~Shape()
 {
 }
 
@@ -150,10 +150,10 @@ GroupsMask Shape::getGroupMask() const
 {
  NxGroupsMask mask = mShape->getGroupsMask();
  GroupsMask gm;
- gm.mBits0 = mask.bits0;
- gm.mBits1 = mask.bits1;
- gm.mBits2 = mask.bits2;
- gm.mBits3 = mask.bits3;
+ gm.bits0 = mask.bits0;
+ gm.bits1 = mask.bits1;
+ gm.bits2 = mask.bits2;
+ gm.bits3 = mask.bits3;
  return gm;
 }
 

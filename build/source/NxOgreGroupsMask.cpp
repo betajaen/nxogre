@@ -41,8 +41,8 @@ GroupsMask::GroupsMask()
  zero();
 }
 
-GroupsMask::GroupsMask(int bits0, int bits1, int bits2, int bits3)
-: mBits0(bits0), mBits1(bits1), mBits2(bits2), mBits3(bits3)
+GroupsMask::GroupsMask(int b0, int b1, int b2, int b3)
+: bits0(b0), bits1(b1), bits2(b2), bits3(b3)
 {
 }
 
@@ -52,16 +52,16 @@ GroupsMask::~GroupsMask()
 
 void GroupsMask::zero()
 {
- mBits0 = 0;
- mBits1 = 1;
- mBits2 = 2;
- mBits3 = 3;
+ bits0 = 0;
+ bits1 = 0;
+ bits2 = 0;
+ bits3 = 0;
 }
 
 String GroupsMask::to_s() const
 {
  std::stringstream s;
- s << mBits0 << ", " << mBits1 << ", " << mBits2 << ", " << mBits3;
+ s << bits0 << ", " << bits1 << ", " << bits2 << ", " << bits3;
  return s.str();
 }
 

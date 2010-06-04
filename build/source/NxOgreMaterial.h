@@ -46,9 +46,8 @@ namespace NxOgre
 class NxOgrePublicClass Material : public GenericBasedAllocatable
 {
   
-  friend class Scene;
-  // friend class Functions::ArrayFunctions<Material*>::Write;
-  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
+  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -83,21 +82,21 @@ class NxOgrePublicClass Material : public GenericBasedAllocatable
       return.
           **MaterialIdentifier** -- The material's identifier.
   */
-  MaterialIdentifier  getIdentifier(void) const;
+  MaterialIdentifier  getIdentifier() const;
   
   /*! function. getRestitution
       desc.
           Text
   */
-  Real  getRestitution(void) const;
+  Real  getRestitution() const;
   
   /** \brief Text
   */
-  Real  getStaticFriction(void) const;
+  Real  getStaticFriction() const;
   
   /** \brief Text
   */
-  Real  getDynamicFriction(void) const;
+  Real  getDynamicFriction() const;
   
   /** \brief Text
   */
@@ -111,6 +110,10 @@ class NxOgrePublicClass Material : public GenericBasedAllocatable
   */
   void  setDynamicFriction(Real);
   
+  /** \brief Text
+  */
+  void  setAll(Real restitution, Real staticFriction, Real dynamicFriction);
+
   protected: // Functions
   
   /** \internal
@@ -123,7 +126,7 @@ class NxOgrePublicClass Material : public GenericBasedAllocatable
   
   /** \internal
   */
-  ~Material(void);
+  ~Material();
   
   /** \internal
   */
@@ -131,7 +134,7 @@ class NxOgrePublicClass Material : public GenericBasedAllocatable
   
   /** \internal
   */
-  void  destroy(void);
+  void  destroy();
   
   protected: // Variables
   

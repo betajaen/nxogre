@@ -60,7 +60,7 @@ class NxOgrePublicClass CharacterController : public RigidBodyBasedAllocatable
       desc.
            Inheritance Constructor
   */
-  CharacterController(void);
+  CharacterController();
 
   /*! function. getNameHash
       desc.
@@ -76,7 +76,7 @@ class NxOgrePublicClass CharacterController : public RigidBodyBasedAllocatable
       return
            **Scene** * -- Scene that this CharacterController belongs to.
   */
-  Scene*  getScene(void); 
+  Scene*  getScene(); 
   
   /*! function. getNxActor
       desc.
@@ -87,7 +87,7 @@ class NxOgrePublicClass CharacterController : public RigidBodyBasedAllocatable
            **NxActor** * -- NxActor instance.
       !physx
   */
-  NxActor*  getNxActor(void);
+  NxActor*  getNxActor();
   
   /*! function. getNxActor
       desc.
@@ -98,7 +98,7 @@ class NxOgrePublicClass CharacterController : public RigidBodyBasedAllocatable
            **NxActor** * -- NxActor instance.
       !physx
   */
-  NxController*  getNxController(void);
+  NxController*  getNxController();
   
   /*! function. setContactCallback
       desc.
@@ -150,7 +150,7 @@ class NxOgrePublicClass CharacterController : public RigidBodyBasedAllocatable
            CharacterController destructor
       !virtual
   */
-  virtual  ~CharacterController(void);
+  virtual  ~CharacterController();
   
   /*! function. destroy
       desc.

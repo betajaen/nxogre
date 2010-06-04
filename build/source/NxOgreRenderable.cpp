@@ -41,11 +41,11 @@ Renderable::Renderable(int type) : mType(type)
 {
 }
 
-Renderable::~Renderable(void)
+Renderable::~Renderable()
 {
 }
 
-int Renderable::getType(void) const
+int Renderable::getType() const
 {
  return mType;
 }

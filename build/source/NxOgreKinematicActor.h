@@ -61,10 +61,8 @@ namespace NxOgre
 class NxOgrePublicClass KinematicActor : public RigidBody
 {
   
-  friend class Scene;
-  // // friend class Functions::ArrayFunctions<KinematicActor*>::Write;
-  
-  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
+  NXOGRE_GC_FRIEND_NEW4
+  NXOGRE_GC_FRIEND_DELETE
   
   public:
   
@@ -96,7 +94,7 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Retrieves the value set with setGroup(). 
   */
-                                      GroupIdentifier        getGroup(void) const;
+                                      GroupIdentifier        getGroup() const;
   
   /** \brief Assigns dynamic actors a dominance group identifier. 
   */
@@ -104,21 +102,21 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Retrieves the value set with setDominanceGroup(). 
   */
-                                      GroupIdentifier        getDominanceGroup(void) const;
+                                      GroupIdentifier        getDominanceGroup() const;
   
   /**  \brief Reset the user actor pair filtering state for this actor. This will cause filtering callbacks
        to be called again for any pairs involving this actor. Use this method when you wish to change
        the filtering policy of an actor that may already be in contact with other actors. 
   */
-                                      void                   resetPairFiltering(void); 
+                                      void                   resetPairFiltering(); 
   
   /** \brief Returns true if the actor is dynamic. 
   */
-                                      bool                   isDynamic(void) const; 
+                                      bool                   isDynamic() const; 
   
   /** \brief Computes the total kinetic (rotational and translational) energy of the object.
   */
-                                      Real                   computeKineticEnergy(void) const;
+                                      Real                   computeKineticEnergy() const;
   
   /** \brief Sets the solver iteration count for the body. 
   */
@@ -126,11 +124,11 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Retrieves the solver iteration count.
   */
-                                      unsigned int           getSolverIterationCount(void) const; 
+                                      unsigned int           getSolverIterationCount() const; 
   
   /** \brief Retrieves the force threshold for contact reports. 
   */
-                                      Real                   getContactReportThreshold(void) const;
+                                      Real                   getContactReportThreshold() const;
   
   /** \brief Sets the force threshold for contact reports. 
   */
@@ -138,7 +136,7 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Retrieves the actor's contact report flags. 
   */
-                                      unsigned int           getContactReportFlags(void) const;
+                                      unsigned int           getContactReportFlags() const;
   
   /** \brief Sets the actor's contact report flags.
   */
@@ -150,11 +148,11 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /// /** \brief  Retrieves the actor's simulation compartment, if any. 
   /// */
-  ///                   NxCompartment*         getCompartment(void) const;
+  ///                   NxCompartment*         getCompartment() const;
   
   /** \brief Retrieves the actor's force field material index, default index is 0. 
   */
-                                      unsigned short         getForceFieldMaterial(void) const; 
+                                      unsigned short         getForceFieldMaterial() const; 
   
   /** \brief Sets the actor's force field material index, default index is 0. 
   */
@@ -178,19 +176,19 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Retrieves the actors world space transform.
   */
-                                      Matrix44               getGlobalPose(void) const;
+                                      Matrix44               getGlobalPose() const;
   
   /** \brief Retrieves the actors world space position.
   */
-                                      Vec3                  getGlobalPosition(void) const;
+                                      Vec3                  getGlobalPosition() const;
   
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Matrix33               getGlobalOrientation(void) const;
+                                      Matrix33               getGlobalOrientation() const;
   
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Quat                  getGlobalOrientationQuat(void) const;
+                                      Quat                  getGlobalOrientationQuat() const;
   
   /** \brief The moveGlobal* calls serve to move kinematically controlled dynamic actors through the game world. 
   */
@@ -218,7 +216,7 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Returns the number of shapes assigned to the actor.
   */
-                                      unsigned int           getNbShapes(void) const;
+                                      unsigned int           getNbShapes() const;
   
   
   protected: // Functions
@@ -236,7 +234,7 @@ class NxOgrePublicClass KinematicActor : public RigidBody
 
   /** \internal Use Scene::destroyKinematicActor
   */
-  virtual                                    ~KinematicActor(void);
+  virtual                                    ~KinematicActor();
   
   /*! function. to_s
       desc.

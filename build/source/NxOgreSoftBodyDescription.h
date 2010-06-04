@@ -50,15 +50,15 @@ class NxOgrePublicClass SoftBodyDescription
   
   /** \brief SoftBodyDescription constructor, all it does is call RigidBodyDescription::reset.
   */
-                                               SoftBodyDescription(void);
+                                               SoftBodyDescription();
   
   /** \brief Resets everything to their default values, and pointers are set to NULL.
   */
-  void                                         reset(void);
+  void                                         reset();
   
   /** \brief Returns if the variables are in a valid range or not
   */
-                        bool                   valid(void);
+                        bool                   valid();
   
   /** \brief Optional name of the SoftBody
       \note  Apart from Actors (and probably derivations of), names are ignored.

@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,10 +21,10 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
-                                                                                       
+
 
 #include "NxOgreStable.h"
 #include "NxOgrePrototypeFunctions.h"
@@ -51,17 +51,17 @@
 
 #include "NxPhysics.h"
 
-                                                                                       
+
 
 namespace NxOgre
 {
 
-                                                                                       
 
-namespace Functions 
+
+namespace Functions
 {
 
-                                                                                       
+
 
 void PrototypeFunctions::JointDescriptionToNxJointDescription(const JointDescription& source, NxJointDesc& desc)
 {
@@ -90,14 +90,20 @@ void PrototypeFunctions::SphericalJointDescriptionToNxSphericalJointDescription(
  desc.maxTorque = source.mMaxTorque;
  desc.projectionDistance = source.mProjectionDistance;
  desc.projectionMode = NxJointProjectionMode(int(source.mProjectionMode));
- desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor;
+#if NxOgreMinimalPhysXVersion >= 281
+ desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor; // Not in 2.8.0
+#endif
  desc.swingAxis = source.mSwingAxis.as<NxVec3>();
  JointLimitDescriptionToNxJointLimitDesc(source.mSwingLimit, desc.swingLimit);
  SpringDescriptionToNxSpringDesc(source.mSwingSpring, desc.swingSpring);
  JointLimitDescriptionToNxJointLimitDesc(source.mTwistLimit.first, desc.twistLimit.low);
  JointLimitDescriptionToNxJointLimitDesc(source.mTwistLimit.second, desc.twistLimit.high);
  SpringDescriptionToNxSpringDesc(source.mTwistSpring, desc.twistSpring);
- desc.useAccelerationSpring = int(source.mSpringType);
+
+#if NxOgreMinimalPhysXVersion >= 281
+ desc.useAccelerationSpring = int(source.mSpringType); // Not in 2.8.0
+#endif
+
 }
 
 void PrototypeFunctions::RevoluteJointDescriptionToNxRevoluteJointDescription(const RevoluteJointDescription& source, NxRevoluteJointDesc& desc)
@@ -118,8 +124,10 @@ void PrototypeFunctions::RevoluteJointDescriptionToNxRevoluteJointDescription(co
  desc.projectionAngle = source.mProjectionAngle;
  desc.projectionDistance = source.mProjectionDistance;
  desc.projectionMode = NxJointProjectionMode(int(source.mProjectionMode));
- desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor;
- desc.useAccelerationSpring = int(source.mSpringType);
+#if NxOgreMinimalPhysXVersion >= 281
+ desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor; // Not in 2.8.0
+ desc.useAccelerationSpring = int(source.mSpringType); // Not in 2.8.0
+#endif
 }
 
 void PrototypeFunctions::SpringDescriptionToNxSpringDesc(const SpringDescription& source, NxSpringDesc& desc)
@@ -171,7 +179,9 @@ void PrototypeFunctions::D6JointDescriptionToNxD6JointDescription(const D6JointD
  desc.slerpDrive.driveType = source.mSlerpDrive.mDriveType;
  desc.slerpDrive.forceLimit = source.mSlerpDrive.mForceLimit;
  desc.slerpDrive.spring = source.mSlerpDrive.mSpring;
- desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor;
+#if NxOgreMinimalPhysXVersion >= 281
+ desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor; // Not in 2.8.0
+#endif
 
  desc.swing1Limit.damping = source.mSwing1Limit.mDamping;
  desc.swing1Limit.restitution = source.mSwing1Limit.mRestitution;
@@ -206,8 +216,9 @@ void PrototypeFunctions::D6JointDescriptionToNxD6JointDescription(const D6JointD
  desc.twistLimit.high.value = source.mTwistLimit.second.mValue;
 
  desc.twistMotion = NxD6JointMotion(int(source.mTwistMotion));
- desc.useAccelerationSpring = int(source.mSpringType);
-
+#if NxOgreMinimalPhysXVersion >= 281
+ desc.useAccelerationSpring = int(source.mSpringType); // Not in 2.8.0
+#endif
  desc.xDrive.damping = source.mXDrive.mDamping;
  desc.xDrive.driveType = source.mXDrive.mDriveType;
  desc.xDrive.forceLimit = source.mXDrive.mForceLimit;
@@ -236,7 +247,12 @@ void PrototypeFunctions::ClothDescriptionToNxClothDesc(const ClothDescription& s
  desc.clothMesh = source.mMesh->getAsCloth();
  desc.collisionGroup = source.mCollisionGroup;
  desc.collisionResponseCoefficient = source.mCollisionResponseCoefficient;
- desc.compartment = 0;
+
+ if (source.mCompartment != 0)
+  desc.compartment = source.mCompartment->getCompartment();
+ else
+  desc.compartment = 0;
+ 
  desc.dampingCoefficient = source.mDampingCoefficient;
  desc.density = source.mDensity;
  desc.externalAcceleration = source.mExternalAcceleration.as<NxVec3>();
@@ -262,7 +278,7 @@ void PrototypeFunctions::ClothDescriptionToNxClothDesc(const ClothDescription& s
  desc.validBounds.min = source.mValidBounds.min.as<NxVec3>();
  desc.validBounds.max = source.mValidBounds.max.as<NxVec3>();
  desc.wakeUpCounter = source.mWakeUpCounter;
- desc.windAcceleration = source.mWindAcceleration.as<NxVec3>(); 
+ desc.windAcceleration = source.mWindAcceleration.as<NxVec3>();
 }
 
 
@@ -298,7 +314,7 @@ void PrototypeFunctions::SoftBodyDescriptionToNxSoftBodyDesc(const SoftBodyDescr
  desc.validBounds.max = source.mValidBounds.max.as<NxVec3>();
  desc.volumeStiffness = source.mVolumeStiffness;
  desc.wakeUpCounter = source.mWakeUpCounter;
- 
+
 }
 
 void PrototypeFunctions::ForceFieldLinearKernelDescriptionToNxForceFieldLinearKernelDesc(const ForceFieldLinearKernelDescription& desc, NxForceFieldLinearKernelDesc& description)
@@ -314,12 +330,12 @@ void PrototypeFunctions::ForceFieldLinearKernelDescriptionToNxForceFieldLinearKe
  description.velocityTarget = desc.mVelocityTarget.as<NxVec3>();
 }
 
-                                                                                       
+
 
 }
 
-                                                                                       
+
 
 } // namespace NxOgre
 
-                                                                                       
+

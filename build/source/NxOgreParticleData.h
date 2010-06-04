@@ -63,31 +63,31 @@ class NxOgrePublicClass ParticleData : public ResourceAllocatable
   
   /** \brief
   */
-  Buffer<Vec3>       mParticlePositions;
+  buffer<Vec3>       mParticlePositions;
   
   /** \brief
   */
-  Buffer<Vec3>       mParticleVelocities;
+  buffer<Vec3>       mParticleVelocities;
   
   /** \brief
   */
-  Buffer<Vec3>       mParticleLifetimes;
+  buffer<Vec3>       mParticleLifetimes;
     
   /** \brief
   */
-  Buffer<Vec3>       mParticleDensities;
+  buffer<Vec3>       mParticleDensities;
   
   /** \brief
   */
-  Buffer<unsigned int>     mParticleIDs;
+  buffer<unsigned int>     mParticleIDs;
   
   /** \brief
   */
-  Buffer<unsigned int>     mParticleFlags;
+  buffer<unsigned int>     mParticleFlags;
   
   /** \brief
   */
-  Buffer<Vec3>       mParticleCollisionNormals;
+  buffer<Vec3>       mParticleCollisionNormals;
   
 }; // class ParticleData
 

@@ -52,7 +52,9 @@ class NxOgrePublicClass PlaneGeometry : public Shape
   
   friend class RigidBody;  // for destroy();
   friend Shape* Functions::ShapeFunctions::createPlane(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  
+  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -82,7 +84,7 @@ class NxOgrePublicClass PlaneGeometry : public Shape
   
   /* destructor. PlaneGeometry
   */
- ~PlaneGeometry(void);
+ ~PlaneGeometry();
   
   /** \internal
   */

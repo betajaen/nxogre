@@ -46,9 +46,6 @@ namespace NxOgre
 class NxOgrePublicClass ForceField
 {
 
-  friend class Scene;
-  template<class T> friend inline void Functions::safe_delete(T*);
-
   public:
 
   /*! function. create
@@ -104,7 +101,7 @@ class NxOgrePublicClass ForceField
 
   /** \internal Use Scene::destroyActor
   */
-  virtual ~ForceField(void);
+  virtual ~ForceField();
   
   /*! function. destroy
       desc.

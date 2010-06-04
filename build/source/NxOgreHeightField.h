@@ -33,7 +33,6 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
-#include "NxOgreHeightFieldSample.h"
 
                                                                                        
 
@@ -47,21 +46,13 @@ namespace NxOgre
 class NxOgrePublicClass HeightField : public ResourceAllocatable
 {
   
-  friend class ManualHeightField;
+  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_DELETE
+  
+  friend class HeightFieldData;
+  friend class HeightFieldManager;
   
   public: // Functions
-  
-  /** \brief HeightField constructor
-  */
-                                              HeightField();
-  
-  /** \brief HeightField constructor, equilvent of calling load(uri);
-  */
-                                              HeightField(Resource*);
-  
-  /** \brief Text
-  */
-                                             ~HeightField(void);
   
   /** \brief Set the name of this HeightField
   */
@@ -75,46 +66,83 @@ class NxOgrePublicClass HeightField : public ResourceAllocatable
   */
   String                                      getName() const;
   
-  /** \brief Get the name hash of this heightfield.
+  /** \brief Get the name of this heightfield.
   */
   StringHash                                  getNameHash() const;
   
   /** \brief Is the shape loaded?
   */
-  bool                                        isLoaded(void) const;
+  bool                                        isLoaded() const;
   
   /** \brief Is a shape(s) using this heightfield?
   */
-  bool                                        isUsed(void) const;
+  bool                                        isUsed() const;
+
+  /*! function. getNbRows
+      desc.
+          Get number of rows.
+  */
+  unsigned int                                getNbRows() const;
+
+  /*! function. getNbColumns
+      desc.
+          Get number of columns.
+  */
+  unsigned int                                getNbColumns() const;
+
+  /** \brief Get's the convex heightfield, or null
+  */
+  NxHeightField*                              getHeightField();
   
-  /** \brief Load a heightfield.
+  /** \brief Save the heightfield information into HeightFieldData
+      \note  You should NXOGRE_DELETE_NXOGRE the HeightFieldData pointer after use.
+  */
+  HeightFieldData*                            getHeightFieldData();
+  
+  /*! function. inspect
+      desc.
+          Give a description of what this heightfield is.
+  */
+  String                                      inspect() const;
+  
+  protected: // Variables
+  
+  NxHeightField*                              mHeightField;
+  
+  /** \brief Name of the heightfield
+  */
+  String                                      mName;
+  
+  /** \brief Hash of the name of the heightfield.
+  */
+  StringHash                                  mNameHash;
+
+  protected:
+  
+  /** \brief HeightField constructor
+  */
+                                              HeightField();
+  
+  /** \brief HeightField constructor, equilvent of calling load(uri);
+  */
+                                              HeightField(Resource*);
+  
+  /** \brief HeightField constructor, equilvent of calling load(uri);
+  */
+                                              HeightField(NxHeightField*);
+  
+  /** \brief HeightField destructor.
+  */
+                                             ~HeightField();
+    
+  /** \brief Load a heightfield from a resource, and take on that heightfield.
   */
   void                                        load(Resource*);
   
-  /** \brief Get the NxHeightfield pointer.
+  /** \brief Unload the heightfield.
   */
-  NxHeightField*                              getHeightField(void);
+  void                                        unload();
 
-  /** \brief
-  */
-  unsigned int getNbRows() const;
-
-  /** \brief
-  */
-  unsigned int getNbColumns() const;
-
- protected:
-  
-  /** \brief Protected Constructor, for use with ManualHeightField
-  */
-                                              HeightField(const String& name, NxHeightField*);
-
-  NxHeightField*                              mHeightField;
-  
-  String                                      mName;
-  
-  StringHash                                  mNameHash;
-  
 }; // class HeightField
 
                                                                                        

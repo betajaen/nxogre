@@ -32,6 +32,9 @@
                                                                                        
 
 #include "NxOgreStable.h"
+
+#if NxOgreHasFluids == 1
+
 #include "NxOgreCommon.h"
 #include "NxOgreTimeListener.h"
 #include "NxOgreFluidEmitter.h"
@@ -83,11 +86,11 @@ class NxOgrePublicClass Fluid : public NonRigidBodyBasedAllocatable, public Time
   
  public:
   
-  friend class Scene;
-  template<class T> friend inline void Functions::safe_delete(T*);
+  NXOGRE_GC_FRIEND_NEW4
+  NXOGRE_GC_FRIEND_DELETE
   
-  typedef ptr_multihashmap<FluidEmitter>           FluidEmitters;
-  typedef ptr_multihashmap_iterator<FluidEmitter>  FluidEmitterIterator;
+  typedef hashmap<FluidEmitter*>           FluidEmitters;
+  typedef hashmap_iterator<FluidEmitter*>  FluidEmitterIterator;
   
   /*! function. getRenderable
       desc.
@@ -161,7 +164,11 @@ class NxOgrePublicClass Fluid : public NonRigidBodyBasedAllocatable, public Time
   
   /** \brief
   */
-  ParticleData*  getParticleData();
+  unsigned int getNbParticles() const;
+  
+//  /** \brief
+//  */
+//  ParticleData*  getParticleData();
   
   /** \brief
   */
@@ -181,7 +188,7 @@ class NxOgrePublicClass Fluid : public NonRigidBodyBasedAllocatable, public Time
   
   /** \brief
   */
-  Buffer<FluidPacket*>  getFluidPacketData() const;
+  buffer<FluidPacket*>  getFluidPacketData() const;
   
   /** \brief
   */
@@ -475,4 +482,5 @@ class NxOgrePublicClass Fluid : public NonRigidBodyBasedAllocatable, public Time
 
                                                                                        
 
+#endif
 #endif

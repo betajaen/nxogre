@@ -44,11 +44,13 @@ Resource::Resource(const Path& path, ResourceProtocol* protocol, Enums::Resource
   mProtocol(protocol), 
   mStatus(Enums::ResourceStatus_Closed),
   mDirectionality(Enums::ResourceDirectionality_Unknown),
-  mAccess(access)
+  mAccess(access),
+  mNbReadBytes(0),
+  mNbWroteBytes(0)
 {
 }
 
-Resource::~Resource(void)
+Resource::~Resource()
 {
 }
 
@@ -64,35 +66,35 @@ Path Resource::getPath() const
 
 bool Resource::hasTouched() const
 {
- return mNbWriteOperations != 0;
+ return mNbWroteBytes != 0;
 }
 
-unsigned int Resource::getNbReadOperations() const
+unsigned int Resource::getNbBytesRead() const
 {
- return mNbReadOperations;
+ return mNbReadBytes;
 }
 
-unsigned int Resource::getNbWriteOperations() const
+unsigned int Resource::getNbBytesWrote() const
 {
- return mNbWriteOperations;
+ return mNbWroteBytes;
 }
 
-Enums::ResourceStatus Resource::getStatus(void) const
+Enums::ResourceStatus Resource::getStatus() const
 {
  return Enums::ResourceStatus_Unknown;
 }
 
-Enums::ResourceDirectionality Resource::getDirectionality(void) const
+Enums::ResourceDirectionality Resource::getDirectionality() const
 {
  return Enums::ResourceDirectionality_Unknown;
 }
 
-Enums::ResourceAccess Resource::getAccess(void) const
+Enums::ResourceAccess Resource::getAccess() const
 {
  return Enums::ResourceAccess_NoAccess;
 }
 
-size_t Resource::getSize(void) const
+size_t Resource::getSize() const
 {
  return 0;
 }
@@ -102,27 +104,27 @@ bool Resource::seek(size_t)
  return false;
 }
 
-bool Resource::seekBeginning(void)
+bool Resource::seekBeginning()
 {
  return false;
 }
 
-bool Resource::seekEnd(void)
+bool Resource::seekEnd()
 {
  return false;
 }
 
-bool Resource::atBeginning(void) const
+bool Resource::atBeginning() const
 {
  return false;
 }
 
-bool Resource::atEnd(void) const
+bool Resource::atEnd() const
 {
  return false;
 }
 
-size_t Resource::at(void) const
+size_t Resource::at() const
 {
  return 0;
 }
@@ -132,7 +134,7 @@ bool Resource::write(const void* src, size_t src_size)
  return false;
 }
 
-bool Resource::writeNull(void)
+bool Resource::writeNull()
 {
  return false;
 }
@@ -252,7 +254,7 @@ bool Resource::writeString(const String&)
  return false;
 }
 
-bool Resource::readBool(void)
+bool Resource::readBool()
 {
  return false;
 }
@@ -261,7 +263,7 @@ void Resource::readBoolArray(bool*, size_t length)
 {
 }
 
-unsigned char Resource::readUChar(void)
+unsigned char Resource::readUChar()
 {
  return false;
 }
@@ -270,7 +272,7 @@ void Resource::readUCharArray(unsigned char*, size_t length)
 {
 }
 
-char Resource::readChar(void)
+char Resource::readChar()
 {
  return false;
 }
@@ -279,7 +281,7 @@ void Resource::readCharArray(char*, size_t length)
 {
 }
 
-unsigned short Resource::readUShort(void)
+unsigned short Resource::readUShort()
 {
  return false;
 }
@@ -288,7 +290,7 @@ void Resource::readUShortArray(unsigned short*, size_t length)
 {
 }
 
-short Resource::readShort(void)
+short Resource::readShort()
 {
  return false;
 }
@@ -297,7 +299,7 @@ void Resource::readShortArray(short*, size_t length)
 {
 }
 
-unsigned int Resource::readUInt(void)
+unsigned int Resource::readUInt()
 {
  return false;
 }
@@ -306,7 +308,7 @@ void Resource::readUIntArray(unsigned int*, size_t length)
 {
 }
 
-int Resource::readInt(void)
+int Resource::readInt()
 {
  return false;
 }
@@ -315,7 +317,7 @@ void Resource::readIntArray(int*, size_t length)
 {
 }
 
-float Resource::readFloat(void)
+float Resource::readFloat()
 {
  return false;
 }
@@ -324,7 +326,7 @@ void Resource::readFloatArray(float*, size_t length)
 {
 }
 
-double Resource::readDouble(void)
+double Resource::readDouble()
 {
  return false;
 }
@@ -333,7 +335,7 @@ void Resource::readDouble(double*, size_t length)
 {
 }
 
-Real Resource::readReal(void)
+Real Resource::readReal()
 {
  return false;
 }
@@ -342,7 +344,7 @@ void Resource::readRealArray(NxOgreRealType*, size_t length)
 {
 }
 
-long Resource::readLong(void)
+long Resource::readLong()
 {
  return false;
 }

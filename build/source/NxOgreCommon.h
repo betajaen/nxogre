@@ -32,6 +32,8 @@
                                                                                        
 
 #include "NxOgreClassPrototypes.h"
+#include "NxOgreType2Id.h"
+#include "NxOgreGC.h"
 #include "NxOgreAllocator.h"
 #include "NxOgreAllocatables.h"
 #include "NxOgrePhysXPrototypes.h"
@@ -46,13 +48,16 @@
 #include "NxOgreSharedPointer.h"
 #include "NxOgreSingleton.h"
 #include "NxOgreVector.h"
+#include "NxOgreVectorIterator.h"
 #include "NxOgreMap.h"
-#include "NxOgrePtrVector.h"
-#include "NxOgrePtrHashmap.h"
-#include "NxOgrePtrMultiHashmap.h"
-#include "NxOgreRefVector.h"
+#include "NxOgreMapIterator.h"
+#include "NxOgreMultimap.h"
+#include "NxOgreMultimapIterator.h"
+#include "NxOgreHashmap.h"
+#include "NxOgreHashmapIterator.h"
+#include "NxOgreMultihashmap.h"
+#include "NxOgreMultihashmapIterator.h"
 #include "NxOgreBuffer.h"
-#include "NxOgreCircularBuffer.h"
 #include "NxOgreMath.h"
 #include "NxOgreTuple.h"
 #include "NxOgreRadian.h"
@@ -70,6 +75,7 @@
 #include "NxOgreEntityReport.h"
 #include "NxOgreTimeStep.h"
 #include "NxOgreTimer.h"
+#include "NxOgrePhysXBuffer.h"
 
                                                                                        
 
@@ -130,11 +136,11 @@ typedef NxShape** RaycastCache;
 
 /** \brief Buffer of SweepQueryHits
 */
-typedef Buffer<SweepQueryHit> SweepQueryHits;
+typedef buffer<SweepQueryHit> SweepQueryHits;
 
 /*
 */
-typedef Buffer<Shape*> OverlapQueryHits;
+typedef buffer<Shape*> OverlapQueryHits;
 
 /* 
 */

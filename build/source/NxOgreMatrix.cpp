@@ -30,6 +30,7 @@
 #include "NxOgreMatrix.h"
 #include "NxOgreVec3.h"
 #include "NxOgreQuat.h"
+#include "NxOgreMath.h"
 
                                                                                        
 
@@ -270,6 +271,33 @@ void Matrix44::set(const Real mem[Rows][Cols])
 void Matrix44::set(const Quat& quat)
 {
  set(quat.w, quat.x, quat.y, quat.z);
+}
+
+void Matrix44::set(const Radian& angle, Enums::Axis axis)
+{
+ float Cos = NxOgre::Math::cos(angle.rad());
+ float Sin = NxOgre::Math::sin(angle.rad());
+ 
+ rotationIdentity();
+ 
+ if (axis == Enums::X)
+ {
+  m.m[1][1] = m.m[2][2] = Cos;
+  m.m[1][2] = -Sin;
+  m.m[1][2] = Sin;
+ }
+ else if (axis == Enums::Y)
+ {
+  m.m[0][0] = m.m[2][2] = Cos;
+  m.m[0][2] = -Sin;
+  m.m[2][0] = Sin;
+ }
+ else if (axis == Enums::Z)
+ {
+  m.m[0][0] = m.m[1][1] = Cos;
+  m.m[0][1] = -Sin;
+  m.m[1][0] = Sin;
+ }
 }
 
 // This function was adopted from the OGRE3D Library, Matrix3 class from http://www.ogre3d.org

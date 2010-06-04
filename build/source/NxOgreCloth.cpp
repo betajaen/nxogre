@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,10 +21,10 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
-                                                                                       
+
 
 #include "NxOgreStable.h"
 #include "NxOgreCloth.h"
@@ -33,7 +33,7 @@
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreScene.h"
 #include "NxOgreReason.h"
-#include "NxOgrePhysXMeshData.h"
+#include "NxOgreMeshRenderable.h"
 #include "NxOgreRenderable.h"
 #include "NxOgreTimeController.h"
 #include "NxOgreShape.h"
@@ -43,67 +43,70 @@
 
 #include "NxPhysics.h"
 
-                                                                                       
+
 
 namespace NxOgre
 {
 
-                                                                                       
+
 
 Cloth::Cloth(const ClothDescription& description, Renderable* renderable, Enums::Priority priority, Scene* scene)
 : mName(description.mName),
   mMesh(description.mMesh),
   mScene(scene),
-  mMeshData(0),
+  mMeshRenderable(0),
   mRenderable(renderable),
   mPriority(priority),
   mDrawnAtLeastOnce(false)
 {
 
+ mNameHash = Strings::hash(mName);
+
  NxClothDesc desc;
  ::NxOgre::Functions::PrototypeFunctions::ClothDescriptionToNxClothDesc(description, desc);
+ 
+ mMeshRenderable = GC::safe_new2<MeshRenderable>(mMesh, desc.tearFactor, NXOGRE_GC_THIS);
+ mMeshRenderable->getPhysXMeshData(desc.meshData);
 
- mMeshData = NXOGRE_NEW_NXOGRE(PhysXMeshData)(mMesh);
- 
- desc.meshData = mMeshData->getMeshData();
- 
  if (desc.isValid() == false)
  {
   NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(desc), Classes::_Cloth);
   return;
  }
- 
+
  mCloth = mScene->getScene()->createCloth(desc);
- TimeController::getSingleton()->addTimeListener(this, mPriority);
- 
+// TimeController::getSingleton()->addTimeListener(this, mPriority);
+ mScene->addRenderListener(this, mPriority);
+
 }
 
 Cloth::~Cloth()
 {
- TimeController::getSingleton()->removeTimeListener(this, mPriority);
- NXOGRE_DELETE_NXOGRE(mMeshData);
+ //TimeController::getSingleton()->removeTimeListener(this, mPriority);
+ mScene->removeRenderListener(this, mPriority);
+ GC::safe_delete(mMeshRenderable, NXOGRE_GC_THIS);
 }
 
 
 bool Cloth::advance(float, const Enums::Priority&)
 {
- 
- if (mRenderable && mMeshData)
+
+ if (mRenderable && mMeshRenderable)
  {
   NxBounds3 bounds;
   mCloth->getWorldBounds(bounds);
-  
+
   /*if (mDrawnAtLeastOnce)
   {
-   mRenderable->drawClothFast(mMeshData, Bounds3::from(bounds));
+   mRenderable->drawClothFast(mMeshRenderable, Bounds3::from(bounds));
   }
   else
   {*/
-   mRenderable->drawCloth(mMeshData, mMesh->getTextureCoords(), Bounds3::from(bounds));
+   mRenderable->drawCloth(mMeshRenderable, Bounds3::from(bounds));
   // mDrawnAtLeastOnce = true;
   //}
  }
- 
+
  return true;
 }
 
@@ -122,14 +125,19 @@ NxCloth*  Cloth::getPhysXCloth()
  return mCloth;
 }
 
-PhysXMeshData*  Cloth::getPhysXMeshData()
+MeshRenderable*  Cloth::getMeshRenderable()
 {
- return mMeshData;
+ return mMeshRenderable;
 }
 
-String Cloth::getName()
+String Cloth::getName() const
 {
  return mName;
+}
+
+StringHash Cloth::getNameHash() const
+{
+ return mNameHash;
 }
 
 void Cloth::setBendingStiffness(Real stiffness)
@@ -284,7 +292,7 @@ Shape* Cloth::getVertexAttachmentShape(unsigned int vertexId) const
  NxShape* nx_shape = mCloth->getVertexAttachmentShape(vertexId);
  if (nx_shape == 0)
   return 0;
- 
+
  return pointer_cast(nx_shape->userData)->get<Shape>();
 }
 
@@ -361,7 +369,7 @@ void Cloth::setPosition(const Vec3& position, unsigned int vertexId)
  mCloth->setPosition(position.as<NxVec3>(), vertexId);
 }
 
-void Cloth::setPositions(Buffer<Vec3>& positions)
+void Cloth::setPositions(buffer<Vec3>& positions)
 {
  mCloth->setPositions(positions.first(), sizeof(Vec3));
 }
@@ -371,7 +379,7 @@ Vec3 Cloth::getPosition(unsigned int vertexId)
  return Vec3(mCloth->getPosition(vertexId));
 }
 
-void Cloth::getPositions(Buffer<Vec3>& positions)
+void Cloth::getPositions(buffer<Vec3>& positions)
 {
  mCloth->getPositions(positions.first(), sizeof(Vec3));
 }
@@ -381,7 +389,7 @@ void Cloth::setVelocity(const Vec3& v, unsigned int vertexId)
  mCloth->setVelocity(v.as<NxVec3>(), vertexId);
 }
 
-void Cloth::setVelocities(Buffer<Vec3>& v)
+void Cloth::setVelocities(buffer<Vec3>& v)
 {
  mCloth->setVelocities(v.first(), sizeof(Vec3));
 }
@@ -391,7 +399,7 @@ Vec3 Cloth::getVelocity(unsigned int vertexId)
  return Vec3(mCloth->getVelocity(vertexId));
 }
 
-void Cloth::getVelocities(Buffer<Vec3>& v)
+void Cloth::getVelocities(buffer<Vec3>& v)
 {
  mCloth->getVelocities(v.first(), sizeof(Vec3));
 }
@@ -561,8 +569,8 @@ String Cloth::to_s() const
  return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Cloth") ));
 }
 
-                                                                                       
+
 
 } // namespace NxOgre
 
-                                                                                       
+

@@ -57,9 +57,9 @@ namespace NxOgre
 class NxOgrePublicClass Convex : public Shape
 {
   
-  friend class RigidBody;  // for destroy();
-  friend Shape* Functions::ShapeFunctions::createConvex(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  
+  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
 
@@ -81,7 +81,7 @@ class NxOgrePublicClass Convex : public Shape
       return.
            **Mesh** * -- The mesh shared by the Convex.
   */
-  Mesh*  getMesh(void);
+  Mesh*  getMesh();
   
   /*! function. saveToDescription
       desc.
@@ -103,7 +103,7 @@ class NxOgrePublicClass Convex : public Shape
   
   /*
   */
- ~Convex(void);
+ ~Convex();
   
   protected:
   

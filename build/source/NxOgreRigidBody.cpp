@@ -106,7 +106,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  
  // RIGIDBODY_SINGLE_SHAPE_DESCRIPTION_PASS_POST
  //////////////////////////////////////////////////
- NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, shape_description);
+ GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(shape_description, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 
  // RIGIDBODY_CREATE_SHAPES_PASS
@@ -119,7 +119,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
@@ -165,7 +165,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
  {
   NxShapeDesc* ptr = actor_description.shapes[i];
-  NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, ptr);
+  GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(ptr, NXOGRE_GC_THIS);
  }
  //////////////////////////////////////////////////
 
@@ -180,7 +180,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
@@ -221,7 +221,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  
  // RIGIDBODY_SINGLE_SHAPE_DESCRIPTION_PASS_POST
  //////////////////////////////////////////////////
- NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, shape_description);
+ GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(shape_description, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
  
  // RIGIDBODY_CREATE_SHAPES_PASS
@@ -234,7 +234,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
@@ -279,7 +279,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
  {
   NxShapeDesc* ptr = actor_description.shapes[i];
-  NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, ptr);
+  GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(ptr, NXOGRE_GC_THIS);
  }
  //////////////////////////////////////////////////
  
@@ -293,7 +293,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
@@ -336,7 +336,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  
  // RIGIDBODY_SINGLE_SHAPE_DESCRIPTION_PASS_POST
  //////////////////////////////////////////////////
- NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, shape_description);
+ GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(shape_description, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
  
  // RIGIDBODY_CREATE_SHAPES_PASS
@@ -349,7 +349,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
@@ -399,7 +399,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
  {
   NxShapeDesc* ptr = actor_description.shapes[i];
-  NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, ptr);
+  GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(ptr, NXOGRE_GC_THIS);
  }
  //////////////////////////////////////////////////
  
@@ -413,7 +413,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
@@ -453,7 +453,7 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  
  // RIGIDBODY_SINGLE_SHAPE_DESCRIPTION_PASS_POST
  //////////////////////////////////////////////////
- NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, shape_description);
+ GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(shape_description, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
  
  // RIGIDBODY_CREATE_SHAPES_PASS
@@ -466,7 +466,7 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
@@ -513,7 +513,7 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  for (unsigned int i=0; i < actor_description.shapes.size(); i++)
  {
   NxShapeDesc* ptr = actor_description.shapes[i];
-  NXOGRE_DELETE_PHYSX(NxShapeDesc, PhysXClassAllocator, ptr);
+  GC::safe_allocated_delete<NxShapeDesc, PhysXClassAllocator>(ptr, NXOGRE_GC_THIS);
  }
  //////////////////////////////////////////////////
  
@@ -527,12 +527,12 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  
  // RIGIDBODY USERDATA PASS
  //////////////////////////////////////////////////
- mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
  //////////////////////////////////////////////////
 }
 
 
-void RigidBody::destroy(void)
+void RigidBody::destroy()
 {
  
  if (mActor == 0)
@@ -540,12 +540,12 @@ void RigidBody::destroy(void)
  
  
  PhysXPointer* ptr = pointer_cast(mActor->userData);
- NXOGRE_DELETE_NXOGRE(ptr);
+ GC::safe_delete(ptr, NXOGRE_GC_THIS);
  
- for (CollisionModel::iterator_t shape = mShapes.iterator(); shape != shape.end(); shape++)
+ for (vector_iterator<Shape*> shape = mShapes.elements(); shape != shape.end(); shape++)
  {
   PhysXPointer* shape_ptr = pointer_cast(shape->getAbstractShape()->userData);
-  NXOGRE_DELETE_NXOGRE(shape_ptr);
+  GC::safe_delete(shape_ptr, NXOGRE_GC_THIS);
  }
  
  NxScene& scene = mActor->getScene();
@@ -553,7 +553,7 @@ void RigidBody::destroy(void)
  
 }
 
-bool RigidBody::isDynamic(void) const
+bool RigidBody::isDynamic() const
 {
  return mActor->isDynamic();
 }
@@ -573,12 +573,12 @@ bool RigidBody::hasFlag(RigidbodyFlags::Flags flag) const
  return mActor->readBodyFlag((NxBodyFlag) (int) flag);
 }
 
-NxActor* RigidBody::getNxActor(void)
+NxActor* RigidBody::getNxActor()
 {
  return mActor;
 }
 
-Scene* RigidBody::getScene(void)
+Scene* RigidBody::getScene()
 {
  return mScene;
 }
@@ -600,7 +600,7 @@ StringHash RigidBody::getNameHash() const
 
 CollisionModelIterator RigidBody::getShapes()
 {
- return mShapes.const_iterator();
+ return mShapes.elements();
 }
 
 String RigidBody::to_s() const

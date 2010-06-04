@@ -36,12 +36,12 @@ namespace NxOgre
 
                                                                                        
 
-JointLimitDescription::JointLimitDescription(void)
+JointLimitDescription::JointLimitDescription()
 {
  reset();
 }
 
-void JointLimitDescription::reset(void)
+void JointLimitDescription::reset()
 {
  mValue = 0;
  mRestitution = 0;

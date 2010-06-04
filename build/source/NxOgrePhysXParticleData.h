@@ -55,7 +55,7 @@ class NxOgrePublicClass PhysXParticleData : public ResourceAllocatable
   
   /** \brief Text
   */
- ~PhysXParticleData(void);
+ ~PhysXParticleData();
   
   /** \internal Do not use in User App.
   */
@@ -63,7 +63,7 @@ class NxOgrePublicClass PhysXParticleData : public ResourceAllocatable
   
   /** \internal Do not use in User App.
   */
-  NxParticleData           getParticleData();
+  void  getParticleData(NxParticleData&);
   
   /** \brief
   */
@@ -101,19 +101,19 @@ class NxOgrePublicClass PhysXParticleData : public ResourceAllocatable
   
   unsigned int*            mNbParticles;
   
-  Buffer<float>            mPositions;
+  buffer<float>            mPositions;
   
-  Buffer<float>            mVelocities;
+  buffer<float>            mVelocities;
   
-  Buffer<float>            mDensities;
+  buffer<float>            mDensities;
   
-  Buffer<float>            mLives;
+  buffer<float>            mLives;
   
-  Buffer<unsigned int>     mIds;
+  buffer<unsigned int>     mIds;
   
-  Buffer<unsigned int>     mFlags;
+  buffer<unsigned int>     mFlags;
   
-  Buffer<float>            mNormals;
+  buffer<float>            mNormals;
   
 }; // class PhysXParticleData
 

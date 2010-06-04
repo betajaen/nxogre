@@ -47,8 +47,8 @@ namespace NxOgre
 class NxOgrePublicClass SoftBody : public NonRigidBodyBasedAllocatable, public TimeListener
 {
   
-  friend class Scene;
-  template<class T> friend inline void Functions::safe_delete(T*);
+  NXOGRE_GC_FRIEND_NEW4
+  NXOGRE_GC_FRIEND_DELETE
   
  public:
   
@@ -66,7 +66,7 @@ class NxOgrePublicClass SoftBody : public NonRigidBodyBasedAllocatable, public T
 
     /** \internal
     */
-    PhysXMeshData*                              getPhysXMeshData();
+    MeshRenderable*                             getMeshRenderable();
 
     /** \brief Get the cloth's name.
     */
@@ -80,7 +80,7 @@ class NxOgrePublicClass SoftBody : public NonRigidBodyBasedAllocatable, public T
   
   /** \brief Use Scene::destroySoftBody
   */
-  virtual                                        ~SoftBody(void);
+  virtual                                        ~SoftBody();
   
   /** \brief
   */
@@ -110,7 +110,7 @@ class NxOgrePublicClass SoftBody : public NonRigidBodyBasedAllocatable, public T
 
   /** \brief
   */
-  PhysXMeshData*                                mMeshData;
+  MeshRenderable*                               mMeshData;
 
   /** \brief Possible name of the mesh.
   */

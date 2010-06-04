@@ -80,37 +80,41 @@ namespace NxOgre
     desc.
         Scene's hold RigidBodies, Cloths, Fluids and so on. There can be upto 32 of them.
 */
-class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
+class NxOgrePublicClass Scene : public BigClassAllocatable
 {
   
   friend class World;
-  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
+  friend class PhysXCallback;
+  template<class T> friend inline void ::NxOgre::GC::safe_delete(T*,const char*,int);
   
   public: // Functions
   
-  typedef  ptr_multihashmap<Actor>                            Actors;
-  typedef  ptr_multihashmap<Actor>::iterator_t                ActorIterator;
-  typedef  ptr_multihashmap<SceneGeometry>                    SceneGeometries;
-  typedef  ptr_multihashmap<SceneGeometry>::iterator_t        SceneGeometryIterator;
-  typedef  ptr_multihashmap<KinematicActor>                   KinematicActors;
-  typedef  ptr_multihashmap<KinematicActor>::iterator_t       KinematicActorIterator;
-  typedef  ptr_multihashmap<Volume>                           Volumes;
-  typedef  ptr_multihashmap<Volume>::iterator_t               VolumeIterator;
-  typedef  ptr_multihashmap<Fluid>                            Fluids;
-  typedef  ptr_multihashmap<Fluid>::iterator_t                FluidIterator;
-  typedef  ptr_multihashmap<Material>                         Materials;
-  typedef  ptr_multihashmap<Material>::iterator_t             MaterialIterator;
-  typedef  ptr_multihashmap<ForceFieldKernel>                 ForceFieldKernels;
-  typedef  ptr_multihashmap<ForceFieldKernel>::iterator_t     ForceFieldKernelIterator;
-  typedef  ptr_multihashmap<ForceField>                       ForceFields;
-  typedef  ptr_multihashmap<ForceField>::iterator_t           ForceFieldIterator;
-  typedef  ptr_map<unsigned short, Material>                  IndexedMaterials;
-  typedef  vector<Machine*>                                   Machines;
-  typedef  vector_iterator<Machine*>                          MachineIterator;
+  typedef  multihashmap<Actor*, GC::HasGarbageCollection>                       Actors;
+  typedef  multihashmap_iterator<Actor*>                                        ActorIterator;
+  typedef  multihashmap<SceneGeometry*, GC::HasGarbageCollection>               SceneGeometries;
+  typedef  multihashmap_iterator<SceneGeometry*>                                SceneGeometryIterator;
+  typedef  multihashmap<KinematicActor*, GC::HasGarbageCollection>              KinematicActors;
+  typedef  multihashmap_iterator<KinematicActor*>                               KinematicActorIterator;
+  typedef  multihashmap<Volume*, GC::HasGarbageCollection>                      Volumes;
+  typedef  multihashmap_iterator<Volume*>                                       VolumeIterator;
+  typedef  multihashmap<Fluid*, GC::HasGarbageCollection>                       Fluids;
+  typedef  multihashmap_iterator<Fluid*>                                        FluidIterator;
+  typedef  multihashmap<Material*, GC::HasGarbageCollection>                    Materials;
+  typedef  multihashmap_iterator<Material*>                                     MaterialIterator;
+  typedef  multihashmap<ForceFieldKernel*, GC::HasGarbageCollection>            ForceFieldKernels;
+  typedef  multihashmap_iterator<ForceFieldKernel*>                             ForceFieldKernelIterator;
+  typedef  multihashmap<ForceField*, GC::HasGarbageCollection>                  ForceFields;
+  typedef  multihashmap_iterator<ForceField*>                                   ForceFieldIterator;
+  typedef  map<unsigned short, Material*, GC::NoGarbageCollection>              IndexedMaterials;
+  typedef  map<Enums::Priority, TimeListenerGroup*, GC::HasGarbageCollection >  TimeListenerGroups;
+  typedef  map_iterator<Enums::Priority, TimeListenerGroup*>                    TimeListenerGroupIterator;
+  
+  typedef  vector<Machine*>                                          Machines;
+  typedef  vector_iterator<Machine*>                                 MachineIterator;
 
 #if NxOgreUsePhysXCharacterController == 1
-  typedef  ptr_multihashmap<CharacterController>              CharacterControllers;
-  typedef  ptr_multihashmap<CharacterController>::iterator_t  CharacterControllerIterator;
+  typedef  hashmap<CharacterController>              CharacterControllers;
+  typedef  hashmap<CharacterController>::iterator_t  CharacterControllerIterator;
 #endif
 
   /*! function. getType
@@ -123,30 +127,30 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
       desc.
            Get the name of the Scene if it has one; otherwise NULL is returned.
   */
-  String        getName(void) const;
+  String        getName() const;
   
   /*! function. getName
       desc.
           HashGet the hash of the name of the Scene.
   */
-  StringHash    getNameHash(void) const;
+  StringHash    getNameHash() const;
   
   /*! function. getNbRigidBodies
       desc.
   */
-  unsigned int  getNbRigidBodies(void) const;
+  unsigned int  getNbRigidBodies() const;
   
   /*! function. getNbActors
       desc.
           
   */
-  unsigned int  getNbActors(void) const;
+  unsigned int  getNbActors() const;
   
   /*! function. getActors
       desc.
           
   */
-  ActorIterator  getActors(void);
+  ActorIterator  getActors();
   
   /*! function. createActor
       desc.
@@ -330,7 +334,8 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
           
   */
   void  destroySoftBody(SoftBody*);
-  
+
+#if NxOgreHasFluids == 1
   /*! function. createFluid
       desc.
           
@@ -342,7 +347,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
           
   */
   void  destroyFluid(Fluid*);
-
+#endif
   /*! function. createForceFieldLinearKernel
       desc.
   */
@@ -379,7 +384,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
       desc.
           
   */
-  Vec3  getGravity(void) const;
+  Vec3  getGravity() const;
 
   /*! function. raycastAnyBounds
       desc.
@@ -437,39 +442,80 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   void  unlockQueries();
 
+  /*! function. addSimulateListener
+      desc.
+          Add
+  */
+  void  addSimulateListener(TimeListener*, Enums::Priority = Enums::Priority_Medium);
+
+  /*! function. removeSimulateListener
+      desc.
+          Remove a simulate time listener
+  */
+  void  removeSimulateListener(TimeListener*, Enums::Priority = Enums::Priority_Medium);
+
+  /*! function. addSimulateListener
+      desc.
+          Add a render time listener
+  */
+  void  addRenderListener(TimeListener*, Enums::Priority = Enums::Priority_Medium);
+
+  /*! function. removeSimulateListener
+      desc.
+          Remove a render time listener
+  */
+  void  removeRenderListener(TimeListener*, Enums::Priority = Enums::Priority_Medium);
+
 
   /*! function. advance
       desc.
-          Required by TimeController. Advances the simulation state of this scene.
+          Advance the simulation by the deltaTime
       note.
           Do not use manually.
   */
-  bool  advance(float user_deltaTime, const Enums::Priority&);
+  void  simulate(float deltaTime);
   
+  /*! function. canRender
+      desc.
+          Has PhysX finished processing this scene?
+      note.
+          Do not use manually.
+  */
+  bool  canRender() const;
+  
+  /*! function. render
+      desc.
+          Render's the result of the simulation.
+      note.
+          Do not use manually.
+  */
+  void  render(float deltaTime);
+  
+
   /*! function. isProcessing
       desc.
           Is the scene currently processing the physics for the next time step. You cannot
              adjust the scene's state whilst it is processing.
   */
-  bool  isProcessing(void) const;
+  bool  isProcessing() const;
   
   /*! function. getDebugRenderable
       desc.
           Get this timestep's debug renderable of the scene.
   */
-  DebugRenderable  getDebugRenderable(void);
+  DebugRenderable  getDebugRenderable();
   
   /*! function. getScene
       desc.
           
   */
-  NxScene*  getScene(void);
+  NxScene*  getScene();
   
   /*! function. getPhysXCallback
       desc.
           
   */
-  PhysXCallback*  getPhysXCallback(void);
+  PhysXCallback*  getPhysXCallback();
   
   /*! function. setActorFlags
       desc.
@@ -505,7 +551,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   /*! function. overlapSphereShapes
       desc.
   */
-  unsigned int overlapSphereShape(const SimpleSphere&, Enums::ShapesType, unsigned int maxShapes, Buffer<Shape*> shapes, unsigned int activeGroups=0xffffffff, bool accurateCollision=false);
+  unsigned int overlapSphereShape(const SimpleSphere&, Enums::ShapesType, unsigned int maxShapes, buffer<Shape*> shapes, unsigned int activeGroups=0xffffffff, bool accurateCollision=false);
 
   /*! function. overlapSphereShapes
       desc.
@@ -536,11 +582,102 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   */
   ConstraintDominance getDominanceGroupPair(GroupIdentifier a, GroupIdentifier b);
   
+  /*! function. setSleepCallback
+      desc.
+          Set the callback for sleep events.
+  */
+  void setSleepCallback(Callback*);
+  
+  /*! function. removeSleepCallback
+      desc.
+          Remove (but not delete) the callback for sleep events.
+  */
+  void removeSleepCallback();
+  
+  /*! function. hasSleepCallback
+      desc.
+          Does the scene have a sleep callback?
+  */
+  bool hasSleepCallback() const;
+
+  /*! function. setGroupCollisionFlag
+      desc.
+          Does CollisionGroup (assigned to a shape) collides with another?
+  */
+  void setGroupCollisionFlag(GroupIdentifier first, GroupIdentifier second, bool collide);
+
+  /*! function. getGroupCollisionFlag
+      desc.
+          Does CollisionGroup (assigned to a shape) collides with another?
+  */
+  void getGroupCollisionFlag(GroupIdentifier first, GroupIdentifier second) const;
+
   /*! function. to_s
       desc.
           Returns the pointer and name as string.
   */
   String to_s() const;
+  
+  /*! function getNbSimulates
+      desc.
+          Get the number of times simulate has been called.
+  */
+  unsigned int getNbSimulates() const;
+  
+  /*! function getNbRenders
+      desc.
+          Get the number of times render has been called.
+  */
+  unsigned int getNbRenders() const;
+  
+  /*! function. setFilterOps
+      desc.
+          Setups filter operations. See NxGroupMask documentation.
+  */
+  void setFilterOps(NxOgre::Enums::FilterOp op0,NxOgre::Enums::FilterOp op1,NxOgre::Enums::FilterOp op2);
+  
+  /*! function. setFilterBool
+      desc.
+          Setups filtering's boolean value. See NxGroupMask documentation.
+  */
+  void setFilterBool(bool flag);
+
+  /*! function. setFilterConstant0
+      desc.
+          Setups filtering's K0 value. See NxGroupMask documentation.
+  */
+  void setFilterConstant0(const GroupsMask& mask);
+  
+  /*! function. setFilterConstant1
+      desc.
+          Setups filtering's K1 value. See NxGroupMask documentation.
+  */
+  void setFilterConstant1(const GroupsMask& mask);
+  
+  /*! function. GetFilterOps
+      desc.
+          Retrieves filter operations. See NxGroupMask documentation.
+  */
+  void getFilterOps(NxOgre::Enums::FilterOp& op0,NxOgre::Enums::FilterOp& op1,NxOgre::Enums::FilterOp& op2) const;
+  
+  /*! function. setFilterBool
+      desc.
+          Retrieves filtering's boolean value. See NxGroupMask documentation.
+  */
+  bool getFilterBool() const;
+
+  /*! function. setFilterConstant0
+      desc.
+          Retrieves filtering's K0 value. See NxGroupMask documentation.
+  */
+  GroupsMask getFilterConstant0() const;
+  
+  /*! function. setFilterConstant1
+      desc.
+          Retrieves filtering's K1 value. See NxGroupMask documentation.
+  */
+  GroupsMask setFilterConstant1() const;
+  
   
   protected: // Functions
   
@@ -550,7 +687,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
 
   /** \internal Use World::destroyScene()
   */
-  virtual ~Scene(void);
+  virtual ~Scene();
   
   protected: // Variables
 
@@ -602,32 +739,35 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
 
   /** \internal Master joints array
   */
-//  Array<Joint*>  mJoints;
-  ptr_vector<Joint> mJoints;
+  vector<Joint*> mJoints;
 
   /** \internal Master machines array
   */
   Machines          mMachines;
+  
+  MachineIterator   mMachineIterator;
+  
+  /** \internal
+  */
+  vector<Cloth*>  mCloths;
 
   /** \internal
   */
-  ptr_vector<Cloth>  mCloths;
+  vector<SoftBody*>  mSoftBodies;
 
   /** \internal
   */
-  ptr_vector<SoftBody>  mSoftBodies;
-
-  /** \internal
-  */
-  ptr_vector<Compartment>  mCompartments;
+  vector<Compartment*>  mCompartments;
 
   /** \internal Master kernels array
   */
   ForceFieldKernels  mForceFieldKernels;
 
+#if NxOgreHasFluids == 1
   /** \brief
   */
   Fluids  mFluids;
+#endif
 
   /** \internal
   */
@@ -636,7 +776,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   /** \internal Is Scene processing flag
   */
   bool  mProcessing;
-
+  
   /** \internal Scene processing priority
   */
   Enums::Priority  mProcessingPriority;
@@ -656,6 +796,34 @@ class NxOgrePublicClass Scene : public BigClassAllocatable, public TimeListener
   /** \internal Can the scene be rendered
   */
   bool  mCanRender;
+
+  /**\ internal
+  */
+  Callback* mSleepCallback;
+
+  /*\ internal Handy TimeListenerIterator
+  */
+  TimeListenerGroupIterator  mListenerIterator;
+  
+  /*\ internal  Before TimeListeners
+  */
+  TimeListenerGroups         mSimulateListenerGroups;
+
+  /*\ internal  Before TimeListeners
+  */
+  TimeListenerGroups         mRenderListenerGroups;
+
+  /*\ internal
+  */
+  TimeListenerGroup*         mWaitingListenerGroup;
+  
+  /*\ internal
+  */
+  unsigned int               mNbSimulates;
+
+  /*\ internal
+  */
+  unsigned int               mNbRenders;
 
 }; // class Scene
 

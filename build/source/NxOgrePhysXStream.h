@@ -63,7 +63,7 @@ class NxOgrePublicClass PhysXStream : public NxStream
   
   /** \brief Text
   */
-                                             ~PhysXStream(void);
+                                             ~PhysXStream();
   
   /** \internal DO NOT USE
   */

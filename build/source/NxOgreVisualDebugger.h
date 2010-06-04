@@ -54,7 +54,7 @@ class NxOgrePublicClass VisualDebugger
   
   /** \brief Text
   */
-                                             ~VisualDebugger(void);
+                                             ~VisualDebugger();
   
   /** \brief Text
   */
@@ -62,7 +62,7 @@ class NxOgrePublicClass VisualDebugger
   
   /** \brief Text
   */
-  Renderable*                                 getRenderable(void);
+  Renderable*                                 getRenderable();
   
   void                                        setVisualisationMode(NxOgre::Enums::VisualDebugger);
 

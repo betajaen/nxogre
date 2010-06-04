@@ -28,11 +28,12 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreManualHeightField.h"
-#include "NxOgreHeightFieldSample.h"
 #include "NxOgreHeightField.h"
+#include "NxOgreHeightFieldData.h"
+#include "NxOgreResourceSystem.h"
 #include "NxOgreHeightFieldManager.h"
-#include "NxOgreReason.h"
-#include "NxPhysics.h"
+#include "NxOgreFunctions.h"
+#include "NxOgreResource.h"
 
                                                                                        
 
@@ -41,51 +42,32 @@ namespace NxOgre
 
                                                                                        
 
-HeightFieldData::HeightFieldData()
- : mNbRows(0),
-   mNbColumns(0),
-   mAxis(Enums::Y),
-   mThickness(0.0f),
-   mVerticalExtent(0.0f),
-   mConvexEdgeThreshold(0.0f),
-   mNoEdgeBoundaries(false)
+ManualHeightField::ManualHeightField()
+: mHeightField(GC::safe_new0<HeightFieldData>(NXOGRE_GC_THIS))
 {
 }
 
-HeightFieldData::~HeightFieldData()
+ManualHeightField::ManualHeightField(const ManualHeightField& other)
+: mHeightField(other.mHeightField)
 {
 }
 
-ManualHeightField::ManualHeightField(void)
+ManualHeightField::ManualHeightField(HeightFieldData* data)
+: mHeightField(data)
 {
- mHeightField = new HeightFieldData();
- mRef = (RefT*) NXOGRE_ALLOCATE(FourByteAllocator, (sizeof(RefT)));
- (*mRef) = 1;
 }
 
-ManualHeightField::~ManualHeightField(void)
+ManualHeightField::~ManualHeightField()
 {
- if(--(*mRef) == 0)
- {
-  NXOGRE_DEALLOCATE(FourByteAllocator, mRef);
-  delete mHeightField;
- }
 }
 
 ManualHeightField& ManualHeightField::operator=(ManualHeightField& other)
 {
- if(--(*mRef) == 0)
- {
-  NXOGRE_DEALLOCATE(FourByteAllocator, mRef);
-  delete mHeightField;
- }
- mHeightField   = other.mHeightField;
- mRef           = other.mRef;
- (*mRef)++;
+ mHeightField = other.mHeightField;
  return *this;
 }
 
-void ManualHeightField::begin(unsigned int nbColumns, unsigned int nbRows, Enums::Axis upAxis)
+void ManualHeightField::begin(unsigned int nbRows, unsigned int nbColumns)
 {
  
  if (nbColumns == 0)
@@ -100,10 +82,21 @@ void ManualHeightField::begin(unsigned int nbColumns, unsigned int nbRows, Enums
   return;
  }
  
- mHeightField->mAxis = upAxis;
+ mHeightField->clear();
  mHeightField->mNbRows = nbRows;
  mHeightField->mNbColumns = nbColumns;
- mHeightField->mSamples.clear();
+ mHeightField->mSamples.resize(mHeightField->mNbRows * mHeightField->mNbColumns);
+ 
+}
+
+void ManualHeightField::clean()
+{
+ mHeightField->clear();
+}
+
+void ManualHeightField::name(const String& name)
+{
+ mHeightField->mName = name;
 }
 
 void ManualHeightField::name(const char* name)
@@ -111,98 +104,19 @@ void ManualHeightField::name(const char* name)
  mHeightField->mName = name;
 }
 
-String ManualHeightField::name(void) const
+String ManualHeightField::name() const
 {
  return mHeightField->mName;
 }
 
-HeightField* ManualHeightField::end(const String& name)
+void ManualHeightField::acquire(HeightFieldData* data)
 {
- HeightField* hf = new HeightField(name, cook());
- StringHash hashed_name = Strings::hash(name);
- HeightFieldManager::getSingleton()->mHeightFields.insert(hashed_name, hf);
- return hf;
-}
-
-NxHeightField* ManualHeightField::cook(void)
-{
- 
- NxHeightField* heightfield = 0;
- NxHeightFieldDesc description;
- 
- description.setToDefault();
- description.nbRows = mHeightField->mNbRows;
- description.nbColumns = mHeightField->mNbColumns;
- description.samples = mHeightField->mSamples.first();
- description.format = NX_HF_S16_TM;
- description.thickness = mHeightField->mThickness;
- description.verticalExtent = mHeightField->mVerticalExtent;
- description.flags = 0;
- description.convexEdgeThreshold = mHeightField->mConvexEdgeThreshold;
- description.format = NX_HF_S16_TM;
- description.sampleStride = sizeof(unsigned int);
- description.flags = 0;
- 
- if (description.isValid() == false)
- {
-  NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(description), Classes::_ManualHeightField);
-  return 0;
- }
- 
- NxPhysicsSDK* sdk = NxGetPhysicsSDK();
- heightfield = sdk->createHeightField(description);
- 
- return heightfield;
-}
-
-bool ManualHeightField::isValid(void)
-{
- if (mHeightField == 0)
-  return false;
- if (mHeightField->mNbRows == 0)
-  return false;
- if (mHeightField->mNbColumns == 0)
-  return false;
- if (mHeightField->mSamples.size() == 0)
-  return false;
- if (mHeightField->mSamples.size() != (mHeightField->mNbRows * mHeightField->mNbColumns))
-  return false;
- return true;
-}
-
-void ManualHeightField::setVerticalExtent(Real v)
-{
- mHeightField->mVerticalExtent = v;
-}
-
-Real ManualHeightField::getVerticalExtent(void)
-{
- return mHeightField->mVerticalExtent;
-}
-
-void ManualHeightField::setConvexEdgeThreshold(Real v)
-{
- mHeightField->mConvexEdgeThreshold = v;
-}
-
-Real ManualHeightField::getConvexEdgeThreshold(void) const
-{
- return mHeightField->mConvexEdgeThreshold;
-}
-
-void ManualHeightField::setHasNoBoundaryEdges(bool v)
-{
- mHeightField->mNoEdgeBoundaries = v;
-}
-
-bool ManualHeightField::getHasNoBoundaryEdges(void) const
-{
- return mHeightField->mNoEdgeBoundaries;
+ mHeightField = SharedPointer<HeightFieldData>(data);
 }
 
 void ManualHeightField::sample(HeightFieldSample sample)
 {
- mHeightField->mSamples.append(sample);
+ mHeightField->mSamples.push_back(sample);
 }
 
 void ManualHeightField::sample(short height, MaterialIdentifier mat0, MaterialIdentifier mat1, Enums::HeightFieldTesselation tesselation)
@@ -212,7 +126,60 @@ void ManualHeightField::sample(short height, MaterialIdentifier mat0, MaterialId
  sample.mMaterial0 = mat0;
  sample.mMaterial1 = mat1;
  sample.mTessellationFlag = tesselation;
- mHeightField->mSamples.append(sample);
+ mHeightField->mSamples.push_back(sample);
+}
+
+bool ManualHeightField::isValid() const
+{ // NOTE: Incomplete function
+ return true;
+}
+
+HeightField* ManualHeightField::end(bool cleanUp, const Path& cookingTarget)
+{
+ 
+ NxOgre_DebugPrint_HeightFields("ManualHeightField -- end");
+ 
+ Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_ReadAndWrite);
+ 
+ NxOgre_DebugPrint_HeightFields("Attempting to cook to resource");
+ mHeightField->cook(cookingResource);
+ 
+ NxOgre_DebugPrint_HeightFields("Attempting to read heightfield.");
+ cookingResource->seekBeginning();
+
+ HeightField* hf = 0;
+ 
+ if (mHeightField->mName.length() == 0)
+ {
+  NxOgre_DebugPrint_HeightFields("load via CookingResource");
+  hf = HeightFieldManager::getSingleton()->load(cookingResource);
+ }
+ else
+ {
+  NxOgre_DebugPrint_HeightFields("load via CookingResource under the name " << mHeightField->mName);
+  hf = HeightFieldManager::getSingleton()->load(cookingResource, mHeightField->mName);
+ }
+ if (cookingResource->getStatus() == Enums::ResourceStatus_Opened)
+  ResourceSystem::getSingleton()->close(cookingResource);
+ 
+ if (cleanUp)
+  clean();
+ 
+ return hf;
+}
+
+void ManualHeightField::endCookOnly(bool cleanUp, const Path& cookingTarget)
+{
+ 
+ Resource* cookingResource = ResourceSystem::getSingleton()->open(cookingTarget, NxOgre::Enums::ResourceAccess_WriteOnly);
+ 
+ mHeightField->cook(cookingResource);
+ 
+ ResourceSystem::getSingleton()->close(cookingResource);
+ 
+ if (cleanUp)
+  clean();
+ 
 }
 
                                                                                        

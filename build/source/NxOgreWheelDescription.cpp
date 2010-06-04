@@ -66,9 +66,9 @@ void WheelDescription::reset()
 NxShapeDesc* WheelDescription::createShapeDescription() const
 {
  
- NxWheelShapeDesc* description = NXOGRE_NEW_PHYSX(NxWheelShapeDesc, PhysXClassAllocator);
- setShapeDescription(description);
- 
+  NxWheelShapeDesc* description = GC::safe_new0<NxWheelShapeDesc>(__FILE__, __LINE__);
+  setShapeDescription(description);
+  
   description->radius = mRadius;
   description->suspensionTravel = mSuspensionTravel;
   description->suspension.damper = mSuspension.mDamper;

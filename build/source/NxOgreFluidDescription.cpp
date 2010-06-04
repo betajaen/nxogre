@@ -26,7 +26,11 @@
 
                                                                                        
 
+
 #include "NxOgreStable.h"
+
+#if NxOgreHasFluids == 1
+
 #include "NxOgreFluidDescription.h"
 
                                                                                        
@@ -36,12 +40,17 @@ namespace NxOgre
 
                                                                                        
 
-FluidDescription::FluidDescription(void)
+FluidDescription::FluidDescription()
+: mParticleData(GC::safe_new0<ParticleData>(NXOGRE_GC_THIS))
 {
  reset();
 }
 
-void FluidDescription::reset(void)
+FluidDescription::~FluidDescription()
+{ // virtual destructor.
+}
+
+void FluidDescription::reset()
 {
  mMaxParticles                       = 32767;
  mNbReserveParticles                 = 0;
@@ -76,11 +85,11 @@ void FluidDescription::reset(void)
  mGroupsMask.x                       = 0;
  mGroupsMask.y                       = 0;
  mGroupsMask.z                       = 0;
- mFlags                              = Enums::FluidFlags_Visualisation | Enums::FluidFlags_Enabled | Enums::FluidFlags_Hardware;
+ mFlags                              = Enums::FluidFlags_Visualisation | Enums::FluidFlags_Enabled; // | Enums::FluidFlags_Hardware;
  mCompartment                        = NULL;
 }
 
-bool FluidDescription::valid(void)
+bool FluidDescription::valid()
 {
  if (mKernelRadiusMultiplier < 1.0f)
   return false;
@@ -167,3 +176,5 @@ bool FluidDescription::valid(void)
 } // namespace NxOgre
 
                                                                                        
+
+#endif

@@ -36,7 +36,7 @@ namespace NxOgre
 
                                                                                        
 
-MotorDescription::MotorDescription(void)
+MotorDescription::MotorDescription()
 {
  reset();
 }

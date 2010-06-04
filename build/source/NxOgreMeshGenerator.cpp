@@ -50,36 +50,41 @@ MeshGenerator::~MeshGenerator()
  assert(0);
 }
 
-bool MeshGenerator::makePlane(const Vec2& size, float density, Enums::MeshType type, const Path& path, const String& mesh_name)
+Mesh* MeshGenerator::makePlane(const Vec2& size, float density, Enums::MeshType type, const Path& path, const String& mesh_name)
 {
  
- const int numX = (int) (size.x / density) + 1;
- const int numY = (int) (size.y / density) + 1;
+ int numX = (int) (size.x / density) + 1;
+ int numY = (int) (size.y / density) + 1;
  
- const int nbVertices = (numX + 1) * (numY + 1);
- const int nbTriangles = numX * numY * 2;
- 
+ NxOgre_DebugPrint_Cooking("MeshGenerator -- makePlane");
+
  ManualMesh mesh;
  
- mesh.begin(type, nbVertices, nbTriangles);
+ mesh.begin(type, (numX+1) * (numY+1));
  
  int i, j, i0, i1, i2, i3;
  
  // Vertices
  for (i = 0; i <= numY; i++)
+ {
   for (j = 0; j <= numX; j++)
-   mesh.vertex(density * j, 0, density * i);
+   {
+    mesh.vertex(density * j, 0, density * i);
+   }
+ }
  
- // Triangles
- for (i = 0; i <= numY; i++)
-  for (j = 0; j <= numX; j++)
+ // Triangles 
+ for (i = 0; i < numY; i++)
+ {
+  for (j = 0; j < numX; j++)
   {
-   i0 = i * (numX + 1) + j;
+
+   i0 = i * (numX+1) + j;
    i1 = i0 + 1;
-   i2 = i0 + (numX + 1);
+   i2 = i0 + (numX+1);
    i3 = i2 + 1;
-   
-   if ( (j+1) % 2)
+
+   if ((j+i)%2)
    {
     mesh.triangle(i0, i2, i1);
     mesh.triangle(i1, i2, i3);
@@ -90,7 +95,26 @@ bool MeshGenerator::makePlane(const Vec2& size, float density, Enums::MeshType t
     mesh.triangle(i0, i3, i1);
    }
   }
- 
+ }
+ // Texture Coords
+ if (type == Enums::MeshType_Cloth || type == Enums::MeshType_SoftBody)
+ {
+  
+  float dx = numX > 0 ? (1.0f / float(numX)) : 1.0f;
+  float dy = numY > 0 ? (1.0f / float(numY)) : 1.0f;
+  
+  for (i = 0; i <= numY; i++)
+  {
+   for (j = 0; j <= numX; j++)
+   {
+    mesh.textureCoordinate(j*dx, i * dy);
+   }
+  }
+  
+ }
+
+ NxOgre_DebugPrint_Cooking("MeshGenerator:2 -- makePlane, verts: " << mesh.nbVertices() << ", tris: " << mesh.nbTriangles() << ", tex_coords = " << mesh.nbTextureCoords());
+
  Mesh* cooked_mesh = mesh.end(true, path);
  
  return cooked_mesh;

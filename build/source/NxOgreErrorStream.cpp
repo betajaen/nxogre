@@ -57,11 +57,11 @@ void ErrorListener::onNotice(const Notice&)
 {
 }
 
-ErrorStream::ErrorStream(void) : Singleton(), mLogResource(0)
+ErrorStream::ErrorStream() : Singleton<ErrorStream>(), mLogResource(0)
 {
 }
 
-ErrorStream::~ErrorStream(void)
+ErrorStream::~ErrorStream()
 {
  //mErrors.
 }

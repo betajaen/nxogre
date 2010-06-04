@@ -38,7 +38,7 @@ namespace NxOgre
 namespace Classes
 {
 
-enum
+enum classes
 {
   NXOGRE_CLASSES_BEGIN = 457,
   _void,

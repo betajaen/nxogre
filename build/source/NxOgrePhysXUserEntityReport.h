@@ -66,7 +66,7 @@ class NxOgrePublicClass PhysXUserEntityReport : public GenericBasedAllocatable, 
   
   /** \brief Text
   */
-                                             ~PhysXUserEntityReport(void)
+                                             ~PhysXUserEntityReport()
   {
   }
   
@@ -74,7 +74,7 @@ class NxOgrePublicClass PhysXUserEntityReport : public GenericBasedAllocatable, 
   */
   bool                                        onEvent(unsigned int tSize, T* t)
   {
-   ReadOnlyBuffer<T> buffer(t, t + tSize);
+   const_buffer<T> buffer(t, t + tSize);
    return mEntityReport->onEvent(buffer);
   }
   
@@ -97,7 +97,7 @@ class NxOgrePublicClass PhysXUserDataCallbackReport : public NxUserEntityReport<
   
   public: // Functions
   
-  typedef bool (C::*CallbackFunction)(const Buffer<T2*>&);
+  typedef bool (C::*CallbackFunction)(const buffer<T2*>&);
   
   /** \brief Text
   */
@@ -108,7 +108,7 @@ class NxOgrePublicClass PhysXUserDataCallbackReport : public NxUserEntityReport<
   
   /** \brief Text
   */
- ~PhysXUserDataCallbackReport(void)
+ ~PhysXUserDataCallbackReport()
   {
   }
   
@@ -116,9 +116,9 @@ class NxOgrePublicClass PhysXUserDataCallbackReport : public NxUserEntityReport<
   */
   bool onEvent(unsigned int tSize, T* t)
   {
-   Buffer<T2*> buffer;//(t, t + tSize);
+   buffer<T2*> buffer;//(t, t + tSize);
    for (unsigned int i=0;i < tSize;i++)
-    buffer.append(pointer_representive_cast<T2>(t[i]->userData));
+    buffer.push_back(pointer_representive_cast<T2>(t[i]->userData));
    return (mCallback->*mFunction)(buffer);
   }
   
@@ -131,6 +131,8 @@ class NxOgrePublicClass PhysXUserDataCallbackReport : public NxUserEntityReport<
 }; // class
 
 #endif
+
+
 
                                                                                        
 

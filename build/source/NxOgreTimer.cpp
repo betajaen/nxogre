@@ -30,8 +30,14 @@
 #include "NxOgreTimer.h"
 
 #if NxOgrePlatform == NxOgrePlatformWindows
-#define WIN32_LEAN_AND_MEAN 
-#include <windows.h>
+
+ #define WIN32_LEAN_AND_MEAN 
+ #include <windows.h>
+
+#elif NxOgrePlatform == NxOgrePlatformLinux
+
+ #include <sys/time.h>
+
 #endif
 
                                                                                        
@@ -42,8 +48,8 @@ namespace NxOgre
                                                                                        
 
 Timer::Timer()
-: mStart(0.0f),
-  mFrequency(0.0f)
+: mStart(0),
+  mFrequency(0)
 {
  reset();
 }
@@ -54,40 +60,73 @@ Timer::~Timer()
 
 float Timer::now()
 {
- __int64 now = 0;
- QueryPerformanceCounter( (LARGE_INTEGER*) &now);
- return (float) ( float(now - mStart) / float(mFrequency));
+
+#if NxOgrePlatform == NxOgrePlatformWindows
+ QueryPerformanceCounter( (LARGE_INTEGER*) &mNow);
+ return (float) ( float(mNow - mStart) / float(mFrequency));
+#elif NxOgrePlatform == NxOgerPlatformLinux
+ gettimeofday(&mNow, &mTimezone);
+ float a = (float)mStart.tv_sec + (float)mStart.tv_usec/(1000*1000);
+ float b = (float)mNow.tv_sec + (float)mNow.tv_usec/(1000*1000);
+ return b - a;
+#endif
 }
 
 double Timer::nowDouble()
 {
- __int64 now = 0;
- QueryPerformanceCounter( (LARGE_INTEGER*) &now);
- return (double) ( double(now - mStart) / double(mFrequency));
+#if NxOgrePlatform == NxOgrePlatformWindows
+ QueryPerformanceCounter( (LARGE_INTEGER*) &mNow);
+ return (double) ( double(mNow - mStart) / double(mFrequency));
+#elif NxOgrePlatform == NxOgerPlatformLinux
+ gettimeofday(&mNow, &mTimezone);
+ double a = (double)mStart.tv_sec + (double)mStart.tv_usec/(1000*1000);
+ double b = (double)mNow.tv_sec + (double)mNow.tv_usec/(1000*1000);
+ return b - a;
+#endif
 }
 
 float Timer::nowReset()
 {
- __int64 now = 0;
- QueryPerformanceCounter( (LARGE_INTEGER*) &now);
- float t = (float) ( float(now - mStart) / float(mFrequency));
+#if NxOgrePlatform == NxOgrePlatformWindows
+ QueryPerformanceCounter( (LARGE_INTEGER*) &mNow);
+ float t = (float) ( float(mNow - mStart) / float(mFrequency));
  reset();
  return t;
+#elif NxOgrePlatform == NxOgerPlatformLinux
+ gettimeofday(&mNow, &mTimezone);
+ float a = (float)mStart.tv_sec + (float)mStart.tv_usec/(1000*1000);
+ float b = (float)mNow.tv_sec + (float)mNow.tv_usec/(1000*1000);
+ reset();
+ return b - a;
+#endif
 }
 
 double Timer::nowResetDouble()
 {
- __int64 now = 0;
- QueryPerformanceCounter( (LARGE_INTEGER*) &now);
- float t = (double) ( double(now - mStart) / double(mFrequency));
+#if NxOgrePlatform == NxOgrePlatformWindows
+ QueryPerformanceCounter( (LARGE_INTEGER*) &mNow);
+ double t = (double) ( double(mNow - mStart) / double(mFrequency));
  reset();
  return t;
+#elif NxOgrePlatform == NxOgerPlatformLinux
+ gettimeofday(&mNow, &mTimezone);
+ double a = (double)mStart.tv_sec + (double)mStart.tv_usec/(1000*1000);
+ double b = (double)mNow.tv_sec + (double)mNow.tv_usec/(1000*1000);
+ reset();
+ return b - a;
+#endif
 }
 
 void Timer::reset()
 {
+
+#if NxOgrePlatform == NxOgrePlatformWindows
  QueryPerformanceCounter( (LARGE_INTEGER*) &mStart);
  QueryPerformanceFrequency( (LARGE_INTEGER*) &mFrequency);
+#else
+ gettimeofday(&mStart, NULL);
+#endif
+
 }
 
                                                                                        

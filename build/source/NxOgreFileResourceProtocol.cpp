@@ -44,19 +44,19 @@ namespace NxOgre
 
                                                                                        
 
-FileResourceProtocol::FileResourceProtocol(void)
+FileResourceProtocol::FileResourceProtocol()
 {
  mProtocolName = "file";
  mProtocolHash = Strings::hash(mProtocolName);
 }
 
-FileResourceProtocol::~FileResourceProtocol(void)
+FileResourceProtocol::~FileResourceProtocol()
 {
 }
 
 Resource* FileResourceProtocol::open(const Path& path, Enums::ResourceAccess access)
 {
- FileResource* resource = NXOGRE_NEW_NXOGRE(FileResource)(path, this, access);
+ FileResource* resource = GC::safe_new3<FileResource>(path, this, access, NXOGRE_GC_THIS);
  addResource(resource);
  resource->open();
  return resource;
@@ -64,27 +64,27 @@ Resource* FileResourceProtocol::open(const Path& path, Enums::ResourceAccess acc
 
 void FileResourceProtocol::close(Resource* resource)
 {
- FileResource* fresource = static_cast<FileResource*>(resource);
- fresource->close();
- removeResource(fresource); // Removing it will automatically delete it as well.
+ FileResource* file_resource = static_cast<FileResource*>(resource);
+ file_resource->close();
+ removeResource(file_resource); // Removing it will automatically delete it as well.
 }
 
-String FileResourceProtocol::getProtocol(void) const
+String FileResourceProtocol::getProtocol() const
 {
  return mProtocolName;
 }
 
-StringHash FileResourceProtocol::getProtocolHash(void) const
+StringHash FileResourceProtocol::getProtocolHash() const
 {
  return mProtocolHash;
 }
 
-bool FileResourceProtocol::usesNamelessResources(void) const
+bool FileResourceProtocol::usesNamelessResources() const
 {
  return false;
 }
 
-void FileResourceProtocol::initialise(void)
+void FileResourceProtocol::initialise()
 {
  // No default archives, so nothing to do.
 }

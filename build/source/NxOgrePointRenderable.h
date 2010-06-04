@@ -53,7 +53,7 @@ class NxOgrePublicClass PointRenderable
   
   /** \brief Required virtual destructor.
   */
-  virtual                                    ~PointRenderable(void);
+  virtual                                    ~PointRenderable();
   
   /** \brief Transform the visual mesh according the global position and orientation (as a quaternion).
   */

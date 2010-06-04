@@ -36,16 +36,16 @@ namespace NxOgre
 
                                                                                        
 
-D6JointDescription::D6JointDescription(void)
+D6JointDescription::D6JointDescription()
 {
  reset();
 }
 
-D6JointDescription::~D6JointDescription(void)
+D6JointDescription::~D6JointDescription()
 {
 }
 
-void D6JointDescription::reset(void)
+void D6JointDescription::reset()
 {
  JointDescription::reset();
 
@@ -70,7 +70,7 @@ void D6JointDescription::reset(void)
  mGearRatio = 1.0f;
 }
 
-bool D6JointDescription::isValid(void) const
+bool D6JointDescription::isValid() const
 {
  if (mD6Flags & Enums::D6JointFlag_SlerpDrive)
  {

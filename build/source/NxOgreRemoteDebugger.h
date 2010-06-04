@@ -55,7 +55,7 @@ class NxOgrePublicClass RemoteDebugger : public GenericBasedAllocatable
   
   /** \brief Text
   */
-                                             ~RemoteDebugger(void);
+                                             ~RemoteDebugger();
   
   /** \brief Text
   */
@@ -63,19 +63,19 @@ class NxOgrePublicClass RemoteDebugger : public GenericBasedAllocatable
   
   /** \brief Text
   */
-  void                                        disconnect(void);
+  void                                        disconnect();
   
   /** \brief Text
   */
-  void                                        flush(void);
+  void                                        flush();
   
   /** \brief Is NxOgre connected to the RemoteDebugger application?
   */
-  bool                                        isConnected(void) const;
+  bool                                        isConnected() const;
   
   /** \brief Text
   */
-  void                                        frameBreak(void);
+  void                                        frameBreak();
   
   /** \brief Text
   */
@@ -179,7 +179,7 @@ class NxOgrePublicClass RemoteDebugger : public GenericBasedAllocatable
   
   /** \brief Text
   */
-  unsigned int                                getMask(void);
+  unsigned int                                getMask();
   
   
   /** \brief Text
@@ -188,7 +188,7 @@ class NxOgrePublicClass RemoteDebugger : public GenericBasedAllocatable
   
   /** \brief Text
   */
-  Vec3                                       getPickedPoint(void);
+  Vec3                                       getPickedPoint();
   
 
   /** \brief Text

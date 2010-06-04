@@ -46,7 +46,7 @@ Convex::Convex(NxConvexShape* shape, Mesh* mesh)
 {
 }
 
-Convex::~Convex(void)
+Convex::~Convex()
 {
 }
 
@@ -60,7 +60,7 @@ Enums::ShapeFunctionType Convex::getShapeFunctionType() const
  return Enums::ShapeFunctionType_Convex;
 }
 
-Mesh* Convex::getMesh(void)
+Mesh* Convex::getMesh()
 {
  return mMesh;
 }
@@ -72,10 +72,10 @@ void Convex::saveToDescription(ConvexDescription& description)
  description.mDensity = desc.density;
  description.mFlags.from_i(desc.shapeFlags);
  description.mGroup = desc.group;
- description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
- description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
- description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
- description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
+ description.mGroupsMask.bits0 = desc.groupsMask.bits0;
+ description.mGroupsMask.bits1 = desc.groupsMask.bits1;
+ description.mGroupsMask.bits2 = desc.groupsMask.bits2;
+ description.mGroupsMask.bits3 = desc.groupsMask.bits3;
  desc.localPose.getRowMajor44(description.mLocalPose.ptr());
  description.mMass = desc.mass;
  description.mMaterial = desc.materialIndex;

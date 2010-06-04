@@ -51,9 +51,9 @@ namespace NxOgre
 class NxOgrePublicClass TriangleGeometry : public Shape
 {
   
-  friend class RigidBody;  // for destroy();
-  friend Shape* Functions::ShapeFunctions::createTriangleMesh(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  
+  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -61,11 +61,11 @@ class NxOgrePublicClass TriangleGeometry : public Shape
 
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */
-  Enums::ShapeFunctionType  getShapeFunctionType(void) const;
+  Enums::ShapeFunctionType  getShapeFunctionType() const;
   
   /** \brief Get the triangle mesh.
   */
-  Mesh*  getTriangleMesh(void);
+  Mesh*  getTriangleMesh();
   
   /** \brief   Get a triangle based upon the triangleIndex.
       \params  Triangle; Triangle that was found
@@ -125,7 +125,7 @@ class NxOgrePublicClass TriangleGeometry : public Shape
   
   /** \brief TriangleGeometry
   */
- ~TriangleGeometry(void);
+ ~TriangleGeometry();
   
   protected:
   

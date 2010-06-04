@@ -43,7 +43,6 @@ namespace NxOgre
 
                                                                                        
 
-
 Volume::Volume(Scene* scene, Callback* callback)
 : RigidBody(),
   mScene(scene),
@@ -67,7 +66,7 @@ Volume::Volume(const ShapeDescriptions& shapes, const Matrix44& pose, Enums::Vol
  createTrigger(pose, type, scene, shapes);
 }
 
-Volume::~Volume(void)
+Volume::~Volume()
 {
  destroy();
 }
@@ -97,27 +96,27 @@ void Volume::setGlobalOrientationQuat(const Quat& r4)
  ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientationQuat(r4, mActor);
 }
 
-Matrix44 Volume::getGlobalPose(void) const
+Matrix44 Volume::getGlobalPose() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
 }
 
-Vec3 Volume::getGlobalPosition(void) const
+Vec3 Volume::getGlobalPosition() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
 }
 
-Matrix33 Volume::getGlobalOrientation(void) const
+Matrix33 Volume::getGlobalOrientation() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
 }
 
-Quat Volume::getGlobalOrientationQuat(void) const
+Quat Volume::getGlobalOrientationQuat() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
 }
 
-unsigned int Volume::getNbShapes(void) const
+unsigned int Volume::getNbShapes() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
 }

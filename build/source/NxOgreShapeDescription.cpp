@@ -49,6 +49,7 @@ ShapeDescription::~ShapeDescription()
 
 NxShapeDesc* ShapeDescription::createShapeDescription() const
 {
+ std::cout << "?? ShapeDescription::createShapeDescription\n";
  return 0;
 }
 
@@ -57,10 +58,10 @@ void ShapeDescription::setShapeDescription(NxShapeDesc* description) const
  description->ccdSkeleton = (mSkeleton != 0) ? mSkeleton->getAsSkeleton() : 0;
  description->density = mDensity;
  description->group = mGroup;
- description->groupsMask.bits0 = mGroupsMask.mBits0;
- description->groupsMask.bits1 = mGroupsMask.mBits1;
- description->groupsMask.bits2 = mGroupsMask.mBits2;
- description->groupsMask.bits3 = mGroupsMask.mBits3;
+ description->groupsMask.bits0 = mGroupsMask.bits0;
+ description->groupsMask.bits1 = mGroupsMask.bits1;
+ description->groupsMask.bits2 = mGroupsMask.bits2;
+ description->groupsMask.bits3 = mGroupsMask.bits3;
  description->localPose.setRowMajor44(mLocalPose.ptr());
  description->mass = mMass;
  description->materialIndex = mMaterial;

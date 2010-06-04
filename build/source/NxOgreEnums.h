@@ -1650,6 +1650,16 @@ enum CharacterControllerInteractionFlag
 
 #endif
 
+enum FilterOp
+{
+ FilterOp_And,
+ FilterOp_Or,
+ FilterOp_Xor,
+ FilterOp_Nand,
+ FilterOp_Nor,
+ FilterOp_NXor,
+ FilterOp_SwapAnd
+};
 
                                                                                        
 

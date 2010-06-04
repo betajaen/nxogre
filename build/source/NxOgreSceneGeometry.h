@@ -65,7 +65,7 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
 
   /** \brief Retrieves the value set with setGroup(). 
   */
-                                      GroupIdentifier        getGroup(void) const;
+                                      GroupIdentifier        getGroup() const;
 
   /** \brief Sets the solver iteration count for the body. 
   */
@@ -73,11 +73,11 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
 
   /** \brief Retrieves the solver iteration count.
   */
-                                      unsigned int           getSolverIterationCount(void) const; 
+                                      unsigned int           getSolverIterationCount() const; 
 
   /** \brief Retrieves the force threshold for contact reports. 
   */
-                                      Real                   getContactReportThreshold(void) const;
+                                      Real                   getContactReportThreshold() const;
 
   /** \brief Sets the force threshold for contact reports. 
   */
@@ -85,7 +85,7 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
   
   /** \brief Retrieves the actor's contact report flags. 
   */
-                                      unsigned int           getContactReportFlags(void) const;
+                                      unsigned int           getContactReportFlags() const;
  
   /** \brief Sets the actor's contact report flags.
   */
@@ -93,19 +93,19 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
 
   /** \brief Retrieves the actors world space transform.
   */
-                                      Matrix44               getGlobalPose(void) const;
+                                      Matrix44               getGlobalPose() const;
 
   /** \brief Retrieves the actors world space position.
   */
-                                      Vec3                  getGlobalPosition(void) const;
+                                      Vec3                  getGlobalPosition() const;
 
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Matrix33               getGlobalOrientation(void) const;
+                                      Matrix33               getGlobalOrientation() const;
   
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Quat                  getGlobalOrientationQuat(void) const;
+                                      Quat                  getGlobalOrientationQuat() const;
 
   /** \brief Creates a new shape and adds it to the list of shapes of this actor. 
   */
@@ -117,7 +117,7 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
   
   /** \brief Returns the number of shapes assigned to the actor.
   */
-                                      unsigned int           getNbShapes(void) const;
+                                      unsigned int           getNbShapes() const;
 
   /** \internal Classes that inherit from SceneGeometry should use this constructor.
   */
@@ -133,7 +133,7 @@ class NxOgrePublicClass SceneGeometry : public RigidBody
   
   /** \internal Use Scene::destroySceneGeometry
   */
-  virtual                                    ~SceneGeometry(void);
+  virtual                                    ~SceneGeometry();
 
   protected: // Variables
   

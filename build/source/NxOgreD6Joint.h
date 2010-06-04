@@ -53,7 +53,8 @@ namespace NxOgre
 class NxOgrePublicClass D6Joint : public Joint
 {
   
-  friend class Scene;
+  NXOGRE_GC_FRIEND_NEW3
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -63,7 +64,7 @@ class NxOgrePublicClass D6Joint : public Joint
       args.
           const Vec3& __position__ -- New drive position.
   */
-  void                                        setDrivePosition(const Vec3& position);
+  void setDrivePosition(const Vec3& position);
 
   
   /*! function. setDriveOrientation
@@ -72,7 +73,7 @@ class NxOgrePublicClass D6Joint : public Joint
       args.
           const Quat& __orientation__ -- New drive orientation.
   */
-  void                                        setDriveOrientation(const Quat& orientation);
+  void setDriveOrientation(const Quat& orientation);
 
   /*! function. setDriveLinearVelocity
       desc.
@@ -80,7 +81,7 @@ class NxOgrePublicClass D6Joint : public Joint
       args.
           const Vec3& __linearVelocity__ -- New drive linear velocity.
   */
-  void                                        setDriveLinearVelocity(const Vec3& linearVelocity);
+  void setDriveLinearVelocity(const Vec3& linearVelocity);
 
 
   /*! function. setDriveAngularVelocity
@@ -89,7 +90,7 @@ class NxOgrePublicClass D6Joint : public Joint
       args.
           const Vec3& __angularVelocity__ -- New drive angular velocity.
   */
-  void                                        setDriveAngularVelocity(const Vec3& angularVelocity);
+  void setDriveAngularVelocity(const Vec3& angularVelocity);
 
   /*! function. getJointType
       desc.
@@ -97,7 +98,7 @@ class NxOgrePublicClass D6Joint : public Joint
       return.
           **Enums::JointFunctionType** -- Joint type as a JointFunctionType.
   */
-  Enums::JointFunctionType                    getJointType();
+  Enums::JointFunctionType getJointType();
 
   protected: // Functions
   
@@ -111,7 +112,7 @@ class NxOgrePublicClass D6Joint : public Joint
       see. Scene::destroyJoint
       !protected
   */
-  ~D6Joint(void);
+  ~D6Joint();
   
   /*! function. to_s
       desc.
@@ -123,7 +124,7 @@ class NxOgrePublicClass D6Joint : public Joint
   
   NxD6Joint*    mD6Joint;
   
-}; // class ClassName
+}; // class D6Joint
 
                                                                                        
 

@@ -126,7 +126,7 @@ NxBox SimpleBox::to_box() const
 
 NxForceFieldShapeDesc*  SimpleBox::to_ff_shape() const
 {
- NxBoxForceFieldShapeDesc* shape = NXOGRE_NEW_PHYSX(NxBoxForceFieldShapeDesc, PhysXClassAllocator);
+ NxBoxForceFieldShapeDesc* shape = GC::safe_allocated_new0<NxBoxForceFieldShapeDesc, PhysXClassAllocator>(NXOGRE_GC_THIS);
  shape->dimensions.set(mSize.as<NxVec3>());
  shape->pose.t.set(mCenter.as<NxVec3>());
  shape->pose.M.setColumnMajor(mRotation.ptr());
@@ -166,7 +166,7 @@ NxSphere SimpleSphere::to_sphere() const
 
 NxForceFieldShapeDesc* SimpleSphere::to_ff_shape() const
 {
- NxSphereForceFieldShapeDesc* shape = NXOGRE_NEW_PHYSX(NxSphereForceFieldShapeDesc, PhysXClassAllocator);
+ NxSphereForceFieldShapeDesc* shape = GC::safe_allocated_new0<NxSphereForceFieldShapeDesc, PhysXClassAllocator>(NXOGRE_GC_THIS);
  shape->pose.t.set(mCenter.as<NxVec3>());
  shape->radius = mRadius;
  return shape;

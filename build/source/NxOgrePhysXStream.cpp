@@ -44,7 +44,7 @@ PhysXStream::PhysXStream(Resource* resource) : mResource(resource)
 {
 }
 
-PhysXStream::~PhysXStream(void)
+PhysXStream::~PhysXStream()
 {
 }
 

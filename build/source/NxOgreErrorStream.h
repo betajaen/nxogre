@@ -95,6 +95,9 @@ class NxOgrePublicClass ErrorStream : public Singleton<ErrorStream>, public BigC
   
   public:
   
+  NXOGRE_GC_FRIEND_NEW0
+  NXOGRE_GC_FRIEND_DELETE
+  
   /*! function. addException
       desc.
           Add an exception.
@@ -151,18 +154,17 @@ class NxOgrePublicClass ErrorStream : public Singleton<ErrorStream>, public BigC
   
   /*! constructor. ErrorStream
   */
-  ErrorStream(void);
+  ErrorStream();
   
   /*! destructor. ErrorStream
   */
- ~ErrorStream(void);
+ ~ErrorStream();
   
   protected: // Variables
   
   std::vector<ErrorListener*> mListeners;
   
   Resource*                   mLogResource;
-  
   
 }; // class ErrorStream
 

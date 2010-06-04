@@ -37,8 +37,8 @@ namespace NxOgre
                                                                                        
 
 ParticleData::ParticleData(unsigned int initialParticleCount)
+: mNbParticles(GC::safe_new1<unsigned int>(0, NXOGRE_GC_THIS))
 {
- mNbParticles = SharedPointer<unsigned int>(new unsigned int);
 }
 
 ParticleData::~ParticleData()

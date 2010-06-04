@@ -52,8 +52,8 @@ namespace Functions
 
 void SweepFunctions::NxSweepQueryHitsToBuffer(NxSweepQueryHit* hits, unsigned int size, SweepQueryHits& buffer)
 {
- buffer.clear();
- buffer.reserve(size);
+ buffer.remove_all();
+ buffer.resize(size);
  for (unsigned int i=0; i < size; i++)
  {
   SweepQueryHit hit;
@@ -64,7 +64,7 @@ void SweepFunctions::NxSweepQueryHitsToBuffer(NxSweepQueryHit* hits, unsigned in
   hit.mNormal.from<NxVec3>(hits[i].normal);
   hit.mPoint.from<NxVec3>(hits[i].point);
   hit.mSweepShape = pointer_representive_cast<Shape>(hits[i].sweepShape->userData);
-  buffer.append(hit);
+  buffer.push_back(hit);
  }
  
 }

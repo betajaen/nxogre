@@ -50,15 +50,15 @@ class NxOgrePublicClass RemoteDebuggerListener
   
   /** \brief Text
   */
-  virtual                                    ~RemoteDebuggerListener(void);
+  virtual                                    ~RemoteDebuggerListener();
   
   /** \brief Text
   */
-  virtual void                                onConnect(void);
+  virtual void                                onConnect();
   
   /** \brief Text
   */
-  virtual void                                onDisconnect(void);
+  virtual void                                onDisconnect();
   
   /** \brief Text
   */

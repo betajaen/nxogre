@@ -48,7 +48,7 @@ TriangleGeometry::TriangleGeometry(NxTriangleMeshShape* shape, Mesh* mesh)
 {
 }
 
-TriangleGeometry::~TriangleGeometry(void)
+TriangleGeometry::~TriangleGeometry()
 {
 }
 
@@ -62,7 +62,7 @@ Enums::ShapeFunctionType TriangleGeometry::getShapeFunctionType() const
  return Enums::ShapeFunctionType_Mesh;
 }
 
-Mesh* TriangleGeometry::getTriangleMesh(void)
+Mesh* TriangleGeometry::getTriangleMesh()
 {
  return mMesh;
 }
@@ -120,10 +120,10 @@ void TriangleGeometry::saveToDescription(TriangleGeometryDescription& descriptio
  description.mDensity = desc.density;
  description.mFlags.from_i(desc.shapeFlags);
  description.mGroup = desc.group;
- description.mGroupsMask.mBits0 = desc.groupsMask.bits0;
- description.mGroupsMask.mBits1 = desc.groupsMask.bits1;
- description.mGroupsMask.mBits2 = desc.groupsMask.bits2;
- description.mGroupsMask.mBits3 = desc.groupsMask.bits3;
+ description.mGroupsMask.bits0 = desc.groupsMask.bits0;
+ description.mGroupsMask.bits1 = desc.groupsMask.bits1;
+ description.mGroupsMask.bits2 = desc.groupsMask.bits2;
+ description.mGroupsMask.bits3 = desc.groupsMask.bits3;
  desc.localPose.getRowMajor44(description.mLocalPose.ptr());
  description.mMass = desc.mass;
  description.mMaterial = desc.materialIndex;

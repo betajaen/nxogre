@@ -58,25 +58,25 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief
   */
-                                            ~MemoryResource(void);
+                                            ~MemoryResource();
   
   /** \brief What is the resources status?
   */
-                       Enums::ResourceStatus getStatus(void) const;
+                       Enums::ResourceStatus getStatus() const;
   
   /** \brief Get the directionality of the resource
   */
-                       Enums::ResourceDirectionality getDirectionality(void) const;
+                       Enums::ResourceDirectionality getDirectionality() const;
   
   /** \brief Get the type of access of the resource
   */
-                        Enums::ResourceAccess         getAccess(void) const;
+                        Enums::ResourceAccess         getAccess() const;
 
   /** \brief Get the size (in bytes) of the resource, or Constants::ResourceSizeUnknown.
       \note  If the Directionality is sucessional or the status is anything but open then
              the file size will be Constants::ResourceSizeUnknown.
   */
-                       size_t                getSize(void) const;
+                       size_t                getSize() const;
   
   /** \brief Go somewhere into the resource from, this is relative to the ReadWrite pointer and not an absolute.
       \note Depending on status, or directionality this will not be possible.
@@ -88,26 +88,26 @@ class NxOgrePublicClass MemoryResource : public Resource
       \note Depending on status, or directionality this will not be possible.
       \return True if the seek did happen, or false if it did not.
   */
-                       bool                  seekBeginning(void);
+                       bool                  seekBeginning();
   
   /** \brief Go to the end of the resource.
       \note Depending on status, or directionality this will not be possible.
       \return True if the seek did happen, or false if it did not.
   */
-                       bool                  seekEnd(void);
+                       bool                  seekEnd();
   
   /** \brief Is the ReadWrite pointer at the end of Resource?
   */
-                       bool                  atBeginning(void) const;
+                       bool                  atBeginning() const;
   
   /** \brief Is the ReadWrite pointer at the end of Resource, just like a standard "EOF" function.
   */
-                       bool                  atEnd(void) const;
+                       bool                  atEnd() const;
   
   /** \brief Where the ReadWrite is from the beginning of the resource.
       \note  Constants::ResourceSizeUnknown will be returned if it is an unknown.
   */
-                       size_t                at(void) const;
+                       size_t                at() const;
   
   /** \brief Write something to the buffer, with a size otherwise fail.
   */
@@ -115,7 +115,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Write a single null (0x00) to the resource otherwise fail.
   */
-                       bool                  writeNull(void);
+                       bool                  writeNull();
   
   /** \brief Write a bool otherwise fail.
   */
@@ -211,7 +211,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a bool otherwise fail.
   */
-                       bool                  readBool(void);
+                       bool                  readBool();
   
   /** \brief Read a bool* array otherwise fail.
   */
@@ -219,7 +219,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single unsigned char otherwise fail.
   */
-                       unsigned char         readUChar(void);
+                       unsigned char         readUChar();
   
   /** \brief Read a unsigned char* array otherwise fail.
   */
@@ -227,7 +227,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single char otherwise fail.
   */
-                       char                  readChar(void);
+                       char                  readChar();
   
   /** \brief Read a char* array otherwise fail.
   */
@@ -235,7 +235,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single unsigned short otherwise fail.
   */
-                       unsigned short        readUShort(void);
+                       unsigned short        readUShort();
   
   /** \brief Read a unsigned short* array otherwise fail.
   */
@@ -243,7 +243,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single short otherwise fail.
   */
-                       short                 readShort(void);
+                       short                 readShort();
   
   /** \brief Read a short* array otherwise fail.
   */
@@ -251,7 +251,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single unsigned int otherwise fail.
   */
-                       unsigned int          readUInt(void);
+                       unsigned int          readUInt();
   
   /** \brief Read a unsigned int* array otherwise fail.
   */
@@ -259,7 +259,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single int otherwise fail.
   */
-                       int                   readInt(void);
+                       int                   readInt();
   
   /** \brief Read a int* array otherwise fail.
   */
@@ -267,7 +267,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single float otherwise fail.
   */
-                       float                 readFloat(void);
+                       float                 readFloat();
   
   /** \brief Read a float* array otherwise fail.
   */
@@ -275,7 +275,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single double otherwise fail.
   */
-                       double                readDouble(void);
+                       double                readDouble();
   
   /** \brief Read a double* array otherwise fail.
   */
@@ -283,7 +283,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a float or double otherwise fail
   */
-                       Real                  readReal(void);
+                       Real                  readReal();
   
   /** \brief Read a float or double array otherwise fail
   */
@@ -291,7 +291,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single long otherwise fail.
   */
-                       long                  readLong(void);
+                       long                  readLong();
   
   /** \brief Read a long* array otherwise fail.
   */
@@ -313,7 +313,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Close the resource.
   */
-                       void                  close(void);
+                       void                  close();
   
   protected: // Variables
   

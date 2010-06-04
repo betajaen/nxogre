@@ -49,6 +49,12 @@ void PhysXConfiguration::setSDKParameter(PhysXParameter parameter, Real value)
  World::getWorld()->getPhysXSDK()->setParameter( (NxParameter) (int) parameter, value);
 }
 
+void PhysXConfiguration::setCCDEnabled(bool is_enabled, float delta)
+{
+ 
+}
+
+
                                                                                        
 
 } // namespace NxOgre

@@ -64,23 +64,23 @@ class NxOgrePublicClass MemoryResourceProtocol : public ResourceProtocol
   
   /** \brief Text
   */
-                                              MemoryResourceProtocol(void);
+                                              MemoryResourceProtocol();
   
   /** \brief Text
   */
-                                             ~MemoryResourceProtocol(void);
+                                             ~MemoryResourceProtocol();
   
   /** \brief Text
   */
-                       String                 getProtocol(void);
+                       String                 getProtocol();
   
   /** \brief Text
   */
-                       StringHash             getProtocolHash(void) const;
+                       StringHash             getProtocolHash() const;
   
   /** \brief Does the resources use filenames?
   */
-                       bool                   usesNamelessResources(void) const;
+                       bool                   usesNamelessResources() const;
   
                        Resource*              open(const Path&, Enums::ResourceAccess);
   
@@ -90,7 +90,7 @@ class NxOgrePublicClass MemoryResourceProtocol : public ResourceProtocol
   
   /** \brief Initialise the memory resource protocol and creates the "memory" archive.
   */
-                       void                   initialise(void);
+                       void                   initialise();
 
   protected: // variables
   

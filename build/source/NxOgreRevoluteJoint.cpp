@@ -66,7 +66,7 @@ RevoluteJoint::RevoluteJoint(RigidBody* first, RigidBody* second, const Revolute
  mRevoluteJoint = mJoint->isRevoluteJoint();
 }
 
-RevoluteJoint::~RevoluteJoint(void)
+RevoluteJoint::~RevoluteJoint()
 {
  mRigidBodies[0]->getScene()->getScene()->releaseJoint(*mJoint);
 }
@@ -76,7 +76,7 @@ void RevoluteJoint::setProjectionMode(Enums::JointProjectionMode mode)
  mRevoluteJoint->setProjectionMode(NxJointProjectionMode(int(mode)));
 }
 
-Enums::JointProjectionMode RevoluteJoint::getProjectionMode(void) const
+Enums::JointProjectionMode RevoluteJoint::getProjectionMode() const
 {
  return Enums::JointProjectionMode(int(mRevoluteJoint->getProjectionMode()));
 }
@@ -94,7 +94,7 @@ void RevoluteJoint::setLimits(const JointLimitPairDescription& desc)
  mRevoluteJoint->setLimits(pair);
 }
 
-JointLimitPairDescription RevoluteJoint::getLimits(void)
+JointLimitPairDescription RevoluteJoint::getLimits()
 {
  NxJointLimitPairDesc pair;
  JointLimitPairDescription out;
@@ -113,7 +113,7 @@ void RevoluteJoint::setMotor(const MotorDescription& in)
  mRevoluteJoint->setMotor(motor);
 }
 
-MotorDescription RevoluteJoint::getMotor(void)
+MotorDescription RevoluteJoint::getMotor()
 {
  MotorDescription out;
  NxMotorDesc motorDesc;
@@ -131,7 +131,7 @@ void RevoluteJoint::setSpring(const SpringDescription& in)
  mRevoluteJoint->setSpring(desc);
 }
 
-SpringDescription RevoluteJoint::getSpring(void)
+SpringDescription RevoluteJoint::getSpring()
 {
  SpringDescription out;
  NxSpringDesc spring;
@@ -142,12 +142,12 @@ SpringDescription RevoluteJoint::getSpring(void)
  return out;
 }
 
-Real RevoluteJoint::getAngle(void)
+Real RevoluteJoint::getAngle()
 {
  return mRevoluteJoint->getAngle();
 }
 
-Real RevoluteJoint::getVelocity(void)
+Real RevoluteJoint::getVelocity()
 {
  return mRevoluteJoint->getVelocity();
 }
@@ -157,7 +157,7 @@ void RevoluteJoint::setRevoluteJointFlags(unsigned int flags)
  mRevoluteJoint->setFlags(flags);
 }
 
-unsigned int RevoluteJoint::getRevoluteJointFlags(void)
+unsigned int RevoluteJoint::getRevoluteJointFlags()
 {
  return mRevoluteJoint->getFlags();
 }

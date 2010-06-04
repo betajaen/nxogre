@@ -41,7 +41,7 @@ ResourceProtocol::ResourceProtocol()
  // virtual function.
 }
 
-ResourceProtocol::~ResourceProtocol(void)
+ResourceProtocol::~ResourceProtocol()
 {
  // virtual function.
 }
@@ -56,22 +56,22 @@ void ResourceProtocol::close(Resource*)
  // virtual function.
 }
 
-String  ResourceProtocol::getProtocol(void) const
+String  ResourceProtocol::getProtocol() const
 {
  return BLANK_STRING;
 }
 
-StringHash ResourceProtocol::getProtocolHash(void) const
+StringHash ResourceProtocol::getProtocolHash() const
 {
  return BLANK_HASH;
 }
 
-bool ResourceProtocol::usesNamelessResources(void) const
+bool ResourceProtocol::usesNamelessResources() const
 {
  return false;
 }
 
-void ResourceProtocol::initialise(void)
+void ResourceProtocol::initialise()
 {
  // virtual function.
 }
@@ -83,7 +83,7 @@ Enums::UserDestructionPolicy ResourceProtocol::getDestructionPolicy() const
 
 ResourceProtocol::ResourceIterator ResourceProtocol::getOpenedResources()
 {
- return mOpenResources.iterator();
+ return mOpenResources.elements();
 }
 
 void ResourceProtocol::addResource(Resource* resource)
@@ -95,7 +95,7 @@ void ResourceProtocol::addResource(Resource* resource)
 void ResourceProtocol::removeResource(Resource* resource)
 {
  if (resource)
-  mOpenResources.erase(resource);
+  mOpenResources.remove(mOpenResources.index(resource));
 }
 
                                                                                        

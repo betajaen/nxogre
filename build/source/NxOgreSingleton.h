@@ -54,7 +54,7 @@ template<class T> class Singleton
       desc.
           Get's a copy of the singleton pointer
   */
-  static T* getSingleton(void)
+  static T* getSingleton()
   {
    return sSingleton;
   }
@@ -65,19 +65,19 @@ template<class T> class Singleton
       desc.
           Constructor for inherited classes.
   */
-  Singleton(void)
+  Singleton()
   {
    sSingleton = static_cast<T*>(this);
   }
   
   /*! destructor. Singleton
   */
- ~Singleton(void)
+ ~Singleton()
   {
    sSingleton = 0;
   }
   
-  private:
+  protected:
   
    static T* sSingleton;
   

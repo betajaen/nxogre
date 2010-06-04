@@ -71,11 +71,9 @@ namespace NxOgre
 class NxOgrePublicClass PrincipalScene : public Scene
 {
   
-  friend class World;
-  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
-  
-  typedef  ref_vector<RigidBody>                            PrincipalDynamics;
-  typedef  ref_vector_iterator<RigidBody>::iterator_t       PrincipalDynamicIterator;
+
+  typedef  vector<RigidBody*>           PrincipalDynamics;
+  typedef  vector_iterator<RigidBody*>  PrincipalDynamicIterator;
   
   public: // Functions
   
@@ -85,7 +83,7 @@ class NxOgrePublicClass PrincipalScene : public Scene
   
   /** \internal Use World::destroyScene()
   */
- ~PrincipalScene(void);
+ ~PrincipalScene();
   
   /*! function. getType
       desc.

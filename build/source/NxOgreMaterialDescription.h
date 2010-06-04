@@ -49,15 +49,15 @@ class NxOgrePublicClass MaterialDescription
   
   /** \brief MaterialDescription constructor, all it does is call MaterialDescription::reset.
   */
-                                              MaterialDescription(void);
+                                              MaterialDescription();
   
   /** \brief Resets everything to their default values, and pointers are set to NULL.
   */
-  void                                        reset(void);
+  void                                        reset();
   
   /** \brief Returns if the variables are in a valid range or not.
   */
-                        bool                  valid(void);
+                        bool                  valid();
 
   /** \brief Optional Name of the Material
   */

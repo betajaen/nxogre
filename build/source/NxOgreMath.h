@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
                                                                                        
@@ -37,7 +37,6 @@
 #include "NxOgreVec3.h"
 #include "NxOgreQuat.h"
 #include "NxOgreMatrix.h"
-
 
                                                                                        
 
@@ -59,29 +58,19 @@ static const double HalfPiD    = 1.57079632679489661923f;
 static const double TwoPiD     = 6.28318530717958647692f;
 static const double InversePiD = 0.31830988618379067154f;
 
-template<typename T> inline T nearEqual(const T& a, const T& b, const T& tolerance)
-{
- return Math::abs(a - b) <= tolerance;
-}
-
-template<typename T> inline T lerp(const T& a, const T& b, const T& alpha) 
-{
- return alpha * (b - a) + a;
-}
-
 template<typename T> inline T abs(T v)
 {
  return v >= (T) 0 ? v : -v;
 }
 
-template<typename T> inline T trunc(const T& v)
+template<typename T> inline T nearEqual(const T& a, const T& b, const T& tolerance)
 {
- return T( (v < (T) 0 ) ? math::ceil(v) : math::floor(v) );
+ return Math::abs<T>(a - b) <= tolerance;
 }
 
-template<typename T> inline T round(const T& v)
+template<typename T> inline T lerp(const T& a, const T& b, const T& alpha)
 {
- return T( math::floor(v + (T) 0.5 ) );
+ return alpha * (b - a) + a;
 }
 
 inline float abs(float v)
@@ -122,6 +111,16 @@ inline float floor(float v)
 inline double floor(double v)
 {
  return ::floor(v);
+}
+
+template<typename T> inline T trunc(const T& v)
+{
+ return T((v < (T) 0 ) ? Math::ceil(v) : Math::floor(v) );
+}
+
+template<typename T> inline T round(const T& v)
+{
+ return T(Math::floor(v + (T) 0.5 ) );
 }
 
 template<typename T>
@@ -166,7 +165,7 @@ inline double sqrt(double v)
  return ::sqrt(v);
 }
 
-inline float arccos( float v)
+inline float arccos(float v)
 {
  if (-1.0f < v)
  {
@@ -179,7 +178,7 @@ inline float arccos( float v)
   return Pi;
 }
 
-inline double arccos( double v)
+inline double arccos(double v)
 {
  if (-1.0 < v)
  {
@@ -192,7 +191,7 @@ inline double arccos( double v)
   return PiD;
 }
 
-inline float arcsin( float v)
+inline float arcsin(float v)
 {
  if (-1.0f < v)
  {
@@ -205,7 +204,7 @@ inline float arcsin( float v)
   return HalfPi;
 }
 
-inline double arcsin( double v)
+inline double arcsin(double v)
 {
  if (-1.0 < v)
  {
@@ -218,22 +217,22 @@ inline double arcsin( double v)
   return HalfPi;
 }
 
-inline float arctan( float v)
+inline float arctan(float v)
 {
  return ::atanf(v);
 }
 
-inline double arctan( double v)
+inline double arctan(double v)
 {
  return ::atan(v);
 }
 
-inline float arctan2( float y, float x)
+inline float arctan2(float y, float x)
 {
  return ::atan2f(y, x);
 }
 
-inline double arctan2( double y, double x)
+inline double arctan2(double y, double x)
 {
  return ::atan2(y, x);
 }
@@ -303,6 +302,7 @@ inline double randomD()
  return double(::rand()) / double(RAND_MAX);
 }
 
+
 inline float random(float x1, float x2)
 {
  float r = random();
@@ -315,12 +315,12 @@ inline Quat nlerp(float alpha, Quat& a, Quat& b, bool shortest)
  Quat out, t;
  float cosine = a.dot(b);
  out = a;
- 
+
  if (cosine < 0.0f && shortest)
   t = -b;
  else
   t = b;
- 
+
  t -= a;
  t *= alpha;
  out += t;
@@ -333,17 +333,17 @@ inline Quat nlerp(float alpha, Quat& a, Quat& b, bool shortest)
 inline void interpolate(Matrix44& a, Matrix44& b, Matrix44& out, float alpha)
 {
  out.scaleIdentity();
- 
+
  // Interpolate translation.
  Vec3 trans_a = a;
  Vec3 trans_b = b;
- out.set( alpha * (trans_b - trans_a) + trans_a);
+ out.set(alpha * (trans_b - trans_a) + trans_a);
 
  // Interpolate orientation.
- 
+
  Quat orient_a = a;
  Quat orient_b = b;
- out.set( nlerp(alpha, orient_a, orient_b, true));
+ out.set(nlerp(alpha, orient_a, orient_b, true));
 
 }
 

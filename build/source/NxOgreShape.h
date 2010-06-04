@@ -50,7 +50,7 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
 {
   
   friend class RigidBody;
-  template<class T> friend inline void Functions::safe_delete(T*);
+  template<class T> friend inline void GC::safe_delete(T*,const char*,int);
 
   public:
   
@@ -176,7 +176,7 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   
   /* Inherited class constructor
   */
- ~Shape(void);
+ ~Shape();
   
   /* Deattach and destroy the NxShape
      Note: The destructor does not call this, as the destructor of the NxActor would do it anyway.
@@ -188,15 +188,17 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
 
                                                                                        
 
-typedef std::vector<ShapeDescription*> ShapeDescriptions;
-
-/** \brief A collection of shapes that belong to a RigidBody (long term storage).
+/* A collection of Descriptions to made into shapes to be attached to a RigidBody.
 */
-typedef ptr_vector<Shape> CollisionModel;
+typedef vector<ShapeDescription*> ShapeDescriptions;
 
-/** \brief
+/* A collection of shapes that belong to a RigidBody (long term storage).
 */
-typedef ptr_vector<Shape>::const_iterator_t CollisionModelIterator;
+typedef vector<Shape*, GC::HasGarbageCollection> CollisionModel;
+
+/* An iterator to a collection of shapes that attached to a RigidBody.
+*/
+typedef vector_iterator<Shape*> CollisionModelIterator;
 
                                                                                        
 

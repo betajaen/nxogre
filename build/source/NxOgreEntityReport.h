@@ -43,7 +43,7 @@ namespace NxOgre
 
 /*! class. EntityReport
     desc.
-        Class specific handling PhysX events, into a ReadOnlyBuffer.
+        Class specific handling PhysX events, into a const_buffer.
 */
 template<typename T>
 class NxOgrePublicClass EntityReport
@@ -54,9 +54,9 @@ class NxOgrePublicClass EntityReport
         desc.
              On Specific events.
         args.
-             ReadOnlyBuffer&lt;T&gt;& __entities__ -- Entities in this event.
+             const_buffer&lt;T&gt;& __entities__ -- Entities in this event.
     */
-    virtual bool onEvent(ReadOnlyBuffer<T>& entities) = 0;
+    virtual bool onEvent(const_buffer<T>& entities) = 0;
   
 }; // class EntityReport<T>
 

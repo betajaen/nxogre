@@ -49,13 +49,19 @@ class NxOgrePublicClass MeshGenerator
  public:
   
   
-  /** \brief Create a plane mesh based on size as load it into the ResourceSysetm as mesh_name
-      \param size      Size of the plane
-      \param type      Type of mesh
-      \param saveTo    Path to save to, default: MEMORY_PATH
-      \param mesh_name mesh_name, default: BLANK_STRING (No mesh name)
+  /*. function. makePlane
+      desc.
+           Create a plane mesh based on size as load it into the ResourceSysetm as mesh_name
+      args.
+          size -- Size of the plane
+          density -- Number of vertices per row/column
+          type -- Type of mesh
+          saveTo -- Path to save to, default: MEMORY_PATH
+          mesh_name -- mesh_name, default: BLANK_STRING (No mesh name)
+     note.
+         If the mesh type is cloth, then the appropriate texture coordinates will be generated too.
   */
-  bool  makePlane(const Vec2& size, float density, Enums::MeshType, const Path& saveTo = MEMORY_PATH, const String& mesh_name = BLANK_STRING);
+  static Mesh* makePlane(const Vec2& size, float density, Enums::MeshType, const Path& saveTo = MEMORY_PATH, const String& mesh_name = BLANK_STRING);
   
   
   /** \brief Create box mesh based on size as load it into the ResourceSystem as mesh_name
@@ -64,7 +70,7 @@ class NxOgrePublicClass MeshGenerator
       \param saveTo    Path to save to, default: MEMORY_PATH
       \param mesh_name mesh_name, default: BLANK_STRING (No mesh name)
   */
-  Mesh*  makeBox(const Vec3& size, Enums::MeshType type, const Path& saveTo = MEMORY_PATH, const String& mesh_name = BLANK_STRING);
+  static Mesh*  makeBox(const Vec3& size, Enums::MeshType type, const Path& saveTo = MEMORY_PATH, const String& mesh_name = BLANK_STRING);
   
  private:
   

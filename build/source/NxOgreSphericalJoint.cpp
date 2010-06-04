@@ -66,7 +66,7 @@ SphericalJoint::SphericalJoint(RigidBody* first, RigidBody* second, const Spheri
  mSphericalJoint = mJoint->isSphericalJoint();
 }
 
-SphericalJoint::~SphericalJoint(void)
+SphericalJoint::~SphericalJoint()
 {
  mRigidBodies[0]->getScene()->getScene()->releaseJoint(*mJoint);
 }
@@ -76,7 +76,7 @@ void SphericalJoint::setProjectionMode(Enums::JointProjectionMode mode)
  mSphericalJoint->setProjectionMode(NxJointProjectionMode(int(mode)));
 }
 
-Enums::JointProjectionMode SphericalJoint::getProjectionMode(void) const
+Enums::JointProjectionMode SphericalJoint::getProjectionMode() const
 {
  return Enums::JointProjectionMode(int(mSphericalJoint->getProjectionMode()));
 }

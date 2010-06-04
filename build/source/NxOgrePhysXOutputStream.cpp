@@ -38,12 +38,12 @@ namespace NxOgre
 
                                                                                        
 
-PhysXOutputStream::PhysXOutputStream(void)
+PhysXOutputStream::PhysXOutputStream()
 : mAssertionResponse(NX_AR_CONTINUE)
 {
 }
 
-PhysXOutputStream::~PhysXOutputStream(void)
+PhysXOutputStream::~PhysXOutputStream()
 {
 }
 

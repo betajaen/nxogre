@@ -147,7 +147,16 @@ class NxOgrePublicClass Callback
        return.
             true to continue overlap processing, false to cancel.
    */
-   virtual bool onOverlap(const Buffer<Shape*>& shapes);
+   virtual bool onOverlap(const buffer<Shape*>& shapes);
+
+
+   /*! function. onSleep
+   */
+   virtual void onSleep(const RigidBodyEventIterator& rigidbodies);
+
+   /*! function. onSleep
+   */
+   virtual void onWake(const RigidBodyEventIterator& rigidbodies);
 
    /*! function. increaseReference
        desc.

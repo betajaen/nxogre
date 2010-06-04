@@ -33,7 +33,7 @@
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreScene.h"
 #include "NxOgreReason.h"
-#include "NxOgrePhysXMeshData.h"
+#include "NxOgreMeshRenderable.h"
 #include "NxOgreRenderable.h"
 #include "NxOgreTimeController.h"
 #include "NxOgreShape.h"
@@ -55,9 +55,8 @@ SoftBody::SoftBody(const SoftBodyDescription& description, Renderable* renderabl
  NxSoftBodyDesc desc;
  ::NxOgre::Functions::PrototypeFunctions::SoftBodyDescriptionToNxSoftBodyDesc(description, desc);
 
- mMeshData = NXOGRE_NEW_NXOGRE(PhysXMeshData)(mMesh);
- 
- desc.meshData = mMeshData->getMeshData();
+ mMeshData = GC::safe_new1<MeshRenderable>(mMesh, __FILE__, __LINE__);
+ mMeshData->getPhysXMeshData(desc.meshData);
  
  if (desc.isValid() == false)
  {
@@ -66,15 +65,16 @@ SoftBody::SoftBody(const SoftBodyDescription& description, Renderable* renderabl
  }
  
  mSoftBody = mScene->getScene()->createSoftBody(desc);
- 
- TimeController::getSingleton()->addTimeListener(this, mPriority);
+ mScene->addRenderListener(this, mPriority);
+ // TimeController::getSingleton()->addTimeListener(this, mPriority);
  
 }
 
 SoftBody::~SoftBody()
 {
- TimeController::getSingleton()->removeTimeListener(this, mPriority);
- NXOGRE_DELETE_NXOGRE(mMeshData);
+ mScene->removeRenderListener(this, mPriority);
+ // TimeController::getSingleton()->removeTimeListener(this, mPriority);
+ GC::safe_delete(mMeshData, NXOGRE_GC_THIS);
 }
 
 bool SoftBody::advance(float deltaTime, const Enums::Priority&)
@@ -103,7 +103,7 @@ NxSoftBody*  SoftBody::getPhysXSoftBody()
  return mSoftBody;
 }
 
-PhysXMeshData*  SoftBody::getPhysXMeshData()
+MeshRenderable*  SoftBody::getMeshRenderable()
 {
  return mMeshData;
 }

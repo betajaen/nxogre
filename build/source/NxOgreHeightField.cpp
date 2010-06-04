@@ -30,15 +30,14 @@
 #include "NxOgreHeightField.h"
 #include "NxOgreResourceSystem.h"
 #include "NxOgrePhysXStream.h"
-#include "NxOgreXFunctions.h"
 #include "NxOgreManualHeightField.h"
-#include "NxOgrePhysXUserEntityReport.h"
-#include "NxOgreWorld.h"
+#include "NxOgreHeightFieldData.h"
+#include "NxOgreNXS.h"
+#include "NxOgreX.h"
+
 
 #include "NxPhysics.h"
 
-
-#include <iostream>
                                                                                        
 
 namespace NxOgre
@@ -47,113 +46,78 @@ namespace NxOgre
                                                                                        
 
 HeightField::HeightField()
-: mNameHash(BLANK_HASH)
 {
  mHeightField = 0;
 }
 
 HeightField::HeightField(Resource* resource)
-: mNameHash(BLANK_HASH)
 {
  mHeightField = 0;
  load(resource);
 }
 
-HeightField::HeightField(const String& name, NxHeightField* hf)
-: mName(name),
-  mHeightField(hf)
+HeightField::HeightField(NxHeightField* heightfield)
+: mHeightField(heightfield)
 {
- mNameHash = Strings::hash(mName);
 }
 
-HeightField::~HeightField(void)
+HeightField::~HeightField()
 {
- 
- if (mHeightField == 0)
-  return;
- 
- NxPhysicsSDK* sdk = NxGetPhysicsSDK();
- 
- if (sdk)
-  sdk->releaseHeightField(*mHeightField);
- 
+ unload();
 }
 
-
-bool HeightField::isLoaded(void) const
+bool HeightField::isLoaded() const
 {
- return mHeightField != 0;
+ return mHeightField != NULL;
 }
 
-bool HeightField::isUsed(void) const
+bool HeightField::isUsed() const
 {
- return (mHeightField && mHeightField->getReferenceCount() != 0);
+ 
+ if (mHeightField)
+ {
+  return mHeightField->getReferenceCount() != 0;
+ }
+ 
+ return false;
 }
 
 void HeightField::load(Resource* resource)
 {
- if (!Functions::XFunctions::isX(resource))
+ 
+ unload();
+ 
+ if (Serialisation::X::isXFile(resource))
  {
-  StringStream ss;
-  ss << "Error: " << resource->getPath().getString() << " is not a NxOgre file. Reasons(s) are:\n"
-     << Functions::XFunctions::whyIsNotX(resource);
-  NxOgre_ThrowException(IOException, ss.str(), Classes::_HeightField);
+  
+  Enums::XType type = Serialisation::X::getXType(resource);
+  
+  if (type != Enums::XType_HeightField)
+  {
+   StringStream stream;
+   stream << "Resource '" << resource->getPath().getString() << " is not a valid NxOgre X HeightField file.\n"
+          << "Reason: Un-reconised header";
+   NxOgre_ThrowException(IOException, stream.str(), Classes::_HeightField);
+   return;
+  }
+  
+  resource->seekBeginning();
+  
+  NxOgre_DebugPrint_HeightFields("Loading x heightfield from heightfield");
+  mHeightField = Serialisation::X::loadHeightField(resource);
+  
   return;
  }
-
- if (!Functions::XFunctions::getXType(resource) == Enums::XType_HeightField)
+ else
  {
-  StringStream ss;
-  ss << "Error: " << resource->getPath().getString() << " is not a NxOgre heightfield file\n"
-     << Functions::XFunctions::whyIsNotX(resource);
-  NxOgre_ThrowException(IOException, ss.str(), Classes::_HeightField);
+  
+  StringStream stream;
+  stream << "Resource '" << resource->getPath().getString() << " is not a NxOgre X heightfield file.";
+  NxOgre_ThrowException(IOException, stream.str(), Classes::_HeightField);
   return;
+  
  }
-
- resource->seekBeginning();
- resource->seek(8);
-
- // hasMaterialAlias (Currently not implemented)
- bool hasMaterialAlias = resource->readBool();
-
- // nbRows (Number of Rows)
- unsigned short nbRows = resource->readShort();
-
- // nbColumns (Number of Columns)
- unsigned short nbColumns = resource->readShort();
-
- unsigned int wh = nbRows * nbColumns;
- 
- ManualHeightField heightfield;
- heightfield.begin(nbColumns, nbRows);
- for (unsigned int i=0; i < wh; i++)
- {
-  HeightFieldSample sample;
-  resource->readCharArray( (char*) &sample, sizeof(NxHeightFieldSample));
-  heightfield.sample(sample);
- }
- 
- mHeightField = heightfield.cook();
-}
-
-void HeightField::setName(const char* name)
-{
- mName = name;
-}
-
-void HeightField::setName(const String& name)
-{
- mName = name;
-}
-
-String HeightField::getName() const
-{
- return mName;
-}
-
-NxHeightField* HeightField::getHeightField(void)
-{
- return mHeightField;
+  
 }
 
 unsigned int HeightField::getNbRows() const
@@ -164,6 +128,62 @@ unsigned int HeightField::getNbRows() const
 unsigned int HeightField::getNbColumns() const
 {
  return mHeightField->getNbColumns();
+}
+
+void HeightField::unload()
+{
+ 
+ if (mHeightField)
+ {
+  NxPhysicsSDK* sdk = NxGetPhysicsSDK();
+  sdk->releaseHeightField(*mHeightField);
+ }
+ 
+ mName = BLANK_STRING;
+ mNameHash = BLANK_HASH;
+ 
+}
+
+NxHeightField* HeightField::getHeightField()
+{
+ return mHeightField;
+}
+
+void HeightField::setName(const char* name)
+{
+ setName(String(name));
+}
+
+void HeightField::setName(const String& name)
+{
+ mName = name;
+ mNameHash = Strings::hash(name);
+}
+
+String HeightField::getName() const
+{
+ return mName;
+}
+
+StringHash HeightField::getNameHash() const
+{
+ return mNameHash;
+}
+
+HeightFieldData* HeightField::getHeightFieldData()
+{
+ 
+ HeightFieldData* data = GC::safe_new0<HeightFieldData>(NXOGRE_GC_THIS);
+ Serialisation::X::saveHeightField(mHeightField, data);
+ return data;
+ 
+}
+
+String HeightField::inspect() const
+{
+ std::ostringstream s;
+ s << "{ 'name' => '" << getName() << "' }";
+ return s.str();
 }
 
 

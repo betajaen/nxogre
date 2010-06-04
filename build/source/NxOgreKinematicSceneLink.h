@@ -63,7 +63,7 @@ class NxOgrePublicClass KinematicSceneLink : public SceneLink
   
   AuxiliaryScene*         mAuxiliary;
   
-  ref_vector<RigidBody*>  mPrincipalKinematicActors;
+  vector<RigidBody*>      mPrincipalKinematicActors;
   
 }; // class SceneLink
 

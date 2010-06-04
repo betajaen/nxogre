@@ -78,7 +78,9 @@ struct NxOgrePublicClass SweepQueryHit
 
 class NxOgrePublicClass SweepCache : public GenericBasedAllocatable
 {
- friend Scene;
+ 
+ NXOGRE_GC_FRIEND_NEW1
+ NXOGRE_GC_FRIEND_DELETE
  
  public:
   

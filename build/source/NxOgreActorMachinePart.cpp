@@ -53,8 +53,13 @@ ActorMachinePart::~ActorMachinePart()
 }
 
 void ActorMachinePart::simulate(float)
+{ // virtual function.
+}
+
+void ActorMachinePart::render(float)
 {
- mPointRenderable->render(mActor->getGlobalPosition(), mActor->getGlobalOrientationQuat());
+ if (mPointRenderable && mActor)
+  mPointRenderable->render(mActor->getGlobalPosition(), mActor->getGlobalOrientationQuat());
 }
 
                                                                                        

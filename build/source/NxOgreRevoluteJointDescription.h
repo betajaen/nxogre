@@ -54,19 +54,19 @@ class NxOgrePublicClass RevoluteJointDescription : public JointDescription
   
   /** \brief Text
   */
-                                              RevoluteJointDescription(void);
+                                              RevoluteJointDescription();
   
   /** \brief Text
   */
-                                             ~RevoluteJointDescription(void);
+                                             ~RevoluteJointDescription();
   
   /** \brief Text
   */
-  void                                        reset(void);
+  void                                        reset();
   
   /** \brief
   */
-  bool                                        isValid(void) const;
+  bool                                        isValid() const;
   
   /** \brief Distance above which to project joint.
       \default 1.0

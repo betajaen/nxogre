@@ -36,7 +36,7 @@ namespace NxOgre
 
                                                                                        
 
-int2::int2(void)
+int2::int2()
 : x(0), y(0)
 {
 }
@@ -46,7 +46,7 @@ int2::int2(int _x, int _y)
 {
 }
 
-int2::~int2(void)
+int2::~int2()
 {
 }
 
@@ -80,7 +80,7 @@ void int2::operator*=(int r)
  y *= r;
 }
 
-int3::int3(void)
+int3::int3()
 : x(0), y(0), z(0)
 {
 }
@@ -90,7 +90,7 @@ int3::int3(int _x, int _y, int _z)
 {
 }
 
-int3::~int3(void)
+int3::~int3()
 {
 }
 
@@ -129,7 +129,7 @@ void int3::operator*=(int r)
  z *= r;
 }
 
-int4::int4(void) : w(0), x(0), y(0), z(0)
+int4::int4() : w(0), x(0), y(0), z(0)
 {
 }
 
@@ -137,7 +137,7 @@ int4::int4(int _w, int _x, int _y, int _z) : w(_w), x(_x), y(_y), z(_z)
 {
 }
 
-int4::~int4(void)
+int4::~int4()
 {
 }
 

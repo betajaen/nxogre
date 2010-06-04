@@ -44,7 +44,7 @@ namespace NxOgre
 namespace Serialisation
 {
 
-static const String FLOWER_SCHEMA_VERSION = "0.2";
+static const String FLOWER_SCHEMA_VERSION = "0.25";
 static const String FLOWER_SCHEMA_VERTICES_LIST = "vertices";
 static const String FLOWER_SCHEMA_INDICES_LIST = "indices";
 static const String FLOWER_SCHEMA_INDICES_LIST_ALT = "indexes";
@@ -58,6 +58,7 @@ static const String FLOWER_SCHEMA_TYPE_VALUE_CONVEX = "convex";
 static const String FLOWER_SCHEMA_TYPE_VALUE_TRIANGLE = "triangle";
 static const String FLOWER_SCHEMA_TYPE_VALUE_CLOTH = "cloth";
 static const String FLOWER_SCHEMA_TYPE_VALUE_SOFTBODY = "softbody";
+static const String FLOWER_SCHEMA_TYPE_VALUE_SKELETON = "skeleton";
 static const String FLOWER_SCHEMA_WELDINGDISTANCE_PROPERTY = "weldingdistance";
 static const String FLOWER_SCHEMA_FLAG_PREFIX = "+";
 static const String FLOWER_SCHEMA_FLAG_FLIPNORMALS = "flip-normals";
@@ -66,20 +67,20 @@ static const String FLOWER_SCHEMA_FLAG_HARDWARE = "hardware";
 static const String FLOWER_SCHEMA_PROPERTY_WELDVERTICES = "weldingdistance";
 static const unsigned int FLOWER_SCHEMA_VALUES_PER_LINE = 9;
 
-void getLine(NxOgre::Resource* resource, NxOgre::Buffer<char>& buffer)
+void getLine(NxOgre::Resource* resource, NxOgre::buffer<char>& buffer)
 {
- buffer.clear();
+ buffer.remove_all();
  while(1)
  {
   char c = resource->readChar();
   if (resource->atEnd() || c == '\n')
    break;
-  buffer.append(c);
+  buffer.push_back(c);
  }
  if (buffer[buffer.size() - 1] == '\r')
   buffer[buffer.size() - 1] = 0;
  else
-  buffer.append(0);
+  buffer.push_back(0);
 }
 
 Flower::Flower()
@@ -95,7 +96,7 @@ Flower::~Flower()
 void Flower::load(MeshData* mesh, Resource* resource)
 {
 
- Buffer<char> lineBuffer;
+ buffer<char> lineBuffer;
  
  while(resource->atEnd() == false)
  {
@@ -198,9 +199,11 @@ void Flower::load(MeshData* mesh, Resource* resource)
     mesh->mType = Enums::MeshType_Cloth;
    else if (line.compare(FLOWER_SCHEMA_TYPE_VALUE_SOFTBODY) == 0)
     mesh->mType = Enums::MeshType_SoftBody;
+   else if (line.compare(FLOWER_SCHEMA_TYPE_VALUE_SKELETON) == 0)
+    mesh->mType = Enums::MeshType_Skeleton;
    continue;
   }
-  
+
   // flags
   if (Strings::starts_insensitive(line, FLOWER_SCHEMA_FLAG_PREFIX))
   {

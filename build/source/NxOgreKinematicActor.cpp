@@ -66,7 +66,7 @@ KinematicActor::KinematicActor(const ShapeDescriptions& shapes, const Matrix44& 
  createKinematic(pose, description, scene, shapes);
 }
 
-KinematicActor::~KinematicActor(void)
+KinematicActor::~KinematicActor()
 {
  destroy();
 }
@@ -96,7 +96,7 @@ void KinematicActor::setGroup(GroupIdentifier actorGroup)
  ::NxOgre::Functions::RigidBodyFunctions::setGroup(actorGroup, mActor);
 }
 
-GroupIdentifier KinematicActor::getGroup(void) const
+GroupIdentifier KinematicActor::getGroup() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGroup(mActor);
 }
@@ -106,22 +106,22 @@ void KinematicActor::setDominanceGroup(GroupIdentifier dominanceGroup)
  ::NxOgre::Functions::RigidBodyFunctions::setGroup(dominanceGroup, mActor);
 }
 
-GroupIdentifier KinematicActor::getDominanceGroup(void) const
+GroupIdentifier KinematicActor::getDominanceGroup() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getDominanceGroup(mActor);
 }
 
-void KinematicActor::resetPairFiltering(void)
+void KinematicActor::resetPairFiltering()
 {
  ::NxOgre::Functions::RigidBodyFunctions::resetPairFiltering(mActor);
 }
 
-bool KinematicActor::isDynamic(void) const
+bool KinematicActor::isDynamic() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::isDynamic(mActor);
 }
 
-Real KinematicActor::computeKineticEnergy(void) const
+Real KinematicActor::computeKineticEnergy() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::computeKineticEnergy(mActor);
 }
@@ -131,12 +131,12 @@ void KinematicActor::setSolverIterationCount(unsigned int iterCount)
  ::NxOgre::Functions::RigidBodyFunctions::setSolverIterationCount(iterCount, mActor);
 }
 
-unsigned int KinematicActor::getSolverIterationCount(void) const
+unsigned int KinematicActor::getSolverIterationCount() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getSolverIterationCount(mActor);
 }
 
-Real KinematicActor::getContactReportThreshold(void) const
+Real KinematicActor::getContactReportThreshold() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getContactReportThreshold(mActor);
 }
@@ -146,7 +146,7 @@ void KinematicActor::setContactReportThreshold(Real threshold)
  ::NxOgre::Functions::RigidBodyFunctions::setContactReportThreshold(threshold, mActor);
 }
 
-unsigned int KinematicActor::getContactReportFlags(void) const
+unsigned int KinematicActor::getContactReportFlags() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
 }
@@ -156,7 +156,7 @@ void KinematicActor::setContactReportFlags(unsigned int flags)
  ::NxOgre::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
 }
 
-unsigned short KinematicActor::getForceFieldMaterial(void) const
+unsigned short KinematicActor::getForceFieldMaterial() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getForceFieldMaterial(mActor);
 }
@@ -186,22 +186,22 @@ void KinematicActor::setGlobalOrientationQuat(const Quat& quat)
  ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientationQuat(quat, mActor);
 }
 
-Matrix44 KinematicActor::getGlobalPose(void) const
+Matrix44 KinematicActor::getGlobalPose() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
 }
 
-Vec3 KinematicActor::getGlobalPosition(void) const
+Vec3 KinematicActor::getGlobalPosition() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
 }
 
-Matrix33 KinematicActor::getGlobalOrientation(void) const
+Matrix33 KinematicActor::getGlobalOrientation() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
 }
 
-Quat KinematicActor::getGlobalOrientationQuat(void) const
+Quat KinematicActor::getGlobalOrientationQuat() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
 }
@@ -216,7 +216,7 @@ void KinematicActor::releaseShape(Shape*)
  //< \argh
 }
 
-unsigned int KinematicActor::getNbShapes(void) const
+unsigned int KinematicActor::getNbShapes() const
 {
  return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
 }

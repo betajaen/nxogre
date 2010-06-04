@@ -50,10 +50,10 @@ namespace NxOgre
 class NxOgrePublicClass HeightFieldGeometry : public Shape
 {
   
-  friend class RigidBody;  // for destroy();
-  friend Shape* Functions::ShapeFunctions::createHeightField(NxShape*); // for new
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
-   
+  
+  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_DELETE
+  
   public: // Functions
   
 
@@ -61,11 +61,11 @@ class NxOgrePublicClass HeightFieldGeometry : public Shape
 
   /** \brief Get the shape type based upon the Classes::xxxx enum.
   */
-  Enums::ShapeFunctionType   getShapeFunctionType(void) const;
+  Enums::ShapeFunctionType   getShapeFunctionType() const;
   
   /** \brief HeightField in Use.
   */
-  HeightField*  getHeightField(void) const;
+  HeightField*  getHeightField() const;
 
   /** \brief  This sets the scale of the heightField to the following formula.
       <code>
@@ -84,15 +84,15 @@ class NxOgrePublicClass HeightFieldGeometry : public Shape
 
   /** \brief Gets the heightfield height scale.
   */
-  Real  getHeightScale(void) const;
+  Real  getHeightScale() const;
 
   /** \brief Gets the heightfield row scale.
   */
-  Real  getRowScale(void) const;
+  Real  getRowScale() const;
 
   /** \brief Gets the heightfield column scale.
   */
-  Real  getColumnScale(void) const;
+  Real  getColumnScale() const;
 
   /** \brief Finds triangles touching the input bounds.
       \params bounds The Bounds to test against.
@@ -188,7 +188,7 @@ class NxOgrePublicClass HeightFieldGeometry : public Shape
   
   /** \brief HeightFieldGeometry
   */
- ~HeightFieldGeometry(void);
+ ~HeightFieldGeometry();
   
   protected:
   

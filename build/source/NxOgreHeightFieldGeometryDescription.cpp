@@ -101,7 +101,7 @@ HeightFieldGeometryDescription::~HeightFieldGeometryDescription()
 
 NxShapeDesc* HeightFieldGeometryDescription::createShapeDescription() const
 {
- NxHeightFieldShapeDesc* description = NXOGRE_NEW_PHYSX(NxHeightFieldShapeDesc, PhysXClassAllocator);
+ NxHeightFieldShapeDesc* description = GC::safe_allocated_new0<NxHeightFieldShapeDesc, PhysXClassAllocator>(NXOGRE_GC_THIS);
  setShapeDescription(description);
  description->heightField = (mHeightField == 0) ? 0 : mHeightField->getHeightField();
 

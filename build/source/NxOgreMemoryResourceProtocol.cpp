@@ -40,19 +40,19 @@ namespace NxOgre
 
                                                                                        
 
-MemoryResourceProtocol::MemoryResourceProtocol(void) : mHasInit(false)
+MemoryResourceProtocol::MemoryResourceProtocol() : mHasInit(false)
 {
  mProtocolName = "memory";
  mProtocolHash = Strings::hash(mProtocolName);
 }
 
-MemoryResourceProtocol::~MemoryResourceProtocol(void)
+MemoryResourceProtocol::~MemoryResourceProtocol()
 {
 }
 
 Resource* MemoryResourceProtocol::open(const Path& path, Enums::ResourceAccess access)
 {
- MemoryResource* resource = NXOGRE_NEW_NXOGRE(MemoryResource)(this);
+ MemoryResource* resource = GC::safe_new1<MemoryResource>(this, NXOGRE_GC_THIS);
  resource->open();
  addResource(resource);
  return resource;
@@ -60,27 +60,27 @@ Resource* MemoryResourceProtocol::open(const Path& path, Enums::ResourceAccess a
 
 void MemoryResourceProtocol::close(Resource* resource)
 {
- MemoryResource* mresource = static_cast<MemoryResource*>(resource);
- mresource->close();
- removeResource(mresource); // Removing it will automatically delete it as well.
+ MemoryResource* mem_resource = static_cast<MemoryResource*>(resource);
+ mem_resource->close();
+ removeResource(mem_resource); // Removing it will automatically delete it as well.
 }
 
-String MemoryResourceProtocol::getProtocol(void)
+String MemoryResourceProtocol::getProtocol()
 {
  return mProtocolName;
 }
 
-StringHash MemoryResourceProtocol::getProtocolHash(void) const
+StringHash MemoryResourceProtocol::getProtocolHash() const
 {
  return mProtocolHash;
 }
 
-bool MemoryResourceProtocol::usesNamelessResources(void) const
+bool MemoryResourceProtocol::usesNamelessResources() const
 {
  return true;
 }
 
-void MemoryResourceProtocol::initialise(void)
+void MemoryResourceProtocol::initialise()
 {
 }
 

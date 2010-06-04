@@ -59,17 +59,17 @@ class NxOgrePublicClass D6JointDescription : public JointDescription
       desc.
            Calls reset.
   */
-  D6JointDescription(void);
+  D6JointDescription();
   
   /*! destructor. D6JointDescription
   */
-  ~D6JointDescription(void);
+  ~D6JointDescription();
   
   /*! function. reset
       desc.
            Sets the properties of the description to their default values.
   */
-  void  reset(void);
+  void  reset();
   
   /*! function. isValid
       desc.
@@ -77,7 +77,7 @@ class NxOgrePublicClass D6JointDescription : public JointDescription
       return.
           **bool** -- If the properties are within valid range of allowed values.
   */
-  bool  isValid(void) const;
+  bool  isValid() const;
   
   /*! variable. mXMotion
       desc.

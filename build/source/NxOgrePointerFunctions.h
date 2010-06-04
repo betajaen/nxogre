@@ -44,6 +44,7 @@ namespace NxOgre
 namespace Functions
 {
 
+#if 0
 template<typename type> inline void safe_delete(type* ptr)
 {
  NXOGRE_DELETE_NXOGRE(ptr);
@@ -57,6 +58,7 @@ template<typename type> inline void safe_delete_policy(type* ptr)
  }
 }
 
+#endif
 }
 
                                                                                        

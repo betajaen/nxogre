@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,20 +21,22 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
                                                                                        
 
-#ifndef NXOGRE_PTR_MAP_H
-#define NXOGRE_PTR_MAP_H
+#ifndef NXOGRE_MAP_H
+#define NXOGRE_MAP_H
 
                                                                                        
 
-#include "NxOgreStable.h"
-#include "NxOgrePointerFunctions.h"
-#include "NxOgreString.h"
+#include "NxOgreGC.h"
+#include "NxOgreSharedPointer.h"
+
+#include <iostream>
 #include <map>
+#include <algorithm>
 
                                                                                        
 
@@ -43,339 +45,192 @@ namespace NxOgre
 
                                                                                        
 
-template<typename key_type, typename type> class ptr_map;
-template<typename key_type, typename type> class ptr_map_iterator;
-template<typename key_type, typename type> class const_ptr_map_iterator;
+template<typename K, typename T> class map_iterator;
 
-/*! class. ptr_map
-    desc.
-         Wrapper for the std::map class.
-    note.
-         Unlike the other ptr containers in NxOgre. This class does _not_ own the pointers, and will be left as they are
-         when the map is erased or eventually removed from memory.
-*/
-template<typename key_type, typename type> class ptr_map
+template<typename K, typename T, typename garbage_collection = GC::NoGarbageCollection>
+class map : protected garbage_collection::template impl_map<K, T>
 {
-  
+
  public:
-  
-  friend class ptr_map_iterator<typename key_type, type>;
-  friend class const_ptr_map_iterator<typename key_type, type>;
-  
-  typedef key_type                                  key_type;
-  
-  typedef type                                      type;
-  
-  typedef type*                                     type_ptr;
-  
-  typedef std::map<key_type, type_ptr>              map_type;
-  
-  typedef ptr_map_iterator<key_type, type>          iterator_t;
-  
-  typedef const_ptr_map_iterator<key_type, type>    const_iterator_t;
-  
-  // constructor
-  ptr_map() : map()
-  {
-    
+
+  map() : container(new std::map<K, T>() )
+  { // constructor
   }
-  
-  // destructor
-  ~ptr_map()
-  {
-   clear();
+
+  map(const map& other) : container(other.container)
+  { // empty constructor.
   }
-  
-  // get a iterator.
-  iterator_t iterator()
+
+ ~map()
   {
-   return iterator_t(*this);
+   if (container.references() == 1)
+    remove_all();
   }
-  
-  // get a constant iterator.
-  const_iterator_t const_iterator()
+
+  map& operator=(const map& other)
   {
-   return const_iterator_t(*this);
+   container = other.container;
+   return *this;
   }
-  
-  // loop through each pointer in the map, and pass it to an operator()(type*) in a class "Each".
-  template<class Each> void each(Each each)
+
+  map_iterator<K, T> elements() const
   {
-   for (map_type::const_iterator it = map.begin(); it != map.end(); ++it)
-    each((*it).second);
+   return map_iterator<K, T>(container->begin(), container->end());
   }
-  
-  // size of the map
+
+  T& operator[](const K& key)
+  {
+   return container->operator [](key);
+  }
+
+  const T& operator[](const K& key) const
+  {
+   return container->operator [](key);
+  }
+
+  T& at(const K& key)
+  {
+   return container->operator [](key);
+  }
+
+  const T& at(const K& key) const
+  {
+   return container->operator [](key);
+  }
+
+  void insert(const K& key, const T& value)
+  {
+   container->insert(std::pair<K,T>(key, value));
+  }
+
+  void remove(const K& key)
+  {
+   typename std::map<K, T>::iterator it = container->find(key);
+   if (it == container->end())
+    return;
+   gc_free((*it).second);
+   container->erase(it);
+  }
+
+  void remove_all()
+  {
+   gc_free_range(container->begin(), container->end());
+   container->clear();
+  }
+
+  bool has(const K& search) const
+  {
+   return container->find(search) != container->end();
+  }
+
   size_t size() const
   {
-   return map.size();
-  }
-  
-  // fetch using a hash.
-  type_ptr at(const key_type& key)
-  {
-   map_type::iterator it = map.find(key);
-   if (it == map.end())
-    return 0;
-   
-   return (*it).second;
-  }
-  
-  // fetch using a hash.
-  const type_ptr at(const key_type& key) const
-  {
-   map_type::const_iterator it = map.find(key);
-   if (it == map.end())
-    return 0;
-   
-   return (*it).second;
-  }
-    
-  // operator[] with a hash.
-  type_ptr operator[](key_type& key)
-  {
-   map_type::iterator it = map.find(key);
-   if (it == map.end())
-    return 0;
-   
-   return (*it).second;
-  }
-  
-  // operator[] with a hash.
-  const type_ptr operator[](key_type& key) const
-  {
-   map_type::const_iterator it = map.find(key);
-   if (it == map.end())
-    return 0;
-   
-   return (*it).second;
-  }
-  
-  // Is the map empty?
-  bool empty() const
-  {
-   return map.empty();
-  }
-  
-  // Insert a pointer into the map, using a prehashed key.
-  void insert(const key_type& key, type_ptr value)
-  {
-   map.insert(std::pair<key_type, type_ptr>(key, value));
-  }
-  
-  // Erase a pointer from the map.
-  void erase(key_type& key) 
-  {
-   map_type::iterator it = map.find(key);
-   if (it == map.end())
-    return;
-   
-   type_ptr ptr = (*it).second;
-   map.erase(it);
-  }
-  
-  // Erase a pointer from the map.
-  void erase(const key_type& key) 
-  {
-   map_type::iterator it = map.find(key);
-   if (it == map.end())
-    return;
-   
-   type_ptr ptr = (*it).second;
-   map.erase(it);
+   return container->size();
   }
 
-  // delete all pointers and clear the map.
-  void clear()
+  size_t length() const
   {
-   map.clear();
+   return container->size();
   }
-  
+
  protected:
-  
-  map_type  map;
-  
+
+  SharedPointer< std::map<K, T> > container;
+
 };
 
 
-
-                                                                                                      
-
-
-
-template<typename key_type, typename type> class const_ptr_map_iterator
+template<typename K, typename T, typename garbage_collection>
+class map<K, T*, garbage_collection> : protected garbage_collection::template impl_map<K, T*>
 {
+
  public:
-  
-  friend class ptr_map<key_type, type>;
 
-  typedef key_type                                            key_type;
-  typedef type                                                type;
-  typedef type*                                               type_ptr;
-  typedef ptr_map<key_type, type>                             ptr_map_type;
-  typedef typename std::map<key_type, type*>::const_iterator  iterator_t;
-  
-  const_ptr_map_iterator()
-  {
-  }
-  
-  const_ptr_map_iterator(const ptr_map_type& other)
-  : _begin(other.map.begin()), _end(other.map.end()), _current(_begin) 
-  {
+  map() : container(new std::map<K, T*>() )
+  { // constructor
   }
 
-  const_ptr_map_iterator<key_type, type>& operator=(const ptr_map_type& other)
+  map(const map& other) : container(other.container)
+  { // empty constructor.
+  }
+
+ ~map()
   {
-   _begin = other.map.begin();
-   _end = other.map.end();
-   _current = _current;
+   if (container.references() == 1)
+    remove_all();
+  }
+
+  map& operator=(const map& other)
+  {
+   container = other.container;
    return *this;
   }
 
-  type_ptr operator->()
+  map_iterator<K, T*> elements() const
   {
-   return (*_current).second;
-  }
-  
-  type_ptr operator*()
-  {
-   return (*_current).second;
-  }
-  
-  const key_type key() const
-  {
-   return (*_current).first;
+   return map_iterator<K, T*>(container->begin(), container->end());
   }
 
-  void operator++()
+  T* operator[](const K& key)
   {
-   _current++;
-  }
-  
-  void operator++(int)
-  {
-   ++_current;
-  }
-  
-  iterator_t& end()
-  {
-   return _end;
+   return container->operator [](key);
   }
 
-  operator iterator_t&()
+  const T* operator[](const K& key) const
   {
-   return _current;
-  }
-  
-  operator iterator_t&() const
-  {
-   return _current;
+   return container->operator [](key);
   }
 
-  bool operator !=(const iterator_t& it) const
+  T* at(const K& key)
   {
-   return _current != it;
+   return container->operator [](key);
   }
 
-  bool operator ==(const iterator_t& it) const
+  const T* at(const K& key) const
   {
-   return _current == it;
+   return container->operator [](key);
   }
- private:
-  
-  iterator_t _begin, _end, _current;
-  
+
+  void insert(const K& key, T* value)
+  {
+   container->insert(std::pair<K,T*>(key, value));
+  }
+
+  void remove(const K& key)
+  {
+   typename std::map<K, T*>::iterator it = container->find(key);
+   if (it == container->end())
+    return;
+   gc_free((*it).second);
+   container->erase(it);
+  }
+
+  void remove_all()
+  {
+   gc_free_range(container->begin(), container->end());
+   container->clear();
+  }
+
+  bool has(const K& key) const
+  {
+   return container->find(key) != container->end();
+  }
+
+  size_t size() const
+  {
+   return container->size();
+  }
+
+  size_t length() const
+  {
+   return container->size();
+  }
+
+ protected:
+
+  SharedPointer< std::map<K, T*> > container;
+
 };
-
-
-
-                                                                                                      
-
-
-
-template<typename key_type, typename type> class ptr_map_iterator
-{
- public:
-  
-  friend class ptr_map<key_type, type>;
-
-  typedef key_type                                            key_type;
-  typedef type                                                type;
-  typedef type*                                               type_ptr;
-  typedef ptr_map<key_type, type>                             ptr_map_type;
-  typedef typename std::map<key_type, type*>::const_iterator  iterator_t;
-  
-  ptr_map_iterator()
-  {
-  }
-  
-  ptr_map_iterator(ptr_map_type& map)
-  : _begin(map.map.begin()), _end(map.map.end()), _current(_begin) 
-  {
-  }
-
-  ptr_map_iterator<key_type, type>& operator=(ptr_map_type& map)
-  {
-   _begin = map.map.begin();
-   _end = map.map.end();
-   _current = _current;
-   return *this;
-  }
-  
-  key_type key() const
-  {
-   return (*_current).first;
-  }
-
-  type_ptr operator->()
-  {
-   return (*_current).second;
-  }
-  
-  type_ptr operator*()
-  {
-   return (*_current).second;
-  }
-
-  void operator++()
-  {
-   _current++;
-  }
-  
-  void operator++(int)
-  {
-   ++_current;
-  }
-  
-  iterator_t& end()
-  {
-   return _end;
-  }
-
-  operator iterator_t&()
-  {
-   return _current;
-  }
-  
-  operator iterator_t&() const
-  {
-   return _current;
-  }
-
-  bool operator !=(const iterator_t& it) const
-  {
-   return _current != it;
-  }
-
-  bool operator ==(const iterator_t& it) const
-  {
-   return _current == it;
-  }
- private:
-  
-  iterator_t _begin, _end, _current;
-};
-
 
                                                                                        
 
@@ -384,7 +239,29 @@ namespace Maps
 
                                                                                        
 
+template<typename K, typename T> T* get_or_null(const NxOgre::map<K,T*>& map, const K& lookFor)
+{
+ if (map.has(lookFor) == false)
+  return NULL;
+ return map.at(lookFor);
+}
+
 template<typename K, typename T> T* get_or_null(const std::map<K,T*>& map, const K& lookFor)
+{
+ std::map<K,T*>::const_iterator it = map.find(lookFor);
+ if (it == map.end())
+  return NULL;
+ return (*it).second;
+}
+
+template<typename K, typename T> T* get_or_null(NxOgre::map<K,T*>& map, const K& lookFor)
+{
+ if (map.has(lookFor) == false)
+  return NULL;
+ return map.at(lookFor);
+}
+
+template<typename K, typename T> T* get_or_null(std::map<K,T*>& map, const K& lookFor)
 {
  std::map<K,T*>::const_iterator it = map.find(lookFor);
  if (it == map.end())

@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,10 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
                                                                                        
-
 
 #ifndef NXOGRE_STRING_H
 #define NXOGRE_STRING_H
@@ -35,19 +34,21 @@
 #include "NxOgreStable.h"
 #include "NxOgreBuffer.h"
 #include <iostream>
+#include <vector>
+#include "NxOgreMap.h"
 
                                                                                        
 
 namespace NxOgre
 {
 
-                                                                                       
+
 
 typedef std::string String;
 
 typedef std::stringstream StringStream;
 
-typedef unsigned long StringHash;
+typedef size_t StringHash;
 
 class Vec2;
 
@@ -145,6 +146,19 @@ String NxOgrePublicFunction to_s(const Radian&);
 */
 String NxOgrePublicFunction to_s(void*, const String& = BLANK_STRING);
 
+/*! function. to_s(float* array with length)
+    desc.
+       Turns a number of floats into strings, seperated by a space.
+*/
+String NxOgrePublicFunction to_s(float*, size_t length);
+
+/*! function. to_s(float* array with length)
+    desc.
+       Turns a number of floats into strings, seperated by a space.
+*/
+String NxOgrePublicFunction to_s(unsigned int*, size_t length);
+
+
 /*! function. to_i
     desc.
         String to int
@@ -183,7 +197,7 @@ void NxOgrePublicFunction inspect(const String& value);
 template<typename T> void inspect(const std::vector<T>& value)
 {
  std::cout << "{";
- for (std::vector<T>::const_iterator it = value.begin(); it != value.end(); ++it)
+ for (typename std::vector<T>::iterator it = value.begin(); it != value.end(); ++it)
  {
   if (it != value.begin())
    std::cout << ", ";
@@ -195,7 +209,7 @@ template<typename T> void inspect(const std::vector<T>& value)
 template<typename K,typename T> void inspect(const std::map<K,T>& value)
 {
  std::cout << "[";
- for (std::map<K,T>::const_iterator it = value.begin(); it != value.end(); ++it)
+ for (typename std::map<K,T>::const_iterator it = value.begin(); it != value.end(); ++it)
  {
   if (it != value.begin())
    std::cout << ", ";
@@ -207,7 +221,7 @@ template<typename K,typename T> void inspect(const std::map<K,T>& value)
 template<typename K,typename T> void inspect(const std::multimap<K,T>& value)
 {
  std::cout << "[";
- for (std::multimap<K,T>::const_iterator it = value.begin(); it != value.end(); ++it)
+ for (typename std::multimap<K,T>::const_iterator it = value.begin(); it != value.end(); ++it)
  {
   if (it != value.begin())
    std::cout << " , ";
@@ -216,7 +230,7 @@ template<typename K,typename T> void inspect(const std::multimap<K,T>& value)
  std::cout << "]" << std::endl;;
 }
 
-template<typename T> void inspect(const Buffer<T>& value)
+template<typename T> void inspect(const buffer<T>& value)
 {
  std::cout << "{";
  for (unsigned int i=0;i < value.size();++i)
@@ -255,7 +269,7 @@ StringHash NxOgrePublicFunction hash(const String& str);
 /* function. index
    desc.
        Find the first occurance of a char in a string
-   args. 
+   args.
       const String& string -- String to search
       char search - Character to search
    return.
@@ -266,7 +280,7 @@ size_t NxOgrePublicFunction index(const String& string, char search);
 /* function. index
    desc.
        Find the first occurance of a char in a string
-   args. 
+   args.
       const String& string -- String to search
       char search - Character to search
    return.
@@ -339,6 +353,18 @@ void NxOgrePublicFunction slice_to_first_of(String& string, char pattern);
 
 /*! function. slice
     desc.
+        slices up the string to the beginning to the last occurance of a character
+*/
+void NxOgrePublicFunction slice_to_last_of(String& string, char pattern);
+
+/*! function. slice
+    desc.
+        slices up the string after to the first occurance of a character
+*/
+void NxOgrePublicFunction slice_after_first_of(String& string, char pattern);
+
+/*! function. slice
+    desc.
         slices up the string after to the last occurance of a character
 */
 void NxOgrePublicFunction slice_after_last_of(String& string, char pattern);
@@ -379,6 +405,19 @@ bool NxOgrePublicFunction starts(const String& original, const String& comparisi
 */
 bool NxOgrePublicFunction starts_insensitive(const String& original, const String& comparision);
 
+/*! function. matches
+    desc.
+        Does the string match with another string?
+*/
+bool NxOgrePublicFunction matches(const String& original, const String& comparision);
+
+/*! function. matches_insensitive
+    desc.
+        Does the string match with another string? Case insensitive version
+*/
+bool NxOgrePublicFunction matches_insensitive(const String& original, const String& comparision);
+
+
 /*! function. join
     desc.
         joins up a string from a range of values.
@@ -396,7 +435,7 @@ template<typename T> String join(T* begin, T* end, const std::string& delimiter 
 template<typename T> String join(const std::vector<T>& values, const std::string& seperator = " ")
 {
  StringStream s;
- for (std::vector<T>::const_iterator it = values.begin(); it != values.end(); ++it)
+ for (typename std::vector<T>::const_iterator it = values.begin(); it != values.end(); ++it)
   s << (*it) << seperator;
  std::string out = s.str();
  return out.substr(0, out.length() - seperator.length());
@@ -415,12 +454,12 @@ template<typename T> std::vector<T> split(const String& str, const String& delim
  while (a != String::npos || b != String::npos)
  {
   std::stringstream s(str.substr(b, a - b));
-  s >> t; 
+  s >> t;
   out.push_back(t);
   b = str.find_first_not_of(delimiters, a);
   a = str.find_first_of(delimiters, b);
  }
- 
+
  return out;
 }
 
@@ -428,7 +467,7 @@ template<typename T> std::vector<T> split(const String& str, const String& delim
     desc.
         slices up the string based on a range.
 */
-template<typename T> void split(const String& str, Buffer<T>& buffer, const String& delimiters = " \t")
+template<typename T> void split(const String& str, buffer<T>& buffer, const String& delimiters = " \t")
 {
 
  size_t b = str.find_first_not_of(delimiters, 0);
@@ -437,12 +476,12 @@ template<typename T> void split(const String& str, Buffer<T>& buffer, const Stri
  while (a != String::npos || b != String::npos)
  {
   std::stringstream s(str.substr(b, a - b));
-  s >> t; 
-  buffer.append(t);
+  s >> t;
+  buffer.push_back(t);
   b = str.find_first_not_of(delimiters, a);
   a = str.find_first_of(delimiters, b);
  }
- 
+
 }
 
 /*! function. split
@@ -454,7 +493,15 @@ template<typename T> void split(const String& str, Buffer<T>& buffer, const Stri
 */
 bool NxOgrePublicFunction split(const String& str, std::map<String, String>&, char delimiter = ' ', bool lowerKey = true, bool trim = true);
 
-                                                                                       
+
+/*! function. split
+    desc.
+        Splits up a string intwo two and places them into a map.
+        The first being the key and the second being the value.
+    return.
+        If the split was succesful or not.
+*/
+bool NxOgrePublicFunction split(const String& str, NxOgre::map<String, String>&, char delimiter = ' ', bool lowerKey = true, bool trim = true);
 
 } // namespace Strings
 

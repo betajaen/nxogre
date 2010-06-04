@@ -32,7 +32,7 @@
 namespace NxOgre
 {
 
-WorldDescription::WorldDescription(void)
+WorldDescription::WorldDescription()
 {
  reset();
 }

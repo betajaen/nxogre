@@ -84,6 +84,7 @@ class NxOgrePublicClass Matrix33
                  const Real& _10, const Real& _11, const Real& _12,
                  const Real& _20, const Real& _21, const Real& _22);
 
+  
  inline Real* operator[](size_t row) const;
 
  inline void identity();
@@ -149,12 +150,15 @@ class NxOgrePublicClass Matrix44
 
  inline Matrix44 operator=(const Matrix44& other);
  
+
  inline void set(const Matrix44& other);
  
  inline void set(const Real mem[Rows][Cols]);
  
  inline void set(const Quat& quat);
  
+ inline void set(const Radian& angle, Enums::Axis);
+
  inline void set(const Real& w, const Real& x, const Real& y, const Real& z);
  
  inline void set(const Vec3& vec);

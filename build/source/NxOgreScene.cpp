@@ -1,19 +1,19 @@
-/** 
-    
+/**
+
     This file is part of NxOgre.
-    
+
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in
     all copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,16 +21,18 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-    
+
 */
 
-                                                                                       
+
 
 #include "NxOgreStable.h"
 #include "NxOgreScene.h"
 
+#include "NxOgreWorld.h"
 #include "NxOgreSceneDescription.h"
 #include "NxOgreSceneTimer.h"
+#include "NxOgreTimeListenerGroup.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreReason.h"
 #include "NxOgreRigidBodyDescription.h"
@@ -76,25 +78,29 @@
 #include "NxOgreCharacterControllerDescription.h"
 #endif
 
-                                                                                       
+
 
 namespace NxOgre
 {
 
-                                                                                       
+
 
 Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 : mScene(0),
   mSDK(sdk),
   mPhysXCallback(0),
-  mSceneTimer(0)
+  mSceneTimer(0),
+  mSleepCallback(0),
+  mNbSimulates(0),
+  mNbRenders(0)
 {
 
- mPhysXCallback = NXOGRE_NEW_NXOGRE(PhysXCallback)(this);
+ mPhysXCallback = GC::safe_new1<PhysXCallback>(this, NXOGRE_GC_THIS);
+ mWaitingListenerGroup = GC::safe_new1<TimeListenerGroup>(Enums::Priority_Low, NXOGRE_GC_THIS);
 
  mName = description.mName;
  mNameHash = Strings::hash(mName);
- 
+
  NxSceneDesc scene_description;
  //Functions::PrototypeFunctions::SceneDescriptionToNxSceneDesc(description, scene_description);
  description.to_nxscene(&scene_description);
@@ -104,7 +110,9 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 
  scene_description.userTriggerReport = mPhysXCallback;
  scene_description.userContactReport = mPhysXCallback;
+ scene_description.userNotify = mPhysXCallback;
  
+ mSleepCallback = World::getSingleton()->getNullCallback();
  
  NxOgre_ThrowExceptionIfNull(mSDK, NX_MEMORY_PhysicsSDK);
  
@@ -117,82 +125,77 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
   NxOgre_ThrowException(DescriptionInvalidException, Reason::Exceptionise(scene_description, mSDK == 0, mName), Classes::_World);
   return;
  }
-  
-  Material* material = NXOGRE_NEW_NXOGRE(Material)(mScene->getMaterialFromIndex(0), this);
+
+  Material* material = GC::safe_new2<Material>(mScene->getMaterialFromIndex(0), this, NXOGRE_GC_THIS);
   mMaterials.insert(material->getNameHash(), material);
   mIndexedMaterials.insert(0, material);
   
-//  TimeController::getSingleton()->mListeners[mProcessingPriority].push_back(this);
-//  TimeController::getSingleton()->mListeners[mFetchingPriority].push_back(this);
-  TimeController::getSingleton()->addTimeListener(this, mProcessingPriority);
-  TimeController::getSingleton()->addTimeListener(this, mFetchingPriority);
+  mSceneTimer = GC::safe_new2<FixedSceneTimer>(this, description.mMaxTimeStep, NXOGRE_GC_THIS); // temp.
 
-  
-  mSceneTimer = new FixedSceneTimer(this, description.mMaxTimeStep); // temp.
-  
 }
 
-Scene::~Scene(void)
+Scene::~Scene()
 {
- 
- TimeController::getSingleton()->removeTimeListener(this, mProcessingPriority);
- TimeController::getSingleton()->removeTimeListener(this, mFetchingPriority);
- 
- //TimeController::getSingleton()->removeListener(this);
- 
+
+ GC::safe_delete(mWaitingListenerGroup, NXOGRE_GC_THIS);
+
  if (mSDK && mScene)
  {
-  mActors.clear();
-  mSceneGeometries.clear();
-  mKinematicActors.clear();
-  mVolumes.clear();
-  mMaterials.clear();
-  mFluids.clear();
-  mCloths.clear();
-  mSoftBodies.clear();
-  NXOGRE_DELETE_NXOGRE(mSceneTimer);
+  mActors.remove_all();
+  mSceneGeometries.remove_all();
+  mKinematicActors.remove_all();
+  mVolumes.remove_all();
+  mMaterials.remove_all();
+#if NxOgreHasFluids == 1
+  mFluids.remove_all();
+#endif
+  mMachines.remove_all();
+  mCloths.remove_all();
+  mSoftBodies.remove_all();
+  GC::safe_delete(mSceneTimer, NXOGRE_GC_THIS);
   mSDK->releaseScene(*mScene);
-  NXOGRE_DELETE_NXOGRE(mPhysXCallback);
+  GC::safe_delete(mPhysXCallback, NXOGRE_GC_THIS);
  }
+
 }
 
-String Scene::getName(void) const
+String Scene::getName() const
 {
  return mName;
 }
 
-StringHash Scene::getNameHash(void) const
+StringHash Scene::getNameHash() const
 {
  return mNameHash;
 }
 
-unsigned int Scene::getNbRigidBodies(void) const
+unsigned int Scene::getNbRigidBodies() const
 {
  return mScene->getNbActors();
 }
 
-unsigned int Scene::getNbActors(void) const
+unsigned int Scene::getNbActors() const
 {
  return mActors.size();
 }
 
-Scene::ActorIterator Scene::getActors(void)
+Scene::ActorIterator Scene::getActors()
 {
- return Scene::ActorIterator(mActors);
+ return mActors.elements();
 }
 
 Actor* Scene::createActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- Actor* actor = NXOGRE_NEW_NXOGRE(Actor)(shapes, pose, description, this);
+ Actor* actor = GC::safe_new4<Actor>(shapes, pose, description, this);
  StringHash hash = actor->getNameHash();
  mActors.insert(hash, actor);
  return actor;
 }
 
-  
+
 Actor* Scene::createActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- Actor* actor = NXOGRE_NEW_NXOGRE(Actor)(shape, pose, description, this);
+ Actor* actor = GC::safe_new4<Actor>(shape, pose, description, this);
  StringHash hash = actor->getNameHash();
  mActors.insert(hash, actor);
  return actor;
@@ -200,21 +203,21 @@ Actor* Scene::createActor(const ShapeDescription& shape, const Matrix44& pose, c
 
 bool Scene::destroyActor(Actor* actor)
 {
- 
+
  if (actor == 0)
   return false;
- 
+
  if (actor->isDynamic() == false)
   return false;
- 
- mActors.erase(actor);
- 
+
+ mActors.remove(actor->getNameHash(), actor);
+
  return true;
 }
 
 SceneGeometry* Scene::createSceneGeometry(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- SceneGeometry* sg = NXOGRE_NEW_NXOGRE(SceneGeometry)(shapes, pose, description, this);
+ SceneGeometry* sg = GC::safe_new4<SceneGeometry>(shapes, pose, description, this, NXOGRE_GC_THIS);
  StringHash hash = sg->getNameHash();
  mSceneGeometries.insert(hash, sg);
  return sg;
@@ -222,46 +225,125 @@ SceneGeometry* Scene::createSceneGeometry(const ShapeDescriptions& shapes, const
 
 SceneGeometry* Scene::createSceneGeometry(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- SceneGeometry* sg = NXOGRE_NEW_NXOGRE(SceneGeometry)(shape, pose, description, this);
+ SceneGeometry* sg = GC::safe_new4<SceneGeometry>(shape, pose, description, this, NXOGRE_GC_THIS);
  StringHash hash = sg->getNameHash();
  mSceneGeometries.insert(hash, sg);
  return sg;
 }
 
-bool Scene::advance(float user_deltaTime, const Enums::Priority& p)
+void Scene::simulate(float deltaTime)
 {
  
- if (p == mProcessingPriority && mSceneTimer->getTimerMode() > 0 )
+ mNbSimulates++;
+ 
+ // Machines first.
+ for (mMachineIterator = mMachines.elements(); mMachineIterator != mMachineIterator.end(); mMachineIterator++)
+  mMachineIterator->simulate(deltaTime);
+
+ // Then any listeners.
+ for (mListenerIterator = mSimulateListenerGroups.elements(); mListenerIterator != mListenerIterator.end(); mListenerIterator++)
+  mListenerIterator->advance(deltaTime, mWaitingListenerGroup);
+ 
+ // Any listeners that got behind.
+ if (mWaitingListenerGroup->empty() == false)
  {
-  mMachines.each(Machine::MachineLambda(user_deltaTime));
-  mCanRender = false;
-  mSceneTimer->simulate(user_deltaTime);
-  return true;
+  mWaitingListenerGroup->advance(deltaTime, 0);
+  mWaitingListenerGroup->remove_all();
  }
  
- if (p == mFetchingPriority && mSceneTimer->getTimerMode() == Enums::TimerMode_Simulating)
- {
-  mSceneTimer->fetchResults();
-  mCanRender = true;
-  return true;
- }
+ mCanRender = false;
  
- return true;
+ // And ready to simulate.....
+ mSceneTimer->simulate(deltaTime);
 }
 
-NxScene* Scene::getScene(void)
+bool Scene::canRender() const
+{
+ return mSceneTimer->hasResults();
+}
+
+void Scene::render(float deltaTime)
+{
+ 
+ mNbRenders++;
+ 
+ // ...okay we are back.
+ mSceneTimer->fetchResults();
+ 
+ mCanRender = true;
+ 
+ // Render the machines first.
+ for (mMachineIterator = mMachines.elements(); mMachineIterator != mMachineIterator.end(); mMachineIterator++)
+  mMachineIterator->render(deltaTime);
+ 
+ // Then any listeners
+ for (mListenerIterator = mRenderListenerGroups.elements(); mListenerIterator != mListenerIterator.end(); mListenerIterator++)
+  mListenerIterator->advance(deltaTime, mWaitingListenerGroup);
+ 
+ 
+ // If there are any WaitingListeners, run them again.
+ if (mWaitingListenerGroup->empty() == false)
+ {
+  mWaitingListenerGroup->advance(deltaTime, 0);
+  mWaitingListenerGroup->remove_all();
+ }
+ 
+}
+
+void Scene::addSimulateListener(TimeListener* listener, Enums::Priority priority)
+{
+ 
+ if (mSimulateListenerGroups.has(priority) == false)
+  mSimulateListenerGroups.insert(priority, GC::safe_new1<TimeListenerGroup>(priority, NXOGRE_GC_THIS));
+  
+ mSimulateListenerGroups.at(priority)->push_back(listener);
+
+}
+
+void Scene::removeSimulateListener(TimeListener* listener, Enums::Priority priority)
+{
+ 
+ if (mSimulateListenerGroups.has(priority) == false)
+  return;
+ 
+ mSimulateListenerGroups.at(priority)->remove(listener);
+ 
+}
+
+void Scene::addRenderListener(TimeListener* listener, Enums::Priority priority)
+{
+ 
+ if (mRenderListenerGroups.has(priority) == false)
+  mRenderListenerGroups.insert(priority, GC::safe_new1<TimeListenerGroup>(priority, NXOGRE_GC_THIS));
+  
+ mRenderListenerGroups.at(priority)->push_back(listener);
+ 
+}
+
+void Scene::removeRenderListener(TimeListener* listener, Enums::Priority priority)
+{
+ 
+ if (mRenderListenerGroups.has(priority) == false)
+  return;
+ 
+ mRenderListenerGroups.at(priority)->remove(listener);
+ 
+}
+
+
+NxScene* Scene::getScene()
 {
  return mScene;
 }
 
-bool Scene::isProcessing(void) const
+bool Scene::isProcessing() const
 {
  return !mScene->isWritable();
 }
 
 Material* Scene::createMaterial(const MaterialDescription& description)
 {
- Material* material = NXOGRE_NEW_NXOGRE Material(description, this);
+ Material* material = GC::safe_new2<Material>(description, this, NXOGRE_GC_THIS);
  mMaterials.insert(material->getNameHash(), material);
  mIndexedMaterials.insert(material->getIdentifier(), material);
  return material;
@@ -270,8 +352,8 @@ Material* Scene::createMaterial(const MaterialDescription& description)
 
 void Scene::destroyMaterial(Material* material)
 {
- mIndexedMaterials.erase(material->getIdentifier());
- mMaterials.erase(material->getNameHash());
+ mIndexedMaterials.remove(material->getIdentifier());
+ mMaterials.remove(material->getNameHash(), material);
 }
 
 Material* Scene::getMaterial(const MaterialIdentifier& identifier)
@@ -281,7 +363,7 @@ Material* Scene::getMaterial(const MaterialIdentifier& identifier)
 
 KinematicActor* Scene::createKinematicActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description)
 {
- KinematicActor* ka = NXOGRE_NEW_NXOGRE(KinematicActor)(shape, pose, description, this);
+ KinematicActor* ka = GC::safe_new4<KinematicActor>(shape, pose, description, this, NXOGRE_GC_THIS);
  StringHash hash = ka->getNameHash();
  mKinematicActors.insert(hash, ka);
  return ka;
@@ -289,7 +371,7 @@ KinematicActor* Scene::createKinematicActor(const ShapeDescription& shape, const
 
 KinematicActor* Scene::createKinematicActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description)
 {
- KinematicActor* ka = NXOGRE_NEW_NXOGRE(KinematicActor)(shapes, pose, description, this);
+ KinematicActor* ka = GC::safe_new4<KinematicActor>(shapes, pose, description, this, NXOGRE_GC_THIS);
  StringHash hash = ka->getNameHash();
  mKinematicActors.insert(hash, ka);
  return ka;
@@ -297,7 +379,7 @@ KinematicActor* Scene::createKinematicActor(const ShapeDescriptions& shapes, con
 
 Volume* Scene::createVolume(const ShapeDescription& shape, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
- Volume* vol = NXOGRE_NEW_NXOGRE(Volume)(shape, pose, vct, this, callback);
+ Volume* vol = GC::safe_new5<Volume>(shape, pose, vct, this, callback, NXOGRE_GC_THIS);
  StringHash hash = vol->getNameHash();
  mVolumes.insert(hash, vol);
  return vol;
@@ -305,7 +387,7 @@ Volume* Scene::createVolume(const ShapeDescription& shape, const Matrix44& pose,
 
 Volume* Scene::createVolume(const ShapeDescriptions& shapes, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
- Volume* vol = NXOGRE_NEW_NXOGRE(Volume)(shapes, pose, vct, this, callback);
+ Volume* vol = GC::safe_new5<Volume>(shapes, pose, vct, this, callback, NXOGRE_GC_THIS);
  StringHash hash = vol->getNameHash();
  mVolumes.insert(hash, vol);
  return vol;
@@ -313,69 +395,72 @@ Volume* Scene::createVolume(const ShapeDescriptions& shapes, const Matrix44& pos
 
 void Scene::destroyJoint(Joint* joint)
 {
- mJoints.erase(joint);
- NXOGRE_DELETE_NXOGRE(joint);
+ mJoints.remove(mJoints.index(joint));
 }
 
 SphericalJoint* Scene::createSphericalJoint(RigidBody* first, const SphericalJointDescription& desc)
 {
- SphericalJoint* joint = new SphericalJoint(first, 0, desc);
+ RigidBody* second = 0;
+ SphericalJoint* joint = GC::safe_new3<SphericalJoint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 SphericalJoint* Scene::createSphericalJoint(RigidBody* first, RigidBody* second, const SphericalJointDescription& desc)
 {
- SphericalJoint* joint = new SphericalJoint(first, second, desc);
+ SphericalJoint* joint = GC::safe_new3<SphericalJoint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 FixedJoint* Scene::createFixedJoint(RigidBody* first, const FixedJointDescription& desc)
 {
- FixedJoint* joint = new FixedJoint(first, 0, desc);
+ RigidBody* second = 0;
+ FixedJoint* joint = GC::safe_new3<FixedJoint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 FixedJoint* Scene::createFixedJoint(RigidBody* first, RigidBody* second, const FixedJointDescription& desc)
 {
- FixedJoint* joint = new FixedJoint(first, second, desc);
+ FixedJoint* joint = GC::safe_new3<FixedJoint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 RevoluteJoint* Scene::createRevoluteJoint(RigidBody* first, const RevoluteJointDescription& desc)
 {
- RevoluteJoint* joint = new RevoluteJoint(first, 0, desc);
+ RigidBody* second = 0;
+ RevoluteJoint* joint = GC::safe_new3<RevoluteJoint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 RevoluteJoint* Scene::createRevoluteJoint(RigidBody* first, RigidBody* second, const RevoluteJointDescription& desc)
 {
- RevoluteJoint* joint = new RevoluteJoint(first, second, desc);
+ RevoluteJoint* joint = GC::safe_new3<RevoluteJoint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 D6Joint* Scene::createD6Joint(RigidBody* first, const D6JointDescription& desc)
 {
- D6Joint* joint = new D6Joint(first, 0, desc);
+ RigidBody* second = 0;
+ D6Joint* joint = GC::safe_new3<D6Joint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 D6Joint* Scene::createD6Joint(RigidBody* first, RigidBody* second, const D6JointDescription& desc)
 {
- D6Joint* joint = new D6Joint(first, second, desc);
+ D6Joint* joint = GC::safe_new3<D6Joint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
 
 Compartment* Scene::createCompartment(const CompartmentDescription& description)
 {
- Compartment* compartment = new Compartment(description, this);
+ Compartment* compartment = GC::safe_new2<Compartment>(description, this, NXOGRE_GC_THIS);
  mCompartments.push_back(compartment);
  mCompartmentPairs[compartment->getCompartment()] = compartment;
  return compartment;
@@ -386,7 +471,7 @@ void Scene::setGravity(const Vec3& vec)
  mScene->setGravity(vec.as<NxVec3>());
 }
 
-Vec3 Scene::getGravity(void) const
+Vec3 Scene::getGravity() const
 {
  NxVec3 g;
  mScene->getGravity(g);
@@ -467,10 +552,10 @@ RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, u
  NxRay inRay;
  inRay.dir = ray.mDirection.as<NxVec3>();
  inRay.orig = ray.mOrigin.as<NxVec3>();
- 
+
  NxRaycastHit hit;
  NxShape* nxShape = mScene->raycastClosestBounds(inRay, NxShapesType(int(type)), hit, group, maxDistance, hintFlags, 0);
- 
+
  RaycastHit out;
  out.mDistance = hit.distance;
  out.mFaceID = hit.faceID;
@@ -479,26 +564,26 @@ RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, u
  out.mMaterialIndex = hit.materialIndex;
  out.mU = hit.u;
  out.mV = hit.v;
- out.mWorldImpact.from<NxVec3>(hit.worldImpact); 
+ out.mWorldImpact.from<NxVec3>(hit.worldImpact);
  out.mWorldNormal.from<NxVec3>(hit.worldNormal);
- 
+
  PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
  out.mShape = shapePointer->get<Shape>();
  out.mRigidBody = shapePointer->getParent<RigidBody>();
- 
+
  return out;
 }
 
 RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, unsigned int group, Real maxDistance, unsigned int hintFlags, RaycastCache cache) const
 {
- 
+
  NxRay inRay;
  inRay.dir = ray.mDirection.as<NxVec3>();
  inRay.orig = ray.mOrigin.as<NxVec3>();
- 
+
  NxRaycastHit hit;
  NxShape* nxShape = mScene->raycastClosestShape(inRay, NxShapesType(int(type)), hit, group, maxDistance, hintFlags, 0, cache);
- 
+
  RaycastHit out;
  out.mDistance = hit.distance;
  out.mFaceID = hit.faceID;
@@ -507,9 +592,9 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
  out.mMaterialIndex = hit.materialIndex;
  out.mU = hit.u;
  out.mV = hit.v;
- out.mWorldImpact.from<NxVec3>(hit.worldImpact); 
+ out.mWorldImpact.from<NxVec3>(hit.worldImpact);
  out.mWorldNormal.from<NxVec3>(hit.worldNormal);
- 
+
  if (nxShape)
  {
   PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
@@ -521,11 +606,11 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
   out.mShape = 0;
   out.mRigidBody = 0;
  }
- 
+
  return out;
 }
 
-const TimeStep& Scene::getTimeStep(void)
+const TimeStep& Scene::getTimeStep()
 {
  return mSceneTimer->getTimeStep();
 }
@@ -537,38 +622,37 @@ void Scene::registerMachine(Machine* machine)
 
 void Scene::unregisterMachine(Machine* machine)
 {
- mMachines.erase(mMachines.index(machine));
+ mMachines.remove(mMachines.index(machine));
 }
 
 Cloth* Scene::createCloth(const ClothDescription& description, Renderable* renderable, Enums::Priority rp)
 {
- Cloth* cloth = NXOGRE_NEW_NXOGRE(Cloth)(description, renderable, rp, this);
+ Cloth* cloth = GC::safe_new4<Cloth>(description, renderable, rp, this, NXOGRE_GC_THIS);
  mCloths.push_back(cloth);
  return cloth;
 }
 
 void Scene::destroyCloth(Cloth* cloth)
 {
- mCloths.erase(cloth);
- NXOGRE_DELETE_NXOGRE(cloth);
+ mCloths.remove(mCloths.index(cloth));
 }
 
 SoftBody* Scene::createSoftBody(const SoftBodyDescription& description, Renderable* renderable, Enums::Priority rp)
 {
- SoftBody* cloth = NXOGRE_NEW_NXOGRE(SoftBody)(description, renderable, rp, this);
+ SoftBody* cloth = GC::safe_new4<SoftBody>(description, renderable, rp, this, NXOGRE_GC_THIS);
  mSoftBodies.push_back(cloth);
  return cloth;
 }
 
 void Scene::destroySoftBody(SoftBody* cloth)
 {
- mSoftBodies.erase(cloth);
- NXOGRE_DELETE_NXOGRE(cloth);
+ mSoftBodies.remove(mSoftBodies.index(cloth));
 }
 
+#if NxOgreHasFluids == 1
 Fluid* Scene::createFluid(const FluidDescription& description, Renderable* renderable, Enums::Priority rp)
 {
- Fluid* fluid = NXOGRE_NEW_NXOGRE(Fluid)(description, renderable, rp, this);
+ Fluid* fluid = GC::safe_new4<Fluid>(description, renderable, rp, this, NXOGRE_GC_THIS);
  StringHash hash = fluid->getNameHash();
  mFluids.insert(hash, fluid);
  return fluid;
@@ -576,14 +660,12 @@ Fluid* Scene::createFluid(const FluidDescription& description, Renderable* rende
 
 void Scene::destroyFluid(NxOgre::Fluid* fluid)
 {
- if (fluid)
- {
-  if (fluid->getNameHash() == BLANK_HASH)
-   mFluids.erase(fluid);
-  else
-   mFluids.erase(fluid->getNameHash());
- }
+ if (fluid == 0)
+  return;
+
+ mFluids.remove(fluid->getNameHash(), fluid);
 }
+#endif
 
 void Scene::setActorFlags(RigidBody* a, RigidBody* b, unsigned int contact_flags)
 {
@@ -600,7 +682,7 @@ Compartment* Scene::getCompartment(NxCompartment* compartment)
 
 unsigned int Scene::linearCapsuleSweep(const SimpleCapsule& capsule, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits& hits, unsigned int activeGroups)
 {
- 
+
  NxSweepQueryHit* query_hits = (NxSweepQueryHit*) malloc(sizeof(NxSweepQueryHit) * maxShapes);
  NxCapsule physx_capsule = capsule.to_capsule();
 
@@ -612,7 +694,7 @@ unsigned int Scene::linearCapsuleSweep(const SimpleCapsule& capsule, const Vec3&
 
 unsigned int Scene::linearOBBSweep(const SimpleBox& box, const Vec3& motion, unsigned int sweep_flags, unsigned int maxShapes, SweepQueryHits& hits, unsigned int activeGroups)
 {
- 
+
  NxSweepQueryHit* query_hits = (NxSweepQueryHit*) malloc(sizeof(NxSweepQueryHit) * maxShapes);
  NxBox physx_box = box.to_box();
 
@@ -622,18 +704,18 @@ unsigned int Scene::linearOBBSweep(const SimpleBox& box, const Vec3& motion, uns
  return count;
 }
 
-unsigned int Scene::overlapSphereShape(const SimpleSphere& sphere, Enums::ShapesType type, unsigned int maxShapes, Buffer<Shape*> shapes, unsigned int activeGroups, bool accurateCollision)
+unsigned int Scene::overlapSphereShape(const SimpleSphere& sphere, Enums::ShapesType type, unsigned int maxShapes, buffer<Shape*> shapes, unsigned int activeGroups, bool accurateCollision)
 {
- 
+
  NxShape* physx_shapes = (NxShape*) malloc(sizeof(NxShape*) * maxShapes);
- 
+
  NxSphere physx_sphere = sphere.to_sphere();
 
  unsigned int count = mScene->overlapSphereShapes(physx_sphere, (NxShapesType) (int) type, maxShapes, &physx_shapes, 0, activeGroups, 0, accurateCollision);
  Functions::ShapeFunctions::NxShapeArrayToBuffer(physx_shapes, count, shapes);
  free(physx_shapes);
  return count;
- 
+
 }
 
 
@@ -642,33 +724,36 @@ unsigned int Scene::overlapSphereShape(const SimpleSphere& sphere, Enums::Shapes
  NxSphere physx_sphere = sphere.to_sphere();
 
  PhysXUserDataCallbackReport<NxShape*, Shape, Callback> cb(&Callback::onOverlap, callback);
- 
+
  unsigned int count = mScene->overlapSphereShapes(physx_sphere, (NxShapesType) (int) type, 0, 0, &cb, activeGroups, 0, accurateCollision);
- 
+
  //NXOGRE_DELETE(cb);
- 
+
  return count;
 }
 
 SweepCache* Scene::createSweepCache()
 {
- return NXOGRE_NEW_NXOGRE(SweepCache)(mScene->createSweepCache());
+ return GC::safe_new1<SweepCache>(mScene->createSweepCache(), NXOGRE_GC_THIS);
 }
 
 void Scene::destroySweepCache(SweepCache* cache)
 {
- mScene->releaseSweepCache(cache->getCache());
- NXOGRE_DELETE_NXOGRE(cache);
+ if (cache)
+  mScene->releaseSweepCache(cache->getCache());
+ GC::safe_delete(cache, NXOGRE_GC_THIS);
 }
 
 void Scene::setDominanceGroupPair(GroupIdentifier a, GroupIdentifier b, Real dominance0, Real domaince1)
 {
- mScene->setDominanceGroupPair(a, b, NxConstraintDominance(dominance0, domaince1));
+ NxConstraintDominance constraint(dominance0, domaince1);
+ mScene->setDominanceGroupPair(a, b, constraint);
 }
 
 void Scene::setDominanceGroupPair(GroupIdentifier a, GroupIdentifier b, const ConstraintDominance& constraint)
 {
- mScene->setDominanceGroupPair(a, b, NxConstraintDominance(constraint.first, constraint.second));
+ NxConstraintDominance physx_constraint(constraint.first, constraint.second);
+ mScene->setDominanceGroupPair(a, b, physx_constraint);
 }
 
 ConstraintDominance Scene::getDominanceGroupPair(GroupIdentifier a, GroupIdentifier b)
@@ -682,7 +767,7 @@ ConstraintDominance Scene::getDominanceGroupPair(GroupIdentifier a, GroupIdentif
 CharacterController* Scene::createBoxCharacterController(const SimpleBox& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description)
 {
 // CharacterController* controller = NXOGRE_NEW_NXOGRE CharacterController(shape, globalPosition, yaw, description);
- 
+
  //CharacterController* characterController =NXOGRE_NEW_NXOGRE Material(description, this);
  //StringHash hash = fluid->getNameHash();
  //mFluids.insert(hash, fluid);
@@ -693,7 +778,7 @@ CharacterController* Scene::createBoxCharacterController(const SimpleBox& shape,
 CharacterController* Scene::createCapsuleCharacterController(const SimpleCapsule& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description)
 {
 // CharacterController* controller = NXOGRE_NEW_NXOGRE CharacterController(shape, globalPosition, yaw, description);
- 
+
  return 0;
 }
 
@@ -712,7 +797,7 @@ void Scene::destroyCharacterController(CharacterController*)
 
 ForceFieldKernel* Scene::createForceFieldLinearKernel(const ForceFieldLinearKernelDescription& description)
 {
- ForceFieldKernel* kernel = NXOGRE_NEW_NXOGRE(ForceFieldLinearKernel)(description, this);
+ ForceFieldKernel* kernel = GC::safe_new2<ForceFieldLinearKernel>(description, this, NXOGRE_GC_THIS);
  StringHash hash = kernel->getNameHash();
  mForceFieldKernels.insert(hash, kernel);
  return kernel;
@@ -722,14 +807,39 @@ bool Scene::destroyForceFieldLinearKernel(ForceFieldLinearKernel* kernel)
 {
  if (kernel == 0)
   return false;
- 
+
  if (kernel->getNbReferences() == 0)
   return false;
- 
- mForceFieldKernels.erase(kernel);
- NXOGRE_DELETE_NXOGRE(kernel);
- 
+
+ mForceFieldKernels.remove(kernel->getNameHash(), kernel);
+ GC::safe_delete(kernel, NXOGRE_GC_THIS);
+
  return true;
+}
+
+void Scene::setSleepCallback(Callback* callback)
+{
+ mSleepCallback = callback;
+}
+
+void Scene::removeSleepCallback()
+{
+ mSleepCallback = World::getSingleton()->getNullCallback();
+}
+
+bool Scene::hasSleepCallback() const
+{
+ return mSleepCallback != NULL || mSleepCallback != World::getSingleton()->getNullCallback();
+}
+
+void Scene::setGroupCollisionFlag(GroupIdentifier first, GroupIdentifier second, bool collide)
+{
+ mScene->setGroupCollisionFlag(first, second, collide);
+}
+
+void Scene::getGroupCollisionFlag(GroupIdentifier first, GroupIdentifier second) const
+{
+ mScene->getGroupCollisionFlag(first, second);
 }
 
 
@@ -738,8 +848,63 @@ std::string Scene::to_s() const
  return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("Scene") ));
 }
 
-                                                                                       
+unsigned int Scene::getNbSimulates() const
+{
+ return mNbSimulates;
+}
+
+unsigned int Scene::getNbRenders() const
+{
+ return mNbRenders;
+}
+
+void Scene::setFilterOps(NxOgre::Enums::FilterOp op0,NxOgre::Enums::FilterOp op1,NxOgre::Enums::FilterOp op2)
+{
+ mScene->setFilterOps(NxFilterOp(int(op0)), NxFilterOp(int(op1)), NxFilterOp(int(op2)));
+}
+
+void Scene::setFilterBool(bool flag)
+{
+ mScene->setFilterBool(flag);
+}
+
+void Scene::setFilterConstant0(const GroupsMask& mask)
+{
+ mScene->setFilterConstant0(mask.as<NxGroupsMask>());
+}
+
+void Scene::setFilterConstant1(const GroupsMask& mask)
+{
+ mScene->setFilterConstant0(mask.as<NxGroupsMask>());
+}
+
+void Scene::getFilterOps(NxOgre::Enums::FilterOp& op0,NxOgre::Enums::FilterOp& op1,NxOgre::Enums::FilterOp& op2) const
+{
+ NxFilterOp o0, o1, o2;
+ mScene->getFilterOps(o0, o1, o2);
+ op0 = static_cast<Enums::FilterOp>(o0);
+ op1 = static_cast<Enums::FilterOp>(o1);
+ op2 = static_cast<Enums::FilterOp>(o2);
+}
+
+bool Scene::getFilterBool() const
+{
+ return mScene->getFilterBool();
+}
+
+GroupsMask Scene::getFilterConstant0() const
+{ 
+ GroupsMask ret;
+ return ret;
+}
+
+GroupsMask Scene::setFilterConstant1() const
+{
+ GroupsMask ret;
+ return ret;
+}
+
 
 } // namespace NxOgre
 
-                                                                                       
+

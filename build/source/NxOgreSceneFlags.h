@@ -52,7 +52,7 @@ namespace NxOgre
         FluidPerformanceHint:0x80*4 -- Enables faster but less accurate fluid collision with static geometry.
         AlternativeFluidTriangleCollision:0x80*8 -- Enables an alternative fluid triangle-mesh collision CUDA kernel which could be signicantly faster in some scenarios.
         MultithreadedForcefield:0x80*16 -- Enables multi-threaded version of force field for fluids.
-    default. 0
+    default. SimulateSeperateThread|DisableSceneMutex
 */
 struct SceneFlags
 {
@@ -89,7 +89,7 @@ struct SceneFlags
     // Enables multi-threaded version of force field for fluids.
     MultithreadedForcefield = 0x80*16,
     // Default
-    DefaultFlags = 0
+    DefaultFlags = SimulateSeperateThread|DisableSceneMutex
    };
 
    SceneFlags() : flags(DefaultFlags) {}
@@ -130,7 +130,7 @@ struct SceneFlags
    private: int flags;
 
 
-  // END - Serialisation. "SceneFlags-4bc8b42e22548f19f9e06105f6572d68"
+  // END - Serialisation. "SceneFlags-2bdbc79ebb02b35496b3eb81ab8e9290"
 
 };
 

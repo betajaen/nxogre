@@ -41,27 +41,33 @@ Callback::Callback() : mNbReferences(1)
 }
 
 Callback::~Callback()
-{
- // virtual function.
+{ // virtual function.
 }
 
 void Callback::onVolumeEvent(Volume*, Shape*, RigidBody*, Shape*, unsigned int)
-{
- // virtual function.
+{ // virtual function.
 }
 
 bool Callback::onHitEvent(const RaycastHit&)
-{
+{ // virtual function.
  return false;
 }
 
 void Callback::onContact(const ContactPair&)
-{
+{ // virtual function.
 }
 
-bool Callback::onOverlap(const Buffer<Shape*>&)
-{
+bool Callback::onOverlap(const buffer<Shape*>&)
+{ // virtual function.
  return false;
+}
+
+void Callback::onSleep(const RigidBodyEventIterator& rigidbodies)
+{ // virtual function.
+}
+
+void Callback::onWake(const RigidBodyEventIterator& rigidbodies)
+{ // virtual function.
 }
 
 void Callback::increaseReference()

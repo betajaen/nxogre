@@ -52,39 +52,40 @@ namespace NxOgre
 class NxOgrePublicClass PhysXOutputStream : public GenericBasedAllocatable, public NxUserOutputStream
 {
   
-  friend class World;
+  NXOGRE_GC_FRIEND_NEW0
+  NXOGRE_GC_FRIEND_DELETE
   
   public:
   
   /** \brief What do when there is an assertion from PhysX
   */
-                        void                  setAssertionResponse(Enums::PhysXAssertionResponse);
+  void setAssertionResponse(Enums::PhysXAssertionResponse);
 
   protected: // Functions
   
   /** \internal
   */
-                                              PhysXOutputStream(void);
+  PhysXOutputStream();
   
   /** \internal
   */
-                                             ~PhysXOutputStream(void);
+ ~PhysXOutputStream();
   
   /** \internal
   */
-                        void                  reportError(NxErrorCode code, const char * message, const char *file, int line);
+  void  reportError(NxErrorCode code, const char * message, const char *file, int line);
 
   /** \internal
   */
-                        NxAssertResponse      reportAssertViolation(const char * message, const char *file, int line);
+  NxAssertResponse  reportAssertViolation(const char * message, const char *file, int line);
 
   /** \internal
   */
-                        void                  print(const char*);
+  void  print(const char*);
   
   protected: // Variables
   
-                        NxAssertResponse      mAssertionResponse;
+  NxAssertResponse  mAssertionResponse;
   
 }; // class ClassName
 

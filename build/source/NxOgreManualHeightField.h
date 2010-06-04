@@ -26,8 +26,8 @@
 
                                                                                        
 
-#ifndef NXOGRE_MANUALHEIGHTFIELD_H
-#define NXOGRE_MANUALHEIGHTFIELD_H
+#ifndef NXOGRE_MANUAL_MESH_H
+#define NXOGRE_MANUAL_MESH_H
 
                                                                                        
 
@@ -41,132 +41,115 @@ namespace NxOgre
 
                                                                                        
 
-class NxOgrePublicClass HeightFieldData : public ResourceAllocatable
-{
- 
- public:
- 
-  HeightFieldData();
- ~HeightFieldData();
- 
-  String                                     mName;
-  Enums::Axis                                mAxis;
-  unsigned int                               mNbRows;
-  unsigned int                               mNbColumns;
-  Buffer<HeightFieldSample>                  mSamples;
-  Real                                       mThickness;
-  Real                                       mVerticalExtent;
-  Real                                       mConvexEdgeThreshold;
-  bool                                       mNoEdgeBoundaries;
-  
-};
-
-/** \brief
+/** \brief ManualHeightField is a class of functions designed to create PhysX heightfields.
+           ManualHeightField can also be used to convert any heightfield file-format to a PhysX one.
+    \example
+     <code>
+      ManualHeightField m;
+      m.begin(NxOgre::Enums::HeightFieldType_Convex, 4);
+       m.vertex(-1,-1);
+       m.vertex(-1, 1);
+       m.vertex( 1,-1);
+       m.vertex( 1, 1);
+      HeightField* heightfield = m.end();
+     </code>
+     To modify an existing heightfield.
+     ManualHeightField m(myHeightField->getHeightFieldData());
+     for (unsigned int i=0;i < m.nbVertices();i++)
+      m.scaleVertex(i, Vec3(2,2,2) );
+     HeightField* myNewScaledHeightField = m.end();
 */
-class NxOgrePublicClass ManualHeightField
+class NxOgrePublicClass ManualHeightField : public GenericBasedAllocatable
 {
   
-  friend class HeightField;
- 
   public: // Functions
   
-  /** \brief Text
-  */
-                                              ManualHeightField(void);
+  enum
+  {
+   AUTO_CALCULATE_TRIANGLES = -1
+  };
   
-  /** \brief Text
+  /** \brief ManualHeightField constructor.
   */
-                                              ManualHeightField(const ManualHeightField& other);
+  ManualHeightField();
   
-  /** \brief Text
+  /** \brief ManualHeightField copy constructor.
   */
-                                             ~ManualHeightField(void);
-
+  ManualHeightField(const ManualHeightField& other);
+  
+  /** \brief Alternative constructor using HeightFieldData.
+  */
+  ManualHeightField(HeightFieldData* other);
+  
+  /** \brief ManualHeightField destructor.
+  */
+ ~ManualHeightField();
+  
   /** \brief Assignment operator
   */
-  ManualHeightField&                          operator=(ManualHeightField& other);
-
-  /** \brief Set the name of the heightfield, otherwise sequentially generate one.
+  ManualHeightField&  operator=(ManualHeightField& other);
+  
+  /** \brief Begin a definition of a heightfield using type.
+      \param estimatedVerticesSize Rough estimate of how many vertices there are. ManualHeightField will auto-resize if needed.
+      \param estimatedTriangleSize Rough estimate of how many triangles there are. If value is "AUTO_CALCULATE_TRIANGLES" then it will
+             use the indexCount * 3, if it is a heightfield that uses Triangles, otherwise 0.
+      \note If using with an existing HeightFieldData, this function may corrupt the existing data!
   */
-  void                                        name(const char* = 0);
-    
+  void  begin(unsigned int nbRows, unsigned int nbColumns);
+  
+  /** \brief Set the name of the heightfield.
+  */
+  void  name(const String& name);
+  
+  /** \brief Set the name of the heightfield.
+  */
+  void  name(const char*);
+  
   /** \brief Get the name of the heightfield.
   */
-  String                                      name(void) const;
+  String  name() const;
+  
+  /** \brief Clean the heightfielddata
+  */
+  void  clean();
 
-  /** \brief Text
+  /** \brief Use the current heightfield data and deallocate/unreference the existing heightfield data.
+      \note Do not use the heightfield data from an existing ManualHeightField as the heightfield data may be unexpectedly deleted!
   */
-  void                                        clear(void);
-  
-  /** \brief Text
-  */
-  void                                        begin(unsigned int nbColumns, unsigned int nbRows, Enums::Axis upAxis = Enums::Y);
-  
-  /** \brief Where the current sample position is.
-  */
-  int2                                        location();
-  
-  /** \brief How large the heightfield is.
-  */
-  int2                                        size();
-  
-  /** \brief Add a heightfield sample, from the HeightField sample class.
-  */
-  void                                        sample(HeightFieldSample);
-  
-  /** \brief Add a heightfield sample, manually.
-  */
-  void                                        sample(short height, MaterialIdentifier mat0 = 0, MaterialIdentifier mat1 = 0, Enums::HeightFieldTesselation = Enums::HeightFieldTesselation_NE_SW);
-  
-  /** \brief Stop and create the heightfield, and load the HeightField into the HeightFieldManager
-  */
-  HeightField*                                end(const String& name);
-  
-  /** \brief Stop and create the heightfield to a Resource.
-  */
-  void                                        end(Resource*);
-  
-  /** \brief
-  */
-  bool                                        isValid(void);
-  
-  /** \brief Set the vertical extent of the heightfield
-  */
-  void                                        setVerticalExtent(Real);
-  
-  /** \brief Get the vertical extent of the heightfield
-  */
-  Real                                        getVerticalExtent(void);
-  
-  /** \brief Set the vertical extent of the convex edge threshold.
-  */
-  void                                        setConvexEdgeThreshold(Real);
-  
-  /** \brief Get the vertical extent of the convex edge threshold.
-  */
-  Real                                        getConvexEdgeThreshold(void) const;
-  
-  /** \brief Set it to disable collisions with height field with boundary edges.
-  */
-  void                                        setHasNoBoundaryEdges(bool);
-  
-  /** \brief Get if it to disable collisions with height field with boundary edges.
-  */
-  bool                                        getHasNoBoundaryEdges(void) const;
+  void  acquire(HeightFieldData*);
 
-  protected: // Functions
-  
-  /** \internal Do not use.
+  /** \brief Add a vertex
+      \for   Triangle, Convex, Cloth, Tetrahedra.
   */
-  NxHeightField*                              cook(void);
+  void  sample(HeightFieldSample);
+  
+  /** \brief Set a vertex value
+  */
+  void  sample(short height, MaterialIdentifier mat0 = 0, MaterialIdentifier mat1 = 0, Enums::HeightFieldTesselation = Enums::HeightFieldTesselation_NE_SW);
+  
+  /** \brief Does the heightfield meet the criteria for the heightfield type?
+  */
+  bool isValid() const;
+  
+  /** \brief Cook the heightfield to a ResourceIdentifier target (default is memory) and return a HeightField to use. HeightField is automatically registered
+             by the HeightFieldManager. HeightField name is automatically generated unless HeightFieldManager::name() is used.
+      \param cleanUp  Clear the buffers after cooking.
+      \param cookingTarget  Tell PhysX to save to a target, in other words. Save the heightfield to a file, save in memory, or to something else.
+  */
+  HeightField* end(bool cleanUp = true, const Path& cookingPath = MEMORY_PATH);
+  
+  /** \brief Cook the heightfield to a ResourceIdentifier target (default is memory).
+      \param cleanUp  Clear the buffers after cooking.
+      \param cookingTarget  Tell PhysX to save to a target, in other words. Save the heightfield to a file, save in memory, or to something else.
+  */
+  void endCookOnly(bool cleanUp = true, const Path& cookingPath = MEMORY_PATH);
   
   protected: // Variables
   
-  HeightFieldData*                      mHeightField;
-  RefT*                                       mRef;
+  NxOgre::SharedPointer<HeightFieldData>             mHeightField;
   
   
-}; // class ClassName
+}; // class ManualHeightField
 
                                                                                        
 

@@ -47,10 +47,11 @@ namespace NxOgre
 class NxOgrePublicClass Mesh : public ResourceAllocatable
 {
   
-  public: // Functions
-  
+  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_DELETE
   friend class MeshManager;
-  template<class T> friend inline void ::NxOgre::Functions::safe_delete(T*);
+  
+  public: // Functions
   
   /** \brief Set the name of this Mesh
   */
@@ -70,28 +71,20 @@ class NxOgrePublicClass Mesh : public ResourceAllocatable
   
   /** \brief Text
   */
-  Enums::MeshType                             getType(void) const;
+  Enums::MeshType                             getType() const;
   
   /** \brief Get type (as a string).
       \note Use Mesh::getType for comparisions.
   */
-  String                                      getTypeAsString(void) const;
+  String                                      getTypeAsString() const;
   
   /** \brief Is the shape loaded?
   */
-  bool                                        isLoaded(void) const;
+  bool                                        isLoaded() const;
   
   /** \brief Is a shape(s) using this mesh?
   */
-  bool                                        isUsed(void) const;
-  
-  /** \brief Load a mesh from a resource, and take on that mesh.
-  */
-  void                                        load(Resource*);
-  
-  /** \brief Unload the mesh.
-  */
-  void                                        unload();
+  bool                                        isUsed() const;
 
   /** \brief Get's the convex mesh, or null
   */
@@ -121,9 +114,17 @@ class NxOgrePublicClass Mesh : public ResourceAllocatable
   */
   MeshStats                                   getStats();
   
-  /** \brief Get the texture coords.
+  /*! function. getTextureCoords
+      desc.
+          Fill a float array with texture coordinates assigned to this mesh.
+      note.
+          Float array length should be at least: 2 * mMesh->getNbTextureCoords()
   */
-  Buffer<float>&                              getTextureCoords();
+  void                                        getTextureCoords(float*);
+
+  /** \brief Get number of texture coords.
+  */
+  unsigned int                                getNbTextureCoords() const;
 
   /** \brief Save the mesh information into MeshData
       \note  You should NXOGRE_DELETE_NXOGRE the MeshData pointer after use.
@@ -151,19 +152,19 @@ class NxOgrePublicClass Mesh : public ResourceAllocatable
   
   /** \brief Render vertices
   */
-  Buffer<float>                               mVertices;
+  buffer<float>                               mVertices;
 
   /** \brief Render indices
   */
-  Buffer<unsigned int>                        mIndices;
+  buffer<unsigned int>                        mIndices;
 
   /** \brief Render normals
   */
-  Buffer<float>                               mNormals;
+  buffer<float>                               mNormals;
   
   /** \brief Render texture coords
   */
-  Buffer<float>                               mTextureCoords;
+  buffer<float>                               mTextureCoords;
   
   /** \brief Name of the mesh
   */
@@ -189,8 +190,16 @@ class NxOgrePublicClass Mesh : public ResourceAllocatable
   
   /** \brief Text
   */
-                                             ~Mesh(void);
+                                             ~Mesh();
+    
+  /** \brief Load a mesh from a resource, and take on that mesh.
+  */
+  void                                        load(Resource*);
   
+  /** \brief Unload the mesh.
+  */
+  void                                        unload();
+
 }; // class Mesh
 
                                                                                        

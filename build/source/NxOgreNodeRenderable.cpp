@@ -36,7 +36,7 @@ namespace NxOgre
 
                                                                                        
 
-NodeRenderable::~NodeRenderable(void)
+NodeRenderable::~NodeRenderable()
 {
 }
 

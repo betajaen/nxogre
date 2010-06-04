@@ -49,47 +49,93 @@ class NxOgrePublicClass MeshManager: public ::NxOgre::Singleton<MeshManager>, pu
   
   friend class World;
   
+  NXOGRE_GC_FRIEND_NEW0
+  NXOGRE_GC_FRIEND_DELETE
+
   public: // Functions
   
-  typedef ptr_multihashmap<Mesh>                Meshes;
+  typedef map<size_t, Mesh*, GC::HasGarbageCollection> Meshes;
   
-  typedef ptr_multihashmap<Mesh>::iterator_t    MeshIterator;
+  typedef map_iterator<size_t, Mesh*>                  MeshIterator;
   
-  /** \brief Load a mesh into the World, that can be used in any Scene.
-      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
+  /*! function. load
+      desc.
+          Load a mesh into the World, that can be used in any Scene.
+      note.
+          If the name is blank, then the mesh name is taken from the path filename, if it can't do that
+          then a name is created for it.
   */
-  Mesh*                                       load(const Path&, const String& name = BLANK_STRING);
+  Mesh* load(const Path&, const String& name = BLANK_STRING);
   
-  /** \brief Load a mesh into the World, that can be used in any Scene.
-      \note  If name is BLANK_STRING then name may be given as <code>Path::getFilenameOnly()</code> of the path
+  /*! function. load
+      desc.
+          Load a mesh into the World, that can be used in any Scene.
+      note.
+          If the name is blank then a name is created for it.
   */
-  Mesh*                                       load(Resource*, const String& name = BLANK_STRING);
+  Mesh* load(Resource*, const String& name = BLANK_STRING);
   
-  /** \brief Text
+  /*! function. unload
+      desc.
+          Try and unload a mesh otherwise return false.
+      note.
+          The mesh cannot be used by anything to be unloaded.
   */
-  Mesh*                                       getByName(const String& name);
+  bool unload(const String& name);
   
-  /** \brief Text
+  /*! function. unload
+      desc.
+          Try and unload a mesh otherwise return false.
+      note.
+          The mesh cannot be used by anything to be unloaded.
   */
-  Mesh*                                       getByHash(const StringHash& hashed_name);
+  bool unload(const StringHash& name);
   
-  /** \brief
+  /*! function. hasMesh
+      desc.
+          Is a mesh loaded?
   */
-  MeshIterator                                getMeshes();
+  bool hasMesh(const String& name) const;
+  
+  /*! function. hasMesh
+      desc.
+          Is a mesh loaded?
+  */
+  bool hasMesh(const StringHash& hash_name) const;
+  
+  /*! function. getByName
+      desc.
+          Get a mesh by it's name or null if it doesn't exist.
+  */
+  Mesh* getByName(const String& name);
+  
+  /*! function. getByHash
+      desc.
+          Get a mesh by it's hashed name or null if it doesn't exist.
+  */
+  Mesh* getByHash(const StringHash& hashed_name);
+  
+  /*! function. getMeshes
+      desc.
+          Get an iterator to all the loaded meshes.
+  */
+  MeshIterator getMeshes() const;
   
   protected: // Variables
   
-  /** \internal See World::precreateSingletons
+  /* \internal See World::precreateSingletons
   */
-                                              MeshManager(void);
+  MeshManager();
   
-  /** \internal See World::destroySingletons
+  /* \internal See World::destroySingletons
   */
-                                             ~MeshManager(void);
+ ~MeshManager();
   
-  /** \brief Known loaded meshes in the World.
+  /* Known loaded meshes in the World.
   */
-  Meshes                                      mMeshes;
+  Meshes mMeshes;
+  
+  unsigned int mNextMeshID;
   
 }; // class ClassName
 

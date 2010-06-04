@@ -53,8 +53,8 @@ namespace NxOgre
 class NxOgrePublicClass ForceFieldLinearKernel : public ForceFieldKernel
 {
   
-  friend class Scene;
-  template<class T> friend inline void Functions::safe_delete(T*); // for delete.
+  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
   
@@ -209,7 +209,7 @@ class NxOgrePublicClass ForceFieldLinearKernel : public ForceFieldKernel
   
   /* destructor. Box
   */
- ~ForceFieldLinearKernel(void);
+ ~ForceFieldLinearKernel();
   
   protected:
   

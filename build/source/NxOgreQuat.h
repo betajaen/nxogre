@@ -50,7 +50,7 @@ class NxOgrePublicClass Quat
  
  public:
   
- Quat(void);
+ Quat();
  
  Quat(const Quat& other);
 

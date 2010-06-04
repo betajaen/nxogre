@@ -37,16 +37,16 @@ namespace NxOgre
 
                                                                                        
 
-SphericalJointDescription::SphericalJointDescription(void)
+SphericalJointDescription::SphericalJointDescription()
 {
  reset();
 }
 
-SphericalJointDescription::~SphericalJointDescription(void)
+SphericalJointDescription::~SphericalJointDescription()
 {
 }
 
-void SphericalJointDescription::reset(void)
+void SphericalJointDescription::reset()
 {
  JointDescription::reset();
  mSwingAxis.set(0,0,1);
@@ -55,7 +55,7 @@ void SphericalJointDescription::reset(void)
  mProjectionMode = Enums::JointProjectionMode_None;;
 }
 
-bool SphericalJointDescription::isValid(void) const
+bool SphericalJointDescription::isValid() const
 {
  return true; // temp.
 }

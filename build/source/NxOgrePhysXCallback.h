@@ -51,7 +51,8 @@ namespace NxOgre
 */
 class NxOgrePublicClass PhysXCallback : public GenericBasedAllocatable,
                                         public NxUserTriggerReport,
-                                        public NxUserContactReport
+                                        public NxUserContactReport,
+                                        public NxUserNotify
 {
   
   public: // Functions
@@ -63,6 +64,12 @@ class NxOgrePublicClass PhysXCallback : public GenericBasedAllocatable,
    void onTrigger(NxShape& triggerShape, NxShape& otherShape, NxTriggerFlag status);
   
    void onContactNotify(NxContactPair& pair, NxU32 events);
+  
+   bool onJointBreak(NxReal breakingImpulse, NxJoint& brokenJoint);
+  
+   void onWake(NxActor** actors, NxU32 count);
+  
+   void onSleep(NxActor** actors, NxU32 count);
   
   protected: // Variables
   

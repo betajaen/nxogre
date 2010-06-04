@@ -51,7 +51,7 @@ class NxOgrePublicClass Ray
   
   /** \brief Constructor with 0,0,0 as Origin and 1,0,0 as Direction.
   */
-                                              Ray(void);
+                                              Ray();
   
   /** \brief Alternate Constructor.
   */
@@ -59,7 +59,7 @@ class NxOgrePublicClass Ray
   
   /** \brief Destructor.
   */
-                                             ~Ray(void);
+                                             ~Ray();
   
   public: // Variables
   

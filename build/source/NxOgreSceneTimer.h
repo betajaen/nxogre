@@ -59,7 +59,7 @@ class NxOgrePublicClass SceneTimer : public GenericBasedAllocatable
   
   /** \brief Text
   */
-  virtual                                    ~SceneTimer(void);
+  virtual                                    ~SceneTimer();
   
   /** \brief
   */
@@ -72,11 +72,11 @@ class NxOgrePublicClass SceneTimer : public GenericBasedAllocatable
   
   /** \brief
   */
-  virtual bool                                hasResults(void) const;
+  virtual bool                                hasResults() const;
   
   /** \brief
   */
-  virtual void                                fetchResults(void);
+  virtual void                                fetchResults();
   
   /*! function. getTimeStep
       desc.

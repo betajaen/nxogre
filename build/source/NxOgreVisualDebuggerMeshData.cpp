@@ -36,11 +36,11 @@ namespace NxOgre
 
                                                                                        
 
-VisualDebuggerMeshData::VisualDebuggerMeshData(void) : mNbLines(0)
+VisualDebuggerMeshData::VisualDebuggerMeshData() : mNbLines(0)
 {
 }
 
-VisualDebuggerMeshData::~VisualDebuggerMeshData(void)
+VisualDebuggerMeshData::~VisualDebuggerMeshData()
 {
 }
 
@@ -49,12 +49,12 @@ unsigned int* VisualDebuggerMeshData::getColours()
  return mColours.first();
 }
 
-float* VisualDebuggerMeshData::getLines(void)
+float* VisualDebuggerMeshData::getLines()
 {
  return mLines.first();
 }
 
-unsigned int VisualDebuggerMeshData::getNbLines(void) const
+unsigned int VisualDebuggerMeshData::getNbLines() const
 {
  return mNbLines;
 }

@@ -50,19 +50,19 @@ class NxOgrePublicClass JointDescription
   
   /** \brief Text
   */
-                                              JointDescription(void);
+                                              JointDescription();
   
   /** \brief Text
   */
-  virtual                                    ~JointDescription(void);
+  virtual                                    ~JointDescription();
   
   /** \brief Text
   */
-  virtual void                                reset(void);
+  virtual void                                reset();
   
   /** \brief
   */
-  virtual bool                                isValid(void) const;
+  virtual bool                                isValid() const;
 
   /** \brief
   */

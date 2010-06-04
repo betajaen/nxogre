@@ -40,7 +40,7 @@ namespace NxOgre
 
                                                                                        
 
-RigidBodyDescription::RigidBodyDescription(void)
+RigidBodyDescription::RigidBodyDescription()
 {
  reset();
 }
@@ -174,6 +174,7 @@ void RigidBodyDescription::reset()
  mMassSpaceInertia.zero();
  mMaxAngularVelocity = -1.0;
  mName.clear();
+ mRigidbodyFlags.reset();
  mSleepAngularVelocity = -1.0;
  mSleepDamping = 0;
  mSleepEnergyThreshold = -1.0;

@@ -66,42 +66,42 @@ Shape* createNull(NxShape* shape)
 
 Shape* createPlane(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE PlaneGeometry(shape->isPlane());
+ return GC::safe_new1<PlaneGeometry>(shape->isPlane(), NXOGRE_GC_THIS);
 }
 
 Shape* createBox(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE Box(shape->isBox());
+ return GC::safe_new1<Box>(shape->isBox(), NXOGRE_GC_THIS);
 }
 
 Shape* createCapsule(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE Capsule(shape->isCapsule());
+ return GC::safe_new1<Capsule>(shape->isCapsule(), NXOGRE_GC_THIS);
 }
 
 Shape* createSphere(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE Sphere(shape->isSphere());
+ return GC::safe_new1<Sphere>(shape->isSphere(), NXOGRE_GC_THIS);
 }
 
 Shape* createWheel(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE Wheel(shape->isWheel());
+ return GC::safe_new1<Wheel>(shape->isWheel(), NXOGRE_GC_THIS);
 }
 
 Shape* createConvex(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE Convex(shape->isConvexMesh(), static_cast<Mesh*>(shape->userData));
+ return GC::safe_new2<Convex>(shape->isConvexMesh(), static_cast<Mesh*>(shape->userData), NXOGRE_GC_THIS);
 }
 
 Shape* createHeightField(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE HeightFieldGeometry(shape->isHeightField(), static_cast<HeightField*>(shape->userData));
+ return GC::safe_new2<HeightFieldGeometry>(shape->isHeightField(), static_cast<HeightField*>(shape->userData), NXOGRE_GC_THIS);
 }
 
 Shape* createTriangleMesh(NxShape* shape)
 {
- return NXOGRE_NEW_NXOGRE TriangleGeometry(shape->isTriangleMesh(), static_cast<Mesh*>(shape->userData));
+ return GC::safe_new2<TriangleGeometry>(shape->isTriangleMesh(), static_cast<Mesh*>(shape->userData), NXOGRE_GC_THIS);
 }
 
 typedef Shape* (*ShapeFunction)(NxShape*);
@@ -132,14 +132,14 @@ Shape* createShape(NxShape* physx_shape, RigidBody* rigid_body)
 {
  Shape* shape = mFunctions[int(physx_shape->getType())] (physx_shape);
  shape->setId((int) physx_shape->userData);
- physx_shape->userData = NXOGRE_NEW_NXOGRE PhysXPointer(shape, shape->getShapeType(), rigid_body);
+ physx_shape->userData = GC::safe_new3<PhysXPointer>(shape, shape->getShapeType(), rigid_body, NXOGRE_GC_THIS);
  return shape;
 }
 
-void NxOgrePublicFunction NxShapeArrayToBuffer(NxShape* nx_shape, unsigned int nb_nx_shapes, Buffer<Shape*>& shapes)
+void NxOgrePublicFunction NxShapeArrayToBuffer(NxShape* nx_shape, unsigned int nb_nx_shapes, buffer<Shape*>& shapes)
 {
  while(nb_nx_shapes--)
-  shapes.append(pointer_representive_cast<Shape>(nx_shape[nb_nx_shapes].userData));
+  shapes.push_back(pointer_representive_cast<Shape>(nx_shape[nb_nx_shapes].userData));
 }
 
                                                                                        

@@ -51,7 +51,7 @@ class NxOgrePublicClass Radian
   
   inline Radian(const Radian& other);
   
-  inline Real    rad();
+  inline Real    rad() const;
 
   inline Radian& operator=(const Real& other);
   

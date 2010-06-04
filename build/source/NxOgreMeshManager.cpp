@@ -41,13 +41,13 @@ namespace NxOgre
 
                                                                                        
 
-MeshManager::MeshManager(void)
+MeshManager::MeshManager() : mNextMeshID(0)
 {
 }
 
-MeshManager::~MeshManager(void)
+MeshManager::~MeshManager()
 {
- mMeshes.clear();
+ mMeshes.remove_all();
 }
 
 Mesh* MeshManager::load(const Path& path, const String& name)
@@ -63,37 +63,69 @@ Mesh* MeshManager::load(Resource* resource, const String& name)
  if (resource == 0)
   return 0;
  
- Mesh* mesh = new Mesh(resource);
+ Mesh* mesh = GC::safe_new1<Mesh>(resource, NXOGRE_GC_THIS);
  
  if (name == BLANK_STRING)
  {
   String mesh_name = resource->getPath().getFilenameOnly();
-  if (mesh_name.length() != 0)
-   mesh->setName(mesh_name);
+  
+  if (mesh_name.length() == 0)
+   mesh_name = "mesh_" + to_s(mNextMeshID++);
+  
+  mesh->setName(mesh_name);
  }
  else
  {
   mesh->setName(name);
  }
  
- StringHash meshHash = mesh->getNameHash();
- mMeshes.insert(meshHash, mesh);
+ mMeshes.insert(mesh->getNameHash(), mesh);
  return mesh;
 }
 
-Mesh* MeshManager::getByName(const String& meshIdentifier)
+bool MeshManager::unload(const String& name)
 {
- return getByHash(Strings::hash(meshIdentifier));
+ return unload(Strings::hash(name));
 }
 
-Mesh* MeshManager::getByHash(const StringHash& hashed_name)
+bool MeshManager::unload(const StringHash& hashed_name)
 {
+ Mesh* mesh = getByHash(hashed_name);
+ if (mesh)
+ {
+  mesh->unload();
+  mMeshes.remove(mesh->getNameHash());
+  return true;
+ }
+ return false;
+}
+
+Mesh* MeshManager::getByName(const String& name)
+{
+ return getByHash(Strings::hash(name));
+}
+
+Mesh* MeshManager::getByHash(const NxOgre::StringHash &hashed_name)
+{
+ if (mMeshes.has(hashed_name) == false)
+  return 0;
+ 
  return mMeshes.at(hashed_name);
 }
 
-MeshManager::MeshIterator MeshManager::getMeshes()
+bool MeshManager::hasMesh(const StringHash& name) const
 {
- return MeshIterator(mMeshes);
+ return mMeshes.has(name);
+}
+
+bool MeshManager::hasMesh(const String& name) const
+{
+ return hasMesh(Strings::hash(name));
+}
+
+MeshManager::MeshIterator MeshManager::getMeshes() const
+{
+ return mMeshes.elements();
 }
 
                                                                                        

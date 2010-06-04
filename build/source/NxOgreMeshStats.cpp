@@ -54,27 +54,27 @@ MeshStats::MeshStats(unsigned int nbVertices, unsigned int nbIndices, unsigned i
 {
 }
 
-unsigned int MeshStats::getNbVertices(void) const
+unsigned int MeshStats::getNbVertices() const
 {
  return mNbVertices;
 }
 
-unsigned int MeshStats::getNbIndices(void) const
+unsigned int MeshStats::getNbIndices() const
 {
  return mNbIndices;
 }
 
-unsigned int MeshStats::getNbParentIndices(void) const
+unsigned int MeshStats::getNbParentIndices() const
 {
  return mNbParentIndices;
 }
 
-unsigned int MeshStats::getNbTextureCoords(void) const
+unsigned int MeshStats::getNbTextureCoords() const
 {
  return mNbTextureCoords;
 }
 
-unsigned int MeshStats::getNbTetrahedra(void) const
+unsigned int MeshStats::getNbTetrahedra() const
 {
  return mNbTetrahedra;
 }

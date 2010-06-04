@@ -40,10 +40,9 @@ class AccumulativeSceneTimer;
 class Actor;
 class ActorMachinePart;
 class AuxiliaryScene;
-template<typename T> class Array;
 class Box;
 class BoxDescription;
-template<typename T> class Buffer;
+template<typename T> class buffer;
 class Capsule;
 class CapsuleDescription;
 class Callback;
@@ -92,6 +91,7 @@ class Material;
 class MaterialDescription;
 class ManualMesh;
 class MeshData;
+class MeshRenderable;
 class ManualHeightField;
 class HeightFieldData;
 class Memory;
@@ -129,6 +129,7 @@ class Resource;
 class ResourceSystem;
 class RigidBody;
 class RigidBodyDescription;
+class RigidBodyEventIterator;
 class RemoteDebugger;
 class RemoteDebuggerListener;
 class Renderable;
@@ -168,8 +169,8 @@ class ShapeDescription;
 class SpringDescription;
 class SweepCache;
 struct SweepQueryHit;
-class TimeController;
 class TimeListener;
+class TimeListenerGroup;
 class TimerStep;
 class Timer;
 class TireFunction;
@@ -185,6 +186,7 @@ class WheelMachinePart;
 class World;
 class WorldDescription;
 class WorldPrototype;
+
 
 #if NxOgreUsePhysXCharacterController == 1
 
