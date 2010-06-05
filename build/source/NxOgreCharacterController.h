@@ -35,7 +35,7 @@
 #include "NxOgreCommon.h"
 #include "NxOgreShape.h"
 
-#if NxOgreUsePhysXCharacterController == 1
+#if NxOgreHasCharacterController == 1
 
 class NxCharacter;
 

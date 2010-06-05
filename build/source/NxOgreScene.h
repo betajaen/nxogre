@@ -63,7 +63,7 @@
 
 #include "NxOgreTimeListener.h"
 
-#if NxOgreUsePhysXCharacterController == 1
+#if NxOgreHasCharacterController == 1
 
 #include "NxOgreCharacterControllerDescription.h"
 
@@ -109,12 +109,12 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   typedef  map<Enums::Priority, TimeListenerGroup*, GC::HasGarbageCollection >  TimeListenerGroups;
   typedef  map_iterator<Enums::Priority, TimeListenerGroup*>                    TimeListenerGroupIterator;
   
-  typedef  vector<Machine*>                                          Machines;
-  typedef  vector_iterator<Machine*>                                 MachineIterator;
+  typedef  vector<Machine*>                                                     Machines;
+  typedef  vector_iterator<Machine*>                                            MachineIterator;
 
-#if NxOgreUsePhysXCharacterController == 1
-  typedef  hashmap<CharacterController>              CharacterControllers;
-  typedef  hashmap<CharacterController>::iterator_t  CharacterControllerIterator;
+#if NxOgreHasCharacterController == 1
+  typedef  hashmap<CharacterController>                                         CharacterControllers;
+  typedef  hashmap<CharacterController>::iterator_t                             CharacterControllerIterator;
 #endif
 
   /*! function. getType
@@ -188,7 +188,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   */
   KinematicActor*  createKinematicActor(const ShapeDescription&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
-#if NxOgreUsePhysXCharacterController == 1
+#if NxOgreHasCharacterController == 1
 
   /*! function. createBoxCharacterController
       desc.
@@ -719,7 +719,7 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   */
   KinematicActors  mKinematicActors;
 
-#if NxOgreUsePhysXCharacterController == 1
+#if NxOgreHasCharacterController == 1
   /** \internal Master character controllers array
   */
   CharacterControllers mCharacterControllers;

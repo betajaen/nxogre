@@ -188,7 +188,7 @@ class WorldDescription;
 class WorldPrototype;
 
 
-#if NxOgreUsePhysXCharacterController == 1
+#if NxOgreHasCharacterController == 1
 
 class CharacterController;
 class CharacterControllerDescription;

@@ -57,12 +57,4 @@ products:
       before:
         - ../VC.prebuild.bat ^NAME^ ^CONFIGURATION^ if visualstudio
       after:
-        - ../VC.postbuild.bat ^NAME^ ^CONFIGURATION^ if visualstudio       
-    - name: NxOgreWithCharacterController
-      aka: NxOgre
-      headers:
-        - %PHYSX_DIR%/SDKs/NxCharacter/include/ if windows
-      libraries:
-        - %PHYSX_DIR%/SDKs/lib/Win32/NxCharacter.lib if windows
-      preprocessor:
-        - NXOGRE_OPTIONS_CHARACTER_CONTROLLER
+        - ../VC.postbuild.bat ^NAME^ ^CONFIGURATION^ if visualstudio

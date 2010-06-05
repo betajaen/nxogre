@@ -1639,7 +1639,7 @@ enum ForceFieldFlags
  ForceFieldFlag_ScalingRigidBody = (1 << 8),
 };
 
-#ifdef NxOgreUsePhysXCharacterController
+#ifdef NxOgreHasCharacterController
 
 enum CharacterControllerInteractionFlag
 {

@@ -34,7 +34,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
-#ifdef NxOgreUsePhysXCharacterController
+#ifdef NxOgreHasCharacterController
 
                                                                                        
 

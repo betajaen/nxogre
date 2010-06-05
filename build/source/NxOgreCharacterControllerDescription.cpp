@@ -29,7 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCharacterControllerDescription.h"
 
-#ifdef NxOgreUsePhysXCharacterController
+#ifdef NxOgreHasCharacterController
 
                                                                                        
 

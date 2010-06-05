@@ -31,6 +31,17 @@
 // Debug Cloth
 #define NXOGRE_DEBUG_CLOTH 0
 
+
+/*
+  NxOgreHasCharacterController
+  ============================
+  
+  Enable use of the PhysX Character Controller.
+   - Requires use of the NxCharacter.lib
+  
+*/
+#define NxOgreHasCharacterController 0
+
 /*
   NxOgreFloatingPointAccuracy
   ===========================

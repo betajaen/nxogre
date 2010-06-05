@@ -2,11 +2,11 @@
 #ifndef NXOGRE_VERSION_H
 #define NXOGRE_VERSION_H
 
-// Wed Jun 02 17:04:50 +0100 2010
+// Sat Jun 05 15:00:15 +0100 2010
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 6
-#define NxOgreVersionRelease 3016
-#define NxOgreCommit "Syllabary"
+#define NxOgreVersionRelease 3031
+#define NxOgreCommit "Haddock"
 #define NxOgreBranch "Detritus"
 
 #endif

@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="NxOgre"
 	ProjectGUID="{2dc6bdb4-2a01-ad08-9dc8-51a73229706a}"
+	RootNamespace="NxOgre"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -16,7 +17,7 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="NxOgreFinal|Win32"
+			Name="Final|Win32"
 			OutputDirectory="NxOgre\Final"
 			IntermediateDirectory="NxOgre\Final"
 			ConfigurationType="2"
@@ -40,9 +41,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\"
+				InlineFunctionExpansion="2"
+				FavorSizeOrSpeed="1"
+				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="..\source;&quot;$(PHYSX_DIR)\SDKs\Physics\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Foundation\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Cooking\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\PhysXLoader\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\NxCharacter\include&quot;"
 				PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;WIN32;_DLL"
 				RuntimeLibrary="2"
+				FloatingPointModel="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -56,7 +61,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="PhysXLoader.lib PhysXCooking.lib"
-				OutputFile="$(OutDir)\NxOgreFinal.dll"
+				OutputFile="$(OutDir)\NxOgre.dll"
 				AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32"
 			/>
 			<Tool
@@ -83,7 +88,7 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="NxOgreDebug|Win32"
+			Name="Debug|Win32"
 			OutputDirectory="NxOgre\Debug"
 			IntermediateDirectory="NxOgre\Debug"
 			ConfigurationType="2"
@@ -107,7 +112,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\"
+				Optimization="0"
+				AdditionalIncludeDirectories="..\source;&quot;$(PHYSX_DIR)\SDKs\Physics\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Foundation\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Cooking\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\PhysXLoader\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\NxCharacter\include&quot;"
 				PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_DEBUG;_DLL"
 				MinimalRebuild="true"
 				RuntimeLibrary="3"
@@ -1295,7 +1301,7 @@
 			RelativePath="..\source\NxOgreStable.cpp"
 			>
 			<FileConfiguration
-				Name="NxOgreDebug|Win32"
+				Name="Debug|Win32"
 				>
 				<Tool
 					Name="VCCLCompilerTool"

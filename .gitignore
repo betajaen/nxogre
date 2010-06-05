@@ -1,8 +1,8 @@
 # Directories
 Debug
 DebugStatic
-Release
-ReleaseStatic
+Final
+FinalStatic
 sdk
 # Specific files
 clean.bat
@@ -18,3 +18,4 @@ clean.bat
 *.ncb
 *.suo
 *.dll
+*.developer

@@ -73,7 +73,7 @@
 
 #include "NxPhysics.h"
 
-#if NxOgreUsePhysXCharacterController == 1
+#if NxOgreHasCharacterController == 1
 #include "NxOgreCharacterController.h"
 #include "NxOgreCharacterControllerDescription.h"
 #endif
@@ -762,7 +762,7 @@ ConstraintDominance Scene::getDominanceGroupPair(GroupIdentifier a, GroupIdentif
  return ConstraintDominance(constraint.dominance0, constraint.dominance1);
 }
 
-#if NxOgreUsePhysXCharacterController == 1
+#if NxOgreHasCharacterController == 1
 
 CharacterController* Scene::createBoxCharacterController(const SimpleBox& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description)
 {
