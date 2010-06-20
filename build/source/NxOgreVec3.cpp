@@ -377,6 +377,28 @@ std::vector<Real> Vec3::to_a() const
  return a;
 }
 
+void Vec3::clamp(const Vec3& min, const Vec3& max)
+{
+ 
+ if (x < min.x)
+  x = min.x;
+ else if (x > max.x)
+  x = max.x;
+
+ 
+ if (y < min.y)
+  y = min.y;
+ else if (y > max.y)
+  y = max.y;
+
+ 
+ if (z < min.z)
+  z = min.z;
+ else if (z > max.z)
+  z = max.z;
+
+}
+
                                                                                        
 
 } // namespace NxOgre

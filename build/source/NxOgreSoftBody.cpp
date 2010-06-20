@@ -35,7 +35,6 @@
 #include "NxOgreReason.h"
 #include "NxOgreMeshRenderable.h"
 #include "NxOgreRenderable.h"
-#include "NxOgreTimeController.h"
 #include "NxOgreShape.h"
 #include "NxOgreRigidBody.h"
 
@@ -77,7 +76,7 @@ SoftBody::~SoftBody()
  GC::safe_delete(mMeshData, NXOGRE_GC_THIS);
 }
 
-bool SoftBody::advance(float deltaTime, const Enums::Priority&)
+bool SoftBody::advance(float deltaTime, const Enums::Priority&, const Enums::SceneFunction&)
 {
  if (mRenderable && mMeshData)
  {

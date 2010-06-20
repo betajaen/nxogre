@@ -41,8 +41,8 @@ namespace NxOgre
 
                                                                                        
 
-Capsule::Capsule(NxCapsuleShape* shape)
-: Shape(shape), mCapsuleShape(shape)
+Capsule::Capsule(NxCapsuleShape* shape, bool isDirty)
+: Shape(shape, isDirty), mCapsuleShape(shape)
 {
 }
 

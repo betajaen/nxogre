@@ -41,8 +41,8 @@ namespace NxOgre
 
                                                                                        
 
-Convex::Convex(NxConvexShape* shape, Mesh* mesh)
-: Shape(shape), mConvexShape(shape), mMesh(mesh)
+Convex::Convex(NxConvexShape* shape, Mesh* mesh, bool isDirty)
+: Shape(shape, isDirty), mConvexShape(shape), mMesh(mesh)
 {
 }
 

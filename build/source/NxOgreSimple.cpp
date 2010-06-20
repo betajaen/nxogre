@@ -43,6 +43,15 @@ NxForceFieldShapeDesc* SimpleShape::to_ff_shape() const
  return 0;
 }
 
+#if NxOgreHasCharacterController == 1
+
+Vec3 SimpleShape::to_cc_shape() const
+{
+ return Vec3::ZERO;
+}
+
+#endif
+
 SimplePlane::SimplePlane()
 : mNormal(0,1,0), mDistance(0)
 { // constructor.
@@ -133,6 +142,15 @@ NxForceFieldShapeDesc*  SimpleBox::to_ff_shape() const
  return shape;
 }
 
+#if NxOgreHasCharacterController == 1
+
+Vec3 SimpleBox::to_cc_shape() const
+{
+ return mSize;
+}
+
+#endif
+
 Enums::SimpleShapeType SimpleBox::getType() const
 {
  return Enums::SimpleShape_Box;
@@ -185,6 +203,13 @@ SimpleCapsule::SimpleCapsule()
 {
 }
 
+SimpleCapsule::SimpleCapsule(Real height, Real radius)
+: mRadius(radius)
+{ // constructor.
+ mP0.y = 0;
+ mP1.y = height;
+}
+
 SimpleCapsule::SimpleCapsule(Real radius, const Vec3& p0, const Vec3& p1)
 : mRadius(radius), mP0(p0), mP1(p1)
 { // constructor.
@@ -203,12 +228,12 @@ SimpleCapsule::SimpleCapsule(const NxCapsule& capsule)
  mRadius = capsule.radius;
 }
 
-Vec3 SimpleCapsule::getOrigin()
+Vec3 SimpleCapsule::getOrigin() const
 {
  return mP0;
 }
 
-Vec3 SimpleCapsule::getDirection()
+Vec3 SimpleCapsule::getDirection() const
 {
  return mP1 - mP0;
 }
@@ -234,6 +259,15 @@ NxForceFieldShapeDesc* SimpleCapsule::to_ff_shape() const
  shape->radius = mRadius;
  return shape;*/
 }
+
+#if NxOgreHasCharacterController == 1
+
+Vec3 SimpleCapsule::to_cc_shape() const
+{
+ return Vec3(mRadius, mP1.y - mP0.y, 0);
+}
+
+#endif
 
 Enums::SimpleShapeType SimpleCapsule::getType() const
 {

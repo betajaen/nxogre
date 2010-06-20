@@ -59,52 +59,52 @@ namespace ShapeFunctions
 
                                                                                        
 
-Shape* createNull(NxShape* shape)
+Shape* createNull(NxShape* shape, bool)
 {
  return 0;
 }
 
-Shape* createPlane(NxShape* shape)
+Shape* createPlane(NxShape* shape, bool isDirty)
 {
- return GC::safe_new1<PlaneGeometry>(shape->isPlane(), NXOGRE_GC_THIS);
+ return GC::safe_new2<PlaneGeometry>(shape->isPlane(), isDirty, NXOGRE_GC_THIS);
 }
 
-Shape* createBox(NxShape* shape)
+Shape* createBox(NxShape* shape, bool isDirty)
 {
- return GC::safe_new1<Box>(shape->isBox(), NXOGRE_GC_THIS);
+ return GC::safe_new2<Box>(shape->isBox(), isDirty, NXOGRE_GC_THIS);
 }
 
-Shape* createCapsule(NxShape* shape)
+Shape* createCapsule(NxShape* shape, bool isDirty)
 {
- return GC::safe_new1<Capsule>(shape->isCapsule(), NXOGRE_GC_THIS);
+ return GC::safe_new2<Capsule>(shape->isCapsule(), isDirty, NXOGRE_GC_THIS);
 }
 
-Shape* createSphere(NxShape* shape)
+Shape* createSphere(NxShape* shape, bool isDirty)
 {
- return GC::safe_new1<Sphere>(shape->isSphere(), NXOGRE_GC_THIS);
+ return GC::safe_new2<Sphere>(shape->isSphere(), isDirty, NXOGRE_GC_THIS);
 }
 
-Shape* createWheel(NxShape* shape)
+Shape* createWheel(NxShape* shape, bool isDirty)
 {
- return GC::safe_new1<Wheel>(shape->isWheel(), NXOGRE_GC_THIS);
+ return GC::safe_new2<Wheel>(shape->isWheel(), isDirty, NXOGRE_GC_THIS);
 }
 
-Shape* createConvex(NxShape* shape)
+Shape* createConvex(NxShape* shape, bool isDirty)
 {
- return GC::safe_new2<Convex>(shape->isConvexMesh(), static_cast<Mesh*>(shape->userData), NXOGRE_GC_THIS);
+ return GC::safe_new3<Convex>(shape->isConvexMesh(), static_cast<Mesh*>(shape->userData), isDirty, NXOGRE_GC_THIS);
 }
 
-Shape* createHeightField(NxShape* shape)
+Shape* createHeightField(NxShape* shape, bool isDirty)
 {
- return GC::safe_new2<HeightFieldGeometry>(shape->isHeightField(), static_cast<HeightField*>(shape->userData), NXOGRE_GC_THIS);
+ return GC::safe_new3<HeightFieldGeometry>(shape->isHeightField(), static_cast<HeightField*>(shape->userData), isDirty, NXOGRE_GC_THIS);
 }
 
-Shape* createTriangleMesh(NxShape* shape)
+Shape* createTriangleMesh(NxShape* shape, bool isDirty)
 {
- return GC::safe_new2<TriangleGeometry>(shape->isTriangleMesh(), static_cast<Mesh*>(shape->userData), NXOGRE_GC_THIS);
+ return GC::safe_new3<TriangleGeometry>(shape->isTriangleMesh(), static_cast<Mesh*>(shape->userData), isDirty, NXOGRE_GC_THIS);
 }
 
-typedef Shape* (*ShapeFunction)(NxShape*);
+typedef Shape* (*ShapeFunction)(NxShape*, bool);
 
 ShapeFunction mFunctions[NX_SHAPE_COUNT];
 
@@ -130,11 +130,19 @@ struct ShapeBinder
 
 Shape* createShape(NxShape* physx_shape, RigidBody* rigid_body)
 {
- Shape* shape = mFunctions[int(physx_shape->getType())] (physx_shape);
+ Shape* shape = mFunctions[int(physx_shape->getType())] (physx_shape, false);
  shape->setId((int) physx_shape->userData);
  physx_shape->userData = GC::safe_new3<PhysXPointer>(shape, shape->getShapeType(), rigid_body, NXOGRE_GC_THIS);
  return shape;
 }
+
+Shape* createDirtyShape(NxShape* physx_shape, RigidBody* rigid_body)
+{
+ Shape* shape = mFunctions[int(physx_shape->getType())] (physx_shape, true);
+ shape->setId(-1);
+ return shape;
+}
+
 
 void NxOgrePublicFunction NxShapeArrayToBuffer(NxShape* nx_shape, unsigned int nb_nx_shapes, buffer<Shape*>& shapes)
 {

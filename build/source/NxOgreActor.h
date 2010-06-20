@@ -73,14 +73,6 @@ class NxOgrePublicClass Actor : public RigidBody
   
   public:
   
-  /*! function. getName
-      desc.
-           Get the name of the Actor or *BLANK_STRING*
-      return.
-           String -- The name of the Actor
-  */
-  String getName() const;
-  
   /*! function. getRigidBodyType
       desc.
           Get the cpp type(see Classes namespace) as a unsigned integer.
@@ -90,7 +82,15 @@ class NxOgrePublicClass Actor : public RigidBody
           **unsigned int** -- The class type, Classes::_Actor in this case.
   */
   virtual unsigned int  getRigidBodyType() const;
-  
+    
+  /*! function. isActorBased
+      desc.
+          Returns true if this class is an Actor or inherits from it.
+      return.
+          **true** -- It is an Actor or Actor based class.
+  */
+  bool  isActorBased() const;
+
   /*! function. raiseDynamicFlag
       desc.
           Set a dynamic flag.
@@ -316,14 +316,6 @@ class NxOgrePublicClass Actor : public RigidBody
   */
   Quat getGlobalOrientationQuat() const;
   
-  /*! function. getNbShapes
-      desc.
-           Returns the number of *Shape*s assigned to the actor.
-      return.
-           unsigned int -- Number of shapes assigned to the actor.
-  */
-  unsigned int getNbShapes() const;
-
   /*! function. setCMassOffsetLocalPose
       desc.
            Set the center of mass offset 
@@ -799,6 +791,32 @@ class NxOgrePublicClass Actor : public RigidBody
 
   protected: // Functions
 
+  /*! function. createDynamic.0
+      desc.
+          Become a Dynamic RigidBody (Actors) based on the arguments.
+      note.
+          User classes that inherit Actor should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           const ShapeDescription& __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+      !protected
+  */
+  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription& description, const ShapeDescription& shape);
+  
+  /*! function. createDynamic.1
+      desc.
+          Become a Dynamic RigidBody (Actor) based on the arguments.
+      note.
+          User classes that inherit Actor should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription&, const ShapeDescriptions& shapes);
+
   /*! constructor. Actor
       desc.
           Classes that inherit from Actor should use this constructor.
@@ -822,17 +840,7 @@ class NxOgrePublicClass Actor : public RigidBody
           Use Scene::destroyActor
   */
   virtual ~Actor();
-
-  protected:
-
-  /* Name of the Actor, otherwise a blank string.
-  */
-  String  mName;
-
-  /* Actor's parent Scene
-  */
-  Scene*  mScene;
-
+  
 }; // class Actor
 
                                                                                        

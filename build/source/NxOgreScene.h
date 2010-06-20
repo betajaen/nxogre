@@ -95,8 +95,8 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   typedef  multihashmap_iterator<SceneGeometry*>                                SceneGeometryIterator;
   typedef  multihashmap<KinematicActor*, GC::HasGarbageCollection>              KinematicActors;
   typedef  multihashmap_iterator<KinematicActor*>                               KinematicActorIterator;
-  typedef  multihashmap<Volume*, GC::HasGarbageCollection>                      Volumes;
-  typedef  multihashmap_iterator<Volume*>                                       VolumeIterator;
+  typedef  vector<Volume*, GC::HasGarbageCollection>                            Volumes;
+  typedef  vector_iterator<Volume*>                                             VolumeIterator;
   typedef  multihashmap<Fluid*, GC::HasGarbageCollection>                       Fluids;
   typedef  multihashmap_iterator<Fluid*>                                        FluidIterator;
   typedef  multihashmap<Material*, GC::HasGarbageCollection>                    Materials;
@@ -113,8 +113,8 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   typedef  vector_iterator<Machine*>                                            MachineIterator;
 
 #if NxOgreHasCharacterController == 1
-  typedef  hashmap<CharacterController>                                         CharacterControllers;
-  typedef  hashmap<CharacterController>::iterator_t                             CharacterControllerIterator;
+  typedef  multihashmap<CharacterController*, GC::HasGarbageCollection>         CharacterControllers;
+  typedef  multihashmap_iterator<CharacterController*>                          CharacterControllerIterator;
 #endif
 
   /*! function. getType
@@ -192,15 +192,9 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
 
   /*! function. createBoxCharacterController
       desc.
-          Create a box based Character Controller.
+          Create a Character Controller.
   */
-  CharacterController*  createBoxCharacterController(const SimpleBox& shape, const Vec3& globalPosition = Vec3(0,0,0), const Radian& yaw = 0, const CharacterControllerDescription& = CharacterControllerDescription());
-
-  /*! function. createCapsuleCharacterController
-      desc.
-          Create a capsule based Character Controller.
-  */
-  CharacterController*  createCapsuleCharacterController(const SimpleCapsule& shape, const Vec3& globalPosition = Vec3(0,0,0), const Radian& yaw = 0, const CharacterControllerDescription& = CharacterControllerDescription());
+  CharacterController*  createCharacterController(const SimpleShape& shape, const Vec3& globalPosition, const CharacterControllerDescription& = CharacterControllerDescription());
 
   /*! function. destroyCharacterController
       desc.
@@ -815,8 +809,12 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
 
   /*\ internal
   */
-  TimeListenerGroup*         mWaitingListenerGroup;
+  TimeListenerGroup*         mSimulateWaitingListenerGroup;
   
+  /*\ internal
+  */
+  TimeListenerGroup*         mRenderWaitingListenerGroup;
+
   /*\ internal
   */
   unsigned int               mNbSimulates;

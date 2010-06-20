@@ -38,8 +38,8 @@ namespace NxOgre
 
                                                                                        
 
-Shape::Shape(NxShape* shape)
-: mShape(shape), mId(0)
+Shape::Shape(NxShape* shape, bool isDirty)
+: mShape(shape), mId(0), mIsDirty(isDirty)
 {
 }
 

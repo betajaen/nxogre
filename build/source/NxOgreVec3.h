@@ -117,6 +117,8 @@ class NxOgrePublicClass Vec3
 
   inline bool isNegative() const;
 
+  void clamp(const Vec3& min, const Vec3& max);
+
   inline Vec3 lerp(const Vec3& other, const Real& alpha) const;
 
   inline friend Vec3 operator * ( const Real fScalar, const Vec3& rkVector )

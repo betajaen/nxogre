@@ -54,7 +54,7 @@ class NxOgrePublicClass TimeListenerGroup
   typedef vector<TimeListener*, GC::NoGarbageCollection>                 TimeListeners;
   typedef vector_iterator<TimeListener*>                                 TimeListenerIterator;
   
-  TimeListenerGroup(Enums::Priority priority);
+  TimeListenerGroup(Enums::Priority priority, Enums::SceneFunction function);
   
  ~TimeListenerGroup();
   
@@ -71,6 +71,7 @@ class NxOgrePublicClass TimeListenerGroup
  protected:
   
   Enums::Priority       mPriority;
+  Enums::SceneFunction  mFunction;
   TimeListeners         mListeners;
   TimeListenerIterator  mIterator;
   

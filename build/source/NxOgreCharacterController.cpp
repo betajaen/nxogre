@@ -34,13 +34,17 @@
 #include "NxOgreCharacterController.h"
 
 #include "NxOgreScene.h"
-#include "NxOgreErrorStream.h"
-#include "NxOgreRigidBodyDescription.h"
-#include "NxOgreSimple.h"
+#include "NxOgreShape.h"
+#include "NxOgreRigidBodyFunctions.h"
+#include "NxOgreWorld.h"
 
 #include "NxActor.h"
-#include "NxPhysics.h"
 #include "NxController.h"
+#include "ControllerManager.h"
+
+#if NxOgrePlatform == NxOgrePlatformWindows
+#  pragma comment(lib, "NxCharacter.lib")
+#endif
 
                                                                                        
 
@@ -49,63 +53,139 @@ namespace NxOgre
 
                                                                                        
 
-CharacterController::CharacterController()
-: mController(0), mScene(0), mContactCallback(0), mNameHash(BLANK_HASH)
+
+CharacterController::CharacterController(Scene* scene)
+: RigidBody(scene),
+  mController(0),
+  mActiveGroups(0),
+  mMinDistance(0.001f),
+  mCollisionFlags(0),
+  mSharpness(0)
 {
+}
+
+CharacterController::CharacterController(const SimpleShape& shape, const Vec3& globalPosition, const CharacterControllerDescription& description, Scene* scene)
+: RigidBody(scene),
+  mController(0),
+  mActiveGroups(0),
+  mMinDistance(0.01f),
+  mCollisionFlags(0),
+  mSharpness(0)
+{
+ mName = description.mName;
+ mNameHash = Strings::hash(mName);
+ 
+ mController = _createCharacterController(globalPosition, mScene, shape, description);
 }
 
 CharacterController::~CharacterController()
 {
- destroy();
+ _destroy();
+ if (mController)
+ {
+  World::getSingleton()->getPhysXControllerManager()->releaseController(*mController);
+  mController = 0;
+ }
 }
 
-//void CharacterController::create(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, const ShapeDescription& shape)
-//{
-
-// mActor->userData = NXOGRE_NEW_NXOGRE PhysXPointer(this, Classes::_RigidBody);
-
-//}
-
-void CharacterController::destroy()
+void CharacterController::createCharacterController(const Vec3& globalPos, const SimpleShape& shape, const CharacterControllerDescription& description)
 {
- /*
- if (mCharacter == 0)
-  return;
- 
- PhysXPointer* ptr = pointer_cast(mCharacter->userData);
- NXOGRE_DELETE_NXOGRE(ptr);
- 
- //NxScene& scene = mActor->getScene();
- //scene.releaseActor(*mActor);
- */
+ mController = _createCharacterController(globalPos, mScene, shape, description);
 }
 
-
-Scene* CharacterController::getScene()
+void CharacterController::setMinimalMoveDistance(Real minDist)
 {
- return mScene;
+ mMinDistance = minDist;
 }
 
-void CharacterController::setContactCallback(Callback* callback)
+Real CharacterController::getMinimalMoveDistance() const
 {
- mContactCallback = callback;
+ return mMinDistance;
 }
 
-Callback* CharacterController::getContactCallback()
+void CharacterController::setMovingSharpness(Real sharpness)
 {
- return mContactCallback;
+ mSharpness = sharpness;
 }
 
-StringHash CharacterController::getNameHash() const
+Real CharacterController::getMovingSharpness() const
 {
- return mNameHash;
+ return mSharpness;
 }
 
+unsigned int CharacterController::getLastCollisionFlags() const
+{
+ return mCollisionFlags;
+}
+
+void CharacterController::move(const Vec3& displacement)
+{
+ mController->move(displacement.as<NxVec3>(), mActiveGroups, mMinDistance, mCollisionFlags, mSharpness);
+}
+
+bool CharacterController::isCharacterControllerBased() const
+{
+ return true;
+}
+
+unsigned int CharacterController::getRigidBodyType() const
+{
+ return Classes::_CharacterController;
+}
+
+void CharacterController::setPosition(const Vec3& globalPosition)
+{
+ mController->setPosition(globalPosition.as<NxExtendedVec3>());
+}
+
+Vec3 CharacterController::getPosition() const
+{
+ return Vec3(mController->getPosition());
+}
+
+void CharacterController::setStepOffset(Real offset)
+{
+ mController->setStepOffset(offset);
+}
+
+void CharacterController::setCollisionsEnabled(bool collisionEnabled)
+{
+ mController->setCollision(collisionEnabled);
+}
+
+void CharacterController::setInteractionFlag(Enums::CharacterControllerInteractionFlag flag)
+{
+ mController->setInteraction( (NxCCTInteractionFlag) (int) flag);
+}
+
+Enums::CharacterControllerInteractionFlag CharacterController::getInteraction() const
+{
+ return (Enums::CharacterControllerInteractionFlag) (int) mController->getInteraction();
+}
+
+void  CharacterController::reportSceneChanged()
+{
+ mController->reportSceneChanged();
+}
+
+bool  CharacterController::isBoxShaped() const
+{
+ return mController->getType() == NX_CONTROLLER_BOX;
+}
+
+bool  CharacterController::isCapsuleShaped() const
+{
+ return mController->getType() == NX_CONTROLLER_CAPSULE;
+}
+
+String CharacterController::to_s() const
+{
+ return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("CharacterController") ));
+}
 
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
-
 #endif

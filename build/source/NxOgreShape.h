@@ -74,6 +74,12 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   */
   void  setId(unsigned int);
   
+  /*! function. isDirty
+      desc.
+          Was the shape created outside of NxOgre?
+  */
+  bool  isDirty() const;
+  
   /** \brief Get the local pose of the shape
   */
   Matrix44  getLocalPose() const;
@@ -168,11 +174,15 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   */
   NxShape*  mShape;
   
+  /* Was the shape created outside of NxOgre?
+  */
+  bool  mIsDirty;
+   
   protected:
   
   /* Inherited class constructor
   */
-  Shape(NxShape*);
+  Shape(NxShape*, bool isDirty);
   
   /* Inherited class constructor
   */

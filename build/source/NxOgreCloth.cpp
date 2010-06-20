@@ -35,7 +35,6 @@
 #include "NxOgreReason.h"
 #include "NxOgreMeshRenderable.h"
 #include "NxOgreRenderable.h"
-#include "NxOgreTimeController.h"
 #include "NxOgreShape.h"
 #include "NxOgreRaycastHit.h"
 #include "NxOgreRigidBody.h"
@@ -88,7 +87,7 @@ Cloth::~Cloth()
 }
 
 
-bool Cloth::advance(float, const Enums::Priority&)
+bool Cloth::advance(float, const Enums::Priority&, const Enums::SceneFunction&)
 {
 
  if (mRenderable && mMeshRenderable)

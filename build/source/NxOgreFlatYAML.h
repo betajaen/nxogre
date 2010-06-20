@@ -4,7 +4,7 @@
     
     Copyright (c) 2009 Robin Southern, http://www.nxogre.org
     
-    Permission is hereby granted, free of charge, to any person obtaining a copy
+    Permission is hereby granted, free of charge, to Value person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -26,8 +26,8 @@
 
                                                                                        
 
-#ifndef NXOGRE_XFUNCTIONS_H
-#define NXOGRE_XFUNCTIONS_H
+#ifndef NXOGRE_SIMPLIFIEDYAML_H
+#define NXOGRE_SIMPLIFIEDYAML_H
 
                                                                                        
 
@@ -41,40 +41,70 @@ namespace NxOgre
 
                                                                                        
 
-namespace Functions
+namespace Serialisation
 {
 
                                                                                        
 
-namespace XFunctions
+/*! class. FlatYAML
+    
+    desc.
+    
+     Collection of functions to serialise a property list to a Simplified YAML file format.
+    
+     This only partially complies with the YAML specification, Flat YAML is only concerned with
+     the key-value part of YAML, so other features are missing or incomplete.
+     
+     More specifically:
+      * The YAML document is treated as a flat continuous structure, with no support for child values.
+      * All keys are assumed to be strings.
+      * Lists are not supported.
+      * FlatYAML uses the "Value" class as an intermediate, so accepted types of values are:
+         - null
+         - string (without newline characters)
+         - float
+         - integer
+         - boolean
+         - Vec3 (as a custom nxogre/vec3 type)
+         - Quat (as a custom nxogre/quat type)
+         - Other types are assumed to be strings.
+*/
+class NxOgrePublicClass FlatYAML
 {
+  
+ public:
+  
+  /** \brief Load a NxOgre Skeleton from a Resource
+  */
+  static void load(const Path&, StringValueList&);
+
+  /** \brief Load a NxOgre Skeleton from a Resource
+  */
+  static void load(Resource*, StringValueList&);
+  
+  /** \brief Load a NxOgre Skeleton from a Resource
+  */
+  static void save(const Path&, const StringValueList&);
+
+  /** \brief Load a NxOgre Skeleton from a Resource
+  */
+  static void save(Resource*, const StringValueList&);
+    
+ private:
+  
+  /** \internal DO NOT USE
+  */
+  FlatYAML();
+  
+  /** \internal DO NOT USE
+  */
+ ~FlatYAML();
+  
+};
 
                                                                                        
 
-/** \brief Is the resource a NxOgre X-file.
-    \note Resource cannot be sucessional.
-*/
-inline bool isX(Resource*);
-
-
-/** \brief Is the resource a NxOgre X-file.
-    \note Resource cannot be sucessional.
-*/
-inline String whyIsNotX(Resource*);
-
-
-/** \brief Get the type of resource or Enums::MeshType_Unknown of a NxOgre X-file.
-    \note Resource cannot be sucessional, it is assumed that the mesh has been run through the isNXS function.
-*/
-inline Enums::XType getXType(Resource*);
-
-                                                                                       
-
-}
-
-                                                                                       
-
-}
+} // namespace Serialisation
 
                                                                                        
 

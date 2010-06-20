@@ -36,12 +36,17 @@ namespace NxOgre
 
                                                                                        
 
-Callback::Callback() : mNbReferences(1)
+Callback::Callback() : mNbReferences(0)
 {
 }
 
 Callback::~Callback()
 { // virtual function.
+}
+
+bool Callback::shouldDelete() const
+{
+ return false;
 }
 
 void Callback::onVolumeEvent(Volume*, Shape*, RigidBody*, Shape*, unsigned int)

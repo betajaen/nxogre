@@ -59,7 +59,7 @@ void PhysXCallback::onTrigger(NxShape& triggerShape, NxShape& physxCollisionShap
  
  if (!triggerShape.getActor().userData && !physxCollisionShape.getActor().userData)
   return;
- 
+  
  Shape* volume_shape = pointer_representive_cast<Shape>(triggerShape.userData);
  RigidBody* rb_volume = pointer_parent_cast<RigidBody>(triggerShape.userData);
  Volume* volume = static_cast<Volume*>(rb_volume);
@@ -67,7 +67,15 @@ void PhysXCallback::onTrigger(NxShape& triggerShape, NxShape& physxCollisionShap
  Shape* collision_shape = 0;
  RigidBody* collision_body = 0;
 
- if (physxCollisionShape.userData)
+#if NxOgreHasCharacterController == 1
+ 
+ // CharacterController Based
+ if (physxCollisionShape.userData == (void*) 'CCTS')
+ {
+  collision_body = pointer_representive_cast<RigidBody>(physxCollisionShape.getActor().userData);
+  collision_shape = collision_body->getShape(0);
+ }
+ else // Everything else.
  {
   collision_shape = pointer_representive_cast<Shape>(physxCollisionShape.userData);
   collision_body  = pointer_parent_cast<RigidBody>(physxCollisionShape.userData);
@@ -75,6 +83,17 @@ void PhysXCallback::onTrigger(NxShape& triggerShape, NxShape& physxCollisionShap
  
  volume->getVolumeCallback()->onVolumeEvent(volume, volume_shape, collision_body, collision_shape, status);
  
+#else
+ if (physxCollisionShape.userData)
+ {
+  collision_shape = pointer_representive_cast<Shape>(physxCollisionShape.userData);
+  collision_body  = pointer_parent_cast<RigidBody>(physxCollisionShape.userData);
+ }
+
+ volume->getVolumeCallback()->onVolumeEvent(volume, volume_shape, collision_body, collision_shape, status);
+ 
+#endif
+
 }
 
 void PhysXCallback::onContactNotify(NxContactPair &pair, NxU32 events)

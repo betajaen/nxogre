@@ -155,6 +155,12 @@
  #define NxOgre_DebugPrint_Cloth(MESSAGE) /* MESSAGE */
 #endif
 
+#if NXOGRE_DEBUG_FLATYAML == 1
+ #define NxOgre_DebugPrint_FlatYAML(MESSAGE) NxOgre_DebugPrint("[NxOgre/FlatYAML] " << MESSAGE)
+#else
+ #define NxOgre_DebugPrint_FlatYAML(MESSAGE) /* MESSAGE */
+#endif
+
                                                                                        
 
 #define NxOgreIntTypeMax INT_MAX

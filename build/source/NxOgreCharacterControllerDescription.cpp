@@ -29,7 +29,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCharacterControllerDescription.h"
 
-#ifdef NxOgreHasCharacterController
+#if NxOgreHasCharacterController == 1
 
                                                                                        
 
@@ -49,6 +49,8 @@ void CharacterControllerDescription::reset()
  mSlopeLimit = 0.707;
  mSkinWidth = 0.1;
  mCallback = 0;
+ mStepOffset = 0.5f;
+ mCapsuleEasyClimbing = false;
  mName.clear();
 }
 
@@ -57,6 +59,8 @@ bool CharacterControllerDescription::isValid() const
  if (mSlopeLimit < 0)
   return false;
  if (mSkinWidth < 0)
+  return false;
+ if (mStepOffset < 0)
   return false;
  return true;
 }

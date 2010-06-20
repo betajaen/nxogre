@@ -206,6 +206,7 @@ enum classes
   _World,
   _WorldDescription,
   _WorldPrototype,
+  _CharacterController,
   RENDERSYSTEMS_CLASSES_BEGIN,
   USER_CLASS = 50000
 };

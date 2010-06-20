@@ -33,11 +33,12 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
-#include "NxOgreShape.h"
 
 #if NxOgreHasCharacterController == 1
 
-class NxCharacter;
+#include "NxOgreRigidBody.h"
+#include "NxOgreDynamicRigidBodyFlags.h"
+#include "NxOgreString.h"
 
                                                                                        
 
@@ -46,129 +47,180 @@ namespace NxOgre
 
                                                                                        
 
-/*! class. CharacterController
+/** 
 */
-class NxOgrePublicClass CharacterController : public RigidBodyBasedAllocatable
+class NxOgrePublicClass CharacterController : public RigidBody
 {
   
- friend class Scene;
- template<class T> friend inline void Functions::safe_delete(T*);
- 
- public: // Functions
+  NXOGRE_GC_FRIEND_NEW4
+  NXOGRE_GC_FRIEND_DELETE
   
-  /*! constructor. CharacterController
+  public:
+  
+  void   setMovingActiveGroups(unsigned int);
+  
+  /*! function. setMinimalMoveDistance
       desc.
-           Inheritance Constructor
+          Set the minimal amount of distance the character should move.
   */
-  CharacterController();
+  unsigned int getMovingActiveGroups();
+  
+  /*! function. setMinimalMoveDistance
+      desc.
+          Set the minimal amount of distance the character should move.
+  */
+  void   setMinimalMoveDistance(Real minDist);
+  
+  /*! function. getMovingSharpness
+      desc.
+          Get the minimal amount of distance the character should move.
+  */
+  Real   getMinimalMoveDistance() const;
+  
+  /*! function. getMovingSharpness
+      desc.
+          Set the autostep sharpness to prevent sudden height changes.
+      note.
+          1.0 - means no smoothing.
+  */
+  void   setMovingSharpness(Real);
+  
+  /*! function. getMovingSharpness
+      desc.
+          Get the autostep sharpness
+  */
+  Real   getMovingSharpness() const;
+  
+  /*! function. getLastCollisionFlags
+      desc.
+          Get the flags reported during the last collision.
+  */
+  unsigned int getLastCollisionFlags() const;
+  
+  /*! function. moveGlobal
+      desc.
+          Try and move globally (without orientation)
+  */
+  void   move(const Vec3& displacement);
+  
+  /** \brief
+  */
+  virtual unsigned int getRigidBodyType() const;
+  
+  /** \brief Returns true if the character is dynamic. 
+  */
+  bool isDynamic() const; 
+  
+  /*! function. isCharacterControllerBased
+      desc.
+          Returns true if this class is a CharacterController or inherits from it.
+      return.
+          **true** -- It is an CharacterController or CharacterController based class.
+  */
+  bool  isCharacterControllerBased() const;
+  
+  /*! function. setPosition
+      desc.
+          "Teleport" the character controller to another position.
+  */
+  void  setPosition(const Vec3& globalPosition);
+  
+  /*! function. getPosition
+      desc.
+          Get the position of the character controller in the global frame.
+  */
+  Vec3  getPosition() const;
 
-  /*! function. getNameHash
+  /*! function. setStepOffset
       desc.
-           Get the hashed name of the CharacterController.
-      return.
-           **StringHash** -- The hash of the name, or *BLANK_HASH* if there is no name.
+           Set the offset for auto-stepping for the controller.
   */
-  StringHash  getNameHash() const;
-  
-  /*! function. getScene
+  void  setStepOffset(Real offset);
+
+  /*! function. setCollisionsEnabled
       desc.
-           Retrieves the scene which this rigid body belongs to. 
-      return
-           **Scene** * -- Scene that this CharacterController belongs to.
-  */
-  Scene*  getScene(); 
-  
-  /*! function. getNxActor
-      desc.
-           Get the PhysX *NxActor* that this CharacterController represents.
+          Enable/Disable collisions with other objects colliding with the controller.
       note.
-           Do not delete, or otherwise modify the pointer.
-      return.
-           **NxActor** * -- NxActor instance.
-      !physx
+          Disabling collision for example would allow a box to fall through the controller,
+          but a box would block the movement of the controller.
   */
-  NxActor*  getNxActor();
-  
-  /*! function. getNxActor
+  void  setCollisionsEnabled(bool);
+
+  /*! function. setInteraction
       desc.
-           Get the PhysX *NxActor* that this CharacterController represents.
-      note.
-           Do not delete, or otherwise modify the pointer.
-      return.
-           **NxActor** * -- NxActor instance.
-      !physx
+          Set the interaction flag
   */
-  NxController*  getNxController();
-  
-  /*! function. setContactCallback
+  void  setInteractionFlag(Enums::CharacterControllerInteractionFlag);
+
+  /*! function. getInteraction
       desc.
-          Set a callback for contact reporting. If there is a previous callback, it won't be deleted.
+          Get the current interaction flag.
+  */
+  Enums::CharacterControllerInteractionFlag getInteraction() const;
+
+  /*! function. reportSceneChanged
+      desc.
+          Update the cache if the scene geometry has changed.
+  */
+  void  reportSceneChanged();
+
+  /*! function. isBoxShaped
+      desc.
+          Is the controller in the shape of a box, otherwise a capsule?
+  */
+  bool  isBoxShaped() const;
+
+  /*! function. isCapsuleShaped
+      desc.
+          Is the controller in the shape of a capsule, otherwise a box?
+  */
+  bool  isCapsuleShaped() const;
+
+  protected: // Functions
+
+  /*! function. createCharacterController
+      desc.
+          Become a Character Controller based on the arguments.
       note.
-          As this contact can be shared between RigidBodies it is upto YOU to delete the callback at the appropriate time.
-          See the reference functions in callback for more information.
+          User classes that inherit CharacterController should call this. Usually in the constructor, or close by.
       args.
-          Callback* __callback__ -- New callback to set, or NULL to clear.
+           const Vec3& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           Scene* __scene__ -- Which scene the CharacterController to exist in. Cannot be NULL.
+           const SimpleShape& __shape__ -- The Single shape for the Character to use. Can only be SimpleBox or SimpleCapsule
+           const CharacterControllerDescription& -- Additional properties to describe the controller.
+      !protected
   */
-  void  setContactCallback(Callback* callback);
-  
-  /*! function. getContactCallback
-      desc.
-           Get the assigned callback for contact reporting.
-      note.
-          As this contact can be shared between RigidBodies it is upto YOU to delete the callback at the appropriate time.
-          See the reference functions in callback for more information.
-      return.
-          **Callback** * -- Callback, or NULL if there is none.
-  */
-  Callback* getContactCallback();
-  
-  /*! constructor. CharacterController
-      desc.
-           Create NxCharacter
-      note.
-           To be used by inherited classes of CharacterController ONLY.
-  */
-  void  create(const SimpleBox& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description, Scene*);
-  
-  
-  protected: // Function
-  
-  /*! constructor. CharacterController
-      desc.
-           CharacterController constructor
-  */
-  CharacterController(const SimpleBox& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description, Scene*);
+  void createCharacterController(const Vec3& globalPos, const SimpleShape&, const CharacterControllerDescription&);
 
-  /*! constructor. CharacterController
-      desc.
-           CharacterController constructor
+  /** \internal Classes that inherit from CharacterController should use this constructor.
   */
-  CharacterController(const SimpleCapsule& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description, Scene*);
+  CharacterController(Scene*);
 
-  /*! destructor. CharacterController
-      desc.
-           CharacterController destructor
-      !virtual
+  /** \internal Use Scene::createCharacterController
+  */
+  CharacterController(const SimpleShape& shape, const Vec3& globalPosition, const CharacterControllerDescription& description, Scene* scene);
+
+  /** \internal Use Scene::destroyCharacterController
   */
   virtual  ~CharacterController();
   
-  /*! function. destroy
+  /*! function. to_s
       desc.
-          Destroy the NxCharacter safely and delete all shapes from mShapes.
-      note.
-          User classes that inherit from CharacterController do not need to call this.
+          Returns the pointer and name as string.
   */
-  void  destroy();
+  String to_s() const;
   
   protected: // Variables
+    
+  NxController*  mController;
   
-  NxController*         mController;
+  Real           mMinDistance;
   
-  Scene*                mScene;
+  Real           mSharpness;
   
-  Callback*             mContactCallback;
+  unsigned int   mActiveGroups;
   
-  StringHash            mNameHash;
+  unsigned int   mCollisionFlags;
   
 }; // class CharacterController
 
@@ -179,5 +231,7 @@ class NxOgrePublicClass CharacterController : public RigidBodyBasedAllocatable
 
                                                                                        
 
+// HasCharacterController
 #endif
+
 #endif

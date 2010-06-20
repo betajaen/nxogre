@@ -68,7 +68,7 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief
   */
-  virtual                             unsigned int           getRigidBodyType() const;
+  virtual  unsigned int  getRigidBodyType() const;
 
   /*! function. raiseDynamicFlag
       desc. 
@@ -90,57 +90,65 @@ class NxOgrePublicClass KinematicActor : public RigidBody
 
   /** \brief Assigns the actor to a user defined group of rigid bodies. 
   */
-                                      void                   setGroup(GroupIdentifier actorGroup); 
+  void                   setGroup(GroupIdentifier actorGroup); 
   
   /** \brief Retrieves the value set with setGroup(). 
   */
-                                      GroupIdentifier        getGroup() const;
+  GroupIdentifier        getGroup() const;
   
   /** \brief Assigns dynamic actors a dominance group identifier. 
   */
-                                      void                   setDominanceGroup(GroupIdentifier dominanceGroup); 
+  void                   setDominanceGroup(GroupIdentifier dominanceGroup); 
   
   /** \brief Retrieves the value set with setDominanceGroup(). 
   */
-                                      GroupIdentifier        getDominanceGroup() const;
+  GroupIdentifier        getDominanceGroup() const;
   
   /**  \brief Reset the user actor pair filtering state for this actor. This will cause filtering callbacks
        to be called again for any pairs involving this actor. Use this method when you wish to change
        the filtering policy of an actor that may already be in contact with other actors. 
   */
-                                      void                   resetPairFiltering(); 
+  void                   resetPairFiltering(); 
   
   /** \brief Returns true if the actor is dynamic. 
   */
-                                      bool                   isDynamic() const; 
+  bool                   isDynamic() const; 
   
+  /*! function. isKinematicActorBased
+      desc.
+          Returns true if this class is a KinematicActor or inherits from it.
+      return.
+          **true** -- It is an KinematicActor or KinematicActor based class.
+  */
+  bool  isKinematicActorBased() const;
+
   /** \brief Computes the total kinetic (rotational and translational) energy of the object.
   */
-                                      Real                   computeKineticEnergy() const;
+  Real                   computeKineticEnergy() const;
   
   /** \brief Sets the solver iteration count for the body. 
   */
-                                      void                   setSolverIterationCount(unsigned int iterCount);
+  void                   setSolverIterationCount(unsigned int iterCount);
   
   /** \brief Retrieves the solver iteration count.
   */
-                                      unsigned int           getSolverIterationCount() const; 
+  unsigned int           getSolverIterationCount() const; 
   
   /** \brief Retrieves the force threshold for contact reports. 
   */
-                                      Real                   getContactReportThreshold() const;
+  Real                   getContactReportThreshold() const;
   
   /** \brief Sets the force threshold for contact reports. 
   */
-                                      void                   setContactReportThreshold(Real threshold);
+  void                   setContactReportThreshold(Real threshold);
   
   /** \brief Retrieves the actor's contact report flags. 
   */
-                                      unsigned int           getContactReportFlags() const;
+  unsigned int           getContactReportFlags() const;
   
   /** \brief Sets the actor's contact report flags.
   */
-                                      void                   setContactReportFlags(unsigned int flags);
+  void                   setContactReportFlags(unsigned int flags);
   
   /// /** \brief Performs a linear sweep through space with the actor. 
   /// */
@@ -152,89 +160,84 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   
   /** \brief Retrieves the actor's force field material index, default index is 0. 
   */
-                                      unsigned short         getForceFieldMaterial() const; 
+  unsigned short         getForceFieldMaterial() const; 
   
   /** \brief Sets the actor's force field material index, default index is 0. 
   */
-                                      void                   setForceFieldMaterial(unsigned short); 
+  void                   setForceFieldMaterial(unsigned short); 
   
   /** \brief Methods for setting a dynamic actor's pose in the world. 
   */
-                                      void                   setGlobalPose(const Matrix44&);
+  void                   setGlobalPose(const Matrix44&);
  
   /** \brief Sets a dynamic actor's position in the world.
    */
-                                      void                   setGlobalPosition (const Vec3&);
+  void                   setGlobalPosition (const Vec3&);
   
   /** \brief Sets a dynamic actor's orientation in the world.
   */
-                                      void                   setGlobalOrientation(const Matrix33&);
+  void                   setGlobalOrientation(const Matrix33&);
   
   /** \brief Sets a dynamic actor's orientation in the world.
   */
-                                      void                   setGlobalOrientationQuat(const Quat&);
+  void                   setGlobalOrientationQuat(const Quat&);
   
   /** \brief Retrieves the actors world space transform.
   */
-                                      Matrix44               getGlobalPose() const;
+  Matrix44               getGlobalPose() const;
   
   /** \brief Retrieves the actors world space position.
   */
-                                      Vec3                  getGlobalPosition() const;
+  Vec3                  getGlobalPosition() const;
   
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Matrix33               getGlobalOrientation() const;
+  Matrix33               getGlobalOrientation() const;
   
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Quat                  getGlobalOrientationQuat() const;
+  Quat                  getGlobalOrientationQuat() const;
   
   /** \brief The moveGlobal* calls serve to move kinematically controlled dynamic actors through the game world. 
   */
-                                      void                   moveGlobalPose(const Matrix44&);
+  void                   moveGlobalPose(const Matrix44&);
   
   /** \brief The moveGlobal* calls serve to move kinematically controlled dynamic actors through the game world. 
   */
-                                      void                   moveGlobalPosition(const Vec3&);
+  void                   moveGlobalPosition(const Vec3&);
   
   /** \brief The moveGlobal* calls serve to move kinematically controlled dynamic actors through the game world. 
   */
-                                      void                   moveGlobalOrientation (const Matrix33&);
+  void                   moveGlobalOrientation (const Matrix33&);
   
   /** \brief The moveGlobal* calls serve to move kinematically controlled dynamic actors through the game world. 
   */
-                                      void                   moveGlobalOrientationQuat (const Quat&);
+  void                   moveGlobalOrientationQuat (const Quat&);
 
   /** \brief Creates a new shape and adds it to the list of shapes of this actor. 
   */
-                                      void                   createShape(Shape*);
+  void                   createShape(Shape*);
   
   /** \brief Deletes the specified shape.
   */
-                                      void                   releaseShape(Shape*);
-  
-  /** \brief Returns the number of shapes assigned to the actor.
-  */
-                                      unsigned int           getNbShapes() const;
-  
+  void                   releaseShape(Shape*);
   
   protected: // Functions
   
   /** \internal Classes that inherit from KinematicActor should use this constructor.
   */
-                                              KinematicActor(Scene*);
+  KinematicActor(Scene*);
   /** \internal Use Scene::createKinematicActor
   */
-                                              KinematicActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
+  KinematicActor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
 
   /** \internal Use Scene::createKinematicActor
   */
-                                              KinematicActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
+  KinematicActor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene);
 
   /** \internal Use Scene::destroyKinematicActor
   */
-  virtual                                    ~KinematicActor();
+  virtual  ~KinematicActor();
   
   /*! function. to_s
       desc.
@@ -243,19 +246,33 @@ class NxOgrePublicClass KinematicActor : public RigidBody
   String to_s() const;
   
   protected: // Variables
-  
-  /** \brief Name of the KinematicActor, otherwise a blank string.
+    /*! function. createKinematic.0
+      desc.
+          Become a Kinematic RigidBody (KinematicActor, KinematicController) based on the arguments.
+      note.
+          User classes that inherit KinematicActor should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           const ShapeDescription& __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+      !protected
   */
-  String          mName;
+  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, const ShapeDescription& shape);
   
-  /** \brief KinematicActor's parent Scene
+  /*! function. createKinematic.1
+      desc.
+          Become a Kinematic RigidBody (KinematicActor, KinematicController) based on the arguments.
+      note.
+          User classes that inherit KinematicActor should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
   */
-  Scene*          mScene;
-  
-  /** \brief Shapes belonging to this Actor.
-  */
-  CollisionModel  mShapes;
-
+  void  createKinematic(const Matrix44& matrix_pose, const RigidBodyDescription&, const ShapeDescriptions& shapes);
   
 }; // class KinematicActor
 

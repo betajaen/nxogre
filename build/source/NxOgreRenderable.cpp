@@ -28,7 +28,6 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreRenderable.h"
-#include "NxOgrePhysXMeshData.h"
 
                                                                                        
 

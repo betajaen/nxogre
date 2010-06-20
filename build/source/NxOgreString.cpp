@@ -33,6 +33,7 @@
 #include "NxOgreVec3.h"
 #include "NxOgreVec4.h"
 #include "NxOgreRadian.h"
+#include "NxOgreResource.h"
 
 #include <sstream>
 #include <algorithm>
@@ -171,6 +172,26 @@ float to_f(const String& str)
  float out = 0.f;
  s >> out;
  return out;
+}
+
+bool to_b(const String& str)
+{
+ if (str.length() != 4)
+  return false;
+ 
+ if (!(str[0] == 'T' || str[0] == 't'))
+  return false;
+
+ if (!(str[1] == 'R' || str[1] == 'r'))
+  return false;
+
+ if (!(str[2] == 'U' || str[2] == 'u'))
+  return false;
+
+ if (!(str[3] == 'E' || str[3] == 'e'))
+  return false;
+ 
+ return true;
 }
 
 void inspect(const float& value)
@@ -408,6 +429,94 @@ bool matches_insensitive(const String& original, const String& comparision)
  return lower_copy(original) == lower_copy(comparision);
 }
 
+StringPair cut(const String& str, bool& didCut, char delimiter, char endDelimiter)
+{
+ 
+ didCut = false;
+ 
+ String working(str);
+ 
+ if (endDelimiter != 0)
+  slice_to_first_of(working, endDelimiter);
+ 
+ trim(working);
+ 
+ if (working.length() == 0)
+  return StringPair(String(), String());
+ 
+ if (Strings::index(working, ':') == std::string::npos)
+  return StringPair(String(), String());
+
+ std::string first(working);
+ slice_to_first_of(first, ':');
+ std::string second(working);
+ slice_after_first_of(second, ':');
+ 
+ trim(first);
+ trim(second);
+ 
+ didCut = true;
+ 
+ return StringPair(first, second);
+}
+
+std::map<std::string, std::string> cut_many(const String& str, char delimiter, char endDelimiter)
+{
+ std::map<std::string, std::string> ret;
+ 
+ if (str.length() <= 1)
+  return ret;
+
+ std::vector<std::string> lines = split(str, "\n");
+ 
+ for (std::vector<std::string>::const_iterator it = lines.begin(); it != lines.end(); it++)
+ {
+  String working(str);
+  
+  if (endDelimiter != 0)
+   slice_to_first_of(working, endDelimiter);
+  
+  trim(working);
+  
+  if (working.length() == 0)
+   continue;
+  
+  if (Strings::index(working, ':') == std::string::npos)
+   continue;
+  
+  std::string first(working);
+  slice_to_first_of(first, ':');
+  std::string second(working);
+  slice_after_first_of(second, ':');
+  
+  trim(first);
+  trim(second);
+  
+  ret.insert(std::pair<std::string, std::string>(first, second));
+ }
+ 
+ return ret;
+}
+
+
+std::vector<std::string> split(const String& str, const String& delimiters)
+{
+ std::vector<std::string> out;
+ size_t b = str.find_first_not_of(delimiters, 0);
+ size_t a = str.find_first_of(delimiters, b);
+ std::string t;
+ while (a != String::npos || b != String::npos)
+ {
+  std::stringstream s(str.substr(b, a - b));
+  s >> t;
+  out.push_back(t);
+  b = str.find_first_not_of(delimiters, a);
+  a = str.find_first_of(delimiters, b);
+ }
+
+ return out;
+}
+
 bool split(const String& str, std::map<String, String>& value, char delimiter, bool lowerKey, bool trim)
 {
  size_t pos = str.find_first_of(delimiter);
@@ -453,6 +562,153 @@ bool split(const String& str, NxOgre::map<String, String>& value, char delimiter
  value.insert(k, v);
 
  return true;
+}
+
+int numWords(const std::string& str)
+{
+ 
+ if (str.length() == 0)
+  return 0;
+ 
+ int ret = 0;
+ bool lastWasSpace = true;
+ for (std::string::const_iterator it = str.begin(); it != str.end(); it++)
+ {
+  if (isspace((*it)))
+   lastWasSpace = true;
+  else
+  {
+   if (lastWasSpace)
+    ret++;
+   lastWasSpace = false;
+  }
+ }
+ 
+ return ret;
+}
+
+bool isNull(const std::string& str)
+{
+ if (str.length() != 4)
+  return false;
+ 
+ if (!(str[0] == 'N' || str[0] == 'n'))
+  return false;
+
+ if (!(str[1] == 'U' || str[1] == 'u'))
+  return false;
+
+ if (!(str[2] == 'L' || str[2] == 'l'))
+  return false;
+
+ if (!(str[3] == 'L' || str[3] == 'l'))
+  return false;
+ 
+ return true;
+}
+
+bool isInteger(const std::string& str)
+{
+ bool hasExponent = false;
+ for (std::string::const_iterator it = str.begin(); it != str.end(); it++)
+ {
+  
+  // Sign -- Must be the first character of the string.
+  if ((*it) == '-' || (*it) == '+')
+  {
+   if (it == str.begin())
+    continue;
+   
+   return false;
+  }
+  
+  // Exponent -- Can't be at the first or last part of the string, and there can only be one of them.
+  if ((*it) == 'E' || (*it) == 'e')
+  {
+   if (hasExponent || it == str.begin() || it == str.end())
+    return false;
+   hasExponent = true;
+   continue;
+  }
+  
+  if (isdigit((*it)) == false)
+   return false;
+  
+ }
+ return true;
+}
+
+bool isReal(const std::string& str)
+{
+ bool hasDecimal = false, hasExponent = false, hasSign = false;
+ for (std::string::const_iterator it = str.begin(); it != str.end(); it++)
+ {
+  
+  // Sign -- Must be the first character of the string, or if the previous character was an exponent.
+  if ((*it) == '-' || (*it) == '+')
+  {
+   
+   hasSign = true;
+   
+   if (it == str.begin())
+    continue;
+
+   std::string::const_iterator last = it - 1;
+   if ( (*last) == 'E' || (*last) == 'e')
+    continue;
+   
+   return false;
+  }
+  
+  // Exponent -- Can't be at the first or last part of the string, and there can only be one of them.
+  if ((*it) == 'E' || (*it) == 'e')
+  {
+   if (hasExponent || hasDecimal || hasSign || it == str.begin() || it == str.end())
+    return false;
+   hasExponent = true;
+   continue;
+  }
+  
+  // Decimal -- There can only be one of them. There can't be one if there is an exponent.
+  if ((*it) == '.')
+  {
+   if (hasExponent || hasDecimal)
+    return false;
+   hasDecimal = true;
+   continue;
+  }
+
+  if (isdigit((*it)) == false)
+   return false;
+ }
+ 
+ return true;
+}
+
+bool isBoolean(const std::string& str)
+{
+ std::string working(str);
+ std::transform(working.begin(), working.end(), working.begin(), tolower);
+ return working == "true" || working == "false";
+}
+
+
+
+void getLine(NxOgre::Resource* resource, NxOgre::buffer<char>& buffer)
+{
+ buffer.remove_all();
+ while(1)
+ {
+  char c = resource->readChar();
+  if (resource->atEnd() || c == '\n')
+   break;
+  buffer.push_back(c);
+ }
+ 
+ if (buffer[buffer.size() - 1] == '\r')
+  buffer[buffer.size() - 1] = 0;
+ else
+  buffer.push_back(0);
 }
 
 

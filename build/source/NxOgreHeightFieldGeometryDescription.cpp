@@ -214,5 +214,5 @@ void HeightFieldGeometryDescription::inspect() const
 
 } // namespace NxOgre
 
-// END - Serialisation. "HeightFieldGeometryDescription-9b665079e3ebd114391a4feefb62b4e2"
+// END - Serialisation. "HeightFieldGeometryDescription-7faef2e0f69977508662fcb8cdce9424"
 

@@ -24,21 +24,24 @@
 
 */
 
-
+                                                                                       
 
 #ifndef NXOGRE_BUFFER_H
 #define NXOGRE_BUFFER_H
 
-
+                                                                                       
 
 #include "NxOgreStable.h"
 #include "NxOgreGC.h"
 #include "NxOgreSharedPointer.h"
 #include "NxOgreAllocatables.h"
 
+                                                                                       
 
 namespace NxOgre
 {
+
+                                                                                       
 
 /*! class. buffer
     desc.
@@ -183,6 +186,8 @@ template<typename T> class buffer
   
 };
 
+                                                                                       
+
 /*! class. const_buffer
     desc.
         Interface to access memory between two pointers for read only access.
@@ -211,7 +216,7 @@ template<typename T> class  const_buffer
    }
 
    inline ~const_buffer()
-   {
+   { // empty destructor.
    }
 
    inline const_buffer<T>& operator=(const const_buffer<T>& other)
@@ -278,8 +283,21 @@ template<typename T> class  const_buffer
    T*  first_ptr;
    T*  last_ptr;
 
+                                                                                       
+
 }; // class const_buffer
 
+                                                                                       
+
+/** \brief Fill a chunk of memory with a value
+*/
+template<typename T> void fill(T* start, T* end, T value)
+{
+ for (;start != end; ++start)
+  (*start) = value;
+}
+
+                                                                                       
 
 
 } // namespace NxOgre

@@ -45,7 +45,7 @@ namespace NxOgre
 
 /*! class. TimeListener
     desc.
-        A TimeListener is any class that needs to react when the timestep goes fowards in NxOgre.
+        A TimeListener is any class that needs to react when the timestep in a Scene goes forwards in NxOgre.
 */
 class NxOgrePublicClass TimeListener
 {
@@ -61,13 +61,14 @@ class NxOgrePublicClass TimeListener
       args.
           float deltaTime -- Time passed.
           const Enums::Priority& -- Priority assigned to this TimeListener.
+          const Enums::SceneFunction& -- When was called; in the Render or Simulate function.
       return.
           True if the function was carried out normally, false if the function needs to be revisited later in this timestep.
       note.
           Calling false only applies if the TimeListener isn't placed on the "waiting list". returning false once the timelistener
           has had it's two turns will not give it a third. Anything that needs to be done should be done on the second visit.
   */
-  virtual bool advance(float deltaTime, const Enums::Priority&) = 0;
+  virtual bool advance(float deltaTime, const Enums::Priority&, const Enums::SceneFunction&) = 0;
   
 }; // class TimeListener
 

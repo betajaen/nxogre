@@ -52,7 +52,7 @@ class NxOgrePublicClass TriangleGeometry : public Shape
 {
   
   
-  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_NEW3
   NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
@@ -121,7 +121,7 @@ class NxOgrePublicClass TriangleGeometry : public Shape
 
   /** \brief TriangleGeometry
   */
-  TriangleGeometry(NxTriangleMeshShape*, Mesh*);
+  TriangleGeometry(NxTriangleMeshShape*, Mesh*, bool isDirty = false);
   
   /** \brief TriangleGeometry
   */

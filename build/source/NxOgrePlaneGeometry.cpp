@@ -39,8 +39,8 @@ namespace NxOgre
 
                                                                                        
 
-PlaneGeometry::PlaneGeometry(NxPlaneShape* plane_shape)
-: Shape(plane_shape), mPlaneShape(plane_shape)
+PlaneGeometry::PlaneGeometry(NxPlaneShape* plane_shape, bool isDirty)
+: Shape(plane_shape, isDirty), mPlaneShape(plane_shape)
 {
 }
 

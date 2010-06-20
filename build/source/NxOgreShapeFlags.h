@@ -147,7 +147,7 @@ struct ShapeFlags
    private: int flags;
 
 
-  // END - Serialisation. "ShapeFlags-6eb45dac6e6e35e66796aabad16f5d32"
+  // END - Serialisation. "ShapeFlags-617b368a83842a809bc2daa6ad5a47a3"
 
 };
 

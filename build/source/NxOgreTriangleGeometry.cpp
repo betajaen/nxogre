@@ -43,8 +43,8 @@ namespace NxOgre
 
                                                                                        
 
-TriangleGeometry::TriangleGeometry(NxTriangleMeshShape* shape, Mesh* mesh)
-: Shape(shape), mTriangleMeshShape(shape), mMesh(mesh)
+TriangleGeometry::TriangleGeometry(NxTriangleMeshShape* shape, Mesh* mesh, bool isDirty)
+: Shape(shape, isDirty), mTriangleMeshShape(shape), mMesh(mesh)
 {
 }
 

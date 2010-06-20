@@ -58,7 +58,7 @@ class NxOgrePublicClass Convex : public Shape
 {
   
   
-  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_NEW3
   NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
@@ -99,7 +99,7 @@ class NxOgrePublicClass Convex : public Shape
   
   /*
   */
-  Convex(NxConvexShape*, Mesh*);
+  Convex(NxConvexShape*, Mesh*, bool isDirty = false);
   
   /*
   */

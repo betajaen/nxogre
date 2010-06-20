@@ -31,6 +31,7 @@
 #include "NxOgreResource.h"
 #include "NxOgreMeshData.h"
 #include "NxOgreResourceStream.h"
+#include "NxOgreFunctions.h"
 
 #include <iostream>
 
@@ -67,22 +68,6 @@ static const String FLOWER_SCHEMA_FLAG_HARDWARE = "hardware";
 static const String FLOWER_SCHEMA_PROPERTY_WELDVERTICES = "weldingdistance";
 static const unsigned int FLOWER_SCHEMA_VALUES_PER_LINE = 9;
 
-void getLine(NxOgre::Resource* resource, NxOgre::buffer<char>& buffer)
-{
- buffer.remove_all();
- while(1)
- {
-  char c = resource->readChar();
-  if (resource->atEnd() || c == '\n')
-   break;
-  buffer.push_back(c);
- }
- if (buffer[buffer.size() - 1] == '\r')
-  buffer[buffer.size() - 1] = 0;
- else
-  buffer.push_back(0);
-}
-
 Flower::Flower()
 {
  // Should never happen.
@@ -100,7 +85,7 @@ void Flower::load(MeshData* mesh, Resource* resource)
  
  while(resource->atEnd() == false)
  {
-  getLine(resource, lineBuffer);
+  NxOgre::Strings::getLine(resource, lineBuffer);
   
   if (lineBuffer.size() == 1) // (0 characters + 1 byte null)
    continue;  // Skip empty lines 

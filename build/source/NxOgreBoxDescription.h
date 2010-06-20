@@ -143,7 +143,7 @@ class NxOgrePublicClass BoxDescription : public ShapeDescription
   */
   virtual void inspect() const;
 
-  // END - Serialisation. "BoxDescription-b0de51e9b492dd515101858546e9314f"
+  // END - Serialisation. "BoxDescription-885a63d715651674dfb3ebaeec29b0d0"
 
 }; // class BoxDescription
 

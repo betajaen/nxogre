@@ -31,7 +31,6 @@
 #include "NxOgreWorldDescription.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreErrorStream.h"
-#include "NxOgreTimeController.h"
 #include "NxOgreResourceSystem.h"
 #include "NxOgreMeshManager.h"
 #include "NxOgreHeightFieldManager.h"
@@ -48,6 +47,10 @@
 #include "NxOgreAuxiliaryScene.h"
 #include "NxPhysics.h"
 #include "NxCooking.h"
+
+#if NxOgreHasCharacterController == 1
+#include "ControllerManager.h"
+#endif
 
                                                                                        
 
@@ -171,8 +174,17 @@ void World::destroyWorld(bool also_destroy_singletons)
   NxOgre_DebugPrint_Core("World::destroyWorld -- World could not be destroyed. Reason: sWorldInstance pointer is null.");
   return;
  }
+ 
 #if NXOGRE_DEBUG_MEMORY == 1
  GC::gc_debugger_last_frame();
+#endif
+ 
+#if NxOgreHasCharacterController == 1
+ if (World::sWorldInstance->mControllerManager != 0)
+ {
+  NxReleaseControllerManager(World::sWorldInstance->mControllerManager);
+  World::sWorldInstance->mControllerManager = 0;
+ }
 #endif
  
  // Clear all scenes
@@ -192,6 +204,9 @@ void World::destroyWorld(bool also_destroy_singletons)
 
 World::World(const WorldDescription& description)
 : mSDK(0), mDeadSDK(false), mPhysXOutputStream(0), mPhysXUserAllocator(0), mNullCallback(0)
+#if NxOgreHasCharacterController == 1
+ , mControllerManager(0)
+#endif
 {
  
  mPhysXOutputStream = GC::safe_new0<PhysXOutputStream>(NXOGRE_GC_THIS);
@@ -329,6 +344,19 @@ NxCookingInterface* World::getPhysXCookingInterface() const
 {
  return mCookingInterface;
 }
+
+
+#if NxOgreHasCharacterController == 1
+
+NxControllerManager* World::getPhysXControllerManager()
+{
+ if (mControllerManager == 0)
+  mControllerManager = NxCreateControllerManager(mPhysXUserAllocator);
+
+ return mControllerManager;
+}
+
+#endif
 
 void World::advance(Real deltaTime)
 {

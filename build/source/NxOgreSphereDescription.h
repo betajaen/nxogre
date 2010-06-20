@@ -134,7 +134,7 @@ class NxOgrePublicClass SphereDescription : public ShapeDescription
   */
   virtual void inspect() const;
 
-  // END - Serialisation. "SphereDescription-58d367fc3c5c197ecd5290b1e16f08ad"
+  // END - Serialisation. "SphereDescription-a578ff25dea9c20bad4bad903f3efec2"
 
 }; // class SphereDescription
 

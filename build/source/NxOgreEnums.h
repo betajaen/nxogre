@@ -1639,7 +1639,7 @@ enum ForceFieldFlags
  ForceFieldFlag_ScalingRigidBody = (1 << 8),
 };
 
-#ifdef NxOgreHasCharacterController
+#if NxOgreHasCharacterController == 1
 
 enum CharacterControllerInteractionFlag
 {
@@ -1659,6 +1659,12 @@ enum FilterOp
  FilterOp_Nor,
  FilterOp_NXor,
  FilterOp_SwapAnd
+};
+
+enum SceneFunction
+{
+ SceneFunction_Simulate,
+ SceneFunction_Render
 };
 
                                                                                        

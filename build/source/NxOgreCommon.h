@@ -46,6 +46,7 @@
 #include "NxOgreErrorStream.h"
 #include "NxOgrePhysXPointer.h"
 #include "NxOgreSharedPointer.h"
+#include "NxOgreValue.h"
 #include "NxOgreSingleton.h"
 #include "NxOgreVector.h"
 #include "NxOgreVectorIterator.h"
@@ -145,6 +146,18 @@ typedef buffer<Shape*> OverlapQueryHits;
 /* 
 */
 typedef std::pair<Real, Real> ConstraintDominance;
+
+/*
+*/
+typedef NxOgre::map<std::string, Value> StringValueList;
+
+/*
+*/
+typedef NxOgre::map_iterator<std::string, Value> StringValuePairIterator;
+
+/*
+*/
+typedef std::pair<std::string, std::string> StringPair;
 
 //
 static const Path MEMORY_PATH = Path("memory://");

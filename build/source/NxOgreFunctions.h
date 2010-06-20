@@ -29,67 +29,63 @@
 #ifndef NXOGRE_FUNCTIONS_H
 #define NXOGRE_FUNCTIONS_H
 
-
+                                                                                       
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreDynamicRigidBodyFlags.h"
 
-
+                                                                                       
 
 namespace NxOgre
 {
 
-
-
-namespace Functions
-{
-
-
-
-/** \brief Fill a chunk of memory with a value
-*/
-template<typename T> void fill(T* start, T* end, T value)
-{
- for (;start != end; ++start)
-  (*start) = value;
-}
-
-/*! function. is_in.ref
+/*! class. VolumePhysicsFunction
     desc.
-        Is a value in this vector.
+        A bunch of pre-made callbacks to be used with a Volume for common needs.
+    note.
+        You can use one PhysicsFunction for one Volume or shared with many, but it uses
+        a reference counting system to automatically delete when it is no longer used.
+    usage.
+        bc. mScene->createVolume(..., VolumePhysicsFunction::raise_clear_flag(NxOgre::DynamicRigidbodyFlags::IgnoreGravity));
 */
-template<typename T > bool is_in(const T& look_up, const std::vector<T>& vec)
+class NxOgrePublicFunction VolumePhysicsFunction
 {
- for (typename std::vector<T>::iterator it = vec.begin(); it != vec.end(); ++it)
- {
-  if ((*it) == look_up)
-   return true;
- }
- return false;
-}
+   
+  public:
+   
+  /*! function. raise_clear_flag
+      desc.
+          Raises or clears a flag of an Actor, under two events in the Volume.
+      example.
+          Set the no gravity flag when the Actor enters the volume and clears it when it leaves.
+  */
+  static Callback* raise_clear_flag(NxOgre::DynamicRigidbodyFlags::Flags flag, 
+           NxOgre::Enums::VolumeCollisionType volume_raise_event = NxOgre::Enums::VolumeCollisionType_OnEnter,
+           NxOgre::Enums::VolumeCollisionType volume_clear_event = NxOgre::Enums::VolumeCollisionType_OnExit);
+   
+  /*! function. move_to
+      desc.
+          Moves the actor towards a global position, whilst the actor is within side the volume
+      example.
+          Set the no gravity flag when the Actor enters the volume and clears it when it leaves.
+  */
+  static Callback* move_to(const Vec3& globalPosition, Real acceleration = Real(1.0));
+  
+  /*! function. teleport_to
+      desc.
+          Teleports the actor to a global position
+      example.
+          This could be used to teleport actors that leave a playing area, or something that goes out of bounds.
+  */
+  static Callback* teleport_to(const Vec3& globalPosition,
+                               NxOgre::Enums::VolumeCollisionType teleport_event = NxOgre::Enums::VolumeCollisionType_OnEnter);
+};
 
-/*! function. is_in
-    desc.
-         Is a value ptr in this vector.
-*/
-template<typename T> bool is_in(T* look_up, const std::vector<T>& vec)
-{
- for (typename std::vector<T>::iterator it = vec.begin(); it != vec.end(); ++it)
- {
-  if ((*it) == look_up)
-   return true;
- }
- return false;
-}
-
-
-
-} // namespace Functions
-
-
+                                                                                       
 
 } // namespace NxOgre
 
-
+                                                                                       
 
 #endif

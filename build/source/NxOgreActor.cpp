@@ -47,36 +47,46 @@ namespace NxOgre
                                                                                        
 
 Actor::Actor(Scene* scene)
-: RigidBody(), mScene(scene)
+: RigidBody(scene)
 {
 }
 
 Actor::Actor(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
-: RigidBody(), mScene(scene)
+: RigidBody(scene)
 {
  mName = description.mName;
  mNameHash = Strings::hash(mName);
 
- createDynamic(pose, description, scene, shape);
+ _createDynamic(pose, description, scene, shape);
 }
 
 Actor::Actor(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
-: RigidBody(), mScene(scene)
+: RigidBody(scene)
 {
  mName = description.mName;
  mNameHash = Strings::hash(mName);
 
- createDynamic(pose, description, scene, shapes);
+ _createDynamic(pose, description, scene, shapes);
 }
 
 Actor::~Actor()
 {
- destroy();
+ _destroy();
 }
 
-String Actor::getName() const
+void Actor::createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription& description, const ShapeDescription& shape)
 {
- return mName;
+ _createDynamic(matrix_pose, description, mScene, shape);
+}
+
+void Actor::createDynamic(const Matrix44& matrix_pose, const RigidBodyDescription& description, const ShapeDescriptions& shapes)
+{
+ _createDynamic(matrix_pose, description, mScene, shapes);
+}
+
+bool Actor::isActorBased() const
+{
+ return true;
 }
 
 void Actor::raiseDynamicFlag(DynamicRigidbodyFlags::Flags flag)
@@ -215,11 +225,6 @@ Matrix33 Actor::getGlobalOrientation() const
 Quat Actor::getGlobalOrientationQuat() const
 {
  return Quat(mActor->getGlobalOrientationQuat());
-}
-
-unsigned int Actor::getNbShapes() const
-{
- return mActor->getNbShapes();
 }
 
 void Actor::setCMassOffsetLocalPose(const Matrix44& matrix)

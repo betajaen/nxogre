@@ -33,8 +33,10 @@
 #include "NxOgreShape.h"
 #include "NxOgreRigidBodyFunctions.h"
 #include "NxOgreRigidBodyDescription.h"
-
+#include "NxOgreCallback.h"
 #include "NxOgreWorld.h"
+
+#include "NxActor.h"
 
                                                                                        
 
@@ -44,31 +46,49 @@ namespace NxOgre
                                                                                        
 
 Volume::Volume(Scene* scene, Callback* callback)
-: RigidBody(),
-  mScene(scene),
+: RigidBody(scene),
   mVolumeCallback(callback)
 {
+ if (mVolumeCallback)
+  mVolumeCallback->increaseReference();
 }
 
 Volume::Volume(const ShapeDescription& shape, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
-: RigidBody(),
-  mScene(scene),
+: RigidBody(scene),
   mVolumeCallback(callback)
 {
- createTrigger(pose, type, scene, shape);
+ _createTrigger(pose, type, scene, shape);
+ if (mVolumeCallback)
+  mVolumeCallback->increaseReference();
 }
 
 Volume::Volume(const ShapeDescriptions& shapes, const Matrix44& pose, Enums::VolumeCollisionType type, Scene* scene, Callback* callback)
-: RigidBody(),
-  mScene(scene),
+: RigidBody(scene),
   mVolumeCallback(callback)
 {
- createTrigger(pose, type, scene, shapes);
+ _createTrigger(pose, type, scene, shapes);
+ if (mVolumeCallback)
+  mVolumeCallback->increaseReference();
 }
 
 Volume::~Volume()
 {
- destroy();
+ 
+ _destroy();
+ 
+ if (mVolumeCallback)
+ {
+  mVolumeCallback->decreaseReference();
+  if (mVolumeCallback->getNbReferences() == 0 && mVolumeCallback->shouldDelete())
+  {
+   GC::safe_delete<Callback>(mVolumeCallback, NXOGRE_GC_THIS); 
+  }
+ }
+}
+
+bool Volume::isVolumeBased() const
+{
+ return true;
 }
 
 unsigned int Volume::getRigidBodyType() const
@@ -78,47 +98,50 @@ unsigned int Volume::getRigidBodyType() const
 
 void Volume::setGlobalPose(const Matrix44& matrix)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalPose(matrix, mActor);
+ NxMat34 global_pose;
+ global_pose.setRowMajor44(matrix.ptr());
+ mActor->setGlobalPose(global_pose);
 }
 
-void Volume::setGlobalPosition (const Vec3& r3)
+void Volume::setGlobalPosition(const Vec3& vec)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalPosition(r3, mActor);
+ mActor->setGlobalPosition(vec.as<NxVec3>());
 }
 
-void Volume::setGlobalOrientation(const Matrix33& r33)
+void Volume::setGlobalOrientation(const Matrix33& mat)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientation(r33, mActor);
+ NxMat33 matrix;
+ matrix.setRowMajor(mat.ptr());
+ mActor->setGlobalOrientation(matrix);
 }
 
-void Volume::setGlobalOrientationQuat(const Quat& r4)
+void Volume::setGlobalOrientationQuat(const Quat& quat)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGlobalOrientationQuat(r4, mActor);
+ mActor->setGlobalOrientationQuat(quat.as<NxQuat>());
 }
 
 Matrix44 Volume::getGlobalPose() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
+ Matrix44 matrix;
+ mActor->getGlobalPose().getRowMajor44(matrix.ptr());
+ return matrix;
 }
 
 Vec3 Volume::getGlobalPosition() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
+ return Vec3(mActor->getGlobalPosition());
 }
 
 Matrix33 Volume::getGlobalOrientation() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
+ Matrix33 matrix;
+ mActor->getGlobalOrientation().getRowMajor(matrix.ptr());
+ return matrix;
 }
 
 Quat Volume::getGlobalOrientationQuat() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
-}
-
-unsigned int Volume::getNbShapes() const
-{
- return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
+ return Quat(mActor->getGlobalOrientationQuat());
 }
 
 Callback* Volume::getVolumeCallback()
@@ -129,11 +152,24 @@ Callback* Volume::getVolumeCallback()
 void Volume::setVolumeCallback(Callback* callback)
 {
  mVolumeCallback = callback;
+ mVolumeCallback->increaseReference();
 }
 
 void Volume::removeVolumeCallback()
 {
+ if (mVolumeCallback)
+  mVolumeCallback->decreaseReference();
  mVolumeCallback = World::getWorld()->getNullCallback();
+}
+
+void Volume::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType type, const ShapeDescription& shape)
+{
+ _createTrigger(pose, type, mScene, shape);
+}
+
+void Volume::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType type, const ShapeDescriptions& shapes)
+{
+ _createTrigger(pose, type, mScene, shapes);
 }
 
                                                                                        

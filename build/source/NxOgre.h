@@ -44,7 +44,8 @@
 #include "NxOgreCallback.h"
 #include "NxOgreCapsule.h"
 #include "NxOgreCapsuleDescription.h"
-#include "NxOgreCircularBuffer.h"
+#include "NxOgreCharacterController.h"
+#include "NxOgreCharacterControllerDescription.h"
 #include "NxOgreClasses.h"
 #include "NxOgreClassPrototypes.h"
 #include "NxOgreCloth.h"
@@ -66,6 +67,7 @@
 #include "NxOgreFileResourceProtocol.h"
 #include "NxOgreFixedJoint.h"
 #include "NxOgreFixedSceneTimer.h"
+#include "NxOgreFlatYAML.h"
 #include "NxOgreFlower.h"
 #include "NxOgreFluid.h"
 #include "NxOgreFluidDescription.h"
@@ -115,7 +117,6 @@
 #include "NxOgrePath.h"
 #include "NxOgrePhysXCallback.h"
 #include "NxOgrePhysXConfiguration.h"
-#include "NxOgrePhysXMeshData.h"
 #include "NxOgrePhysXOutputStream.h"
 #include "NxOgrePhysXParticleData.h"
 #include "NxOgrePhysXPointer.h"
@@ -135,7 +136,6 @@
 #include "NxOgreRay.h"
 #include "NxOgreRaycastHit.h"
 #include "NxOgreReason.h"
-#include "NxOgreRefVector.h"
 #include "NxOgreRemoteDebugger.h"
 #include "NxOgreRemoteDebuggerListener.h"
 #include "NxOgreRenderable.h"
@@ -194,7 +194,6 @@
 #include "NxOgreWorld.h"
 #include "NxOgreWorldDescription.h"
 #include "NxOgreX.h"
-#include "NxOgreXFunctions.h"
 
                                                                                        
 

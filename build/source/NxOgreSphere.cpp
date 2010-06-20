@@ -40,8 +40,8 @@ namespace NxOgre
 
                                                                                        
 
-Sphere::Sphere(NxSphereShape* shape)
-: Shape(shape), mSphereShape(shape)
+Sphere::Sphere(NxSphereShape* shape, bool isDirty)
+: Shape(shape, isDirty), mSphereShape(shape)
 {
 }
 

@@ -34,7 +34,7 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
-#ifdef NxOgreHasCharacterController
+#if NxOgreHasCharacterController == 1
 
                                                                                        
 
@@ -115,7 +115,25 @@ class NxOgrePublicClass CharacterControllerDescription
           Enums::CharacterControllerInteractionFlag_Include
   */
   Enums::CharacterControllerInteractionFlag  mInteractionFlag;
-
+  
+  /*! variable. mStepOffset
+      desc.
+          Maximum height of an obstacle which the character can climb.
+      default.
+          0.5
+  */
+  Real mStepOffset;
+  
+  /*! variable. mCapsuleEasyClimbing
+      desc.
+          If the controller is an capsule one, when climbing should it let
+          the capsule climb over surfaces according to the impact normal (easy),
+          or try to limit climbing according to the step offset (constrained)
+      default.
+          **false* -- Constrained climbing
+  */
+  bool mCapsuleEasyClimbing;
+  
 }; // class CharacterControllerDescription
 
                                                                                        

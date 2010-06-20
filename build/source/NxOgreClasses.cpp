@@ -41,7 +41,7 @@ namespace Classes
 
                                                                                        
 
-static const char*  sClasses[625] = {
+static const char*  sClasses[626] = {
   "NX_MEMORY_PERSISTENT",
   "NX_MEMORY_TEMP",
   "NX_MEMORY_Articulation",
@@ -665,6 +665,7 @@ static const char*  sClasses[625] = {
   "World",
   "WorldDescription",
   "WorldPrototype",
+  "CharacterController",
   "RENDERSYSTEMS_CLASSES_BEGIN",
   "USER_CLASSES_BEGIN",
 };

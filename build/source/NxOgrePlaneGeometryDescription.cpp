@@ -124,5 +124,5 @@ void PlaneGeometryDescription::inspect() const
 
 } // namespace NxOgre
 
-// END - Serialisation. "PlaneGeometryDescription-e9d569ded62d6428f4adef457efaed17"
+// END - Serialisation. "PlaneGeometryDescription-feeb338654014916cbab924900fc2cc3"
 

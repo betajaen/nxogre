@@ -56,7 +56,15 @@ class NxOgrePublicClass Volume : public RigidBody
   NXOGRE_GC_FRIEND_DELETE
   
   public:
-  
+
+  /*! function. isVolumeBased
+      desc.
+          Returns true if this class is a Volume or inherits from it.
+      return.
+          **true** -- It is an Volume or Volume based class.
+  */
+  bool  isVolumeBased() const;
+
   /*! function. getRigidBodyType
       desc.
           Get the the type of RigidBody.
@@ -112,24 +120,6 @@ class NxOgrePublicClass Volume : public RigidBody
           Retrieves the Volumes world space orientation.
   */
   Quat  getGlobalOrientationQuat() const;
-
-  /*! function. createShape
-      desc.
-          Creates a new shape and adds it to the list of shapes of this Volume. 
-  */
-  void  createShape(Shape*);
-  
-  /*! function. releaseShape
-      desc.
-          Deletes the specified shape.
-  */
-  void  releaseShape(Shape*);
-  
-  /*! function. getNbShapes
-      desc.
-          Returns the number of shapes assigned to the Volume.
-  */
-  unsigned int  getNbShapes() const;
   
   /*! function. getVolumeCallback
       desc.
@@ -155,6 +145,32 @@ class NxOgrePublicClass Volume : public RigidBody
   */
   Volume(Scene*, Callback*);
   
+  /*! function. createTrigger.0
+      desc.
+          Become a Trigger RigidBody (Volume) based on the arguments.
+      note.
+          User classes that inherit Volume should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           Enums::VolumeCollisionType _colType__ -- Collision types (composed with the @|@ (or) operator) of the types of Collisions to report.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, const ShapeDescription&);
+  
+  /*! function. createTrigger.1
+      desc.
+          Become a Trigger RigidBody (Volume) based on the arguments.
+      note.
+          User classes that inherit Volume should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           Enums::VolumeCollisionType _colType__ -- Collision types (composed with the @|@ (or) operator) of the types of Collisions to report.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createTrigger(const Matrix44& pose, Enums::VolumeCollisionType, const ShapeDescriptions&);
+
   /* Private do not use.
      Use Scene::createVolume
   */
@@ -172,12 +188,6 @@ class NxOgrePublicClass Volume : public RigidBody
   
 
   protected: // Variables
-  
-  /** \brief Volume's parent Scene
-  */
-  Scene*  mScene;
-  
-  CollisionModel  mShapes;
   
   Callback*  mVolumeCallback;
   

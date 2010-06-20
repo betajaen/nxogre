@@ -89,7 +89,7 @@ struct SceneFlags
     // Enables multi-threaded version of force field for fluids.
     MultithreadedForcefield = 0x80*16,
     // Default
-    DefaultFlags = SimulateSeperateThread|DisableSceneMutex
+    DefaultFlags = SimulateSeperateThread
    };
 
    SceneFlags() : flags(DefaultFlags) {}
@@ -130,7 +130,7 @@ struct SceneFlags
    private: int flags;
 
 
-  // END - Serialisation. "SceneFlags-2bdbc79ebb02b35496b3eb81ab8e9290"
+  // END - Serialisation. "SceneFlags-b27cf62ed5103142581b487bcc8290cb"
 
 };
 

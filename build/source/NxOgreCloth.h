@@ -940,7 +940,7 @@ bool                                        tearVertex(const unsigned int vertex
            float __deltaTime__ -- Time passed
            const Enums::Priority& priority -- Priority of the cloth
   */
-  bool                                         advance(float deltaTime, const Enums::Priority& priority);
+  bool                                         advance(float deltaTime, const Enums::Priority& priority, const Enums::SceneFunction&);
   
   protected: // Variables
   

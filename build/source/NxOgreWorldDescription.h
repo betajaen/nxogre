@@ -153,7 +153,7 @@ class NxOgrePublicClass WorldDescription
   */
   virtual void inspect() const;
 
-  // END - Serialisation. "WorldDescription-c13960d86c98f541e399d9182795dca9"
+  // END - Serialisation. "WorldDescription-7a85aefb65e9b14cfd7d19e5c8cc87cf"
 
 }; // class WorldDescription
 

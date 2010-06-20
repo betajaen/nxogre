@@ -50,7 +50,7 @@ namespace NxOgre
 class NxOgrePublicClass Sphere : public Shape
 {
   
-  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_NEW2
   NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
@@ -95,7 +95,7 @@ class NxOgrePublicClass Sphere : public Shape
   
   /** \brief Sphere
   */
-  Sphere(NxSphereShape*);
+  Sphere(NxSphereShape*, bool isDirty = false);
   
   /** \brief Sphere
   */

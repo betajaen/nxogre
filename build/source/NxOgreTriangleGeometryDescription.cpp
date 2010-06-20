@@ -131,5 +131,5 @@ void TriangleGeometryDescription::inspect() const
 
 } // namespace NxOgre
 
-// END - Serialisation. "TriangleGeometryDescription-23818dae2a7d516e43ac7064c70a63dd"
+// END - Serialisation. "TriangleGeometryDescription-d9af3a15f5bb0ae28aeab780b06786f9"
 

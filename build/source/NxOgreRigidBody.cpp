@@ -32,6 +32,7 @@
 #include "NxOgreRigidBody.h"
 
 #include "NxOgreScene.h"
+#include "NxOgreWorld.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreErrorStream.h"
 #include "NxOgreRigidBodyDescription.h"
@@ -46,8 +47,14 @@
 #include "NxOgreShapeFunctions.h"
 
 #include "NxActor.h"
-
 #include "NxPhysics.h"
+
+#if NxOgreHasCharacterController == 1
+#include "NxController.h"
+#include "NxBoxController.h"
+#include "NxCapsuleController.h"
+#include "ControllerManager.h"
+#endif
 
                                                                                        
 
@@ -56,8 +63,8 @@ namespace NxOgre
 
                                                                                        
 
-RigidBody::RigidBody()
-: mActor(0), mScene(0), mContactCallback(0), mNameHash(BLANK_HASH)
+RigidBody::RigidBody(Scene* scene)
+: mActor(0), mScene(scene), mContactCallback(0), mDirtyActor(false), mNameHash(0)
 {
 }
 
@@ -65,12 +72,22 @@ RigidBody::~RigidBody()
 {
 }
 
+String RigidBody::getName() const
+{
+ return mName;
+}
+
+StringHash RigidBody::getNameHash() const
+{
+ return mNameHash;
+}
+
 unsigned int RigidBody::getRigidBodyType() const
 {
  return Classes::_RigidBody;
 }
 
-void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
+void RigidBody::_createDynamic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
 {
  // RIGIDBODY_EXCEPTIONS_PASS
  //////////////////////////////////////////////////
@@ -123,7 +140,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
  //////////////////////////////////////////////////
 }
 
-void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
+void RigidBody::_createDynamic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
 {
  // RIGIDBODY_EXCEPTIONS_PASS
  //////////////////////////////////////////////////
@@ -185,7 +202,7 @@ void RigidBody::createDynamic(const Matrix44& pose, const RigidBodyDescription& 
 }
 
 
-void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
+void RigidBody::_createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
 {
  // RIGIDBODY_EXCEPTIONS_PASS
  //////////////////////////////////////////////////
@@ -239,7 +256,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
 }
 
 
-void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
+void RigidBody::_createStatic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
 {
  
  // RIGIDBODY_EXCEPTIONS_PASS
@@ -298,7 +315,7 @@ void RigidBody::createStatic(const Matrix44& pose, const RigidBodyDescription& d
 }
 
 
-void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
+void RigidBody::_createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescription& shape)
 {
  // RIGIDBODY_EXCEPTIONS_PASS
  //////////////////////////////////////////////////
@@ -354,7 +371,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
 }
 
 
-void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
+void RigidBody::_createKinematic(const Matrix44& pose, const RigidBodyDescription& description, Scene* scene, const ShapeDescriptions& shapes)
 {
  
  // RIGIDBODY_EXCEPTIONS_PASS
@@ -418,7 +435,7 @@ void RigidBody::createKinematic(const Matrix44& pose, const RigidBodyDescription
 }
 
 
-void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, const ShapeDescription& shape)
+void RigidBody::_createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, const ShapeDescription& shape)
 {
 
  // RIGIDBODY_EXCEPTIONS_PASS
@@ -471,7 +488,7 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
 }
 
 
-void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, const ShapeDescriptions& shapes)
+void RigidBody::_createTrigger(const Matrix44& pose, Enums::VolumeCollisionType collision_type, Scene* scene, const ShapeDescriptions& shapes)
 {
  
  // RIGIDBODY_EXCEPTIONS_PASS
@@ -531,13 +548,92 @@ void RigidBody::createTrigger(const Matrix44& pose, Enums::VolumeCollisionType c
  //////////////////////////////////////////////////
 }
 
+#if NxOgreHasCharacterController == 1
 
-void RigidBody::destroy()
+NxController* RigidBody::_createCharacterController(const Vec3& globalPos, Scene* scene, const SimpleShape& shape, const CharacterControllerDescription& description)
+{
+ 
+ // RIGIDBODY_EXCEPTIONS_PASS
+ //////////////////////////////////////////////////
+ if (mActor)
+   NxOgre_ThrowException(NonNullPointerException, "Tried to create an NxActor but this RigidBody already has one.", Classes::_RigidBody);
+ NxOgre_ThrowExceptionIfNull(scene, Classes::_Scene);
+ //////////////////////////////////////////////////
+ 
+ // RIGIDBODY_CHARACTER_CONTROLLER
+ //////////////////////////////////////////////////
+ mScene = scene;
+ NxController* controller = 0;
+
+ // BOX_CHARACTER_CONTROLLER
+ //////////////////////////////////////////////////
+ if (shape.getType() == Enums::SimpleShape_Box)
+ {
+  NxBoxControllerDesc controller_desc;
+  controller_desc.callback = 0;
+  Vec3 box_desc = shape.to_cc_shape();
+  box_desc *= 0.5f;
+  controller_desc.extents.x = box_desc.x;
+  controller_desc.extents.y = box_desc.y;
+  controller_desc.extents.z = box_desc.z;
+  controller_desc.interactionFlag = (NxCCTInteractionFlag) (int) description.mInteractionFlag;
+  controller_desc.position = globalPos.as<NxExtendedVec3>();
+  controller_desc.skinWidth = description.mSkinWidth;
+  controller_desc.slopeLimit = description.mSlopeLimit.rad();
+  controller_desc.stepOffset = description.mStepOffset;
+  controller_desc.upDirection = (NxHeightFieldAxis) (int) description.mUpDirection;
+  //controller_desc.userData = GC::safe_new2<PhysXPointer>(this, Classes::_CharacterController, NXOGRE_GC_THIS);
+  
+  controller = World::getSingleton()->getPhysXControllerManager()->createController(mScene->getScene(), controller_desc);
+  mActor = controller->getActor();
+ }
+ // CAPSULE_CHARACTER_CONTROLLER
+ //////////////////////////////////////////////////
+ else if (shape.getType() == Enums::SimpleShape_Capsule)
+ {
+  NxCapsuleControllerDesc controller_desc;
+  controller_desc.callback = 0;
+  controller_desc.climbingMode = description.mCapsuleEasyClimbing ? CLIMB_EASY : CLIMB_CONSTRAINED;
+  Vec3 capsule_desc = shape.to_cc_shape();
+  controller_desc.height = capsule_desc.y;
+  controller_desc.radius = capsule_desc.x;
+  controller_desc.position = globalPos.as<NxExtendedVec3>();
+  controller_desc.skinWidth = description.mSkinWidth;
+  controller_desc.slopeLimit = description.mSlopeLimit.rad();
+  controller_desc.stepOffset = description.mStepOffset;
+  controller_desc.upDirection = (NxHeightFieldAxis) (int) description.mUpDirection;
+  //controller_desc.userData = GC::safe_new2<PhysXPointer>(this, Classes::_CharacterController, NXOGRE_GC_THIS);
+  
+  controller = World::getSingleton()->getPhysXControllerManager()->createController(mScene->getScene(), controller_desc);
+  mActor = controller->getActor();
+ }
+ 
+ if (mActor == 0)
+  NxOgre_ThrowException(DescriptionInvalidException, "Character Controller was not created", Classes::_RigidBody);
+ 
+ mDirtyActor = true;
+ 
+ mActor->userData = GC::safe_new2<PhysXPointer>(this, Classes::_RigidBody, NXOGRE_GC_THIS);
+ 
+ // RIGIDBODY_CREATE_SHAPES_PASS
+ //////////////////////////////////////////////////
+ NxShape* const* physx_shapes = mActor->getShapes();
+ NxU32 nbShapes = mActor->getNbShapes();
+ while (nbShapes--)
+  mShapes.push_back(Functions::ShapeFunctions::createDirtyShape(physx_shapes[nbShapes], this));
+ //////////////////////////////////////////////////
+
+ 
+ return controller;
+}
+
+#endif
+
+void RigidBody::_destroy()
 {
  
  if (mActor == 0)
   return;
- 
  
  PhysXPointer* ptr = pointer_cast(mActor->userData);
  GC::safe_delete(ptr, NXOGRE_GC_THIS);
@@ -548,8 +644,11 @@ void RigidBody::destroy()
   GC::safe_delete(shape_ptr, NXOGRE_GC_THIS);
  }
  
- NxScene& scene = mActor->getScene();
- scene.releaseActor(*mActor);
+ if (!mDirtyActor)
+ {
+  NxScene& scene = mActor->getScene();
+  scene.releaseActor(*mActor);
+ }
  
 }
 
@@ -557,6 +656,35 @@ bool RigidBody::isDynamic() const
 {
  return mActor->isDynamic();
 }
+
+bool RigidBody::isSceneGeometryBased() const
+{
+ return false;
+}
+
+bool RigidBody::isVolumeBased() const
+{
+ return false;
+}
+
+bool RigidBody::isActorBased() const
+{
+ return false;
+}
+
+bool RigidBody::isKinematicActorBased() const
+{
+ return false;
+}
+
+#if NxOgreHasCharacterController == 1
+
+bool RigidBody::isCharacterControllerBased() const
+{
+ return false;
+}
+
+#endif
 
 void RigidBody::raiseFlag(RigidbodyFlags::Flags flag)
 {
@@ -593,14 +721,21 @@ Callback* RigidBody::getContactCallback()
  return mContactCallback;
 }
 
-StringHash RigidBody::getNameHash() const
-{
- return mNameHash;
-}
-
 CollisionModelIterator RigidBody::getShapes()
 {
  return mShapes.elements();
+}
+
+Shape* RigidBody::getShape(unsigned int index)
+{
+ if (index > mShapes.size() - 1)
+  return 0;
+ return mShapes.at(index);
+}
+
+unsigned int RigidBody::getNbShapes() const
+{
+ return mShapes.size();
 }
 
 String RigidBody::to_s() const

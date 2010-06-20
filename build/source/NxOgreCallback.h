@@ -79,6 +79,20 @@ class NxOgrePublicClass Callback
        !virtual
    */
    virtual ~Callback();
+   
+   /*! function. shouldDelete
+       desc.
+           Should this callback be deleted when no longer used?
+       note.
+           This automatically returns true, and should be overriden when you want a different
+           behaviour.
+           When returning true -- the callback will be deleted on the following events:
+            - Volume destroyed, when reference count is 0.
+            - Scene destroyed, when reference count is 0.
+       return.
+           **false** -- Don't delete it
+    */
+    virtual bool shouldDelete() const;
 
    /*! function. onVolumeEvent
        desc.

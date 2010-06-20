@@ -43,111 +43,162 @@ namespace NxOgre
 
                                                                                        
 
-/** \brief
+/*! class. SceneGeometry
+    desc.
+        Non-movable, non-deletable large actors storing meshes, heightfields or primitives
+        making up the solid world of your choice such as buildings, parks, benches and
+        landmasses.
 */
 class NxOgrePublicClass SceneGeometry : public RigidBody
 {
   
-  friend class Scene;
-  
-  public:
-  
+  NXOGRE_GC_FRIEND_DELETE
+  NXOGRE_GC_FRIEND_NEW4
   
   public: // Functions
   
+  /*! function. isSceneGeometryBased
+      desc.
+          Returns true if this class is SceneGeometry or inherits from it.
+      return.
+          **true** -- It is an SceneGeometry or SceneGeometry based class.
+  */
+  bool  isSceneGeometryBased() const;
+
+  /*! function. createStatic.0
+      desc.
+          Become a Static RigidBody (SceneGeometry) based on the arguments.
+      note.
+          User classes that inherit should *not* call this. Call CharacterController::createStatic() instead.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           const ShapeDescription& __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+      !protected
+  */
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, const ShapeDescription& shape);
+  
+  /*! function. createStatic.1
+      desc.
+          Become a Static RigidBody (SceneGeometry) based on the arguments.
+      note.
+          User classes that inherit should *not* call this. Call CharacterController::createStatic() instead.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, const ShapeDescriptions& shapes);
+
   /** \brief 
   */
-  virtual                             unsigned int           getRigidBodyType() const;
+  virtual  unsigned int  getRigidBodyType() const;
 
   /** \brief Assigns the actor to a user defined group of rigid bodies. 
   */
-                                      void                   setGroup(GroupIdentifier actorGroup); 
+  void                   setGroup(GroupIdentifier actorGroup); 
 
   /** \brief Retrieves the value set with setGroup(). 
   */
-                                      GroupIdentifier        getGroup() const;
+  GroupIdentifier        getGroup() const;
 
   /** \brief Sets the solver iteration count for the body. 
   */
-                                      void                   setSolverIterationCount(unsigned int iterCount);
+  void                   setSolverIterationCount(unsigned int iterCount);
 
   /** \brief Retrieves the solver iteration count.
   */
-                                      unsigned int           getSolverIterationCount() const; 
+  unsigned int           getSolverIterationCount() const; 
 
   /** \brief Retrieves the force threshold for contact reports. 
   */
-                                      Real                   getContactReportThreshold() const;
+  Real                   getContactReportThreshold() const;
 
   /** \brief Sets the force threshold for contact reports. 
   */
-                                      void                   setContactReportThreshold(Real threshold);
+  void                   setContactReportThreshold(Real threshold);
   
   /** \brief Retrieves the actor's contact report flags. 
   */
-                                      unsigned int           getContactReportFlags() const;
+  unsigned int           getContactReportFlags() const;
  
   /** \brief Sets the actor's contact report flags.
   */
-                                      void                   setContactReportFlags(unsigned int flags);
+  void                   setContactReportFlags(unsigned int flags);
 
   /** \brief Retrieves the actors world space transform.
   */
-                                      Matrix44               getGlobalPose() const;
+  Matrix44               getGlobalPose() const;
 
   /** \brief Retrieves the actors world space position.
   */
-                                      Vec3                  getGlobalPosition() const;
+  Vec3                  getGlobalPosition() const;
 
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Matrix33               getGlobalOrientation() const;
+  Matrix33               getGlobalOrientation() const;
   
   /** \brief Retrieves the actors world space orientation.
   */
-                                      Quat                  getGlobalOrientationQuat() const;
+  Quat                  getGlobalOrientationQuat() const;
 
-  /** \brief Creates a new shape and adds it to the list of shapes of this actor. 
-  */
-                                      void                   createShape(const ShapeDescription&);
-  
-  /** \brief Deletes the specified shape.
-  */
-                                      void                   releaseShape(Shape*);
-  
   /** \brief Returns the number of shapes assigned to the actor.
   */
-                                      unsigned int           getNbShapes() const;
+  unsigned int           getNbShapes() const;
 
-  /** \internal Classes that inherit from SceneGeometry should use this constructor.
-  */
-                                              SceneGeometry(Scene*);
-  
-  /** \internal Use Scene::createActor
-  */
-                                              SceneGeometry(const ShapeDescription&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
-  
-  /** \internal Use Scene::createActor
-  */
-                                              SceneGeometry(const ShapeDescriptions&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
-  
   /** \internal Use Scene::destroySceneGeometry
   */
   virtual                                    ~SceneGeometry();
 
-  protected: // Variables
-  
-  /** \brief Name of the Actor, otherwise a blank string.
-  */
-                       String          mName;
-  
-  /** \brief Actor's parent Scene
-  */
-                       Scene*                mScene;
-  
-                       CollisionModel        mShapes;
+  protected:
 
-}; // class ClassName
+  /*! function. createStatic.0
+      desc.
+          Become a Static RigidBody (SceneGeometry) based on the arguments.
+      note.
+          User classes that inherit Actor should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           const ShapeDescription& __shape__ -- The Single shape for the RigidBody to use. Cannot be NULL.
+      !protected
+  */
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, const ShapeDescription& shape);
+  
+  /*! function. createStatic.1
+      desc.
+          Become a Static RigidBody (SceneGeometry) based on the arguments.
+      note.
+          User classes that inherit Actor should call this.
+      args.
+           const Matrix44& __pose__ -- Pose of where the Dynamic RigidBody should be.
+           const RigidBodyDescription& __description__ -- Additional properties of the RigidBody.
+           Scene* __scene__ -- Which scene the RigidBody to exist in. Cannot be NULL.
+           Shape& __shapes__ -- The multiple shapes for the RigidBody to use. Cannot be empty.
+      !protected
+  */
+  void  createStatic(const Matrix44& matrix_pose, const RigidBodyDescription&, Scene* scene, const ShapeDescriptions& shapes);
+
+
+  /** \internal Classes that inherit from SceneGeometry should use this constructor.
+  */
+  SceneGeometry(Scene*);
+  
+  /** \internal Use Scene::createActor
+  */
+  SceneGeometry(const ShapeDescription&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  
+  /** \internal Use Scene::createActor
+  */
+  SceneGeometry(const ShapeDescriptions&, const Matrix44& pose, const RigidBodyDescription&, Scene*);
+  
+
+
+}; // class SceneGeometry
 
                                                                                        
 

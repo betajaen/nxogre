@@ -132,5 +132,5 @@ void CapsuleDescription::inspect() const
 
 } // namespace NxOgre
 
-// END - Serialisation. "CapsuleDescription-12a528ce1e3ee22e9914301366c24bc0"
+// END - Serialisation. "CapsuleDescription-900f57fddac29d8ea93d837ad5aae159"
 

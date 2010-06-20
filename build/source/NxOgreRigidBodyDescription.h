@@ -386,7 +386,7 @@ class NxOgrePublicClass RigidBodyDescription
   */
   virtual void inspect() const;
 
-  // END - Serialisation. "RigidBodyDescription-e94c041377ba1096a6cfef32ba15503c"
+  // END - Serialisation. "RigidBodyDescription-7008a292458be6d5a889be20d7ead6a2"
 
 }; // class RigidBodyDescription
 

@@ -43,7 +43,6 @@
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
-				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\source;&quot;$(PHYSX_DIR)\SDKs\Physics\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Foundation\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Cooking\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\PhysXLoader\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\NxCharacter\include&quot;"
 				PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;WIN32;_DLL"
 				RuntimeLibrary="2"
@@ -431,6 +430,14 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreFixedSceneTimer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFlatYAML.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgreFlatYAML.h"
 			>
 		</File>
 		<File
@@ -903,6 +910,22 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgrePhysXConfiguration.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXController.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXController.h"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXControllerManager.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\source\NxOgrePhysXControllerManager.h"
 			>
 		</File>
 		<File
@@ -1406,6 +1429,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\source\NxOgreValue.h"
+			>
+		</File>
+		<File
 			RelativePath="..\source\NxOgreVec2.cpp"
 			>
 		</File>
@@ -1523,14 +1550,6 @@
 		</File>
 		<File
 			RelativePath="..\source\NxOgreX.h"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreXFunctions.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\source\NxOgreXFunctions.h"
 			>
 		</File>
 	</Files>

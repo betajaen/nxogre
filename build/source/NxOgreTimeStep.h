@@ -106,7 +106,7 @@ class NxOgrePublicClass TimeStep
       desc.
           Get the time given by the user from TimeStep::calculate.
   */
-  float        getAccurate() const;
+  float        getActual() const;
   
   /*! function. isFixed
       desc.

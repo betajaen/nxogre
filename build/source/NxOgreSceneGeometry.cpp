@@ -34,6 +34,8 @@
 #include "NxOgreRigidBodyFunctions.h"
 #include "NxOgreRigidBodyDescription.h"
 
+#include "NxActor.h"
+
                                                                                        
 
 namespace NxOgre
@@ -43,28 +45,36 @@ namespace NxOgre
 
 
 SceneGeometry::SceneGeometry(Scene* scene)
-: RigidBody(),
-  mScene(scene)
+: RigidBody(scene)
 {
 }
 
 SceneGeometry::SceneGeometry(const ShapeDescription& shape, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
-: RigidBody(),
-  mScene(scene)
+: RigidBody(scene)
 {
- createStatic(pose, description, scene, shape);
+ mName = description.mName;
+ mNameHash = Strings::hash(mName);
+ 
+ _createStatic(pose, description, scene, shape);
 }
 
 SceneGeometry::SceneGeometry(const ShapeDescriptions& shapes, const Matrix44& pose, const RigidBodyDescription& description, Scene* scene)
-: RigidBody(),
-  mScene(scene)
+: RigidBody(scene)
 {
- createStatic(pose, description, scene, shapes);
+ mName = description.mName;
+ mNameHash = Strings::hash(mName);
+ 
+ _createStatic(pose, description, scene, shapes);
 }
 
 SceneGeometry::~SceneGeometry()
 {
- destroy();
+ _destroy();
+}
+
+bool SceneGeometry::isSceneGeometryBased() const
+{
+ return true;
 }
 
 unsigned int SceneGeometry::getRigidBodyType() const
@@ -74,58 +84,61 @@ unsigned int SceneGeometry::getRigidBodyType() const
 
 void SceneGeometry::setGroup(GroupIdentifier SceneGeometryGroup)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setGroup(SceneGeometryGroup, mActor);
+ mActor->setGroup(SceneGeometryGroup);
 }
 
 GroupIdentifier SceneGeometry::getGroup() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGroup(mActor);
+ return mActor->getGroup();
 }
 
 unsigned int SceneGeometry::getContactReportFlags() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getContactReportFlags(mActor);
+ return mActor->getContactReportFlags();
 }
 
 void SceneGeometry::setContactReportFlags(unsigned int flags)
 {
- ::NxOgre::Functions::RigidBodyFunctions::setContactReportFlags(flags, mActor);
+ mActor->setContactReportFlags(flags);
 }
 
 Matrix44 SceneGeometry::getGlobalPose() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPose(mActor);
+ Matrix44 matrix;
+ mActor->getGlobalPose().getRowMajor44(matrix.ptr());
+ return matrix;
 }
 
 Vec3 SceneGeometry::getGlobalPosition() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalPosition(mActor);
+ return Vec3(mActor->getGlobalPosition());
 }
 
 Matrix33 SceneGeometry::getGlobalOrientation() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientation(mActor);
+ Matrix33 matrix;
+ mActor->getGlobalOrientation().getRowMajor(matrix.ptr());
+ return matrix;
 }
 
 Quat SceneGeometry::getGlobalOrientationQuat() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getGlobalOrientationQuat(mActor);
-}
-
-
-void SceneGeometry::createShape(const ShapeDescription&)
-{
- //< \argh
-}
-
-void SceneGeometry::releaseShape(Shape*)
-{
- //< \argh
+ return Quat(mActor->getGlobalOrientationQuat());
 }
 
 unsigned int SceneGeometry::getNbShapes() const
 {
- return ::NxOgre::Functions::RigidBodyFunctions::getNbShapes(mActor);
+ return mActor->getNbShapes();
+}
+
+void SceneGeometry::createStatic(const Matrix44& matrix_pose, const RigidBodyDescription& description, const ShapeDescription& shape)
+{
+ _createStatic(matrix_pose, description, mScene, shape);
+}
+
+void SceneGeometry::createStatic(const Matrix44& matrix_pose, const RigidBodyDescription& description, const ShapeDescriptions& shapes)
+{
+ _createStatic(matrix_pose, description, mScene, shapes);
 }
 
                                                                                        

@@ -24,7 +24,7 @@
 
 */
 
-
+                                                                                       
 
 #include "NxOgreStable.h"
 #include "NxOgreScene.h"
@@ -39,7 +39,6 @@
 #include "NxOgreActor.h"
 #include "NxOgreSceneGeometry.h"
 #include "NxOgreKinematicActor.h"
-#include "NxOgreTimeController.h"
 #include "NxOgreMaterial.h"
 #include "NxOgreVolume.h"
 #include "NxOgreSphericalJoint.h"
@@ -78,12 +77,12 @@
 #include "NxOgreCharacterControllerDescription.h"
 #endif
 
-
+                                                                                       
 
 namespace NxOgre
 {
 
-
+                                                                                       
 
 Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 : mScene(0),
@@ -96,7 +95,8 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 {
 
  mPhysXCallback = GC::safe_new1<PhysXCallback>(this, NXOGRE_GC_THIS);
- mWaitingListenerGroup = GC::safe_new1<TimeListenerGroup>(Enums::Priority_Low, NXOGRE_GC_THIS);
+ mSimulateWaitingListenerGroup = GC::safe_new2<TimeListenerGroup>(Enums::Priority_Low, Enums::SceneFunction_Simulate, NXOGRE_GC_THIS);
+ mRenderWaitingListenerGroup = GC::safe_new2<TimeListenerGroup>(Enums::Priority_Low, Enums::SceneFunction_Render, NXOGRE_GC_THIS);
 
  mName = description.mName;
  mNameHash = Strings::hash(mName);
@@ -136,8 +136,9 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
 
 Scene::~Scene()
 {
-
- GC::safe_delete(mWaitingListenerGroup, NXOGRE_GC_THIS);
+ 
+ GC::safe_delete(mSimulateWaitingListenerGroup, NXOGRE_GC_THIS);
+ GC::safe_delete(mRenderWaitingListenerGroup, NXOGRE_GC_THIS);
 
  if (mSDK && mScene)
  {
@@ -148,6 +149,9 @@ Scene::~Scene()
   mMaterials.remove_all();
 #if NxOgreHasFluids == 1
   mFluids.remove_all();
+#endif
+#if NxOgreHasCharacterController == 1
+  mCharacterControllers.remove_all();
 #endif
   mMachines.remove_all();
   mCloths.remove_all();
@@ -242,13 +246,13 @@ void Scene::simulate(float deltaTime)
 
  // Then any listeners.
  for (mListenerIterator = mSimulateListenerGroups.elements(); mListenerIterator != mListenerIterator.end(); mListenerIterator++)
-  mListenerIterator->advance(deltaTime, mWaitingListenerGroup);
+  mListenerIterator->advance(deltaTime, mSimulateWaitingListenerGroup);
  
  // Any listeners that got behind.
- if (mWaitingListenerGroup->empty() == false)
+ if (mSimulateWaitingListenerGroup->empty() == false)
  {
-  mWaitingListenerGroup->advance(deltaTime, 0);
-  mWaitingListenerGroup->remove_all();
+  mSimulateWaitingListenerGroup->advance(deltaTime, 0);
+  mSimulateWaitingListenerGroup->remove_all();
  }
  
  mCanRender = false;
@@ -278,14 +282,14 @@ void Scene::render(float deltaTime)
  
  // Then any listeners
  for (mListenerIterator = mRenderListenerGroups.elements(); mListenerIterator != mListenerIterator.end(); mListenerIterator++)
-  mListenerIterator->advance(deltaTime, mWaitingListenerGroup);
+  mListenerIterator->advance(deltaTime, mRenderWaitingListenerGroup);
  
  
  // If there are any WaitingListeners, run them again.
- if (mWaitingListenerGroup->empty() == false)
+ if (mRenderWaitingListenerGroup->empty() == false)
  {
-  mWaitingListenerGroup->advance(deltaTime, 0);
-  mWaitingListenerGroup->remove_all();
+  mRenderWaitingListenerGroup->advance(deltaTime, 0);
+  mRenderWaitingListenerGroup->remove_all();
  }
  
 }
@@ -294,7 +298,7 @@ void Scene::addSimulateListener(TimeListener* listener, Enums::Priority priority
 {
  
  if (mSimulateListenerGroups.has(priority) == false)
-  mSimulateListenerGroups.insert(priority, GC::safe_new1<TimeListenerGroup>(priority, NXOGRE_GC_THIS));
+  mSimulateListenerGroups.insert(priority, GC::safe_new2<TimeListenerGroup>(priority, Enums::SceneFunction_Simulate, NXOGRE_GC_THIS));
   
  mSimulateListenerGroups.at(priority)->push_back(listener);
 
@@ -314,7 +318,7 @@ void Scene::addRenderListener(TimeListener* listener, Enums::Priority priority)
 {
  
  if (mRenderListenerGroups.has(priority) == false)
-  mRenderListenerGroups.insert(priority, GC::safe_new1<TimeListenerGroup>(priority, NXOGRE_GC_THIS));
+  mRenderListenerGroups.insert(priority, GC::safe_new2<TimeListenerGroup>(priority, Enums::SceneFunction_Render, NXOGRE_GC_THIS));
   
  mRenderListenerGroups.at(priority)->push_back(listener);
  
@@ -329,7 +333,6 @@ void Scene::removeRenderListener(TimeListener* listener, Enums::Priority priorit
  mRenderListenerGroups.at(priority)->remove(listener);
  
 }
-
 
 NxScene* Scene::getScene()
 {
@@ -380,16 +383,14 @@ KinematicActor* Scene::createKinematicActor(const ShapeDescriptions& shapes, con
 Volume* Scene::createVolume(const ShapeDescription& shape, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
  Volume* vol = GC::safe_new5<Volume>(shape, pose, vct, this, callback, NXOGRE_GC_THIS);
- StringHash hash = vol->getNameHash();
- mVolumes.insert(hash, vol);
+ mVolumes.push_back(vol);
  return vol;
 }
 
 Volume* Scene::createVolume(const ShapeDescriptions& shapes, const Matrix44& pose, Callback* callback, Enums::VolumeCollisionType vct)
 {
  Volume* vol = GC::safe_new5<Volume>(shapes, pose, vct, this, callback, NXOGRE_GC_THIS);
- StringHash hash = vol->getNameHash();
- mVolumes.insert(hash, vol);
+ mVolumes.push_back(vol);
  return vol;
 }
 
@@ -566,10 +567,37 @@ RaycastHit Scene::raycastClosestBounds(const Ray& ray, Enums::ShapesType type, u
  out.mV = hit.v;
  out.mWorldImpact.from<NxVec3>(hit.worldImpact);
  out.mWorldNormal.from<NxVec3>(hit.worldNormal);
+ out.mRigidBody = 0;
+ out.mShape = 0;
 
+ if (nxShape == 0)
+  return out; 
+
+ if (nxShape->getActor().userData == 0)
+  return out;
+ 
+ RigidBody* rbody = pointer_representive_cast<RigidBody>(nxShape->getActor().userData);
+ 
+#if NxOgreHasCharacterController == 1
+ 
+ if (rbody->isCharacterControllerBased())
+ {
+  out.mRigidBody = rbody;
+  out.mShape = rbody->getShape(0);
+ }
+ else
+ {
+  out.mRigidBody = rbody;
+  out.mShape = pointer_representive_cast<Shape>(nxShape->userData);
+ }
+ 
+#else
+ 
  PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
  out.mShape = shapePointer->get<Shape>();
  out.mRigidBody = shapePointer->getParent<RigidBody>();
+ 
+#endif
 
  return out;
 }
@@ -594,18 +622,37 @@ RaycastHit Scene::raycastClosestShape(const Ray& ray, Enums::ShapesType type, un
  out.mV = hit.v;
  out.mWorldImpact.from<NxVec3>(hit.worldImpact);
  out.mWorldNormal.from<NxVec3>(hit.worldNormal);
+ out.mRigidBody = 0;
+ out.mShape = 0;
 
- if (nxShape)
+ if (nxShape == 0)
+  return out; 
+
+ if (nxShape->getActor().userData == 0)
+  return out;
+ 
+ RigidBody* rbody = pointer_representive_cast<RigidBody>(nxShape->getActor().userData);
+ 
+#if NxOgreHasCharacterController == 1
+ 
+ if (rbody->isCharacterControllerBased())
  {
-  PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
-  out.mShape = shapePointer->get<Shape>();
-  out.mRigidBody = shapePointer->getParent<RigidBody>();
+  out.mRigidBody = rbody;
+  out.mShape = rbody->getShape(0);
  }
  else
  {
-  out.mShape = 0;
-  out.mRigidBody = 0;
+  out.mRigidBody = rbody;
+  out.mShape = pointer_representive_cast<Shape>(nxShape->userData);
  }
+ 
+#else
+ 
+ PhysXPointer* shapePointer = pointer_cast(nxShape->userData);
+ out.mShape = shapePointer->get<Shape>();
+ out.mRigidBody = shapePointer->getParent<RigidBody>();
+ 
+#endif
 
  return out;
 }
@@ -764,33 +811,21 @@ ConstraintDominance Scene::getDominanceGroupPair(GroupIdentifier a, GroupIdentif
 
 #if NxOgreHasCharacterController == 1
 
-CharacterController* Scene::createBoxCharacterController(const SimpleBox& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description)
+CharacterController* Scene::createCharacterController(const SimpleShape& shape, const Vec3& globalPosition, const CharacterControllerDescription& description)
 {
-// CharacterController* controller = NXOGRE_NEW_NXOGRE CharacterController(shape, globalPosition, yaw, description);
-
- //CharacterController* characterController =NXOGRE_NEW_NXOGRE Material(description, this);
- //StringHash hash = fluid->getNameHash();
- //mFluids.insert(hash, fluid);
- //return fluid;
- return 0;
+ CharacterController* controller = GC::safe_new4<CharacterController>(shape, globalPosition, description, this, NXOGRE_GC_THIS);
+ mCharacterControllers.insert(controller->getNameHash(), controller);
+ return controller;
 }
 
-CharacterController* Scene::createCapsuleCharacterController(const SimpleCapsule& shape, const Vec3& globalPosition, const Radian& yaw, const CharacterControllerDescription& description)
+void Scene::destroyCharacterController(CharacterController* controller)
 {
-// CharacterController* controller = NXOGRE_NEW_NXOGRE CharacterController(shape, globalPosition, yaw, description);
-
- return 0;
-}
-
-void Scene::destroyCharacterController(CharacterController*)
-{
- //if (fluid)
- //{
- // if (fluid->getNameHash() == BLANK_HASH)
- //  mFluids.erase(fluid);
- // else
- //  mFluids.erase(fluid->getNameHash());
- //}
+ 
+ if (controller == 0)
+  return;
+ 
+ mCharacterControllers.remove(controller->getNameHash(), controller);
+ 
 }
 
 #endif
@@ -904,7 +939,8 @@ GroupsMask Scene::setFilterConstant1() const
  return ret;
 }
 
+                                                                                       
 
 } // namespace NxOgre
 
-
+                                                                                       

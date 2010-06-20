@@ -30,6 +30,8 @@
 #define NXOGRE_DEBUG_HEIGHTFIELDS 0
 // Debug Cloth
 #define NXOGRE_DEBUG_CLOTH 0
+// Debug FlatYAML
+#define NXOGRE_DEBUG_FLATYAML 0
 
 
 /*
@@ -37,8 +39,7 @@
   ============================
   
   Enable use of the PhysX Character Controller.
-   - Requires use of the NxCharacter.lib
-  
+   - Requires use of the NxCharacter.lib/NxCharacter.dll
 */
 #define NxOgreHasCharacterController 0
 

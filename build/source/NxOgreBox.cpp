@@ -42,8 +42,8 @@ namespace NxOgre
 
                                                                                        
 
-Box::Box(NxBoxShape* box_shape)
-: Shape(box_shape), mBoxShape(box_shape)
+Box::Box(NxBoxShape* box_shape, bool isDirty)
+: Shape(box_shape, isDirty), mBoxShape(box_shape)
 {
 }
 

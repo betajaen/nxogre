@@ -115,7 +115,7 @@ struct RigidbodyFlags
    private: int flags;
 
 
-  // END - Serialisation. "RigidbodyFlags-475b3bca23c392b216acbe32b190d794"
+  // END - Serialisation. "RigidbodyFlags-b02b4929a6d29b617b373bfb4b680bfe"
 
 };
 

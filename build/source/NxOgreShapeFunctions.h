@@ -55,7 +55,7 @@ namespace ShapeFunctions
 
                                                                                        
 
-/*! function. Functions_ShapeFunctions_createShape
+/*! function. createShape
     desc.
         Master function that calls create__ShapeName__ based of it's internal PhysX type value, this
         function should be used directly instead of calling a specific shape function.
@@ -66,6 +66,17 @@ namespace ShapeFunctions
         associated with that shape, this of course will be replaced by a PhysXPointer.
 */
 Shape* createShape(NxShape*, RigidBody*);
+
+/*! function. createDirtyShape
+    desc.
+        Master function that calls create __ShapeName__ based of it's internal PhysX type value, this
+        function should be used directly instead of calling a specific shape function.
+        
+    note.
+        This function is used to bind to NxShapes that have been created outside NxOgre, for this reason
+        they are marked "dirty". The userdata is not filled thus the binding is an one-way relationship.
+*/
+Shape* createDirtyShape(NxShape*, RigidBody*);
 
 /* For unknown or internal shapes.
 */

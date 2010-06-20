@@ -226,7 +226,19 @@ class NxOgrePublicClass World : public BigClassAllocatable
       return. NxCookingInterface* -- The NxCookingInterface pointer
   */
   NxCookingInterface*  getPhysXCookingInterface() const;
+
+
+#if NxOgreHasCharacterController == 1
   
+  /*! function. getPhysXControllerManager
+      Get a copy of the NxControllerManager pointer.
+      !physx
+      note. This OWNED by NxOgre. Do not delete it.
+      return. NxControllerManager* -- The NxControllerManager pointer
+  */
+  NxControllerManager*  getPhysXControllerManager();
+#endif
+
   /*! function. to_s
       desc.
           Returns the pointer and name as string.
@@ -485,7 +497,6 @@ NxOgre::DynamicRigidbodyFlags::EnergySleepTest is set.
   bool  getImprovedSpringSolver() const;
 
 
-
   protected: // Functions
   
   /*! function. Constructor
@@ -573,6 +584,12 @@ NxOgre::DynamicRigidbodyFlags::EnergySleepTest is set.
   /* Scenes that are STILL processing, I mean really!
   */
   SceneBuffer  mSceneTertiaryBuffer;
+
+#if NxOgreHasCharacterController == 1
+  /*
+  */
+  NxControllerManager*   mControllerManager;
+#endif
 
 }; // class World
 

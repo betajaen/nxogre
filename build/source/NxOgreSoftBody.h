@@ -84,7 +84,7 @@ class NxOgrePublicClass SoftBody : public NonRigidBodyBasedAllocatable, public T
   
   /** \brief
   */
-  bool                                            advance(float deltaTime, const Enums::Priority&);
+  bool                                            advance(float deltaTime, const Enums::Priority&, const Enums::SceneFunction&);
   
   /** \brief
   */

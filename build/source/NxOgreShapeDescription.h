@@ -218,7 +218,7 @@ class NxOgrePublicClass ShapeDescription : public GenericBasedAllocatable
   */
   virtual void inspect() const;
 
-  // END - Serialisation. "ShapeDescription-55a7d2cd8aa582448657d1db022f4a76"
+  // END - Serialisation. "ShapeDescription-11f697d54f71eb074e1517ee08161adc"
 
 }; // class ShapeDescription
 

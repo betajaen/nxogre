@@ -36,7 +36,6 @@
 #include "NxOgreCompartment.h"
 #include "NxOgreScene.h"
 #include "NxOgreRenderable.h"
-#include "NxOgreTimeController.h"
 
 #include "NxPhysics.h"
 
@@ -141,7 +140,7 @@ NxFluid* Fluid::getFluid()
  return mFluid;
 }
 
-bool Fluid::advance(float, const Enums::Priority&)
+bool Fluid::advance(float, const Enums::Priority&, const Enums::SceneFunction&)
 {
  if (mRenderable && mParticleData)
  {

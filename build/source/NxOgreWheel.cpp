@@ -44,8 +44,8 @@ namespace NxOgre
 
                                                                                        
 
-Wheel::Wheel(NxWheelShape* wheel_shape)
-: Shape(wheel_shape), mWheelShape(wheel_shape)
+Wheel::Wheel(NxWheelShape* wheel_shape, bool isDirty)
+: Shape(wheel_shape, isDirty), mWheelShape(wheel_shape)
 {
 }
 

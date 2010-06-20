@@ -31,6 +31,7 @@
 
                                                                                        
 
+#include "NxOgreConfiguration.h"
 
 /*
     
@@ -219,7 +220,14 @@ struct NxIntegrals;                   //< \internal Prototyped class. DO NOT USE
 struct NxRaycastHit;                  //< \internal Prototyped class. DO NOT USE.
 struct NxSweepQueryHit;               //< \internal Prototyped class. DO NOT USE.
 
-  
+
+#if NxOgreHasCharacterController == 1
+
+class NxController;                   //< \internal Prototyped class. DO NOT USE.
+class NxControllerManager;            //< \internal Prototyped class. DO NOT USE.
+
+#endif
+
                                                                                          
   
   

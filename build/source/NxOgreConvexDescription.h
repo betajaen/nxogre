@@ -140,7 +140,7 @@ class NxOgrePublicClass ConvexDescription : public ShapeDescription
   */
   virtual void inspect() const;
 
-  // END - Serialisation. "ConvexDescription-1ead03930ffbdc2d8f5fbcfe475ea5e5"
+  // END - Serialisation. "ConvexDescription-24193e472d6f1101b59bc83412b4f9a3"
 
 }; // class ConvexDescription
 

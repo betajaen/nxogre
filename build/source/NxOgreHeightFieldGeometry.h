@@ -51,7 +51,7 @@ class NxOgrePublicClass HeightFieldGeometry : public Shape
 {
   
   
-  NXOGRE_GC_FRIEND_NEW2
+  NXOGRE_GC_FRIEND_NEW3
   NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
@@ -184,7 +184,7 @@ class NxOgrePublicClass HeightFieldGeometry : public Shape
   
   /** \brief HeightFieldGeometry
   */
-  HeightFieldGeometry(NxHeightFieldShape*, HeightField*);
+  HeightFieldGeometry(NxHeightFieldShape*, HeightField*, bool isDirty = false);
   
   /** \brief HeightFieldGeometry
   */

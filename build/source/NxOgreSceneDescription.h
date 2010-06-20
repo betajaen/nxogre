@@ -424,7 +424,7 @@ class NxOgrePublicClass SceneDescription
   */
   virtual void inspect() const;
 
-  // END - Serialisation. "SceneDescription-3cb54ed5984aa3a9dbf79533388be3e4"
+  // END - Serialisation. "SceneDescription-0d3cf6f4e3a3bb2de896bbb39c298462"
 
 }; // class ShapeDescription
 

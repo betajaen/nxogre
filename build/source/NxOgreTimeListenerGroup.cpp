@@ -37,8 +37,8 @@ namespace NxOgre
 
                                                                                        
 
-TimeListenerGroup::TimeListenerGroup(Enums::Priority priority)
-: mPriority(priority)
+TimeListenerGroup::TimeListenerGroup(Enums::Priority priority, Enums::SceneFunction function)
+: mPriority(priority), mFunction(function)
 { // empty constructor.
 }
 
@@ -65,7 +65,7 @@ void TimeListenerGroup::advance(Real deltaTime, TimeListenerGroup* waiting_group
 {
  for (mIterator = mListeners.elements(); mIterator != mIterator.end(); mIterator++)
  {
-  if (mIterator->advance(deltaTime, mPriority) == false)
+  if (mIterator->advance(deltaTime, mPriority, mFunction) == false)
    if (waiting_group)
     waiting_group->push_back((*mIterator));
  }

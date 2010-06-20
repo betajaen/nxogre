@@ -72,7 +72,7 @@ class multihashmap : protected garbage_collection::template impl_map<size_t, T>
 
   multihashmap& operator=(const multihashmap& other)
   {
-   container(other.container);
+   container = other.container;
    return *this;
   }
 

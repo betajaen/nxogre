@@ -26,8 +26,8 @@
 
                                                                                        
 
-#ifndef NXOGRE_MANUAL_MESH_H
-#define NXOGRE_MANUAL_MESH_H
+#ifndef NXOGRE_MANUAL_HEIGHTFIELD_H
+#define NXOGRE_MANUAL_HEIGHTFIELD_H
 
                                                                                        
 

@@ -56,7 +56,7 @@ namespace NxOgre
 class NxOgrePublicClass Box : public Shape
 {
   
-  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_NEW2
   NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
@@ -121,7 +121,7 @@ class NxOgrePublicClass Box : public Shape
   
   /* constructor. Box
   */
-  Box(NxBoxShape*);
+  Box(NxBoxShape*, bool isDirty = false);
   
   /* destructor. Box
   */

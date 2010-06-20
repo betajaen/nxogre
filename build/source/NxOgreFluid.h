@@ -120,7 +120,7 @@ class NxOgrePublicClass Fluid : public NonRigidBodyBasedAllocatable, public Time
           float __deltaTime__ -- Time passed.
           const Enums::Priority __priority__ -- Time priority of the fluid.
   */
-  bool  advance(float deltaTime, const Enums::Priority& priority);
+  bool  advance(float deltaTime, const Enums::Priority& priority, const Enums::SceneFunction&);
   
   /*! function. createEmitter
       desc.

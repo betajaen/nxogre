@@ -49,7 +49,7 @@ namespace NxOgre
 class NxOgrePublicClass Wheel : public Shape
 {
   
-  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_NEW2
   NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
@@ -200,7 +200,7 @@ class NxOgrePublicClass Wheel : public Shape
 
   /*
   */
-  Wheel(NxWheelShape*);
+  Wheel(NxWheelShape*, bool isDirty);
   
   /*
   */

@@ -174,7 +174,6 @@ void RigidBodyDescription::reset()
  mMassSpaceInertia.zero();
  mMaxAngularVelocity = -1.0;
  mName.clear();
- mRigidbodyFlags.reset();
  mSleepAngularVelocity = -1.0;
  mSleepDamping = 0;
  mSleepEnergyThreshold = -1.0;
@@ -249,5 +248,5 @@ void RigidBodyDescription::inspect() const
 
 } // namespace NxOgre
 
-// END - Serialisation. "RigidBodyDescription-e94c041377ba1096a6cfef32ba15503c"
+// END - Serialisation. "RigidBodyDescription-7008a292458be6d5a889be20d7ead6a2"
 

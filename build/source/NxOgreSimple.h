@@ -45,7 +45,9 @@ struct NxOgrePublicClass SimpleShape : public ShapeAllocatable
 {
  virtual Enums::SimpleShapeType  getType() const = 0;
  virtual NxForceFieldShapeDesc*  to_ff_shape() const;
-
+#if NxOgreHasCharacterController == 1
+ virtual Vec3 to_cc_shape() const;
+#endif
 };
 
 struct NxOgrePublicClass SimplePlane : public SimpleShape
@@ -68,10 +70,14 @@ struct NxOgrePublicClass SimpleBox : public SimpleShape
  SimpleBox(const NxBox&);
  SimpleBox(const Bounds3& aabb, const Matrix44& trans);
 
+
  Enums::SimpleShapeType  getType() const;
  bool                    contains(const Vec3&) const;
  NxBox                   to_box() const;
  NxForceFieldShapeDesc*  to_ff_shape() const;
+#if NxOgreHasCharacterController == 1
+ Vec3                    to_cc_shape() const;
+#endif
 
  Vec3     mCenter;
  Matrix33 mRotation;
@@ -95,17 +101,21 @@ struct NxOgrePublicClass SimpleSphere : public SimpleShape
 struct NxOgrePublicClass SimpleCapsule : public SimpleShape
 {
  SimpleCapsule();
+ SimpleCapsule(Real height, Real radius);
  SimpleCapsule(const Vec3& origin, const Vec3& direction, Real radius);
  SimpleCapsule(Real radius, const Vec3& p0, const Vec3& p1);
  SimpleCapsule(const NxCapsule&);
  
- Vec3 getOrigin();
- Vec3 getDirection();
+ Vec3 getOrigin() const;
+ Vec3 getDirection() const;
 
  Enums::SimpleShapeType  getType() const;
  NxCapsule               to_capsule() const;
  NxForceFieldShapeDesc*  to_ff_shape() const;
- 
+#if NxOgreHasCharacterController == 1
+ Vec3                    to_cc_shape() const;
+#endif
+
  Vec3 mP0, mP1;
  Real mRadius;
 };

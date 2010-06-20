@@ -53,9 +53,9 @@ namespace GC
 #define NXOGRE_GC_FRIEND_NEW3 template<class T, typename A1, typename A2, typename A3> friend inline T* ::NxOgre::GC::safe_new3(const A1&,const A2&,const A3&,const char*,int);
 #define NXOGRE_GC_FRIEND_NEW4 template<class T, typename A1, typename A2, typename A3, typename A4> friend inline T* ::NxOgre::GC::safe_new4(const A1&,const A2&,const A3&,const A4&,const char*,int);
 #define NXOGRE_GC_FRIEND_NEW5 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5> friend inline T* ::NxOgre::GC::safe_new5(const A1&,const A2&,const A3&,const A4&,const A5&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW6 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6> friend inline T* ::NxOgre::GC::safe_new4(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW7 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7> friend inline T* ::NxOgre::GC::safe_new4(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const A7&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW8 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8> friend inline T* ::NxOgre::GC::safe_new4(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const A7&,const A8&,const char*,int);
+#define NXOGRE_GC_FRIEND_NEW6 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6> friend inline T* ::NxOgre::GC::safe_new6(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const char*,int);
+#define NXOGRE_GC_FRIEND_NEW7 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7> friend inline T* ::NxOgre::GC::safe_new7(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const A7&,const char*,int);
+#define NXOGRE_GC_FRIEND_NEW8 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8> friend inline T* ::NxOgre::GC::safe_new8(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const A7&,const A8&,const char*,int);
 
 #if NXOGRE_DEBUG_MEMORY == 1
 void NxOgrePublicFunction gc_debugger_push_ptr(void* ptr, unsigned int size, const char* type, const char* file, unsigned int line);

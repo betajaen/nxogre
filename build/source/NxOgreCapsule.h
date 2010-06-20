@@ -56,7 +56,7 @@ namespace NxOgre
 class NxOgrePublicClass Capsule : public Shape
 {
   
-  NXOGRE_GC_FRIEND_NEW1
+  NXOGRE_GC_FRIEND_NEW2
   NXOGRE_GC_FRIEND_DELETE
   
   public: // Functions
@@ -137,7 +137,7 @@ class NxOgrePublicClass Capsule : public Shape
   
   /*
   */
-  Capsule(NxCapsuleShape*);
+  Capsule(NxCapsuleShape*, bool isDirty = false);
   
   /*
   */

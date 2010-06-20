@@ -83,15 +83,15 @@ void ManualMesh::begin(NxOgre::Enums::MeshType type, unsigned int estimatedVerti
  mMesh->mClothWeldingDistance = 0.0f;
 
  mMesh->mVertices.resize(estimatedVerticesSize * 3);
- Functions::fill<float>(mMesh->mVertices.first(), mMesh->mVertices.last(), 0.0f);
+ fill<float>(mMesh->mVertices.first(), mMesh->mVertices.last(), 0.0f);
  
  if (mMesh->mType == NxOgre::Enums::MeshType_Triangle)
  {
   mMesh->mIndexes.resize(estimatedTriSize == AUTO_CALCULATE_TRIANGLES ? mMesh->mVertices.size() * 3 : estimatedTriSize * 3);
   mMesh->mMaterials.resize(mMesh->mIndexes.size());
   
-  Functions::fill<unsigned int>(mMesh->mIndexes.first(), mMesh->mIndexes.last(), 0);
-  Functions::fill<MaterialIdentifier>(mMesh->mMaterials.first(), mMesh->mMaterials.last(), 0);
+  fill<unsigned int>(mMesh->mIndexes.first(), mMesh->mIndexes.last(), 0);
+  fill<MaterialIdentifier>(mMesh->mMaterials.first(), mMesh->mMaterials.last(), 0);
   
   return;
  }
@@ -100,13 +100,13 @@ void ManualMesh::begin(NxOgre::Enums::MeshType type, unsigned int estimatedVerti
  {
   // Normally, convexes don't need triangles. So instead of wasting memory each time, it will be allocated as needed.
   mMesh->mIndexes.resize(estimatedTriSize == AUTO_CALCULATE_TRIANGLES ? 0 : estimatedTriSize * 3);
-  Functions::fill<unsigned int>(mMesh->mIndexes.first(), mMesh->mIndexes.last(), 0);
+  fill<unsigned int>(mMesh->mIndexes.first(), mMesh->mIndexes.last(), 0);
  }
  
  if (mMesh->mType == NxOgre::Enums::MeshType_SoftBody)
  {
   mMesh->mTetrahedra.resize(estimatedVerticesSize * 4);
-  Functions::fill<unsigned int>(mMesh->mTetrahedra.first(), mMesh->mTetrahedra.last(), 0);
+  fill<unsigned int>(mMesh->mTetrahedra.first(), mMesh->mTetrahedra.last(), 0);
  }
  
 }

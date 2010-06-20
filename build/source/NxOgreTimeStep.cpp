@@ -67,6 +67,7 @@ FixedTimeStep::FixedTimeStep(Scene* scene)
 void FixedTimeStep::calculate(float deltaTime)
 {
  
+ mActual = deltaTime;
  mAccumulator += deltaTime;
  mModified = 0;
  
@@ -110,6 +111,10 @@ float TimeStep::getAccumulator() const
  return mAccumulator;
 }
 
+float TimeStep::getActual() const
+{
+ return mActual;
+}
 
                                                                                        
 

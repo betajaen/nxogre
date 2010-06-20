@@ -62,6 +62,8 @@ static const String BLANK_STRING = String();
 
 static const StringHash BLANK_HASH = 0;
 
+typedef std::pair<std::string, std::string> StringPair;
+
 /*! function. to_s (bool)
     desc.
         Turns a boolean value into a string (true = "true", false = "false")
@@ -170,6 +172,14 @@ int NxOgrePublicFunction to_i(const String&);
         String to float
 */
 float NxOgrePublicFunction to_f(const String&);
+
+/*! function. to_b
+    desc.
+        String to bool
+    note.
+        This string checks upon the value of "true" (case-insensitive), any other values returns false.
+*/
+bool NxOgrePublicFunction to_b(const String&);
 
 template<typename T> void inspect(const T& value)
 {
@@ -441,9 +451,31 @@ template<typename T> String join(const std::vector<T>& values, const std::string
  return out.substr(0, out.length() - seperator.length());
 }
 
+/*! function. cut
+    desc.
+        cuts up a string into two pieces, based on a delimeter. An additional delimiter may
+        be used to mark as the ending of the string. Both strings are trimmed and cleaned.
+*/
+StringPair NxOgrePublicFunction cut(const String& str, bool& did_cut, char delimiter = ':', char endDelimiter = '#');
+
+/*! function. cut_many
+    desc.
+        cuts up each line in a string into two pieces, based on a delimeter. An additional delimiter may
+        be used to mark as the ending of the string. Both strings are trimmed and cleaned.
+*/
+std::map<std::string, std::string> NxOgrePublicFunction cut_many(const String& str, char delimiter = ':', char endDelimiter = '#');
+
+
+
 /*! function. split
     desc.
-        slices up the string based on a range.
+        slices up the string based on a delimiters.
+*/
+std::vector<std::string> split(const String& str, const String& delimiters = " \t"); 
+
+/*! function. split
+    desc.
+        slices up the string based on a delimiters.
 */
 template<typename T> std::vector<T> split(const String& str, const String& delimiters = " \t")
 {
@@ -502,6 +534,46 @@ bool NxOgrePublicFunction split(const String& str, std::map<String, String>&, ch
         If the split was succesful or not.
 */
 bool NxOgrePublicFunction split(const String& str, NxOgre::map<String, String>&, char delimiter = ' ', bool lowerKey = true, bool trim = true);
+ 
+ /*! function. numWords
+     desc.
+          Get the number of words (blocks of non-whitespace text) in a string.
+     note.
+         This just counts the blocks of text seperated by whitespace, and not actual
+         "words" in a sentence. Punctation and other characters are counted as words.
+     example.
+          Strings::numWords("one two three four") => 4
+ */
+ int numWords(const std::string& str);
+ 
+ /*! function. isNull
+     desc.
+         Either the string is empty, or has four characters within it saying "null" in it.
+ */
+ bool isNull(const std::string& str);
+ 
+ /*! function. isInteger
+     desc.
+         Is a string a base-10 integer?
+ */
+ bool NxOgrePublicFunction isInteger(const std::string& str);
+ 
+ /*! function. isReal
+     desc.
+         Is a string a base-10 real number?
+ */
+ bool NxOgrePublicFunction isReal(const std::string& str);
+ 
+ /*! function. isBoolean
+    desc.
+        Is a string a boolean
+ */
+ bool NxOgrePublicFunction isBoolean(const std::string& str);
+
+
+
+ void NxOgrePublicFunction getLine(NxOgre::Resource* resource, NxOgre::buffer<char>& buffer);
+
 
 } // namespace Strings
 

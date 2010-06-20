@@ -42,8 +42,8 @@ namespace NxOgre
 
                                                                                        
 
-HeightFieldGeometry::HeightFieldGeometry(NxHeightFieldShape* shape, HeightField* heightfield)
-: Shape(shape), mHeightFieldShape(shape), mHeightField(heightfield)
+HeightFieldGeometry::HeightFieldGeometry(NxHeightFieldShape* shape, HeightField* heightfield, bool isDirty)
+: Shape(shape, isDirty), mHeightFieldShape(shape), mHeightField(heightfield)
 {
 }
 
