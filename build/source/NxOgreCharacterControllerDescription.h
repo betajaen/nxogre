@@ -43,14 +43,14 @@ namespace NxOgre
 
                                                                                        
 
-/*! class. BoxCharacterControllerDescription
+/*! class. CharacterControllerDescription
 */
 class NxOgrePublicClass CharacterControllerDescription
 {
   
   public:
   
-  /*! constructor. BoxDescription
+  /*! constructor. CharacterControllerDescription
       desc.
        Constructor, and resets the member variables to their default values according to the PhysX SDK.
   */
@@ -66,7 +66,7 @@ class NxOgrePublicClass CharacterControllerDescription
       desc. 
           Returns true if the description is valid.
   */
-  bool isValid() const;
+  bool valid() const;
 
   /*! variable. mName
   */

@@ -237,6 +237,11 @@ class NxOgrePublicClass Vec3
 
   static const Vec3 NEGATIVE_UNIT_Z;
 
+  static const Vec3 POSITIVE_1_1_1;
+
+  static const Vec3 NEGATIVE_1_1_1;
+
+
   Real x, y, z;
 
 };

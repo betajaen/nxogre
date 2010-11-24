@@ -27,9 +27,19 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreCharacterControllerDescription.h"
+#include "NxOgreCommon.h"
 
 #if NxOgreHasCharacterController == 1
+
+#include "NxOgrePhysXControllerHitReport.h"
+#include "NxOgreCharacterController.h"
+#include "NxOgreCharacterControllerHit.h"
+
+#include "NxOgreCallback.h"
+
+#include "NxController.h"
+#include "NxPhysicsSDK.h"
+#include "NxActor.h"
 
                                                                                        
 
@@ -38,37 +48,49 @@ namespace NxOgre
 
                                                                                        
 
-CharacterControllerDescription::CharacterControllerDescription()
+PhysXCharacterHitReport::PhysXCharacterHitReport()
 {
- reset();
 }
 
-void CharacterControllerDescription::reset()
+PhysXCharacterHitReport::~PhysXCharacterHitReport()
 {
- mUpDirection = Enums::Y;
- mSlopeLimit = 0.707;
- mSkinWidth = 0.1;
- mCallback = 0;
- mStepOffset = 0.5f;
- mCapsuleEasyClimbing = false;
- mName.clear();
 }
 
-bool CharacterControllerDescription::valid() const
+
+NxControllerAction  PhysXCharacterHitReport::onShapeHit(const NxControllerShapeHit& hit)
 {
- if (mSlopeLimit < 0)
-  return false;
- if (mSkinWidth < 0)
-  return false;
- if (mStepOffset < 0)
-  return false;
- return true;
+ CharacterControllerHit ret;
+ ret.mController = pointer_representive_cast<CharacterController>(hit.controller->getActor()->userData);
+ if (ret.mController->getContactCallback() == 0)
+  return NX_ACTION_NONE;
+ 
+ ret.mMotionDirection.from<NxVec3>(hit.dir);
+ ret.mMotionLength = hit.length;
+ ret.mHitShape = pointer_representive_cast<Shape>(hit.shape->userData);
+ ret.mWorldNormal.from<NxVec3>(hit.worldNormal);
+ ret.mWorldPosition.from<NxExtendedVec3>(hit.worldPos);
+ 
+ return (NxControllerAction) (int) ret.mController->getContactCallback()->onShapeHit(ret);
 }
+
+NxControllerAction  PhysXCharacterHitReport::onControllerHit(const NxControllersHit& hit)
+{
+ CharacterController* a = pointer_representive_cast<CharacterController>(hit.controller->getActor()->userData);
+
+ if (a->getContactCallback() == 0)
+  return NX_ACTION_NONE;
+
+ CharacterController* b = pointer_representive_cast<CharacterController>(hit.other->getActor()->userData);
+ 
+ return (NxControllerAction) (int) a->getContactCallback()->onCharacterHit(a, b);
+}
+
 
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
+
 
 #endif

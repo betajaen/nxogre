@@ -51,6 +51,9 @@ const Vec3        Vec3::NEGATIVE_UNIT_Y( 0,-1, 0);
 
 const Vec3        Vec3::NEGATIVE_UNIT_Z( 0, 0,-1);
 
+const Vec3        Vec3::POSITIVE_1_1_1(1,1,1);
+
+const Vec3        Vec3::NEGATIVE_1_1_1(-1,-1,-1);
 
 Vec3::Vec3()
 {

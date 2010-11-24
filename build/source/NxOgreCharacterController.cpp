@@ -60,7 +60,8 @@ CharacterController::CharacterController(Scene* scene)
   mActiveGroups(0),
   mMinDistance(0.001f),
   mCollisionFlags(0),
-  mSharpness(0)
+  mSharpness(1.0),
+  mStepOffset(0)
 {
 }
 
@@ -68,9 +69,10 @@ CharacterController::CharacterController(const SimpleShape& shape, const Vec3& g
 : RigidBody(scene),
   mController(0),
   mActiveGroups(0),
-  mMinDistance(0.01f),
+  mMinDistance(0.001f),
   mCollisionFlags(0),
-  mSharpness(0)
+  mSharpness(1.0),
+  mStepOffset(0)
 {
  mName = description.mName;
  mNameHash = Strings::hash(mName);
@@ -90,7 +92,29 @@ CharacterController::~CharacterController()
 
 void CharacterController::createCharacterController(const Vec3& globalPos, const SimpleShape& shape, const CharacterControllerDescription& description)
 {
+ mStepOffset = description.mStepOffset;
+ mSkinWidth = description.mSkinWidth;
  mController = _createCharacterController(globalPos, mScene, shape, description);
+}
+
+Real CharacterController::getSkinWidth() const
+{
+ return mSkinWidth;
+}
+
+Real CharacterController::getStepOffset() const
+{
+ return mStepOffset;
+}
+
+void CharacterController::setMovingActiveGroups(unsigned int groups)
+{
+ mActiveGroups = groups;
+}
+
+unsigned int CharacterController::getMovingActiveGroups()
+{
+ return mActiveGroups;
 }
 
 void CharacterController::setMinimalMoveDistance(Real minDist)
@@ -118,6 +142,21 @@ unsigned int CharacterController::getLastCollisionFlags() const
  return mCollisionFlags;
 }
 
+bool CharacterController::lastCollisionDown() const
+{
+ return mCollisionFlags & NXCC_COLLISION_DOWN;
+}
+
+bool CharacterController::lastCollisionSides() const
+{
+ return mCollisionFlags & NXCC_COLLISION_SIDES;
+}
+
+bool CharacterController::lastCollisionUp() const
+{
+ return mCollisionFlags & NXCC_COLLISION_UP;
+}
+
 void CharacterController::move(const Vec3& displacement)
 {
  mController->move(displacement.as<NxVec3>(), mActiveGroups, mMinDistance, mCollisionFlags, mSharpness);
@@ -140,7 +179,7 @@ void CharacterController::setPosition(const Vec3& globalPosition)
 
 Vec3 CharacterController::getPosition() const
 {
- return Vec3(mController->getPosition());
+ return Vec3(mActor->getGlobalPosition());
 }
 
 void CharacterController::setStepOffset(Real offset)

@@ -192,6 +192,7 @@ class WorldPrototype;
 
 class CharacterController;
 class CharacterControllerDescription;
+class PhysXCharacterHitReport;
 
 #endif
 

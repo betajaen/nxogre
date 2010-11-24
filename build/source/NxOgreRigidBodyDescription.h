@@ -380,6 +380,7 @@ class NxOgrePublicClass RigidBodyDescription
           Is this RigidBodyDescription valid according to each property.
   */
   virtual bool valid() const;
+  
   /*! function. inspect
       desc.
         Writes the contents of this to the console.

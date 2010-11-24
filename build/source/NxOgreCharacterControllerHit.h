@@ -26,8 +26,13 @@
 
                                                                                        
 
+#ifndef NXOGRE_CHARACTERCONTOLLERHIT_H
+#define NXOGRE_CHARACTERCONTOLLERHIT_H
+
+                                                                                       
+
 #include "NxOgreStable.h"
-#include "NxOgreCharacterControllerDescription.h"
+#include "NxOgreCommon.h"
 
 #if NxOgreHasCharacterController == 1
 
@@ -38,32 +43,21 @@ namespace NxOgre
 
                                                                                        
 
-CharacterControllerDescription::CharacterControllerDescription()
+/*! class. CharacterControllerHit
+*/
+class NxOgrePublicClass CharacterControllerHit
 {
- reset();
-}
-
-void CharacterControllerDescription::reset()
-{
- mUpDirection = Enums::Y;
- mSlopeLimit = 0.707;
- mSkinWidth = 0.1;
- mCallback = 0;
- mStepOffset = 0.5f;
- mCapsuleEasyClimbing = false;
- mName.clear();
-}
-
-bool CharacterControllerDescription::valid() const
-{
- if (mSlopeLimit < 0)
-  return false;
- if (mSkinWidth < 0)
-  return false;
- if (mStepOffset < 0)
-  return false;
- return true;
-}
+  
+  public:
+  
+  CharacterController* mController;
+  Shape*               mHitShape;
+  Vec3                 mMotionDirection;
+  Real                 mMotionLength;
+  Vec3                 mWorldPosition;
+  Vec3                 mWorldNormal;
+  
+}; // class CharacterControllerHit
 
                                                                                        
 
@@ -71,4 +65,5 @@ bool CharacterControllerDescription::valid() const
 
                                                                                        
 
+#endif
 #endif

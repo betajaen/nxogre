@@ -113,10 +113,11 @@ void PhysXCallback::onContactNotify(NxContactPair &pair, NxU32 events)
  contact_pair.mSecond = rbody_b;
  contact_pair.mSumFrictionForce = pair.sumFrictionForce;
  contact_pair.mSumNormalForce = pair.sumNormalForce;
+ contact_pair.mEvents = events;
  
  if (rbody_a->getContactCallback() != 0)
   rbody_a->getContactCallback()->onContact(contact_pair);
- 
+
  if (rbody_b->getContactCallback() != 0)
   rbody_b->getContactCallback()->onContact(contact_pair);
  

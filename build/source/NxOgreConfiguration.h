@@ -17,9 +17,9 @@
 // File to write to.
 #define NXOGRE_DEBUG_MEMORY_FILE nxogre.allocations.html
 // Debug cooking processes
-#define NXOGRE_DEBUG_COOKING 0
+#define NXOGRE_DEBUG_COOKING 1
 // Debug reading and writing to resources.
-#define NXOGRE_DEBUG_RESOURCES 0
+#define NXOGRE_DEBUG_RESOURCES 1
 // Debug NxOgre Core. Constructor/Destruction of key classes.
 #define NXOGRE_DEBUG_CORE 0
 // Debug buffer<T> class.
@@ -27,7 +27,7 @@
 // Debug Meshes
 #define NXOGRE_DEBUG_MESHES 0
 // Debug HeightFields
-#define NXOGRE_DEBUG_HEIGHTFIELDS 0
+#define NXOGRE_DEBUG_HEIGHTFIELDS 1
 // Debug Cloth
 #define NXOGRE_DEBUG_CLOTH 0
 // Debug FlatYAML
@@ -41,7 +41,7 @@
   Enable use of the PhysX Character Controller.
    - Requires use of the NxCharacter.lib/NxCharacter.dll
 */
-#define NxOgreHasCharacterController 0
+#define NxOgreHasCharacterController 1
 
 /*
   NxOgreFloatingPointAccuracy

@@ -192,11 +192,19 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
   
   /*! function. getShape
       desc.
-          Get a shape attached to this RigidBody by index.
+          Get a shape attached to this RigidBody by index in the order attached (0 = first, 1 = second, etc).
       return.
           **Shape** -- Shape requested or NULL if it does not exist.
   */
   Shape* getShape(unsigned int index);
+
+  /*! function. getShape
+      desc.
+          Get a shape attached to this RigidBody by an id given to by the ShapeDescription.
+      return.
+          **Shape** -- Shape requested or NULL if it does not exist.
+  */
+  Shape* getShapeById(unsigned int id);
 
   /*! function. getNbShapes
       desc.

@@ -34,6 +34,10 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
+#if NxOgreHasCharacterController == 1
+#include "NxOgreCharacterControllerHit.h"
+#endif
+
                                                                                        
 
 namespace NxOgre
@@ -171,6 +175,19 @@ class NxOgrePublicClass Callback
    /*! function. onSleep
    */
    virtual void onWake(const RigidBodyEventIterator& rigidbodies);
+
+
+#if NxOgreHasCharacterController == 1
+
+   /*! function. onShapeHit
+   */
+   virtual NxOgre::Enums::CharacterControllerAction onShapeHit(const CharacterControllerHit& hit);
+
+   /*! function. onCharacterHit
+   */
+   virtual NxOgre::Enums::CharacterControllerAction onCharacterHit(CharacterController* a, CharacterController* b);
+
+#endif
 
    /*! function. increaseReference
        desc.

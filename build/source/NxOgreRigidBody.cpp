@@ -54,6 +54,7 @@
 #include "NxBoxController.h"
 #include "NxCapsuleController.h"
 #include "ControllerManager.h"
+#include "NxOgrePhysXControllerHitReport.h"
 #endif
 
                                                                                        
@@ -570,7 +571,6 @@ NxController* RigidBody::_createCharacterController(const Vec3& globalPos, Scene
  if (shape.getType() == Enums::SimpleShape_Box)
  {
   NxBoxControllerDesc controller_desc;
-  controller_desc.callback = 0;
   Vec3 box_desc = shape.to_cc_shape();
   box_desc *= 0.5f;
   controller_desc.extents.x = box_desc.x;
@@ -582,6 +582,8 @@ NxController* RigidBody::_createCharacterController(const Vec3& globalPos, Scene
   controller_desc.slopeLimit = description.mSlopeLimit.rad();
   controller_desc.stepOffset = description.mStepOffset;
   controller_desc.upDirection = (NxHeightFieldAxis) (int) description.mUpDirection;
+  controller_desc.callback = World::getSingleton()->getPhysXCharacterHitReport();
+
   //controller_desc.userData = GC::safe_new2<PhysXPointer>(this, Classes::_CharacterController, NXOGRE_GC_THIS);
   
   controller = World::getSingleton()->getPhysXControllerManager()->createController(mScene->getScene(), controller_desc);
@@ -592,7 +594,6 @@ NxController* RigidBody::_createCharacterController(const Vec3& globalPos, Scene
  else if (shape.getType() == Enums::SimpleShape_Capsule)
  {
   NxCapsuleControllerDesc controller_desc;
-  controller_desc.callback = 0;
   controller_desc.climbingMode = description.mCapsuleEasyClimbing ? CLIMB_EASY : CLIMB_CONSTRAINED;
   Vec3 capsule_desc = shape.to_cc_shape();
   controller_desc.height = capsule_desc.y;
@@ -602,6 +603,8 @@ NxController* RigidBody::_createCharacterController(const Vec3& globalPos, Scene
   controller_desc.slopeLimit = description.mSlopeLimit.rad();
   controller_desc.stepOffset = description.mStepOffset;
   controller_desc.upDirection = (NxHeightFieldAxis) (int) description.mUpDirection;
+  controller_desc.callback = World::getSingleton()->getPhysXCharacterHitReport();
+
   //controller_desc.userData = GC::safe_new2<PhysXPointer>(this, Classes::_CharacterController, NXOGRE_GC_THIS);
   
   controller = World::getSingleton()->getPhysXControllerManager()->createController(mScene->getScene(), controller_desc);
@@ -731,6 +734,14 @@ Shape* RigidBody::getShape(unsigned int index)
  if (index > mShapes.size() - 1)
   return 0;
  return mShapes.at(index);
+}
+
+Shape* RigidBody::getShapeById(unsigned int id)
+{
+ for (unsigned int i=0;i < mShapes.size();i++)
+  if (mShapes[i]->getId() == id)
+   return mShapes[i];
+ return 0;
 }
 
 unsigned int RigidBody::getNbShapes() const

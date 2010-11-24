@@ -19,3 +19,4 @@ clean.bat
 *.suo
 *.dll
 *.developer
+*.NOGIT

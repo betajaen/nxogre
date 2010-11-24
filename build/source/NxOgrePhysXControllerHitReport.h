@@ -26,10 +26,20 @@
 
                                                                                        
 
-#include "NxOgreStable.h"
-#include "NxOgreCharacterControllerDescription.h"
+#ifndef NXOGRE_PHYSXCHARACTERHITREPORT_H
+#define NXOGRE_PHYSXCHARACTERHITREPORT_H
 
+                                                                                       
+
+#include "NxOgreStable.h"
+#include "NxOgreCommon.h"
+
+#ifdef NXOGRE_SDK
+# include "NxPhysics.h"
 #if NxOgreHasCharacterController == 1
+#  include "NxController.h"
+#endif
+#endif
 
                                                                                        
 
@@ -38,33 +48,27 @@ namespace NxOgre
 
                                                                                        
 
-CharacterControllerDescription::CharacterControllerDescription()
-{
- reset();
-}
+#ifdef NXOGRE_SDK
 
-void CharacterControllerDescription::reset()
-{
- mUpDirection = Enums::Y;
- mSlopeLimit = 0.707;
- mSkinWidth = 0.1;
- mCallback = 0;
- mStepOffset = 0.5f;
- mCapsuleEasyClimbing = false;
- mName.clear();
-}
+#if NxOgreHasCharacterController == 1
 
-bool CharacterControllerDescription::valid() const
+class NxOgrePublicClass PhysXCharacterHitReport : public NxUserControllerHitReport
 {
- if (mSlopeLimit < 0)
-  return false;
- if (mSkinWidth < 0)
-  return false;
- if (mStepOffset < 0)
-  return false;
- return true;
-}
+  
+  public: // Functions
+  
+   PhysXCharacterHitReport();
+  ~PhysXCharacterHitReport();
+  
+   NxControllerAction  onShapeHit(const NxControllerShapeHit& hit);
+   
+   NxControllerAction  onControllerHit(const NxControllersHit& hit);
+  
+}; // class PhysXCharacterHitReport
 
+#endif
+
+#endif
                                                                                        
 
 } // namespace NxOgre

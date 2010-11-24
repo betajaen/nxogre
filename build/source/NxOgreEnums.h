@@ -1513,7 +1513,7 @@ enum ContactPairFlags
  ContactPairFlags_StartTouchThreshold        = (1<<8),
  ContactPairFlags_StopTouchThreshold         = (1<<9),
  ContactPairFlags_TouchThreshold             = (1<<10),
- ContactPairFlags_ContactModifcation         = (1<<16),
+ ContactPairFlags_ContactModification        = (1<<16),
  ContactPairFlags_All                        = (
                                                 ContactPairFlags_StartTouch          |
                                                 ContactPairFlags_StopTouch           |
@@ -1646,6 +1646,19 @@ enum CharacterControllerInteractionFlag
  CharacterControllerInteractionFlag_Include,
  CharacterControllerInteractionFlag_Exclude,
  CharacterControllerInteractionFlag_UseFilter
+};
+
+enum CharacterControllerCollisionFlag
+{
+ CharacterControllerCollisionFlag_Sides = (1<<0),
+ CharacterControllerCollisionFlag_Up    = (1<<1),
+ CharacterControllerCollisionFlag_Down  = (1<<2)
+};
+
+enum CharacterControllerAction
+{
+ CharacterControllerAction_None,
+ CharacterControllerAction_Push
 };
 
 #endif

@@ -84,6 +84,51 @@ class ContactPair
   */
   Vec3 mSumFrictionForce;
   
+  /*! variable. mEvents
+      desc.
+          What event caused this collision.
+      type.
+          unsigned int (Flags set by bits)
+      see.
+         ContactPair::isStartTouchEvent
+         ContactPair::isStopTouchEvent
+         ContactPair::isTouchEvent
+         ContactPair::isStartTouchThresholdEvent
+         ContactPair::isStopTouchThresholdEvent
+         ContactPair::isTouchThresholdEvent
+  */
+  unsigned int mEvents;
+  
+  inline bool  isStartTouchEvent() const
+  {
+   return mEvents & NxOgre::Enums::ContactPairFlags_StartTouch;
+  }
+
+  inline bool  isStopTouchEvent() const
+  {
+   return mEvents & NxOgre::Enums::ContactPairFlags_StopTouch;
+  }
+
+  inline bool  isTouchEvent() const
+  {
+   return mEvents & NxOgre::Enums::ContactPairFlags_Touch;
+  }
+  
+  inline bool  isStartTouchThresholdEvent() const
+  {
+   return mEvents & NxOgre::Enums::ContactPairFlags_StartTouchThreshold;
+  }
+
+  inline bool  isStopTouchThresholdEvent() const
+  {
+   return mEvents & NxOgre::Enums::ContactPairFlags_StopTouchThreshold;
+  }
+
+  inline bool  isTouchThresholdEvent() const
+  {
+   return mEvents & NxOgre::Enums::ContactPairFlags_TouchThreshold;
+  }
+  
 }; // class ContactPair
 
                                                                                        

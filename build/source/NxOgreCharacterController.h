@@ -57,11 +57,15 @@ class NxOgrePublicClass CharacterController : public RigidBody
   
   public:
   
-  void   setMovingActiveGroups(unsigned int);
-  
   /*! function. setMinimalMoveDistance
       desc.
-          Set the minimal amount of distance the character should move.
+          Set the shape groups mask that the character should collide with
+  */
+  void   setMovingActiveGroups(unsigned int);
+  
+  /*! function. getMovingActiveGroups
+      desc.
+          Set the shape groups mask that the character should collide with
   */
   unsigned int getMovingActiveGroups();
   
@@ -70,6 +74,18 @@ class NxOgrePublicClass CharacterController : public RigidBody
           Set the minimal amount of distance the character should move.
   */
   void   setMinimalMoveDistance(Real minDist);
+  
+  /*! function. getStepOffset
+      desc.
+          Get the minimal offset between the bottom of the character and the ground.
+  */
+  Real   getStepOffset() const;
+  
+  /*! function. getSkinWidth
+      desc.
+          Get the skin width of the character controller.
+  */
+  Real   getSkinWidth() const;
   
   /*! function. getMovingSharpness
       desc.
@@ -97,11 +113,30 @@ class NxOgrePublicClass CharacterController : public RigidBody
   */
   unsigned int getLastCollisionFlags() const;
   
+  /*! function. lastCollisionDown
+      desc.
+          In the last collision, was there any collision "down"?
+  */
+  bool lastCollisionDown() const;
+  
+  /*! function. lastCollisionDown
+      desc.
+          In the last collision, was there any collision to the sides?
+  */
+  bool lastCollisionSides() const;
+  
+  /*! function. lastCollisionUp
+      desc.
+          In the last collision, was there any collision "up"?
+  */
+  bool lastCollisionUp() const;
+
+
   /*! function. moveGlobal
       desc.
           Try and move globally (without orientation)
   */
-  void   move(const Vec3& displacement);
+  virtual void   move(const Vec3& displacement);
   
   /** \brief
   */
@@ -221,6 +256,10 @@ class NxOgrePublicClass CharacterController : public RigidBody
   unsigned int   mActiveGroups;
   
   unsigned int   mCollisionFlags;
+  
+  Real           mStepOffset;
+  
+  Real           mSkinWidth;
   
 }; // class CharacterController
 

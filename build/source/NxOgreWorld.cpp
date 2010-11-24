@@ -50,6 +50,7 @@
 
 #if NxOgreHasCharacterController == 1
 #include "ControllerManager.h"
+#include "NxOgrePhysXControllerHitReport.h"
 #endif
 
                                                                                        
@@ -206,6 +207,7 @@ World::World(const WorldDescription& description)
 : mSDK(0), mDeadSDK(false), mPhysXOutputStream(0), mPhysXUserAllocator(0), mNullCallback(0)
 #if NxOgreHasCharacterController == 1
  , mControllerManager(0)
+ , mPhysXCharacterHitReport(0)
 #endif
 {
  
@@ -354,6 +356,14 @@ NxControllerManager* World::getPhysXControllerManager()
   mControllerManager = NxCreateControllerManager(mPhysXUserAllocator);
 
  return mControllerManager;
+}
+
+PhysXCharacterHitReport* World::getPhysXCharacterHitReport()
+{
+ if (mPhysXCharacterHitReport == 0)
+  mPhysXCharacterHitReport = new PhysXCharacterHitReport();
+
+ return mPhysXCharacterHitReport;
 }
 
 #endif

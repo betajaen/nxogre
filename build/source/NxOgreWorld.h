@@ -237,7 +237,22 @@ class NxOgrePublicClass World : public BigClassAllocatable
       return. NxControllerManager* -- The NxControllerManager pointer
   */
   NxControllerManager*  getPhysXControllerManager();
+  
 #endif
+
+
+#if NxOgreHasCharacterController == 1
+  
+  /*! function. getPhysXCharacterHitReport
+      Get a copy of the PhysXCharacterHitReport pointer.
+      !physx
+      note. This OWNED by NxOgre. Do not delete it.
+      return. PhysXCharacterHitReport* -- The PhysXCharacterHitReport pointer
+  */
+  PhysXCharacterHitReport*  getPhysXCharacterHitReport();
+  
+#endif
+
 
   /*! function. to_s
       desc.
@@ -556,6 +571,12 @@ NxOgre::DynamicRigidbodyFlags::EnergySleepTest is set.
   /* World's PhysX user allocator instance
   */
   PhysXUserAllocator*  mPhysXUserAllocator;
+
+#if NxOgreHasCharacterController == 1
+  /* 
+  */
+  PhysXCharacterHitReport*  mPhysXCharacterHitReport;
+#endif
 
   /* Master copy of all the Scenes in the World.
   */

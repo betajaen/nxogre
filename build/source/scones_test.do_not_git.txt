@@ -1,0 +1,84 @@
+/*! class. ConvexDescription
+    from. ShapeDescription
+    desc. Description class for Convex
+    
+    description.
+        Mesh* mMesh -- Loaded Convex mesh to use. (default: 0)
+        unsigned int mMeshFlags -- Flags for mesh (default: 0)
+*/
+class NxOgrePublicClass ConvexDescription : public ShapeDescription
+{
+  
+  public:
+  
+  /*! constructor. BoxDescription
+      desc.
+       Constructor, and resets the member variables to their default values according to the PhysX SDK.
+  */
+  ConvexDescription(Mesh* = 0, const MaterialIdentifier& material = 0, const Matrix44& local_pose = Matrix44::IDENTITY);
+
+  /*! destructor.
+      desc.
+          Required destructor
+  */
+  ~ConvexDescription();
+  
+  /*! function. createShapeDescription
+      desc.
+          Create NxBoxShapeDesc to be attached to an RigidBody.
+          This is an internal function and shouldn't be used in the User's app.
+      note.
+         Pointer is owned by the class/function calling it, and should be deleted when no longer used.
+         userData variable is the Mesh pointer assigned to the Shape. The Mesh is assigned to the userData
+         for speed reasons, and replaced with a PhysXPointer once the Convex shape has been created.
+  */
+  NxShapeDesc*  createShapeDescription() const;
+
+  public: // Below is computer generated code. Please do not edit.
+  
+  /*! variable. mMesh
+      desc.
+          Loaded Convex mesh to use.
+      default.
+          0
+  */
+  Mesh* mMesh;
+  
+  /*! variable. mMesh
+      desc.
+          Flags for mesh
+      default.
+          0
+  */
+  unsigned int mMeshFlags;
+ 
+    
+  /*! function. reset
+  */
+  virtual void reset();
+  
+  /*! function. copy
+      desc.
+          Copy this properties into another ConvexDescription
+  */
+  virtual void copy(ConvexDescription*) const;
+  
+  /*! function. duplicate
+      desc.
+          Create a ShapeDescription* and copy these properties into it.
+  */
+  virtual ShapeDescription* duplicate();
+  
+  /*! constructor. ConvexDescription
+      desc.
+          Copy constructor for ConvexDescription.
+  */
+  ConvexDescription(const ConvexDescription&);
+  
+  /*! function. operator=
+      desc.
+          Assignment operator for ConvexDescription
+  */
+  ConvexDescription operator=(const ConvexDescription&);
+  
+}; // class ConvexDescription

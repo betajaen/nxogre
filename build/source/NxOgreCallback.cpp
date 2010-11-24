@@ -75,6 +75,20 @@ void Callback::onWake(const RigidBodyEventIterator& rigidbodies)
 { // virtual function.
 }
 
+#if NxOgreHasCharacterController == 1
+
+NxOgre::Enums::CharacterControllerAction Callback::onShapeHit(const CharacterControllerHit&)
+{
+ return Enums::CharacterControllerAction_None;
+}
+
+NxOgre::Enums::CharacterControllerAction Callback::onCharacterHit(CharacterController*, CharacterController*)
+{
+ return Enums::CharacterControllerAction_None;
+}
+
+#endif
+
 void Callback::increaseReference()
 {
  mNbReferences++;

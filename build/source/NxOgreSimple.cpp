@@ -195,9 +195,6 @@ Enums::SimpleShapeType SimpleSphere::getType() const
  return Enums::SimpleShape_Sphere;
 }
 
-
-
-
 SimpleCapsule::SimpleCapsule()
 : mRadius(0)
 {

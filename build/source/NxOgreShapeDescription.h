@@ -123,7 +123,7 @@ class NxOgrePublicClass ShapeDescription : public GenericBasedAllocatable
 
   /*! variable. mId
       desc.
-          Optional id of the ship. This is stored as a unsigne int instead of a string for memory reasons.
+          Optional id of the shape. This is stored as a unsigned int instead of a string for memory reasons.
       default.
           0
   */
