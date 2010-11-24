@@ -2,11 +2,11 @@
 #ifndef NXOGRE_VERSION_H
 #define NXOGRE_VERSION_H
 
-// 2010-07-31 17:58:19 +0000
+// 2010-11-24 19:08:24 +0000
 #define NxOgreVersionMajor 1
-#define NxOgreVersionMinor 6
-#define NxOgreVersionRelease 3399
-#define NxOgreCommit "Darshana"
-#define NxOgreBranch "Detritus"
+#define NxOgreVersionMinor 7
+#define NxOgreVersionRelease 3347
+#define NxOgreCommit "Comment"
+#define NxOgreBranch "BuggySwires"
 
 #endif

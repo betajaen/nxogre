@@ -4,6 +4,7 @@ DebugStatic
 Final
 FinalStatic
 sdk
+build/ipch
 # Specific files
 clean.bat
 # Files of a type
@@ -20,3 +21,8 @@ clean.bat
 *.dll
 *.developer
 *.NOGIT
+build/*.xml
+*.opensdf
+*.suo
+*.old
+*.sdf

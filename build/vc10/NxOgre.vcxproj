@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2dc6bdb4-2a01-ad08-9dc8-51a73229706a}</ProjectGuid>
+    <RootNamespace>NxOgre</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">NxOgre\Final\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">NxOgre\Final\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NxOgre\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NxOgre\Debug\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <PreBuildEvent>
+      <Command>..\VC.prebuild.bat NxOgre Final</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\;$(PHYSX_DIR)\SDKs\NxCharacter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;WIN32;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FloatingPointModel>Strict</FloatingPointModel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>PhysXLoader.lib;PhysXCooking.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)NxOgre.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(PHYSX_DIR)\SDKs\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>..\VC.postbuild.bat NxOgre Final</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>..\VC.prebuild.bat NxOgre Debug</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\;$(PHYSX_DIR)\SDKs\NxCharacter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_DEBUG;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>NxOgreStable.h</PrecompiledHeaderFile>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>PhysXLoader.lib;PhysXCooking.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)NxOgreDebug.dll</OutputFile>
+      <AdditionalLibraryDirectories>$(PHYSX_DIR)\SDKs\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>..\VC.postbuild.bat NxOgre Debug</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\NxOgre.h" />
+    <ClInclude Include="..\source\NxOgreActor.h" />
+    <ClInclude Include="..\source\NxOgreActorMachinePart.h" />
+    <ClInclude Include="..\source\NxOgreAllocatables.h" />
+    <ClInclude Include="..\source\NxOgreAllocator.h" />
+    <ClInclude Include="..\source\NxOgreAutoConfiguration.h" />
+    <ClInclude Include="..\source\NxOgreAuxiliaryScene.h" />
+    <ClInclude Include="..\source\NxOgreBounds.h" />
+    <ClInclude Include="..\source\NxOgreBox.h" />
+    <ClInclude Include="..\source\NxOgreBoxDescription.h" />
+    <ClInclude Include="..\source\NxOgreBuffer.h" />
+    <ClInclude Include="..\source\NxOgreCallback.h" />
+    <ClInclude Include="..\source\NxOgreCapsule.h" />
+    <ClInclude Include="..\source\NxOgreCapsuleDescription.h" />
+    <ClInclude Include="..\source\NxOgreCharacterController.h" />
+    <ClInclude Include="..\source\NxOgreCharacterControllerDescription.h" />
+    <ClInclude Include="..\source\NxOgreCharacterControllerHit.h" />
+    <ClInclude Include="..\source\NxOgreCircularBuffer.h" />
+    <ClInclude Include="..\source\NxOgreClasses.h" />
+    <ClInclude Include="..\source\NxOgreClassPrototypes.h" />
+    <ClInclude Include="..\source\NxOgreCloth.h" />
+    <ClInclude Include="..\source\NxOgreClothDescription.h" />
+    <ClInclude Include="..\source\NxOgreCommon.h" />
+    <ClInclude Include="..\source\NxOgreCommonMachineParts.h" />
+    <ClInclude Include="..\source\NxOgreCompartment.h" />
+    <ClInclude Include="..\source\NxOgreCompartmentDescription.h" />
+    <ClInclude Include="..\source\NxOgreConfiguration.h" />
+    <ClInclude Include="..\source\NxOgreContactPair.h" />
+    <ClInclude Include="..\source\NxOgreConvex.h" />
+    <ClInclude Include="..\source\NxOgreConvexDescription.h" />
+    <ClInclude Include="..\source\NxOgreD6Joint.h" />
+    <ClInclude Include="..\source\NxOgreD6JointDescription.h" />
+    <ClInclude Include="..\source\NxOgreDynamicRigidBodyFlags.h" />
+    <ClInclude Include="..\source\NxOgreEntityReport.h" />
+    <ClInclude Include="..\source\NxOgreEnums.h" />
+    <ClInclude Include="..\source\NxOgreErrorStream.h" />
+    <ClInclude Include="..\source\NxOgreException.h" />
+    <ClInclude Include="..\source\NxOgreFileResource.h" />
+    <ClInclude Include="..\source\NxOgreFileResourceProtocol.h" />
+    <ClInclude Include="..\source\NxOgreFixedJoint.h" />
+    <ClInclude Include="..\source\NxOgreFixedSceneTimer.h" />
+    <ClInclude Include="..\source\NxOgreFlatYAML.h" />
+    <ClInclude Include="..\source\NxOgreFlower.h" />
+    <ClInclude Include="..\source\NxOgreFluid.h" />
+    <ClInclude Include="..\source\NxOgreFluidDescription.h" />
+    <ClInclude Include="..\source\NxOgreFluidEmitter.h" />
+    <ClInclude Include="..\source\NxOgreFluidEmitterDescription.h" />
+    <ClInclude Include="..\source\NxOgreForceField.h" />
+    <ClInclude Include="..\source\NxOgreForceFieldDescription.h" />
+    <ClInclude Include="..\source\NxOgreForceFieldKernel.h" />
+    <ClInclude Include="..\source\NxOgreForceFieldLinearKernel.h" />
+    <ClInclude Include="..\source\NxOgreForceFieldLinearKernelDescription.h" />
+    <ClInclude Include="..\source\NxOgreFunctions.h" />
+    <ClInclude Include="..\source\NxOgreGC.h" />
+    <ClInclude Include="..\source\NxOgreGroupsMask.h" />
+    <ClInclude Include="..\source\NxOgreHash.h" />
+    <ClInclude Include="..\source\NxOgreHashmap.h" />
+    <ClInclude Include="..\source\NxOgreHashmapIterator.h" />
+    <ClInclude Include="..\source\NxOgreHeightField.h" />
+    <ClInclude Include="..\source\NxOgreHeightFieldData.h" />
+    <ClInclude Include="..\source\NxOgreHeightFieldGeometry.h" />
+    <ClInclude Include="..\source\NxOgreHeightFieldGeometryDescription.h" />
+    <ClInclude Include="..\source\NxOgreHeightFieldManager.h" />
+    <ClInclude Include="..\source\NxOgreHeightFieldSample.h" />
+    <ClInclude Include="..\source\NxOgreIndexBuffer.h" />
+    <ClInclude Include="..\source\NxOgreIntVectors.h" />
+    <ClInclude Include="..\source\NxOgreJoint.h" />
+    <ClInclude Include="..\source\NxOgreJointDescription.h" />
+    <ClInclude Include="..\source\NxOgreJointDriveDescription.h" />
+    <ClInclude Include="..\source\NxOgreJointLimitDescription.h" />
+    <ClInclude Include="..\source\NxOgreJointLimitSoftDescription.h" />
+    <ClInclude Include="..\source\NxOgreKinematicActor.h" />
+    <ClInclude Include="..\source\NxOgreKinematicSceneLink.h" />
+    <ClInclude Include="..\source\NxOgreLinearInterpolationMap.h" />
+    <ClInclude Include="..\source\NxOgreList.h" />
+    <ClInclude Include="..\source\NxOgreMachine.h" />
+    <ClInclude Include="..\source\NxOgreMachinePart.h" />
+    <ClInclude Include="..\source\NxOgreMallocAllocator.h" />
+    <ClInclude Include="..\source\NxOgreManualHeightField.h" />
+    <ClInclude Include="..\source\NxOgreManualMesh.h" />
+    <ClInclude Include="..\source\NxOgreMap.h" />
+    <ClInclude Include="..\source\NxOgreMapIterator.h" />
+    <ClInclude Include="..\source\NxOgreMaterial.h" />
+    <ClInclude Include="..\source\NxOgreMaterialDescription.h" />
+    <ClInclude Include="..\source\NxOgreMath.h" />
+    <ClInclude Include="..\source\NxOgreMatrix.h" />
+    <ClInclude Include="..\source\NxOgreMemoryResource.h" />
+    <ClInclude Include="..\source\NxOgreMemoryResourceProtocol.h" />
+    <ClInclude Include="..\source\NxOgreMesh.h" />
+    <ClInclude Include="..\source\NxOgreMeshData.h" />
+    <ClInclude Include="..\source\NxOgreMeshGenerator.h" />
+    <ClInclude Include="..\source\NxOgreMeshManager.h" />
+    <ClInclude Include="..\source\NxOgreMeshRenderable.h" />
+    <ClInclude Include="..\source\NxOgreMeshStats.h" />
+    <ClInclude Include="..\source\NxOgreMotorDescription.h" />
+    <ClInclude Include="..\source\NxOgreMultihashmap.h" />
+    <ClInclude Include="..\source\NxOgreMultihashmapIterator.h" />
+    <ClInclude Include="..\source\NxOgreMultimap.h" />
+    <ClInclude Include="..\source\NxOgreMultimapIterator.h" />
+    <ClInclude Include="..\source\NxOgreNodeRenderable.h" />
+    <ClInclude Include="..\source\NxOgreNotice.h" />
+    <ClInclude Include="..\source\NxOgreNXS.h" />
+    <ClInclude Include="..\source\NxOgreParticleData.h" />
+    <ClInclude Include="..\source\NxOgrePath.h" />
+    <ClInclude Include="..\source\NxOgrePhysXBuffer.h" />
+    <ClInclude Include="..\source\NxOgrePhysXCallback.h" />
+    <ClInclude Include="..\source\NxOgrePhysXConfiguration.h" />
+    <ClInclude Include="..\source\NxOgrePhysXControllerHitReport.h" />
+    <ClInclude Include="..\source\NxOgrePhysXOutputStream.h" />
+    <ClInclude Include="..\source\NxOgrePhysXParticleData.h" />
+    <ClInclude Include="..\source\NxOgrePhysXPointer.h" />
+    <ClInclude Include="..\source\NxOgrePhysXPrototypes.h" />
+    <ClInclude Include="..\source\NxOgrePhysXRaycastReport.h" />
+    <ClInclude Include="..\source\NxOgrePhysXStream.h" />
+    <ClInclude Include="..\source\NxOgrePhysXUserAllocator.h" />
+    <ClInclude Include="..\source\NxOgrePhysXUserEntityReport.h" />
+    <ClInclude Include="..\source\NxOgrePlaneGeometry.h" />
+    <ClInclude Include="..\source\NxOgrePlaneGeometryDescription.h" />
+    <ClInclude Include="..\source\NxOgrePointerFunctions.h" />
+    <ClInclude Include="..\source\NxOgrePointRenderable.h" />
+    <ClInclude Include="..\source\NxOgrePrincipalScene.h" />
+    <ClInclude Include="..\source\NxOgrePrototypeFunctions.h" />
+    <ClInclude Include="..\source\NxOgreQuat.h" />
+    <ClInclude Include="..\source\NxOgreRadian.h" />
+    <ClInclude Include="..\source\NxOgreRay.h" />
+    <ClInclude Include="..\source\NxOgreRaycastHit.h" />
+    <ClInclude Include="..\source\NxOgreReason.h" />
+    <ClInclude Include="..\source\NxOgreRefVector.h" />
+    <ClInclude Include="..\source\NxOgreRemoteDebugger.h" />
+    <ClInclude Include="..\source\NxOgreRemoteDebuggerListener.h" />
+    <ClInclude Include="..\source\NxOgreRenderable.h" />
+    <ClInclude Include="..\source\NxOgreResource.h" />
+    <ClInclude Include="..\source\NxOgreResourceProtocol.h" />
+    <ClInclude Include="..\source\NxOgreResourceStream.h" />
+    <ClInclude Include="..\source\NxOgreResourceSystem.h" />
+    <ClInclude Include="..\source\NxOgreRevoluteJoint.h" />
+    <ClInclude Include="..\source\NxOgreRevoluteJointDescription.h" />
+    <ClInclude Include="..\source\NxOgreRigidBody.h" />
+    <ClInclude Include="..\source\NxOgreRigidBodyDescription.h" />
+    <ClInclude Include="..\source\NxOgreRigidBodyEventIterator.h" />
+    <ClInclude Include="..\source\NxOgreRigidBodyFlags.h" />
+    <ClInclude Include="..\source\NxOgreRigidBodyFunctions.h" />
+    <ClInclude Include="..\source\NxOgreScene.h" />
+    <ClInclude Include="..\source\NxOgreSceneDescription.h" />
+    <ClInclude Include="..\source\NxOgreSceneFlags.h" />
+    <ClInclude Include="..\source\NxOgreSceneGeometry.h" />
+    <ClInclude Include="..\source\NxOgreSceneLink.h" />
+    <ClInclude Include="..\source\NxOgreSceneTimer.h" />
+    <ClInclude Include="..\source\NxOgreShape.h" />
+    <ClInclude Include="..\source\NxOgreShapeDescription.h" />
+    <ClInclude Include="..\source\NxOgreShapeFlags.h" />
+    <ClInclude Include="..\source\NxOgreShapeFunctions.h" />
+    <ClInclude Include="..\source\NxOgreSharedPointer.h" />
+    <ClInclude Include="..\source\NxOgreSimple.h" />
+    <ClInclude Include="..\source\NxOgreSingleton.h" />
+    <ClInclude Include="..\source\NxOgreSoftBody.h" />
+    <ClInclude Include="..\source\NxOgreSoftBodyDescription.h" />
+    <ClInclude Include="..\source\NxOgreSphere.h" />
+    <ClInclude Include="..\source\NxOgreSphereDescription.h" />
+    <ClInclude Include="..\source\NxOgreSphericalJoint.h" />
+    <ClInclude Include="..\source\NxOgreSphericalJointDescription.h" />
+    <ClInclude Include="..\source\NxOgreSpringDescription.h" />
+    <ClInclude Include="..\source\NxOgreStable.h" />
+    <ClInclude Include="..\source\NxOgreString.h" />
+    <ClInclude Include="..\source\NxOgreSweepQuery.h" />
+    <ClInclude Include="..\source\NxOgreTimeListener.h" />
+    <ClInclude Include="..\source\NxOgreTimeListenerGroup.h" />
+    <ClInclude Include="..\source\NxOgreTimer.h" />
+    <ClInclude Include="..\source\NxOgreTimeStep.h" />
+    <ClInclude Include="..\source\NxOgreTireFunction.h" />
+    <ClInclude Include="..\source\NxOgreTriangle.h" />
+    <ClInclude Include="..\source\NxOgreTriangleGeometry.h" />
+    <ClInclude Include="..\source\NxOgreTriangleGeometryDescription.h" />
+    <ClInclude Include="..\source\NxOgreTuple.h" />
+    <ClInclude Include="..\source\NxOgreType2Id.h" />
+    <ClInclude Include="..\source\NxOgreUtil.h" />
+    <ClInclude Include="..\source\NxOgreValue.h" />
+    <ClInclude Include="..\source\NxOgreVec2.h" />
+    <ClInclude Include="..\source\NxOgreVec3.h" />
+    <ClInclude Include="..\source\NxOgreVec4.h" />
+    <ClInclude Include="..\source\NxOgreVector.h" />
+    <ClInclude Include="..\source\NxOgreVectorIterator.h" />
+    <ClInclude Include="..\source\NxOgreVersion.h" />
+    <ClInclude Include="..\source\NxOgreVertexBuffer.h" />
+    <ClInclude Include="..\source\NxOgreVisualDebugger.h" />
+    <ClInclude Include="..\source\NxOgreVisualDebuggerMeshData.h" />
+    <ClInclude Include="..\source\NxOgreVolume.h" />
+    <ClInclude Include="..\source\NxOgreWarning.h" />
+    <ClInclude Include="..\source\NxOgreWheel.h" />
+    <ClInclude Include="..\source\NxOgreWheelDescription.h" />
+    <ClInclude Include="..\source\NxOgreWheelMachinePart.h" />
+    <ClInclude Include="..\source\NxOgreWorld.h" />
+    <ClInclude Include="..\source\NxOgreWorldDescription.h" />
+    <ClInclude Include="..\source\NxOgreX.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\NxOgreActor.cpp" />
+    <ClCompile Include="..\source\NxOgreActorMachinePart.cpp" />
+    <ClCompile Include="..\source\NxOgreAllocator.cpp" />
+    <ClCompile Include="..\source\NxOgreAuxiliaryScene.cpp" />
+    <ClCompile Include="..\source\NxOgreBox.cpp" />
+    <ClCompile Include="..\source\NxOgreBoxDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreCallback.cpp" />
+    <ClCompile Include="..\source\NxOgreCapsule.cpp" />
+    <ClCompile Include="..\source\NxOgreCapsuleDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreCharacterController.cpp" />
+    <ClCompile Include="..\source\NxOgreCharacterControllerDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreClasses.cpp" />
+    <ClCompile Include="..\source\NxOgreCloth.cpp" />
+    <ClCompile Include="..\source\NxOgreClothDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreCommonMachineParts.cpp" />
+    <ClCompile Include="..\source\NxOgreCompartment.cpp" />
+    <ClCompile Include="..\source\NxOgreCompartmentDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreConvex.cpp" />
+    <ClCompile Include="..\source\NxOgreConvexDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreD6Joint.cpp" />
+    <ClCompile Include="..\source\NxOgreD6JointDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreErrorStream.cpp" />
+    <ClCompile Include="..\source\NxOgreException.cpp" />
+    <ClCompile Include="..\source\NxOgreFileResource.cpp" />
+    <ClCompile Include="..\source\NxOgreFileResourceProtocol.cpp" />
+    <ClCompile Include="..\source\NxOgreFixedJoint.cpp" />
+    <ClCompile Include="..\source\NxOgreFixedSceneTimer.cpp" />
+    <ClCompile Include="..\source\NxOgreFlatYAML.cpp" />
+    <ClCompile Include="..\source\NxOgreFlower.cpp" />
+    <ClCompile Include="..\source\NxOgreFluid.cpp" />
+    <ClCompile Include="..\source\NxOgreFluidDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreFluidEmitter.cpp" />
+    <ClCompile Include="..\source\NxOgreFluidEmitterDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreForceField.cpp" />
+    <ClCompile Include="..\source\NxOgreForceFieldDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreForceFieldKernel.cpp" />
+    <ClCompile Include="..\source\NxOgreForceFieldLinearKernel.cpp" />
+    <ClCompile Include="..\source\NxOgreForceFieldLinearKernelDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreFunctions.cpp" />
+    <ClCompile Include="..\source\NxOgreGC.cpp" />
+    <ClCompile Include="..\source\NxOgreGroupsMask.cpp" />
+    <ClCompile Include="..\source\NxOgreHeightField.cpp" />
+    <ClCompile Include="..\source\NxOgreHeightFieldData.cpp" />
+    <ClCompile Include="..\source\NxOgreHeightFieldGeometry.cpp" />
+    <ClCompile Include="..\source\NxOgreHeightFieldGeometryDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreHeightFieldManager.cpp" />
+    <ClCompile Include="..\source\NxOgreIntVectors.cpp" />
+    <ClCompile Include="..\source\NxOgreJoint.cpp" />
+    <ClCompile Include="..\source\NxOgreJointDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreJointDriveDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreJointLimitDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreJointLimitSoftDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreKinematicActor.cpp" />
+    <ClCompile Include="..\source\NxOgreKinematicSceneLink.cpp" />
+    <ClCompile Include="..\source\NxOgreLinearInterpolationMap.cpp" />
+    <ClCompile Include="..\source\NxOgreList.cpp" />
+    <ClCompile Include="..\source\NxOgreMachine.cpp" />
+    <ClCompile Include="..\source\NxOgreMachinePart.cpp" />
+    <ClCompile Include="..\source\NxOgreMallocAllocator.cpp" />
+    <ClCompile Include="..\source\NxOgreManualHeightField.cpp" />
+    <ClCompile Include="..\source\NxOgreManualMesh.cpp" />
+    <ClCompile Include="..\source\NxOgreMaterial.cpp" />
+    <ClCompile Include="..\source\NxOgreMaterialDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreMath.cpp" />
+    <ClCompile Include="..\source\NxOgreMatrix.cpp" />
+    <ClCompile Include="..\source\NxOgreMemoryResource.cpp" />
+    <ClCompile Include="..\source\NxOgreMemoryResourceProtocol.cpp" />
+    <ClCompile Include="..\source\NxOgreMesh.cpp" />
+    <ClCompile Include="..\source\NxOgreMeshData.cpp" />
+    <ClCompile Include="..\source\NxOgreMeshGenerator.cpp" />
+    <ClCompile Include="..\source\NxOgreMeshManager.cpp" />
+    <ClCompile Include="..\source\NxOgreMeshRenderable.cpp" />
+    <ClCompile Include="..\source\NxOgreMeshStats.cpp" />
+    <ClCompile Include="..\source\NxOgreMotorDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreNodeRenderable.cpp" />
+    <ClCompile Include="..\source\NxOgreNotice.cpp" />
+    <ClCompile Include="..\source\NxOgreNXS.cpp" />
+    <ClCompile Include="..\source\NxOgreParticleData.cpp" />
+    <ClCompile Include="..\source\NxOgrePath.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXCallback.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXConfiguration.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXControllerHitReport.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXOutputStream.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXParticleData.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXPointer.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXRaycastReport.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXStream.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXUserAllocator.cpp" />
+    <ClCompile Include="..\source\NxOgrePlaneGeometry.cpp" />
+    <ClCompile Include="..\source\NxOgrePlaneGeometryDescription.cpp" />
+    <ClCompile Include="..\source\NxOgrePointRenderable.cpp" />
+    <ClCompile Include="..\source\NxOgrePrincipalScene.cpp" />
+    <ClCompile Include="..\source\NxOgrePrototypeFunctions.cpp" />
+    <ClCompile Include="..\source\NxOgreQuat.cpp" />
+    <ClCompile Include="..\source\NxOgreRadian.cpp" />
+    <ClCompile Include="..\source\NxOgreRay.cpp" />
+    <ClCompile Include="..\source\NxOgreRaycastHit.cpp" />
+    <ClCompile Include="..\source\NxOgreReason.cpp" />
+    <ClCompile Include="..\source\NxOgreRemoteDebugger.cpp" />
+    <ClCompile Include="..\source\NxOgreRenderable.cpp" />
+    <ClCompile Include="..\source\NxOgreResource.cpp" />
+    <ClCompile Include="..\source\NxOgreResourceProtocol.cpp" />
+    <ClCompile Include="..\source\NxOgreResourceStream.cpp" />
+    <ClCompile Include="..\source\NxOgreResourceSystem.cpp" />
+    <ClCompile Include="..\source\NxOgreRevoluteJoint.cpp" />
+    <ClCompile Include="..\source\NxOgreRevoluteJointDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreRigidBody.cpp" />
+    <ClCompile Include="..\source\NxOgreRigidBodyDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreRigidBodyEventIterator.cpp" />
+    <ClCompile Include="..\source\NxOgreRigidBodyFunctions.cpp" />
+    <ClCompile Include="..\source\NxOgreScene.cpp" />
+    <ClCompile Include="..\source\NxOgreSceneDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreSceneGeometry.cpp" />
+    <ClCompile Include="..\source\NxOgreSceneLink.cpp" />
+    <ClCompile Include="..\source\NxOgreSceneTimer.cpp" />
+    <ClCompile Include="..\source\NxOgreShape.cpp" />
+    <ClCompile Include="..\source\NxOgreShapeDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreShapeFunctions.cpp" />
+    <ClCompile Include="..\source\NxOgreSimple.cpp" />
+    <ClCompile Include="..\source\NxOgreSoftBody.cpp" />
+    <ClCompile Include="..\source\NxOgreSoftBodyDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreSphere.cpp" />
+    <ClCompile Include="..\source\NxOgreSphereDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreSphericalJoint.cpp" />
+    <ClCompile Include="..\source\NxOgreSphericalJointDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreSpringDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreStable.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\source\NxOgreString.cpp" />
+    <ClCompile Include="..\source\NxOgreSweepQuery.cpp" />
+    <ClCompile Include="..\source\NxOgreTimeListenerGroup.cpp" />
+    <ClCompile Include="..\source\NxOgreTimer.cpp" />
+    <ClCompile Include="..\source\NxOgreTimeStep.cpp" />
+    <ClCompile Include="..\source\NxOgreTireFunction.cpp" />
+    <ClCompile Include="..\source\NxOgreTriangle.cpp" />
+    <ClCompile Include="..\source\NxOgreTriangleGeometry.cpp" />
+    <ClCompile Include="..\source\NxOgreTriangleGeometryDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreUtil.cpp" />
+    <ClCompile Include="..\source\NxOgreVec2.cpp" />
+    <ClCompile Include="..\source\NxOgreVec3.cpp" />
+    <ClCompile Include="..\source\NxOgreVec4.cpp" />
+    <ClCompile Include="..\source\NxOgreVisualDebugger.cpp" />
+    <ClCompile Include="..\source\NxOgreVisualDebuggerMeshData.cpp" />
+    <ClCompile Include="..\source\NxOgreVolume.cpp" />
+    <ClCompile Include="..\source\NxOgreWarning.cpp" />
+    <ClCompile Include="..\source\NxOgreWheel.cpp" />
+    <ClCompile Include="..\source\NxOgreWheelDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreWheelMachinePart.cpp" />
+    <ClCompile Include="..\source\NxOgreWorld.cpp" />
+    <ClCompile Include="..\source\NxOgreWorldDescription.cpp" />
+    <ClCompile Include="..\source\NxOgreX.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
