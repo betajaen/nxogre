@@ -94,6 +94,10 @@
 
 #define NxOgre_Stringify(x) NxOgre_PreprocessorToStringBase(x)
 
+#define NxOgre_DeclareEmptyClassFunctionVoid(FUNCTION_SIGNATURE) FUNCTION_SIGNATURE {}
+
+#define NxOgre_DeclareEmptyClassFunctionValue(FUNCTION_SIGNATURE, RETURN_VALUE) FUNCTION_SIGNATURE {return RETURN_VALUE;}
+
 #ifdef NXOGRE_SDK
 // All classes that use the TinyClassAllocatable, must use this macro when the class is defined.
 #  define NxOgreSixteenBytesRestriction(CLASS) extern char NxOgreCompileAssert[size_t(sizeof(CLASS) == 16 ? 1 : -1)];

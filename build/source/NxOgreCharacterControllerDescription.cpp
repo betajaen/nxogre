@@ -46,8 +46,8 @@ CharacterControllerDescription::CharacterControllerDescription()
 void CharacterControllerDescription::reset()
 {
  mUpDirection = Enums::Y;
- mSlopeLimit = 0.707;
- mSkinWidth = 0.1;
+ mSlopeLimit = 0.707f;
+ mSkinWidth = 0.1f;
  mCallback = 0;
  mStepOffset = 0.5f;
  mCapsuleEasyClimbing = false;

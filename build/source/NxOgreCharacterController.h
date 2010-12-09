@@ -213,6 +213,8 @@ class NxOgrePublicClass CharacterController : public RigidBody
 
   protected: // Functions
 
+  void _setShapeGroup(GroupIdentifier);
+
   /*! function. createCharacterController
       desc.
           Become a Character Controller based on the arguments.

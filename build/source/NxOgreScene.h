@@ -62,9 +62,11 @@
 #include "NxOgreForceFieldLinearKernelDescription.h"
 
 #include "NxOgreTimeListener.h"
+#include "NxOgreTimeListenerGroup.h"
 
 #if NxOgreHasCharacterController == 1
 
+#include "NxOgreCharacterController.h"
 #include "NxOgreCharacterControllerDescription.h"
 
 #endif

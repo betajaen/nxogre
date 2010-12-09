@@ -115,7 +115,8 @@ struct NxOgrePublicClass SimpleCapsule : public SimpleShape
 #if NxOgreHasCharacterController == 1
  Vec3                    to_cc_shape() const;
 #endif
-
+ CapsuleDescription      to_desc() const;
+ 
  Vec3 mP0, mP1;
  Real mRadius;
 };

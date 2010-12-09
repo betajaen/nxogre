@@ -154,7 +154,7 @@ void RigidBodyDescription::copy_into(RigidBodyDescription* other) const
 
 void RigidBodyDescription::reset()
 {
- mAngularDamping = 0.05;
+ mAngularDamping = 0.05f;
  mAngularVelocity.zero();
  mAuxiliaryMirror = false;
  mCCDMotionThreshold = 0;
@@ -167,19 +167,19 @@ void RigidBodyDescription::reset()
  mForceFieldMaterial = 0;
  mGroup = 0;
  mInternalThreadCount = 0;
- mLinearDamping = 0.0;
+ mLinearDamping = 0.0f;
  mLinearVelocity.zero();
- mMass = 1.0;
+ mMass = 1.0f;
  mMassLocalPose.identity();
  mMassSpaceInertia.zero();
- mMaxAngularVelocity = -1.0;
+ mMaxAngularVelocity = -1.0f;
  mName.clear();
- mSleepAngularVelocity = -1.0;
+ mSleepAngularVelocity = -1.0f;
  mSleepDamping = 0;
- mSleepEnergyThreshold = -1.0;
- mSleepLinearVelocity = -1.0;
+ mSleepEnergyThreshold = -1.0f;
+ mSleepLinearVelocity = -1.0f;
  mSolverIterationCount = 4;
- mWakeUpCounter = 0.04;
+ mWakeUpCounter = 0.04f;
 }
 
 bool RigidBodyDescription::valid() const

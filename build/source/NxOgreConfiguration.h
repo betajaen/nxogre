@@ -33,6 +33,14 @@
 // Debug FlatYAML
 #define NXOGRE_DEBUG_FLATYAML 0
 
+/*
+  NxOgreUsesCookingLib
+  ====================
+  Use the PhysX cooking library to create Triangle/Convex/Cloth/SoftBody/Skeleton meshes
+  Warning! If disabled, all of NxOgre cooking functions will automatically fail on use.
+  - Requires use of the PhysXCooking.lib/PhysXCooking.dll
+*/
+#define NxOgreUsesCookingLib 1
 
 /*
   NxOgreHasCharacterController

@@ -28,6 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreSimple.h"
+#include "NxOgreCapsuleDescription.h"
 
 #include "NxPhysics.h"
 
@@ -270,6 +271,15 @@ Enums::SimpleShapeType SimpleCapsule::getType() const
 {
  return Enums::SimpleShape_Capsule;
 }
+
+CapsuleDescription SimpleCapsule::to_desc() const
+{
+ CapsuleDescription out;
+ out.mRadius = mRadius;
+ out.mHeight = mP1.y - mP0.y;
+ return out;
+}
+
 
 
 

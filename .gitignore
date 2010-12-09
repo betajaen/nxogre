@@ -4,13 +4,13 @@ DebugStatic
 Final
 FinalStatic
 sdk
-build/ipch
+ipch
 # Specific files
 clean.bat
+.developer
 # Files of a type
 *.py
 *.pyc
-*.rb
 *.lnk
 *.obj
 *.manifest
@@ -19,9 +19,7 @@ clean.bat
 *.ncb
 *.suo
 *.dll
-*.developer
 *.NOGIT
-build/*.xml
 *.opensdf
 *.suo
 *.old

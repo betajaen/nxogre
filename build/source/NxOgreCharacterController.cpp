@@ -222,6 +222,11 @@ String CharacterController::to_s() const
  return NxOgre::to_s((void*)this, (mName.length() ? String("'" + mName + "'") : String("CharacterController") ));
 }
 
+void CharacterController::_setShapeGroup(GroupIdentifier group_id)
+{
+ mController->getActor()->getShapes()[0]->setGroup(group_id);
+}
+
                                                                                        
 
 } // namespace NxOgre

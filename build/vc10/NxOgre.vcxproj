@@ -11,80 +11,81 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2dc6bdb4-2a01-ad08-9dc8-51a73229706a}</ProjectGuid>
+    <ProjectGuid>{D5425ED3-3C43-4D8F-9069-60AFCC39387F}</ProjectGuid>
     <RootNamespace>NxOgre</RootNamespace>
-    <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">NxOgre\Final\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">NxOgre\Final\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NxOgre\Debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NxOgre\Debug\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
-    <PreBuildEvent>
-      <Command>..\VC.prebuild.bat NxOgre Final</Command>
-    </PreBuildEvent>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <TargetName>NxOgre</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>NxOgreDebug</TargetName>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\;$(PHYSX_DIR)\SDKs\NxCharacter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;WIN32;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FloatingPointModel>Strict</FloatingPointModel>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;WIN32;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\;$(PHYSX_DIR)\SDKs\NxCharacter\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PhysXLoader.lib;PhysXCooking.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)NxOgre.dll</OutputFile>
-      <AdditionalLibraryDirectories>$(PHYSX_DIR)\SDKs\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(PHYSX_DIR)\SDKs\lib\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>buildbot.bat version</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
-      <Command>..\VC.postbuild.bat NxOgre Final</Command>
+      <Command>buildbot.bat makesdk Debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <PreBuildEvent>
-      <Command>..\VC.prebuild.bat NxOgre Debug</Command>
-    </PreBuildEvent>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
     <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\;$(PHYSX_DIR)\SDKs\NxCharacter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_DEBUG;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>NxOgreStable.h</PrecompiledHeaderFile>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\source;$(PHYSX_DIR)\SDKs\Physics\include\;$(PHYSX_DIR)\SDKs\Foundation\include\;$(PHYSX_DIR)\SDKs\Cooking\include\;$(PHYSX_DIR)\SDKs\PhysXLoader\include\;$(PHYSX_DIR)\SDKs\NxCharacter\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PhysXLoader.lib;PhysXCooking.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)NxOgreDebug.dll</OutputFile>
-      <AdditionalLibraryDirectories>$(PHYSX_DIR)\SDKs\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <GenerateMapFile>true</GenerateMapFile>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(PHYSX_DIR)\SDKs\lib\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>buildbot.bat version</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
-      <Command>..\VC.postbuild.bat NxOgre Debug</Command>
+      <Command>buildbot.bat makesdk Final</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -105,7 +106,6 @@
     <ClInclude Include="..\source\NxOgreCharacterController.h" />
     <ClInclude Include="..\source\NxOgreCharacterControllerDescription.h" />
     <ClInclude Include="..\source\NxOgreCharacterControllerHit.h" />
-    <ClInclude Include="..\source\NxOgreCircularBuffer.h" />
     <ClInclude Include="..\source\NxOgreClasses.h" />
     <ClInclude Include="..\source\NxOgreClassPrototypes.h" />
     <ClInclude Include="..\source\NxOgreCloth.h" />
@@ -215,7 +215,6 @@
     <ClInclude Include="..\source\NxOgreRay.h" />
     <ClInclude Include="..\source\NxOgreRaycastHit.h" />
     <ClInclude Include="..\source\NxOgreReason.h" />
-    <ClInclude Include="..\source\NxOgreRefVector.h" />
     <ClInclude Include="..\source\NxOgreRemoteDebugger.h" />
     <ClInclude Include="..\source\NxOgreRemoteDebuggerListener.h" />
     <ClInclude Include="..\source\NxOgreRenderable.h" />
@@ -365,7 +364,9 @@
     <ClCompile Include="..\source\NxOgrePath.cpp" />
     <ClCompile Include="..\source\NxOgrePhysXCallback.cpp" />
     <ClCompile Include="..\source\NxOgrePhysXConfiguration.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXController.cpp" />
     <ClCompile Include="..\source\NxOgrePhysXControllerHitReport.cpp" />
+    <ClCompile Include="..\source\NxOgrePhysXControllerManager.cpp" />
     <ClCompile Include="..\source\NxOgrePhysXOutputStream.cpp" />
     <ClCompile Include="..\source\NxOgrePhysXParticleData.cpp" />
     <ClCompile Include="..\source\NxOgrePhysXPointer.cpp" />
@@ -410,9 +411,7 @@
     <ClCompile Include="..\source\NxOgreSphericalJoint.cpp" />
     <ClCompile Include="..\source\NxOgreSphericalJointDescription.cpp" />
     <ClCompile Include="..\source\NxOgreSpringDescription.cpp" />
-    <ClCompile Include="..\source\NxOgreStable.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="..\source\NxOgreStable.cpp" />
     <ClCompile Include="..\source\NxOgreString.cpp" />
     <ClCompile Include="..\source\NxOgreSweepQuery.cpp" />
     <ClCompile Include="..\source\NxOgreTimeListenerGroup.cpp" />
@@ -436,6 +435,7 @@
     <ClCompile Include="..\source\NxOgreWorld.cpp" />
     <ClCompile Include="..\source\NxOgreWorldDescription.cpp" />
     <ClCompile Include="..\source\NxOgreX.cpp" />
+    <ClCompile Include="..\source\NxOgreXFunctions.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
