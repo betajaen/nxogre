@@ -8,6 +8,7 @@ ipch
 # Specific files
 clean.bat
 .developer
+*.developer*
 # Files of a type
 *.py
 *.pyc

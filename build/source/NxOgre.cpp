@@ -27,7 +27,7 @@
                                                                                        
 
 // This is an automatically created file. Do not alter.
-//~~ ub_begin 1d639587c7c6209c4a097c4a3724ca7f
+//~~ ub_begin 43b6d7dae28342bcca56819124a804fa
 
 #include "NxOgreActor.cpp"
 #include "NxOgreActorMachinePart.cpp"

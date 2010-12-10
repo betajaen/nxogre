@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject ProjectType="Visual C++" Version="9.00" Name="NxOgre"
+ProjectGUID="{2dc6bdb4-2a01-ad08-9dc8-51a73229706a}"
+RootNamespace="NxOgre" Keyword="Win32Proj" TargetFrameworkVersion="131072">
+<Platforms><Platform Name="Win32"/></Platforms>
+<ToolFiles></ToolFiles>
+<Configurations>
+  <Configuration
+    Name="Final|Win32"
+    OutputDirectory="Final"
+    IntermediateDirectory="Final"
+    ConfigurationType="2"
+    CharacterSet="1">
+  <Tool  Name="VCPreBuildEventTool"  CommandLine=""  />
+  <Tool  Name="VCCustomBuildTool" />
+  <Tool  Name="VCXMLDataGeneratorTool" />
+  <Tool  Name="VCWebServiceProxyGeneratorTool" />
+  <Tool  Name="VCMIDLTool" />
+  <Tool  Name="VCCLCompilerTool"
+    InlineFunctionExpansion="2"
+    FavorSizeOrSpeed="1"
+    AdditionalIncludeDirectories="..\source;&quot;$(PHYSX_DIR)\SDKs\Physics\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Foundation\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Cooking\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\PhysXLoader\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\NxCharacter\include&quot;"
+    PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_FINAL;WIN32;_DLL"
+    RuntimeLibrary="2"
+    FloatingPointModel="1"
+  />
+  <Tool  Name="VCManagedResourceCompilerTool" />
+  <Tool  Name="VCResourceCompilerTool" />
+  <Tool  Name="VCPreLinkEventTool"/>
+  <Tool  Name="VCLinkerTool"
+    AdditionalDependencies="PhysXLoader.lib"
+    OutputFile="$(OutDir)\NxOgre.dll"
+    AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32"
+  />
+  <Tool Name="VCALinkTool"/>
+  <Tool Name="VCManifestTool"/>
+  <Tool Name="VCXDCMakeTool" />
+  <Tool Name="VCBscMakeTool" />
+  <Tool Name="VCFxCopTool" />
+  <Tool Name="VCAppVerifierTool" />
+  <Tool Name="VCPostBuildEventTool" CommandLine="buildbot.bat makesdk Final" />
+  </Configuration>
+  <Configuration
+    Name="Debug|Win32"
+    OutputDirectory="Debug"
+    IntermediateDirectory="Debug"
+    ConfigurationType="2"
+    CharacterSet="1"
+  >
+  <Tool  Name="VCPreBuildEventTool" CommandLine="" />
+  <Tool  Name="VCCustomBuildTool" />
+  <Tool  Name="VCXMLDataGeneratorTool" />
+  <Tool  Name="VCWebServiceProxyGeneratorTool" />
+  <Tool  Name="VCMIDLTool" />
+  <Tool
+    Name="VCCLCompilerTool"
+    Optimization="0"
+    AdditionalIncludeDirectories="..\source;&quot;$(PHYSX_DIR)\SDKs\Physics\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Foundation\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\Cooking\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\PhysXLoader\include\&quot;;&quot;$(PHYSX_DIR)\SDKs\NxCharacter\include&quot;"
+    PreprocessorDefinitions="WIN32;NXOGRE_SDK;NXOGRE_DYNAMIC_LIBRARY;NXOGRE_DEBUG;_DLL"
+    MinimalRebuild="true"
+    RuntimeLibrary="3"
+    DebugInformationFormat="4"
+  />
+  <Tool  Name="VCManagedResourceCompilerTool" />
+  <Tool  Name="VCResourceCompilerTool" />
+  <Tool  Name="VCPreLinkEventTool" />
+  <Tool  Name="VCLinkerTool"
+    AdditionalDependencies="PhysXLoader.lib"
+    OutputFile="$(OutDir)\NxOgreDebug.dll"
+    AdditionalLibraryDirectories="$(PHYSX_DIR)\SDKs\lib\Win32"
+    GenerateDebugInformation="true"
+    GenerateMapFile="true"
+  />
+  <Tool  Name="VCALinkTool" />
+  <Tool  Name="VCManifestTool" />
+  <Tool  Name="VCXDCMakeTool" />
+  <Tool  Name="VCBscMakeTool" />
+  <Tool  Name="VCFxCopTool" />
+  <Tool  Name="VCAppVerifierTool" />
+  <Tool  Name="VCPostBuildEventTool" CommandLine="buildbot.bat makesdk Debug" />
+  </Configuration>
+</Configurations>
+<References>
+</References>
+<Files>
+  <File RelativePath="..\source\NxOgre.h"></File>
+  <File RelativePath="..\source\NxOgre.cpp"></File>
+</Files>
+<Globals>
+</Globals>
+</VisualStudioProject>
