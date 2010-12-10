@@ -32,6 +32,11 @@ def do_version(args)
 	escape_if f == nil, "Could not find or read file"
 	prefix = (PREFS["project"] || "Project")
 
+	force = false
+	if args[0] != nil
+		force = true if args[0].to_s.downcase == 'force'	
+	end
+
 	hsh = nil
 	mhsh = nil
 	# Try and fetch hash
@@ -40,27 +45,35 @@ def do_version(args)
 		hsh = res[0][0].downcase.strip if res[0][0] != nil
 	end
 
-	mdates = Array.new
-	Dir.glob(PREFS["cpp_files"]).each do |fn|
-		next if (File.basename(fn) == File.basename(PREFS["unity_build_file"]) )
-		mdates.push File.stat(fn).mtime.to_i.to_s
-	end
-	Dir.glob(PREFS["h_files"]).each do |fn|
-		next if (File.basename(fn) == File.basename(PREFS["version_file"]) )
-		mdates.push File.stat(fn).mtime.to_i.to_s
-	end
-	mhsh = Digest::MD5.hexdigest(mdates.join(',')).downcase
+	if force == false
+		mdates = Array.new
+		Dir.glob(PREFS["cpp_files"]).each do |fn|
+			next if (File.basename(fn) == File.basename(PREFS["unity_build_file"]) )
+			mdates.push File.stat(fn).mtime.to_i.to_s
+		end
+		Dir.glob(PREFS["h_files"]).each do |fn|
+			next if (File.basename(fn) == File.basename(PREFS["version_file"]) )
+			mdates.push File.stat(fn).mtime.to_i.to_s
+		end
+		mhsh = Digest::MD5.hexdigest(mdates.join(',')).downcase
 
-	return if hsh == mhsh
-	
-	###########
+		return if hsh == mhsh
+		
+		###########
 
-	# Bump build number.
-	f.gsub! /^\s*#define\s+#{prefix}VersionBuild\s+\d+/ do |ln|
-		build = ln.scan(/Build\s+(\d+)/)[0][0]
-		ln.gsub(build.to_s, (build.to_i + 1).to_s)
+		# Bump build number.
+		f.gsub! /^\s*#define\s+#{prefix}VersionBuild\s+\d+/ do |ln|
+			build = ln.scan(/Build\s+(\d+)/)[0][0]
+			ln.gsub(build.to_s, (build.to_i + 1).to_s)
+		end
+
+		# Bump modified time
+		f.gsub! /^\s*\/\/~~\s+mtime\s+\w+/ do |ln|
+			ln.gsub(/mtime\s+\w+/, "mtime " + mhsh)
+		end
+
 	end
-	
+
 	# Bump build name
 	webster = Webster.new
 	build_name = webster.random_word.capitalize
@@ -68,12 +81,6 @@ def do_version(args)
 	f.gsub! /^\s*#define\s+NxOgreBuildName\s+"\w+"/ do |ln|
 		ln.gsub(/\"\w+\"/, "\"#{build_name}\"")
 	end
-
-	# Bump modified time
-	f.gsub! /^\s*\/\/~~\s+mtime\s+\w+/ do |ln|
-		ln.gsub(/mtime\s+\w+/, "mtime " + mhsh)
-	end
-
 
 	File.open(PREFS["version_file"], 'w')  { |c| c.write f }
 	

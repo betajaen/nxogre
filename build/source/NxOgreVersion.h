@@ -31,10 +31,10 @@
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 7
-#define NxOgreVersionBuild 3443
-#define NxOgreBuildName "Grate"
+#define NxOgreVersionBuild 3449
+#define NxOgreBuildName "Virtue"
 #define NxOgreBranchName "BuggySwires"
 #define NxOgreVersion 170
-//~~ mtime 89c96096fc116883a0b963cf5d0f857d
+//~~ mtime 59b1a256f871411b8ae991409eccc7b6
 
 #endif
