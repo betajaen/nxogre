@@ -81,22 +81,22 @@ class multimap : protected garbage_collection::template impl_map<K, T>
 
   T& operator[](const K& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T& operator[](const K& key) const
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   T& at(const K& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T& at(const K& key) const
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   void insert(const K& key, const T& value)
@@ -169,22 +169,22 @@ class multimap<K, T*, garbage_collection> : protected garbage_collection::templa
 
   T* operator[](const K& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T* operator[](const K& key) const
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   T* at(const K& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T* at(const K& key)const
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   void insert(const K& key, T* value)

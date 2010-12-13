@@ -83,22 +83,22 @@ class vector : protected garbage_collection::template impl_vector<T>
 
   T& operator[](size_t index)
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   const T& operator[](size_t index) const
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   T& at(size_t index)
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   const T& at(size_t index) const
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   void push_back(const T& value)
@@ -229,22 +229,22 @@ class vector<T*, garbage_collection> : protected garbage_collection::template im
 
   T* operator[](size_t index)
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   const T* operator[](size_t index) const
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   T* at(size_t index)
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   const T* at(size_t index) const
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   void push_back(T* value)

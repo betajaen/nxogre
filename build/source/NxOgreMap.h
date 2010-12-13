@@ -80,22 +80,22 @@ class map : protected garbage_collection::template impl_map<K, T>
 
   T& operator[](const K& key)
   {
-   return container->operator [](key);
+   return container->operator[](key);
   }
 
   const T& operator[](const K& key) const
   {
-   return container->operator [](key);
+   return container->operator[](key);
   }
 
   T& at(const K& key)
   {
-   return container->operator [](key);
+   return container->operator[](key);
   }
 
   const T& at(const K& key) const
   {
-   return container->operator [](key);
+   return container->operator[](key);
   }
 
   void insert(const K& key, const T& value)
@@ -173,22 +173,38 @@ class map<K, T*, garbage_collection> : protected garbage_collection::template im
 
   T* operator[](const K& key)
   {
-   return container->operator [](key);
+   return container->operator[](key);
   }
 
   const T* operator[](const K& key) const
   {
-   return container->operator [](key);
+   return container->operator[](key);
   }
 
   T* at(const K& key)
   {
-   return container->operator [](key);
+   return container->operator[](key);
+  }
+  
+  T* at_or_null(const K& key)
+  {
+   std::map<K,T*>::iterator it container->find(key);
+   if (it == container->end())
+    return 0;
+   return (*it).second;
   }
 
   const T* at(const K& key) const
   {
-   return container->operator [](key);
+   return container->operator[](key);
+  }
+  
+  const T* at_or_null(const K& key) const
+  {
+   std::map<K,T*>::const_iterator it container->find(key);
+   if (it == container->end())
+    return 0;
+   return (*it).second;
   }
 
   void insert(const K& key, T* value)

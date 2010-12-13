@@ -82,22 +82,22 @@ class hashmap : protected garbage_collection::template impl_map<size_t, T>
 
   T& operator[](const size_t& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T& operator[](const size_t& key) const
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   T& at(const size_t& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T& at(const size_t& key) const
   {
-   return container->at(index);
+   return container->operator[](index);
   }
 
   void insert(const size_t& key, const T& value)
@@ -175,22 +175,22 @@ class hashmap<T*, garbage_collection> : protected garbage_collection::template i
 
   T* operator[](const size_t& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T* operator[](const size_t& key) const
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   T* at(const size_t& key)
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   const T* at(const size_t& key)const
   {
-   return container->at(key);
+   return container->operator[](key);
   }
 
   void insert(const size_t& key, T* value)
