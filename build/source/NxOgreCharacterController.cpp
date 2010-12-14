@@ -71,6 +71,7 @@ CharacterController::CharacterController(const SimpleShape& shape, const Vec3& g
   mActiveGroups(0),
   mMinDistance(0.001f),
   mCollisionFlags(0),
+  mPreviousCollisionFlags(0),
   mSharpness(1.0),
   mStepOffset(0)
 {
@@ -142,23 +143,39 @@ unsigned int CharacterController::getLastCollisionFlags() const
  return mCollisionFlags;
 }
 
-bool CharacterController::lastCollisionDown() const
+bool CharacterController::hasCollidedDown() const
 {
  return mCollisionFlags & NXCC_COLLISION_DOWN;
 }
 
-bool CharacterController::lastCollisionSides() const
+bool CharacterController::hasCollidedSides() const
 {
  return mCollisionFlags & NXCC_COLLISION_SIDES;
 }
 
-bool CharacterController::lastCollisionUp() const
+bool CharacterController::hasCollidedUp() const
 {
  return mCollisionFlags & NXCC_COLLISION_UP;
 }
 
+bool CharacterController::hasPreviouslyCollidedDown() const
+{
+ return mPreviousCollisionFlags & NXCC_COLLISION_DOWN;
+}
+
+bool CharacterController::hasPreviouslyCollidedSides() const
+{
+ return mPreviousCollisionFlags & NXCC_COLLISION_SIDES;
+}
+
+bool CharacterController::hasPreviouslyCollidedUp() const
+{
+ return mPreviousCollisionFlags & NXCC_COLLISION_UP;
+}
+
 void CharacterController::move(const Vec3& displacement)
 {
+ mPreviousCollisionFlags = mCollisionFlags;
  mController->move(displacement.as<NxVec3>(), mActiveGroups, mMinDistance, mCollisionFlags, mSharpness);
 }
 

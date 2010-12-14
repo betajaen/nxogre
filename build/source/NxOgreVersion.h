@@ -31,10 +31,10 @@
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 7
-#define NxOgreVersionBuild 3453
-#define NxOgreBuildName "Reinforce"
+#define NxOgreVersionBuild 3455
+#define NxOgreBuildName "Subcast"
 #define NxOgreBranchName "BuggySwires"
 #define NxOgreVersion 170
-//~~ mtime 8aa9b33b5e51a712ab117cf0a16d41e3
+//~~ mtime c30894f5bcf70f9c47a990127dc973a4
 
 #endif

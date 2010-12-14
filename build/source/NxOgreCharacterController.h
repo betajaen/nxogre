@@ -113,24 +113,41 @@ class NxOgrePublicClass CharacterController : public RigidBody
   */
   unsigned int getLastCollisionFlags() const;
   
-  /*! function. lastCollisionDown
+  /*! function. hasCollidedDown
       desc.
           In the last collision, was there any collision "down"?
   */
-  bool lastCollisionDown() const;
+  bool hasCollidedDown() const;
   
-  /*! function. lastCollisionDown
+  /*! function. hasCollidedSides
       desc.
           In the last collision, was there any collision to the sides?
   */
-  bool lastCollisionSides() const;
+  bool hasCollidedSides() const;
   
-  /*! function. lastCollisionUp
+  /*! function. hasCollidedUp
       desc.
           In the last collision, was there any collision "up"?
   */
-  bool lastCollisionUp() const;
-
+  bool hasCollidedUp() const;
+  
+  /*! function. hasPreviouslyCollidedDown
+      desc.
+          In the previous collision, was there any collision "down"?
+  */
+  bool hasPreviouslyCollidedDown() const;
+  
+  /*! function. hasPreviouslyCollidedSides
+      desc.
+          In the previous collision, was there any collision to the sides?
+  */
+  bool hasPreviouslyCollidedSides() const;
+  
+  /*! function. hasPreviouslyCollidedUp
+      desc.
+          In the previous collision, was there any collision "up"?
+  */
+  bool hasPreviouslyCollidedUp() const;
 
   /*! function. moveGlobal
       desc.
@@ -257,7 +274,7 @@ class NxOgrePublicClass CharacterController : public RigidBody
   
   unsigned int   mActiveGroups;
   
-  unsigned int   mCollisionFlags;
+  unsigned int   mCollisionFlags, mPreviousCollisionFlags;
   
   Real           mStepOffset;
   
