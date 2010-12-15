@@ -33,6 +33,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
+#include "NxOgreMeshData.h"
 
                                                                                        
 

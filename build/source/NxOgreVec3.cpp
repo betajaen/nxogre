@@ -106,6 +106,25 @@ const Real* Vec3::ptr() const
  return &x;
 }
 
+Enums::Axis Vec3::axis() const
+{
+ if (x != 0)
+  return Enums::X;
+ else if (y != 0)
+  return Enums::Y;
+ else if (z != 0)
+  return Enums::Z;
+}
+
+Vec3 Vec3::used() const
+{
+ Vec3 out;
+ out.x = x != 0.0f ? 1.0f : 0.0f;
+ out.y = y != 0.0f ? 1.0f : 0.0f;
+ out.z = z != 0.0f ? 1.0f : 0.0f;
+ return out;
+}
+
 Real Vec3::normalise()
 {
  Real length = magnitude();
@@ -117,6 +136,13 @@ Real Vec3::normalise()
   z *= inv;
  }
  return length;
+}
+
+Vec3 Vec3::normaliseCopy() const
+{
+ Vec3 copy(x,y,z);
+ copy.normalise();
+ return copy;
 }
 
 Vec3 Vec3::mid(const Vec3& other) const

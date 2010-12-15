@@ -76,6 +76,16 @@ class NxOgrePublicClass Vec3
    set(other.x, other.y, other.z);
    return *this;
   }
+  
+  inline Enums::Axis axis() const;
+
+  /*! function. used
+      desc.
+          Returns a Vec3, with the contents set to 1.0, if the original is a non-zero value.
+          i.e.
+             {0,4.5,-2} => {0,1,1}
+  */
+  inline Vec3 used() const;
 
   inline Vec3(const Real& X, const Real& Y, const Real& Z);
 
@@ -90,7 +100,9 @@ class NxOgrePublicClass Vec3
   inline const Real* ptr() const;
 
   inline Real normalise();
-
+  
+  inline Vec3 normaliseCopy() const;
+  
   inline Vec3 mid(const Vec3& other) const;
 
   inline Real dot(const Vec3& other) const;
