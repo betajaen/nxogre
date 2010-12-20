@@ -86,6 +86,7 @@
 #include "NxOgreJoint.h"
 #include "NxOgreJointDescription.h"
 #include "NxOgreJointDriveDescription.h"
+#include "NxOgreJointHelper.h"
 #include "NxOgreJointLimitDescription.h"
 #include "NxOgreJointLimitSoftDescription.h"
 #include "NxOgreKinematicActor.h"

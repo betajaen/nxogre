@@ -27,7 +27,7 @@
                                                                                        
 
 // This is an automatically created file. Do not alter.
-//~~ ub_begin 43b6d7dae28342bcca56819124a804fa
+//~~ ub_begin 156993638fa4d18fbd50d7452fb9e282
 
 #include "NxOgreActor.cpp"
 #include "NxOgreActorMachinePart.cpp"
@@ -79,6 +79,7 @@
 #include "NxOgreJoint.cpp"
 #include "NxOgreJointDescription.cpp"
 #include "NxOgreJointDriveDescription.cpp"
+#include "NxOgreJointHelper.cpp"
 #include "NxOgreJointLimitDescription.cpp"
 #include "NxOgreJointLimitSoftDescription.cpp"
 #include "NxOgreKinematicActor.cpp"

@@ -66,8 +66,7 @@ class NxOgrePublicClass SphericalJointDescription : public JointDescription
   /** \brief
   */
   bool                                        isValid() const;
-
-
+  
   /** \brief Swing limit axis (directional vector) defined in the joint space of RigidBody 0.
       \default Vec3::POS_Z
       \see NxSphericalJointDesc::swingAxis

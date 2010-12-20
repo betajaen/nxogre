@@ -41,6 +41,70 @@ namespace NxOgre
 
                                                                                        
 
+/*! class. VisualDebuggerDescription
+    desc.
+         Description to describe the VisualDebuggerDescription
+*/
+class NxOgrePublicClass VisualDebuggerDescription
+{
+  
+  friend class RigidBody;
+  
+  public:
+  
+  VisualDebuggerDescription();
+  
+  void showMinimal();
+
+  void showLight();
+
+  void showDebug();
+  
+  void showAll();
+  
+  struct World
+  {
+   bool axes;
+  } mWorld;
+
+  struct RigidBody
+  {
+   bool actorAxes, bodyAxes, massAxes, linearVelocity, angularVelocity, jointGroups;
+  } mRigidBody;
+
+  struct Joint
+  {
+   bool worldAxes, limits;
+  } mJoint;
+
+  struct Contact
+  {
+   bool point, normal, error, force;
+  } mContact;
+
+  struct Collision
+  {
+   bool AABB, shapes, axes, compound, vNormals, fNormals, edges, spheres, staticPruning, dynamicPruning, freePruning, CCD, skeletons; 
+  } mCollision;
+
+  struct Fluid
+  {
+   bool emitters, position, kernelRadius, bounds, packets, motionLimit, dynamicCollision, staticCollision, meshPackets, drains, packetData;
+  } mFluid;
+
+  struct Cloth
+  {
+   bool mesh, collisions, selfCollisions, workPackets, sleeping, sleepVertex, tearableVertices, tearing, attachment, validBounds, hierarchy, hardStretchingLimitation;
+  } mCloth;
+
+  struct SoftBody
+  {
+   bool mesh, collisions, workPackets, sleeping, sleepVertex, tearableVertices, tearing, attachment, validBounds;
+  } mSoftBody;
+  
+}; // class VisualDebuggerDescription
+
+
 /** \brief VisualDebugger is an NxOgre implementation of the PhysX NxDebugRenderable and NX_VISUALIZE properties.
 */
 class NxOgrePublicClass VisualDebugger
@@ -48,28 +112,24 @@ class NxOgrePublicClass VisualDebugger
   
   public: // Functions
   
-  /** \brief Text
-  */
                                               VisualDebugger(World*);
   
-  /** \brief Text
-  */
                                              ~VisualDebugger();
   
-  /** \brief Text
-  */
   void                                        setRenderable(Renderable*);
   
-  /** \brief Text
-  */
   Renderable*                                 getRenderable();
   
-  void                                        setVisualisationMode(NxOgre::Enums::VisualDebugger);
-
-  /** \brief Draw the scene.
-  */
+  void                                        enable();
+  
+  void                                        disable();
+  
   void                                        draw();
   
+  void                                        loadFromDescription(const VisualDebuggerDescription&);
+  
+  void                                        saveToDescription(VisualDebuggerDescription&);
+
   protected: // Variables
   
   Renderable*                                 mRenderable;

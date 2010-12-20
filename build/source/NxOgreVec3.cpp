@@ -114,6 +114,7 @@ Enums::Axis Vec3::axis() const
   return Enums::Y;
  else if (z != 0)
   return Enums::Z;
+ return Enums::NoAxis;
 }
 
 Vec3 Vec3::used() const

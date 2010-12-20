@@ -27,9 +27,11 @@
                                                                                        
 
 #include "NxOgreStable.h"
-#include "NxOgreSphericalJointDescription.h"
+#include "NxOgreJointHelper.h"
+#include "NxOgreRigidBody.h"
 #include "NxOgreJointDescription.h"
-#include "NxPhysicsSDK.h"
+
+#include "NxPhysics.h"
 
                                                                                        
 
@@ -38,31 +40,30 @@ namespace NxOgre
 
                                                                                        
 
-SphericalJointDescription::SphericalJointDescription()
+
+void JointHelper::setGlobalAnchor(JointDescription& jdesc, const Vec3& globalAnchorPosition, RigidBody* a, RigidBody* b)
 {
- reset();
+ NxFixedJointDesc desc;
+ desc.actor[0] = a->getNxActor();
+ desc.actor[1] = b->getNxActor();
+ desc.setGlobalAnchor(globalAnchorPosition.as<NxVec3>());
+
+ jdesc.mLocalAnchor[0].from<NxVec3>(desc.localAnchor[0]);
+ jdesc.mLocalAnchor[1].from<NxVec3>(desc.localAnchor[1]);
 }
 
-SphericalJointDescription::~SphericalJointDescription()
+void JointHelper::setGlobalAxis(JointDescription& jdesc, const Vec3& globalAxis, RigidBody* a, RigidBody* b)
 {
+ NxFixedJointDesc desc;
+ desc.actor[0] = a->getNxActor();
+ desc.actor[1] = b->getNxActor();
+ desc.setGlobalAxis(globalAxis.as<NxVec3>());
+
+ jdesc.mLocalAxis[0].from<NxVec3>(desc.localAxis[0]);
+ jdesc.mLocalAxis[1].from<NxVec3>(desc.localAxis[1]);
 }
 
-void SphericalJointDescription::reset()
-{
- JointDescription::reset();
- mSwingAxis.set(0,0,1);
- mProjectionDistance = 1.0f;
- mSphericalJointFlags = 0;
- mProjectionMode = Enums::JointProjectionMode_None;;
-}
-
-bool SphericalJointDescription::isValid() const
-{
- return true; // temp.
-}
 
                                                                                        
 
 } // namespace NxOgre
-
-                                                                                       

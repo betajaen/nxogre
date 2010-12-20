@@ -26,10 +26,13 @@
 
                                                                                        
 
+#ifndef NXOGRE_JOINTHELPER_H
+#define NXOGRE_JOINTHELPER_H
+
+                                                                                       
+
 #include "NxOgreStable.h"
-#include "NxOgreSphericalJointDescription.h"
-#include "NxOgreJointDescription.h"
-#include "NxPhysicsSDK.h"
+#include "NxOgreCommon.h"
 
                                                                                        
 
@@ -38,31 +41,21 @@ namespace NxOgre
 
                                                                                        
 
-SphericalJointDescription::SphericalJointDescription()
+class NxOgrePublicClass JointHelper
 {
- reset();
-}
-
-SphericalJointDescription::~SphericalJointDescription()
-{
-}
-
-void SphericalJointDescription::reset()
-{
- JointDescription::reset();
- mSwingAxis.set(0,0,1);
- mProjectionDistance = 1.0f;
- mSphericalJointFlags = 0;
- mProjectionMode = Enums::JointProjectionMode_None;;
-}
-
-bool SphericalJointDescription::isValid() const
-{
- return true; // temp.
-}
+  
+ public:
+  
+  static void setGlobalAnchor(JointDescription&, const Vec3& globalAnchorPosition, RigidBody* a, RigidBody* b);
+  
+  static void setGlobalAxis(JointDescription&, const Vec3& globalAxis, RigidBody* a, RigidBody* b);
+  
+}; // class JointHelper
 
                                                                                        
 
 } // namespace NxOgre
 
                                                                                        
+
+#endif
