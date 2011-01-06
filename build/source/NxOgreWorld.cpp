@@ -217,8 +217,13 @@ World::World(const WorldDescription& description)
 
  NxPhysicsSDKDesc sdk_description;
  sdk_description.cookerThreadMask = description.mCookerThreadMask;
+ 
+ sdk_description.flags = 0;
+ sdk_description.flags |= NX_SDKF_PER_SCENE_BATCHING;
+ 
  if (description.mNoHardware)
   sdk_description.flags |= NX_SDKF_NO_HARDWARE;
+ 
  sdk_description.hwConvexMax = description.mHardwareMaximumConvex;
  sdk_description.hwPageMax = description.mHardwareMaximumPage;
  sdk_description.hwPageSize = 65536; // Restriction imposed by NxPhysXSDKDesc
@@ -305,6 +310,11 @@ bool World::hasHardware() const
  if (mDeadSDK)
   return false;
  return mSDK->getHWVersion() != NX_HW_VERSION_NONE;
+}
+
+Enums::HardwareVersion World::getHardwareVersion() const
+{
+ return (Enums::HardwareVersion) (int) mSDK->getHWVersion();
 }
 
 World* World::getWorld()

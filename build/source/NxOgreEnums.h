@@ -88,6 +88,19 @@ enum Axis
  NoAxis = (1<<3)
 };
 
+/*! enum. HardwareVersion
+    desc.
+        Type of hardware (and versions) that can be used by PhysX.
+    enum
+        HardwareVersion_None -- No Hardware,
+        HardwareVersion_Athena_1_0 -- Typical PhysX hardware (PhysX PPU or nVidia GPU)
+*/
+enum HardwareVersion
+{
+ HardwareVersion_None = 0,
+ HardwareVersion_Athena_1_0 = 1,
+};
+
 /*! enum. CoordinateSystem
     desc.
         Type of Coordinate systems.
@@ -1470,6 +1483,17 @@ enum MeshPagingMode
  MeshPagingMode_Manual,
  MeshPagingMode_Fallback,
  MeshPagingMode_Auto,
+};
+
+/*! enum. ForceFieldKernelType
+    desc.
+         Type of Force Field kernel
+    enums.
+         ForceFieldKernelType_Linear -- Linear kernel
+*/
+enum ForceFieldKernelType
+{
+ ForceFieldKernelType_Linear = 1,
 };
 
 /*! enum. ForceFieldType

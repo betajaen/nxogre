@@ -49,6 +49,7 @@ class NxOgrePublicClass ForceFieldKernel : public ForceFieldBasedAllocatable
   
   public: // Functions
    
+   
    ForceFieldKernel(const String& name = String());
    
    virtual ~ForceFieldKernel();
@@ -92,6 +93,10 @@ class NxOgrePublicClass ForceFieldKernel : public ForceFieldBasedAllocatable
    */
    unsigned int getNbReferences() const;
    
+   virtual NxOgre::Enums::ForceFieldKernelType getType() const = 0;
+
+   virtual NxForceFieldKernel* getKernel() const = 0;
+
   protected:
    
    String       mName;

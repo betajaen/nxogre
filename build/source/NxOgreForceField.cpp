@@ -30,6 +30,7 @@
 #include "NxOgreForceField.h"
 #include "NxOgreForceFieldDescription.h"
 #include "NxOgreForceFieldKernel.h"
+#include "NxOgreForceFieldLinearKernel.h"
 #include "NxOgreScene.h"
 
 #include "NxOgreRigidBody.h"
@@ -84,6 +85,9 @@ void ForceField::create(const ForceFieldDescription& description, ForceFieldKern
  desc.pose.setRowMajor44(description.mPose.ptr());
  desc.rigidBodyType = (NxForceFieldType) (int) description.mRigidBodyType;
  desc.softBodyType = (NxForceFieldType) (int) description.mSoftBodyType;
+ 
+ desc.kernel = mKernel->getKernel();
+
  
  for(SimpleShapes::const_iterator shape = description.mIncludeGroupShapes.begin(); shape != description.mIncludeGroupShapes.end(); ++shape)
  {

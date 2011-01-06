@@ -183,6 +183,12 @@ class NxOgrePublicClass World : public BigClassAllocatable
       
   */
   bool  hasHardware() const;
+  
+  /*! function. getHardwareVersion
+      desc.
+          What version (if present) of PhysX hardware is available.
+  */
+  Enums::HardwareVersion  getHardwareVersion() const;
 
   /*! function. getNullCallback
       Get a copy of the Null Callback. Used for parts of NxOgre that don't have a user callback but still recieve events.

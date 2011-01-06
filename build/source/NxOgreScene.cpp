@@ -102,7 +102,6 @@ Scene::Scene(const SceneDescription& description, NxPhysicsSDK* sdk)
  mNameHash = Strings::hash(mName);
 
  NxSceneDesc scene_description;
- //Functions::PrototypeFunctions::SceneDescriptionToNxSceneDesc(description, scene_description);
  description.to_nxscene(&scene_description);
  mProcessingPriority = description.mProcessingPriority;
  mFetchingPriority = description.mFetchingPriority;
@@ -829,6 +828,23 @@ void Scene::destroyCharacterController(CharacterController* controller)
 }
 
 #endif
+
+ForceField* Scene::createForceField(const ForceFieldDescription& desc, ForceFieldKernel* kernel)
+{
+ ForceField* ff = GC::safe_new3<ForceField>(desc, kernel, this, NXOGRE_GC_THIS);
+ StringHash hash = ff->getNameHash();
+ mForceFields.insert(hash, ff);
+ return ff;
+}
+
+bool Scene::destroyForceField(ForceField* ff)
+{
+ if (ff == 0)
+  return false;
+ mForceFields.remove(ff->getNameHash(), ff);
+ GC::safe_delete(ff, NXOGRE_GC_THIS);
+ return true;
+}
 
 ForceFieldKernel* Scene::createForceFieldLinearKernel(const ForceFieldLinearKernelDescription& description)
 {

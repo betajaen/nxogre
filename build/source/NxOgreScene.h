@@ -344,6 +344,11 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   */
   void  destroyFluid(Fluid*);
 #endif
+
+  ForceField* createForceField(const ForceFieldDescription&, ForceFieldKernel*);
+
+  bool destroyForceField(ForceField*);
+
   /*! function. createForceFieldLinearKernel
       desc.
   */
@@ -758,7 +763,9 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   /** \internal Master kernels array
   */
   ForceFieldKernels  mForceFieldKernels;
-
+  
+  ForceFields        mForceFields;
+  
 #if NxOgreHasFluids == 1
   /** \brief
   */

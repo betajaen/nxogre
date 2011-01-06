@@ -201,6 +201,10 @@ class NxOgrePublicClass ForceFieldLinearKernel : public ForceFieldKernel
   */
   String to_s() const;
   
+  NxOgre::Enums::ForceFieldKernelType getType() const;
+  
+  NxForceFieldKernel* getKernel() const;
+
   protected:
   
   /* constructor. Box
@@ -214,6 +218,8 @@ class NxOgrePublicClass ForceFieldLinearKernel : public ForceFieldKernel
   protected:
   
   NxForceFieldLinearKernel*  mKernel;
+  
+  Scene*                     mScene;
   
 }; // class Box
 

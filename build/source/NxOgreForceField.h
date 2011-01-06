@@ -47,7 +47,10 @@ class NxOgrePublicClass ForceField
 {
 
   public:
-
+  
+  NXOGRE_GC_FRIEND_NEW3
+  NXOGRE_GC_FRIEND_DELETE
+  
   /*! function. create
       desc.
           Create a ForceField

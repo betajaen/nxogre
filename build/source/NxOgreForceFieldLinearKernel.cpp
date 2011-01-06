@@ -28,7 +28,7 @@
 
 #include "NxOgreStable.h"
 #include "NxOgreForceFieldLinearKernel.h"
-
+#include "NxOgreScene.h"
 #include "NxPhysics.h"
 #include "NxOgrePrototypeFunctions.h"
 
@@ -40,20 +40,21 @@ namespace NxOgre
                                                                                        
 
 ForceFieldLinearKernel::ForceFieldLinearKernel(const ForceFieldLinearKernelDescription& desc, Scene* scene)
-: ForceFieldKernel(desc.mName) 
+: ForceFieldKernel(desc.mName), mScene(scene), mKernel(0)
 {
  
  NxForceFieldLinearKernelDesc description;
  NxOgre::Functions::PrototypeFunctions::ForceFieldLinearKernelDescriptionToNxForceFieldLinearKernelDesc(desc, description);
  description.name = mName.c_str();
  
- 
+ mKernel = mScene->getScene()->createForceFieldLinearKernel(description);
+
 }
 
 ForceFieldLinearKernel::~ForceFieldLinearKernel()
 {
+ mScene->getScene()->releaseForceFieldLinearKernel(*mKernel);
 }
-
 
 void ForceFieldLinearKernel::saveToDescription(ForceFieldLinearKernelDescription& description)
 {
@@ -68,12 +69,21 @@ void ForceFieldLinearKernel::saveToDescription(ForceFieldLinearKernelDescription
  description.mTorusRadius = desc.torusRadius;
  desc.velocityMultiplier.getRowMajor(description.mVelocityMultiplier.ptr());
  description.mVelocityTarget.from<NxVec3>(desc.velocityTarget);
-
 }
 
 String ForceFieldLinearKernel::to_s() const
 {
  return "ForceFieldLinearKernel";
+}
+
+NxOgre::Enums::ForceFieldKernelType  ForceFieldLinearKernel::getType() const
+{
+ return NxOgre::Enums::ForceFieldKernelType_Linear;
+}
+
+NxForceFieldKernel* ForceFieldLinearKernel::getKernel() const
+{
+ return mKernel;
 }
 
                                                                                        

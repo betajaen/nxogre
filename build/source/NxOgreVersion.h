@@ -31,10 +31,10 @@
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 7
-#define NxOgreVersionBuild 3471
-#define NxOgreBuildName "Mistletoe"
+#define NxOgreVersionBuild 3492
+#define NxOgreBuildName "Bootless"
 #define NxOgreBranchName "BuggySwires"
 #define NxOgreVersion 170
-//~~ mtime 31dfcda85f1cbc71536498897ef56c1d
+//~~ mtime 1ec4b7b7a083f0143408db7a92be5fa7
 
 #endif
