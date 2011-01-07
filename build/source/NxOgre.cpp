@@ -27,7 +27,7 @@
                                                                                        
 
 // This is an automatically created file. Do not alter.
-//~~ ub_begin 156993638fa4d18fbd50d7452fb9e282
+//~~ ub_begin dd5019b789f64ef5c412c1d2c167984d
 
 #include "NxOgreActor.cpp"
 #include "NxOgreActorMachinePart.cpp"
@@ -50,6 +50,8 @@
 #include "NxOgreConvexDescription.cpp"
 #include "NxOgreD6Joint.cpp"
 #include "NxOgreD6JointDescription.cpp"
+#include "NxOgreDistanceJoint.cpp"
+#include "NxOgreDistanceJointDescription.cpp"
 #include "NxOgreErrorStream.cpp"
 #include "NxOgreException.cpp"
 #include "NxOgreFileResource.cpp"
@@ -122,6 +124,7 @@
 #include "NxOgrePhysXUserAllocator.cpp"
 #include "NxOgrePlaneGeometry.cpp"
 #include "NxOgrePlaneGeometryDescription.cpp"
+#include "NxOgrePointOnLineJoint.cpp"
 #include "NxOgrePointRenderable.cpp"
 #include "NxOgrePrincipalScene.cpp"
 #include "NxOgrePrototypeFunctions.cpp"

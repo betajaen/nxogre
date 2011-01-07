@@ -54,6 +54,7 @@
 #include "NxOgreSphericalJointDescription.h"
 #include "NxOgreRevoluteJointDescription.h"
 #include "NxOgreD6JointDescription.h"
+#include "NxOgreDistanceJointDescription.h"
 #include "NxOgreClothDescription.h"
 #include "NxOgreCompartmentDescription.h"
 #include "NxOgreCompartment.h"
@@ -294,7 +295,31 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
           
   */
   D6Joint*  createD6Joint(RigidBody* first, RigidBody* second, const D6JointDescription& = D6JointDescription());
-
+  
+  /*! function. createDistanceJoint
+      desc.
+          
+  */
+  DistanceJoint* createDistanceJoint(RigidBody* first, const DistanceJointDescription& = DistanceJointDescription());
+  
+  /*! function. createDistanceJoint
+      desc.
+          
+  */
+  DistanceJoint* createDistanceJoint(RigidBody* first, RigidBody* second, const DistanceJointDescription& = DistanceJointDescription());
+  
+  /*! function. createDistanceJoint
+      desc.
+          
+  */
+  PointOnLineJoint* createPointOnLineJoint(RigidBody* first, const JointDescription& = JointDescription());
+  
+  /*! function. createDistanceJoint
+      desc.
+          
+  */
+  PointOnLineJoint* createPointOnLineJoint(RigidBody* first, RigidBody* second, const JointDescription& = JointDescription());
+  
   /*! function. destroyMaterial
       desc.
           

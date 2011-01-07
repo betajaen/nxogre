@@ -40,6 +40,7 @@
 #include "NxOgreJointDescription.h"
 #include "NxOgreSphericalJointDescription.h"
 #include "NxOgreRevoluteJointDescription.h"
+#include "NxOgreDistanceJointDescription.h"
 #include "NxOgreD6JointDescription.h"
 
 #include "NxOgreClothDescription.h"
@@ -128,6 +129,31 @@ void PrototypeFunctions::RevoluteJointDescriptionToNxRevoluteJointDescription(co
  desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor; // Not in 2.8.0
  desc.useAccelerationSpring = int(source.mSpringType); // Not in 2.8.0
 #endif
+}
+
+void PrototypeFunctions::DistanceJointDescriptionToNxDistanceJointDescription(const DistanceJointDescription& source, NxDistanceJointDesc& desc)
+{
+ 
+ desc.flags = source.mDistanceJointFlags;
+ desc.jointFlags = source.mJointFlags;
+ desc.localAnchor[0] = source.mLocalAnchor[0].as<NxVec3>();
+ desc.localAnchor[1] = source.mLocalAnchor[1].as<NxVec3>();
+ desc.localAxis[0] = source.mLocalAxis[0].as<NxVec3>();
+ desc.localAxis[1] = source.mLocalAxis[1].as<NxVec3>();
+ desc.localNormal[0] = source.mLocalNormal[0].as<NxVec3>();
+ desc.localNormal[1] = source.mLocalNormal[1].as<NxVec3>();
+ desc.maxDistance = source.mMaxDistance;
+ desc.maxForce = source.mMaxForce;
+ desc.maxTorque = source.mMaxTorque;
+ desc.minDistance = source.mMinDistance;
+#if NxOgreMinimalPhysXVersion >= 281
+ desc.solverExtrapolationFactor = source.mSolverExtrapolationFactor; // Not in 2.8.0
+ desc.spring.damper = source.mSpring.mDamper; // Not in 2.8.0
+ desc.spring.spring = source.mSpring.mSpring;
+ desc.spring.targetValue = source.mSpring.mTargetValue;
+#endif
+ desc.useAccelerationSpring = int(source.mSpringType);
+ 
 }
 
 void PrototypeFunctions::SpringDescriptionToNxSpringDesc(const SpringDescription& source, NxSpringDesc& desc)

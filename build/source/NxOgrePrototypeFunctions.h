@@ -74,6 +74,12 @@ class NxOgrePublicClass PrototypeFunctions
 #endif
 
 #ifdef NXOGRE_SDK
+  /** \brief Copies all relevant DistanceJoint properties to a NxDistanceJointDesc.
+  */
+  static void DistanceJointDescriptionToNxDistanceJointDescription(const DistanceJointDescription&, NxDistanceJointDesc&);
+#endif
+
+#ifdef NXOGRE_SDK
   /** \brief Copies all relevant Spring properties to a NxSpringDesc.
   */
   static void SpringDescriptionToNxSpringDesc(const SpringDescription&, NxSpringDesc&);
@@ -117,6 +123,7 @@ class NxOgrePublicClass PrototypeFunctions
   */
   static void ForceFieldLinearKernelDescriptionToNxForceFieldLinearKernelDesc(const ForceFieldLinearKernelDescription&, NxForceFieldLinearKernelDesc&);
 #endif
+
   
  private:
   

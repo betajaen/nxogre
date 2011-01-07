@@ -45,6 +45,8 @@
 #include "NxOgreFixedJoint.h"
 #include "NxOgreRevoluteJoint.h"
 #include "NxOgreD6Joint.h"
+#include "NxOgreDistanceJoint.h"
+#include "NxOgrePointOnLineJoint.h"
 #include "NxOgrePhysXCallback.h"
 #include "NxOgreRay.h"
 #include "NxOgrePhysXRaycastReport.h"
@@ -454,6 +456,36 @@ D6Joint* Scene::createD6Joint(RigidBody* first, const D6JointDescription& desc)
 D6Joint* Scene::createD6Joint(RigidBody* first, RigidBody* second, const D6JointDescription& desc)
 {
  D6Joint* joint = GC::safe_new3<D6Joint>(first, second, desc, NXOGRE_GC_THIS);
+ mJoints.push_back(joint);
+ return joint;
+}
+
+DistanceJoint* Scene::createDistanceJoint(RigidBody* first, const DistanceJointDescription& desc)
+{
+ RigidBody* second = 0;
+ DistanceJoint* joint = GC::safe_new3<DistanceJoint>(first, second, desc, NXOGRE_GC_THIS);
+ mJoints.push_back(joint);
+ return joint;
+}
+
+DistanceJoint* Scene::createDistanceJoint(RigidBody* first, RigidBody* second, const DistanceJointDescription& desc)
+{
+ DistanceJoint* joint = GC::safe_new3<DistanceJoint>(first, second, desc, NXOGRE_GC_THIS);
+ mJoints.push_back(joint);
+ return joint;
+}
+
+PointOnLineJoint* Scene::createPointOnLineJoint(RigidBody* first, const JointDescription& desc)
+{
+ RigidBody* second = 0;
+ PointOnLineJoint* joint = GC::safe_new3<PointOnLineJoint>(first, second, desc, NXOGRE_GC_THIS);
+ mJoints.push_back(joint);
+ return joint;
+}
+
+PointOnLineJoint* Scene::createPointOnLineJoint(RigidBody* first, RigidBody* second, const JointDescription& desc)
+{
+ PointOnLineJoint* joint = GC::safe_new3<PointOnLineJoint>(first, second, desc, NXOGRE_GC_THIS);
  mJoints.push_back(joint);
  return joint;
 }
