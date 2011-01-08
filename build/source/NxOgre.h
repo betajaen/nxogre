@@ -133,7 +133,6 @@
 #include "NxOgrePointerFunctions.h"
 #include "NxOgrePointRenderable.h"
 #include "NxOgrePointOnLineJoint.h"
-#include "NxOgrePointOnLineJointDescription.h"
 #include "NxOgrePrincipalScene.h"
 #include "NxOgrePrototypeFunctions.h"
 #include "NxOgreQuat.h"
