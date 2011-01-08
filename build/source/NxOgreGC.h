@@ -39,6 +39,10 @@ namespace NxOgre
 
                                                                                        
 
+typedef unsigned char Byte;
+
+                                                                                       
+
 namespace GC
 {
 
@@ -403,6 +407,15 @@ class HasGarbageCollection
  };
 
 };
+
+template<typename T> bool safe_copy(T* first, T* last, T* dest)
+{
+ if (first == 0 || last == 0 || dest == 0)
+  return false;
+ for (; first != last; ++dest, ++first)
+  *dest = *first;
+ return true;
+}
 
                                                                                        
 

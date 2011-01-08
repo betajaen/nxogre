@@ -267,7 +267,7 @@ class NxOgrePublicClass MemoryResource : public Resource
   
   /** \brief Read a single float otherwise fail.
   */
-                       float                 readFloat();
+                       float                  readFloat();
   
   /** \brief Read a float* array otherwise fail.
   */
@@ -315,12 +315,13 @@ class NxOgrePublicClass MemoryResource : public Resource
   */
                        void                  close();
   
+  void _willFit(size_t dataSize);
+  
   protected: // Variables
   
-                       char*                 mStart;
-                       char*                 mEnd;
-                       char*                 mPointer;
-
+  safe_memory                                mMemory;
+  size_t                                     mIndex;
+  
 }; // class MemoryResource
 
                                                                                        

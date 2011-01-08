@@ -299,6 +299,159 @@ template<typename T> void fill(T* start, T* end, T value)
 
                                                                                        
 
+/*! class. safe_memory
+    desc.
+        "Safe" garbage collected class that handles writing to a memory chunk.
+*/
+class safe_memory
+{
+  
+ public:
+  
+  inline safe_memory(size_t initialSize = 4) : mMemory(0), mSize(0)
+  {
+   resize(initialSize);
+  }
+  
+  inline ~safe_memory()
+  {
+   _destroy();
+  }
+  
+  inline void clear()
+  {
+   for (size_t i=0;i < mSize;i++)
+    mMemory[i] = 0;
+  }
+  
+  bool put_at(size_t index, const void* mem, size_t mem_size)
+  {
+   if (index > mSize)
+    return false;
+   if (index > mSize + mem_size)
+    return false;
+   memcpy(mMemory + index, mem, mem_size);
+   return true;
+  }
+  
+  template<typename T> bool put_at(size_t index, const T& value)
+  {
+   if (index > mSize)
+    return false;
+   size_t size = sizeof(T);
+   if (index > mSize + size)
+    return false;
+   memcpy(mMemory + index, &value, size);
+   return true;
+  }
+  
+  template<typename T> bool get_at(size_t index, T& value) const
+  {
+   if (index > mSize)
+    return false;
+   size_t size = sizeof(T);
+   if (index > mSize + size)
+    return false;
+   memcpy(&value, mMemory + index, size);
+   return true;
+  }
+  
+  inline void resize(size_t length)
+  {
+   
+   if (length == mSize)
+    return;
+
+   if (length == 0)
+   {
+    _destroy();
+    return;
+   }
+   
+   Byte* new_memory = GC::safe_malloc<Byte, GenericBasedAllocator>(length, __FILE__, __LINE__);
+   
+   if (mMemory && mSize)
+   {
+    // Copy all or some of the data over.
+    size_t copySize = 0;
+    
+    if (length > mSize)
+     copySize = mSize;
+    else
+     copySize = length;
+    
+    GC::safe_copy<Byte>(mMemory, mMemory + copySize, new_memory);
+    
+    // Then free it.
+    _destroy();
+   }
+   
+   mSize = length;
+   mMemory = new_memory;
+  }
+  
+  inline size_t size() const
+  {
+   return mSize;
+  }
+  
+  inline Byte& operator[](size_t index)
+  {
+   if (index < 0 || index > (mSize - 1))
+   {
+    throw std::bad_alloc(); // temp.
+   }
+   
+   return *(mMemory + index);
+  }
+  
+  inline Byte& at(size_t index)
+  {
+   if (index < 0 || index > (mSize - 1))
+   {
+    throw std::bad_alloc(); // temp.
+   }
+   
+   return *(mMemory + index);
+  }
+  
+  inline const Byte& at(size_t index) const
+  {
+   if (index < 0 || index > (mSize - 1))
+   {
+    throw std::bad_alloc(); // temp.
+   }
+   
+   return *(mMemory + index);
+  }
+  
+  inline const Byte& operator[](size_t index) const
+  {
+   if (index < 0 || index > (mSize - 1))
+   {
+    throw std::bad_alloc(); // temp.
+   }
+   
+   return *(mMemory + index);
+  }
+  
+ protected:
+  
+  inline void _destroy()
+  {
+   if (mMemory && mSize > 0)
+   {
+    GC::safe_free<Byte, GenericBasedAllocator>(mMemory, __FILE__, __LINE__);
+    mMemory = 0;
+   }
+   mSize = 0;
+  }
+  
+  Byte*     mMemory;
+  size_t    mSize;
+  
+};
+
 
 } // namespace NxOgre
 
