@@ -41,7 +41,7 @@ namespace NxOgre
                                                                                        
 
 MemoryResource::MemoryResource(ResourceProtocol* protocol)
-:Resource(MEMORY_PATH, protocol, Enums::ResourceAccess_ReadAndWrite), mStart(0), mEnd(0), mPointer(0)
+:Resource(MEMORY_PATH, protocol, Enums::ResourceAccess_ReadAndWrite), mIndex(0)
 {
 }
 
@@ -74,9 +74,10 @@ void MemoryResource::open()
  std::cout << "[+] Opening Memory resource" << std::endl;
 #endif
  
- mStart = (char*) GC::safe_malloc<char, ResourceAllocator>(16, NXOGRE_GC_THIS);
- mEnd = mStart + 16;
- mPointer = mStart;
+ mMemory.resize(4);
+ mMemory.clear();
+ mIndex = 0;
+ 
  mStatus = Enums::ResourceStatus_Opened;
  mDirectionality = Enums::ResourceDirectionality_Omidirectional;
 
@@ -91,12 +92,13 @@ void MemoryResource::close()
  mDirectionality = Enums::ResourceDirectionality_Unknown;
 
 #if NXOGRE_DEBUG_RESOURCES == 1
- std::cout << "[-] Closing Memory resource. -> End Size is " << int(mEnd - mStart) << " bytes" << std::endl;
+ std::cout << "[-] Closing Memory resource. -> Final size is " << mMemory.size() << " bytes" << std::endl;
 #endif
  
- if (mStart)
-  GC::safe_free<char, ResourceAllocator>(mStart, NXOGRE_GC_THIS);
- mStart = mEnd = mPointer = 0;
+ mMemory.resize(4);
+ mMemory.clear();
+ mIndex = 0;
+ 
  mStatus = Enums::ResourceStatus_Closed;
  
 }
@@ -108,18 +110,16 @@ Enums::ResourceAccess  MemoryResource::getAccess() const
 
 size_t MemoryResource::getSize() const
 {
- return (mEnd - mStart);
+ return mMemory.size();
 }
 
 bool MemoryResource::seek(size_t to)
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
-  if (to > size_t(mEnd - mStart))
+  if (to > mMemory.size())
    return false;
-
-  mPointer = mStart + to;
-
+  mIndex = to;
   return true;
  }
  return false;
@@ -129,7 +129,7 @@ bool MemoryResource::seekBeginning()
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
-  mPointer = mStart;
+  mIndex = 0;
   return true;
  }
  return false;
@@ -139,7 +139,7 @@ bool MemoryResource::seekEnd()
 {
  if (mStatus == Enums::ResourceStatus_Opened && mDirectionality == Enums::ResourceDirectionality_Omidirectional)
  {
-  mPointer = mEnd - 1;
+  mIndex = mMemory.size() - 1;
   return true;
  }
  return false;
@@ -147,17 +147,28 @@ bool MemoryResource::seekEnd()
 
 bool MemoryResource::atBeginning() const
 {
- return (mPointer == mStart);
+ return mIndex == 0;
 }
 
 bool MemoryResource::atEnd() const
 {
- return (mPointer >= mEnd - 1);
+ return (mIndex >= mMemory.size() - 1);
 }
 
 size_t MemoryResource::at() const
 {
- return (mPointer - mStart);
+ return mIndex;
+}
+
+void MemoryResource::_willFit(size_t dataSize)
+{
+ size_t newSize = mIndex + dataSize;
+ if (newSize < mMemory.size())
+  return;
+ 
+ while (newSize < mMemory.size())
+  newSize <<= 1;
+ mMemory.resize(newSize);
 }
 
 bool MemoryResource::write(const void* src, size_t src_size)
@@ -167,37 +178,15 @@ bool MemoryResource::write(const void* src, size_t src_size)
  {
   return false;
  }
-
+ 
  if (mAccess != Enums::ResourceAccess_ReadAndWrite)
  {
   return false;
  }
- size_t current_size = (mEnd - mStart);
- char* pointer_willbe = mPointer + src_size;
  
- if (pointer_willbe > mStart + current_size)
- {
-  mStatus = Enums::ResourceStatus_Maintenance;
-  
-  size_t new_buffer_size = (current_size * 2) + 1;
-
-  char* new_buffer = (char*) GC::safe_malloc<char, ResourceAllocator>(new_buffer_size, NXOGRE_GC_THIS);
-  if (mStart)
-   NxOgreCopy(new_buffer, mStart, current_size);
-
-  size_t pointer_pos = mPointer - mStart;
-  GC::safe_free<char, ResourceAllocator>(mStart, NXOGRE_GC_THIS);
-  
-  mStart = new_buffer;
-  mEnd = mStart + new_buffer_size;
-  mPointer = mStart + pointer_pos;
-  
-  mStatus = Enums::ResourceStatus_Opened;
- }
-  
- NxOgreCopy(mPointer, src, src_size);
- mPointer += src_size;
-  
+ _willFit(src_size);
+ mMemory.put_at(mIndex, src, src_size);
+ mIndex += src_size;
  return true;
 }
 
@@ -325,155 +314,155 @@ bool MemoryResource::writeString(const String& str)
 bool MemoryResource::readBool()
 {
  bool t;
- NxOgreCopy(&t, mPointer, sizeof(bool));
- mPointer += sizeof(bool);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(bool);
  return t;
 }
 
 void MemoryResource::readBoolArray(bool* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readBool();
 }
 
 unsigned char MemoryResource::readUChar()
 {
  unsigned char t;
- NxOgreCopy(&t, mPointer, sizeof(unsigned char));
- mPointer += sizeof(unsigned char);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(unsigned char);
  return t;
 }
 
 void MemoryResource::readUCharArray(unsigned char* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readUChar();
 }
 
 char MemoryResource::readChar()
 {
  char t;
- NxOgreCopy(&t, mPointer, sizeof(char));
- mPointer += sizeof(char);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(char);
  return t;
 }
 
 void MemoryResource::readCharArray(char* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readChar();
 }
 
 unsigned short MemoryResource::readUShort()
 {
  unsigned short t;
- NxOgreCopy(&t, mPointer, sizeof(unsigned short));
- mPointer += sizeof(unsigned short);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(unsigned short);
  return t;
 }
 
 void MemoryResource::readUShortArray(unsigned short* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readUShort();
 }
 
 short MemoryResource::readShort()
 {
  short t;
- NxOgreCopy(&t, mPointer, sizeof(short));
- mPointer += sizeof(short);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(short);
  return t;
 }
 
 void MemoryResource::readShortArray(short* t, size_t length)
 {
-NxOgreCopy(t, mPointer, length);
-mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readShort();
 }
 
 unsigned int MemoryResource::readUInt()
 {
  unsigned int t;
- NxOgreCopy(&t, mPointer, sizeof(unsigned int));
- mPointer += sizeof(unsigned int);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(unsigned int);
  return t;
 }
 
 void MemoryResource::readUIntArray(unsigned int* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readUInt();
 }
 
 int MemoryResource::readInt()
 {
  int t;
- NxOgreCopy(&t, mPointer, sizeof(int));
- mPointer += sizeof(int);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(int);
  return t;
 }
 
 void MemoryResource::readIntArray(int* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readInt();
 }
 
 float MemoryResource::readFloat()
 {
  float t;
- NxOgreCopy(&t, mPointer, sizeof(float));
- mPointer += sizeof(float);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(float);
  return t;
 }
 
 void MemoryResource::readFloatArray(float* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readFloat();
 }
 
 double MemoryResource::readDouble()
 {
  double t;
- NxOgreCopy(&t, mPointer, sizeof(double));
- mPointer += sizeof(double);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(double);
  return t;
 }
 
 void MemoryResource::readDouble(double* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readDouble();
 }
 
 Real MemoryResource::readReal()
 {
  NxOgreRealType t;
- NxOgreCopy(&t, mPointer, sizeof(NxOgreRealType));
- mPointer += sizeof(NxOgreRealType);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(NxOgreRealType);
  return t;
 }
 
 void MemoryResource::readRealArray(NxOgreRealType* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readReal();
 }
 
 long MemoryResource::readLong()
 {
  long t;
- NxOgreCopy(&t, mPointer, sizeof(long));
- mPointer += sizeof(long);
+ mMemory.get_at(mIndex, t);
+ mIndex += sizeof(long);
  return t;
 }
 
 void MemoryResource::readLongArray(long* t, size_t length)
 {
- NxOgreCopy(t, mPointer, length);
- mPointer += length;
+ for (size_t i=0;i < length;i++)
+  t[i] = readLong();
 }
 
 void MemoryResource::flush()
@@ -483,7 +472,7 @@ void MemoryResource::flush()
 
 char* MemoryResource::getStart() const
 {
- return mStart;
+ return (char*) mMemory[0];
 }
 
                                                                                        
