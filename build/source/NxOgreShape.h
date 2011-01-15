@@ -60,7 +60,7 @@ class NxOgrePublicClass Shape : public ShapeAllocatable
   
   /** \brief Get the shape type based upon the NxShapeType enum.
   */
-  Enums::ShapeFunctionType   getShapeFunctionType() const;
+  virtual Enums::ShapeFunctionType   getShapeFunctionType() const;
   
   /** \brief Get the NxShape (abstract)
   */
