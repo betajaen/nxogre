@@ -1,8 +1,0 @@
-p(d). Get the renderable of the Fluid.
-
-
-h3. Return
-
-p(r). **Renderable** * -- The renderable pointer.
-
-

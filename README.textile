@@ -1,35 +1,5 @@
-h1. Compiling NxOgre from the Git repository
+h1. LeJean
 
-The Git repository is Betajaen's public copy of the working code of NxOgre. It is the most recent code published, and it being so recent hasn't been tested so much. 
+This is a future branch.
 
-If you can't live on the edge then the "latest release":http://nxogre.org/compiling_nxogre_from_a_release is for you, otherwise game on.
-
-h2. Checklist
-
-Before you install NxOgre go through this checklist
-
-* "Install the PhysX SystemSoftware":http://nxogre.org/installing_the_physx_system_software
-* "Install the PhysX SDK":http://nxogre.org/installing_the_physx_sdk
-* "Create the environmental variable for the PhysX SDK":http://nxogre.org/environmental_variable_for_physx
-
-h2. Installation Instructions
-
-# Go to the latest commit on "Github":http://github.com/betajaen/nxogre/tree/master
-# Click on the download link
-# Then click on zip archive to download it to your computer
-# Uncompress the contents of the archive to your development directory i.e. @c:/dev/@
-# The folder name of NxOgre will be a bit strange ex. @betajaen-nxogre-8b032dd34625b7ebda0c343e8f98210e6a8354a5@ rename it to @NxOgre@ to have it a bit more meaning.
-
-h2. Compile it.
-
-Currently the Git versions has the build solutions for Visual Studio 2005 and Visual Studio 2008.
-
-# Goto @c:/dev/NxOgre/build/msvc/@
-# Double click on the solution to your IDE.
-# Compile the NxOgre project
-
-If you have any problems. 
-
-* Make sure you've gone through all steps of all the items in the checklist. 
-* Check of the "forums":http://nxogre.org/forums for anyone else having your problems.
-* Make a post asking for help.
+Please use the most stable branch, "Detritus"
