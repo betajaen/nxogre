@@ -29,10 +29,10 @@
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 8
-#define NxOgreVersionBuild 1011
-#define NxOgreBuildName "Colorcast"
+#define NxOgreVersionBuild 1090
+#define NxOgreBuildName "Pigman"
 #define NxOgreBranchName "LeJean"
 #define NxOgreVersion 180
-//~~ mtime 5bc6b3fa05b75a42ff5890b437ffeaa7
+//~~ mtime e83afa48895563c83d0814babcd9b0a2
 
 #endif

@@ -35,4 +35,9 @@ namespace NxOgre
  const Real Math::RADIANS_PER_DEGREE = (Math::TWO_PI / Real(360));
  const Real Math::DEGREES_PER_RADIAN = (Real(360) / Math::TWO_PI);
 
+#if NXOGRE_PLATFORM == NXOGRE_PLATFORM_WINDOWS
+ NxOgre::GC::WindowsMemoryAllocator NxOgre::GC::WindowsMemoryAllocator::Allocator = NxOgre::GC::WindowsMemoryAllocator();
+ NxOgre::GC::WindowsMemoryTracker NxOgre::GC::WindowsMemoryTracker::Tracker = NxOgre::GC::WindowsMemoryTracker();
+#endif
+
 }

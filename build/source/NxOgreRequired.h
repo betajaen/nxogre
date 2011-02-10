@@ -30,13 +30,6 @@
 #include "NxOgreVersion.h"
 #include "NxOgreConfiguration.h"
 
-#include <math.h>
-#include <stdlib.h>
-#include <float.h>
-#include <assert.h>
-#include <string.h>
-#include <string>
-#include <sstream>
 
 // ------------------------------------------------------------------
 
@@ -51,7 +44,25 @@
 
 #ifdef _WIN32
   
+  #include <math.h>
+  #include <stdlib.h>
+  #include <float.h>
+  #include <assert.h>
+  #include <string.h>
+  #include <string>
+  #include <sstream>
+  #include <iostream>
+  #include <map>
+  #include <vector>
+  
+  #define NXOGRE_PLATFORM NXOGRE_PLATFORM_WINDOWS
+
   #if ( defined (_MSC_VER) )
+   
+   #define NXOGRE_COMPILER NXOGRE_COMPILER_MSVC
+
+   // Remove Warning: "class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class"
+   #pragma warning(disable: 4251)
 
    #define NXOGRE_FORCE_INLINE __forceinline
    #define NXOGRE_ALIGN_16 1
@@ -74,388 +85,312 @@
    #endif
    
    #define NXOGRE_ASSERT(COND) assert(COND)
-   
+   #define NXOGRE_UNUSED(X) (void) X
+   #define NXOGRE_NULL_POINTER NULL
+
+   namespace NxOgre
+   {
+   namespace GC
+   {
+     
+     // ------------------------------------------------------------------
+     
+#if NXOGRE_DEBUG_MEMORY >= 1
+     
+     class NXOGRE_CLASS WindowsMemoryTracker
+     {
+       
+       public:
+        
+        static WindowsMemoryTracker Tracker;
+        
+#if NXOGRE_DEBUG_MEMORY == 1
+        NXOGRE_FORCE_INLINE void push_memory(void* memory)
+        {
+         mAllocations++;
+        }
 #endif
 
-// ------------------------------------------------------------------
+#if NXOGRE_DEBUG_MEMORY >= 2
+        NXOGRE_FORCE_INLINE void push_memory(void* memory, size_t length, const char* file, size_t line)
+        {
+         Allocation allocation;
+         allocation.file_pushed = hash(file);
+         allocation.line_pushed = line;
+         allocation.size = length;
+         
+         if (allocation.file_pushed != 0)
+         {
+          mStringsIterator = mStrings.find(allocation.file_pushed);
+          if (mStringsIterator == mStrings.end())
+          {
+           mStrings.insert(std::pair<size_t, std::string>(allocation.file_pushed, std::string(file)));
+          }
+         }
+         
+         mCurrentAllocations.insert(std::pair<void*, Allocation>(memory, allocation));
+         
+         #if NXOGRE_DEBUG_MEMORY == 3
+           mAllAllocations.insert(std::pair<void*, Allocation>(memory, allocation));
+         #endif
+        }
+#endif
 
-#define NXOGRE_GC_THIS __FILE__, __LINE__
+#if NXOGRE_DEBUG_MEMORY == 1
+        NXOGRE_FORCE_INLINE void push_memory(void* memory)
+        {
+         mAllocations--;
+        }
+#endif
 
-#define NXOGRE_GC_FRIEND_DELETE template<class T> friend inline void ::NxOgre::GC::safe_delete(T*,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW0 template<class T> friend inline T* ::NxOgre::GC::safe_new0(const char*,int);
-#define NXOGRE_GC_FRIEND_NEW1 template<class T, typename A1> friend inline T* ::NxOgre::GC::safe_new1(const A1&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW2 template<class T, typename A1, typename A2> friend inline T* ::NxOgre::GC::safe_new2(const A1&,const A2&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW3 template<class T, typename A1, typename A2, typename A3> friend inline T* ::NxOgre::GC::safe_new3(const A1&,const A2&,const A3&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW4 template<class T, typename A1, typename A2, typename A3, typename A4> friend inline T* ::NxOgre::GC::safe_new4(const A1&,const A2&,const A3&,const A4&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW5 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5> friend inline T* ::NxOgre::GC::safe_new5(const A1&,const A2&,const A3&,const A4&,const A5&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW6 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6> friend inline T* ::NxOgre::GC::safe_new6(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW7 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7> friend inline T* ::NxOgre::GC::safe_new7(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const A7&,const char*,int);
-#define NXOGRE_GC_FRIEND_NEW8 template<class T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8> friend inline T* ::NxOgre::GC::safe_new8(const A1&,const A2&,const A3&,const A4&,const A5&,const A6&,const A7&,const A8&,const char*,int);
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+        NXOGRE_FORCE_INLINE void pop_memory(void* memory, const char* file, size_t line)
+        {
+         mCurrentAllocationsIterator = mCurrentAllocations.find(memory);
+         if (mCurrentAllocationsIterator == mCurrentAllocations.end())
+         {
+          mCurrentAllocations.erase(mCurrentAllocationsIterator);
+         }
+         
+#if NXOGRE_DEBUG_MEMORY == 3
+         mAllAllocationsIterator = mAllAllocations.find(memory);
+         if (mAllAllocationsIterator == mAllAllocations.end())
+         {
+          (*mAllAllocationsIterator).second.file_popped = hash(file);
+          (*mAllAllocationsIterator).second.line_popped = 0;
+
+          if ((*mAllAllocationsIterator).second.file_popped != 0)
+          {
+           mStringsIterator = mStrings.find( (*mAllAllocationsIterator).second.file_popped );
+           if (mStringsIterator == mStrings.end())
+           {
+            mStrings.insert(std::pair<size_t, std::string>((*mAllAllocationsIterator).second.file_popped, std::string(file)));
+           }
+          }
+         }
+#endif
+        
+        }
+#endif
+       
+       protected:
+        
+#if NXOGRE_DEBUG_MEMORY == 1
+        size_t mAllocations;
+#elif NXOGRE_DEBUG_MEMORY >= 2
+        
+        NXOGRE_FORCE_INLINE size_t hash(const char* str)
+        {
+         size_t len = strlen(str);
+         if (len == 0)
+          return 0;
+         size_t ret = 2166136261U;
+         for (size_t i=0;i < len;i++)
+          ret = 16777619 * ret ^ (size_t) * &str[i];
+         return ret;
+        }
+        
+        std::map<size_t, std::string>                  mStrings;
+        std::map<size_t, std::string>::const_iterator  mStringsIterator;
+        
+        struct Allocation
+        {
+         size_t file_pushed, file_popped;
+         size_t line_pushed, line_popped;
+         size_t size;
+        };
+
+        std::map<void*, Allocation>            mCurrentAllocations;
+        std::map<void*, Allocation>::iterator  mCurrentAllocationsIterator;
+#endif
+
+#if NXOGRE_DEBUG_MEMORY == 3
+        std::map<void*, Allocation>                mAllAllocations;
+        std::map<void*, Allocation>::iterator      mAllAllocationsIterator;
+#endif
+
+     };
+
+     typedef WindowsMemoryTracker MemoryTracker;
+
+#endif
+
+     // ------------------------------------------------------------------
+     
+     class NXOGRE_CLASS WindowsMemoryAllocator
+     {
+       
+#if NXOGRE_DEBUG_MEMORY >= 2
+       friend void* safe_malloc(size_t,const char*,size_t);
+       friend void  safe_free(void*,const char*,size_t);
+       friend void* safe_realloc(void* ptr, size_t length, const char* file, size_t line);
+#else
+       friend void* safe_malloc(size_t);
+       friend void  safe_free(void*);
+       friend void* safe_realloc(void* ptr, size_t length);
+#endif
+      protected:
+       
+       // ------------------------------------------------------------------
+       
+       static WindowsMemoryAllocator Allocator;
+       
+       // ------------------------------------------------------------------
+       
+       WindowsMemoryAllocator()
+       {
+       }
+       
+       // ------------------------------------------------------------------
+       
+       ~WindowsMemoryAllocator()
+       {
+       }
+       
+       // ------------------------------------------------------------------
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+       NXOGRE_FORCE_INLINE void* allocateMemory(size_t length, const char* file, size_t line)
+       {
+        void* ptr = malloc(length);
+        WindowsMemoryTracker::Tracker.push_memory(ptr, length, file, line);
+        return ptr;
+       }
+#else
+       NXOGRE_FORCE_INLINE void* allocateMemory(size_t length)
+       {
+       return malloc(length)
+       }
+#endif
+       
+       // ------------------------------------------------------------------
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+       NXOGRE_FORCE_INLINE void* reallocateMemory(void* ptr, size_t length, const char* file, size_t line)
+       {
+        void* new_ptr = realloc(ptr, length);
+        WindowsMemoryTracker::Tracker.pop_memory(ptr, file, line);
+        WindowsMemoryTracker::Tracker.push_memory(new_ptr, length, file, line);
+        return new_ptr;
+       }
+#else
+       NXOGRE_FORCE_INLINE void* reallocateMemory(void* ptr, size_t length)
+       {
+       return realloc(ptr, length);
+       }
+#endif
+       
+       // ------------------------------------------------------------------
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+       NXOGRE_FORCE_INLINE void freeMemory(void* ptr, const char* file, size_t line)
+       {
+        WindowsMemoryTracker::Tracker.pop_memory(ptr, file, line);
+        free(ptr);
+       }
+#else
+       NXOGRE_FORCE_INLINE void freeMemory(void* ptr)
+       {
+        free(ptr);
+       }
+#endif
+
+     }; // WindowsMemoryAllocator
+     
+     typedef WindowsMemoryAllocator MemoryAllocator;
+
+     // ------------------------------------------------------------------
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+#define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH, __FILE__, __LINE__)
+#define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH, __FILE__, __LINE__)
+#define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR, __FILE__, __LINE__)
+#else
+#define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH)
+#define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH)
+#define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR)
+#endif
+
+     // ------------------------------------------------------------------
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+     NXOGRE_FORCE_INLINE void* safe_malloc(size_t length, const char* file, size_t line)
+     {
+      return MemoryAllocator::Allocator.allocateMemory(length, file, line);
+     }
+#else
+     NXOGRE_FORCE_INLINE void* safe_malloc(size_t length)
+     {
+      return MemoryAllocator::Allocator.allocateMemory(length);
+     }
+#endif
+     
+     // ------------------------------------------------------------------
+     
+#if NXOGRE_DEBUG_MEMORY >= 2
+     NXOGRE_FORCE_INLINE void* safe_realloc(void* ptr, size_t length, const char* file, size_t line)
+     {
+      return MemoryAllocator::Allocator.reallocateMemory(ptr, length, file, line);
+     }
+#else
+     NXOGRE_FORCE_INLINE void* safe_realloc(void* ptr, size_t length)
+     {
+      return MemoryAllocator::Allocator.reallocateMemory(ptr, length);
+     }
+#endif
+     
+     // ------------------------------------------------------------------
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+     NXOGRE_FORCE_INLINE void safe_free(void* ptr, const char* file, size_t line)
+     {
+      if (ptr != NXOGRE_NULL_POINTER)
+      {
+       MemoryAllocator::Allocator.freeMemory(ptr, file, line);
+      }
+     }
+#else
+     NXOGRE_FORCE_INLINE void safe_free(void* ptr)
+     {
+      if (ptr != NXOGRE_NULL_POINTER)
+      {
+       MemoryAllocator::Allocator.freeMemory(ptr);
+      }
+     }
+#endif
+     
+     // ------------------------------------------------------------------
+     
+   } // namespace NxOgre::GC
+   } // namespace NxOgre
+
+#endif  // WIN32
 
 // ---------------------------------------------------------------
+
 namespace NxOgre
 {
 namespace GC
 {
-
-#if NXOGRE_DEBUG_MEMORY == 1
- void NXOGRE_FUNCTION gc_debugger_push_ptr(void* ptr, unsigned int size, const char* type, const char* file, unsigned int line);
- void NXOGRE_FUNCTION gc_debugger_change_ptr(void* old_ptr, void* new_ptr, unsigned int new_size, const char* file, unsigned int line);
- void NXOGRE_FUNCTION gc_debugger_pop_ptr(void* ptr, const char* file, unsigned int line);
- void NXOGRE_FUNCTION gc_debugger_first_frame();
- void NXOGRE_FUNCTION gc_debugger_frame(unsigned int id, float time);
- void NXOGRE_FUNCTION gc_debugger_last_frame();
-#endif
-
- template<typename T, typename AX> inline T* safe_malloc(size_t bytes, const char* file, unsigned line)
- {
-  T* mem = (T*) AX::allocatebytes(bytes);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(mem, bytes, type2id<T>::type_name(), file, line);
-#endif
-  return mem;
- }
-
- template<typename T, typename AX> inline T* safe_malloc(size_t bytes, const char* type, const char* file, unsigned line)
- {
-  T* mem = (T*) AX::allocatebytes(bytes);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(mem, bytes, type, file, line);
-#endif
-  return mem;
- }
-
- template<typename T, typename AX> inline T* safe_realloc(T* mem, size_t new_size, const char* file, unsigned line)
- {
-  T* new_mem = (T*) AX::reallocatebytes(mem, new_size);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_change_ptr(mem, new_mem, new_size, file, line);
-#endif
-  return new_mem;
- }
-
- template<typename T, typename AX> inline void safe_free(T* mem, const char* file, unsigned line)
- {
-  if (mem == 0)
-   return;
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_pop_ptr(mem, file, line);
-#endif
-  AX::deallocatebytes(mem);
- }
-
- template<typename T> inline T* safe_new0(const char* file, int line)
- {
-  T* ptr = new T();
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX> inline T* safe_allocated_new0(const char* file, int line)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T();
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1> inline T* safe_new1(const A1& v1, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1> inline T* safe_allocated_new1(const A1& v1, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1, typename A2> inline T* safe_new2(const A1& v1, const A2& v2, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1, v2);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1, typename A2> inline T* safe_allocated_new2(const A1& v1, const A2& v2, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1, v2);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1, typename A2, typename A3> inline T* safe_new3(const A1& v1, const A2& v2, const A3& v3, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1, v2, v3);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1, typename A2, typename A3> inline T* safe_allocated_new3(const A1& v1, const A2& v2, const A3& v3, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1, v2, v3);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1, typename A2, typename A3, typename A4> inline T* safe_new4(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1, v2, v3, v4);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1, typename A2, typename A3, typename A4> inline T* safe_allocated_new4(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1, v2, v3, v4);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5> inline T* safe_new5(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1, v2, v3, v4, v5);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1, typename A2, typename A3, typename A4, typename A5> inline T* safe_allocated_new5(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1, v2, v3, v4, v5);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6> inline T* safe_new6(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const A6& v6, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1, v2, v3, v4, v5, v6);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6> inline T* safe_allocated_new6(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const A6& v6, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1, v2, v3, v4, v5, v6);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7> inline T* safe_new7(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const A6& v6, const A7& v7, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1, v2, v3, v4, v5, v6, v7);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7> inline T* safe_allocated_new7(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const A6& v6, const A7& v7, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1, v2, v3, v4, v5, v6, v7);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8> inline T* safe_new8(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const A6& v6, const A7& v7, const A8& v8, const char* file = 0, int line = 0)
- {
-  T* ptr = new T(v1, v2, v3, v4, v5, v6, v7, v8);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T, typename AX, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8> inline T* safe_allocated_new8(const A1& v1, const A2& v2, const A3& v3, const A4& v4, const A5& v5, const A6& v6, const A7& v7, const A8& v8, const char* file = 0, int line = 0)
- {
-  void* mem = AX::allocatebytes(sizeof(T));
-  T* ptr = new(mem) T(v1, v2, v3, v4, v5, v6, v7, v8);
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_push_ptr(ptr, sizeof(T), type2id<T>::type_name(), file, line);
-#endif
-  return ptr;
- };
-
- template<typename T> void inline safe_delete(T* ptr, const char* file, int line)
- {
-  if (ptr == 0)
-   return;
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_pop_ptr(ptr, file, line);
-#endif
-  delete ptr;
- }
-
- template<typename T, typename AX> void inline safe_allocated_delete(T* ptr, const char* file, int line)
- {
-  if (ptr == 0)
-   return;
-  ptr->~T();
-#if NXOGRE_DEBUG_MEMORY == 1
-  gc_debugger_pop_ptr(ptr, file, line);
-#endif
-  AX::deallocatebytes(ptr);
- }
-
- class NoGarbageCollection
- {
- public:
-
-  // map<K,T>, multimap<K,T>, hashmap<K,T>
-  template<typename K, typename T> class impl_map
-  {
-  public:
-   inline void gc_free(T&) {}
-   template<typename it> inline void gc_free_range(it first, it last) {}
-  };
-
-  // map<K,T*>, multimap<K,T*>, hashmap<K,T*>
-  template<typename K, typename T> class impl_map<K,T*>
-  {
-  public:
-   inline void gc_free(T*) {}
-   template<typename it> inline void gc_free_range(it first, it last) {}
-  };
-
-  // vector<T>
-  template<typename T> class impl_vector
-  {
-  protected:
-
-   inline void gc_free(T&) {}
-   template<typename it> inline void gc_free_range(it first, it last) {}
-  };
-
-  // vector<T*>
-  template<typename T> class impl_vector<T*>
-  {
-  protected:
-
-   inline void gc_free(T*) {}
-   template<typename it> inline void gc_free_range(it first, it last) {}
-  };
-
- };
-
- class HasGarbageCollection
- {
- public:
-
-  // map<K,T>, multimap<K,T>, hashmap<K,T>
-  template<typename K, typename T> class impl_map
-  {
-  public:
-   inline void gc_free(T& ref) {ref.~T();}
-   template<typename it> inline void gc_free_range(it first, it last)
-   {
-    while(first != last)
-    {
-     (*first).second.~T();
-     first++;
-    }
-   }
-  };
-
-  // map<K,T*>, multimap<K,T*>, hashmap<K,T*>
-  template<typename K, typename T> class impl_map<K,T*>
-  {
-  public:
-   inline void gc_free(T* ptr) {safe_delete(ptr, NXOGRE_GC_THIS);}
-   template<typename it> inline void gc_free_range(it first, it last)
-   {
-    while(first != last)
-    {
-     //delete (*first).second;
-     safe_delete((*first).second, NXOGRE_GC_THIS);
-     first++;
-    }
-   }
-  };
-
-  // vector<T>
-  template<typename T> class impl_vector
-  {
-  protected:
-
-   inline void gc_free(T& ref) {ref.~T();}
-   template<typename it> inline void gc_free_range(it first, it last)
-   {
-    while(first != last)
-    {
-     (*first).~T();
-     first++;
-    }
-   }
-  };
-
-  // vector<T*>
-  template<typename T> class impl_vector<T*>
-  {
-  protected:
-
-   inline void gc_free(T* ptr) {safe_delete<T>(ptr, NXOGRE_GC_THIS);}
-   template<typename it> inline void gc_free_range(it first, it last)
-   {
-    while(first != last)
-    {
-     safe_delete<T>((*first), NXOGRE_GC_THIS);
-     first++;
-    }
-   }
-  };
-
- };
-
-
+ 
+ 
 } // namespace NxOgre::GC
-
 } // namespace NxOgre
-
 
 // ---------------------------------------------------------------
 
+#if NXOGRE_DEBUG_MEMORY >= 2
+#define NXOGRE_NEW new(__FILE__, __LINE__) 
+#define NXOGRE_DELETE(PTR) operator delete(PTR, __FILE__, __LINE__); PTR = 0;
+#else
+#define NXOGRE_NEW new
+#define NXOGRE_DELETE(PTR) delete PTR; PTR = 0;
+#endif
+
 namespace NxOgre
 {
-class AllocatedClass
+class NXOGRE_CLASS AllocatedClass
 {
   
  public:
@@ -490,26 +425,54 @@ class AllocatedClass
      ALLOCATED_CLASS_TYPE = alloc_type
     };
     
+#if NXOGRE_DEBUG_MEMORY >= 2
+    void* operator new(size_t length, const char* file, size_t line)
+    {
+     return GC::safe_malloc(length, file, line);
+    }
+#else
     void* operator new(size_t length)
     {
-     return GC::safe_malloc(length, NXOGRE_GC_THIS);
+     return GC::safe_malloc(length);
     }
-    
+#endif
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+    void* operator new[](size_t length, const char* file, size_t line)
+    {
+     return GC::safe_malloc(length, file, line);
+    }
+#else
     void* operator new[](size_t length)
     {
-     return GC::safe_malloc(length, NXOGRE_GC_THIS);
+     return GC::safe_malloc(length);
     }
-    
+#endif
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+    void operator delete(void* ptr, const char* file, size_t line)
+    {
+     GC::safe_free(ptr, file, line);
+    }
+#else
     void operator delete(void* ptr)
     {
-     GC::safe_free(ptr, NXOGRE_GC_THIS);
+     GC::safe_free(ptr);
     }
-    
+#endif
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+    void operator delete[](void* ptr, const char* file, size_t line)
+    {
+     GC::safe_free(ptr, file, line);
+    }
+#else
     void operator delete[](void* ptr)
     {
-     GC::safe_free(ptr, NXOGRE_GC_THIS);
+     GC::safe_free(ptr);
     }
-    
+#endif
+  
   };
   
   typedef Allocatable<AT_Unallocated>        Unallocated;
@@ -754,12 +717,16 @@ namespace NxOgre
 
  public:
 
+  // ---------------------------------------------------------------
+
   template<typename T> NXOGRE_FORCE_INLINE static void swap(T& a, T& b)
   {
    T t = a;
    a = b;
    b = t;
   }
+
+  // ---------------------------------------------------------------
 
   template<typename T> NXOGRE_FORCE_INLINE static bool copy(T* first, T* last, T* dest)
   {
@@ -770,10 +737,88 @@ namespace NxOgre
    return true;
   }
 
+  // ---------------------------------------------------------------
+
   template<typename T> NXOGRE_FORCE_INLINE static bool isNull(T* ptr)
   {
    return ptr == 0;
   }
+  
+  // ---------------------------------------------------------------
+
+   struct boolean
+   {
+     template<typename T> struct less
+     {
+      bool operator()(const T& a, const T& b)
+      {
+       return (a < b);
+      }
+     };
+
+     template<typename T> struct more
+     {
+      bool operator()(const T& a, const T& b)
+      {
+       return (a > b);
+      }
+     };
+
+     template<typename T> struct equals
+     {
+      bool operator()(const T& a, const T& b)
+      {
+       return (a == b);
+      }
+     };
+
+     template<typename T> struct not
+     {
+      bool operator()(const T& a, const T& b)
+      {
+       return (a != b);
+      }
+     };
+   };
+
+  // ---------------------------------------------------------------
+
+   template<typename T, typename Comparision = boolean::less<T> > struct sort
+   {
+    NXOGRE_FORCE_INLINE void operator()(T* begin, T* end)
+    {
+     std::sort(begin, end, Comparision());
+    }
+   };
+
+  // ---------------------------------------------------------------
+
+   template<typename T, typename Comparision = boolean::equals<T> > struct unique
+   {
+    NXOGRE_FORCE_INLINE T* operator()(T* begin, T* end)
+    {
+     return std::unique(begin, end, Comparision());
+    }
+   };
+
+  // ---------------------------------------------------------------
+
+   template<typename T, typename Comparision = boolean::equals<T> > struct linear_find
+   {
+    NXOGRE_FORCE_INLINE T* operator()(T* begin, T* end, const T& search)
+    {
+     Comparision c;
+     while(begin < end)
+     {
+      if ( c(*begin, search) )
+       return begin;
+      begin++;
+     }
+     return end;
+    }
+   };
+
+  // ---------------------------------------------------------------
 
  }; // class Util
 
@@ -786,6 +831,25 @@ namespace NxOgre
  
  typedef std::string String;
  
+ struct Strings
+ {
+   
+   // ---------------------------------------------------------------
+   
+   template<typename T> NXOGRE_FORCE_INLINE static void join(std::ostream& s, T* begin, T* end, char delimiter = '\n')
+   {
+    while(begin < end)
+    {
+     s << *begin;
+     if (begin != end -1)
+      s << delimiter;
+     begin++;
+    }
+   }
+   
+   // ---------------------------------------------------------------
+   
+ };
  
 } // namespace NxOgre
 

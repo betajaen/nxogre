@@ -25,10 +25,11 @@
 */
 
 // This is an automatically created file. Do not alter.
-//~~ ub_begin 39aa1c4f6dc4863987a904560fae6076
+//~~ ub_begin 3e44564c20fc07cc5bd577aaa2306d81
 
 #include "NxOgreCommon.cpp"
 #include "NxOgreRequired.cpp"
+#include "NxOgreWorld.cpp"
 
 //~~ ub_end
 

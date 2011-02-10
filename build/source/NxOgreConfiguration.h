@@ -35,4 +35,16 @@
 
 // #define NXOGRE_USES_4BYTE_ALIGNMENT
 
+
+
+/*
+  Debug Memory
+
+  0 - No debugging
+  1 - Count allocations/reallocations/free, and save to file on end (leak acknowledgement)
+  2 - Count allocations/reallocations/free, and where they originated and discard freed memory (leak detection);
+  3 - Count allocations/reallocations/free, and where they originated  (leak detection, full memory history);
+*/
+#define NXOGRE_DEBUG_MEMORY 3
+
 #endif
