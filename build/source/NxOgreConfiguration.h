@@ -47,4 +47,22 @@
 */
 #define NXOGRE_DEBUG_MEMORY 3
 
+/*
+  
+  Assertion/Exception handling for the public API.
+  
+  0 - throw exception
+  1 - assert
+*/
+
+#define NXOGRE_USES_ASSERT 0
+
+/*
+  Use the STL Allocator instead of the default.
+
+  0 - Disable
+  1 - Enable
+*/
+#define NXOGRE_USE_STLALLOCATOR 1
+
 #endif

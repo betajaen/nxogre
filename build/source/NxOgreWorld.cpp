@@ -32,7 +32,7 @@ namespace NxOgre
  
  // --------------------------------------------------
 
- World* World::SINGLETON = 0;
+ World* World::SINGLETON = NXOGRE_NULL_POINTER;
 
  // --------------------------------------------------
 
@@ -74,32 +74,71 @@ namespace NxOgre
     return NXOGRE_MALLOC(size);
    }
   
+   // --------------------------------------------------
+  
+   void* malloc(size_t size, NxMemoryType type)
+   {
+    NXOGRE_UNUSED(type);
+    return NXOGRE_MALLOC(size);
+   }
+  
   // --------------------------------------------------
-  
-  void* malloc(size_t size, NxMemoryType type)
-  {
-   NXOGRE_UNUSED(type);
-   return NXOGRE_MALLOC(size);
-  }
-  
- // --------------------------------------------------
 
-  void* realloc(void* memory, size_t size)
-  {
-   return NXOGRE_REALLOC(memory, size);
-  }
+   void* realloc(void* memory, size_t size)
+   {
+    return NXOGRE_REALLOC(memory, size);
+   }
   
- // --------------------------------------------------
+  // --------------------------------------------------
 
-  void free(void* memory)
-  {
-   NXOGRE_FREE(memory);
-  }
+   void free(void* memory)
+   {
+    NXOGRE_FREE(memory);
+   }
   
- // --------------------------------------------------
+  // --------------------------------------------------
 
-};
+ };
 
+ class PhysXOutputStream : public NxUserOutputStream, public AllocatedClass::PhysX
+ {
+  public:
+   
+   PhysXOutputStream(NxAssertResponse assertion_policy)
+   : mAssertionPolicy(assertion_policy)
+   {
+   }
+
+   void reportError(NxErrorCode code, const char * message, const char *file, int line)
+   {
+    // TODO: Flesh out
+   }
+
+   NxAssertResponse reportAssertViolation(const char * message, const char *file, int line)
+   {
+    // TODO: Flesh out
+    return mAssertionPolicy;
+   }
+
+   void print(const char * message)
+   {
+    // TODO: Flesh out
+   }
+   
+   NXOGRE_FORCE_INLINE static NxAssertResponse PhysXAssertionPolicyToNxAssertResponse( Enums::PhysXAssertionPolicy policy)
+   {
+    if (policy == Enums::PhysXAssertionPolicy_Breakpoint)
+     return NX_AR_BREAKPOINT;
+    else if (policy == Enums::PhysXAssertionPolicy_Continue)
+     return NX_AR_CONTINUE;
+    else if (policy == Enums::PhysXAssertionPolicy_Ignore)
+     return NX_AR_IGNORE;
+    return NX_AR_BREAKPOINT;
+   }
+
+   NxAssertResponse  mAssertionPolicy;
+   
+ };
 
 
  // --------------------------------------------------
@@ -128,8 +167,8 @@ namespace NxOgre
 
  String to_s(const WorldDescription::Reason& r)
  {
-  std::ostringstream s;
-  if (r.assertion_response)
+  OStringStream s;
+  if (r.assertion_policy)
    s << "Assertion response\n";
   if (r.cooker_thread_mask)
    s << "Cooker thread mask\n";
@@ -153,7 +192,7 @@ namespace NxOgre
  // --------------------------------------------------
 
  World::World(const WorldDescription& desc)
- : mSDK(0)
+ : mSDK(NXOGRE_NULL_POINTER)
  {
   assert(SINGLETON);
   loadFromDescription(desc);
@@ -167,7 +206,7 @@ namespace NxOgre
   if (mSDK)
   {
    NxReleasePhysicsSDK(mSDK);
-   mSDK = 0;
+   mSDK = NXOGRE_NULL_POINTER;
   }
   
   NXOGRE_DELETE(mPhysXAllocator);
@@ -181,7 +220,9 @@ namespace NxOgre
   mDescription = desc;
   NxSDKCreateError errorCode = NXCE_NO_ERROR;
   mPhysXAllocator = NXOGRE_NEW PhysXAllocator();
-  mSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, mPhysXAllocator, 0, mDescription.to_physx_desc(), &errorCode);
+  mPhysXOutputStream = NXOGRE_NEW PhysXOutputStream(NX_AR_BREAKPOINT);
+
+  mSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, mPhysXAllocator, mPhysXOutputStream, mDescription.to_physx_desc(), &errorCode);
   
  }
 
@@ -197,7 +238,7 @@ namespace NxOgre
  {
   if (SINGLETON)
   {
-   //NXOGRE_THROW_EXCEPTION("Urgh");
+   NXOGRE_THROW_EXCEPTION(BadStateException, "World already exists.");
    return NXOGRE_NULL_POINTER;
   }
   
@@ -213,7 +254,7 @@ namespace NxOgre
   
   if (SINGLETON)
   {
-   //NXOGRE_THROW_EXCEPTION("Urgh");
+   NXOGRE_THROW_EXCEPTION(BadStateException, "World has already been destroyed.");
    return;
   }
 

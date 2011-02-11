@@ -30,287 +30,28 @@
 #include "NxOgreVersion.h"
 #include "NxOgreConfiguration.h"
 
-
-// ------------------------------------------------------------------
-
-#define NXOGRE_PLATFORM_WINDOWS 0
-#define NXOGRE_PLATFORM_LINUX 1
-#define NXOGRE_PLATFORM_APPLE 2
-
-#define NXOGRE_COMPILER_MSVC 0
-#define NXOGRE_COMPILER_GCC 1
-
-// ------------------------------------------------------------------
+ // ------------------------------------------------------------------
 
 #ifdef _WIN32
-  
-  #include <math.h>
-  #include <stdlib.h>
-  #include <float.h>
-  #include <assert.h>
-  #include <string.h>
-  #include <string>
-  #include <sstream>
-  #include <iostream>
-  #include <map>
-  #include <vector>
-  
-  #define NXOGRE_PLATFORM NXOGRE_PLATFORM_WINDOWS
-
-  #if ( defined (_MSC_VER) )
-   
-   #define NXOGRE_COMPILER NXOGRE_COMPILER_MSVC
-
-   // Remove Warning: "class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class"
-   #pragma warning(disable: 4251)
-
-   #define NXOGRE_FORCE_INLINE __forceinline
-   #define NXOGRE_ALIGN_16 1
-
-   #ifdef NXOGRE_IS_LIBRARY
-       
-       #ifdef NXOGRE_SDK
-        #define NXOGRE_CLASS __declspec(dllexport)
-        #define NXOGRE_FUNCTION __declspec(dllexport)
-       #else
-        #define NXOGRE_CLASS __declspec(dllimport)
-        #define NXOGRE_FUNCTION __declspec(dllimport)
-       #endif
-       
-   #else
-       
-       #define NXOGRE_CLASS
-       #define NXOGRE_FUNCTION
-       
-   #endif
-   
-   #define NXOGRE_ASSERT(COND) assert(COND)
-   #define NXOGRE_UNUSED(X) (void) X
-   #define NXOGRE_NULL_POINTER NULL
-
-   namespace NxOgre
-   {
-   namespace GC
-   {
-     
-     // ------------------------------------------------------------------
-     
-#if NXOGRE_DEBUG_MEMORY >= 1
-     
-     class NXOGRE_CLASS WindowsMemoryTracker
-     {
-       
-       public:
-        
-        static WindowsMemoryTracker Tracker;
-        
-#if NXOGRE_DEBUG_MEMORY == 1
-        NXOGRE_FORCE_INLINE void push_memory(void* memory)
-        {
-         mAllocations++;
-        }
+  #include "NxOgreRequiredWindows.h"
 #endif
 
-#if NXOGRE_DEBUG_MEMORY >= 2
-        NXOGRE_FORCE_INLINE void push_memory(void* memory, size_t length, const char* file, size_t line)
-        {
-         Allocation allocation;
-         allocation.file_pushed = hash(file);
-         allocation.line_pushed = line;
-         allocation.size = length;
-         
-         if (allocation.file_pushed != 0)
-         {
-          mStringsIterator = mStrings.find(allocation.file_pushed);
-          if (mStringsIterator == mStrings.end())
-          {
-           mStrings.insert(std::pair<size_t, std::string>(allocation.file_pushed, std::string(file)));
-          }
-         }
-         
-         mCurrentAllocations.insert(std::pair<void*, Allocation>(memory, allocation));
-         
-         #if NXOGRE_DEBUG_MEMORY == 3
-           mAllAllocations.insert(std::pair<void*, Allocation>(memory, allocation));
-         #endif
-        }
-#endif
-
-#if NXOGRE_DEBUG_MEMORY == 1
-        NXOGRE_FORCE_INLINE void push_memory(void* memory)
-        {
-         mAllocations--;
-        }
-#endif
-
-
-#if NXOGRE_DEBUG_MEMORY >= 2
-        NXOGRE_FORCE_INLINE void pop_memory(void* memory, const char* file, size_t line)
-        {
-         mCurrentAllocationsIterator = mCurrentAllocations.find(memory);
-         if (mCurrentAllocationsIterator == mCurrentAllocations.end())
-         {
-          mCurrentAllocations.erase(mCurrentAllocationsIterator);
-         }
-         
-#if NXOGRE_DEBUG_MEMORY == 3
-         mAllAllocationsIterator = mAllAllocations.find(memory);
-         if (mAllAllocationsIterator == mAllAllocations.end())
-         {
-          (*mAllAllocationsIterator).second.file_popped = hash(file);
-          (*mAllAllocationsIterator).second.line_popped = 0;
-
-          if ((*mAllAllocationsIterator).second.file_popped != 0)
-          {
-           mStringsIterator = mStrings.find( (*mAllAllocationsIterator).second.file_popped );
-           if (mStringsIterator == mStrings.end())
-           {
-            mStrings.insert(std::pair<size_t, std::string>((*mAllAllocationsIterator).second.file_popped, std::string(file)));
-           }
-          }
-         }
-#endif
-        
-        }
-#endif
-       
-       protected:
-        
-#if NXOGRE_DEBUG_MEMORY == 1
-        size_t mAllocations;
-#elif NXOGRE_DEBUG_MEMORY >= 2
-        
-        NXOGRE_FORCE_INLINE size_t hash(const char* str)
-        {
-         size_t len = strlen(str);
-         if (len == 0)
-          return 0;
-         size_t ret = 2166136261U;
-         for (size_t i=0;i < len;i++)
-          ret = 16777619 * ret ^ (size_t) * &str[i];
-         return ret;
-        }
-        
-        std::map<size_t, std::string>                  mStrings;
-        std::map<size_t, std::string>::const_iterator  mStringsIterator;
-        
-        struct Allocation
-        {
-         size_t file_pushed, file_popped;
-         size_t line_pushed, line_popped;
-         size_t size;
-        };
-
-        std::map<void*, Allocation>            mCurrentAllocations;
-        std::map<void*, Allocation>::iterator  mCurrentAllocationsIterator;
-#endif
-
-#if NXOGRE_DEBUG_MEMORY == 3
-        std::map<void*, Allocation>                mAllAllocations;
-        std::map<void*, Allocation>::iterator      mAllAllocationsIterator;
-#endif
-
-     };
-
-     typedef WindowsMemoryTracker MemoryTracker;
-
-#endif
-
-     // ------------------------------------------------------------------
-     
-     class NXOGRE_CLASS WindowsMemoryAllocator
-     {
-       
-#if NXOGRE_DEBUG_MEMORY >= 2
-       friend void* safe_malloc(size_t,const char*,size_t);
-       friend void  safe_free(void*,const char*,size_t);
-       friend void* safe_realloc(void* ptr, size_t length, const char* file, size_t line);
-#else
-       friend void* safe_malloc(size_t);
-       friend void  safe_free(void*);
-       friend void* safe_realloc(void* ptr, size_t length);
-#endif
-      protected:
-       
-       // ------------------------------------------------------------------
-       
-       static WindowsMemoryAllocator Allocator;
-       
-       // ------------------------------------------------------------------
-       
-       WindowsMemoryAllocator()
-       {
-       }
-       
-       // ------------------------------------------------------------------
-       
-       ~WindowsMemoryAllocator()
-       {
-       }
-       
-       // ------------------------------------------------------------------
-
-#if NXOGRE_DEBUG_MEMORY >= 2
-       NXOGRE_FORCE_INLINE void* allocateMemory(size_t length, const char* file, size_t line)
-       {
-        void* ptr = malloc(length);
-        WindowsMemoryTracker::Tracker.push_memory(ptr, length, file, line);
-        return ptr;
-       }
-#else
-       NXOGRE_FORCE_INLINE void* allocateMemory(size_t length)
-       {
-       return malloc(length)
-       }
-#endif
-       
-       // ------------------------------------------------------------------
-
-#if NXOGRE_DEBUG_MEMORY >= 2
-       NXOGRE_FORCE_INLINE void* reallocateMemory(void* ptr, size_t length, const char* file, size_t line)
-       {
-        void* new_ptr = realloc(ptr, length);
-        WindowsMemoryTracker::Tracker.pop_memory(ptr, file, line);
-        WindowsMemoryTracker::Tracker.push_memory(new_ptr, length, file, line);
-        return new_ptr;
-       }
-#else
-       NXOGRE_FORCE_INLINE void* reallocateMemory(void* ptr, size_t length)
-       {
-       return realloc(ptr, length);
-       }
-#endif
-       
-       // ------------------------------------------------------------------
-
-#if NXOGRE_DEBUG_MEMORY >= 2
-       NXOGRE_FORCE_INLINE void freeMemory(void* ptr, const char* file, size_t line)
-       {
-        WindowsMemoryTracker::Tracker.pop_memory(ptr, file, line);
-        free(ptr);
-       }
-#else
-       NXOGRE_FORCE_INLINE void freeMemory(void* ptr)
-       {
-        free(ptr);
-       }
-#endif
-
-     }; // WindowsMemoryAllocator
-     
-     typedef WindowsMemoryAllocator MemoryAllocator;
+ namespace NxOgre
+ {
+ namespace GC
+ {
 
      // ------------------------------------------------------------------
 
-#if NXOGRE_DEBUG_MEMORY >= 2
-#define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH, __FILE__, __LINE__)
-#define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH, __FILE__, __LINE__)
-#define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR, __FILE__, __LINE__)
-#else
-#define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH)
-#define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH)
-#define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR)
-#endif
+     #if NXOGRE_DEBUG_MEMORY >= 2
+          #define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH, __FILE__, __LINE__)
+          #define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH, __FILE__, __LINE__)
+          #define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR, __FILE__, __LINE__)
+     #else
+          #define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH)
+          #define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH)
+          #define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR)
+     #endif
 
      // ------------------------------------------------------------------
 
@@ -364,19 +105,6 @@
      
    } // namespace NxOgre::GC
    } // namespace NxOgre
-
-#endif  // WIN32
-
-// ---------------------------------------------------------------
-
-namespace NxOgre
-{
-namespace GC
-{
- 
- 
-} // namespace NxOgre::GC
-} // namespace NxOgre
 
 // ---------------------------------------------------------------
 
@@ -497,29 +225,6 @@ class NXOGRE_CLASS AllocatedClass
 
 // ---------------------------------------------------------------
 
-
-#ifdef NXOGRE_USES_DOUBLE_PRECISION
-
-#define NXOGRE_REAL_EPSILON DBL_EPSILON
-#define NXOGRE_REAL_MAX DBL_MAX
-#define NXOGRE_REAL_MIN DBL_MIN
-
-namespace NxOgre
-{
- typedef double Real;
-}
-
-#else
-
-#define NXOGRE_REAL_EPSILON FLT_EPSILON
-#define NXOGRE_REAL_MAX FLT_MAX
-#define NXOGRE_REAL_MIN FLT_MIN
-
-namespace NxOgre
-{
- typedef float Real;
-}
-#endif
 
 
 // -------------------------------------------------
@@ -828,15 +533,206 @@ namespace NxOgre
  
 namespace NxOgre
 {
+
+#if NXOGRE_USE_STLALLOCATOR == 1
+    
+  // ---------------------------------------------------------------
+  
+  template<typename T> struct STLAllocatorBase
+  {
+   typedef T value_type;
+  };
+    
+  // ---------------------------------------------------------------
+  
+  template<typename T> struct STLAllocatorBase<const T>
+  {
+   typedef T value_type;
+  };
+    
+  // ---------------------------------------------------------------
+  
+  template<typename T> class STLAllocator : public STLAllocatorBase<T>
+  {
+     
+   public:
+     
+     typedef STLAllocatorBase<T> Base;
+     typedef typename Base::value_type value_type;
+     typedef value_type*               pointer;
+     typedef const value_type*         const_pointer;
+     typedef value_type&               reference;
+     typedef const value_type&         const_reference;
+     typedef std::size_t               size_type;
+     typedef std::ptrdiff_t            difference_type;
+     
+     template<typename U> struct rebind
+     {
+      typedef STLAllocator<U> other;
+     };
+     
+     NXOGRE_FORCE_INLINE explicit STLAllocator()
+     {
+     }
+     
+     NXOGRE_FORCE_INLINE virtual ~STLAllocator()
+     {
+     }
+     
+     NXOGRE_FORCE_INLINE STLAllocator(STLAllocator const&)
+     {
+     }
+     
+     template<typename U> NXOGRE_FORCE_INLINE STLAllocator(STLAllocator<U> const&)
+     {
+     }
+     
+     NXOGRE_FORCE_INLINE pointer allocate(size_type count,
+                                          typename std::allocator<void>::const_pointer ptr = 0)
+     {
+      NXOGRE_UNUSED(ptr);
+      register size_type sz = count * sizeof(T);
+      pointer p = static_cast<pointer>( NXOGRE_MALLOC(sz) );
+      return p;
+     }
+     
+     NXOGRE_FORCE_INLINE void deallocate(pointer ptr, size_type)
+     {
+      NXOGRE_FREE(ptr);
+     }
+     
+     pointer address(reference x) const
+     {
+      return x;
+     }
+
+     const_pointer address(const_reference x) const
+     {
+      return &x;
+     }
+
+     size_type max_size() const throw()
+     {
+      return std::numeric_limits<size_t>::max();
+     }
+
+     void construct(pointer p, const T& val)
+     {
+      new(static_cast<void*>(p)) T(val);
+     }
+
+     void destroy(pointer p)
+     {
+      p->~T();
+     }
+
+  };
+  
+  // ---------------------------------------------------------------
+  
+  template<typename T, typename T2>
+  NXOGRE_FORCE_INLINE bool operator==(STLAllocator<T> const&, STLAllocator<T2> const&)
+  {
+   return true;
+  }
+  
+  // ---------------------------------------------------------------
+  
+  template<typename T, typename OtherAllocator>
+  NXOGRE_FORCE_INLINE bool operator==(STLAllocator<T> const&, OtherAllocator const&)
+  {
+   return false;
+  }
+  
+  // ---------------------------------------------------------------
+  
+  template<typename T, typename T2>
+  NXOGRE_FORCE_INLINE bool operator!=(STLAllocator<T> const&, STLAllocator<T2> const&)
+  {
+   return false;
+  }
+  
+  // ---------------------------------------------------------------
+  
+  template<typename T, typename OtherAllocator>
+  NXOGRE_FORCE_INLINE bool operator!=(STLAllocator<T> const&, OtherAllocator const&)
+  {
+   return true;
+  }
+  
+  // ---------------------------------------------------------------
+  
+#endif
  
- typedef std::string String;
+}
+ 
+ // ---------------------------------------------------------------
+ 
+ namespace NxOgre
+ {
+ 
+#if NXOGRE_USE_STLALLOCATOR == 0
+  
+  template<typename K, typename V> struct map
+  {
+   typedef std::map<K,V> type;
+   typedef typename std::map<K,V>::iterator iterator;
+   typedef typename std::map<K,V>::const_iterator const_iterator;
+   typedef K key_t;
+   typedef V val_t;
+  };
+  
+  template<typename T> struct vector
+  {
+   typedef std::vector<T> type;
+   typedef typename std::vector<T>::iterator iterator;
+   typedef typename std::vector<T>::const_iterator const_iterator;
+   typedef T val_t;
+  };
+  
+  typedef std::ostringstream OStringStream;
+  typedef std::stringstream StringStream;
+  typedef std::istringstream IStringStream;
+  typedef std::string String;
+  
+#else
+  
+  template<typename K, typename V> struct map
+  {
+   typedef std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>> type;
+   typedef typename std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>>::iterator iterator;
+   typedef typename std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>>::const_iterator const_iterator;
+   typedef K key_t;
+   typedef V val_t;
+  };
+  
+  template<typename T> struct vector
+  {
+   typedef std::vector<T, STLAllocator<T>> type;
+   typedef typename std::vector<T, STLAllocator<T>>::iterator iterator;
+   typedef typename std::vector<T, STLAllocator<T>>::const_iterator const_iterator;
+   typedef T val_t;
+  };
+  
+  typedef std::basic_ostringstream<char, std::char_traits<char>, STLAllocator<char>> OStringStream;
+  typedef std::basic_stringstream<char, std::char_traits<char>, STLAllocator<char>> StringStream;
+  typedef std::basic_istringstream<char, std::char_traits<char>, STLAllocator<char>> IStringStream;
+  typedef std::basic_string<char, std::char_traits<char>, STLAllocator<char> > String;
+#endif
+ 
+ };
+
+ // ---------------------------------------------------------------
+  
+namespace NxOgre
+{
  
  struct Strings
  {
    
    // ---------------------------------------------------------------
    
-   template<typename T> NXOGRE_FORCE_INLINE static void join(std::ostream& s, T* begin, T* end, char delimiter = '\n')
+   template<typename T> NXOGRE_FORCE_INLINE static void join(StringStream& s, T* begin, T* end, char delimiter = '\n')
    {
     while(begin < end)
     {
@@ -852,44 +748,6 @@ namespace NxOgre
  };
  
 } // namespace NxOgre
-
-
- // ---------------------------------------------------------------
- 
-namespace NxOgre
-{
-namespace Enums
-{
-
- // ---------------------------------------------------------------
-
- /*! enum. PhysXAssertionResponse
-     desc.
-          What do when there is an assertion from PhysX
-     enums.
-          PhysXAssertion_Continue -- Continue
-          PhysXAssertion_Ignore -- Ignore
-          PhysXAssertion_Breakpoint -- Breakpoint
-          PhysXAssertion_Exception -- Throw a detailed STL exception
- */
- enum PhysXAssertionResponse
- {
-  PhysXAssertion_Continue,
-  PhysXAssertion_Ignore,
-  PhysXAssertion_Breakpoint,
-  PhysXAssertion_Exception,
- };
-
- // ---------------------------------------------------------------
-
-} // namespace NxOgre::Enums
-} // namespace NxOgre
-
- // ---------------------------------------------------------------
-
-
-#endif
-
 
 
 #endif

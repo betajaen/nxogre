@@ -36,6 +36,29 @@ namespace NxOgre
 {
 
 class PhysXAllocator;
+class PhysXOutputStream;
+
+namespace Enums
+{
+ 
+ /*! enum. PhysXAssertionPolicy
+     desc.
+          What do when there is an assertion from PhysX
+     enums.
+          PhysXAssertionPolicy_Continue -- Continue
+          PhysXAssertionPolicy_Ignore -- Ignore and don't report this assert from now on
+          PhysXAssertionPolicy_Breakpoint -- Breakpoint
+          PhysXAssertionPolicy_Exception -- Throw a exception
+ */
+ enum PhysXAssertionPolicy
+ {
+  PhysXAssertionPolicy_Continue,
+  PhysXAssertionPolicy_Ignore,
+  PhysXAssertionPolicy_Breakpoint,
+  PhysXAssertionPolicy_Exception,
+ };
+ 
+};
 
 /* class. WorldDescription
    desc.
@@ -50,7 +73,7 @@ class NXOGRE_CLASS WorldDescription
 
   struct Reason
   {
-   bool assertion_response : 1;
+   bool assertion_policy : 1;
    bool cooker_thread_mask : 1;
    bool hardware_page_size : 1;
    bool hardware_maximum_convex : 1;
@@ -81,7 +104,7 @@ class NXOGRE_CLASS WorldDescription
   */
   NXOGRE_FORCE_INLINE void reset()
   {
-   mAssertionResponse = Enums::PhysXAssertion_Continue;
+   mAssertionPolicy = Enums::PhysXAssertionPolicy_Continue;
    mCookerThreadMask = 0;
    mHardwareMaximumConvex = 2048;
    mHardwareMaximumPage = 256;
@@ -159,7 +182,7 @@ class NXOGRE_CLASS WorldDescription
       default.
           Enums::PhysXAssertion_Continue
   */
-  Enums::PhysXAssertionResponse mAssertionResponse;
+  Enums::PhysXAssertionPolicy mAssertionPolicy;
 
   // --------------------------------------------------
 
@@ -307,7 +330,23 @@ class NXOGRE_CLASS World : public AllocatedClass::BigClass
   {
    return SINGLETON;
   }
-
+  
+  // --------------------------------------------------
+  
+  /*! function. setPhysXAssertionPolicy
+      desc.
+          Set assertion policy when PhysX encounters an error.
+  */
+  void setPhysXAssertionPolicy(Enums::PhysXAssertionPolicy);
+  
+  // --------------------------------------------------
+  
+  /*! function. GetPhysXAssertionPolicy
+      desc.
+          Get assertion policy when PhysX encounters an error.
+  */
+  Enums::PhysXAssertionPolicy getPhysXAssertionPolicy() const;
+  
   // --------------------------------------------------
 
   WorldDescription saveToDescription() const;
@@ -337,6 +376,8 @@ class NXOGRE_CLASS World : public AllocatedClass::BigClass
   WorldDescription   mDescription;
 
   PhysXAllocator*    mPhysXAllocator;
+
+  PhysXOutputStream* mPhysXOutputStream;
 
 };
 
