@@ -41,7 +41,7 @@
   Debug Memory
 
   0 - No debugging
-  1 - Count allocations/reallocations/free, and save to file on end (leak acknowledgement)
+  1 - Count allocations/reallocations/free, and save to file on end (leak acknowledgment)
   2 - Count allocations/reallocations/free, and where they originated and discard freed memory (leak detection);
   3 - Count allocations/reallocations/free, and where they originated  (leak detection, full memory history);
 */
@@ -64,5 +64,23 @@
   1 - Enable
 */
 #define NXOGRE_USE_STLALLOCATOR 1
+
+/*
+  When logging information write to the console
+  
+  0 - Disable
+  1 - Enable
+*/
+#define NXOGRE_LOG_TO_CONSOLE 1
+
+/*
+  When logging information write to the console
+  
+  0 - Disable
+  1 - Enable
+*/
+#define NXOGRE_LOG_TO_FILE 1
+
+
 
 #endif

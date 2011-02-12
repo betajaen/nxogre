@@ -34,10 +34,21 @@ namespace NxOgre
  const Real Math::HALF_PI = (Math::TWO_PI * Real(0.25));
  const Real Math::RADIANS_PER_DEGREE = (Math::TWO_PI / Real(360));
  const Real Math::DEGREES_PER_RADIAN = (Real(360) / Math::TWO_PI);
+ 
+ Log Log::LOG = Log();
 
 #if NXOGRE_PLATFORM == NXOGRE_PLATFORM_WINDOWS
  NxOgre::GC::WindowsMemoryAllocator NxOgre::GC::WindowsMemoryAllocator::Allocator = NxOgre::GC::WindowsMemoryAllocator();
  NxOgre::GC::WindowsMemoryTracker NxOgre::GC::WindowsMemoryTracker::Tracker = NxOgre::GC::WindowsMemoryTracker();
 #endif
-
+ 
+   void throw_assert_message(const char* s, const char* file, const char* function, int line)
+   {
+    NxOgre::Platform::printf("[NxOgre] Assertion!\n%s\nAsserted by: %s %s(%i)", s, function, file, line);
+   }
+   
+   void throw_assert_message(const StringStream& s, const char* file, const char* function, int line)
+   {
+    NxOgre::Platform::printf("[NxOgre] Assertion!\n%s\nAsserted by: %s %s(%i)", s.str().c_str(), function, file, line);
+   }
 }

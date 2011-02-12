@@ -31,6 +31,9 @@
 #include "NxOgreConfiguration.h"
 
  // ------------------------------------------------------------------
+ 
+ #define NXOGRE_STRINGIFY(STR) NXOGRE_STRINGIFY_IMPL(STR)
+ #define NXOGRE_STRINGIFY_IMPL(STR) #STR
 
 #ifdef _WIN32
   #include "NxOgreRequiredWindows.h"
@@ -44,9 +47,9 @@
      // ------------------------------------------------------------------
 
      #if NXOGRE_DEBUG_MEMORY >= 2
-          #define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH, __FILE__, __LINE__)
-          #define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH, __FILE__, __LINE__)
-          #define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR, __FILE__, __LINE__)
+          #define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH, __FILE__, __FUNCTION__, __LINE__)
+          #define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH, __FILE__, __FUNCTION__, __LINE__)
+          #define NXOGRE_FREE(PTR) ::NxOgre::GC::safe_free(PTR, __FILE__, __FUNCTION__, __LINE__)
      #else
           #define NXOGRE_MALLOC(LENGTH) ::NxOgre::GC::safe_malloc(LENGTH)
           #define NXOGRE_REALLOC(PTR, LENGTH) ::NxOgre::GC::safe_realloc(PTR, LENGTH)
@@ -56,9 +59,9 @@
      // ------------------------------------------------------------------
 
 #if NXOGRE_DEBUG_MEMORY >= 2
-     NXOGRE_FORCE_INLINE void* safe_malloc(size_t length, const char* file, size_t line)
+     NXOGRE_FORCE_INLINE void* safe_malloc(size_t length, const char* file, const char* function, size_t line)
      {
-      return MemoryAllocator::Allocator.allocateMemory(length, file, line);
+      return MemoryAllocator::Allocator.allocateMemory(length, file, function, line);
      }
 #else
      NXOGRE_FORCE_INLINE void* safe_malloc(size_t length)
@@ -70,9 +73,9 @@
      // ------------------------------------------------------------------
      
 #if NXOGRE_DEBUG_MEMORY >= 2
-     NXOGRE_FORCE_INLINE void* safe_realloc(void* ptr, size_t length, const char* file, size_t line)
+     NXOGRE_FORCE_INLINE void* safe_realloc(void* ptr, size_t length, const char* file, const char* function, size_t line)
      {
-      return MemoryAllocator::Allocator.reallocateMemory(ptr, length, file, line);
+      return MemoryAllocator::Allocator.reallocateMemory(ptr, length, file, function, line);
      }
 #else
      NXOGRE_FORCE_INLINE void* safe_realloc(void* ptr, size_t length)
@@ -84,11 +87,11 @@
      // ------------------------------------------------------------------
 
 #if NXOGRE_DEBUG_MEMORY >= 2
-     NXOGRE_FORCE_INLINE void safe_free(void* ptr, const char* file, size_t line)
+     NXOGRE_FORCE_INLINE void safe_free(void* ptr, const char* file, const char* function, size_t line)
      {
       if (ptr != NXOGRE_NULL_POINTER)
       {
-       MemoryAllocator::Allocator.freeMemory(ptr, file, line);
+       MemoryAllocator::Allocator.freeMemory(ptr, file, function, line);
       }
      }
 #else
@@ -100,7 +103,14 @@
       }
      }
 #endif
-     
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+     NXOGRE_FORCE_INLINE void safe_debug_delete(void* ptr)
+     {
+       MemoryAllocator::Allocator.freeMemory(ptr, 0, 0, 0);
+     }
+#endif
+
      // ------------------------------------------------------------------
      
    } // namespace NxOgre::GC
@@ -109,8 +119,9 @@
 // ---------------------------------------------------------------
 
 #if NXOGRE_DEBUG_MEMORY >= 2
-#define NXOGRE_NEW new(__FILE__, __LINE__) 
-#define NXOGRE_DELETE(PTR) operator delete(PTR, __FILE__, __LINE__); PTR = 0;
+#define NXOGRE_NEW new(__FILE__, __FUNCTION__,  __LINE__) 
+#define NXOGRE_DELETE(PTR) ::NxOgre::GC::MemoryTracker::Tracker.pop_memory(PTR, __FILE__, __FUNCTION__, __LINE__); \
+                          delete PTR; PTR = 0;
 #else
 #define NXOGRE_NEW new
 #define NXOGRE_DELETE(PTR) delete PTR; PTR = 0;
@@ -154,9 +165,9 @@ class NXOGRE_CLASS AllocatedClass
     };
     
 #if NXOGRE_DEBUG_MEMORY >= 2
-    void* operator new(size_t length, const char* file, size_t line)
+    void* operator new(size_t length, const char* file, const char* function, size_t line)
     {
-     return GC::safe_malloc(length, file, line);
+     return GC::safe_malloc(length, file, function, line);
     }
 #else
     void* operator new(size_t length)
@@ -166,9 +177,9 @@ class NXOGRE_CLASS AllocatedClass
 #endif
 
 #if NXOGRE_DEBUG_MEMORY >= 2
-    void* operator new[](size_t length, const char* file, size_t line)
+    void* operator new[](size_t length, const char* file, const char* function, size_t line)
     {
-     return GC::safe_malloc(length, file, line);
+     return GC::safe_malloc(length, file, function, line);
     }
 #else
     void* operator new[](size_t length)
@@ -178,21 +189,26 @@ class NXOGRE_CLASS AllocatedClass
 #endif
 
 #if NXOGRE_DEBUG_MEMORY >= 2
-    void operator delete(void* ptr, const char* file, size_t line)
+    // Required by new
+    void operator delete(void* ptr, const char* file, const char* function, size_t line)
     {
-     GC::safe_free(ptr, file, line);
-    }
-#else
-    void operator delete(void* ptr)
-    {
-     GC::safe_free(ptr);
+     GC::safe_free(ptr, file, function, line);
     }
 #endif
 
-#if NXOGRE_DEBUG_MEMORY >= 2
-    void operator delete[](void* ptr, const char* file, size_t line)
+    void operator delete(void* ptr)
     {
-     GC::safe_free(ptr, file, line);
+#if NXOGRE_DEBUG_MEMORY >= 2
+     GC::safe_debug_delete(ptr);
+#else
+     GC::safe_free(ptr);
+#endif
+    }
+
+#if NXOGRE_DEBUG_MEMORY >= 2
+    void operator delete[](void* ptr, const char* file, const char* function, size_t line)
+    {
+     GC::safe_free(ptr, file, function, line);
     }
 #else
     void operator delete[](void* ptr)
@@ -200,7 +216,6 @@ class NXOGRE_CLASS AllocatedClass
      GC::safe_free(ptr);
     }
 #endif
-  
   };
   
   typedef Allocatable<AT_Unallocated>        Unallocated;
@@ -223,10 +238,6 @@ class NXOGRE_CLASS AllocatedClass
 }; // AllocatedClass
 } // namespace NxOgre
 
-// ---------------------------------------------------------------
-
-
-
 // -------------------------------------------------
 
 namespace NxOgre
@@ -244,6 +255,7 @@ namespace NxOgre
 
  class NXOGRE_CLASS Math
  {
+
  public:
 
   static const Real TWO_PI;
@@ -670,55 +682,55 @@ namespace NxOgre
  
  namespace NxOgre
  {
- 
+  
 #if NXOGRE_USE_STLALLOCATOR == 0
-  
-  template<typename K, typename V> struct map
-  {
-   typedef std::map<K,V> type;
-   typedef typename std::map<K,V>::iterator iterator;
-   typedef typename std::map<K,V>::const_iterator const_iterator;
-   typedef K key_t;
-   typedef V val_t;
-  };
-  
-  template<typename T> struct vector
-  {
-   typedef std::vector<T> type;
-   typedef typename std::vector<T>::iterator iterator;
-   typedef typename std::vector<T>::const_iterator const_iterator;
-   typedef T val_t;
-  };
-  
   typedef std::ostringstream OStringStream;
   typedef std::stringstream StringStream;
   typedef std::istringstream IStringStream;
   typedef std::string String;
-  
 #else
-  
-  template<typename K, typename V> struct map
-  {
-   typedef std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>> type;
-   typedef typename std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>>::iterator iterator;
-   typedef typename std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>>::const_iterator const_iterator;
-   typedef K key_t;
-   typedef V val_t;
-  };
-  
-  template<typename T> struct vector
-  {
-   typedef std::vector<T, STLAllocator<T>> type;
-   typedef typename std::vector<T, STLAllocator<T>>::iterator iterator;
-   typedef typename std::vector<T, STLAllocator<T>>::const_iterator const_iterator;
-   typedef T val_t;
-  };
-  
   typedef std::basic_ostringstream<char, std::char_traits<char>, STLAllocator<char>> OStringStream;
   typedef std::basic_stringstream<char, std::char_traits<char>, STLAllocator<char>> StringStream;
   typedef std::basic_istringstream<char, std::char_traits<char>, STLAllocator<char>> IStringStream;
   typedef std::basic_string<char, std::char_traits<char>, STLAllocator<char> > String;
 #endif
+  
+  template<typename K, typename V> struct map
+  {
+   
+#if NXOGRE_USE_STLALLOCATOR == 0
+   typedef std::map<K,V> type;
+   typedef typename std::map<K,V>::iterator iterator;
+   typedef typename std::map<K,V>::const_iterator const_iterator;
+   typedef K key_t;
+   typedef V val_t;
+#else
+   typedef std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>> type;
+   typedef typename std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>>::iterator iterator;
+   typedef typename std::map<K,V, std::less<K>, STLAllocator<std::pair<K,V>>>::const_iterator const_iterator;
+   typedef K key_t;
+   typedef V val_t;
+#endif
+   
+  };
+  
+  template<typename T> struct vector
+  {
+   
+#if NXOGRE_USE_STLALLOCATOR == 0
+   typedef std::vector<T> type;
+   typedef typename std::vector<T>::iterator iterator;
+   typedef typename std::vector<T>::const_iterator const_iterator;
+   typedef T val_t;
+#else
+   typedef std::vector<T, STLAllocator<T>> type;
+   typedef typename std::vector<T, STLAllocator<T>>::iterator iterator;
+   typedef typename std::vector<T, STLAllocator<T>>::const_iterator const_iterator;
+   typedef T val_t;
+#endif
+   
+  };
+  
  
  };
 
@@ -745,9 +757,258 @@ namespace NxOgre
    
    // ---------------------------------------------------------------
    
+   template<typename T> NXOGRE_FORCE_INLINE static void join(StringStream& s, typename vector<T>::type& vec, char delimiter = '\n')
+   {
+    return join(s, vec.begin(), vec.end(), delimiter);
+   }
+   
+   // ---------------------------------------------------------------
+   
+ };
+ 
+
+} // namespace NxOgre
+
+
+// ---------------------------------------------------------------
+
+namespace NxOgre
+{
+ 
+ class Log
+ {
+   
+  public:
+   
+   static Log LOG;
+   
+   void push(const char* message)
+   {
+#if NXOGRE_LOG_TO_CONSOLE == 1
+    Platform::printf("[NxOgre] %s\n", message);
+#endif
+    
+#if NXOGRE_LOG_TO_FILE == 1
+    mNow.refresh();
+    mLogFile.writef("[%i:%i:%i] %s\n", mNow.hour(), mNow.minute(), mNow.second(), message);
+#endif
+   }
+   
+   void push(const String& message)
+   {
+#if NXOGRE_LOG_TO_CONSOLE == 1
+    Platform::printf("[NxOgre] %s\n", message.c_str());
+#endif
+    
+#if NXOGRE_LOG_TO_FILE == 1
+    mNow.refresh();
+    mLogFile.writef("[%i:%i:%i] %s\n", mNow.hour(), mNow.minute(), mNow.second(), message.c_str());
+#endif
+   }
+
+   void push(const StringStream& message)
+   {
+#if NXOGRE_LOG_TO_CONSOLE == 1
+    Platform::printf("[NxOgre] %s\n", message.str().c_str());
+#endif
+    
+#if NXOGRE_LOG_TO_FILE == 1
+    mNow.refresh();
+    mLogFile.writef("[%i:%i:%i] %s\n", mNow.hour(), mNow.minute(), mNow.second(), message.str().c_str());
+#endif
+   }
+   
+   Log()
+   {
+#if NXOGRE_LOG_TO_FILE == 1
+    mLogFile.open("NxOgre.log", false, true);
+    mLogFile.writef(
+    "NxOgre %i.%i.%i '%s/%s' built with %s\n\n[%i:%i:%i] ** Log Started\n",
+     NxOgreVersionMajor, NxOgreVersionMinor, NxOgreVersionBuild, NxOgreBranchName, NxOgreBuildName, NXOGRE_COMPILER_STRING,
+     mNow.hour(), mNow.minute(), mNow.second());
+#endif
+   }
+   
+  ~Log()
+   {
+#if NXOGRE_LOG_TO_FILE == 1
+    mLogFile.writef("[%i:%i:%i] ** Log Stopped\n", mNow.hour(), mNow.minute(), mNow.second());
+    mLogFile.close();
+#endif
+   }
+   
+  protected:
+   
+#if NXOGRE_LOG_TO_FILE == 1
+   Platform::File  mLogFile;
+   Platform::Time  mNow;
+#endif
+   
+ };
+
+
+#if NXOGRE_LOG_TO_FILE == 0 && NXOGRE_LOG_TO_CONSOLE == 0
+ #define NXOGRE_LOG_MESSAGE(MESSAGE)
+ #define NXOGRE_LOG_LONG_MESSAGE_BEGIN if (0) {
+ #define NXOGRE_LOG_LONG_MESSAGE_END(MESSAGE) }
+#else
+ #define NXOGRE_LOG_MESSAGE(MESSAGE) Log::LOG.push(MESSAGE);
+ #define NXOGRE_LOG_LONG_MESSAGE_BEGIN {
+ #define NXOGRE_LOG_LONG_MESSAGE_END(MESSAGE) Log::LOG.push(MESSAGE); }
+#endif
+
+} // namespace NxOgre
+
+// ---------------------------------------------------------------
+
+namespace NxOgre
+{
+    
+    class Exception : public std::exception
+    {
+      
+     public:
+      
+      NXOGRE_FORCE_INLINE Exception(const char* message, const char* file, const char* function, size_t line)
+      : mMessage(message), mFile(file), mFunction(function), mLine(line)
+      {
+       String s = to_s();
+       #if NXOGRE_LOG_TO_FILE == 0 && NXOGRE_LOG_TO_CONSOLE == 0
+         Platform::printf(s.c_str());
+       #else
+         NXOGRE_LOG_MESSAGE(s);
+       #endif
+      }
+
+      NXOGRE_FORCE_INLINE ~Exception() throw()
+      {
+      }
+
+      void operator=(const Exception& other)
+      {
+       mMessage = other.mMessage;
+       mFile = other.mFile;
+       mFunction = other.mFunction;
+       mLine = other.mLine;
+      }
+      
+      String to_s()
+      {
+       StringStream s;
+       s << getName() << " Thrown!\n\n" << mMessage << "\nThrown by " << mFunction << " in " << mFile << "(" << mLine << ")\n";
+       return s.str();
+      }
+
+      virtual const char* getName() const { return "Exception"; }
+
+     protected:
+      
+      std::string  mMessage, mFile, mFunction;
+      size_t       mLine;
+    };
+
+    class BadStateException : public Exception
+    {
+     public:
+      BadStateException(const char* message, const char* file, const char* function, size_t line)
+      : Exception(message, file, function, line) {}
+      const char* getName() const { return "BadStateException"; }
+    };
+    
+    class PhysXException : public Exception
+    {
+     public:
+      PhysXException(const char* message, const char* file, const char* function, size_t line)
+      : Exception(message, file, function, line) {}
+      const char* getName() const { return "PhysXException"; }
+    };
+    
+    class BadDescriptionException : public Exception
+    {
+     public:
+      BadDescriptionException(const char* message, const char* file, const char* function, size_t line)
+      : Exception(message, file, function, line) {}
+      const char* getName() const { return "BadDescriptionException"; }
+    };
+    
+   void throw_assert_message(const char* s, const char* file, const char* function, int line);
+   
+   void throw_assert_message(const StringStream& s, const char* file, const char* function, int line);
+
+   #if NXOGRE_USES_ASSERT == 0
+     #define NXOGRE_THROW_EXCEPTION(EXCEPTION_TYPE, MESSAGE)                       \
+      throw EXCEPTION_TYPE(MESSAGE, __FILE__, __FUNCTION__, __LINE__);      
+   #else
+     #define NXOGRE_THROW_EXCEPTION(EXCEPTION_TYPE, MESSAGE)                       \
+      ::NxOgre::throw_assert_message(MESSAGE, __FILE__, __FUNCTION__, __LINE__);  \
+      assert(0);                                                                   
+   #endif
+
+} // namespace NxOgre
+
+// ---------------------------------------------------------------
+
+namespace NxOgre
+{
+ 
+ namespace Enums
+ {
+  
+   /*! enum. FrameType
+       desc.
+           Type of frame.
+       enums.
+           FrameType_Simulate -- Simulation frame. Physics state will be updated in this frame.
+           FrameType_Interpolation -- Render frame, interpolate position. Physics state won't be updated in this frame.
+           FrameType_Extrapolation -- Render frame, extrapolation position. Physics state is currently lost/out of sync.
+   */
+   enum FrameType
+   {
+    FrameType_Simulate,
+    FrameType_Interpolation,
+    FrameType_Extrapolation
+   };
+ };
+
+ struct TimeStep
+ {
+   
+   friend class SceneIntegrator;
+   
+   NXOGRE_FORCE_INLINE TimeStep()
+   {
+   }
+   
+   NXOGRE_FORCE_INLINE Real getInterpolationAlpha() const
+   {
+    return mAlpha;
+   }
+   
+   NXOGRE_FORCE_INLINE Real getDeltaTime() const
+   {
+    return mDeltaTimeSeconds;
+   }
+   
+   NXOGRE_FORCE_INLINE unsigned long getDeltaTimeMilliseconds() const
+   {
+    return mDeltaTimeMilliseconds;
+   }
+
+   NXOGRE_FORCE_INLINE Enums::FrameType getFrameType() const
+   {
+    return mFrameType;
+   }
+   
+  protected:
+   
+   Real              mDeltaTimeSeconds, mAlpha;
+   unsigned long     mDeltaTimeMilliseconds;
+   Enums::FrameType  mFrameType;
+   
  };
  
 } // namespace NxOgre
 
+// ---------------------------------------------------------------
 
 #endif

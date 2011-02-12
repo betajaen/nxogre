@@ -46,7 +46,7 @@ namespace NxOgre
    void* mallocDEBUG(size_t size, const char* file, int line)
    {
 #if NXOGRE_DEBUG_MEMORY >= 2
-    return GC::safe_malloc(size, file, line);
+    return GC::safe_malloc(size, file, __FUNCTION__, line);
 #else
     NXOGRE_UNUSED(file);
     NXOGRE_UNUSED(line);
@@ -60,7 +60,7 @@ namespace NxOgre
    {
     NXOGRE_UNUSED(type);
 #if NXOGRE_DEBUG_MEMORY >= 2
-    return GC::safe_malloc(size, file, line);
+    return GC::safe_malloc(size, file, __FUNCTION__, line);
 #else
     NXOGRE_UNUSED(file);
     NXOGRE_UNUSED(className);
@@ -194,7 +194,6 @@ namespace NxOgre
  World::World(const WorldDescription& desc)
  : mSDK(NXOGRE_NULL_POINTER)
  {
-  assert(SINGLETON);
   loadFromDescription(desc);
  }
 
@@ -203,14 +202,14 @@ namespace NxOgre
  World::~World()
  {
   
+  NXOGRE_LOG_MESSAGE("Stopping PhysX SDK");
   if (mSDK)
   {
    NxReleasePhysicsSDK(mSDK);
    mSDK = NXOGRE_NULL_POINTER;
   }
-  
   NXOGRE_DELETE(mPhysXAllocator);
-  
+  NXOGRE_DELETE(mPhysXOutputStream);
  }
 
  // --------------------------------------------------
@@ -221,8 +220,49 @@ namespace NxOgre
   NxSDKCreateError errorCode = NXCE_NO_ERROR;
   mPhysXAllocator = NXOGRE_NEW PhysXAllocator();
   mPhysXOutputStream = NXOGRE_NEW PhysXOutputStream(NX_AR_BREAKPOINT);
-
+  
+NXOGRE_LOG_LONG_MESSAGE_BEGIN
+  StringStream s;
+  s << "Creating PhysX SDK using PhysX " << NX_SDK_VERSION_MAJOR << "." << NX_SDK_VERSION_MINOR << "." << NX_SDK_VERSION_BUGFIX;
+NXOGRE_LOG_LONG_MESSAGE_END(s);
+  
   mSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, mPhysXAllocator, mPhysXOutputStream, mDescription.to_physx_desc(), &errorCode);
+  
+  if (mSDK == 0)
+  {
+   StringStream s;
+   s << "Could not create PhysxSDK, reasons being could be: \n";
+   
+   if (errorCode == NXCE_DESCRIPTOR_INVALID)
+   {
+    s << "WorldDescription is invalid, specifically;\n" << to_s(desc.wrong()) << "\n";
+    NXOGRE_THROW_EXCEPTION(BadDescriptionException, s.str().c_str());
+   }
+   else
+   {
+    
+    if (errorCode == NXCE_PHYSX_NOT_FOUND)
+     s << "Unable to find the PhysX libraries. The PhysX drivers are not installed correctly.";
+    
+    else if (errorCode == NXCE_WRONG_VERSION)
+     s << "NxOgre has given a version number that does not match with the libraries.";
+    
+    else if (errorCode == NXCE_CONNECTION_ERROR)
+     s << "A PhysX card was found, but there are problems when communicating with the card.";
+    
+    else if (errorCode == NXCE_RESET_ERROR)
+     s << "A PhysX card was found, but it did not reset (or initialize) properly.";
+    
+    else if (errorCode == NXCE_IN_USE_ERROR)
+     s << "A PhysX card was found, but it is already in use by another application.";
+    
+    else if (errorCode == NXCE_BUNDLE_ERROR)
+     s << "A PhysX card was found, but there are issues with loading the firmware.";
+    else
+     s << "Unknown error\n";
+    NXOGRE_THROW_EXCEPTION(PhysXException, s.str().c_str());
+   }
+  }
   
  }
 
@@ -252,14 +292,16 @@ namespace NxOgre
  void World::destroyWorld()
  {
   
-  if (SINGLETON)
+  if (SINGLETON == 0)
   {
    NXOGRE_THROW_EXCEPTION(BadStateException, "World has already been destroyed.");
    return;
   }
-
+  
   NXOGRE_DELETE(SINGLETON);
   SINGLETON = NXOGRE_NULL_POINTER;
+  
+  NXOGRE_LOG_MESSAGE("NxOgre and PhysX Objects destroyed");
   
  }
  

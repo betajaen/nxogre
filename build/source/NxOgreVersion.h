@@ -24,15 +24,15 @@
     
 */
 
-#ifndef NXOGRE_REQUIRED_H
-#define NXOGRE_REQUIRED_H
+#ifndef NXOGRE_VERSION_H
+#define NXOGRE_VERSION_H
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 8
-#define NxOgreVersionBuild 1131
-#define NxOgreBuildName "Result"
+#define NxOgreVersionBuild 1333
+#define NxOgreBuildName "Approve"
 #define NxOgreBranchName "LeJean"
 #define NxOgreVersion 180
-//~~ mtime f21a0ba43b3489eb24a7fda282f6c63e
+//~~ mtime 661ab8a27eff896f9d707f5fabdb98bc
 
 #endif

@@ -29,6 +29,7 @@
 
 #include "NxOgreRequired.h"
 #include "NxOgreCommon.h"
+#include "NxOgreWorld.h"
 
 
 #endif

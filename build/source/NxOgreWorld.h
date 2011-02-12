@@ -112,6 +112,7 @@ class NXOGRE_CLASS WorldDescription
    mPerSceneBatching = true;
    mGPUHeapSize = 32;
    mMeshCacheSize = 0xffffffff;
+   mHardwarePageSize = 65536;
   }
 
   // --------------------------------------------------
@@ -152,7 +153,7 @@ class NXOGRE_CLASS WorldDescription
    Reason r = {0,0,0, 0,0,0, 0,0,0, 0};
 
    if ( mHardwarePageSize != 65536 )
-    r.hardware_maximum_page = true;
+    r.hardware_page_size = true;
    if ( mHardwareMaximumConvex & (mHardwareMaximumConvex - 1) )
     r.hardware_maximum_convex = true;
    if ( mHardwareMaximumPage & (mHardwareMaximumPage - 1) )
@@ -348,9 +349,21 @@ class NXOGRE_CLASS World : public AllocatedClass::BigClass
   Enums::PhysXAssertionPolicy getPhysXAssertionPolicy() const;
   
   // --------------------------------------------------
-
+  
+  /*! function. saveToDescription
+      desc.
+          Get the description of the world of when it was created.
+  */
   WorldDescription saveToDescription() const;
-
+  
+  // --------------------------------------------------
+  
+  /*! function. advance
+      desc.
+          Advance time
+  */
+  void advance(Real deltaTime);
+  
  protected:
 
   // --------------------------------------------------
@@ -378,6 +391,8 @@ class NXOGRE_CLASS World : public AllocatedClass::BigClass
   PhysXAllocator*    mPhysXAllocator;
 
   PhysXOutputStream* mPhysXOutputStream;
+
+  size_t             mCurrentFrameID;
 
 };
 

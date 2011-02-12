@@ -209,7 +209,7 @@ class NXOGRE_CLASS Vec3
   // --------------------------------------------------
 
   // Set x,y,z to modulus of x,y,z 
-  NXOGRE_FORCE_INLINE void ABSOLUTE()
+  NXOGRE_FORCE_INLINE void Absolute()
   {
    x = Math::abs(x);
    y = Math::abs(y);
@@ -231,7 +231,7 @@ class NXOGRE_CLASS Vec3
   // --------------------------------------------------
 
   // Lerp of x,y,z from b according to t
-  NXOGRE_FORCE_INLINE void LERP(const Vec3& b, const Real& t)
+  NXOGRE_FORCE_INLINE void Lerp(const Vec3& b, const Real& t)
   {
    x = Math::lerp(x, b.x, t);
    y = Math::lerp(y, b.y, t);
@@ -273,7 +273,7 @@ class NXOGRE_CLASS Vec3
   // --------------------------------------------------
 
   // Become the cross product (self x V)
-  NXOGRE_FORCE_INLINE void CROSS(const Vec3& v)
+  NXOGRE_FORCE_INLINE void Cross(const Vec3& v)
   {
    set(cross(v));
   }
@@ -281,7 +281,7 @@ class NXOGRE_CLASS Vec3
   // --------------------------------------------------
 
   // Normalise self
-  NXOGRE_FORCE_INLINE Real NORMALISE()
+  NXOGRE_FORCE_INLINE Real Normalise()
   {
    Real n = magnitude();
    if (n > NXOGRE_REAL_EPSILON)
@@ -300,7 +300,7 @@ class NXOGRE_CLASS Vec3
   NXOGRE_FORCE_INLINE Vec3 normalise()
   {
    Vec3 v(*this);
-   v.NORMALISE();
+   v.Normalise();
    return v;
   }
 
