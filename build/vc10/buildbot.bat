@@ -38,6 +38,7 @@ xcopy "%2\*.lib" "..\..\sdk" /Q /R /Y /T /I
 xcopy "%2\*.lib" "..\..\sdk" /Q /R /Y
 xcopy "%2\*.dll" "..\..\sdk" /Q /R /Y
 xcopy "..\source\NxOgre*.h" "..\..\sdk" /Q /R /Y
+xcopy "..\source\NxOgre*.rb" "..\..\sdk" /Q /R /Y
 EXIT
 :: ----------------------------------------------------
 

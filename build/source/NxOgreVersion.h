@@ -29,10 +29,10 @@
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 8
-#define NxOgreVersionBuild 1333
-#define NxOgreBuildName "Approve"
+#define NxOgreVersionBuild 1378
+#define NxOgreBuildName "Isotope"
 #define NxOgreBranchName "LeJean"
 #define NxOgreVersion 180
-//~~ mtime 661ab8a27eff896f9d707f5fabdb98bc
+//~~ mtime 52eaf8d0a21dbc7629be8615a593e903
 
 #endif

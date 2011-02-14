@@ -973,8 +973,6 @@ namespace NxOgre
  struct TimeStep
  {
    
-   friend class SceneIntegrator;
-   
    NXOGRE_FORCE_INLINE TimeStep()
    {
    }

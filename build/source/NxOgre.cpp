@@ -25,10 +25,13 @@
 */
 
 // This is an automatically created file. Do not alter.
-//~~ ub_begin 3e44564c20fc07cc5bd577aaa2306d81
+//~~ ub_begin 41de9ac6e4b8f0763b64acfa317f39b8
 
+#include "NxOgreCAPI.cpp"
 #include "NxOgreCommon.cpp"
 #include "NxOgreRequired.cpp"
+#include "NxOgreScene.cpp"
+#include "NxOgreSceneIntegrator.cpp"
 #include "NxOgreWorld.cpp"
 
 //~~ ub_end

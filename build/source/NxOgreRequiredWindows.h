@@ -71,6 +71,8 @@
    
    #ifdef NXOGRE_IS_LIBRARY
        
+       #define NXOGRE_C_FUNCTION extern __declspec(dllexport)
+       
        #ifdef NXOGRE_SDK
         #define NXOGRE_CLASS __declspec(dllexport)
         #define NXOGRE_FUNCTION __declspec(dllexport)

@@ -24,13 +24,11 @@
     
 */
 
-#ifndef NXOGRE_H
-#define NXOGRE_H
+#ifndef NXOGRE_C_API_H
+#define NXOGRE_C_API_H
 
 #include "NxOgreRequired.h"
-#include "NxOgreCommon.h"
 
-#include "NxOgreWorld.h"
-#include "NxOgreScene.h"
+
 
 #endif

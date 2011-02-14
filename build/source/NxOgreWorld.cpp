@@ -25,6 +25,7 @@
 */
 
 #include "NxOgreWorld.h"
+#include "NxOgreScene.h"
 #include "NxPhysics.h"
 
 namespace NxOgre
@@ -135,6 +136,17 @@ namespace NxOgre
      return NX_AR_IGNORE;
     return NX_AR_BREAKPOINT;
    }
+   
+   NXOGRE_FORCE_INLINE static Enums::PhysXAssertionPolicy NxAssertResponseToPhysXAssertionPolicy( NxAssertResponse policy)
+   {
+    if (policy == NX_AR_BREAKPOINT)
+     return Enums::PhysXAssertionPolicy_Breakpoint;
+    else if (policy == NX_AR_CONTINUE)
+     return Enums::PhysXAssertionPolicy_Continue;
+    else if (policy == NX_AR_IGNORE)
+     return Enums::PhysXAssertionPolicy_Ignore;
+    return Enums::PhysXAssertionPolicy_Breakpoint;
+   }
 
    NxAssertResponse  mAssertionPolicy;
    
@@ -189,11 +201,27 @@ namespace NxOgre
   return s.str();
  }
 
+ String WorldDescription::to_s() const
+ {
+  OStringStream s;
+  s << "\n[\nassertion_policy = " << mAssertionPolicy << " ,\n"
+    << "cooker_thread_mask = " << mCookerThreadMask << ",\n"
+    << "hardware_maximum_convex = " << mHardwareMaximumConvex << ",\n"
+    << "hardware_maximum_page = " << mHardwareMaximumPage  << ",\n"
+    << "no_hardware = " << mNoHardware  << ",\n"
+    << "per_scene_batching = " << mPerSceneBatching  << ",\n"
+    << "gpu_heap_size = " << mGPUHeapSize  << ",\n"
+    << "mesh_cache_size = " << mMeshCacheSize  << ",\n"
+    << "hardware_page_size = " << mHardwarePageSize  << "\n]\n";
+  return s.str();
+ }
+
  // --------------------------------------------------
 
  World::World(const WorldDescription& desc)
  : mSDK(NXOGRE_NULL_POINTER)
  {
+  std::cout << desc.to_s() << "\n";
   loadFromDescription(desc);
  }
 
@@ -306,6 +334,22 @@ NXOGRE_LOG_LONG_MESSAGE_END(s);
  }
  
  // --------------------------------------------------
-
+ 
+ void World::advance(Real deltaTime)
+ {
+   std::cout << "Advancing time by " << deltaTime << "\n";
+ }
+ 
+ // --------------------------------------------------
+ 
+ void World::setPhysXAssertionPolicy(Enums::PhysXAssertionPolicy policy)
+ {
+  mPhysXOutputStream->mAssertionPolicy = PhysXOutputStream::PhysXAssertionPolicyToNxAssertResponse(policy);
+ }
+ 
+ Enums::PhysXAssertionPolicy World::getPhysXAssertionPolicy() const
+ {
+  return PhysXOutputStream::NxAssertResponseToPhysXAssertionPolicy(mPhysXOutputStream->mAssertionPolicy);
+ }
 
 } // namespace World

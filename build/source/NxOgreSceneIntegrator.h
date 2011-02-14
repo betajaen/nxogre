@@ -24,13 +24,43 @@
     
 */
 
-#ifndef NXOGRE_H
-#define NXOGRE_H
+#ifndef NXOGRE_SCENE_INTEGRATOR_H
+#define NXOGRE_SCENE_INTEGRATOR_H
 
 #include "NxOgreRequired.h"
-#include "NxOgreCommon.h"
 
-#include "NxOgreWorld.h"
-#include "NxOgreScene.h"
+class NxScene;
+
+namespace NxOgre
+{
+ 
+ 
+ class FixedASyncSceneIntegrator
+ {
+   
+  public:
+   
+   FixedASyncSceneIntegrator(NxScene*, Real maxTimeStep, int maxSubSteps);
+   
+  ~FixedASyncSceneIntegrator();
+   
+   void advance();
+   
+   void advance(Real customDeltaTime);
+   
+  protected:
+   
+   Platform::Timer  mTimer;
+   NxScene*         mScene;
+   Real             mMaxTimeStep, mFrameTime;
+   int              mMaxSubSteps;
+   
+ };
+ 
+ #if NXOGRE_SCENE_INTEGRATOR_METHOD == NXOGRE_SCENE_INTEGRATOR_ASYNC
+  typedef FixedASyncSceneIntegrator SceneIntegrator;
+ #endif
+
+} // namespace NxOgre
 
 #endif

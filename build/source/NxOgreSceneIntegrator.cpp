@@ -24,13 +24,50 @@
     
 */
 
-#ifndef NXOGRE_H
-#define NXOGRE_H
+#include "NxOgreSceneIntegrator.h"
+#include "NxPhysics.h"
 
-#include "NxOgreRequired.h"
-#include "NxOgreCommon.h"
+namespace NxOgre
+{
+ 
+ // --------------------------------------------------
 
-#include "NxOgreWorld.h"
-#include "NxOgreScene.h"
+ FixedASyncSceneIntegrator::FixedASyncSceneIntegrator(NxScene* scene, Real maxTimeStep, int maxSubSteps)
+ : mScene(scene), mMaxTimeStep(maxTimeStep), mMaxSubSteps(maxSubSteps)
+ {
+ }
 
-#endif
+ FixedASyncSceneIntegrator::~FixedASyncSceneIntegrator()
+ {
+ }
+ 
+ void FixedASyncSceneIntegrator::advance()
+ {
+  
+  advance(mTimer.nowSeconds());
+  
+ }
+ 
+ void FixedASyncSceneIntegrator::advance(Real customDeltaTime)
+ {
+  
+  mFrameTime = customDeltaTime;
+  
+  mScene->simulate(mFrameTime);
+  mScene->flushStream();
+  
+  /*
+     Calculate timestep and alpha here.
+  */
+  
+  while(!mScene->checkResults(NX_RIGID_BODY_FINISHED, false))
+  {
+   // Callback for user waiting function?
+  }
+  mScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+ }
+
+ // --------------------------------------------------
+
+
+} // namespace World

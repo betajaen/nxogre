@@ -52,10 +52,10 @@ namespace Enums
  */
  enum PhysXAssertionPolicy
  {
-  PhysXAssertionPolicy_Continue,
-  PhysXAssertionPolicy_Ignore,
-  PhysXAssertionPolicy_Breakpoint,
-  PhysXAssertionPolicy_Exception,
+  PhysXAssertionPolicy_Continue = 0,
+  PhysXAssertionPolicy_Ignore = 1,
+  PhysXAssertionPolicy_Breakpoint = 2,
+  PhysXAssertionPolicy_Exception = 3,
  };
  
 };
@@ -114,9 +114,17 @@ class NXOGRE_CLASS WorldDescription
    mMeshCacheSize = 0xffffffff;
    mHardwarePageSize = 65536;
   }
-
+  
   // --------------------------------------------------
-
+  
+  /*! function. to_s
+      desc.
+          to string
+  */
+  String to_s() const;
+  
+  // --------------------------------------------------
+  
   /* function. isValid
      desc.
          Is the description valid or not?
@@ -361,6 +369,9 @@ class NXOGRE_CLASS World : public AllocatedClass::BigClass
   /*! function. advance
       desc.
           Advance time
+      note.
+          This is a legacy function, for more accurate Scene control, you
+          should call Scene::advance(deltaTime) per Scene as needed.
   */
   void advance(Real deltaTime);
   
@@ -382,18 +393,18 @@ class NXOGRE_CLASS World : public AllocatedClass::BigClass
 
  protected:
   
-  static World* SINGLETON;
-
-  NxPhysicsSDK*      mSDK;
-
-  WorldDescription   mDescription;
-
-  PhysXAllocator*    mPhysXAllocator;
-
-  PhysXOutputStream* mPhysXOutputStream;
-
-  size_t             mCurrentFrameID;
-
+  static World*               SINGLETON;
+  
+  NxPhysicsSDK*               mSDK;
+  
+  WorldDescription            mDescription;
+  
+  PhysXAllocator*             mPhysXAllocator;
+  
+  PhysXOutputStream*          mPhysXOutputStream;
+  
+  vector<class Scene*>::type  mScenes;
+  
 };
 
 // --------------------------------------------------
@@ -411,10 +422,107 @@ class NXOGRE_CLASS World : public AllocatedClass::BigClass
 */
 String to_s(const WorldDescription::Reason&);
 
-
-
 // --------------------------------------------------
 
 } // namespace NxOgre
+
+
+
+#if NXOGRE_C_API == 1
+
+extern "C"
+{
+ 
+ struct NXC_WorldDescription
+ {
+  int assertion_policy;
+  unsigned int cooker_thread_mask;
+  unsigned int hardware_maximum_convex;
+  unsigned int hardware_page_size;
+  unsigned int hardware_maximum_page;
+  int no_hardware;
+  int per_scene_batching;
+  unsigned int gpu_heap_size;
+  unsigned int mesh_cache_size;
+ };
+ 
+ NXOGRE_C_FUNCTION void* NXC_WorldCreate(NXC_WorldDescription* d)
+ {
+  NxOgre::WorldDescription desc;
+  desc.mAssertionPolicy = (NxOgre::Enums::PhysXAssertionPolicy) d->assertion_policy;
+  desc.mCookerThreadMask = d->cooker_thread_mask;
+  desc.mGPUHeapSize = d->gpu_heap_size;
+  desc.mHardwareMaximumConvex = d->hardware_maximum_convex;
+  desc.mHardwareMaximumPage = d->hardware_maximum_page;
+  desc.mHardwarePageSize = d->hardware_page_size;
+  desc.mMeshCacheSize = d->mesh_cache_size;
+  desc.mNoHardware = d->no_hardware;
+  desc.mPerSceneBatching = d->per_scene_batching;
+  return NxOgre::World::createWorld(desc);
+ }
+ 
+ NXOGRE_C_FUNCTION void NXC_WorldDestroy()
+ {
+  NxOgre::World::destroyWorld();
+ }
+
+ NXOGRE_C_FUNCTION NXC_WorldDescription* NXC_WorldDescriptionNew()
+ {
+  NXC_WorldDescription* desc = new NXC_WorldDescription();
+  desc->assertion_policy = NxOgre::Enums::PhysXAssertionPolicy_Continue;
+  desc->cooker_thread_mask = 0;
+  desc->gpu_heap_size = 32;
+  desc->hardware_maximum_convex = 2048;
+  desc->hardware_maximum_page = 256;
+  desc->hardware_page_size = 65536;
+  desc->mesh_cache_size = 0xffffffff;
+  desc->no_hardware = true;
+  desc->per_scene_batching = true;
+  return desc;
+ }
+
+ NXOGRE_C_FUNCTION void NXC_WorldDescriptionReset(NXC_WorldDescription* desc)
+ {
+  std::cout << "Reseting\n";
+  desc->assertion_policy = NxOgre::Enums::PhysXAssertionPolicy_Continue;
+  desc->cooker_thread_mask = 0;
+  desc->gpu_heap_size = 32;
+  desc->hardware_maximum_convex = 2048;
+  desc->hardware_maximum_page = 256;
+  desc->hardware_page_size = 65536;
+  desc->mesh_cache_size = 0xffffffff;
+  desc->no_hardware = true;
+  desc->per_scene_batching = true;
+ }
+
+ NXOGRE_C_FUNCTION void NXC_WorldDescriptionDelete(NXC_WorldDescription* desc)
+ {
+  if (desc)
+   delete desc;
+ }
+ 
+ NXOGRE_C_FUNCTION void NXC_WorldAdvance(NxOgre::World* world, float time)
+ {
+  world->advance(time);
+ }
+
+ NXOGRE_C_FUNCTION NxOgre::World* NXC_WorldSingleton()
+ {
+  return NxOgre::World::getSingleton();
+ }
+ 
+ NXOGRE_C_FUNCTION void NXC_WorldSetAssertionPolicy(NxOgre::World* world, int policy)
+ {
+  world->setPhysXAssertionPolicy((NxOgre::Enums::PhysXAssertionPolicy) policy);
+ }
+ 
+ NXOGRE_C_FUNCTION int NXC_WorldGetAssertionPolicy(NxOgre::World* world)
+ {
+  return world->getPhysXAssertionPolicy();
+ }
+ 
+}
+
+#endif
 
 #endif

@@ -24,13 +24,15 @@
     
 */
 
-#ifndef NXOGRE_H
-#define NXOGRE_H
-
+#include "NxOgreCAPI.h"
 #include "NxOgreRequired.h"
-#include "NxOgreCommon.h"
 
-#include "NxOgreWorld.h"
-#include "NxOgreScene.h"
-
-#endif
+extern "C"
+{
+ 
+ float NxOgre_Abs(float val)
+ {
+  return NxOgre::Math::abs(val);
+ }
+ 
+};

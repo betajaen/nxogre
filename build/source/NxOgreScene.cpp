@@ -24,13 +24,59 @@
     
 */
 
-#ifndef NXOGRE_H
-#define NXOGRE_H
-
-#include "NxOgreRequired.h"
-#include "NxOgreCommon.h"
-
-#include "NxOgreWorld.h"
 #include "NxOgreScene.h"
+#include "NxPhysics.h"
 
-#endif
+namespace NxOgre
+{
+ 
+ // --------------------------------------------------
+
+ NxSceneDesc SceneDescription::to_physx_desc() const
+ {
+  NxSceneDesc desc;
+  return desc;
+ }
+
+ // --------------------------------------------------
+
+ String to_s(const SceneDescription::Reason& r)
+ {
+  OStringStream s;
+  //if (r.assertion_policy)
+  // s << "Assertion response\n";
+
+  return s.str();
+ }
+
+ // --------------------------------------------------
+
+ Scene::Scene(const SceneDescription& desc, World* parent)
+ : mScene(NXOGRE_NULL_POINTER), mParent(parent)
+ {
+  loadFromDescription(desc);
+ }
+
+ // --------------------------------------------------
+
+ Scene::~Scene()
+ {
+ }
+
+ // --------------------------------------------------
+
+ void Scene::loadFromDescription(const SceneDescription& desc)
+ {
+ }
+
+ // --------------------------------------------------
+
+ SceneDescription Scene::saveToDescription() const
+ {
+  return SceneDescription();
+ }
+ 
+ // --------------------------------------------------
+
+
+} // namespace World

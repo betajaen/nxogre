@@ -81,6 +81,19 @@
 */
 #define NXOGRE_LOG_TO_FILE 1
 
+/*
+  
+  Scene Integration Method
+  NXOGRE_SCENE_INTEGRATOR_ASYNC - Async
+  
+*/
+#define NXOGRE_SCENE_INTEGRATOR_ASYNC 0
+#define NXOGRE_SCENE_INTEGRATOR_METHOD NXOGRE_SCENE_INTEGRATOR_ASYNC
 
+
+/*
+  
+*/
+#define NXOGRE_C_API 1
 
 #endif
