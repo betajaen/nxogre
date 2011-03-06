@@ -77,18 +77,13 @@ CharacterController::CharacterController(const SimpleShape& shape, const Vec3& g
 {
  mName = description.mName;
  mNameHash = Strings::hash(mName);
- 
  mController = _createCharacterController(globalPosition, mScene, shape, description);
 }
 
 CharacterController::~CharacterController()
 {
- _destroy();
- if (mController)
- {
-  World::getSingleton()->getPhysXControllerManager()->releaseController(*mController);
-  mController = 0;
- }
+ _destroyCharacterController(mController);
+ mController = 0;
 }
 
 void CharacterController::createCharacterController(const Vec3& globalPos, const SimpleShape& shape, const CharacterControllerDescription& description)

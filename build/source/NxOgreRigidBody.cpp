@@ -655,6 +655,23 @@ void RigidBody::_destroy()
  
 }
 
+#if NxOgreHasCharacterController == 1
+
+void RigidBody::_destroyCharacterController(NxController* controller)
+{
+ 
+ if (controller == 0)
+  return;
+ 
+ PhysXPointer* ptr = pointer_cast(mActor->userData);
+ GC::safe_delete(ptr, NXOGRE_GC_THIS);
+ 
+ World::getSingleton()->getPhysXControllerManager()->releaseController(*controller);
+ 
+}
+
+#endif
+
 bool RigidBody::isDynamic() const
 {
  return mActor->isDynamic();

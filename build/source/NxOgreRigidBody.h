@@ -360,9 +360,9 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
       !protected
   */
   NxController*  _createCharacterController(const Vec3 &, Scene*, const SimpleShape&, const CharacterControllerDescription&);
-
+  
 #endif
-
+  
   /*! function. destroy
       desc.
           Destroy the NxActor safely and delete all shapes from mShapes.
@@ -370,6 +370,18 @@ class NxOgrePublicClass RigidBody : public RigidBodyBasedAllocatable
           User classes that inherit from Actor, SceneGeometry, KinematicActor, CharacterController or Volume do not need to call this, as it will be call automatically by the parent destructor.
   */
   void  _destroy();
+  
+#if NxOgreHasCharacterController == 1
+  
+  /*! function. _destroyCharacterController
+      desc.
+          Destroy the NxCharacterController safely.
+      note.
+          User classes that inherit from CharacterController not need to call this, as it will be call automatically by the parent destructor.
+  */
+  void  _destroyCharacterController(NxController*);
+  
+#endif
   
   protected: // Variables
   
