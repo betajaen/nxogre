@@ -31,10 +31,10 @@
 
 #define NxOgreVersionMajor 1
 #define NxOgreVersionMinor 7
-#define NxOgreVersionBuild 3521
-#define NxOgreBuildName "Towards"
+#define NxOgreVersionBuild 3527
+#define NxOgreBuildName "Sparked"
 #define NxOgreBranchName "BuggySwires"
 #define NxOgreVersion 170
-//~~ mtime 4ac5e30649f7cb8fb26f54e330cea5cd
+//~~ mtime 14f14839cbde1ed467e39090c978cd9e
 
 #endif

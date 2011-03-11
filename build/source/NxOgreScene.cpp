@@ -236,6 +236,17 @@ SceneGeometry* Scene::createSceneGeometry(const ShapeDescription& shape, const M
  return sg;
 }
 
+bool Scene::forceDestroySceneGeometry(SceneGeometry* scene_geom)
+{
+ 
+ if (scene_geom == 0)
+  return false;
+ 
+ mSceneGeometries.remove(scene_geom->getNameHash(), scene_geom);
+ 
+ return true;
+}
+
 void Scene::simulate(float deltaTime)
 {
  

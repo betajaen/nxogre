@@ -185,6 +185,15 @@ class NxOgrePublicClass Scene : public BigClassAllocatable
   */
   SceneGeometry*  createSceneGeometry(const ShapeDescriptions&, const Matrix44& = Matrix44::IDENTITY, const RigidBodyDescription& = RigidBodyDescription());
   
+  /*! function. forceDestroySceneGeometry
+      desc.
+          Force the deletion of a SceneGeometry.
+      note.
+          Deleting SceneGeometries is "frowned" upon, due to the unstable behaviour that may happen in the
+          following frames after it has been deleted.
+  */
+  bool forceDestroySceneGeometry(SceneGeometry*);
+  
   /*! function. createKinematicActor
       desc.
           

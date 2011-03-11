@@ -188,6 +188,7 @@ bool MemoryResource::write(const void* src, size_t src_size)
  mMemory.put_at(mIndex, src, src_size);
  mIndex += src_size;
  
+ return true;
 }
 
 bool MemoryResource::writeNull()
