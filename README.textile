@@ -12,7 +12,7 @@ Before you install NxOgre go through this checklist
 
 h2. Installation Instructions
 
-# Go to the latest commit on "Github":http://github.com/betajaen/nxogre/tree/master
+# Go to the latest commit on "Github":http://github.com/betajaen/nxogre/tree/detritus
 # Click on the download link
 # Then click on zip archive to download it to your computer
 # Uncompress the contents of the archive to your development directory i.e. @c:/dev/@
