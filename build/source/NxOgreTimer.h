@@ -77,7 +77,6 @@ class NxOgrePublicClass Timer
 
    timeval  mStart;
    timeval  mNow;
-   timezone mTimezone;
 
 #endif
 

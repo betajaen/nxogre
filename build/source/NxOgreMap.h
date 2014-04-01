@@ -146,6 +146,8 @@ class map<K, T*, garbage_collection> : protected garbage_collection::template im
 
  public:
 
+    typedef typename garbage_collection::template impl_map<K, T*> BaseClass;
+
   map() : container(new std::map<K, T*>() )
   { // constructor
   }
@@ -188,7 +190,7 @@ class map<K, T*, garbage_collection> : protected garbage_collection::template im
   
   T* at_or_null(const K& key)
   {
-   std::map<K,T*>::iterator it container->find(key);
+   typename std::map<K, T*>::iterator it = container->find(key);
    if (it == container->end())
     return 0;
    return (*it).second;
@@ -201,7 +203,7 @@ class map<K, T*, garbage_collection> : protected garbage_collection::template im
   
   const T* at_or_null(const K& key) const
   {
-   std::map<K,T*>::const_iterator it container->find(key);
+   typename std::map<K,T*>::const_iterator it = container->find(key);
    if (it == container->end())
     return 0;
    return (*it).second;
@@ -217,13 +219,13 @@ class map<K, T*, garbage_collection> : protected garbage_collection::template im
    typename std::map<K, T*>::iterator it = container->find(key);
    if (it == container->end())
     return;
-   gc_free((*it).second);
+   BaseClass::gc_free((*it).second);
    container->erase(it);
   }
 
   void remove_all()
   {
-   gc_free_range(container->begin(), container->end());
+   BaseClass::gc_free_range(container->begin(), container->end());
    container->clear();
   }
 
@@ -264,7 +266,7 @@ template<typename K, typename T> T* get_or_null(const NxOgre::map<K,T*>& map, co
 
 template<typename K, typename T> T* get_or_null(const std::map<K,T*>& map, const K& lookFor)
 {
- std::map<K,T*>::const_iterator it = map.find(lookFor);
+ typename std::map<K,T*>::const_iterator it = map.find(lookFor);
  if (it == map.end())
   return NULL;
  return (*it).second;
@@ -279,7 +281,7 @@ template<typename K, typename T> T* get_or_null(NxOgre::map<K,T*>& map, const K&
 
 template<typename K, typename T> T* get_or_null(std::map<K,T*>& map, const K& lookFor)
 {
- std::map<K,T*>::const_iterator it = map.find(lookFor);
+ typename std::map<K,T*>::const_iterator it = map.find(lookFor);
  if (it == map.end())
   return NULL;
  return (*it).second;

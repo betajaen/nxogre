@@ -40,18 +40,25 @@
 
 #endif
 
-                                                                                       
+
 
 namespace NxOgre
 {
 
-                                                                                       
+
 
 Timer::Timer()
-: mStart(0),
-  mFrequency(0)
+#if NxOgrePlatform == NxOgrePlatformWindows
+    : mStart(0),
+      mFrequency(0)
+    #endif
 {
- reset();
+#if NxOgrePlatform == NxOgrePlatformLinux
+    mStart.tv_sec = 0;
+    mStart.tv_usec = 0;
+#endif
+
+    reset();
 }
 
 Timer::~Timer()
@@ -64,8 +71,8 @@ float Timer::now()
 #if NxOgrePlatform == NxOgrePlatformWindows
  QueryPerformanceCounter( (LARGE_INTEGER*) &mNow);
  return (float) ( float(mNow - mStart) / float(mFrequency));
-#elif NxOgrePlatform == NxOgerPlatformLinux
- gettimeofday(&mNow, &mTimezone);
+#elif NxOgrePlatform == NxOgrePlatformLinux
+ gettimeofday(&mNow, NULL);
  float a = (float)mStart.tv_sec + (float)mStart.tv_usec/(1000*1000);
  float b = (float)mNow.tv_sec + (float)mNow.tv_usec/(1000*1000);
  return b - a;
@@ -77,8 +84,8 @@ double Timer::nowDouble()
 #if NxOgrePlatform == NxOgrePlatformWindows
  QueryPerformanceCounter( (LARGE_INTEGER*) &mNow);
  return (double) ( double(mNow - mStart) / double(mFrequency));
-#elif NxOgrePlatform == NxOgerPlatformLinux
- gettimeofday(&mNow, &mTimezone);
+#elif NxOgrePlatform == NxOgrePlatformLinux
+ gettimeofday(&mNow, NULL);
  double a = (double)mStart.tv_sec + (double)mStart.tv_usec/(1000*1000);
  double b = (double)mNow.tv_sec + (double)mNow.tv_usec/(1000*1000);
  return b - a;
@@ -92,8 +99,8 @@ float Timer::nowReset()
  float t = (float) ( float(mNow - mStart) / float(mFrequency));
  reset();
  return t;
-#elif NxOgrePlatform == NxOgerPlatformLinux
- gettimeofday(&mNow, &mTimezone);
+#elif NxOgrePlatform == NxOgrePlatformLinux
+ gettimeofday(&mNow, NULL);
  float a = (float)mStart.tv_sec + (float)mStart.tv_usec/(1000*1000);
  float b = (float)mNow.tv_sec + (float)mNow.tv_usec/(1000*1000);
  reset();
@@ -108,8 +115,8 @@ double Timer::nowResetDouble()
  double t = (double) ( double(mNow - mStart) / double(mFrequency));
  reset();
  return t;
-#elif NxOgrePlatform == NxOgerPlatformLinux
- gettimeofday(&mNow, &mTimezone);
+#elif NxOgrePlatform == NxOgrePlatformLinux
+ gettimeofday(&mNow, NULL);
  double a = (double)mStart.tv_sec + (double)mStart.tv_usec/(1000*1000);
  double b = (double)mNow.tv_sec + (double)mNow.tv_usec/(1000*1000);
  reset();

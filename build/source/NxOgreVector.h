@@ -152,7 +152,7 @@ class vector : protected garbage_collection::template impl_vector<T>
   std::string join(const std::string& seperator = ", ") const
   {
    std::ostringstream stream;
-   for (std::vector<T>::const_iterator it = container->begin(); it != container->end(); ++it)
+   for (typename std::vector<T>::const_iterator it = container->begin(); it != container->end(); ++it)
     stream << (*it) << seperator;
    std::string out = stream.str();
    return out.substr(0, out.length() - seperator.length());
@@ -199,6 +199,8 @@ class vector<T*, garbage_collection> : protected garbage_collection::template im
 {
 
  public:
+
+    typedef typename garbage_collection::template impl_vector<T*> BaseClass;
 
   static const size_t npos = -1;
 
@@ -264,13 +266,13 @@ class vector<T*, garbage_collection> : protected garbage_collection::template im
    if (index == npos || index > container->size() - 1)
     return;
    typename std::vector<T*>::iterator it = container->begin() + index;
-   gc_free((*it));
+   BaseClass::gc_free((*it));
    container->erase(it);
   }
 
   void remove_all()
   {
-   gc_free_range(container->begin(), container->end());
+   BaseClass::gc_free_range(container->begin(), container->end());
    container->clear();
   }
 
@@ -361,7 +363,7 @@ struct NxOgrePublicTemplateClass collect
 */
 template<typename T> bool has(const std::vector<T>& vec, const T& checkAgainst)
 {
- for (std::vector<T>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+ for (typename std::vector<T>::const_iterator it = vec.begin(); it != vec.end(); ++it)
   if ( (*it) == checkAgainst)
    return true;
  return false;
@@ -375,7 +377,7 @@ template<typename T> bool has(const std::vector<T>& vec, const T& checkAgainst)
 */
 template<typename T, typename AX> bool has(const std::vector<T, AX>& vec, const T& checkAgainst)
 {
- for (std::vector<T, AX>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+ for (typename std::vector<T, AX>::const_iterator it = vec.begin(); it != vec.end(); ++it)
   if ( (*it) == checkAgainst)
    return true;
  return false;
@@ -384,7 +386,7 @@ template<typename T, typename AX> bool has(const std::vector<T, AX>& vec, const 
 template<typename T> std::string join(const std::vector<T>& values, const std::string& seperator = " ")
 {
  StringStream s;
- for (std::vector<T>::const_iterator it = values.begin(); it != values.end(); ++it)
+ for (typename std::vector<T>::const_iterator it = values.begin(); it != values.end(); ++it)
   s << (*it) << seperator;
  std::string out = s.str();
  return out.substr(0, out.length() - seperator.length());
@@ -393,7 +395,7 @@ template<typename T> std::string join(const std::vector<T>& values, const std::s
 template<typename T, typename AX> std::string join(const std::vector<T, AX>& values, const std::string& seperator = " ")
 {
  StringStream s;
- for (std::vector<T, AX>::const_iterator it = values.begin(); it != values.end(); ++it)
+ for (typename std::vector<T, AX>::const_iterator it = values.begin(); it != values.end(); ++it)
   s << (*it) << seperator;
  std::string out = s.str();
  return out.substr(0, out.length() - seperator.length());
@@ -401,15 +403,15 @@ template<typename T, typename AX> std::string join(const std::vector<T, AX>& val
 
 template<typename T> void safe_erase(std::vector<T*>& values)
 {
- for (std::vector<T*>::iterator it = values.begin(); it != values.end(); ++it)
-   Functions::safe_delete<T>((*it));
+ for (typename std::vector<T*>::iterator it = values.begin(); it != values.end(); ++it)
+   GC::safe_delete<T>((*it));
  values.clear();
 }
 
 template<typename T, typename AX> void safe_erase(std::vector<T*, AX>& values)
 {
- for (std::vector<T*, AX>::iterator it = values.begin(); it != values.end(); ++it)
-   Functions::safe_delete<T>((*it));
+ for (typename std::vector<T*, AX>::iterator it = values.begin(); it != values.end(); ++it)
+   GC::safe_delete<T>((*it));
  values.clear();
 }
 

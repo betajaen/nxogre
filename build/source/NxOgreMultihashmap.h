@@ -137,6 +137,8 @@ class multihashmap<T*, garbage_collection> : protected garbage_collection::templ
 
  public:
 
+    typedef typename garbage_collection::template impl_map<size_t, T*> BaseClass;
+
   multihashmap() : container(new std::multimap<size_t, T*>() )
   { // constructor
   }
@@ -177,7 +179,7 @@ class multihashmap<T*, garbage_collection> : protected garbage_collection::templ
     if ((*it).second != value)
      continue;
 
-    gc_free((*it).second);
+    BaseClass::gc_free((*it).second);
     container->erase(it);
     break;
    }
@@ -186,7 +188,7 @@ class multihashmap<T*, garbage_collection> : protected garbage_collection::templ
 
   void remove_all()
   {
-   gc_free_range(container->begin(), container->end());
+   BaseClass::gc_free_range(container->begin(), container->end());
    container->clear();
   }
 

@@ -35,7 +35,7 @@
 #include "NxOgreCommon.h"
 #include "NxOgreShape.h"
 
-#include "NxOgreRigidbodyFlags.h"
+#include "NxOgreRigidBodyFlags.h"
 
                                                                                        
 

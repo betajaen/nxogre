@@ -219,7 +219,9 @@ World::World(const WorldDescription& description)
  sdk_description.cookerThreadMask = description.mCookerThreadMask;
  
  sdk_description.flags = 0;
+#if NX_SDK_VERSION_MAJOR >= 2 && NX_SDK_VERSION_MINOR >= 8 && NX_SDK_VERSION_BUGFIX > 1
  sdk_description.flags |= NX_SDKF_PER_SCENE_BATCHING;
+#endif
  
  if (description.mNoHardware)
   sdk_description.flags |= NX_SDKF_NO_HARDWARE;

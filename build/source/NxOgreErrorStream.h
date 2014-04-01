@@ -34,9 +34,9 @@
 #include "NxOgreStable.h"
 #include "NxOgreSingleton.h"
 #include "NxOgreString.h"
-#include "NxogreException.h"
-#include "NxogreWarning.h"
-#include "NxogreNotice.h"
+#include "NxOgreException.h"
+#include "NxOgreWarning.h"
+#include "NxOgreNotice.h"
 
                                                                                        
 

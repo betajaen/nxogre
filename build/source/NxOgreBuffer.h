@@ -194,8 +194,8 @@ template<typename T> class buffer
 */
 template<typename T> class  const_buffer
 {
-
   public:
+    static const size_t npos = -1;
 
    inline const_buffer()
    {
@@ -264,7 +264,9 @@ template<typename T> class  const_buffer
     {
      if (*it == value)
       return it - first_ptr;
+     ++it;
     }
+    // was not found
     return npos;
    }
 

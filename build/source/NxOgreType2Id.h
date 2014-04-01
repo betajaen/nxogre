@@ -3,6 +3,8 @@
 
 #include "NxOgreClassPrototypes.h"
 
+#include <typeinfo>
+
 namespace NxOgre
 {
 

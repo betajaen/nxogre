@@ -34,8 +34,8 @@
 #include "NxOgreStable.h"
 #include "NxOgreCommon.h"
 
-#include "NxOgreRigidbodyFlags.h"
-#include "NxOgreDynamicRigidbodyFlags.h"
+#include "NxOgreRigidBodyFlags.h"
+#include "NxOgreDynamicRigidBodyFlags.h"
 
 
                                                                                        
