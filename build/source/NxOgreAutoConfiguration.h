@@ -121,7 +121,8 @@
  # define NxOgrePublicTemplateClass
  #endif
 
-
+#else
+# define NxOgrePublicTemplateClass
 #endif
 
 #if (NxOgreCompiler == NxOgreCompilerGNUC)

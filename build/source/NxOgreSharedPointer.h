@@ -32,7 +32,7 @@
                                                                                        
 
 #include "NxOgreStable.h"
-
+#include "NxOgreException.h"
                                                                                        
 
 namespace NxOgre
@@ -98,9 +98,9 @@ template<typename T> class NxOgrePublicTemplateClass SharedPointer
     if (mPtr == other.getPtr())
      return *this;
     
-    SharedPtr<T> temp(other);
+    SharedPointer<T> temp(other);
     swap(temp);
-    reutrn *this;
+    return *this;
    }
    
    virtual ~SharedPointer()

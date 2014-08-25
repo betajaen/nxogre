@@ -417,8 +417,10 @@ void VisualDebugger::loadFromDescription(const VisualDebuggerDescription& desc)
  sdk->setParameter(NX_VISUALIZE_CLOTH_TEARABLE_VERTICES,  float(desc.mCloth.tearableVertices));
  sdk->setParameter(NX_VISUALIZE_CLOTH_TEARING,  float(desc.mCloth.tearing));
  sdk->setParameter(NX_VISUALIZE_CLOTH_ATTACHMENT,  float(desc.mCloth.attachment));
+#if NX_SDK_VERSION_MAJOR >= 2 && NX_SDK_VERSION_MINOR >= 8 && NX_SDK_VERSION_BUGFIX > 1
  sdk->setParameter(NX_VISUALIZE_CLOTH_HIERARCHY,  float(desc.mCloth.hierarchy));
  sdk->setParameter(NX_VISUALIZE_CLOTH_HARD_STRETCHING_LIMITATION,  float(desc.mCloth.hardStretchingLimitation));
+#endif
  sdk->setParameter(NX_VISUALIZE_SOFTBODY_MESH,  float(desc.mSoftBody.mesh));
  sdk->setParameter(NX_VISUALIZE_SOFTBODY_COLLISIONS,  float(desc.mSoftBody.collisions));
  sdk->setParameter(NX_VISUALIZE_SOFTBODY_WORKPACKETS,  float(desc.mSoftBody.workPackets));
@@ -478,8 +480,10 @@ void VisualDebugger::saveToDescription(VisualDebuggerDescription& desc)
  desc.mCloth.tearableVertices = (bool)  sdk->getParameter(NX_VISUALIZE_CLOTH_TEARABLE_VERTICES);
  desc.mCloth.tearing = (bool)  sdk->getParameter(NX_VISUALIZE_CLOTH_TEARING);
  desc.mCloth.attachment = (bool)  sdk->getParameter(NX_VISUALIZE_CLOTH_ATTACHMENT);
+#if NX_SDK_VERSION_MAJOR >= 2 && NX_SDK_VERSION_MINOR >= 8 && NX_SDK_VERSION_BUGFIX > 1
  desc.mCloth.hierarchy = (bool)  sdk->getParameter(NX_VISUALIZE_CLOTH_HIERARCHY);
  desc.mCloth.hardStretchingLimitation = (bool) sdk->getParameter(NX_VISUALIZE_CLOTH_HARD_STRETCHING_LIMITATION);
+#endif
  desc.mSoftBody.mesh = (bool)  sdk->getParameter(NX_VISUALIZE_SOFTBODY_MESH);
  desc.mSoftBody.collisions = (bool)  sdk->getParameter(NX_VISUALIZE_SOFTBODY_COLLISIONS);
  desc.mSoftBody.workPackets = (bool)  sdk->getParameter(NX_VISUALIZE_SOFTBODY_WORKPACKETS);
